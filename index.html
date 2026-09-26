@@ -1222,6 +1222,11 @@ a.ks-s-en:hover { color: var(--white); }
 .act-btn.quiet { border: 0; color: var(--ink-faint); }
 /* A number, not a button: nothing happens if you press it. */
 .act-btn.still { cursor: default; font-variant-numeric: tabular-nums; }
+/* The repost mark, drawn at the size of the words beside it. */
+.ico-re { width: 1.05em; height: 1.05em; vertical-align: -.17em;
+  fill: none; stroke: currentColor; stroke-width: 2.1;
+  stroke-linecap: round; stroke-linejoin: round; }
+.tile-k .ico-re, .repost-from .ico-re { stroke-width: 2.4; }
 .attach-row, .attach-card { width: 100%; text-align: start; padding: .6rem .8rem; border-radius: var(--r-lg);
   border: var(--hair); background: rgba(255,255,255,.04); color: inherit; font: inherit; box-shadow: none; }
 .attach-card { display: grid; gap: .15rem; margin-bottom: .5rem; }
@@ -9358,6 +9363,15 @@ function memberRow(m, onOpen) {
   return row;
 }
 
+/* The repost mark: the same loop of two arrows that labels the Reposts
+   tab, so the button, the count, the tile and the line above a repost
+   are all obviously the one idea. Drawn rather than typed — "↻" is a
+   clock arrow, and a font that has no glyph for it prints a box. */
+const REPOST_ICO =
+  '<svg class="ico-re" viewBox="0 0 24 24" aria-hidden="true">' +
+  '<path d="M4 9.5A3.5 3.5 0 0 1 7.5 6H17l-2.5-2.5' +
+  'M20 14.5A3.5 3.5 0 0 1 16.5 18H7l2.5 2.5"/></svg>';
+
 /* ── who follows whom ──
    The two numbers on a profile are people, so tapping one opens them.
    On anybody's profile, not only your own: the view behind this reads
@@ -9770,7 +9784,7 @@ function postCard(r, opts) {
   if (r.repost_of) {
     const who = r.orig_display_name || (r.orig_username ? "@" + r.orig_username : "");
     const rf = el("div", "repost-from",
-      '↻ Reposted from <b>' + esc(who || "another member") + '</b>' +
+      REPOST_ICO + ' Reposted from <b>' + esc(who || "another member") + '</b>' +
       (r.orig_username && r.orig_display_name ? ' <span class="dimmed">@' + esc(r.orig_username) + '</span>' : ''));
     card.appendChild(rf);
   }
@@ -9882,24 +9896,27 @@ function postCard(r, opts) {
      screen that reposting existed at all. */
   let nRe = r.reposts || 0;
   if (r.author_id !== myId() && r.visibility !== "private") {
-    const say = () => "↻ Repost" + (nRe ? " · " + nRe : "");
-    const rp = el("button", "act-btn", say());
+    /* innerHTML rather than textContent throughout: the label carries
+       the drawn mark, and setting text would throw it away. */
+    const say = w => REPOST_ICO + " " + esc(w);
+    const idle = () => say("Repost" + (nRe ? " · " + nRe : ""));
+    const rp = el("button", "act-btn", idle());
     rp.addEventListener("click", async () => {
-      rp.disabled = true; rp.textContent = "↻ Reposting…";
+      rp.disabled = true; rp.innerHTML = say("Reposting…");
       try {
         await sbPost("posts", { author_id: myId(), post_type: "other",
                                 visibility: "members", repost_of: r.repost_of || r.id });
         nRe++;
-        rp.textContent = "↻ Reposted";
+        rp.innerHTML = say("Reposted");
       } catch (e) {
-        rp.textContent = "↻ Could not repost";
-        setTimeout(() => { rp.textContent = say(); rp.disabled = false; }, 2500);
+        rp.innerHTML = say("Could not repost");
+        setTimeout(() => { rp.innerHTML = idle(); rp.disabled = false; }, 2500);
       }
     });
     acts.appendChild(rp);
   } else if (r.author_id === myId()) {
     const n = el("span", "act-btn quiet still",
-                 "↻ " + nRe + (nRe === 1 ? " repost" : " reposts"));
+                 REPOST_ICO + " " + nRe + (nRe === 1 ? " repost" : " reposts"));
     n.title = "How many members have passed this on. You cannot repost your own work.";
     acts.appendChild(n);
   }
@@ -11432,7 +11449,7 @@ function postTile(r) {
   const b = el("button", "tile" + (hasPic ? " has-pic" : ""),
     (hasPic ? '<span class="tile-shade"></span>' : '') +
     '<span class="tile-k">' +
-      (r.repost_of ? "\u21bb " : "") +
+      (r.repost_of ? REPOST_ICO + " " : "") +
       esc(kind ? kind.en : shownType) + '</span>' +
     (hasPic ? '' : '<span class="tile-t" dir="auto">' + esc(words.slice(0, 140)) + '</span>') +
     '<span class="tile-n">' +
@@ -11610,7 +11627,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-0330";
+const BUILD = "0927-0355";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
