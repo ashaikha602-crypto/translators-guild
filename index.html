@@ -1225,7 +1225,14 @@ a.ks-s-en:hover { color: var(--white); }
 .act-pair { display: inline-flex; align-items: stretch;
   border: var(--hair); border-radius: 999px; overflow: hidden; }
 .act-pair .act-btn { border: 0; border-radius: 0; background: transparent; }
-.act-pair .heart { padding-inline-end: .35rem; font-size: .95rem; line-height: 1; }
+.act-pair .heart { padding-inline-end: .35rem; line-height: 1; }
+/* The three marks: same size, same weight, same colour as the number
+   beside them. The heart fills when it is yours. */
+.ico-ac { width: 1.05em; height: 1.05em; vertical-align: -.17em;
+  fill: none; stroke: currentColor; stroke-width: 1.9;
+  stroke-linecap: round; stroke-linejoin: round; }
+.act-pair.on .heart .ico-ac { fill: var(--magenta); stroke: var(--magenta); }
+.act-btn.bad { border-color: #e2607a; color: #e2607a; }
 .act-pair .tally { padding-inline-start: .35rem; font-variant-numeric: tabular-nums; }
 .act-pair.on { border-color: var(--magenta); background: rgba(167,38,208,.16); }
 .act-pair.on .act-btn { color: var(--white); }
@@ -9404,6 +9411,19 @@ function verifiedMark(on, note) {
     esc(note || "Verified account") + '">' + VERIFIED_ICO + '</span>';
 }
 
+/* The three marks under a post, all drawn the same way so the row
+   reads as one set. The heart and the speech bubble used to be a text
+   character and a colour emoji, which land at different weights and
+   different sizes on every phone. */
+const HEART_ICO =
+  '<svg class="ico-ac" viewBox="0 0 24 24" aria-hidden="true">' +
+  '<path d="M12 20.4S4.6 15.8 4.6 10.9A4.2 4.2 0 0 1 12 8.1a4.2 4.2 0 0 1 7.4 2.8' +
+  'c0 4.9-7.4 9.5-7.4 9.5z"/></svg>';
+const TALK_ICO =
+  '<svg class="ico-ac" viewBox="0 0 24 24" aria-hidden="true">' +
+  '<path d="M20.4 11.4a7.4 7.4 0 0 1-10.8 6.6L4.6 19.4l1.4-4.6' +
+  'A7.4 7.4 0 1 1 20.4 11.4z"/></svg>';
+
 /* The repost mark: the same loop of two arrows that labels the Reposts
    tab, so the button, the count, the tile and the line above a repost
    are all obviously the one idea. Drawn rather than typed — "↻" is a
@@ -9906,7 +9926,7 @@ function postCard(r, opts) {
      rather than a control. */
   let liked = r.i_like, nLike = r.likes;
   const pair = el("span", "act-pair" + (liked ? " on" : ""));
-  const like = el("button", "act-btn heart", "♡");
+  const like = el("button", "act-btn heart", HEART_ICO);
   like.setAttribute("aria-label", "Like this post");
   const nBtn = el("button", "act-btn tally", String(nLike));
   nBtn.setAttribute("aria-label", "Who liked this post");
@@ -9918,17 +9938,54 @@ function postCard(r, opts) {
       else { await sbPost("post_likes", { user_id: myId(), post_id: r.id }); nLike++; }
       liked = !liked;
       nBtn.textContent = String(nLike);
-      like.textContent = liked ? "♥" : "♡";
       pair.classList.toggle("on", liked);
     } catch (e) {} finally { like.disabled = false; }
   });
-  like.textContent = liked ? "♥" : "♡";
   pair.appendChild(like); pair.appendChild(nBtn);
   acts.appendChild(pair);
 
-  const cm = el("button", "act-btn", "💬 " + r.comments);
+  const cm = el("button", "act-btn", TALK_ICO + " " + r.comments);
+  cm.setAttribute("aria-label", "Comments");
   cm.addEventListener("click", () => openPost(r));
   acts.appendChild(cm);
+
+  /* Reposting somebody else's work, beside the heart and the bubble
+     and drawn like them: a mark and a number, no word. A private post
+     is nobody's to pass on, and the database refuses it as well as
+     this button does. You cannot repost your own post — so on your own
+     posts the count stands in its place, which is also how you learn
+     that somebody has passed your work on. */
+  let nRe = r.reposts || 0;
+  if (r.author_id !== myId() && r.visibility !== "private") {
+    /* innerHTML rather than textContent: the label carries the drawn
+       mark, and setting text would throw it away. */
+    const rp = el("button", "act-btn", REPOST_ICO + " " + nRe);
+    rp.title = "Repost this";
+    rp.setAttribute("aria-label", "Repost this");
+    rp.addEventListener("click", async () => {
+      rp.disabled = true;
+      try {
+        await sbPost("posts", { author_id: myId(), post_type: "other",
+                                visibility: "members", repost_of: r.repost_of || r.id });
+        nRe++;
+        rp.innerHTML = REPOST_ICO + " " + nRe;
+        rp.classList.add("on");
+        rp.title = "You reposted this";
+      } catch (e) {
+        /* No room for a sentence here, so the mark itself says it
+           failed and then goes back to what it was. */
+        rp.classList.add("bad");
+        rp.title = "That could not be reposted.";
+        setTimeout(() => { rp.classList.remove("bad"); rp.title = "Repost this";
+                           rp.disabled = false; }, 2500);
+      }
+    });
+    acts.appendChild(rp);
+  } else if (r.author_id === myId()) {
+    const n = el("span", "act-btn quiet still", REPOST_ICO + " " + nRe);
+    n.title = "How many members have passed this on. You cannot repost your own work.";
+    acts.appendChild(n);
+  }
 
   let saved = r.i_saved;
   const sv = el("button", "act-btn" + (saved ? " on" : ""), saved ? "Saved" : "Save");
@@ -9941,39 +9998,6 @@ function postCard(r, opts) {
     } catch (e) {} finally { sv.disabled = false; }
   });
   acts.appendChild(sv);
-
-  /* Reposting somebody else's work. A private post is nobody's to pass
-     on, and the database refuses it as well as this button does.
-     You cannot repost your own post — so on your own posts the count
-     stands in its place, which is also how you learn that somebody has
-     passed your work on. Without it there was no sign on your own
-     screen that reposting existed at all. */
-  let nRe = r.reposts || 0;
-  if (r.author_id !== myId() && r.visibility !== "private") {
-    /* innerHTML rather than textContent throughout: the label carries
-       the drawn mark, and setting text would throw it away. */
-    const say = w => REPOST_ICO + " " + esc(w);
-    const idle = () => say("Repost" + (nRe ? " · " + nRe : ""));
-    const rp = el("button", "act-btn", idle());
-    rp.addEventListener("click", async () => {
-      rp.disabled = true; rp.innerHTML = say("Reposting…");
-      try {
-        await sbPost("posts", { author_id: myId(), post_type: "other",
-                                visibility: "members", repost_of: r.repost_of || r.id });
-        nRe++;
-        rp.innerHTML = say("Reposted");
-      } catch (e) {
-        rp.innerHTML = say("Could not repost");
-        setTimeout(() => { rp.innerHTML = idle(); rp.disabled = false; }, 2500);
-      }
-    });
-    acts.appendChild(rp);
-  } else if (r.author_id === myId()) {
-    const n = el("span", "act-btn quiet still",
-                 REPOST_ICO + " " + nRe + (nRe === 1 ? " repost" : " reposts"));
-    n.title = "How many members have passed this on. You cannot repost your own work.";
-    acts.appendChild(n);
-  }
 
   if (r.author_id === myId()) {
     const del = el("button", "act-btn quiet", "Delete");
@@ -11681,7 +11705,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-0430";
+const BUILD = "0927-0505";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
