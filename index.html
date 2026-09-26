@@ -1219,9 +1219,31 @@ a.ks-s-en:hover { color: var(--white); }
 .act-btn { padding: .35rem .7rem; border-radius: 999px; border: var(--hair); background: transparent;
   color: var(--ink-soft); font-size: .78rem; box-shadow: none; }
 .act-btn.on { color: var(--white); border-color: var(--magenta); background: rgba(167,38,208,.16); }
+/* The heart and its number read as one control and sit in one outline,
+   but they are two buttons: press the heart to like, the number to see
+   who did. */
+.act-pair { display: inline-flex; align-items: stretch;
+  border: var(--hair); border-radius: 999px; overflow: hidden; }
+.act-pair .act-btn { border: 0; border-radius: 0; background: transparent; }
+.act-pair .heart { padding-inline-end: .35rem; font-size: .95rem; line-height: 1; }
+.act-pair .tally { padding-inline-start: .35rem; font-variant-numeric: tabular-nums; }
+.act-pair.on { border-color: var(--magenta); background: rgba(167,38,208,.16); }
+.act-pair.on .act-btn { color: var(--white); }
 .act-btn.quiet { border: 0; color: var(--ink-faint); }
 /* A number, not a button: nothing happens if you press it. */
 .act-btn.still { cursor: default; font-variant-numeric: tabular-nums; }
+/* The verified mark: a seal with a tick, at the size of the name it
+   sits beside, in the Guild's own magenta rather than another app's
+   blue. */
+.vf { display: inline-flex; vertical-align: -.12em; margin-inline-start: .3em; }
+.ico-vf { width: .82em; height: .82em; }
+.vf-seal { fill: var(--magenta); stroke: none; }
+.vf-tick { fill: none; stroke: #fff; stroke-width: 2.4;
+  stroke-linecap: round; stroke-linejoin: round; }
+.mm-name .ico-vf { width: .9em; height: .9em; }
+.vf-note { margin: .1rem 0 0; font-size: .74rem; color: var(--mag-ink);
+  letter-spacing: .01em; }
+
 /* The repost mark, drawn at the size of the words beside it. */
 .ico-re { width: 1.05em; height: 1.05em; vertical-align: -.17em;
   fill: none; stroke: currentColor; stroke-width: 2.1;
@@ -2367,6 +2389,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
       </span>
       <div class="ig-id">
         <h1 class="ig-name" id="seal-name" dir="auto">Member</h1>
+        <p class="vf-note" id="seal-verified" hidden></p>
         <p class="chips-row">
           <span class="chip-tag" id="chip-rank">Novice</span>
           <span class="chip-tag solid">Translation Team</span>
@@ -8144,7 +8167,7 @@ async function sbHeaders() {
 const PROFILE_COLS = "id,username,title,display_name,avatar_path,bio,motto,field_of_study,minor," +
   "institution,academic_level,marks,rank_slug,profile_visibility,discoverable,show_progress," +
   "show_interests,show_institution,show_academic_level,allow_follows," +
-  "who_can_message,show_online,read_receipts";
+  "who_can_message,show_online,read_receipts,verified,verified_note";
 
 async function loadMyProfile() {
   if (backend !== "supabase" || !session || !session.user) return null;
@@ -9298,7 +9321,7 @@ async function myCounts() {
 }
 
 async function findMembers(q) {
-  const cols = "id,username,title,display_name,avatar_path,bio,marks,rank_slug,allow_follows,main_interest,i_follow,follows_me";
+  const cols = "id,username,title,display_name,avatar_path,bio,marks,rank_slug,allow_follows,main_interest,i_follow,follows_me,verified,verified_note";
   let path = "member_directory?select=" + cols + "&order=display_name.asc&limit=40";
   if (q) {
     const t = encodeURIComponent("*" + q.replace(/[,()*]/g, "") + "*");
@@ -9351,7 +9374,8 @@ function memberRow(m, onOpen) {
 
   const txt = el("div", "mm-txt");
   txt.innerHTML =
-    '<span class="mm-name">' + esc(withTitle(m.title, m.display_name)) + '</span>' +
+    '<span class="mm-name">' + esc(withTitle(m.title, m.display_name)) +
+      verifiedMark(m.verified, m.verified_note) + '</span>' +
     (m.username ? '<span class="mm-at">@' + esc(m.username) + '</span>' : '') +
     '<span class="mm-meta">' +
       (m.rank_slug ? esc(rankName(m.rank_slug)) : "") +
@@ -9361,6 +9385,23 @@ function memberRow(m, onOpen) {
   row.appendChild(txt);
   if (m.allow_follows) row.appendChild(followButton(m));
   return row;
+}
+
+/* ── the verified mark ──
+   A fact read from the profile, never a name written into this file.
+   The column it comes from is not in the set of columns a member is
+   granted UPDATE on, so nobody can award it to themselves; it is set
+   in the database and read here. */
+const VERIFIED_ICO =
+  '<svg class="ico-vf" viewBox="0 0 24 24" aria-hidden="true">' +
+  '<path class="vf-seal" d="M12 2.4l2.3 1.7 2.8-.3 1 2.7 2.5 1.4-.7 2.8.7 2.8-2.5 1.4-1 2.7' +
+  '-2.8-.3L12 21.6l-2.3-1.7-2.8.3-1-2.7L3.4 16l.7-2.8-.7-2.8 2.5-1.4 1-2.7 2.8.3z"/>' +
+  '<path class="vf-tick" d="M8.4 12.2l2.5 2.5 4.7-5"/></svg>';
+
+function verifiedMark(on, note) {
+  if (!on) return "";
+  return '<span class="vf" title="' +
+    esc(note || "Verified account") + '">' + VERIFIED_ICO + '</span>';
 }
 
 /* The repost mark: the same loop of two arrows that labels the Reposts
@@ -9390,7 +9431,7 @@ async function runFollowList(subjectId, direction) {
   const list = el("div", "m-members");
   const msg = el("p", "f-msg", "Loading…");
   stage.appendChild(list); stage.appendChild(msg);
-  const cols = "id,username,title,display_name,avatar_path,rank_slug,allow_follows,i_follow";
+  const cols = "id,username,title,display_name,avatar_path,rank_slug,allow_follows,i_follow,verified";
   let rows = [];
   try {
     rows = await sbGet("follow_list?select=" + cols + "&subject_id=eq." + subjectId +
@@ -9526,9 +9567,11 @@ async function runPublic(id) {
   paintFace(av, p.avatar_path, p.display_name);
   head.appendChild(av);
   const who = el("div", "ig-id");
-  const pubName = el("h1", "ig-name", esc(withTitle(p.title, p.display_name)));
+  const pubName = el("h1", "ig-name",
+    esc(withTitle(p.title, p.display_name)) + verifiedMark(p.verified, p.verified_note));
   pubName.dir = "auto";
   who.appendChild(pubName);
+  if (p.verified && p.verified_note) who.appendChild(el("p", "vf-note", esc(p.verified_note)));
   /* The rank badge only when they have left their progress visible; the
      view returns null for it otherwise. */
   who.appendChild(el("p", "chips-row",
@@ -9698,7 +9741,7 @@ const FEED_COLS = "id,author_id,post_type,title,content,source_language,target_l
   "source_text,translated_text,translation_note,feedback_on,difficulty,deadline,visibility," +
   "created_at,repost_of,username,author_title,display_name,avatar_path,rank_slug," +
   "likes,comments,attachments,thumb_path,thumb_type," +
-  "orig_type,orig_text,orig_username,orig_display_name,i_like,i_saved,reposts";
+  "orig_type,orig_text,orig_username,orig_display_name,i_like,i_saved,reposts,author_verified";
 
 async function loadFeed(kind, mine) {
   let q = "feed?select=" + FEED_COLS + "&order=created_at.desc&limit=40";
@@ -9773,7 +9816,8 @@ function postCard(r, opts) {
   av.addEventListener("click", () => openPublic({ id: r.author_id, display_name: r.display_name, username: r.username }));
   head.appendChild(av);
   head.innerHTML += '<div class="ph-txt">' +
-      '<span class="mm-name">' + esc(withTitle(r.author_title, r.display_name)) + '</span>' +
+      '<span class="mm-name">' + esc(withTitle(r.author_title, r.display_name)) +
+        verifiedMark(r.author_verified) + '</span>' +
       '<span class="mm-meta">' + (r.username ? "@" + esc(r.username) + " · " : "") +
         esc(rankName(r.rank_slug)) + " · " + when(r.created_at) + '</span>' +
     '</div>';
@@ -9856,21 +9900,31 @@ function postCard(r, opts) {
   }
 
   const acts = el("div", "post-acts");
-  const like = el("button", "act-btn" + (r.i_like ? " on" : ""), "♡ " + r.likes);
-  /* The heart likes it; the word beside it says who did. */
-  const whoLiked = el("button", "act-btn quiet", "who");
-  whoLiked.addEventListener("click", () => showLikers(r.id));
+  /* One pill, two things to press: the heart likes it, the number
+     beside it opens the people who did. There used to be a third
+     button spelling out the word "who", which read like a caption
+     rather than a control. */
   let liked = r.i_like, nLike = r.likes;
+  const pair = el("span", "act-pair" + (liked ? " on" : ""));
+  const like = el("button", "act-btn heart", "♡");
+  like.setAttribute("aria-label", "Like this post");
+  const nBtn = el("button", "act-btn tally", String(nLike));
+  nBtn.setAttribute("aria-label", "Who liked this post");
+  nBtn.addEventListener("click", () => showLikers(r.id));
   like.addEventListener("click", async () => {
     like.disabled = true;
     try {
       if (liked) { await sbDel("post_likes?user_id=eq." + myId() + "&post_id=eq." + r.id); nLike--; }
       else { await sbPost("post_likes", { user_id: myId(), post_id: r.id }); nLike++; }
-      liked = !liked; like.textContent = "♡ " + nLike; like.classList.toggle("on", liked);
+      liked = !liked;
+      nBtn.textContent = String(nLike);
+      like.textContent = liked ? "♥" : "♡";
+      pair.classList.toggle("on", liked);
     } catch (e) {} finally { like.disabled = false; }
   });
-  acts.appendChild(like);
-  acts.appendChild(whoLiked);
+  like.textContent = liked ? "♥" : "♡";
+  pair.appendChild(like); pair.appendChild(nBtn);
+  acts.appendChild(pair);
 
   const cm = el("button", "act-btn", "💬 " + r.comments);
   cm.addEventListener("click", () => openPost(r));
@@ -11454,7 +11508,7 @@ function postTile(r) {
     (hasPic ? '' : '<span class="tile-t" dir="auto">' + esc(words.slice(0, 140)) + '</span>') +
     '<span class="tile-n">' +
       (isVid ? '<span class="tile-play" aria-hidden="true">\u25B6</span> ' : '') +
-      '\u2661 ' + r.likes + ' \u00b7 \u25CB ' + r.comments + '</span>');
+      '\u2661 ' + (r.likes || 0) + ' \u00b7 \u25CB ' + (r.comments || 0) + '</span>');
   b.type = "button";
   b.addEventListener("click", () => openPost(r));
   return b;
@@ -11627,7 +11681,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-0355";
+const BUILD = "0927-0430";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -11679,7 +11733,15 @@ function renderSeal() {
 
   const who = withTitle(state.profile && state.profile.title, profileName());
   const nameEl = document.getElementById("seal-name");
-  if (nameEl) nameEl.textContent = who;
+  const p0 = state.profile || {};
+  if (nameEl) nameEl.innerHTML = esc(who) + verifiedMark(p0.verified, p0.verified_note);
+  /* The line under the mark: what this account is, in her own words,
+     stored beside the mark rather than written into the page. */
+  const vn = document.getElementById("seal-verified");
+  if (vn) {
+    vn.textContent = p0.verified && p0.verified_note ? p0.verified_note : "";
+    vn.hidden = !(p0.verified && p0.verified_note);
+  }
 
   /* Initials rather than a picture: the Guild holds no photographs, and two
      letters identify an account at a glance without asking for one. */
