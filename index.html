@@ -1248,8 +1248,6 @@ a.ks-s-en:hover { color: var(--white); }
 .vf-tick { fill: none; stroke: #fff; stroke-width: 2.4;
   stroke-linecap: round; stroke-linejoin: round; }
 .mm-name .ico-vf { width: .9em; height: .9em; }
-.vf-note { margin: .1rem 0 0; font-size: .74rem; color: var(--mag-ink);
-  letter-spacing: .01em; }
 
 /* The repost mark, drawn at the size of the words beside it. */
 .ico-re { width: 1.05em; height: 1.05em; vertical-align: -.17em;
@@ -2396,7 +2394,6 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
       </span>
       <div class="ig-id">
         <h1 class="ig-name" id="seal-name" dir="auto">Member</h1>
-        <p class="vf-note" id="seal-verified" hidden></p>
         <p class="chips-row">
           <span class="chip-tag" id="chip-rank">Novice</span>
           <span class="chip-tag solid">Translation Team</span>
@@ -8174,7 +8171,7 @@ async function sbHeaders() {
 const PROFILE_COLS = "id,username,title,display_name,avatar_path,bio,motto,field_of_study,minor," +
   "institution,academic_level,marks,rank_slug,profile_visibility,discoverable,show_progress," +
   "show_interests,show_institution,show_academic_level,allow_follows," +
-  "who_can_message,show_online,read_receipts,verified,verified_note";
+  "who_can_message,show_online,read_receipts,verified";
 
 async function loadMyProfile() {
   if (backend !== "supabase" || !session || !session.user) return null;
@@ -9328,7 +9325,7 @@ async function myCounts() {
 }
 
 async function findMembers(q) {
-  const cols = "id,username,title,display_name,avatar_path,bio,marks,rank_slug,allow_follows,main_interest,i_follow,follows_me,verified,verified_note";
+  const cols = "id,username,title,display_name,avatar_path,bio,marks,rank_slug,allow_follows,main_interest,i_follow,follows_me,verified";
   let path = "member_directory?select=" + cols + "&order=display_name.asc&limit=40";
   if (q) {
     const t = encodeURIComponent("*" + q.replace(/[,()*]/g, "") + "*");
@@ -9382,7 +9379,7 @@ function memberRow(m, onOpen) {
   const txt = el("div", "mm-txt");
   txt.innerHTML =
     '<span class="mm-name">' + esc(withTitle(m.title, m.display_name)) +
-      verifiedMark(m.verified, m.verified_note) + '</span>' +
+      verifiedMark(m.verified) + '</span>' +
     (m.username ? '<span class="mm-at">@' + esc(m.username) + '</span>' : '') +
     '<span class="mm-meta">' +
       (m.rank_slug ? esc(rankName(m.rank_slug)) : "") +
@@ -9405,10 +9402,12 @@ const VERIFIED_ICO =
   '-2.8-.3L12 21.6l-2.3-1.7-2.8.3-1-2.7L3.4 16l.7-2.8-.7-2.8 2.5-1.4 1-2.7 2.8.3z"/>' +
   '<path class="vf-tick" d="M8.4 12.2l2.5 2.5 4.7-5"/></svg>';
 
-function verifiedMark(on, note) {
+/* The mark and nothing else. It carried a line of text underneath
+   naming what the account was; she does not want the site announcing
+   that about her, so the mark stands alone and says it by itself. */
+function verifiedMark(on) {
   if (!on) return "";
-  return '<span class="vf" title="' +
-    esc(note || "Verified account") + '">' + VERIFIED_ICO + '</span>';
+  return '<span class="vf" title="Verified account">' + VERIFIED_ICO + '</span>';
 }
 
 /* The three marks under a post, all drawn the same way so the row
@@ -9588,10 +9587,9 @@ async function runPublic(id) {
   head.appendChild(av);
   const who = el("div", "ig-id");
   const pubName = el("h1", "ig-name",
-    esc(withTitle(p.title, p.display_name)) + verifiedMark(p.verified, p.verified_note));
+    esc(withTitle(p.title, p.display_name)) + verifiedMark(p.verified));
   pubName.dir = "auto";
   who.appendChild(pubName);
-  if (p.verified && p.verified_note) who.appendChild(el("p", "vf-note", esc(p.verified_note)));
   /* The rank badge only when they have left their progress visible; the
      view returns null for it otherwise. */
   who.appendChild(el("p", "chips-row",
@@ -11705,7 +11703,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-0505";
+const BUILD = "0927-0540";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -11758,14 +11756,7 @@ function renderSeal() {
   const who = withTitle(state.profile && state.profile.title, profileName());
   const nameEl = document.getElementById("seal-name");
   const p0 = state.profile || {};
-  if (nameEl) nameEl.innerHTML = esc(who) + verifiedMark(p0.verified, p0.verified_note);
-  /* The line under the mark: what this account is, in her own words,
-     stored beside the mark rather than written into the page. */
-  const vn = document.getElementById("seal-verified");
-  if (vn) {
-    vn.textContent = p0.verified && p0.verified_note ? p0.verified_note : "";
-    vn.hidden = !(p0.verified && p0.verified_note);
-  }
+  if (nameEl) nameEl.innerHTML = esc(who) + verifiedMark(p0.verified);
 
   /* Initials rather than a picture: the Guild holds no photographs, and two
      letters identify an account at a glance without asking for one. */
