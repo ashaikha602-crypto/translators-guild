@@ -1220,6 +1220,8 @@ a.ks-s-en:hover { color: var(--white); }
   color: var(--ink-soft); font-size: .78rem; box-shadow: none; }
 .act-btn.on { color: var(--white); border-color: var(--magenta); background: rgba(167,38,208,.16); }
 .act-btn.quiet { border: 0; color: var(--ink-faint); }
+/* A number, not a button: nothing happens if you press it. */
+.act-btn.still { cursor: default; font-variant-numeric: tabular-nums; }
 .attach-row, .attach-card { width: 100%; text-align: start; padding: .6rem .8rem; border-radius: var(--r-lg);
   border: var(--hair); background: rgba(255,255,255,.04); color: inherit; font: inherit; box-shadow: none; }
 .attach-card { display: grid; gap: .15rem; margin-bottom: .5rem; }
@@ -9682,7 +9684,7 @@ const FEED_COLS = "id,author_id,post_type,title,content,source_language,target_l
   "source_text,translated_text,translation_note,feedback_on,difficulty,deadline,visibility," +
   "created_at,repost_of,username,author_title,display_name,avatar_path,rank_slug," +
   "likes,comments,attachments,thumb_path,thumb_type," +
-  "orig_type,orig_text,orig_username,orig_display_name,i_like,i_saved";
+  "orig_type,orig_text,orig_username,orig_display_name,i_like,i_saved,reposts";
 
 async function loadFeed(kind, mine) {
   let q = "feed?select=" + FEED_COLS + "&order=created_at.desc&limit=40";
@@ -9873,21 +9875,33 @@ function postCard(r, opts) {
   acts.appendChild(sv);
 
   /* Reposting somebody else's work. A private post is nobody's to pass
-     on, and the database refuses it as well as this button does. */
+     on, and the database refuses it as well as this button does.
+     You cannot repost your own post — so on your own posts the count
+     stands in its place, which is also how you learn that somebody has
+     passed your work on. Without it there was no sign on your own
+     screen that reposting existed at all. */
+  let nRe = r.reposts || 0;
   if (r.author_id !== myId() && r.visibility !== "private") {
-    const rp = el("button", "act-btn", "↻ Repost");
+    const say = () => "↻ Repost" + (nRe ? " · " + nRe : "");
+    const rp = el("button", "act-btn", say());
     rp.addEventListener("click", async () => {
       rp.disabled = true; rp.textContent = "↻ Reposting…";
       try {
         await sbPost("posts", { author_id: myId(), post_type: "other",
                                 visibility: "members", repost_of: r.repost_of || r.id });
+        nRe++;
         rp.textContent = "↻ Reposted";
       } catch (e) {
         rp.textContent = "↻ Could not repost";
-        setTimeout(() => { rp.textContent = "↻ Repost"; rp.disabled = false; }, 2500);
+        setTimeout(() => { rp.textContent = say(); rp.disabled = false; }, 2500);
       }
     });
     acts.appendChild(rp);
+  } else if (r.author_id === myId()) {
+    const n = el("span", "act-btn quiet still",
+                 "↻ " + nRe + (nRe === 1 ? " repost" : " reposts"));
+    n.title = "How many members have passed this on. You cannot repost your own work.";
+    acts.appendChild(n);
   }
 
   if (r.author_id === myId()) {
@@ -11596,7 +11610,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-0255";
+const BUILD = "0927-0330";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
