@@ -1504,6 +1504,33 @@ a.ks-s-en:hover { color: var(--white); }
 .pick-chip { cursor: pointer; background: transparent; font-family: inherit; }
 .pick-chip.on { background: rgba(167,38,208,.25); color: var(--white); border-color: var(--magenta); }
 .pick-chip.add { border-style: dashed; color: var(--mag-ink); }
+/* ── Lately in the Guild ── */
+.lately-list { display: grid; gap: .45rem; margin: .2rem 0 .6rem; }
+.lately-row { display: grid; grid-template-columns: auto 1fr auto; gap: .7rem;
+  align-items: center; width: 100%; text-align: start; padding: .6rem .7rem;
+  border: var(--hair); border-radius: var(--r-lg);
+  background: rgba(255,255,255,.035); color: inherit; font: inherit; box-shadow: none; }
+.lately-row:hover { transform: none; background: rgba(214,191,234,.1); }
+.lt-txt { display: grid; gap: .1rem; min-width: 0; }
+.lt-who { display: flex; align-items: center; gap: .3rem; font-size: .88rem;
+  color: var(--white); min-width: 0; }
+.lt-who b { font-family: var(--f-serif); font-weight: 600; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.lt-when { margin-inline-start: auto; font-size: .7rem; color: var(--ink-faint);
+  white-space: nowrap; padding-inline-start: .4rem; }
+.lt-kind { font-size: .62rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--mag-ink); }
+.lt-words { font-size: .82rem; line-height: 1.4; color: var(--ink-soft);
+  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; }
+.lt-pic { width: 44px; height: 44px; border-radius: 8px; overflow: hidden;
+  background: rgba(0,0,0,.25); display: block; flex: none; }
+.lt-pic img, .lt-pic video { width: 100%; height: 100%; object-fit: cover; display: block;
+  -webkit-touch-callout: none; pointer-events: none; }
+.lately-more { width: 100%; padding: .55rem 1rem; border-radius: 999px;
+  border: var(--hair); background: transparent; color: var(--ink-soft);
+  font-size: .82rem; box-shadow: none; }
+
 /* Above the bottom bar, gone in four seconds. */
 .flash { position: fixed; left: 50%; transform: translateX(-50%); bottom: 5.4rem;
   z-index: 70; max-width: min(22rem, calc(100vw - 1.6rem));
@@ -2333,6 +2360,17 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
         <span class="note">Sixteen translators &mdash; tap any one</span>
       </div>
       <div class="strip" id="strip"></div>
+    </div>
+
+    <!-- What the Guild has been posting. Under the lineage, because the
+         dead translators are the ground and the living ones are the
+         reason to come back. -->
+    <div id="lately-wrap" hidden>
+      <div class="strip-head">
+        <h2>Lately in the Guild</h2>
+        <span class="note">What members have been posting</span>
+      </div>
+      <div id="lately"></div>
     </div>
 
     <p class="signature">Shaikha Al-Khaldi</p>
@@ -10599,9 +10637,11 @@ async function runPrivacy() {
     "On by default, so other members can find you. Turn it off to stay " +
     "out of the member list \u2014 your profile still opens for anyone " +
     "given the link.");
-  choice("Profile visibility", "profile_visibility",
-    [["public","Public"],["members","Members only"],["private","Private"]],
-    "Private means nobody but you can open your profile.");
+  /* "Profile visibility" used to sit here, with Private among its
+     choices. There are no private accounts in the Guild any more: a
+     member's profile opens for every other member. What is left below
+     still decides what that profile says about them, and a post of
+     their own can still be kept to themselves. */
   toggle("Show my progress", "show_progress", "Marks and rank on your public profile.");
   toggle("Show my interests", "show_interests");
   toggle("Show my institution", "show_institution");
@@ -11869,7 +11909,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-0850";
+const BUILD = "0927-0940";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -12096,8 +12136,73 @@ function renderHall() {
   });
   paintPortraits(strip);
 
+  renderLately();
   paintStore();
   checkLevelUp();
+}
+
+/* ── Lately in the Guild ──
+   Everything the Guild has posted, newest first, whatever kind it is:
+   a translation, a question, a picture, a reel, a repost. The feed
+   view decides what each reader may see, so this adds no rule of its
+   own — a post set to Only me never reaches anybody's home screen.
+   Tapping one opens it. */
+async function renderLately() {
+  const wrap = document.getElementById("lately-wrap");
+  const box = document.getElementById("lately");
+  if (!wrap || !box) return;
+  if (backend !== "supabase" || !myId()) { wrap.hidden = true; return; }
+  let rows = [];
+  try {
+    rows = await sbGet("feed?select=" + FEED_COLS + "&order=created_at.desc&limit=12");
+  } catch (e) { wrap.hidden = true; return; }
+  if (!rows.length) { wrap.hidden = true; return; }
+
+  wrap.hidden = false;
+  box.innerHTML = "";
+  const list = el("div", "lately-list");
+  rows.forEach(r => list.appendChild(latelyRow(r)));
+  box.appendChild(list);
+
+  const more = el("button", "lately-more", "Open the Guild Feed");
+  more.type = "button";
+  more.addEventListener("click", () => openItem(COMMUNITY_ITEM));
+  box.appendChild(more);
+  paintMedia(list);
+}
+
+function latelyRow(r) {
+  const shownType = (r.repost_of && r.orig_type) ? r.orig_type : r.post_type;
+  const kind = POST_KINDS.find(k => k.id === shownType);
+  const words = r.title || r.content || r.source_text || r.translated_text ||
+                r.orig_text || "";
+
+  const b = el("button", "lately-row");
+  b.type = "button";
+  const av = el("span", "avatar sm");
+  paintFace(av, r.avatar_path, r.display_name);
+  b.appendChild(av);
+
+  const txt = el("div", "lt-txt");
+  txt.innerHTML =
+    '<span class="lt-who"><b>' + esc(withTitle(r.author_title, r.display_name || "Member")) +
+      '</b>' + verifiedMark(r.author_verified) +
+      '<span class="lt-when">' + when(r.created_at) + '</span></span>' +
+    '<span class="lt-kind">' + (r.repost_of ? REPOST_ICO + " " : "") +
+      esc(kind ? kind.en : shownType) + '</span>' +
+    (words ? '<span class="lt-words" dir="auto">' + esc(words.slice(0, 120)) + '</span>' : '');
+  b.appendChild(txt);
+
+  /* A picture earns a thumbnail; the link is signed with the rest of
+     the screenful in one request. */
+  if (r.thumb_path) {
+    const m = el("span", "lt-pic");
+    m.dataset.mpath = r.thumb_path;
+    m.dataset.mtype = r.thumb_type || "";
+    b.appendChild(m);
+  }
+  b.addEventListener("click", () => openPost(r));
+  return b;
 }
 
 /* One ledger of cards, used by both the Learn and Practice screens. */
