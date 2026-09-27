@@ -1948,6 +1948,11 @@ a.ks-s-en:hover { color: var(--white); }
 /* typing trials */
 .typing { display: grid; gap: .7rem; }
 .typing textarea { resize: none; line-height: 1.5; }
+/* Where the character limit came from, said on the screen rather than
+   left as a number the member has to take on trust. */
+.prompt .sub-rule { margin: .5rem 0 0; font-size: .72rem; line-height: 1.6;
+  color: var(--lilac-dim); letter-spacing: .02em; }
+.prompt .sub-rule b { color: var(--white); font-weight: 600; }
 .gauge { display: flex; justify-content: space-between; gap: 1rem; font-size: .74rem;
   letter-spacing: .14em; text-transform: uppercase; color: var(--lilac-dim); }
 .gauge .over { color: var(--coral); }
@@ -3975,24 +3980,144 @@ const NAME_PROC = [
     why: "English took the Arabic word whole and let it naturalise. Borrowing runs in both directions, and English is full of Arabic loans." }
 ];
 
+/* ═══════════ SUBTITLING · Chapter 27 ═══════════
+   The lines are ones a member already knows, so the exercise is not
+   "what does this mean" — it is the craft: fit the meaning into the space
+   a viewer has to read it in. Every one of them is a real, attributed
+   line. Nothing here is invented and nothing is paraphrased into the
+   source; where a quotation is famously disputed it has been left out
+   rather than settled by this site.
+
+   THE LIMIT IS NOT A NUMBER SOMEBODY CHOSE. It is the standard the trade
+   actually works to, and it is computed, never typed:
+
+     42 characters to a line      Netflix, TED and the BBC all sit at 37–42
+     two lines at the very most
+     17 characters a second       English reading speed
+     20 characters a second       Arabic, which reads faster per character
+
+     limit = min(lines × 42, round(seconds on screen × characters/second))
+
+   So a line held on screen for 1.6 seconds gets 32 characters in Arabic
+   and no more, because that is how long a viewer has to read it. The
+   model answer is checked against the same arithmetic at load, and the
+   trial refuses to start if any model breaks its own rule — which is how
+   two over-long models used to sit in here unnoticed. */
+const SUB_LINE = 42;
+const SUB_CPS = { en: 17, ar: 20 };
+
 const SUBTITLE = [
-  { src: "واللّه ما كنت أدري إنّك جاي اليوم، لو دريت لجهّزت لك شي.",
-    limit: 42, model: "I had no idea you were coming today!",
-    keys: ["no idea","didn't know","did not know","didnt know","no clue","unaware","not know"],
-    why: "The apology in the second half is implied by the surprise in the first. Subtitles cut whatever the picture and the tone already carry." },
-  { src: "يا أخي، أنا قلت لك من أوّل الشهر ولا سمعتني.",
-    limit: 38, model: "Told you weeks ago. You didn't listen.",
-    keys: ["told you","i said","listen","warned you"],
-    why: "<b>يا أخي</b> is exasperation, not family. Punctuation and word order carry the tone the vocative carried in Arabic. Note the missing <i>I</i>: dropping a subject pronoun the viewer can already see is one of the first two characters a subtitler buys back." },
-  { src: "خلاص، ما عليك منه، هذا طبعه من صغره.",
-    limit: 36, model: "Forget it. That's just how he is.",
-    keys: ["always","forget","never chang","like this","thats him","that's him","since he was"],
-    why: "Three Arabic clauses, two short English ones. A subtitle is read in under two seconds — density is a constraint, not a style choice." },
-  { src: "تراني تعبت، أبغى أنام.",
-    limit: 30, model: "I'm exhausted. I need sleep.",
-    keys: ["tired","exhaust","sleep","bed","done in","beat"],
-    why: "Two clauses, two short sentences. When the Arabic is already tight, resist the urge to expand it." }
+  /* ── English lines, subtitled into Arabic ── */
+  { src: "May the Force be with you.", srcEn: true, secs: 1.6, lines: 1,
+    from: "Star Wars (1977)",
+    model: "لتكن القوة معك.",
+    alts: ["ليكن معك القوة."],
+    keys: ["القوة", "معك"],
+    why: "Short source, shorter target. Arabic says this in three words, and there is no reason to spend the whole 32 characters just because they are there &mdash; <b>a subtitle that ends early is a subtitle read easily</b>." },
+
+  { src: "I'll be back.", srcEn: true, secs: 1.0, lines: 1,
+    from: "The Terminator (1984)",
+    model: "سأعود.",
+    alts: ["سوف أعود."],
+    keys: ["اعود"],
+    why: "One second on screen buys twenty characters. The Arabic needs six. The temptation is to add <i>سوف</i> or a pronoun for weight; the line is famous for being flat, and flat is what survives." },
+
+  { src: "Frankly, my dear, I don't give a damn.", srcEn: true, secs: 2.4, lines: 1,
+    from: "Gone with the Wind (1939)",
+    model: "بصراحة يا عزيزتي، لا يعنيني الأمر.",
+    alts: ["بصراحة يا عزيزتي، لا أبالي."],
+    keys: ["بصراحه"],
+    why: "The line is rude in a register Arabic does not have a single word for, so the rudeness moves into the flatness of <b>لا يعنيني الأمر</b>. Swearing harder in Arabic would be a different character speaking." },
+
+  { src: "To be, or not to be, that is the question.", srcEn: true, secs: 2.8, lines: 1,
+    from: "Hamlet, Act III", 
+    model: "أكون أو لا أكون، تلك هي المسألة.",
+    alts: ["أن أكون أو لا أكون، تلك هي المسألة."],
+    keys: ["اكون", "المساله"],
+    why: "Some lines arrive already translated: this one has an Arabic form readers recognise, and inventing a fresh rendering would make the most famous sentence in English literature sound like nobody had heard it before. <b>Recognition is part of the meaning.</b>" },
+
+  { src: "Ask not what your country can do for you; ask what you can do for your country.",
+    srcEn: true, secs: 5.0, lines: 2,
+    from: "Kennedy, inaugural address, 1961",
+    model: "لا تسأل ما يقدمه وطنك لك،\nبل ما تقدمه أنت لوطنك.",
+    alts: ["لا تسأل ماذا يفعل وطنك لك،\nبل ماذا تفعل أنت لوطنك."],
+    keys: ["تسال", "وطنك"],
+    why: "Two lines, and the break is not free: it goes where the sentence turns, after the comma, so each line is a whole thought. <b>Never break a subtitle where the grammar is still open</b> &mdash; a reader who reaches the end of line one should not be holding their breath." },
+
+  { src: "All animals are equal, but some animals are more equal than others.",
+    srcEn: true, secs: 4.2, lines: 2,
+    from: "Orwell, Animal Farm",
+    model: "كل الحيوانات متساوية،\nلكن بعضها أكثر تساويًا.",
+    alts: ["الحيوانات كلها متساوية،\nلكن بعضها أكثر تساويًا."],
+    keys: ["الحيوانات", "بعضها"],
+    why: "<i>More equal</i> is deliberately broken English and the Arabic must stay broken too: <b>أكثر تساويًا</b> is as wrong in Arabic as the original is in English, which is the whole joke. Repairing it would delete the sentence." },
+
+  /* ── Arabic lines, subtitled into English ── */
+  { src: "إذا الشعبُ يوماً أراد الحياة · فلا بدَّ أن يستجيب القدر", secs: 3.4, lines: 1,
+    from: "أبو القاسم الشابي",
+    model: "If a people wills life, fate must yield.",
+    keys: ["people", "live", "life", "fate", "destiny"],
+    why: "A full line of verse into forty characters. The metre goes, the rhyme goes, and what must not go is <b>فلا بدَّ</b> &mdash; the compulsion. Drop <i>must</i> and the line becomes a hope instead of a law." },
+
+  { src: "وما نيلُ المطالبِ بالتمنّي · ولكن تُؤخَذُ الدنيا غِلابا", secs: 3.4, lines: 1,
+    from: "أحمد شوقي",
+    model: "Wishing wins nothing. The world is taken.",
+    keys: ["wish", "taken", "seiz", "force", "struggl"],
+    why: "Two clauses, two sentences, and the full stop in the middle does the work the Arabic caesura does. <b>غِلابا</b> &mdash; by struggle &mdash; will not fit; <i>taken</i> carries enough of it that the viewer supplies the rest." },
+
+  { src: "قم للمعلّمِ وفِّهِ التبجيلا · كاد المعلّمُ أن يكون رسولا", secs: 4.0, lines: 2,
+    from: "أحمد شوقي",
+    model: "Rise for the teacher, honour him:\nhe is almost a prophet.",
+    keys: ["teacher", "prophet", "messenger"],
+    why: "<b>رسولا</b> is a messenger and a prophet at once, and English must choose. <i>Prophet</i> is the stronger reading and the one the line is quoted for. Note the colon: it holds the two halves together across the line break." },
+
+  { src: "الخيلُ والليلُ والبيداءُ تعرفني · والسيفُ والرمحُ والقرطاسُ والقلمُ",
+    secs: 4.4, lines: 2,
+    from: "المتنبي",
+    model: "Horse, night and desert know me —\nso do sword, spear, page and pen.",
+    keys: ["night", "desert", "sword", "pen"],
+    why: "Seven nouns and no room for seven. The articles go first &mdash; Arabic needs them, a subtitle does not &mdash; and that alone buys back the space. <b>Cut grammar before you cut content.</b>" },
+
+  { src: "على قَدْرِ أهلِ العزمِ تأتي العزائمُ · وتأتي على قَدْرِ الكرامِ المكارمُ",
+    secs: 4.0, lines: 2,
+    from: "المتنبي",
+    model: "Resolve rises to the resolute,\nand honour to the honourable.",
+    keys: ["resolve", "honour", "honor", "noble"],
+    why: "The Arabic repeats a root twice over &mdash; العزم/العزائم, الكرام/المكارم. English can do the same trick with <i>resolve/resolute</i> and <i>honour/honourable</i>, so the figure survives. When the target language happens to offer the same move, take it." },
+
+  { src: "أنا الذي نظر الأعمى إلى أدبي · وأسمعت كلماتي من به صممُ", secs: 3.8, lines: 2,
+    from: "المتنبي",
+    model: "The blind have seen my verse;\nthe deaf have heard my words.",
+    keys: ["blind", "deaf"],
+    why: "The boast is in the impossibility, so both halves must stay: keep only the blind and the line is merely proud. The semicolon is doing what the Arabic parallelism does &mdash; two halves, one shape." }
 ];
+
+/* The limit, computed from the standard above, never stored. */
+function subLimit(q) {
+  const cps = q.srcEn ? SUB_CPS.ar : SUB_CPS.en;
+  return Math.min(q.lines * SUB_LINE, Math.round(q.secs * cps));
+}
+/* A line break costs the viewer nothing to read, so it is not charged for. */
+function subLen(s) { return String(s || "").replace(/\n/g, "").length; }
+function subLongestLine(s) {
+  return String(s || "").split("\n").reduce((n, x) => Math.max(n, x.length), 0);
+}
+
+/* The check that should have existed before two over-long models sat in
+   this trial unnoticed. It runs at load and names anything that breaks
+   the rule the trial is teaching. */
+(function auditSubtitles() {
+  const bad = [];
+  SUBTITLE.forEach((q, i) => {
+    const lim = subLimit(q);
+    [q.model].concat(q.alts || []).forEach(m => {
+      if (subLen(m) > lim) bad.push("#" + (i + 1) + " " + subLen(m) + " > " + lim);
+      if (subLongestLine(m) > SUB_LINE) bad.push("#" + (i + 1) + " a line runs " + subLongestLine(m));
+      if (m.split("\n").length > q.lines) bad.push("#" + (i + 1) + " uses more than " + q.lines + " line(s)");
+    });
+  });
+  if (bad.length && window.console) console.error("Subtitling models break their own limit:", bad);
+})();
 
 /* ═══════════ THE BOOTH · settings and levels ═══════════
    Two things an interpreter is never asked to do: work in general, and
@@ -7933,7 +8058,8 @@ const ITEMS = [
     run: () => runChoice(CULTURAL, "How does this cross into Arabic?") },
   { id: "subtitle", ar: "قَيد الشّاشة", en: "Subtitling", kind: "trial", section: "trials",
     subject: "السترجة · Chapter 27",
-    blurb: "A hard character limit and a line that will not fit. Cut the words, keep the meaning.",
+    direction: "both",
+    blurb: "Twelve lines everyone knows, six each way, against the limit the trade really works to.",
     run: runSubtitle },
   { id: "booth", ar: "المَقصورة", en: "Interpreting", kind: "trial", section: "trials",
     subject: "الترجمة الشفوية · Chapter 1",
@@ -12035,7 +12161,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0928-0245";
+const BUILD = "0928-0410";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -13459,7 +13585,36 @@ function runFinale() {
   });
 }
 
-/* ═══════════ SUBTITLE SQUEEZE ═══════════ */
+/* ═══════════ SUBTITLE SQUEEZE ═══════════
+   Twelve famous lines, six each way. The limit on every one of them is
+   computed from the trade's own standard rather than chosen — see the
+   note over SUBTITLE — and the model answer is held to the same rule as
+   the member, which it previously was not.
+
+   Working into Arabic the answer is marked on Arabic content words, the
+   same way the booth marks a rendering; working into English it is marked
+   on the content the line must carry. Neither asks for the model's
+   wording. What both insist on is the space: a subtitle that does not fit
+   is not a subtitle, however well written. */
+function subCarries(q, val) {
+  if (q.srcEn) {
+    /* into Arabic: the content words of the answer, against the keys */
+    const a = arNorm(val);
+    if (a.length < 2) return false;
+    const keys = q.keys || [];
+    if (!keys.length) return false;
+    const got = keys.filter(k => a.indexOf(arNorm(k)) >= 0 ||
+                                 a.indexOf(arBare(arNorm(k))) >= 0).length;
+    return got >= Math.max(1, Math.ceil(keys.length * 0.6));
+  }
+  const a = norm(val);
+  if (a.length < 3) return false;
+  const keys = q.keys || [];
+  if (!keys.length) return false;
+  const got = keys.filter(k => a.indexOf(norm(k)) >= 0).length;
+  return got >= 1;
+}
+
 function runSubtitle() {
   let i = 0;
   const log = [];
@@ -13469,22 +13624,39 @@ function runSubtitle() {
     setCount("Line " + (i + 1) + " of " + SUBTITLE.length);
     setDots(SUBTITLE.length, i, i);
     const q = SUBTITLE[i];
+    const limit = subLimit(q);
+    const into = q.srcEn ? "Arabic" : "English";
 
     const card = el("div", "prompt");
-    card.appendChild(el("p", "ask", "Fit this into " + q.limit + " characters"));
-    card.appendChild(el("p", "src", q.src));
+    card.appendChild(el("p", "ask",
+      "Subtitle this into " + into + " &mdash; " + limit + " characters"));
+    card.appendChild(el("p", q.srcEn ? "src-en" : "src", q.srcEn ? "“" + q.src + "”" : q.src));
+    card.appendChild(el("p", "lit", "&mdash; " + escapeText(q.from)));
+    /* Where the number came from, on the screen, every time. */
+    card.appendChild(el("p", "sub-rule",
+      q.secs + "s on screen &middot; " + (q.srcEn ? SUB_CPS.ar : SUB_CPS.en) +
+      " characters a second &middot; " + q.lines + (q.lines > 1 ? " lines" : " line") +
+      " of " + SUB_LINE + " &rarr; <b>" + limit + "</b>"));
     stage.appendChild(card);
 
     const typing = el("div", "typing");
     const ta = document.createElement("textarea");
-    ta.rows = 2; ta.placeholder = "the subtitle, as it would appear on screen";
+    /* Two rows even for a one-line cue: the box is the writing surface,
+       not the limit, and a single row clips its own placeholder. The
+       counter is what enforces the line rule. */
+    ta.rows = 2;
+    ta.placeholder = q.lines > 1 ? "two lines at most" : "one line";
     ta.setAttribute("aria-label", "Your subtitle");
+    ta.dir = q.srcEn ? "rtl" : "ltr";
+    ta.lang = q.srcEn ? "ar" : "en";
     typing.appendChild(ta);
 
     const gauge = el("div", "gauge");
     const left = el("span", "ok", "");
     gauge.appendChild(left);
-    gauge.appendChild(el("span", null, "Space is the constraint, not the vocabulary"));
+    gauge.appendChild(el("span", null,
+      q.lines > 1 ? "Two lines allowed. Break where the sense breaks."
+                  : "One line. Space is the constraint, not the vocabulary."));
     typing.appendChild(gauge);
 
     const bar = el("div", "bar", "<i></i>");
@@ -13492,11 +13664,16 @@ function runSubtitle() {
     stage.appendChild(typing);
 
     function tick() {
-      const n = ta.value.length, over = n > q.limit;
-      left.textContent = n + " / " + q.limit + " characters";
+      const n = subLen(ta.value);
+      const longest = subLongestLine(ta.value);
+      const rows = ta.value.split("\n").length;
+      const over = n > limit || longest > SUB_LINE || rows > q.lines;
+      left.innerHTML = n + " / " + limit + " characters" +
+        (longest > SUB_LINE ? ' &middot; a line runs ' + longest : "") +
+        (rows > q.lines ? " &middot; too many lines" : "");
       left.className = over ? "over" : "ok";
       const b = bar.querySelector("i");
-      b.style.width = Math.min(100, (n / q.limit) * 100) + "%";
+      b.style.width = Math.min(100, (n / limit) * 100) + "%";
       b.className = over ? "hot" : "";
     }
     ta.addEventListener("input", tick); tick();
@@ -13511,26 +13688,51 @@ function runSubtitle() {
   }
 
   function grade(q, val) {
-    const fits = val.length > 0 && val.length <= q.limit;
-    const carries = q.keys.some(k => norm(val).includes(norm(k)));
+    const limit = subLimit(q);
+    const n = subLen(val);
+    const longest = subLongestLine(val);
+    const rows = val.split("\n").length;
+    const fits = n > 0 && n <= limit && longest <= SUB_LINE && rows <= q.lines;
+    const carries = subCarries(q, val);
     const hit = fits && carries;
-    log.push({ src: q.src, srcEn: false, hit: hit, best: q.model });
+    log.push({ src: q.src, srcEn: !!q.srcEn, hit: hit, best: q.model });
     setDots(SUBTITLE.length, i + 1, -1);
 
     stage.innerHTML = "";
     const card = el("div", "prompt");
     card.appendChild(el("p", "ask", hit ? "✦ It fits and it carries" : "✧ Not there yet"));
-    card.appendChild(el("p", "src", q.src));
+    card.appendChild(el("p", q.srcEn ? "src-en" : "src", q.srcEn ? "“" + q.src + "”" : q.src));
+    card.appendChild(el("p", "lit", "&mdash; " + escapeText(q.from)));
     stage.appendChild(card);
 
+    const shown = t => q.srcEn
+      ? '<span dir="rtl" lang="ar" class="ar-say">' + escapeText(t).replace(/\n/g, "<br>") + '</span>'
+      : escapeText(t).replace(/\n/g, "<br>");
+
     const v = el("div", "verdict");
-    v.appendChild(el("span", "vh", "Yours · " + val.length + " characters"));
-    v.appendChild(el("p", "vb", val ? "“" + val + "”" : "<i>nothing entered</i>"));
-    v.appendChild(el("span", "vh win", "One professional answer · " + q.model.length + " characters"));
-    v.appendChild(el("p", "vb", "<b>“" + q.model + "”</b>"));
+    v.appendChild(el("span", "vh", "Yours &middot; " + n + " characters"));
+    v.appendChild(el("p", "vb", val ? shown(val) : "<i>nothing entered</i>"));
+    v.appendChild(el("span", "vh win",
+      "One professional answer &middot; " + subLen(q.model) + " of " + limit));
+    v.appendChild(el("p", "vb", "<b>" + shown(q.model) + "</b>"));
+    if (q.alts && q.alts.length) {
+      v.appendChild(el("p", "vb feed-alt", "also fits: " +
+        q.alts.map(a => shown(a)).join(" &middot; ")));
+    }
     v.appendChild(el("p", "vb", q.why));
-    if (!fits && val.length) v.appendChild(el("p", "vb",
-      "<b>It ran " + (val.length - q.limit) + " characters over.</b> On screen the tail is simply cut."));
+    if (!fits && n) {
+      const faults = [];
+      if (n > limit) faults.push("<b>ran " + (n - limit) + " characters over</b>");
+      if (longest > SUB_LINE) faults.push("<b>a line reached " + longest +
+        "</b>, past the " + SUB_LINE + " a line is allowed");
+      if (rows > q.lines) faults.push("<b>used " + rows + " lines</b> where " + q.lines + " is the most");
+      v.appendChild(el("p", "vb", "It " + faults.join(", and ") +
+        ". On screen the tail is simply cut."));
+    } else if (fits && !carries) {
+      v.appendChild(el("p", "vb",
+        "It fits. What did not survive the cut is the meaning &mdash; " +
+        "space is bought from the wording, never from the content."));
+    }
     v.appendChild(chapterLine(q.ch));
     stage.appendChild(v);
 
