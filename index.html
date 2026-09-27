@@ -11466,8 +11466,17 @@ async function runNotifications() {
    and it keeps one per viewer per day so a refresh is not a second
    visit. Nothing about the device, the address or where they are is
    sent or kept — only who, whose, and when. */
+let lastViewSent = { id: null, at: 0 };
 async function recordProfileView(id) {
   if (backend !== "supabase" || !myId() || !id || id === myId()) return;
+  /* Every open is a visit — the database keeps them all now. The only
+     thing stopped here is the same tap being sent twice, which is a
+     screen drawing itself again rather than somebody coming back. Three
+     seconds is far too short to be a second visit and long enough to
+     catch a double render. */
+  const now = Date.now();
+  if (lastViewSent.id === id && now - lastViewSent.at < 3000) return;
+  lastViewSent = { id: id, at: now };
   try {
     await fetch(SUPABASE.url + "/rest/v1/rpc/record_profile_view", {
       method: "POST",
@@ -11909,7 +11918,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-0940";
+const BUILD = "0927-1020";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -11960,7 +11969,7 @@ window.addEventListener("focus", checkForNewBuild);
    is in front — a page nobody is looking at asks for nothing. */
 setInterval(() => {
   if (document.visibilityState === "visible") paintBadges();
-}, 45000);
+}, 20000);
 
 function renderSeal() {
   wireProfileButtons();
