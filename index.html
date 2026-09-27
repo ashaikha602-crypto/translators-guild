@@ -9364,8 +9364,12 @@ async function myCounts() {
 }
 
 async function findMembers(q) {
-  const cols = "id,username,title,display_name,avatar_path,bio,marks,rank_slug,allow_follows,main_interest,i_follow,follows_me,verified";
-  let path = "member_directory?select=" + cols + "&order=display_name.asc&limit=40";
+  const cols = "id,username,title,display_name,avatar_path,bio,marks,rank_slug,allow_follows,main_interest,i_follow,follows_me,verified,featured";
+  /* Featured accounts first, then by name. A search still only
+     returns who it matches: this orders the list, it does not add to
+     it. */
+  let path = "member_directory?select=" + cols +
+             "&order=featured.desc,display_name.asc&limit=40";
   if (q) {
     const t = encodeURIComponent("*" + q.replace(/[,()*]/g, "") + "*");
     path += "&or=(display_name.ilike." + t + ",username.ilike." + t + ")";
@@ -11865,7 +11869,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-0815";
+const BUILD = "0927-0850";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
