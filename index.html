@@ -1148,7 +1148,12 @@ a.ks-s-en:hover { color: var(--white); }
    A photograph if the member uploaded one, their initials if not. The
    wrapper exists only to hang the edit button off the avatar's corner. */
 .avatar-wrap { position: relative; display: inline-grid; flex: none; }
-.avatar.has-photo { padding: 0; overflow: hidden; background: var(--grad-soft); }
+/* The photograph is the element's background, so the phone offers no
+   "Save to Photos" on it, and no long-press callout anywhere near it. */
+.avatar.has-photo { padding: 0; overflow: hidden; background: var(--grad-soft);
+  background-size: cover; background-position: center; background-repeat: no-repeat; }
+.avatar, .avatar.has-photo {
+  -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
 .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
 .avatar.big { width: 92px; height: 92px; font-size: 1.6rem; }
 .avatar-edit {
@@ -1211,6 +1216,11 @@ a.ks-s-en:hover { color: var(--white); }
 .repost-from .dimmed { color: var(--ink-faint); }
 /* The picture on the card, not behind a tap. */
 .post-media { margin: .2rem 0 0; }
+/* The same for what members post: pressing and holding should not
+   offer somebody else's work to the camera roll. */
+.post-media img, .tile img, .at-image img {
+  -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;
+  pointer-events: none; }
 .post-media img, .post-media video { width: 100%; height: auto; max-height: 60vh;
   object-fit: contain; border-radius: var(--r-lg); border: var(--hair);
   display: block; background: rgba(0,0,0,.25); }
@@ -8247,14 +8257,22 @@ function initialsFor(name) {
    asking the server for what is really a line of JavaScript. Four
    pointless 404s, nothing broken, but the DOM does not have the
    problem and is clearer anyway. */
+/* A face is painted as a background, not as an <img>.
+   Holding a finger on an <img> opens the phone's own menu — Share,
+   Save to Photos, Copy — and hands somebody her photograph. That menu
+   is offered for images and links; a background has none, so pressing
+   and holding does nothing.
+   This stops it being taken casually. It cannot stop a screenshot, and
+   anyone who knows where to look can still find the file the browser
+   downloaded to show it. Nothing on any website can prevent that, and
+   she should hear it from me rather than assume otherwise. */
 function paintFace(node, path, name) {
   if (!node) return;
   node.textContent = "";
+  node.style.backgroundImage = "";
   if (path) {
-    const img = document.createElement("img");
-    img.alt = "";
-    img.src = avatarUrl(path) + "?v=" + encodeURIComponent(path.split("/").pop());
-    node.appendChild(img);
+    const url = avatarUrl(path) + "?v=" + encodeURIComponent(path.split("/").pop());
+    node.style.backgroundImage = 'url("' + url.replace(/"/g, "%22") + '")';
     node.classList.add("has-photo");
   } else {
     node.textContent = initialsFor(name);
@@ -11847,7 +11865,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-0730";
+const BUILD = "0927-0815";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
