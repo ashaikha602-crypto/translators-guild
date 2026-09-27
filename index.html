@@ -1239,6 +1239,12 @@ a.ks-s-en:hover { color: var(--white); }
 .act-btn.quiet { border: 0; color: var(--ink-faint); }
 /* A number, not a button: nothing happens if you press it. */
 .act-btn.still { cursor: default; font-variant-numeric: tabular-nums; }
+.views-count { margin: .2rem 0 1rem; font-size: .9rem; color: var(--ink-soft); }
+.views-count b { font-family: var(--f-serif); font-size: 1.3rem; color: var(--white);
+  margin-inline-end: .25rem; }
+.v-when { font-size: .72rem; color: var(--ink-faint); white-space: nowrap; }
+.m-member.with-when { grid-template-columns: auto 1fr auto auto; }
+
 /* The verified mark: a seal with a tick, at the size of the name it
    sits beside, in the Guild's own magenta rather than another app's
    blue. */
@@ -2368,6 +2374,14 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
                 aria-label="Switch between dark and light">
           <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
           <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>
+        </button>
+        <!-- Who looked at your profile. Not rendered at all unless the
+             account holds the capability, and the database refuses the
+             rows to anyone else regardless of what the page shows. -->
+        <button type="button" class="icon-btn plain badged" id="seal-views"
+                aria-label="Who viewed your profile" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.8 12S5.5 5.8 12 5.8 22.2 12 22.2 12 18.5 18.2 12 18.2 1.8 12 1.8 12z"/><circle cx="12" cy="12" r="3.1"/></svg>
+          <span class="badge" hidden></span>
         </button>
         <button type="button" class="icon-btn plain badged" id="seal-notifs" aria-label="Notifications">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 15V10a6 6 0 1 0-12 0v5l-1.6 2.5h15.2z"/><path d="M9.8 20a2.3 2.3 0 0 0 4.4 0"/></svg>
@@ -8171,7 +8185,7 @@ async function sbHeaders() {
 const PROFILE_COLS = "id,username,title,display_name,avatar_path,bio,motto,field_of_study,minor," +
   "institution,academic_level,marks,rank_slug,profile_visibility,discoverable,show_progress," +
   "show_interests,show_institution,show_academic_level,allow_follows," +
-  "who_can_message,show_online,read_receipts,verified";
+  "who_can_message,show_online,read_receipts,verified,sees_profile_views";
 
 async function loadMyProfile() {
   if (backend !== "supabase" || !session || !session.user) return null;
@@ -9577,6 +9591,12 @@ async function runPublic(id) {
   try { posts = await sbGet("feed?select=id&author_id=eq." + id); } catch (e) {}
 
   const dir = (await sbGet("member_directory?select=i_follow,follows_me,allow_follows&id=eq." + id))[0] || {};
+
+  /* Opening somebody's profile is the event. Not awaited, and it
+     cannot throw into this function: reading a profile must not fail
+     because the note of it did. */
+  recordProfileView(id);
+
   stage.innerHTML = "";
 
   /* The same head as her own profile: picture on the left, and the
@@ -11282,6 +11302,7 @@ const N_SAYS = {
   comment: "commented on your post",
   reply:   "replied to you",
   follow:  "followed you",
+  repost:  "reposted your post",
   message: "sent you a message"
 };
 
@@ -11346,6 +11367,82 @@ async function runNotifications() {
 }
 
 /* The two numbers on the top bar. Quiet when there is nothing. */
+/* ── who viewed your profile ──
+   A screen for one account. It is not in anybody else's menu, and it
+   is not hidden behind a flag either: the rows are refused to anyone
+   but the profile's owner by row-level security, and a view is only
+   recorded at all for an account that holds the capability, so nobody
+   else's reading is logged in the first place. */
+/* The database decides whether this is worth recording, not this call,
+   and it keeps one per viewer per day so a refresh is not a second
+   visit. Nothing about the device, the address or where they are is
+   sent or kept — only who, whose, and when. */
+async function recordProfileView(id) {
+  if (backend !== "supabase" || !myId() || !id || id === myId()) return;
+  try {
+    await fetch(SUPABASE.url + "/rest/v1/rpc/record_profile_view", {
+      method: "POST",
+      headers: Object.assign(await sbHeaders(), { "Content-Type": "application/json" }),
+      body: JSON.stringify({ target: id })
+    });
+  } catch (e) {}
+}
+
+const VIEWS_ITEM = { id: "views", en: "Profile Views",
+                     subject: "Who opened your profile", section: "profile",
+                     run: runProfileViews };
+
+async function runProfileViews() {
+  setCount(""); stage.innerHTML = "";
+  const head = el("p", "views-count", "…");
+  const fresh = el("div", null);
+  const older = el("div", null);
+  const msg = el("p", "f-msg", "Loading…");
+  stage.appendChild(head); stage.appendChild(fresh);
+  stage.appendChild(older); stage.appendChild(msg);
+
+  let rows = [];
+  try {
+    rows = await sbGet("my_profile_views?select=*&order=viewed_at.desc&limit=100");
+  } catch (e) {
+    head.textContent = "";
+    msg.textContent = "That could not be loaded.";
+    stage.appendChild(footNav({ backLabel: "Profile" }));
+    return;
+  }
+
+  head.innerHTML = '<b>' + rows.length + '</b> ' +
+    (rows.length === 1 ? "profile view" : "profile views");
+  msg.textContent = rows.length ? "" : "Nobody has opened your profile yet.";
+
+  const unseen = rows.filter(r => !r.seen);
+  const seen   = rows.filter(r => r.seen);
+  const section = (into, label, list) => {
+    if (!list.length) return;
+    into.appendChild(el("h3", "pub-h", label));
+    list.forEach(v => {
+      const who = { id: v.viewer_id, username: v.username, title: v.title,
+                    display_name: v.display_name, avatar_path: v.avatar_path,
+                    rank_slug: v.rank_slug,
+                    main_interest: [v.field_of_study, v.academic_level]
+                                     .filter(Boolean).join(" · ") };
+      const row = memberRow(who, x => openPublic(x));
+      row.classList.add("with-when");
+      row.appendChild(el("span", "v-when", when(v.viewed_at)));
+      into.appendChild(row);
+    });
+  };
+  section(fresh, "New", unseen);
+  section(older, unseen.length ? "Earlier" : "Recently", seen);
+
+  /* Opening the panel is what marks them read. */
+  if (unseen.length) {
+    sbPatch("profile_views?seen=is.false&profile_owner_id=eq." + myId(), { seen: true })
+      .then(paintBadges).catch(() => {});
+  }
+  stage.appendChild(footNav({ backLabel: "Profile" }));
+}
+
 async function paintBadges() {
   if (backend !== "supabase" || !myId()) return;
   const set = (id, n) => {
@@ -11364,6 +11461,15 @@ async function paintBadges() {
     set("seal-notifs", notes.length);
     set("seal-inbox", box.reduce((a, r) => a + Number(r.unread || 0), 0));
   } catch (e) {}
+  /* Asked for separately, and only when this account holds it: the
+     request is not even sent otherwise. */
+  if (state.profile && state.profile.sees_profile_views) {
+    try {
+      const v = await sbGet("profile_views?select=id&profile_owner_id=eq." + myId() +
+                            "&seen=is.false");
+      set("seal-views", v.length);
+    } catch (e) {}
+  }
 }
 
 /* Who liked a post. The list is what the reader is allowed to see: a
@@ -11673,6 +11779,17 @@ function wireProfileButtons() {
     nb.dataset.wired = "1";
     nb.addEventListener("click", () => openItem(NOTIFS_ITEM));
   }
+  const vb = document.getElementById("seal-views");
+  if (vb) {
+    /* Hidden unless this account holds the capability. That is a
+       convenience, not the protection: the rows themselves are refused
+       to anyone else by the database. */
+    vb.hidden = !(state.profile && state.profile.sees_profile_views);
+    if (!vb.dataset.wired) {
+      vb.dataset.wired = "1";
+      vb.addEventListener("click", () => openItem(VIEWS_ITEM));
+    }
+  }
   const ib = document.getElementById("seal-inbox");
   if (ib && !ib.dataset.wired) {
     ib.dataset.wired = "1";
@@ -11703,7 +11820,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-0540";
+const BUILD = "0927-0620";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -11742,9 +11859,19 @@ async function checkForNewBuild() {
   document.body.appendChild(bar);
 }
 document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible") checkForNewBuild();
+  if (document.visibilityState === "visible") { checkForNewBuild(); paintBadges(); }
 });
 window.addEventListener("focus", checkForNewBuild);
+
+/* The counts keep themselves current while the page is open, so a like
+   or a message or a new reader arrives without anybody reloading. It
+   asks the server rather than holding a socket open: the same request
+   the page already makes, under the same row-level security, with no
+   second channel to get the permissions wrong on. Only while the tab
+   is in front — a page nobody is looking at asks for nothing. */
+setInterval(() => {
+  if (document.visibilityState === "visible") paintBadges();
+}, 45000);
 
 function renderSeal() {
   wireProfileButtons();
