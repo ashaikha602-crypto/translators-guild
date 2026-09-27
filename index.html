@@ -1252,7 +1252,9 @@ a.ks-s-en:hover { color: var(--white); }
 .views-count { margin: .2rem 0 1rem; font-size: .9rem; color: var(--ink-soft); }
 .views-count b { font-family: var(--f-serif); font-size: 1.3rem; color: var(--white);
   margin-inline-end: .25rem; }
-.v-when { font-size: .72rem; color: var(--ink-faint); white-space: nowrap; }
+/* The clock time, and the day above it when it was not today. */
+.v-when { font-size: .74rem; color: var(--ink-soft); text-align: end;
+  white-space: pre-line; line-height: 1.25; font-variant-numeric: tabular-nums; }
 .m-member.with-when { grid-template-columns: auto 1fr auto auto; }
 
 /* The verified mark: a seal with a tick, at the size of the name it
@@ -11490,6 +11492,26 @@ const VIEWS_ITEM = { id: "views", en: "Profile Views",
                      subject: "Who opened your profile", section: "profile",
                      run: runProfileViews };
 
+/* The clock, not "4m". She wants to know that somebody opened her
+   profile at 10:58, and on which day. Read on her own phone, so it is
+   her own time zone with nothing to convert. */
+function viewClock(iso) {
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return "";
+  const t = String(d.getHours()).padStart(2, "0") + ":" +
+            String(d.getMinutes()).padStart(2, "0");
+  const now = new Date();
+  const sameDay = (a, b) => a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  if (sameDay(d, now)) return t;
+  const y = new Date(now.getTime() - 86400000);
+  if (sameDay(d, y)) return "Yesterday\n" + t;
+  let day = "";
+  try { day = d.toLocaleDateString(undefined, { day: "numeric", month: "short" }); }
+  catch (e) { day = (d.getDate()) + "/" + (d.getMonth() + 1); }
+  return day + "\n" + t;
+}
+
 async function runProfileViews() {
   setCount(""); stage.innerHTML = "";
   const head = el("p", "views-count", "…");
@@ -11526,7 +11548,10 @@ async function runProfileViews() {
                                      .filter(Boolean).join(" · ") };
       const row = memberRow(who, x => openPublic(x));
       row.classList.add("with-when");
-      row.appendChild(el("span", "v-when", when(v.viewed_at)));
+      const stamp = el("span", "v-when", esc(viewClock(v.viewed_at)));
+      /* The full date and second, for anyone who wants to be sure. */
+      try { stamp.title = new Date(v.viewed_at).toLocaleString(); } catch (e) {}
+      row.appendChild(stamp);
       into.appendChild(row);
     });
   };
@@ -11918,7 +11943,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-1020";
+const BUILD = "0927-1055";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
