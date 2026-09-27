@@ -2017,6 +2017,8 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
 .score .earned { font-size: .74rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
   color: var(--mint); margin: 0; padding: .4rem 1rem; border-radius: var(--r-pill);
   border: 1px solid rgba(46,217,160,.4); background: rgba(46,217,160,.1); }
+.score .onward { margin: 0; font-size: .88rem; line-height: 1.7; color: var(--ink-soft); max-width: 44ch; }
+.score .onward b { color: var(--white); }
 
 .review { display: grid; gap: .5rem; width: 100%; text-align: left; }
 .rev-row { display: grid; grid-template-columns: 1.6rem 1fr; gap: .8rem; align-items: baseline;
@@ -3713,7 +3715,7 @@ const PROVERBS = [
       { t: "التِّجارة تِجارة.", tag: "plausible, but not the fixed expression" },
       { t: "لا مجال للعواطف في العمل.", tag: "explains it — and loses the bluntness" }
     ],
-    why: "Some proverbs cross almost untouched. The third option is a correct <b>explanation</b>, and explanation is the last resort, not the first.", ch: "Chapters 8 and 13" },
+    why: "Some proverbs cross almost untouched. <b>التِّجارة تِجارة</b> follows the same pattern and is simply not the expression Arabic has fixed &mdash; an idiom is the words people actually say, not the ones the pattern allows. <b>لا مجال للعواطف في العمل</b> is a correct <b>explanation</b>, and explanation is the last resort, not the first.", ch: "Chapters 8 and 13" },
 
   { src: "على قَدِّ لِحافك مُدَّ رِجليك.",
     opts: [
@@ -3736,7 +3738,7 @@ const PROVERBS = [
       { t: "أفشى السرّ", tag: "the equivalent the handbook gives", ok: true },
       { t: "كشف المعلومات السرّية", tag: "the meaning, with the idiom gone" }
     ],
-    why: "An idiom's meaning is not the sum of its words, so the beans cannot come with it &mdash; <b>أراق الفاصولياء</b> is a sentence about pulses. Arabic has an expression that does the same job, <b>أفشى السرّ</b>, so that is what goes in. The third option is not wrong; it is the fallback. The order the chapter sets is: look for an equivalent first, and give the plain meaning only when there is none.", ch: "Chapter 8" },
+    why: "An idiom's meaning is not the sum of its words, so the beans cannot come with it &mdash; <b>أراق الفاصولياء</b> is a sentence about pulses. Arabic has an expression that does the same job, <b>أفشى السرّ</b>, so that is what goes in. <b>كشف المعلومات السرّية</b> is not wrong; it is the fallback, and it is deliberately close, because telling an idiom apart from a plain paraphrase of it is the whole skill this question is testing. The order the chapter sets is: look for an equivalent first, and give the plain meaning only when there is none.", ch: "Chapter 8" },
 
   { src: "over the moon", srcEn: true,
     opts: [
@@ -3811,7 +3813,7 @@ const COURTESY = [
       { t: "Enjoy your meal.", tag: "natural — for this situation", ok: true },
       { t: "Get well soon.", tag: "a different situation for the same words" }
     ],
-    why: "Read the second option and the third together: both are real translations of <b>بالعافية</b>, and the one that is right is decided entirely by <b>who is saying it and when</b>. Said over food it is a table courtesy; said to someone who has been ill it is a wish for recovery; said to someone working hard it is encouragement; and said to someone who has just bathed, English has <b>nothing at all</b>. The chamber on Language &amp; Phraseology walks all four." },
+    why: "Read <b>Enjoy your meal</b> and <b>Get well soon</b> together: both are real translations of <b>بالعافية</b>, and the one that is right is decided entirely by <b>who is saying it and when</b>. Said over food it is a table courtesy; said to someone who has been ill it is a wish for recovery; said to someone working hard it is encouragement; and said to someone who has just bathed, English has <b>nothing at all</b>. The chamber on Language &amp; Phraseology walks all four." },
   { src: "اللّه يعطيك العافية", lit: '"may God give you health"',
     opts: [
       { t: "Thanks for your hard work.", tag: "natural", ok: true },
@@ -3939,11 +3941,11 @@ const SUBTITLE = [
     keys: ["no idea","didn't know","did not know","didnt know","no clue","unaware","not know"],
     why: "The apology in the second half is implied by the surprise in the first. Subtitles cut whatever the picture and the tone already carry." },
   { src: "يا أخي، أنا قلت لك من أوّل الشهر ولا سمعتني.",
-    limit: 38, model: "I told you weeks ago. You didn't listen.",
+    limit: 38, model: "Told you weeks ago. You didn't listen.",
     keys: ["told you","i said","listen","warned you"],
-    why: "<b>يا أخي</b> is exasperation, not family. Punctuation and word order carry the tone the vocative carried in Arabic." },
+    why: "<b>يا أخي</b> is exasperation, not family. Punctuation and word order carry the tone the vocative carried in Arabic. Note the missing <i>I</i>: dropping a subject pronoun the viewer can already see is one of the first two characters a subtitler buys back." },
   { src: "خلاص، ما عليك منه، هذا طبعه من صغره.",
-    limit: 36, model: "Forget it. He's always been like this.",
+    limit: 36, model: "Forget it. That's just how he is.",
     keys: ["always","forget","never chang","like this","thats him","that's him","since he was"],
     why: "Three Arabic clauses, two short English ones. A subtitle is read in under two seconds — density is a constraint, not a style choice." },
   { src: "تراني تعبت، أبغى أنام.",
@@ -5031,7 +5033,7 @@ const COLLOC = [
       { t: "يخالف القانون", tag: "the natural partner", ok: true },
       { t: "يهدم القانون", tag: "a different claim: destroying it, not breaking it" }
     ],
-    why: "English breaks a law as it breaks a plate. Arabic <b>contravenes</b> it. The first option would be understood and would still mark the text as translated.", ch: "Chapter 7" },
+    why: "English breaks a law as it breaks a plate. Arabic <b>contravenes</b> it. <b>يكسر القانون</b> would be understood and would still mark the text as translated.", ch: "Chapter 7" },
 
   { src: "عقد اجتماعاً",
     opts: [
@@ -5068,7 +5070,7 @@ const CONTEXT_Q = [
       { t: "We drank from a cold water spring.", tag: "context decides", ok: true },
       { t: "We drank from a cold spy.", tag: "the third sense — and a reminder to read" }
     ],
-    why: "<b>عين</b> is an eye, a spring, and a spy. <i>ماء</i> standing beside it decides which. A translator who reaches for the first dictionary sense produces the first option.", ch: "Chapter 6" },
+    why: "<b>عين</b> is an eye, a spring, and a spy. <i>ماء</i> standing beside it decides which. A translator who reaches for the first dictionary sense produces <b>a cold eye of water</b>.", ch: "Chapter 6" },
 
   { src: "He sat on the bank and watched the water.", srcEn: true,
     opts: [
@@ -11977,7 +11979,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-1420";
+const BUILD = "0928-0110";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -13132,15 +13134,29 @@ function runCommentary() {
 }
 
 /* ═══════════ MULTIPLE-CHOICE ENGINE ═══════════ */
+/* ═══════════ THE MULTIPLE-CHOICE TRIALS ═══════════
+   Options are shuffled fresh on every run.
+
+   They used not to be, and the authored order had a tell: across all
+   fifty-two questions on the site, sixty-five per cent of the right
+   answers sat in slot B, and slot C was right three times in total.
+   Answering B every time scored 65% without reading a word of Arabic —
+   comfortably above the mark. A member noticed and said so.
+
+   Nothing in the material changed to fix it; the order is simply no
+   longer information. Anything in a `why` that used to point at "the
+   first option" now names the option instead, because after this the
+   positions mean nothing. */
 function runChoice(items, ask) {
   let i = 0;
   const log = [];
+  const deck = items.map(q => Object.assign({}, q, { opts: shuffled(q.opts) }));
 
   function question() {
     stage.innerHTML = "";
-    setCount("Question " + (i + 1) + " of " + items.length);
-    setDots(items.length, i, i);
-    const q = items[i];
+    setCount("Question " + (i + 1) + " of " + deck.length);
+    setDots(deck.length, i, i);
+    const q = deck[i];
 
     const card = el("div", "prompt");
     card.appendChild(el("p", "ask", ask));
@@ -13161,13 +13177,13 @@ function runChoice(items, ask) {
       wrap.appendChild(b);
     });
     stage.appendChild(wrap);
-    stage.appendChild(quitTrial(log, i, items.length));
+    stage.appendChild(quitTrial(log, i, deck.length));
   }
 
   function answer(k, wrap, q) {
     const hit = !!q.opts[k].ok;
     log.push({ src: q.src, srcEn: !AR_RE.test(q.src), hit: hit, best: q.opts.find(o => o.ok).t });
-    setDots(items.length, i + 1, -1);
+    setDots(deck.length, i + 1, -1);
 
     Array.from(wrap.children).forEach((b, idx) => {
       b.disabled = true;
@@ -13187,15 +13203,15 @@ function runChoice(items, ask) {
     stage.appendChild(v);
 
     const foot = el("div", "foot");
-    const next = el("button", null, i < items.length - 1 ? "Next" : "See the tally");
-    next.addEventListener("click", () => { i++; if (i < items.length) question(); else finish(log, items.length); });
+    const next = el("button", null, i < deck.length - 1 ? "Next" : "See the tally");
+    next.addEventListener("click", () => { i++; if (i < deck.length) question(); else finish(log, deck.length); });
     foot.appendChild(next);
     stage.appendChild(foot);
     /* the row was already on the question screen; move it below the verdict
        rather than leaving two of them on the page */
     const stale = stage.querySelector(".quit-row");
     if (stale) stale.remove();
-    stage.appendChild(quitTrial(log, i + 1, items.length));
+    stage.appendChild(quitTrial(log, i + 1, deck.length));
     next.focus();
   }
   question();
@@ -13325,12 +13341,35 @@ function finish(log, total, stoppedEarly) {
     '<span class="q-ans">natural: <b>' + r.best + '</b></span></span>')));
   card.appendChild(rev);
 
+  /* Where to go next. A member who has just earned a Mark was being shown
+     two ways backwards — run this again, or return to the hall — and no
+     way onward, so nobody could tell that finishing one trial is meant to
+     lead to the next. The trials are not locked and never were: the order
+     is a route, not a gate, and a member may take them in any order they
+     like. This only says which one comes after this one. */
+  const trials = publishedTrials();
+  const at = trials.findIndex(t => t.id === active.id);
+  const nextTrial = at >= 0 ? trials[at + 1] : null;
+
+  if (pass && nextTrial) {
+    card.appendChild(el("p", "onward",
+      "That is this trial done. Next comes <b>" + escapeText(nextTrial.en) + "</b> &mdash; " +
+      "though the trials are not locked, so take them in whatever order suits you."));
+  } else if (pass && at >= 0) {
+    card.appendChild(el("p", "onward", "That was the last of the trials."));
+  }
+
   const foot = el("div", "foot");
   const again = el("button", "ghost", "Run it again");
   again.addEventListener("click", () => openItem(active));
-  const back = el("button", null, "Back to the hall");
+  const back = el("button", "ghost", "Back to the hall");
   back.addEventListener("click", () => { renderHall(); show("hall"); setAct(markCount() ? 3 : 2); });
   foot.appendChild(again); foot.appendChild(back);
+  if (pass && nextTrial) {
+    const on = el("button", null, nextTrial.en + " →");
+    on.addEventListener("click", () => openItem(nextTrial));
+    foot.appendChild(on);
+  }
   card.appendChild(foot);
   stage.appendChild(card);
 }
@@ -14046,7 +14085,21 @@ function rememberServed(genreId, list) {
   save();
 }
 
-function shuffled(a) { return a.slice().sort(() => Math.random() - 0.5); }
+/* This used to be `a.slice().sort(() => Math.random() - 0.5)`, which reads
+   like a shuffle and is not one: a comparator that answers at random
+   breaks the sort's own assumptions, and what comes out leans hard on the
+   order that went in. Measured over twenty thousand deals it left the
+   third item short by seven points. Fisher–Yates is the same three lines
+   and is actually uniform. The Booth used the old one too, so its rounds
+   were tilted in the same way. */
+function shuffled(list) {
+  const a = list.slice();
+  for (let n = a.length - 1; n > 0; n--) {
+    const m = Math.floor(Math.random() * (n + 1));
+    const t = a[n]; a[n] = a[m]; a[m] = t;
+  }
+  return a;
+}
 
 /* One round: a few of each level, in order, none of them repeated, and
    the ones this member has not met yet taken first. */
