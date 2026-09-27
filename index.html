@@ -495,6 +495,38 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .rep-card { display: grid; gap: .5rem; padding: .95rem 1.1rem; border: var(--hair); border-radius: var(--r-md);
   background: rgba(214,191,234,.05); }
 .rep-card .what { color: var(--white); font-size: .95rem; }
+
+/* ── the member roll ──
+   Who has signed in, when, and what they have done. A ten-column table
+   is unreadable on a phone, so each member is a card and the counts are
+   chips. The database refuses this list to anyone not on the admins
+   table; none of what follows is what keeps it private. */
+.mr-sum { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.4rem, 1fr));
+  gap: .6rem; margin-bottom: 1.1rem; }
+.mr-sum div { background: rgba(214,191,234,.05); border: var(--hair);
+  border-radius: var(--r-md); padding: .7rem .8rem; }
+.mr-sum b { display: block; font-family: var(--f-serif); font-size: 1.45rem;
+  color: var(--white); line-height: 1.1; }
+.mr-sum span { display: block; font-size: .72rem; color: var(--lilac-dim);
+  margin-top: .15rem; line-height: 1.35; }
+.mr-list { display: grid; gap: .7rem; }
+.mr-card { display: grid; gap: .55rem; padding: .95rem 1.1rem; border: var(--hair);
+  border-radius: var(--r-md); background: rgba(214,191,234,.05); }
+.mr-card.on { border-color: rgba(46,217,160,.32); }
+.mr-top { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+.mr-name { font-family: var(--f-serif); font-size: 1rem; font-weight: 600; color: var(--white); }
+.mr-name .ico-vf { width: .9em; height: .9em; }
+.mr-name.none { font-family: var(--f-sans); font-weight: 400; color: var(--lilac-dim); font-style: italic; }
+.mr-at { font-size: .8rem; color: var(--workshop-ink); }
+.mr-mail { font-size: .78rem; color: var(--lilac-dim); word-break: break-all; }
+.mr-when { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: .78rem; color: var(--ink-soft); }
+.mr-when b { color: var(--white); font-weight: 600; }
+.mr-tags { display: flex; gap: .4rem; flex-wrap: wrap; }
+.mr-tag { font-size: .72rem; padding: .18rem .55rem; border-radius: 20px;
+  border: var(--hair); color: var(--ink-soft); white-space: nowrap; }
+.mr-tag.lit { color: var(--mint-soft); border-color: rgba(46,217,160,.4);
+  background: rgba(46,217,160,.1); }
+.mr-tag.idle { color: var(--lilac-dim); }
 #auth-lede { margin: 0; }
 
 /* ═══════════ THE NAVIGATION BAR ═══════════
@@ -2555,7 +2587,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
         <p class="seal-eyebrow">Curator</p>
         <h1>Content Admin</h1>
         <p class="note"><b>Only you can see this page.</b> The button that opens it is hidden from everyone else, and the database refuses to let anyone but an administrator read or write the library &mdash; the hiding is not what protects it.</p>
-        <p class="note">It is a store for material you write yourself, kept in the database rather than in the page, so it can be corrected without a developer. Nothing in it is shown to a learner until it is marked <b>Verified</b>.</p>
+        <p class="note"><b>Library</b> is a store for material you write yourself, kept in the database rather than in the page, so it can be corrected without a developer. Nothing in it is shown to a learner until it is marked <b>Verified</b>. <b>Reports</b> is what members have flagged. <b>Members</b> is the roll of everyone who has registered, with the last time each of them was on the site.</p>
       </div>
       <button class="ghost" id="admin-back">← Back to the hall</button>
     </div>
@@ -2564,10 +2596,12 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
       <div class="auth-tabs" role="tablist" aria-label="Library or reports">
         <button class="auth-tab on" id="adm-tab-lib" role="tab" aria-selected="true">Library</button>
         <button class="auth-tab" id="adm-tab-rep" role="tab" aria-selected="false">Reports</button>
+        <button class="auth-tab" id="adm-tab-mem" role="tab" aria-selected="false">Members</button>
       </div>
       <p class="msg" id="adm-msg" hidden role="status" aria-live="polite"></p>
       <div id="adm-library"></div>
       <div id="adm-reports" hidden></div>
+      <div id="adm-members" hidden></div>
     </div>
   </section>
 
@@ -11943,7 +11977,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-1315";
+const BUILD = "0927-1420";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -15215,26 +15249,153 @@ async function admSetReport(id, status) {
   } catch (e) { admSay("That report could not be updated."); }
 }
 
+/* ── the member roll ──
+   Every registered account: who they are, when they signed up, the last
+   time they were on the site, and what they have done since.
+
+   This reads the member_admin view, which carries its own guard: it
+   returns rows only to a member listed in the admins table, and the
+   anonymous key has no permission to read it at all. A member who
+   opened the page source, found this function and called it by hand
+   would get an empty list back. The tab being hidden is a courtesy,
+   not the lock. */
+const MEM_COLS = "id,display_name,username,title,verified,email," +
+  "joined_at,last_login_at,last_seen_at,posts,comments,likes,follows," +
+  "messages,profiles_opened,studied,actions,last_action_at";
+
+function admWhen(iso) {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return null;
+  const clock = String(d.getHours()).padStart(2, "0") + ":" +
+                String(d.getMinutes()).padStart(2, "0");
+  const now = new Date();
+  const same = (a, b) => a.getFullYear() === b.getFullYear() &&
+                         a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  if (same(d, now)) return "Today " + clock;
+  if (same(d, new Date(now.getTime() - 86400000))) return "Yesterday " + clock;
+  let day;
+  try { day = d.toLocaleDateString(undefined, { day: "numeric", month: "short" }); }
+  catch (e) { day = d.getDate() + "/" + (d.getMonth() + 1); }
+  return day + ", " + clock;
+}
+function admOnToday(iso) {
+  if (!iso) return false;
+  const d = new Date(iso), n = new Date();
+  return d.getFullYear() === n.getFullYear() && d.getMonth() === n.getMonth() &&
+         d.getDate() === n.getDate();
+}
+
+async function admMembers() {
+  const box = document.getElementById("adm-members");
+  box.innerHTML = '<p class="adm-empty">Loading…</p>';
+  let rows;
+  try {
+    const r = await fetch(SUPABASE.url + "/rest/v1/member_admin?select=" + MEM_COLS +
+                          "&order=last_seen_at.desc.nullslast&limit=500",
+                          { headers: await sbHeaders() });
+    if (!r.ok) throw new Error("read " + r.status);
+    rows = await r.json();
+  } catch (e) {
+    box.innerHTML = '<p class="adm-empty">The member roll could not be read. ' +
+      'If this keeps happening your account may no longer be an administrator.</p>';
+    return;
+  }
+  if (!Array.isArray(rows)) rows = [];
+
+  box.innerHTML = "";
+  const head = el("div", "mr-sum");
+  [[rows.length, "Accounts registered"],
+   [rows.filter(m => m.last_login_at).length, "Have signed in"],
+   [rows.filter(m => m.actions > 0).length, "Have done something"],
+   [rows.filter(m => m.display_name).length, "Filled in a name"],
+   [rows.filter(m => admOnToday(m.last_seen_at)).length, "On the site today"]]
+    .forEach(([n, label]) => {
+      const c = el("div");
+      c.appendChild(el("b", null, String(n)));
+      c.appendChild(el("span", null, label));
+      head.appendChild(c);
+    });
+  box.appendChild(head);
+
+  if (!rows.length) {
+    box.appendChild(el("p", "adm-empty", "Nobody has registered yet."));
+    return;
+  }
+
+  const list = el("div", "mr-list");
+  rows.forEach(m => {
+    const busy = m.actions > 0;
+    const card = el("div", "mr-card" + (busy ? " on" : ""));
+
+    const top = el("div", "mr-top");
+    const name = el("span", "mr-name" + (m.display_name ? "" : " none"));
+    name.innerHTML = admEsc(m.display_name || "no name set yet") +
+                     (m.verified ? " " + VERIFIED_ICO : "");
+    top.appendChild(name);
+    if (m.username) top.appendChild(el("span", "mr-at", "@" + admEsc(m.username)));
+    card.appendChild(top);
+    card.appendChild(el("span", "mr-mail", admEsc(m.email || "")));
+
+    const when = el("div", "mr-when");
+    when.innerHTML =
+      "<span>Joined <b>" + admEsc(admWhen(m.joined_at) || "—") + "</b></span>" +
+      "<span>Last seen <b>" + admEsc(admWhen(m.last_seen_at) || "signed out") + "</b></span>";
+    card.appendChild(when);
+
+    const tags = el("div", "mr-tags");
+    [["posts", "post", "posts"], ["comments", "comment", "comments"],
+     ["likes", "like", "likes"], ["follows", "follow", "follows"],
+     ["messages", "message", "messages"], ["profiles_opened", "profile opened", "profiles opened"],
+     ["studied", "lesson", "lessons"]]
+      .forEach(([k, one, many]) => {
+        const n = m[k] || 0;
+        if (!n) return;
+        tags.appendChild(el("span", "mr-tag lit", n + " " + (n === 1 ? one : many)));
+      });
+    if (!tags.children.length) {
+      tags.appendChild(el("span", "mr-tag idle",
+        m.last_login_at ? "signed in, nothing done yet" : "never signed in"));
+    }
+    card.appendChild(tags);
+    list.appendChild(card);
+  });
+  box.appendChild(list);
+
+  const foot = el("div", "adm-actions");
+  const again = el("button", "ghost", "Refresh");
+  again.addEventListener("click", admMembers);
+  foot.appendChild(again);
+  box.appendChild(foot);
+}
+
 /* ── wiring ── */
 document.getElementById("admin-btn").addEventListener("click", () => {
-  admQuiet(); show("admin"); admLoad();
+  admQuiet(); show("admin");
+  document.getElementById("adm-tab-lib").click();   /* always open on the Library */
 });
 document.getElementById("admin-back").addEventListener("click", () => {
   renderHall(); show("hall"); setAct(markCount() ? 3 : 2);
 });
-document.getElementById("adm-tab-lib").addEventListener("click", () => {
-  document.getElementById("adm-tab-lib").classList.add("on");
-  document.getElementById("adm-tab-rep").classList.remove("on");
-  document.getElementById("adm-library").hidden = false;
-  document.getElementById("adm-reports").hidden = true;
-  admLoad();
-});
-document.getElementById("adm-tab-rep").addEventListener("click", () => {
-  document.getElementById("adm-tab-rep").classList.add("on");
-  document.getElementById("adm-tab-lib").classList.remove("on");
-  document.getElementById("adm-library").hidden = true;
-  document.getElementById("adm-reports").hidden = false;
-  admReports();
+/* One tab is open at a time. Naming the three in one place means a
+   fourth is a line, not another pair of hide-and-show calls. */
+const ADM_TABS = [
+  ["adm-tab-lib", "adm-library", () => admLoad()],
+  ["adm-tab-rep", "adm-reports", () => admReports()],
+  ["adm-tab-mem", "adm-members", () => admMembers()]
+];
+ADM_TABS.forEach(([tabId, paneId, open]) => {
+  document.getElementById(tabId).addEventListener("click", () => {
+    ADM_TABS.forEach(([t, p]) => {
+      const on = t === tabId;
+      const tab = document.getElementById(t);
+      tab.classList.toggle("on", on);
+      tab.setAttribute("aria-selected", on ? "true" : "false");
+      document.getElementById(p).hidden = !on;
+    });
+    admQuiet();
+    open();
+  });
 });
 
 /* ═══════════ BOOT ═══════════ */
