@@ -1494,6 +1494,13 @@ a.ks-s-en:hover { color: var(--white); }
 .pick-chip { cursor: pointer; background: transparent; font-family: inherit; }
 .pick-chip.on { background: rgba(167,38,208,.25); color: var(--white); border-color: var(--magenta); }
 .pick-chip.add { border-style: dashed; color: var(--mag-ink); }
+/* Above the bottom bar, gone in four seconds. */
+.flash { position: fixed; left: 50%; transform: translateX(-50%); bottom: 5.4rem;
+  z-index: 70; max-width: min(22rem, calc(100vw - 1.6rem));
+  padding: .6rem 1rem; border-radius: 999px; border: 1px solid var(--magenta);
+  background: var(--panel, rgba(30,16,48,.98)); color: var(--white);
+  font-size: .85rem; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,.45); }
+
 /* Sits above the bottom bar, out of the way, until she taps it. */
 .new-build { position: fixed; left: .7rem; right: .7rem; bottom: 5.2rem; z-index: 60;
   display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
@@ -9405,6 +9412,21 @@ function memberRow(m, onOpen) {
   return row;
 }
 
+/* A line that says what went wrong and then goes away.
+   The action row is marks and numbers now, with no room for a
+   sentence, so a refused repost could only turn the mark red — which
+   is indistinguishable from nothing happening. It says so instead, and
+   the real error goes to the console for whoever has to find out why. */
+function flash(words, err) {
+  if (err) try { console.error("Guild:", words, err); } catch (e) {}
+  const old = document.getElementById("flash");
+  if (old) old.remove();
+  const n = el("div", "flash", esc(words));
+  n.id = "flash";
+  document.body.appendChild(n);
+  setTimeout(() => { if (n.isConnected) n.remove(); }, 4000);
+}
+
 /* ── the verified mark ──
    A fact read from the profile, never a name written into this file.
    The column it comes from is not in the set of columns a member is
@@ -9996,10 +10018,9 @@ function postCard(r, opts) {
         rp.classList.add("on");
         rp.title = "You reposted this";
       } catch (e) {
-        /* No room for a sentence here, so the mark itself says it
-           failed and then goes back to what it was. */
         rp.classList.add("bad");
         rp.title = "That could not be reposted.";
+        flash("That could not be reposted.", e);
         setTimeout(() => { rp.classList.remove("bad"); rp.title = "Repost this";
                            rp.disabled = false; }, 2500);
       }
@@ -11826,7 +11847,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0927-0655";
+const BUILD = "0927-0730";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
