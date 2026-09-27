@@ -16,6 +16,27 @@
 <meta name="keywords" content="Arabic English translation, translation studies, translation procedures, translation strategies, equivalence, collocation, idioms, register, subtitling, interpreting, Kuwait">
 <link rel="canonical" href="https://translators-guild.vercel.app/">
 <meta name="theme-color" content="#110620">
+
+<!-- ═══ ON A HOME SCREEN ═══
+     Added to a phone's home screen with none of this, iOS drew its own
+     icon: a black square with a T in it, taken from the first letter of
+     the <title>. It does that when there is no apple-touch-icon, and it
+     will not read one out of a data: URI, which is why these are real
+     files rather than inlined like the logo inside the page.
+
+     The label under the icon comes from apple-mobile-web-app-title, not
+     from <title>, which is why it read "TheTranslators'…". iOS truncates
+     it at about a dozen characters, and whoever installs it can rename it
+     in the Add to Home Screen sheet — this only sets the default. -->
+<meta name="apple-mobile-web-app-title" content="Guild Translators">
+<meta name="application-name" content="Guild Translators">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="The Translators' Guild">
 <meta property="og:url" content="https://translators-guild.vercel.app/">
@@ -12250,7 +12271,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0928-0530";
+const BUILD = "0928-0625";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;

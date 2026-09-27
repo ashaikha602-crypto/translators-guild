@@ -7,6 +7,12 @@ __pycache__/
 .DS_Store
 *.png
 
+# The home-screen icons are the one exception to the *.png rule above:
+# iOS will not take an apple-touch-icon from a data: URI, so these have
+# to be real files served from the site.
+!icons/
+!icons/*.png
+
 # The member guide: built artefacts, 30MB of screenshots and a PDF.
 # Kept out of the repo so the site stays small. Rebuild with the
 # scripts in the session scratchpad if it needs refreshing.
