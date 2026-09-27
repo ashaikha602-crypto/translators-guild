@@ -11,3 +11,4 @@ __pycache__/
 # Kept out of the repo so the site stays small. Rebuild with the
 # scripts in the session scratchpad if it needs refreshing.
 guide/
+reports/
