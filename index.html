@@ -1621,6 +1621,10 @@ a.ks-s-en:hover { color: var(--white); }
 .chip-tag { font-size: .7rem; letter-spacing: .06em; padding: .28rem .7rem; border-radius: 999px;
   border: var(--hair-lit); color: var(--lilac); white-space: nowrap; }
 .chip-tag.solid { background: var(--grad); border-color: transparent; color: var(--on-grad); }
+/* Earned in the booth, not in the written trials — a different ladder, so
+   a different colour from the rank beside it. */
+.chip-tag.booth { color: var(--mint-soft); border-color: rgba(46,217,160,.4);
+  background: rgba(46,217,160,.1); }
 @media (max-width: 560px) {
 }
 
@@ -2019,6 +2023,41 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
   border: 1px solid rgba(46,217,160,.4); background: rgba(46,217,160,.1); }
 .score .onward { margin: 0; font-size: .88rem; line-height: 1.7; color: var(--ink-soft); max-width: 44ch; }
 .score .onward b { color: var(--white); }
+.score .onward .won { display: block; font-family: var(--f-serif); font-size: 1.15rem;
+  color: var(--mint); margin-bottom: .1rem; }
+.score .onward .won-ar { display: block; font-family: var(--f-ar); font-size: .95rem;
+  color: var(--mint-soft); margin-bottom: .45rem; }
+
+/* ── the four readings a booth round gives back ──
+   Not one of them is about wording. */
+.dials { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: .7rem; width: 100%; text-align: left; margin-top: .4rem; }
+.dial { background: rgba(214,191,234,.05); border: var(--hair); border-radius: var(--r-md);
+  padding: .7rem .85rem; display: grid; gap: .2rem; }
+.dial .d-lab { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--faint, var(--lilac-dim)); }
+.dial .d-val { font-family: var(--f-serif); font-size: 1.5rem; line-height: 1; color: var(--white); }
+.dial .d-val small { font-size: .8rem; color: var(--lilac-dim); }
+.dial .d-bar { display: block; height: 3px; border-radius: 3px; background: rgba(214,191,234,.14); overflow: hidden; }
+.dial .d-bar i { display: block; height: 100%; background: var(--mint); border-radius: 3px; }
+.dial .d-say { font-size: .7rem; line-height: 1.45; color: var(--lilac-dim); }
+.score .d-note { margin: 0; font-size: .82rem; color: var(--ink-soft); }
+.score .d-note b { color: var(--white); }
+
+/* ── the booth's own standing, on its front screen and on a profile ── */
+.fields { display: grid; gap: .55rem; width: 100%; }
+.field-row { display: grid; grid-template-columns: 1.4rem 1fr auto; gap: .7rem; align-items: center;
+  padding: .6rem .8rem; border: var(--hair); border-radius: var(--r-md);
+  background: rgba(214,191,234,.04); }
+.field-row.won { border-color: rgba(46,217,160,.35); background: rgba(46,217,160,.07); }
+.field-row .f-tick { font-family: var(--f-serif); color: var(--lilac-dim); }
+.field-row.won .f-tick { color: var(--mint); }
+.field-row .f-name { font-size: .9rem; color: var(--white); }
+.field-row .f-sub { display: block; font-size: .72rem; color: var(--lilac-dim); }
+.field-row .f-state { font-size: .72rem; color: var(--lilac-dim); white-space: nowrap; }
+.field-row.won .f-state { color: var(--mint-soft); }
+.booth-rank { margin: 0 0 .2rem; font-family: var(--f-serif); font-size: 1.2rem; color: var(--white); }
+.booth-rank-ar { margin: 0; font-family: var(--f-ar); font-size: .95rem; color: var(--lilac); }
 
 .review { display: grid; gap: .5rem; width: 100%; text-align: left; }
 .rev-row { display: grid; grid-template-columns: 1.6rem 1fr; gap: .8rem; align-items: baseline;
@@ -2501,6 +2540,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
         <h1 class="ig-name" id="seal-name" dir="auto">Member</h1>
         <p class="chips-row">
           <span class="chip-tag" id="chip-rank">Novice</span>
+          <span id="chip-booth"></span>
           <span class="chip-tag solid">Translation Team</span>
         </p>
         <div class="count-row mine" id="seal-counts"></div>
@@ -8278,7 +8318,8 @@ async function sbHeaders() {
 const PROFILE_COLS = "id,username,title,display_name,avatar_path,bio,motto,field_of_study,minor," +
   "institution,academic_level,marks,rank_slug,profile_visibility,discoverable,show_progress," +
   "show_interests,show_institution,show_academic_level,allow_follows," +
-  "who_can_message,show_online,read_receipts,verified,sees_profile_views";
+  "who_can_message,show_online,read_receipts,verified,sees_profile_views," +
+  "interpreting_fields,interpreting_rank";
 
 async function loadMyProfile() {
   if (backend !== "supabase" || !session || !session.user) return null;
@@ -8288,6 +8329,7 @@ async function loadMyProfile() {
   if (!r.ok) return null;
   const rows = await r.json();
   state.profile = (rows && rows[0]) || null;
+  applyStanding(state.profile);
   return state.profile;
 }
 
@@ -9550,6 +9592,19 @@ function verifiedMark(on) {
   return '<span class="vf" title="Verified account">' + VERIFIED_ICO + '</span>';
 }
 
+/* What the booth has awarded, as chips beside the rank. A member who has
+   turned their progress off returns an empty list from the view, so this
+   draws nothing for them without having to know about the setting. */
+function interpretingChips(p) {
+  const list = (p && Array.isArray(p.interpreting_fields)) ? p.interpreting_fields : [];
+  return list
+    .map(f => BOOTH_FIELD_TITLES[f])
+    .filter(Boolean)
+    .map(t => '<span class="chip-tag booth" title="Earned in the Guild’s booth">' +
+              esc(t.en) + '</span>')
+    .join("");
+}
+
 /* The three marks under a post, all drawn the same way so the row
    reads as one set. The heart and the speech bubble used to be a text
    character and a colour emoji, which land at different weights and
@@ -9740,6 +9795,7 @@ async function runPublic(id) {
      view returns null for it otherwise. */
   who.appendChild(el("p", "chips-row",
     (p.rank_slug ? '<span class="chip-tag">' + esc(rankName(p.rank_slug)) + '</span>' : '') +
+    interpretingChips(p) +
     '<span class="chip-tag solid">Translation Team</span>'));
   const c = counts || {};
   const cell = (n, lab) => '<div><b>' + tally(n) + '</b><span>' + lab + '</span></div>';
@@ -11979,7 +12035,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0928-0110";
+const BUILD = "0928-0245";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -12051,6 +12107,10 @@ function renderSeal() {
 
   const chip = document.getElementById("chip-rank");
   if (chip) chip.textContent = rank.en;
+  /* The booth's awards sit beside the translation rank, not inside it:
+     two ladders, climbed separately, shown together. */
+  const bchip = document.getElementById("chip-booth");
+  if (bchip) bchip.innerHTML = interpretingChips({ interpreting_fields: boothStanding.fields });
   paintWho();
   renderCounts();
   renderIdent();
@@ -14370,6 +14430,15 @@ function keyMet(key, answer) {
   return !!also && also.some(x => x && answer.indexOf(x) >= 0);
 }
 
+/* How much of this target's content the answer carries, as a share of it.
+   Wording is not consulted: only whether the content words arrived. */
+function arShare(target, answer) {
+  const want = arTokens(target);
+  if (!want.length) return 0;
+  const got = want.filter(w => answer.indexOf(w) >= 0 || answer.indexOf(arBare(w)) >= 0).length;
+  return got / want.length;
+}
+
 /* Does the answer carry this target's content? `all` for a term, where
    every content word is expected; a proportion for anything longer. */
 function arCarries(target, answer, share) {
@@ -14388,6 +14457,11 @@ function boothForms(item, into) {
 
 /* Returns what happened, not merely whether it passed: a variant that is
    accepted is still a pass, and the usual form is worth naming. */
+/* `hit` is the pass. `share` is how much of the content arrived, between
+   nothing and all of it, and it is what the four dials on the scorecard
+   are built from — a rendering that carries four fifths of a turn is not
+   the same as one that carries none, and marking both as "missed" threw
+   that away. Wording is never consulted in either number. */
 function boothMark(item, input, dir) {
   const into = (dir || "ar-en") === "en-ar" ? "ar" : "en";
   const long = item.level ? (item.level.key === "sentences" || item.level.key === "turns")
@@ -14396,30 +14470,159 @@ function boothMark(item, input, dir) {
 
   if (into === "ar") {
     const a = arNorm(input);
-    if (a.length < 2) return { hit: false, exact: false };
+    if (a.length < 2) return { hit: false, exact: false, share: 0 };
     /* A long answer is marked on content; a term has to carry all of it,
        though the article and the word order are its own business. */
     const share = long ? 0.6 : 1;
+    let best = 0;
     for (let i = 0; i < forms.length; i++) {
-      if (arCarries(forms[i], a, share)) return { hit: true, exact: i === 0, matched: forms[i] };
+      best = Math.max(best, arShare(forms[i], a));
+      if (arCarries(forms[i], a, share)) {
+        return { hit: true, exact: i === 0, matched: forms[i], share: Math.max(best, share) };
+      }
     }
-    return { hit: false, exact: false };
+    return { hit: false, exact: false, share: best };
   }
 
   if (long) {
     const a = norm(input);
-    if (a.length < 4) return { hit: false, exact: false };
-    const got = (item.keys || []).filter(k => keyMet(k, a)).length;
-    const need = Math.ceil((item.keys || []).length * 0.7);
-    return { hit: !!need && got >= need, exact: false };
+    if (a.length < 4) return { hit: false, exact: false, share: 0 };
+    const keys = item.keys || [];
+    const got = keys.filter(k => keyMet(k, a)).length;
+    const need = Math.ceil(keys.length * 0.7);
+    return { hit: !!need && got >= need, exact: false,
+             share: keys.length ? got / keys.length : 0 };
   }
   for (let i = 0; i < forms.length; i++) {
-    if (loose(input, [forms[i]])) return { hit: true, exact: i === 0, matched: forms[i] };
+    if (loose(input, [forms[i]])) return { hit: true, exact: i === 0, matched: forms[i], share: 1 };
   }
-  return { hit: false, exact: false };
+  return { hit: false, exact: false, share: 0 };
 }
 /* kept for the checks that call it directly */
 function boothHit(item, input, dir) { return boothMark(item, input, dir).hit; }
+
+/* ═══════════ THE BOOTH'S OWN LADDER ═══════════
+   Interpreting is not translation done aloud, and a Mark earned in the
+   written trials says nothing about whether somebody can hold a turn of
+   speech under a clock. So the booth keeps its own standing, counted
+   separately from the nine Marks and shown separately on a profile.
+
+   A FIELD is earned by producing one qualifying round in it in BOTH
+   directions. An interpreter is not hired to work one way, and a member
+   who can render مجلس الأمن into English but not the other way round has
+   not finished the setting.
+
+   A round QUALIFIES on four readings, none of which is about wording:
+
+     Meaning       how much of the content arrived, over every item
+     Terminology   the same, over the terms and phrases alone
+     Completeness  the same, over the sentences and full turns
+     Delivery      how much was answered, in time, without skipping
+
+   Whether a round qualifies is decided by the database, not here: the
+   four numbers are filed and a generated column rules on them. What this
+   page cannot do is award itself a title.
+
+   The Guild teaches and certifies nothing — the note above the RANKS
+   ladder says why, and it applies here word for word. These are the
+   Guild's own names for its own stages, and no member should take one
+   for an accreditation. */
+const BOOTH_FIELD_TITLES = {
+  diplomatic: { en: "Diplomatic and Political Interpreter", ar: "مُترجِم شفويّ دبلوماسيّ وسياسيّ" },
+  legal:      { en: "Legal and Court Interpreter",          ar: "مُترجِم شفويّ قانونيّ وقضائيّ" },
+  media:      { en: "Media Interpreter",                    ar: "مُترجِم شفويّ إعلاميّ" },
+  medical:    { en: "Medical Interpreter",                  ar: "مُترجِم شفويّ طبّيّ" },
+  conference: { en: "Conference Interpreter",               ar: "مُترجِم شفويّ للمؤتمرات" },
+  community:  { en: "Community Interpreter",                ar: "مُترجِم شفويّ مجتمعيّ" }
+};
+/* Mirrors interpreting_rank_for() in the database, which is what the
+   server actually writes. If one of these changes the other must. */
+const BOOTH_RANKS = [
+  { at: 1, en: "Booth interpreter",            ar: "مُترجِم مقصورة" },
+  { at: 2, en: "Practising booth interpreter", ar: "مُترجِم مقصورة مُمارِس" },
+  { at: 4, en: "Senior booth interpreter",     ar: "مُترجِم مقصورة أوّل" },
+  { at: 6, en: "Interpreter of every setting", ar: "مُترجِم كلّ المجالات" }
+];
+function boothRankFor(n) {
+  let r = null;
+  BOOTH_RANKS.forEach(x => { if (n >= x.at) r = x; });
+  return r;
+}
+function boothRankAr(en) {
+  const r = BOOTH_RANKS.find(x => x.en === en);
+  return r ? r.ar : "";
+}
+
+const BOOTH_STANDARD = { composite: 0.80, meaning: 0.75, completeness: 0.60 };
+
+/* The four readings, from the per-item shares a round collected. */
+function boothDials(marks) {
+  const mean = list => list.length
+    ? list.reduce((t, x) => t + x, 0) / list.length : 0;
+  const shortLv = m => m.level === "terms" || m.level === "phrases";
+  const meaning      = mean(marks.map(m => m.share));
+  const terminology  = mean(marks.filter(shortLv).map(m => m.share));
+  const completeness = mean(marks.filter(m => !shortLv(m)).map(m => m.share));
+  const delivery     = mean(marks.map(m => (m.skipped || m.blank) ? 0 : 1));
+  const composite = 0.40 * meaning + 0.25 * terminology +
+                    0.20 * completeness + 0.15 * delivery;
+  return { meaning: meaning, terminology: terminology,
+           completeness: completeness, delivery: delivery, composite: composite };
+}
+function boothQualifies(d, finished) {
+  return !!finished &&
+    d.composite >= BOOTH_STANDARD.composite &&
+    d.meaning >= BOOTH_STANDARD.meaning &&
+    d.completeness >= BOOTH_STANDARD.completeness;
+}
+
+/* What this member has earned. Held in the page for the screens that
+   need it now, and re-read from the profile whenever that is loaded. */
+let boothStanding = { fields: [], rank: null };
+
+function applyStanding(p) {
+  if (!p) return;
+  boothStanding = {
+    fields: Array.isArray(p.interpreting_fields) ? p.interpreting_fields.slice() : [],
+    rank: p.interpreting_rank || null
+  };
+}
+
+/* File the round. The database decides whether it qualified; the reply
+   carries that decision back, and the profile carries the standing. */
+async function fileRound(field, dir, items, through, d, finished) {
+  if (backend !== "supabase" || !myId()) return null;
+  const r3 = n => Math.round(Math.min(1, Math.max(0, n)) * 1000) / 1000;
+  try {
+    const r = await fetch(SUPABASE.url + "/rest/v1/interpreting_rounds", {
+      method: "POST",
+      headers: Object.assign(await sbHeaders(), {
+        "Content-Type": "application/json", "Prefer": "return=representation" }),
+      body: JSON.stringify({
+        user_id: myId(), field: field, direction: dir,
+        items: items, through: through,
+        meaning: r3(d.meaning), terminology: r3(d.terminology),
+        completeness: r3(d.completeness), delivery: r3(d.delivery),
+        finished: !!finished
+      })
+    });
+    if (!r.ok) return null;
+    const rows = await r.json();
+    return (rows && rows[0]) || null;
+  } catch (e) { return null; }
+}
+
+async function refreshStanding() {
+  if (backend !== "supabase" || !myId()) return;
+  try {
+    const r = await fetch(SUPABASE.url +
+      "/rest/v1/profiles?select=interpreting_fields,interpreting_rank",
+      { headers: await sbHeaders() });
+    if (!r.ok) return;
+    const rows = await r.json();
+    applyStanding(rows && rows[0]);
+  } catch (e) {}
+}
 
 function runBooth() { stopBooth(); chooseGenre(); }
 
@@ -14472,6 +14675,36 @@ function chooseGenre() {
     grid.appendChild(b);
   });
   stage.appendChild(grid);
+
+  /* What the booth has awarded this member so far, and what is left. The
+     six settings are the ladder; the rank underneath counts them. */
+  const standing = el("div", "verdict");
+  standing.appendChild(el("span", "vh", "Your standing in the booth"));
+  if (boothStanding.rank) {
+    standing.appendChild(el("p", "booth-rank", escapeText(boothStanding.rank)));
+    standing.appendChild(el("p", "booth-rank-ar", boothRankAr(boothStanding.rank)));
+  }
+  standing.appendChild(el("p", "vb",
+    "Counted apart from the nine Marks, because interpreting is not translation read aloud. " +
+    "A setting is earned by one round at the standard <b>in both directions</b> &mdash; " +
+    "nobody is hired to work one way. What you earn is shown on your profile."));
+  const fields = el("div", "fields");
+  BOOTH_GENRES.forEach(g => {
+    const won = boothStanding.fields.indexOf(g.id) >= 0;
+    const t = BOOTH_FIELD_TITLES[g.id];
+    const row = el("div", "field-row" + (won ? " won" : ""));
+    row.innerHTML =
+      '<span class="f-tick">' + (won ? "✦" : "✧") + '</span>' +
+      '<span><span class="f-name">' + escapeText(t.en) + '</span>' +
+      '<span class="f-sub" dir="rtl" lang="ar">' + t.ar + '</span></span>' +
+      '<span class="f-state">' + (won ? "earned" : "not yet") + '</span>';
+    fields.appendChild(row);
+  });
+  standing.appendChild(fields);
+  standing.appendChild(el("p", "vb",
+    "The Guild teaches and awards no credential. These are its own names for its own stages, " +
+    "and none of them is an accreditation."));
+  stage.appendChild(standing);
 
   const ladder = el("div", "verdict");
   ladder.appendChild(el("span", "vh", "How a round climbs"));
@@ -14541,7 +14774,7 @@ function boothRound(genre) {
   const DUR = queue.reduce((t, q) => t + q.level.secs, 0);
   const NEED = Math.max(3, Math.round(queue.length * 0.55));
   let left = DUR, idx = 0, hits = 0, started = false;
-  const log = [];
+  const log = [], marks = [];
   rememberServed(genre.id, queue);
 
   stage.innerHTML = "";
@@ -14663,6 +14896,8 @@ function boothRound(genre) {
     }
     log.push({ src: prompt(q), hit: m.hit, exact: m.exact, best: model(q),
                alts: boothForms(q, into).slice(1), level: q.level.en });
+    marks.push({ level: q.level.key, share: m.share || 0,
+                 blank: !String(inp.value || "").trim(), skipped: false });
     tally.textContent = hits + " through";
     advance();
   }
@@ -14675,6 +14910,7 @@ function boothRound(genre) {
       const q = queue[idx];
       log.push({ src: prompt(q), hit: false, best: model(q),
                  alts: boothForms(q, into).slice(1), level: q.level.en, passed: true });
+      marks.push({ level: q.level.key, share: 0, blank: true, skipped: true });
       advance();
     }
   });
@@ -14686,6 +14922,16 @@ function boothRound(genre) {
        against. Running out of time is finishing; leaving is not. */
     const pass = !stoppedEarly && hits >= NEED;
     const fresh = settleTrial("booth", hits, Math.max(hits, NEED), pass, stoppedEarly);
+
+    /* Anything the clock never reached was not delivered, and says so.
+       A round walked out of is not scored against the items left in it. */
+    if (!stoppedEarly) {
+      for (let n = marks.length; n < queue.length; n++) {
+        marks.push({ level: queue[n].level.key, share: 0, blank: true, skipped: true });
+      }
+    }
+    const dials = boothDials(marks);
+    const qualifies = boothQualifies(dials, !stoppedEarly);
 
     stage.innerHTML = "";
     setCount(stoppedEarly ? "Stopped" : "Time");
@@ -14702,6 +14948,72 @@ function boothRound(genre) {
     else sc.appendChild(el("p", "note", stoppedEarly
       ? hits + " through · " + log.length + " of " + queue.length + " attempted"
       : hits + " through · " + NEED + " needed."));
+
+    /* The four readings. Not one of them asks whether the wording matched
+       anything: they ask how much of the content arrived, in the terms,
+       in the long items, and whether it arrived in time. */
+    if (marks.length) {
+      const pc = x => Math.round(x * 100);
+      const dl = el("div", "dials");
+      [["Meaning", dials.meaning, "how much of the content arrived"],
+       ["Terminology", dials.terminology, "the terms and phrases alone"],
+       ["Completeness", dials.completeness, "the sentences and full turns"],
+       ["Delivery", dials.delivery, "answered, in time, without skipping"]]
+        .forEach(([lab, v, say]) => {
+          const d = el("div", "dial");
+          d.innerHTML =
+            '<span class="d-lab">' + lab + '</span>' +
+            '<span class="d-val">' + pc(v) + '<small>%</small></span>' +
+            '<span class="d-bar"><i style="width:' + pc(v) + '%"></i></span>' +
+            '<span class="d-say">' + say + '</span>';
+          dl.appendChild(d);
+        });
+      sc.appendChild(dl);
+      sc.appendChild(el("p", "d-note",
+        "Overall <b>" + pc(dials.composite) + "%</b> &mdash; " +
+        "a field asks for " + pc(BOOTH_STANDARD.composite) + "% here, " +
+        pc(BOOTH_STANDARD.meaning) + "% on meaning, in both directions."));
+    }
+
+    /* File it, then say what it earned. The database rules on whether the
+       round qualified and what the standing now is; this only reports. */
+    const award = el("p", "onward", "");
+    sc.appendChild(award);
+    const before = boothStanding.fields.slice();
+    fileRound(genre.id, dir, queue.length, hits, dials, !stoppedEarly)
+      .then(async row => {
+        if (!row) {
+          award.innerHTML = qualifies
+            ? "This round meets the standard for <b>" + escapeText(BOOTH_FIELD_TITLES[genre.id].en) +
+              "</b>. It could not be filed just now &mdash; sign in and run it again for it to count."
+            : "";
+          return;
+        }
+        await refreshStanding();
+        const has = boothStanding.fields.indexOf(genre.id) >= 0;
+        const isNew = has && before.indexOf(genre.id) < 0;
+        const title = BOOTH_FIELD_TITLES[genre.id];
+        if (isNew) {
+          award.innerHTML = '<span class="won">✦ ' + escapeText(title.en) + '</span>' +
+            '<span class="won-ar" dir="rtl" lang="ar">' + title.ar + '</span>' +
+            "Both directions at the standard. It is on your profile now." +
+            (boothStanding.rank
+              ? " Your booth standing is <b>" + escapeText(boothStanding.rank) + "</b>." : "");
+        } else if (has) {
+          award.innerHTML = "You already hold <b>" + escapeText(title.en) + "</b>.";
+        } else if (row.qualified) {
+          const other = dir === "ar-en" ? "English into Arabic" : "Arabic into English";
+          award.innerHTML = "This round is at the standard. <b>" + escapeText(title.en) +
+            "</b> needs the same " + other + " &mdash; that is the half that is left.";
+        } else {
+          award.innerHTML = "Not at the field standard yet. " +
+            (dials.meaning < BOOTH_STANDARD.meaning
+              ? "Meaning is the one to work on: content before wording."
+              : dials.completeness < BOOTH_STANDARD.completeness
+                ? "The long items are where it went: hold the whole turn, then render it."
+                : "Close. Delivery is what is costing you &mdash; fewer left unanswered.");
+        }
+      });
 
     if (log.length) {
       const rev = el("div", "review");
