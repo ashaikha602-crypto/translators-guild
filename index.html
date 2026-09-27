@@ -2030,6 +2030,10 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
 .score .onward b { color: var(--white); }
 .score .onward .won { display: block; font-family: var(--f-serif); font-size: 1.15rem;
   color: var(--mint); margin-bottom: .1rem; }
+.score .onward.half { border: 1px solid rgba(255,196,107,.35); background: rgba(255,196,107,.07);
+  border-radius: var(--r-md); padding: .9rem 1.05rem; }
+.score .onward.half .won { color: var(--amber); }
+.score .onward.half button { margin-top: .75rem; }
 .score .onward .won-ar { display: block; font-family: var(--f-ar); font-size: .95rem;
   color: var(--mint-soft); margin-bottom: .45rem; }
 
@@ -2055,8 +2059,17 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
   padding: .6rem .8rem; border: var(--hair); border-radius: var(--r-md);
   background: rgba(214,191,234,.04); }
 .field-row.won { border-color: rgba(46,217,160,.35); background: rgba(46,217,160,.07); }
+.field-row.part { border-color: rgba(255,196,107,.35); background: rgba(255,196,107,.06); }
 .field-row .f-tick { font-family: var(--f-serif); color: var(--lilac-dim); }
 .field-row.won .f-tick { color: var(--mint); }
+.field-row.part .f-tick { color: var(--amber); }
+.field-row.part .f-state { color: var(--amber); }
+/* The two directions a field needs, lit as each one is banked. */
+.f-legs { display: flex; gap: .3rem; margin-top: .25rem; }
+.f-leg { font-size: .6rem; letter-spacing: .06em; padding: .1rem .38rem; border-radius: 20px;
+  border: 1px solid rgba(214,191,234,.18); color: var(--lilac-dim); }
+.f-leg.on { border-color: rgba(46,217,160,.45); color: var(--mint-soft);
+  background: rgba(46,217,160,.12); }
 .field-row .f-name { font-size: .9rem; color: var(--white); }
 .field-row .f-sub { display: block; font-size: .72rem; color: var(--lilac-dim); }
 .field-row .f-state { font-size: .72rem; color: var(--lilac-dim); white-space: nowrap; }
@@ -4089,7 +4102,82 @@ const SUBTITLE = [
     from: "المتنبي",
     model: "The blind have seen my verse;\nthe deaf have heard my words.",
     keys: ["blind", "deaf"],
-    why: "The boast is in the impossibility, so both halves must stay: keep only the blind and the line is merely proud. The semicolon is doing what the Arabic parallelism does &mdash; two halves, one shape." }
+    why: "The boast is in the impossibility, so both halves must stay: keep only the blind and the line is merely proud. The semicolon is doing what the Arabic parallelism does &mdash; two halves, one shape." },
+
+  /* ── ten more from film and television, which is where most subtitling
+     work actually is. Every line is one a viewer would recognise before
+     the subtitle appears, which is the point: with the meaning already
+     known, the only thing left to get right is the craft. ── */
+
+  { src: "Here's looking at you, kid.", srcEn: true, secs: 2.0, lines: 1,
+    from: "Casablanca (1942)",
+    model: "نخبك، يا صغيرتي.",
+    alts: ["في صحتك، يا صغيرتي."],
+    keys: ["نخبك"],
+    why: "A toast and an endearment in five English words. <b>نخبك</b> carries the glass; <b>يا صغيرتي</b> carries the affection. Translating <i>kid</i> as <i>طفلة</i> would make him her father instead of her lover." },
+
+  { src: "I'm gonna make him an offer he can't refuse.", srcEn: true, secs: 3.0, lines: 2,
+    from: "The Godfather (1972)",
+    model: "سأعرض عليه عرضًا\nلا يستطيع رفضه.",
+    alts: ["سأقدم له عرضًا\nلا يمكنه رفضه."],
+    keys: ["عرض", "رفض"],
+    why: "The threat is entirely in the politeness, so the Arabic must stay polite too. The line break falls before <b>لا يستطيع</b>, where the sentence turns &mdash; the viewer reads a complete offer, then the catch." },
+
+  { src: "There's no place like home.", srcEn: true, secs: 2.0, lines: 1,
+    from: "The Wizard of Oz (1939)",
+    model: "لا مكان يضاهي البيت.",
+    alts: ["لا شيء يعدل البيت."],
+    keys: ["البيت"],
+    why: "<b>البيت</b>, not <b>المنزل</b>. One is the place you belong to and the other is the building; English <i>home</i> and <i>house</i> split the same way, and a subtitler who reaches for the building has translated the wrong word." },
+
+  { src: "No, I am your father.", srcEn: true, secs: 1.8, lines: 1,
+    from: "The Empire Strikes Back (1980)",
+    model: "لا، أنا والدك.",
+    alts: ["لا، أنا أبوك."],
+    keys: ["والدك", "ابوك"],
+    why: "Half the world quotes this as <i>Luke, I am your father</i>, and the film does not say it. <b>A subtitler works from the audio, never from memory</b> &mdash; the famous version of a line is very often not the line." },
+
+  { src: "Why so serious?", srcEn: true, secs: 1.4, lines: 1,
+    from: "The Dark Knight (2008)",
+    model: "لماذا كل هذا الجد؟",
+    alts: ["ما كل هذا الجد؟"],
+    keys: ["الجد"],
+    why: "Three words, twenty-eight characters to spend, and no reason to spend them. The menace is in how little is said; padding the Arabic to fill the line would soften the one thing that makes it frightening." },
+
+  { src: "Winter is coming.", srcEn: true, secs: 1.5, lines: 1,
+    from: "Game of Thrones",
+    model: "الشتاء قادم.",
+    alts: ["الشتاء آتٍ."],
+    keys: ["الشتاء"],
+    why: "A house motto, so it has to sound like one: short, present, and slightly ominous. <b>قادم</b> does it in one word. Anything explanatory &mdash; <i>سيأتي الشتاء قريبًا</i> &mdash; turns a warning into a weather report." },
+
+  { src: "I am the one who knocks.", srcEn: true, secs: 2.0, lines: 1,
+    from: "Breaking Bad",
+    model: "أنا من يطرق الباب.",
+    alts: ["أنا الطارق على الباب."],
+    keys: ["يطرق", "الطارق", "الباب"],
+    why: "Arabic has no bare <i>the one who</i>, so <b>من</b> does the work. Note what is not added: no <i>في هذا البيت</i>, no explanation of who he means. The line is a boast made entirely of understatement." },
+
+  { src: "Hakuna Matata! It means no worries.", srcEn: true, secs: 2.6, lines: 2,
+    from: "The Lion King (1994)",
+    model: "هاكونا ماتاتا!\nتعني: لا هموم.",
+    alts: ["هاكونا ماتاتا!\nمعناها: لا تقلق."],
+    keys: ["هاكونا"],
+    why: "The Swahili is <b>not translated</b>, because the line translates it for you a second later &mdash; render it and the sentence explains a phrase the viewer has not heard. <b>Transcribe what the film treats as foreign</b>, and let the film do the glossing." },
+
+  { src: "Just keep swimming.", srcEn: true, secs: 1.6, lines: 1,
+    from: "Finding Nemo (2003)",
+    model: "واصلي السباحة فحسب.",
+    alts: ["استمري في السباحة."],
+    keys: ["السباحه"],
+    why: "Arabic marks gender where English does not, so the subtitler has to know who is speaking and to whom &mdash; Dory to herself, so <b>واصلي</b>. Guess the gender and you have put the wrong person on screen." },
+
+  { src: "Live long and prosper.", srcEn: true, secs: 1.8, lines: 1,
+    from: "Star Trek",
+    model: "عش طويلًا وازدهر.",
+    alts: ["طولَ العمر والازدهار."],
+    keys: ["عش", "ازدهر", "العمر"],
+    why: "A formal blessing, and Arabic has a whole register for those. Either rendering works: the imperative keeps the Vulcan formality, the noun phrase sounds like something a person would actually say at a parting. <b>Both fit; the register decides.</b>" }
 ];
 
 /* The limit, computed from the standard above, never stored. */
@@ -8690,6 +8778,7 @@ async function connectBackend(email) {
     backend = "supabase";
     loadProfile();
     loadMyProfile().then(() => { if (!views.seal.hidden) renderSeal(); }).catch(() => {});
+    loadHalves();
     admCheck();
     absorb(row);
     await sbWrite(member);
@@ -12161,7 +12250,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0928-0410";
+const BUILD = "0928-0530";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -13615,15 +13704,30 @@ function subCarries(q, val) {
   return got >= 1;
 }
 
+/* Twenty-two lines is more than anybody should sit through in one go, so
+   a run draws twelve of them, shuffled, and always carries at least three
+   working the other way. Two runs are not the same twelve, which is the
+   other half of the point: the material outlasts the first attempt. */
+const SUB_TAKE = 12, SUB_MIN_OTHER = 3;
+function subRound() {
+  const intoAr = shuffled(SUBTITLE.filter(q => q.srcEn));
+  const intoEn = shuffled(SUBTITLE.filter(q => !q.srcEn));
+  const wantEn = Math.min(SUB_MIN_OTHER, intoEn.length);
+  const picked = intoEn.slice(0, wantEn)
+    .concat(shuffled(intoAr.concat(intoEn.slice(wantEn))).slice(0, SUB_TAKE - wantEn));
+  return shuffled(picked);
+}
+
 function runSubtitle() {
   let i = 0;
   const log = [];
+  const deck = subRound();
 
   function question() {
     stage.innerHTML = "";
-    setCount("Line " + (i + 1) + " of " + SUBTITLE.length);
-    setDots(SUBTITLE.length, i, i);
-    const q = SUBTITLE[i];
+    setCount("Line " + (i + 1) + " of " + deck.length);
+    setDots(deck.length, i, i);
+    const q = deck[i];
     const limit = subLimit(q);
     const into = q.srcEn ? "Arabic" : "English";
 
@@ -13683,7 +13787,7 @@ function runSubtitle() {
     go.addEventListener("click", () => grade(q, ta.value));
     foot.appendChild(go);
     stage.appendChild(foot);
-    stage.appendChild(quitTrial(log, i, SUBTITLE.length));
+    stage.appendChild(quitTrial(log, i, deck.length));
     ta.focus();
   }
 
@@ -13696,7 +13800,7 @@ function runSubtitle() {
     const carries = subCarries(q, val);
     const hit = fits && carries;
     log.push({ src: q.src, srcEn: !!q.srcEn, hit: hit, best: q.model });
-    setDots(SUBTITLE.length, i + 1, -1);
+    setDots(deck.length, i + 1, -1);
 
     stage.innerHTML = "";
     const card = el("div", "prompt");
@@ -13737,11 +13841,11 @@ function runSubtitle() {
     stage.appendChild(v);
 
     const foot = el("div", "foot");
-    const next = el("button", null, i < SUBTITLE.length - 1 ? "Next line" : "See the tally");
-    next.addEventListener("click", () => { i++; if (i < SUBTITLE.length) question(); else finish(log, SUBTITLE.length); });
+    const next = el("button", null, i < deck.length - 1 ? "Next line" : "See the tally");
+    next.addEventListener("click", () => { i++; if (i < deck.length) question(); else finish(log, deck.length); });
     foot.appendChild(next);
     stage.appendChild(foot);
-    stage.appendChild(quitTrial(log, i + 1, SUBTITLE.length));
+    stage.appendChild(quitTrial(log, i + 1, deck.length));
     next.focus();
   }
   question();
@@ -14781,6 +14885,11 @@ function boothQualifies(d, finished) {
 /* What this member has earned. Held in the page for the screens that
    need it now, and re-read from the profile whenever that is loaded. */
 let boothStanding = { fields: [], rank: null };
+/* Which directions are already banked, per field: { medical: ["ar-en"] }.
+   A field needs both, and a member who has one of them was being shown
+   nothing at all — the round counted, the screen stayed blank, and it
+   read as a failure. Half a field is progress and now looks like it. */
+let boothHalf = {};
 
 function applyStanding(p) {
   if (!p) return;
@@ -14789,6 +14898,26 @@ function applyStanding(p) {
     rank: p.interpreting_rank || null
   };
 }
+
+/* The member's own qualifying rounds. Row-level security already limits
+   this to their own, so there is nothing to filter here. */
+async function loadHalves() {
+  if (backend !== "supabase" || !myId()) return;
+  try {
+    const r = await fetch(SUPABASE.url +
+      "/rest/v1/interpreting_rounds?select=field,direction&qualified=is.true&limit=500",
+      { headers: await sbHeaders() });
+    if (!r.ok) return;
+    const rows = await r.json();
+    const got = {};
+    (rows || []).forEach(x => {
+      if (!got[x.field]) got[x.field] = [];
+      if (got[x.field].indexOf(x.direction) < 0) got[x.field].push(x.direction);
+    });
+    boothHalf = got;
+  } catch (e) {}
+}
+function dirName(d) { return d === "en-ar" ? "English → Arabic" : "Arabic → English"; }
 
 /* File the round. The database decides whether it qualified; the reply
    carries that decision back, and the profile carries the standing. */
@@ -14893,14 +15022,22 @@ function chooseGenre() {
   const fields = el("div", "fields");
   BOOTH_GENRES.forEach(g => {
     const won = boothStanding.fields.indexOf(g.id) >= 0;
+    const half = (boothHalf[g.id] || []);
     const t = BOOTH_FIELD_TITLES[g.id];
-    const row = el("div", "field-row" + (won ? " won" : ""));
-    row.innerHTML =
-      '<span class="f-tick">' + (won ? "✦" : "✧") + '</span>' +
-      '<span><span class="f-name">' + escapeText(t.en) + '</span>' +
-      '<span class="f-sub" dir="rtl" lang="ar">' + t.ar + '</span></span>' +
-      '<span class="f-state">' + (won ? "earned" : "not yet") + '</span>';
+    const row = el("div", "field-row" + (won ? " won" : half.length ? " part" : ""));
+    /* Both directions, each shown as banked or still owed, so a member
+       can see exactly what a qualifying round has bought them. */
+    const legs = ["ar-en", "en-ar"].map(d =>
+      '<span class="f-leg' + (won || half.indexOf(d) >= 0 ? " on" : "") + '">' +
+      (d === "ar-en" ? "AR→EN" : "EN→AR") + '</span>').join("");
     fields.appendChild(row);
+    row.innerHTML =
+      '<span class="f-tick">' + (won ? "✦" : half.length ? "◐" : "✧") + '</span>' +
+      '<span><span class="f-name">' + escapeText(t.en) + '</span>' +
+      '<span class="f-sub" dir="rtl" lang="ar">' + t.ar + '</span>' +
+      '<span class="f-legs">' + legs + '</span></span>' +
+      '<span class="f-state">' +
+        (won ? "earned" : half.length ? "half way" : "not yet") + '</span>';
   });
   standing.appendChild(fields);
   standing.appendChild(el("p", "vb",
@@ -15192,6 +15329,7 @@ function boothRound(genre) {
           return;
         }
         await refreshStanding();
+        await loadHalves();
         const has = boothStanding.fields.indexOf(genre.id) >= 0;
         const isNew = has && before.indexOf(genre.id) < 0;
         const title = BOOTH_FIELD_TITLES[genre.id];
@@ -15204,9 +15342,18 @@ function boothRound(genre) {
         } else if (has) {
           award.innerHTML = "You already hold <b>" + escapeText(title.en) + "</b>.";
         } else if (row.qualified) {
-          const other = dir === "ar-en" ? "English into Arabic" : "Arabic into English";
-          award.innerHTML = "This round is at the standard. <b>" + escapeText(title.en) +
-            "</b> needs the same " + other + " &mdash; that is the half that is left.";
+          /* Loud, because it was quiet and read as nothing having happened.
+             The round counted; it bought half the field. */
+          const other = dir === "ar-en" ? "en-ar" : "ar-en";
+          award.className = "onward half";
+          award.innerHTML =
+            '<span class="won">◐ Half of ' + escapeText(title.en) + '</span>' +
+            "This round is <b>banked</b>. A field takes both directions, and you have " +
+            "<b>" + dirName(dir) + "</b>. One round at the standard in <b>" +
+            dirName(other) + "</b> and the title is yours.";
+          const go = el("button", null, "Run it " + dirName(other) + " →");
+          go.addEventListener("click", () => { state.boothDir = other; save(); boothRound(genre); });
+          award.appendChild(go);
         } else {
           award.innerHTML = "Not at the field standard yet. " +
             (dials.meaning < BOOTH_STANDARD.meaning
