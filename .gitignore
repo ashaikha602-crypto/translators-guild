@@ -6,3 +6,8 @@ __pycache__/
 *.pyc
 .DS_Store
 *.png
+
+# The member guide: built artefacts, 30MB of screenshots and a PDF.
+# Kept out of the repo so the site stays small. Rebuild with the
+# scripts in the session scratchpad if it needs refreshing.
+guide/
