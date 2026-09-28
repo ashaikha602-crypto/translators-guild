@@ -4272,14 +4272,19 @@ function subLongestLine(s) {
    attention going. Eleven was a warm-up. Twenty at 4, 6, 10 and 16
    seconds comes to 162 seconds of work, and every setting carries enough
    material for it — the shortest has 23 items. */
+/* The seconds went up with the change to a per-item clock, and they had
+   to. Under the pooled clock the time spent reading an item came out of a
+   shared pot; now each item's own budget has to cover reading it AND
+   typing the answer, and a booth here is worked with thumbs, not a voice.
+   Twenty items comes to 237 seconds — just under four minutes. */
 const BOOTH_LEVELS = [
-  { key: "terms", en: "Terms", ar: "مصطلحات", take: 6, secs: 4,
+  { key: "terms", en: "Terms", ar: "مصطلحات", take: 6, secs: 6,
     say: "One term at a time. This is vocabulary, not yet interpreting." },
-  { key: "phrases", en: "Phrases", ar: "عبارات", take: 5, secs: 6,
+  { key: "phrases", en: "Phrases", ar: "عبارات", take: 5, secs: 9,
     say: "Chunks, the way they actually arrive — verb and object together." },
-  { key: "sentences", en: "Sentences", ar: "جُمَل", take: 6, secs: 10,
+  { key: "sentences", en: "Sentences", ar: "جُمَل", take: 6, secs: 15,
     say: "A whole sentence. Get the meaning through; the words are yours." },
-  { key: "turns", en: "Full turns", ar: "أدوار كاملة", take: 3, secs: 16,
+  { key: "turns", en: "Full turns", ar: "أدوار كاملة", take: 3, secs: 22,
     say: "What a speaker really gives you before pausing. Hold it, then render it." }
 ];
 const BOOTH_ROUND_SIZE = BOOTH_LEVELS.reduce((n, L) => n + L.take, 0);
@@ -12401,7 +12406,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0928-1125";
+const BUILD = "0928-1240";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -15292,14 +15297,28 @@ function boothRound(genre) {
 
   /* The clock is built from what is actually being asked: a term is not
      a sentence, and a sentence is not a full turn. */
+  /* ONE CLOCK PER ITEM, not one pooled clock for the round.
+
+     It used to be pooled: 162 seconds for the whole thing, counting from
+     the first keystroke. That works at eleven items and fails at twenty,
+     because anything overspent on the six terms at the start is stolen
+     from the sentences and full turns at the end — and those run last.
+     Shaikha's diplomatic rounds are the proof: terminology 100%,
+     completeness 11%, delivery 65%. She was not failing the long items.
+     She never reached seven of them.
+
+     Each item now carries its own seconds, so nothing an item takes can
+     be taken from the next one. Running out on one marks it undelivered
+     and moves on; it no longer ends the round. */
   const DUR = queue.reduce((t, q) => t + q.level.secs, 0);
   const NEED = Math.max(3, Math.round(queue.length * 0.55));
-  let left = DUR, idx = 0, hits = 0, started = false;
+  let left = queue[0].level.secs, idx = 0, hits = 0;
   const log = [], marks = [];
   rememberServed(genre.id, queue);
 
   stage.innerHTML = "";
-  setCount(genre.en + " · " + (into === "ar" ? "EN → AR" : "AR → EN"));
+  setCount(genre.en + " · " + (into === "ar" ? "EN → AR" : "AR → EN") +
+           " · " + Math.round(DUR / 60) + " min");
   setDots(queue.length, 0, 0);
 
   const card = el("div", "prompt");
@@ -15321,7 +15340,7 @@ function boothRound(genre) {
   typing.appendChild(inp);
 
   const gauge = el("div", "gauge");
-  const clock = el("span", "ok", DUR + "s");
+  const clock = el("span", "ok", queue[0].level.secs + "s");
   const tally = el("span", null, "0 through");
   gauge.appendChild(clock); gauge.appendChild(tally);
   typing.appendChild(gauge);
@@ -15330,7 +15349,7 @@ function boothRound(genre) {
   typing.appendChild(bar);
   stage.appendChild(typing);
 
-  const feed = el("p", "note", "The clock starts the moment you type. Enter to send, Tab to pass.");
+  const feed = el("p", "note", "Each item has its own clock. Enter to send, Tab to pass.");
   stage.appendChild(feed);
 
   /* A round is against a clock, which is exactly why there has to be a
@@ -15359,19 +15378,41 @@ function boothRound(genre) {
     inp.value = "";
     quitBtn.textContent = log.length ? "End this round" : "Leave this round";
     quitNote.textContent = log.length + " of " + queue.length + " answered";
+    begin();                 /* this item's own clock, from the top */
   }
+  /* Starts when the item appears, because that is when a speaker starts
+     speaking. Runs out and the item is simply not delivered. */
   function begin() {
-    if (started) return;
-    started = true;
+    stopBooth();
+    const span = queue[idx].level.secs;
+    left = span;
+    clock.textContent = left + "s";
+    clock.className = "ok";
+    const b0 = bar.querySelector("i");
+    b0.style.width = "100%"; b0.className = "";
     boothTimer = setInterval(() => {
       left--;
-      clock.textContent = left + "s";
-      clock.className = left <= 10 ? "over" : "ok";
+      clock.textContent = Math.max(0, left) + "s";
+      clock.className = left <= Math.max(2, Math.round(span * 0.3)) ? "over" : "ok";
       const b = bar.querySelector("i");
-      b.style.width = (left / DUR * 100) + "%";
-      b.className = left <= 10 ? "hot" : "";
-      if (left <= 0) end();
+      b.style.width = Math.max(0, left / span * 100) + "%";
+      b.className = left <= Math.max(2, Math.round(span * 0.3)) ? "hot" : "";
+      if (left <= 0) ranOut();
     }, 1000);
+  }
+
+  /* The clock beat them to it. The item counts as not delivered, which is
+     what the delivery dial is for, and the round carries on. */
+  function ranOut() {
+    stopBooth();
+    const q = queue[idx];
+    feed.innerHTML = '<b style="color:var(--coral)">\u2727 time</b> \u2014 ' +
+      (q.level.key === "sentences" || q.level.key === "turns" ? "one good rendering: " : "") +
+      shown(q) + others(q);
+    log.push({ src: prompt(q), hit: false, best: model(q),
+               alts: boothForms(q, into).slice(1), level: q.level.en, timedOut: true });
+    marks.push({ level: q.level.key, share: 0, blank: true, skipped: true });
+    advance();
   }
   function advance() {
     idx++;
@@ -15396,6 +15437,7 @@ function boothRound(genre) {
       '</span>' : "";
   }
   function send() {
+    stopBooth();
     const q = queue[idx];
     const m = boothMark(q, inp.value, dir);
     const long = q.level.key === "sentences" || q.level.key === "turns";
@@ -15423,11 +15465,11 @@ function boothRound(genre) {
     advance();
   }
 
-  inp.addEventListener("input", begin);
   inp.addEventListener("keydown", e => {
-    if (e.key === "Enter") { e.preventDefault(); begin(); send(); }
+    if (e.key === "Enter") { e.preventDefault(); send(); }
     if (e.key === "Tab") {
-      e.preventDefault(); begin();
+      e.preventDefault();
+      stopBooth();
       const q = queue[idx];
       log.push({ src: prompt(q), hit: false, best: model(q),
                  alts: boothForms(q, into).slice(1), level: q.level.en, passed: true });
