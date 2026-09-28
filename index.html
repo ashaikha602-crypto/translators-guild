@@ -2774,15 +2774,31 @@ const RANKS = [
 
      Mirrored in the ranks table in the database, which is what the server
      actually awards from. */
-  { at: 0,  en: "Novice",            ar: "مُبتدِئ" },
-  { at: 2,  en: "Advanced Beginner", ar: "مُبتدِئ مُتقدِّم" },
-  { at: 5,  en: "Competent",         ar: "كَفء" },
-  { at: 8,  en: "Proficient",        ar: "مُتقِن" },
-  /* Expert sits at the number of published trials, never above it, or the
-     top rank cannot be reached by anyone. Ten trials, ten marks. This line
-     and the ranks table move together whenever the curriculum grows. */
-  { at: 10, en: "Expert",            ar: "خَبير" }
+  /* The thresholds are a SHAPE, not five typed numbers, and `at` is worked
+     out from however many trials are published — see rankAt() below.
+
+     They were typed once, and on 24 September a tenth trial was added and
+     the five numbers were retyped by hand: Expert moved from 7 to 10. Every
+     member holding 7, 8 or 9 marks was silently demoted that day. Nobody
+     lost a mark and nothing was unfair about the new bar, but the app never
+     said a word — it just showed a smaller rank than the day before, which
+     is how Shaikha found it. A curriculum that grows should not take a rank
+     off somebody's profile without explaining itself, and thresholds that
+     have to be retyped guarantee it happens again. */
+  { share: 0,    en: "Novice",            ar: "مُبتدِئ" },
+  { share: 0.2,  en: "Advanced Beginner", ar: "مُبتدِئ مُتقدِّم" },
+  { share: 0.5,  en: "Competent",         ar: "كَفء" },
+  { share: 0.8,  en: "Proficient",        ar: "مُتقِن" },
+  /* Expert is every published trial, never fewer and never more: fewer and
+     it is not the top, more and nobody can reach it. */
+  { share: 1,    en: "Expert",            ar: "خَبير" }
 ];
+
+/* How many marks a rank actually asks for, given today's curriculum. With
+   ten trials this returns 0, 2, 5, 8, 10 — exactly the numbers that were
+   typed by hand before — so nothing moves today, and an eleventh trial
+   moves the ladder without anybody having to remember to. */
+function rankAt(r) { return Math.ceil(r.share * totalMarks()); }
 
 /* ═══════════ PORTRAITS ═══════════
    One image per figure, held as a file in this repository rather than
@@ -4587,6 +4603,46 @@ const REGISTER = [
       { name: "Everyday MSA", ar: "شُكراً لك.", en: "Thank you.", note: "The default. Fits almost anywhere." },
       { name: "Formal", ar: "أشكرك جزيل الشُّكر.", en: "I'm most grateful to you.", note: "Correspondence, ceremony, public thanks." },
       { name: "Classical", ar: "جزاك اللّه خيراً على ما أسديت.", en: "May you be rewarded for the kindness you have shown.", note: "Religious and literary register at once." }
+    ] },
+
+  { meaning: "I'm sorry.",
+    stops: [
+      { name: "Kuwaiti", ar: "آسف، واللّه ما قصدت.", en: "Sorry, I honestly didn't mean it.", note: "Spoken, between equals. The oath is emphasis, not religion — translate the emphasis, not the word." },
+      { name: "Everyday MSA", ar: "أنا آسف.", en: "I'm sorry.", note: "Neutral, and the one a subtitle usually wants." },
+      { name: "Formal", ar: "أعتذر عن ذلك.", en: "I apologise for that.", note: "A workplace, a letter, a correction issued in writing." },
+      { name: "Classical", ar: "إنّي أعتذر إليك أشدَّ الاعتذار.", en: "I offer you my most profound apologies.", note: "Ceremonial. In English this height is nearly always too much — watch it." }
+    ] },
+
+  { meaning: "I don't know.",
+    stops: [
+      { name: "Kuwaiti", ar: "ما أدري.", en: "No idea.", note: "Two words in each language, and both are shrugs." },
+      { name: "Everyday MSA", ar: "لا أعرف.", en: "I don't know.", note: "Neutral, flat, unremarkable — which is the point." },
+      { name: "Formal", ar: "ليس لديّ عِلم بذلك.", en: "I have no information on that.", note: "A spokesman, a witness, a minuted meeting. Notice it says less than it seems to." },
+      { name: "Classical", ar: "لا عِلمَ لي بذلك.", en: "Of that I have no knowledge.", note: "The same words in a different order, and a century of distance." }
+    ] },
+
+  { meaning: "What do you want?",
+    stops: [
+      { name: "Kuwaiti", ar: "شتبي؟", en: "What d'you want?", note: "One word. Blunt, and between friends not rude." },
+      { name: "Everyday MSA", ar: "ماذا تُريد؟", en: "What do you want?", note: "Neutral in Arabic — and already slightly sharp in English." },
+      { name: "Formal", ar: "كيف يُمكنني مساعدتك؟", en: "How may I help you?", note: "The polite register does not ask the question at all. <b>It replaces it.</b> A counter, a call centre, a front desk." },
+      { name: "Classical", ar: "ما حاجتُك؟", en: "What is your need?", note: "Old and courtly. In a modern text it would read as pastiche." }
+    ] },
+
+  { meaning: "Congratulations.",
+    stops: [
+      { name: "Kuwaiti", ar: "مبروك!", en: "Congrats!", note: "Said for anything: a marriage, a car, a haircut." },
+      { name: "Everyday MSA", ar: "تَهانينا.", en: "Congratulations.", note: "The plural is conventional, not royal. Do not render it as <i>our congratulations</i> unless it really is a group." },
+      { name: "Formal", ar: "نتقدّم إليكم بأحرّ التهاني.", en: "We extend to you our warmest congratulations.", note: "An official letter or a notice in a newspaper." },
+      { name: "Classical", ar: "بارك اللّه لك وبارك عليك.", en: "May God bless you, and bless what is yours.", note: "A blessing rather than a congratulation — a different speech act wearing the same job." }
+    ] },
+
+  { meaning: "He died.",
+    stops: [
+      { name: "Kuwaiti", ar: "مات.", en: "He died.", note: "Bare and direct. Among family it is ordinary; in an announcement it would be harsh." },
+      { name: "Everyday MSA", ar: "تُوُفِّيَ.", en: "He passed away.", note: "The passive is the euphemism: <i>he was taken</i>. English reaches for <i>passed away</i> at the same height." },
+      { name: "Formal", ar: "اِنتقل إلى رحمة اللّه تعالى.", en: "He has passed into the mercy of God.", note: "An obituary, a formal announcement. Rendering this as <i>he died</i> is accurate and tone-deaf." },
+      { name: "Classical", ar: "وافَتْه المَنِيَّة.", en: "Death came upon him.", note: "Literary. The Arabic makes death the subject and the man the object, and English can keep that." }
     ] }
 ];
 
@@ -4628,6 +4684,66 @@ const ROOTS = [
       { w: "تَسليم", tr: "taslīm", en: "delivery, handover" },
       { w: "اِستِسلام", tr: "istislām", en: "surrender" },
       { w: "سُلَّم", tr: "sullam", en: "ladder — its rungs are whole" }
+    ] },
+
+  /* ── six more, chosen because a translator meets every one of them in
+     the first week: the words the craft uses about itself. ── */
+
+  { root: "ن ق ل", sense: "to move, to carry across",
+    words: [
+      { w: "نَقَلَ", tr: "naqala", en: "he moved, he carried across &mdash; and one of the old verbs for <i>he translated</i>" },
+      { w: "نَقل", tr: "naql", en: "transfer, transport; and in classical scholarship <b>transmission</b>, the received, as against عَقل, the reasoned" },
+      { w: "ناقِل", tr: "nāqil", en: "a carrier, a transmitter" },
+      { w: "مَنقول", tr: "manqūl", en: "moved, transmitted &mdash; of a text, handed down" },
+      { w: "اِنتِقال", tr: "intiqāl", en: "a transition, a move" },
+      { w: "مُتَنَقِّل", tr: "mutanaqqil", en: "mobile, itinerant" }
+    ] },
+
+  { root: "ف س ر", sense: "to explain, to expound",
+    words: [
+      { w: "فَسَّرَ", tr: "fassara", en: "he explained, he expounded" },
+      { w: "تَفسير", tr: "tafsīr", en: "exegesis, commentary &mdash; and the ordinary word for <i>interpretation</i> of a text. Set it against تَرجَمة: <b>tafsīr explains inside the language, tarjama carries across into another</b>" },
+      { w: "مُفَسِّر", tr: "mufassir", en: "an exegete, a commentator" },
+      { w: "اِستِفسار", tr: "istifsār", en: "a request for clarification, an enquiry" },
+      { w: "تَفسيريّ", tr: "tafsīrī", en: "explanatory" }
+    ] },
+
+  { root: "ك ل م", sense: "to speak",
+    words: [
+      { w: "كَلام", tr: "kalām", en: "speech, talk" },
+      { w: "كَلِمة", tr: "kalima", en: "a word" },
+      { w: "تَكَلَّمَ", tr: "takallama", en: "he spoke" },
+      { w: "مُتَكَلِّم", tr: "mutakallim", en: "a speaker &mdash; and, in عِلم الكَلام, a theologian. The same form, two fields, and only the context tells you which" },
+      { w: "كَليم", tr: "kalīm", en: "one spoken to &mdash; as in كَليم اللّه" },
+      { w: "كَلْم", tr: "kalm", en: "a wound. The same three letters, and no relation in sense &mdash; a root is not always one family" }
+    ] },
+
+  { root: "ع ر ب", sense: "to be an Arab; to make plain",
+    words: [
+      { w: "عَرَبِيّ", tr: "ʿarabī", en: "Arab; Arabic" },
+      { w: "تَعريب", tr: "taʿrīb", en: "<b>arabisation</b> &mdash; giving a foreign term Arabic shape rather than translating it. A procedure in its own right, and the one behind تِلِفِزيون" },
+      { w: "مُعَرَّب", tr: "muʿarrab", en: "arabised &mdash; a loanword that has been given Arabic form" },
+      { w: "إعراب", tr: "iʿrāb", en: "the case and mood endings; literally <i>making plain</i>" },
+      { w: "أعراب", tr: "aʿrāb", en: "the desert Arabs &mdash; not a plural of عَرَبِيّ, and not interchangeable with it" }
+    ] },
+
+  { root: "ف ه م", sense: "to understand",
+    words: [
+      { w: "فَهم", tr: "fahm", en: "understanding" },
+      { w: "فاهِم", tr: "fāhim", en: "one who understands" },
+      { w: "مَفهوم", tr: "mafhūm", en: "understood &mdash; and <b>a concept</b>. The passive participle doing duty as a technical noun" },
+      { w: "تَفاهُم", tr: "tafāhum", en: "mutual understanding &mdash; مُذَكِّرة تَفاهُم is a memorandum of understanding, which you will meet in the booth" },
+      { w: "اِستِفهام", tr: "istifhām", en: "enquiry &mdash; أداة استفهام is an interrogative particle" }
+    ] },
+
+  { root: "د ر س", sense: "to study",
+    words: [
+      { w: "دَرس", tr: "dars", en: "a lesson" },
+      { w: "دِراسة", tr: "dirāsa", en: "study; a study, a piece of research" },
+      { w: "مُدَرِّس", tr: "mudarris", en: "a teacher" },
+      { w: "مَدرَسة", tr: "madrasa", en: "a school &mdash; the place of the lesson" },
+      { w: "دارِس", tr: "dāris", en: "one who studies; a researcher" },
+      { w: "تَدريس", tr: "tadrīs", en: "teaching, instruction" }
     ] }
 ];
 
@@ -8236,7 +8352,7 @@ function markCount() {
   const scored = new Set(publishedTrials().map(t => t.id));
   return Object.keys(state.marks).filter(k => state.marks[k] && scored.has(k)).length;
 }
-function currentRank() { let r = RANKS[0]; const n = markCount(); for (const c of RANKS) if (n >= c.at) r = c; return r; }
+function currentRank() { let r = RANKS[0]; const n = markCount(); for (const c of RANKS) if (n >= rankAt(c)) r = c; return r; }
 function grant(id) {
   if (!state.marks[id]) { state.marks[id] = true; save(); pushBackend(); return true; }
   return false;
@@ -11316,27 +11432,27 @@ function renderClimb() {
   const n = markCount(), rank = currentRank(), last = RANKS.length - 1, tm = totalMarks();
 
   let k = 0;
-  for (let i = 0; i < RANKS.length; i++) if (n >= RANKS[i].at) k = i;
+  for (let i = 0; i < RANKS.length; i++) if (n >= rankAt(RANKS[i])) k = i;
   let pos = 1;
   if (k < last) {
-    const span = RANKS[k + 1].at - RANKS[k].at;
-    pos = (k + (n - RANKS[k].at) / span) / last;
+    const span = rankAt(RANKS[k + 1]) - rankAt(RANKS[k]);
+    pos = (k + (n - rankAt(RANKS[k])) / span) / last;
   }
 
   const next = RANKS[k + 1];
-  const gap = next ? next.at - n : 0;
+  const gap = next ? rankAt(next) - n : 0;
   const nextTxt = next
     ? 'Next rung: <b>' + next.en + '</b> — ' + gap + ' more mark' + (gap === 1 ? '' : 's') + ' to go.'
     : '<span class="done">Every mark earned. You hold the highest rank in the house.</span>';
 
   let stations = "";
   RANKS.forEach(r => {
-    const reached = n >= r.at;
+    const reached = n >= rankAt(r);
     stations +=
       '<div class="station' + (reached ? " reached" : "") + (r.en === rank.en ? " current" : "") + '">' +
         '<span class="dot">✦</span>' +
         '<span class="s-en">' + r.en + '</span>' +
-        '<span class="s-n">' + r.at + ' marks</span>' +
+        '<span class="s-n">' + rankAt(r) + ' marks</span>' +
       '</div>';
   });
 
@@ -11435,8 +11551,8 @@ function paintSeal() {
   const box = document.getElementById("seal-journey");
   if (!box) return;
 
-  const next = RANKS.find(r => r.at > n);
-  const gap = next ? next.at - n : 0;
+  const next = RANKS.find(r => rankAt(r) > n);
+  const gap = next ? rankAt(next) - n : 0;
   const nextTxt = next
     ? gap + (gap === 1 ? " mark to " : " marks to ") + next.en
     : "Every mark earned";
@@ -12285,7 +12401,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0928-0940";
+const BUILD = "0928-1125";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -13694,9 +13810,11 @@ function runFinale() {
   ov.innerHTML =
     '<div class="fin-stage"><div class="fin-verdict">' +
       '<span class="fin-logo" aria-hidden="true"></span>' +
-      '<p class="fin-kick">Nine marks · the house is yours</p>' +
+      /* Typed as "Nine" when there were nine trials, and left behind when a
+         tenth arrived. It counts them now. */
+      '<p class="fin-kick">' + totalMarks() + ' marks · the house is yours</p>' +
       '<p class="fin-rank">' + r.en + '</p>' +
-      '<p class="fin-said">Every trial passed, every chamber walked. Nine times you took the ' +
+      '<p class="fin-said">Every trial passed, every chamber walked. ' + totalMarks() + ' times you took the ' +
         '<b>natural equivalent</b> over the literal one — which is the only thing the craft ever asks.</p>' +
       '<div class="foot" style="justify-content:center">' +
         '<button id="fin-close">Back to the hall</button></div>' +
