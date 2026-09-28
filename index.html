@@ -2091,6 +2091,13 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
   border: 1px solid rgba(214,191,234,.18); color: var(--lilac-dim); }
 .f-leg.on { border-color: rgba(46,217,160,.45); color: var(--mint-soft);
   background: rgba(46,217,160,.12); }
+/* Twenty rounds is a long climb, so the climb is drawn. */
+.f-track, .score .onward .track { display: block; height: 3px; border-radius: 3px;
+  background: rgba(214,191,234,.14); overflow: hidden; margin-top: .4rem; }
+.f-track i, .score .onward .track i { display: block; height: 100%; border-radius: 3px;
+  background: var(--amber); }
+.field-row.won .f-track i { background: var(--mint); }
+.score .onward .track { margin: .1rem 0 .6rem; }
 .field-row .f-name { font-size: .9rem; color: var(--white); }
 .field-row .f-sub { display: block; font-size: .72rem; color: var(--lilac-dim); }
 .field-row .f-state { font-size: .72rem; color: var(--lilac-dim); white-space: nowrap; }
@@ -12271,7 +12278,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0928-0625";
+const BUILD = "0928-0810";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -14880,7 +14887,16 @@ function boothRankAr(en) {
   return r ? r.ar : "";
 }
 
-const BOOTH_STANDARD = { composite: 0.80, meaning: 0.75, completeness: 0.60 };
+/* Height and volume, because four good rounds is a good day and not a
+   qualification. An interpreter is somebody who does it again, at speed,
+   and is still accurate on the twentieth turn — so a field asks for
+   twenty rounds at the standard, in both directions, and the standard
+   itself is 90 rather than 80.
+
+   Mirrored in the database, which is what actually rules on a round and
+   what actually writes the title. If one of these moves the other must. */
+const BOOTH_STANDARD = { composite: 0.90, meaning: 0.85, completeness: 0.70 };
+const BOOTH_ROUNDS_NEEDED = 20;
 
 /* The four readings, from the per-item shares a round collected. */
 function boothDials(marks) {
@@ -14906,11 +14922,16 @@ function boothQualifies(d, finished) {
 /* What this member has earned. Held in the page for the screens that
    need it now, and re-read from the profile whenever that is loaded. */
 let boothStanding = { fields: [], rank: null };
-/* Which directions are already banked, per field: { medical: ["ar-en"] }.
-   A field needs both, and a member who has one of them was being shown
-   nothing at all — the round counted, the screen stayed blank, and it
-   read as a failure. Half a field is progress and now looks like it. */
+/* Rounds banked so far, per field and per direction:
+     { medical: { "ar-en": 7, "en-ar": 4, total: 11 } }
+   Twenty of them earns the field, so a member needs to see the count
+   climbing. Showing nothing until the twentieth would read as failure
+   nineteen times over. */
 let boothHalf = {};
+function bankedIn(fieldId) {
+  const b = boothHalf[fieldId];
+  return b ? b.total : 0;
+}
 
 function applyStanding(p) {
   if (!p) return;
@@ -14932,8 +14953,10 @@ async function loadHalves() {
     const rows = await r.json();
     const got = {};
     (rows || []).forEach(x => {
-      if (!got[x.field]) got[x.field] = [];
-      if (got[x.field].indexOf(x.direction) < 0) got[x.field].push(x.direction);
+      if (!got[x.field]) got[x.field] = { "ar-en": 0, "en-ar": 0, total: 0 };
+      if (got[x.field][x.direction] === undefined) return;
+      got[x.field][x.direction]++;
+      got[x.field].total++;
     });
     boothHalf = got;
   } catch (e) {}
@@ -15038,27 +15061,35 @@ function chooseGenre() {
   }
   standing.appendChild(el("p", "vb",
     "Counted apart from the nine Marks, because interpreting is not translation read aloud. " +
-    "A setting is earned by one round at the standard <b>in both directions</b> &mdash; " +
-    "nobody is hired to work one way. What you earn is shown on your profile."));
+    "A setting takes <b>" + BOOTH_ROUNDS_NEEDED + " rounds at the standard</b>, " +
+    "<b>in both directions</b> &mdash; nobody is hired to work one way, and nobody is an " +
+    "interpreter on the strength of one good afternoon. The standard is " +
+    Math.round(BOOTH_STANDARD.composite * 100) + "% overall and " +
+    Math.round(BOOTH_STANDARD.meaning * 100) + "% on meaning. " +
+    "What you earn is shown on your profile."));
   const fields = el("div", "fields");
   BOOTH_GENRES.forEach(g => {
     const won = boothStanding.fields.indexOf(g.id) >= 0;
-    const half = (boothHalf[g.id] || []);
+    const bank = boothHalf[g.id] || { "ar-en": 0, "en-ar": 0, total: 0 };
     const t = BOOTH_FIELD_TITLES[g.id];
-    const row = el("div", "field-row" + (won ? " won" : half.length ? " part" : ""));
-    /* Both directions, each shown as banked or still owed, so a member
-       can see exactly what a qualifying round has bought them. */
+    const row = el("div", "field-row" + (won ? " won" : bank.total ? " part" : ""));
+    /* Each direction with its own count, so a member can see both how far
+       along they are and whether they have been working only one way. */
     const legs = ["ar-en", "en-ar"].map(d =>
-      '<span class="f-leg' + (won || half.indexOf(d) >= 0 ? " on" : "") + '">' +
-      (d === "ar-en" ? "AR→EN" : "EN→AR") + '</span>').join("");
+      '<span class="f-leg' + (bank[d] ? " on" : "") + '">' +
+      (d === "ar-en" ? "AR→EN" : "EN→AR") + ' ' + bank[d] + '</span>').join("");
+    const pct = Math.min(100, Math.round(100 * bank.total / BOOTH_ROUNDS_NEEDED));
     fields.appendChild(row);
     row.innerHTML =
-      '<span class="f-tick">' + (won ? "✦" : half.length ? "◐" : "✧") + '</span>' +
+      '<span class="f-tick">' + (won ? "✦" : bank.total ? "◐" : "✧") + '</span>' +
       '<span><span class="f-name">' + escapeText(t.en) + '</span>' +
       '<span class="f-sub" dir="rtl" lang="ar">' + t.ar + '</span>' +
-      '<span class="f-legs">' + legs + '</span></span>' +
+      '<span class="f-legs">' + legs + '</span>' +
+      (won ? "" : '<span class="f-track"><i style="width:' + pct + '%"></i></span>') +
+      '</span>' +
       '<span class="f-state">' +
-        (won ? "earned" : half.length ? "half way" : "not yet") + '</span>';
+        (won ? "earned"
+             : bank.total + " of " + BOOTH_ROUNDS_NEEDED) + '</span>';
   });
   standing.appendChild(fields);
   standing.appendChild(el("p", "vb",
@@ -15330,9 +15361,10 @@ function boothRound(genre) {
         });
       sc.appendChild(dl);
       sc.appendChild(el("p", "d-note",
-        "Overall <b>" + pc(dials.composite) + "%</b> &mdash; " +
-        "a field asks for " + pc(BOOTH_STANDARD.composite) + "% here, " +
-        pc(BOOTH_STANDARD.meaning) + "% on meaning, in both directions."));
+        "Overall <b>" + pc(dials.composite) + "%</b> &mdash; a round counts towards a field " +
+        "at " + pc(BOOTH_STANDARD.composite) + "% here and " +
+        pc(BOOTH_STANDARD.meaning) + "% on meaning. A field takes <b>" +
+        BOOTH_ROUNDS_NEEDED + "</b> of them, both directions."));
     }
 
     /* File it, then say what it earned. The database rules on whether the
@@ -15357,24 +15389,38 @@ function boothRound(genre) {
         if (isNew) {
           award.innerHTML = '<span class="won">✦ ' + escapeText(title.en) + '</span>' +
             '<span class="won-ar" dir="rtl" lang="ar">' + title.ar + '</span>' +
-            "Both directions at the standard. It is on your profile now." +
+            BOOTH_ROUNDS_NEEDED + " rounds at the standard, both directions. " +
+            "It is on your profile now." +
             (boothStanding.rank
               ? " Your booth standing is <b>" + escapeText(boothStanding.rank) + "</b>." : "");
         } else if (has) {
           award.innerHTML = "You already hold <b>" + escapeText(title.en) + "</b>.";
         } else if (row.qualified) {
           /* Loud, because it was quiet and read as nothing having happened.
-             The round counted; it bought half the field. */
+             The round counted, and the count is the point now: twenty of
+             these, so the number has to be on the screen every time. */
+          const bank = boothHalf[genre.id] || { "ar-en": 0, "en-ar": 0, total: 0 };
+          const left = Math.max(0, BOOTH_ROUNDS_NEEDED - bank.total);
           const other = dir === "ar-en" ? "en-ar" : "ar-en";
+          const owesOther = bank[other] === 0;
           award.className = "onward half";
           award.innerHTML =
-            '<span class="won">◐ Half of ' + escapeText(title.en) + '</span>' +
-            "This round is <b>banked</b>. A field takes both directions, and you have " +
-            "<b>" + dirName(dir) + "</b>. One round at the standard in <b>" +
-            dirName(other) + "</b> and the title is yours.";
-          const go = el("button", null, "Run it " + dirName(other) + " →");
-          go.addEventListener("click", () => { state.boothDir = other; save(); boothRound(genre); });
-          award.appendChild(go);
+            '<span class="won">◐ ' + bank.total + " of " + BOOTH_ROUNDS_NEEDED +
+              " &middot; " + escapeText(title.en) + '</span>' +
+            '<span class="track"><i style="width:' +
+              Math.min(100, Math.round(100 * bank.total / BOOTH_ROUNDS_NEEDED)) + '%"></i></span>' +
+            "This round is <b>banked</b>: " + bank[dir] + " going " + dirName(dir) +
+            ", " + bank[other] + " going " + dirName(other) + ". " +
+            (left
+              ? "<b>" + left + " more</b> at the standard" +
+                (owesOther ? ", and at least one of them <b>" + dirName(other) + "</b>," : "") +
+                " and the title is yours."
+              : "That is the twenty. The title lands as soon as both directions are covered.");
+          if (owesOther) {
+            const go = el("button", null, "Run it " + dirName(other) + " →");
+            go.addEventListener("click", () => { state.boothDir = other; save(); boothRound(genre); });
+            award.appendChild(go);
+          }
         } else {
           award.innerHTML = "Not at the field standard yet. " +
             (dials.meaning < BOOTH_STANDARD.meaning
