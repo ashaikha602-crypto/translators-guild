@@ -4250,16 +4250,23 @@ function subLongestLine(s) {
    under a clock. It carries the content words it must contain, and
    getting most of them through is what a booth actually asks of you.
    ══════════════════════════════════════════════════════════════════ */
+/* A round is twenty turns against one clock, which is the thing being
+   tested: not whether somebody can render a term, but whether they are
+   still rendering accurately on the twentieth, at speed, without the
+   attention going. Eleven was a warm-up. Twenty at 4, 6, 10 and 16
+   seconds comes to 162 seconds of work, and every setting carries enough
+   material for it — the shortest has 23 items. */
 const BOOTH_LEVELS = [
-  { key: "terms", en: "Terms", ar: "مصطلحات", take: 3, secs: 4,
+  { key: "terms", en: "Terms", ar: "مصطلحات", take: 6, secs: 4,
     say: "One term at a time. This is vocabulary, not yet interpreting." },
-  { key: "phrases", en: "Phrases", ar: "عبارات", take: 3, secs: 6,
+  { key: "phrases", en: "Phrases", ar: "عبارات", take: 5, secs: 6,
     say: "Chunks, the way they actually arrive — verb and object together." },
-  { key: "sentences", en: "Sentences", ar: "جُمَل", take: 3, secs: 10,
+  { key: "sentences", en: "Sentences", ar: "جُمَل", take: 6, secs: 10,
     say: "A whole sentence. Get the meaning through; the words are yours." },
-  { key: "turns", en: "Full turns", ar: "أدوار كاملة", take: 2, secs: 16,
+  { key: "turns", en: "Full turns", ar: "أدوار كاملة", take: 3, secs: 16,
     say: "What a speaker really gives you before pausing. Hold it, then render it." }
 ];
+const BOOTH_ROUND_SIZE = BOOTH_LEVELS.reduce((n, L) => n + L.take, 0);
 
 const BOOTH_GENRES = [
   {
@@ -12278,7 +12285,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0928-0810";
+const BUILD = "0928-0940";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -14887,16 +14894,16 @@ function boothRankAr(en) {
   return r ? r.ar : "";
 }
 
-/* Height and volume, because four good rounds is a good day and not a
-   qualification. An interpreter is somebody who does it again, at speed,
-   and is still accurate on the twentieth turn — so a field asks for
-   twenty rounds at the standard, in both directions, and the standard
-   itself is 90 rather than 80.
+/* The twenty is inside the round, not a count of rounds. Shaikha's point
+   was that an interpreter is somebody still accurate on the twentieth
+   turn, at speed — so the test is twenty turns against one clock, held to
+   90%, and it is that single sustained run which earns the field. Asking
+   for twenty separate runs was my misreading of it.
 
    Mirrored in the database, which is what actually rules on a round and
    what actually writes the title. If one of these moves the other must. */
 const BOOTH_STANDARD = { composite: 0.90, meaning: 0.85, completeness: 0.70 };
-const BOOTH_ROUNDS_NEEDED = 20;
+const BOOTH_ROUNDS_NEEDED = 1;
 
 /* The four readings, from the per-item shares a round collected. */
 function boothDials(marks) {
@@ -15004,7 +15011,7 @@ function runBooth() { stopBooth(); chooseGenre(); }
 function chooseGenre() {
   stopBooth();
   stage.innerHTML = "";
-  setCount("Six settings · four levels");
+  setCount("Six settings · " + BOOTH_ROUND_SIZE + " turns a round");
   setDots(0, 0, 0);
 
 
@@ -15061,35 +15068,40 @@ function chooseGenre() {
   }
   standing.appendChild(el("p", "vb",
     "Counted apart from the nine Marks, because interpreting is not translation read aloud. " +
-    "A setting takes <b>" + BOOTH_ROUNDS_NEEDED + " rounds at the standard</b>, " +
-    "<b>in both directions</b> &mdash; nobody is hired to work one way, and nobody is an " +
-    "interpreter on the strength of one good afternoon. The standard is " +
-    Math.round(BOOTH_STANDARD.composite * 100) + "% overall and " +
-    Math.round(BOOTH_STANDARD.meaning * 100) + "% on meaning. " +
-    "What you earn is shown on your profile."));
+    "A setting takes one round of <b>" + BOOTH_ROUND_SIZE + " turns against the clock</b> at " +
+    Math.round(BOOTH_STANDARD.composite * 100) + "% &mdash; and the same again " +
+    "<b>the other way</b>. What is being tested is whether you are still accurate on the " +
+    "twentieth turn: anybody can render one term. Nobody is hired to work one direction, " +
+    "which is why both are asked for. What you earn is shown on your profile."));
   const fields = el("div", "fields");
   BOOTH_GENRES.forEach(g => {
     const won = boothStanding.fields.indexOf(g.id) >= 0;
     const bank = boothHalf[g.id] || { "ar-en": 0, "en-ar": 0, total: 0 };
     const t = BOOTH_FIELD_TITLES[g.id];
-    const row = el("div", "field-row" + (won ? " won" : bank.total ? " part" : ""));
+    const row = el("div", "field-row");
     /* Each direction with its own count, so a member can see both how far
        along they are and whether they have been working only one way. */
+    /* Each direction is either banked or it is not — one qualifying round
+       does it — so the chips say so rather than carrying a count. */
     const legs = ["ar-en", "en-ar"].map(d =>
       '<span class="f-leg' + (bank[d] ? " on" : "") + '">' +
-      (d === "ar-en" ? "AR→EN" : "EN→AR") + ' ' + bank[d] + '</span>').join("");
-    const pct = Math.min(100, Math.round(100 * bank.total / BOOTH_ROUNDS_NEEDED));
+      (d === "ar-en" ? "AR→EN" : "EN→AR") + (bank[d] ? " ✓" : "") + '</span>').join("");
+    /* Both legs banked is the field, whether or not the profile has caught
+       up yet — the trigger writes it a moment after the round is filed, and
+       the row should not read "one way done" in the gap. */
+    const done = ["ar-en", "en-ar"].filter(d => bank[d]).length;
+    const held = won || done === 2;
+    row.className = "field-row" + (held ? " won" : done ? " part" : "");
     fields.appendChild(row);
     row.innerHTML =
-      '<span class="f-tick">' + (won ? "✦" : bank.total ? "◐" : "✧") + '</span>' +
+      '<span class="f-tick">' + (held ? "✦" : done ? "◐" : "✧") + '</span>' +
       '<span><span class="f-name">' + escapeText(t.en) + '</span>' +
       '<span class="f-sub" dir="rtl" lang="ar">' + t.ar + '</span>' +
       '<span class="f-legs">' + legs + '</span>' +
-      (won ? "" : '<span class="f-track"><i style="width:' + pct + '%"></i></span>') +
+      (held ? "" : '<span class="f-track"><i style="width:' + (done * 50) + '%"></i></span>') +
       '</span>' +
       '<span class="f-state">' +
-        (won ? "earned"
-             : bank.total + " of " + BOOTH_ROUNDS_NEEDED) + '</span>';
+        (held ? "earned" : done ? "one way done" : "not yet") + '</span>';
   });
   standing.appendChild(fields);
   standing.appendChild(el("p", "vb",
@@ -15361,10 +15373,10 @@ function boothRound(genre) {
         });
       sc.appendChild(dl);
       sc.appendChild(el("p", "d-note",
-        "Overall <b>" + pc(dials.composite) + "%</b> &mdash; a round counts towards a field " +
+        "Overall <b>" + pc(dials.composite) + "%</b> &mdash; a round earns its direction " +
         "at " + pc(BOOTH_STANDARD.composite) + "% here and " +
-        pc(BOOTH_STANDARD.meaning) + "% on meaning. A field takes <b>" +
-        BOOTH_ROUNDS_NEEDED + "</b> of them, both directions."));
+        pc(BOOTH_STANDARD.meaning) + "% on meaning, over all " + BOOTH_ROUND_SIZE +
+        " turns. A field takes one each way."));
     }
 
     /* File it, then say what it earned. The database rules on whether the
@@ -15389,7 +15401,7 @@ function boothRound(genre) {
         if (isNew) {
           award.innerHTML = '<span class="won">✦ ' + escapeText(title.en) + '</span>' +
             '<span class="won-ar" dir="rtl" lang="ar">' + title.ar + '</span>' +
-            BOOTH_ROUNDS_NEEDED + " rounds at the standard, both directions. " +
+            BOOTH_ROUND_SIZE + " turns at the standard, both directions. " +
             "It is on your profile now." +
             (boothStanding.rank
               ? " Your booth standing is <b>" + escapeText(boothStanding.rank) + "</b>." : "");
@@ -15400,27 +15412,17 @@ function boothRound(genre) {
              The round counted, and the count is the point now: twenty of
              these, so the number has to be on the screen every time. */
           const bank = boothHalf[genre.id] || { "ar-en": 0, "en-ar": 0, total: 0 };
-          const left = Math.max(0, BOOTH_ROUNDS_NEEDED - bank.total);
           const other = dir === "ar-en" ? "en-ar" : "ar-en";
-          const owesOther = bank[other] === 0;
           award.className = "onward half";
           award.innerHTML =
-            '<span class="won">◐ ' + bank.total + " of " + BOOTH_ROUNDS_NEEDED +
-              " &middot; " + escapeText(title.en) + '</span>' +
-            '<span class="track"><i style="width:' +
-              Math.min(100, Math.round(100 * bank.total / BOOTH_ROUNDS_NEEDED)) + '%"></i></span>' +
-            "This round is <b>banked</b>: " + bank[dir] + " going " + dirName(dir) +
-            ", " + bank[other] + " going " + dirName(other) + ". " +
-            (left
-              ? "<b>" + left + " more</b> at the standard" +
-                (owesOther ? ", and at least one of them <b>" + dirName(other) + "</b>," : "") +
-                " and the title is yours."
-              : "That is the twenty. The title lands as soon as both directions are covered.");
-          if (owesOther) {
-            const go = el("button", null, "Run it " + dirName(other) + " →");
-            go.addEventListener("click", () => { state.boothDir = other; save(); boothRound(genre); });
-            award.appendChild(go);
-          }
+            '<span class="won">◐ ' + escapeText(title.en) + ' &middot; one way done</span>' +
+            '<span class="track"><i style="width:50%"></i></span>' +
+            "Twenty turns at the standard, <b>" + dirName(dir) + "</b>. That direction is " +
+            "<b>banked</b> and stays banked. One round like it going <b>" + dirName(other) +
+            "</b> and the title is yours.";
+          const go = el("button", null, "Run it " + dirName(other) + " →");
+          go.addEventListener("click", () => { state.boothDir = other; save(); boothRound(genre); });
+          award.appendChild(go);
         } else {
           award.innerHTML = "Not at the field standard yet. " +
             (dials.meaning < BOOTH_STANDARD.meaning
