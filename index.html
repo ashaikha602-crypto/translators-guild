@@ -4266,25 +4266,47 @@ function subLongestLine(s) {
    under a clock. It carries the content words it must contain, and
    getting most of them through is what a booth actually asks of you.
    ══════════════════════════════════════════════════════════════════ */
-/* A round is twenty turns against one clock, which is the thing being
+/* A round is twenty turns against a clock, which is the thing being
    tested: not whether somebody can render a term, but whether they are
    still rendering accurately on the twentieth, at speed, without the
-   attention going. Eleven was a warm-up. Twenty at 4, 6, 10 and 16
-   seconds comes to 162 seconds of work, and every setting carries enough
-   material for it — the shortest has 23 items. */
-/* The seconds went up with the change to a per-item clock, and they had
-   to. Under the pooled clock the time spent reading an item came out of a
-   shared pot; now each item's own budget has to cover reading it AND
-   typing the answer, and a booth here is worked with thumbs, not a voice.
-   Twenty items comes to 237 seconds — just under four minutes. */
+   attention going. Eleven was a warm-up. Twenty is the round.
+
+   ── the clock, and why it is not a number ──
+   It was a flat number per level twice, and it was wrong twice. A booth
+   here is worked with thumbs, not a voice: the member reads the prompt,
+   works out the rendering, and then has to TYPE it. Six seconds for a
+   term meant six seconds to read المجتمع الدولي and type "the
+   international community" — twenty-seven characters, no time left to
+   read or think. Measured across all 140 items the old numbers demanded
+   between 2.0 and 6.1 characters a second with nothing left over. Nobody
+   types at 6.1.
+
+   So the allowance is no longer typed in. It is derived:
+
+       seconds = time to take the prompt in  +  length of the answer ÷ typing speed
+
+   which means a three-letter term gets a short clock and a full turn of
+   a hundred and thirty characters gets a long one, automatically, and
+   nobody has to guess a number again when the material changes. */
+const BOOTH_TYPE_CPS = { en: 2.2, ar: 1.9 };   /* characters a second, on a phone, in a second language */
+const BOOTH_SECS_FLOOR = 8, BOOTH_SECS_CEILING = 75;
+function boothSecs(q, into) {
+  const answer = String((into === "ar" ? q.ar : (q.ok || [])[0]) || "");
+  const rate = into === "ar" ? BOOTH_TYPE_CPS.ar : BOOTH_TYPE_CPS.en;
+  const raw = q.level.think + answer.length / rate;
+  return Math.min(BOOTH_SECS_CEILING, Math.max(BOOTH_SECS_FLOOR, Math.round(raw)));
+}
+/* `think` is the part that is not typing: reading the prompt, holding it,
+   deciding how to render it. It is the only number still set by hand,
+   and it is the only one that should be. */
 const BOOTH_LEVELS = [
-  { key: "terms", en: "Terms", ar: "مصطلحات", take: 6, secs: 6,
+  { key: "terms", en: "Terms", ar: "مصطلحات", take: 6, think: 5,
     say: "One term at a time. This is vocabulary, not yet interpreting." },
-  { key: "phrases", en: "Phrases", ar: "عبارات", take: 5, secs: 9,
+  { key: "phrases", en: "Phrases", ar: "عبارات", take: 5, think: 7,
     say: "Chunks, the way they actually arrive — verb and object together." },
-  { key: "sentences", en: "Sentences", ar: "جُمَل", take: 6, secs: 15,
+  { key: "sentences", en: "Sentences", ar: "جُمَل", take: 6, think: 10,
     say: "A whole sentence. Get the meaning through; the words are yours." },
-  { key: "turns", en: "Full turns", ar: "أدوار كاملة", take: 3, secs: 22,
+  { key: "turns", en: "Full turns", ar: "أدوار كاملة", take: 3, think: 16,
     say: "What a speaker really gives you before pausing. Hold it, then render it." }
 ];
 const BOOTH_ROUND_SIZE = BOOTH_LEVELS.reduce((n, L) => n + L.take, 0);
@@ -12406,7 +12428,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0928-1240";
+const BUILD = "0929-0155";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -15236,6 +15258,10 @@ function chooseGenre() {
   ladder.appendChild(el("span", "vh", "How a round climbs"));
   ladder.appendChild(el("ul", "how", BOOTH_LEVELS.map(L =>
     '<li><span><b>' + L.en + '</b> <i>' + L.ar + '</i> &mdash; ' + L.say + '</span></li>').join("")));
+  ladder.appendChild(el("p", "vb",
+    "Every item carries its own clock, and it is worked out from the length of the rendering it " +
+    "is asking for — you are typing here, not speaking, and the allowance says so. A term gets a " +
+    "few seconds; a full turn gets close to a minute."));
   stage.appendChild(ladder);
 
   /* People will ask, so the booth answers before they have to. */
@@ -15310,9 +15336,12 @@ function boothRound(genre) {
      Each item now carries its own seconds, so nothing an item takes can
      be taken from the next one. Running out on one marks it undelivered
      and moves on; it no longer ends the round. */
-  const DUR = queue.reduce((t, q) => t + q.level.secs, 0);
+  /* Each item's allowance is worked out once, here, from the length of
+     the answer it is actually asking for — see boothSecs. */
+  queue.forEach(q => q.secs = boothSecs(q, into));
+  const DUR = queue.reduce((t, q) => t + q.secs, 0);
   const NEED = Math.max(3, Math.round(queue.length * 0.55));
-  let left = queue[0].level.secs, idx = 0, hits = 0;
+  let left = queue[0].secs, idx = 0, hits = 0;
   const log = [], marks = [];
   rememberServed(genre.id, queue);
 
@@ -15340,7 +15369,7 @@ function boothRound(genre) {
   typing.appendChild(inp);
 
   const gauge = el("div", "gauge");
-  const clock = el("span", "ok", queue[0].level.secs + "s");
+  const clock = el("span", "ok", queue[0].secs + "s");
   const tally = el("span", null, "0 through");
   gauge.appendChild(clock); gauge.appendChild(tally);
   typing.appendChild(gauge);
@@ -15384,7 +15413,7 @@ function boothRound(genre) {
      speaking. Runs out and the item is simply not delivered. */
   function begin() {
     stopBooth();
-    const span = queue[idx].level.secs;
+    const span = queue[idx].secs;
     left = span;
     clock.textContent = left + "s";
     clock.className = "ok";
