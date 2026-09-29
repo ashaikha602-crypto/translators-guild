@@ -32,6 +32,7 @@ const borders = { top: line, bottom: line, left: line, right: line };
 function block([kind, a, b, c]) {
   switch (kind) {
     case 'h1': body.push(new Paragraph({ heading: HeadingLevel.HEADING_1, children: [new TextRun({ text: a })] })); break;
+    case 'h1p': body.push(new Paragraph({ heading: HeadingLevel.HEADING_1, pageBreakBefore: true, children: [new TextRun({ text: a })] })); break;   // starts on a new page
     case 'h2': body.push(new Paragraph({ heading: HeadingLevel.HEADING_2, children: [new TextRun({ text: a })] })); break;
     case 'p': P(runs(a), { alignment: AlignmentType.JUSTIFIED }); break;
     case 'ul': case 'ol': {

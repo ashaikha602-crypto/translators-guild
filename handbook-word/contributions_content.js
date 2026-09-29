@@ -330,7 +330,7 @@ module.exports = [
 ], [62, 38]],
 
 // ================= WHOLE BOOK =================
-['h1', '8. Removed from the whole draft, and why'],
+['h1p', '8. Removed from the whole draft, and why'],
 ['table', ['Removed', 'Why'], [
   ['The practice section at three levels and its answer key', 'Too long for a handbook; each chapter keeps its Try it questions with answers.'],
   ['The four checklists at the end', 'They repeated the chapter summaries.'],
@@ -346,9 +346,6 @@ module.exports = [
 ['h1', '9. Still open for the team'],
 ['p', 'Because this is a draft, the following need the team’s decision:'],
 ['redul', [
-  'The Contributors list for the final version: the framework agreed that all four names appear equally.',
-  'Whether to name the academic supervisor, Abdullah Bezea, in the handbook.',
-  'The club’s official name: the draft says “Guild Professional Club”; the team’s main document says “The Professional English Club: Guild”.',
   'Whether the material not yet received should go into this edition: Loulwah’s Principles of Translation notes, the Gamal article and AVT Theory; Masooma’s Translation Texts and stylistics summary; the three sample analyses.',
   'Who shared the Kuwaiti expressions dictionary, and its author, publisher and year, so that it can be cited in full.',
   'The author and publication details of the text {{الترجمة: ماهيتها وكيفيتها}}, so that the two idioms taken from it can be cited in full.',
