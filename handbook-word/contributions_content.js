@@ -1,4 +1,4 @@
-// Contributions Report: a working report by the editor on how each member's material was used in the draft handbook.
+// Contributions Report: a working report by Shaikhah Alkhaledi on how each member's material was used in the draft handbook.
 module.exports = [
 
 ['h1', '1. About this report'],
@@ -27,7 +27,7 @@ module.exports = [
   ['Start here', 'Written by Shaikhah Alkhaledi', 'The park-sign example; the House of Wisdom; the four steps'],
   ['1 Translation and the translator', 'Samiuallah Mohammad (draft)', 'Shaikhah’s notes: three kinds of translation, the translator as a reader; the Rosetta Stone'],
   ['2 Tips, advice and preparation', 'Masooma Almesri (idea); Samiuallah (draft tips and plan)', 'Shaikhah’s framework: the three questions (client, purpose, audience); a worked first translation'],
-  ['3 Printed and digital dictionaries', 'Loulwah Bin Saeed (idea); Samiuallah (plan)', 'Written from published sources; {{كتاب العين}}'],
+  ['3 Printed and digital dictionaries', 'Loulwah Bin Saeed (idea); Samiuallah (plan)', 'Written by Shaikhah Alkhaledi from published sources; {{كتاب العين}}'],
   ['4 English and Arabic: key differences', 'Samiuallah (draft, 180 and Translation 1 notes)', 'Shaikhah’s notes: _be_, _do_, _have_, the dual, gender of _I_ and _you_; Arabic numerals'],
   ['5 Form and meaning', 'Samiuallah (draft)', '—'],
   ['6 Types of meaning', 'Samiuallah (draft)', 'Shaikhah’s notes: lexical gaps, false equivalents, rare words'],
@@ -37,17 +37,17 @@ module.exports = [
   ['10 Equivalence', 'Samiuallah (draft)', 'Citation of Farghal & Shunnaq'],
   ['11 Literal and free translation', 'Samiuallah (draft)', 'Communicative translation (requested in the Teams chat)'],
   ['12 Metaphoric translation', 'Samiuallah (draft)', 'Masooma’s slides: {{عقارب الساعة}}, _a throbbing headache_'],
-  ['13 The seven translation procedures', 'Samiuallah (plan); written from published sources', 'Examples from Samiuallah’s Farghal & Shunnaq notes and draft: _shadow government_, _My friend speaks German fluently_, _A burnt child dreads the fire_, _garage_'],
+  ['13 The seven translation procedures', 'Samiuallah (plan); written by Shaikhah Alkhaledi from published sources', 'Examples from Samiuallah’s Farghal & Shunnaq notes and draft: _shadow government_, _My friend speaks German fluently_, _A burnt child dreads the fire_, _garage_'],
   ['14 Translation strategies', 'Samiuallah (draft and Translation 1 notes)', 'Explicitation and implicitation (Teams chat); further strategies; Shaikhah’s notes: Arabic words in English'],
   ['15 Cultural approximation', 'Samiuallah (draft)', 'Citation of Farghal & Shunnaq'],
   ['16 Descriptive translation', 'Samiuallah (draft)', 'Citation of Farghal & Shunnaq'],
   ['17 Lexical creation', 'Samiuallah (draft)', 'Shaikhah’s notes: Arabicisation examples; Masooma’s slides: {{الاستمطار}}, {{قطار}}, affixes; the journey of _coffee_'],
   ['18 Text analysis', 'Samiuallah (draft and Text Analysis Model)', '—'],
   ['19 Text types and genres', 'Samiuallah (plan); Shaikhah (framework)', 'Shaikhah’s notes: news headlines, the inverted pyramid, technical and literary texts'],
-  ['20 Words and points of view', 'Samiuallah (plan: the relational model)', 'Written from published sources'],
+  ['20 Words and points of view', 'Samiuallah (plan: the relational model)', 'Written by Shaikhah Alkhaledi from published sources'],
   ['21 Terminology', 'Masooma and Samiuallah (terminology material from Masooma’s slides)', 'Shaikhah’s terminology class notes: the research steps; Shaikhah’s notes: medical examples; UNTERM, Arabterm, a sample term list; the Damascus academy'],
-  ['22 Machine translation and AI', 'Samiuallah (draft: post-editing; plan)', 'Shaikhah’s notes: translation memory, CAT tools, localisation; the 1954 demonstration'],
-  ['23 Revision and common mistakes', 'Samiuallah (plan); Shaikhah (framework)', 'Written from published sources'],
+  ['22 Machine translation', 'Samiuallah (draft: post-editing; plan)', 'Shaikhah’s notes: translation memory, CAT tools, localisation; the 1954 demonstration'],
+  ['23 Revision and common mistakes', 'Samiuallah (plan); Shaikhah (framework)', 'Written by Shaikhah Alkhaledi from published sources'],
   ['24 Interlingual risk assessment', 'Shaikhah (framework)', 'The _Mars Climate Orbiter_'],
   ['25 Translation commentary', 'Samiuallah (draft and Text Analysis Model)', '—'],
   ['26 Introduction to audiovisual translation', 'Loulwah (AVT notes)', 'Shaikhah’s notes: the Arabic dubbing of _The Simpsons_; silent-film intertitles'],
@@ -57,7 +57,7 @@ module.exports = [
 
 // ================= LOULWAH =================
 ['h1', '4. Loulwah Bin Saeed'],
-['p', 'Material received: the audiovisual translation notes (Intro to AVT and AVT 2), idiom notes, and her suggestion to include dictionaries. Her Principles of Translation notes, the Gamal article and the AVT Theory file have not yet reached the editor, and her other notes were lost.'],
+['p', 'Material received: the audiovisual translation notes (Intro to AVT and AVT 2), idiom notes, and her suggestion to include dictionaries. Her Principles of Translation notes, the Gamal article and the AVT Theory file have not yet been received, and her other notes were lost.'],
 ['p', 'A typed and organised version of the same notes (Audiovisual Translation.docx), posted by Samiuallah Mohammad, was compared with Chapters 26 and 27. It contains no new material: everything suitable for beginners was already in the handbook, and the parts left out are the same as below. It still gives the old line length (32 to 41 characters), which the handbook corrects. The parts left out would suit the website, as Samiuallah Mohammad suggested.'],
 ['h2', '4.1 Taken into the handbook'],
 ['table', ['What was taken', 'Where it is now'], [
@@ -92,12 +92,12 @@ module.exports = [
   ['The quotation on “screen translation”', 'Not needed once the term was explained.'],
   ['The idiom notes', 'Several entries needed correcting (_my cup runneth over_, _rear-view mirror_, _just deserts_) or were incomplete, and most equivalents are colloquial.'],
 ], [45, 55]],
-['h2', '4.4 Added by the editor to her chapters'],
+['h2', '4.4 Added by Shaikhah Alkhaledi to her chapters'],
 ['p', 'Subtitle display time and spotting, subtitles for the deaf and hard of hearing (SDH), a five-step subtitling method, a worked example of shortening a line, rules for Arabic subtitles, first steps for beginners, and the published sources that support the chapters (Díaz Cintas & Remael; Pedersen; Pérez-González; Gambier; Reiss & Vermeer).'],
 
 // ================= MASOOMA =================
 ['h1', '5. Masooma Almesri'],
-['p', 'Material received: the terminology slides (182), the terminology material selected from them with Samiuallah Mohammad, the TerminologyIdioms document, and her suggestion of an opening chapter of tips. Her Translation Texts document (180 and 386 texts) and her stylistics summary have not yet reached the editor.'],
+['p', 'Material received: the terminology slides (182), the terminology material selected from them with Samiuallah Mohammad, the TerminologyIdioms document, and her suggestion of an opening chapter of tips. Her Translation Texts document (180 and 386 texts) and her stylistics summary have not yet been received.'],
 ['h2', '5.1 Taken into the handbook'],
 ['table', ['What was taken', 'Where it is now'], [
   ['The definition of terminology, and of a term', 'Chapter 21, Step 1'],
@@ -131,7 +131,7 @@ module.exports = [
   ['The format for citing references', 'It belongs to the References style, not to the text.'],
   ['Most of the idiom list', 'Mostly American slang, some about drinking; the common idioms are already in Chapter 9.'],
 ], [45, 55]],
-['h2', '5.4 Added by the editor to her chapter'],
+['h2', '5.4 Added by Shaikhah Alkhaledi to her chapter'],
 ['p', 'UNTERM and Arabterm, a sample term list, medical examples (_allergic_, _allergen_, _contact eczema_), the research steps from Shaikhah Alkhaledi’s terminology class notes (see Section 7), and the Damascus academy and the Coordination Bureau of Arabization in Rabat.'],
 
 // ================= SAMIUALLAH =================
@@ -160,7 +160,7 @@ module.exports = [
   ['Analysing a text (with the KUNA example)', 'Chapter 18'],
   ['Post-editing', 'Chapter 22'],
   ['Commentary on translation', 'Chapter 25'],
-  ['Terminology; AI and machine translation; glossary; references (empty headings)', 'Written in full: Chapters 21 and 22, the Glossary and the References'],
+  ['Terminology; machine translation; glossary; references (empty headings)', 'Written in full: Chapters 21 and 22, the Glossary and the References'],
 ], [55, 45]],
 ['h2', '6.2 The first draft: edited'],
 ['ul', [
@@ -263,6 +263,12 @@ module.exports = [
   ['Revised the wording of rules and claims so that they read as tendencies, not absolute laws, and marked the preferred Arabic term where two exist', 'Chapters 4, 10, 11, 20, 22, 27; Glossary'],
   ['Replaced the invented subtitling lines with famous, cited film lines (_The Godfather_; _Gone with the Wind_), each explained', 'Chapter 27'],
   ['Reviewed every example against the team’s documents and her notes: team examples kept and corrected; weak examples replaced, preferably with team examples; challenge questions added', 'Chapters 1–27'],
+  ['Wrote the opening example of Start here, a real translation decision from a news report (_The government came under pressure to reconsider the decision._ → {{تعرّضت الحكومة لضغوط لإعادة النظر في القرار}})', 'Start here'],
+  ['Wrote the examples added where the team’s material had none, and replaced weak ones: for example _the White House_ → {{البيت الأبيض}}, _You can’t miss it_ → {{ستجده بسهولة}}, {{خال}} and {{عمّ}} → _uncle_, and three challenge questions', 'Chapters 10, 13, 14, 15'],
+  ['Added Kuwaiti expressions, with their English equivalents, from the Kuwaiti expressions dictionary', 'Chapters 9, 15, 27'],
+  ['Replaced the subtitling examples with famous, cited film lines, each explained', 'Chapter 27'],
+  ['Corrected Arabic terms: Genre → {{نوع النص}}; Ideology → {{المنظومة الفكرية (الأيديولوجيا)}}; Loaded word → {{كلمة مشحونة دلالياً}}; two equivalents joined with {{أو}}, the preferred one first', 'Chapters 19, 20; Glossary'],
+  ['Made every Try it clearer: a line explaining its purpose, questions that name the skill, and answers that explain why', 'Every chapter'],
   ['Designed the two covers (Midnight and Light), the page layout and the QR code; designed and developed the Translation Team’s website', 'Covers; inside pages; website'],
 ], [62, 38]],
 ['h2', '7.1 Her proposals not taken, and why'],
@@ -289,7 +295,7 @@ module.exports = [
 ['h1', '9. Still open for the team'],
 ['p', 'Because this is a draft, the following need the team’s decision:'],
 ['redul', [
-  'The order and titles on the Contributors page: the framework agreed that all four names appear equally.',
+  'The Contributors list for the final version: the framework agreed that all four names appear equally.',
   'Whether to name the academic supervisor, Abdullah Bezea, in the handbook.',
   'The club’s official name: the draft says “Guild Professional Club”; the team’s main document says “The Professional English Club: Guild”.',
   'Whether the material not yet received should go into this edition: Loulwah’s Principles of Translation notes, the Gamal article and AVT Theory; Masooma’s Translation Texts and stylistics summary; the three sample analyses.',
