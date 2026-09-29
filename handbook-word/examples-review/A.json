@@ -1,0 +1,305 @@
+[
+ {
+  "chapter": "Chapter 4",
+  "action": "replace",
+  "origin": "team:samiuallah_farghal_notes.txt",
+  "find": "_The government announced new measures._ → {{أعلنت الحكومة إجراءاتٍ جديدة}}",
+  "replace": "_Ali often goes to bed early._ → {{ينامُ عليٌّ مبكراً}} (the verb comes first, and _goes to bed_ becomes simply {{ينام}}, not {{يذهب إلى الفراش}})",
+  "removed": [
+   "_The government announced new measures._ → أعلنت الحكومة إجراءاتٍ جديدة (editor filler: a second bare VSO swap after the Sam example)"
+  ],
+  "kept_replacement_source": "samiuallah_farghal_notes.txt (Exercise 1: 'Ali often goes to bed early' → ينام علي مبكرا; margin note: 'goes to bed' → ينام, not يذهب إلى الفراش)",
+  "why_strong": "Team example that shows a real decision: verb-first order plus choosing the natural Arabic verb instead of a literal phrase."
+ },
+ {
+  "chapter": "Chapter 4",
+  "action": "replace",
+  "origin": "team:samiuallah_farghal_notes.txt",
+  "find": "{{الطالب في المكتبة}} → _The student is in the library._",
+  "replace": "{{الطلاب في المختبر}} → _The students are in the laboratory._",
+  "removed": [
+   "الطالب في المكتبة → The student is in the library (editor adaptation)"
+  ],
+  "kept_replacement_source": "samiuallah_farghal_notes.txt (Relevance of Grammar, Exercise 1: 'The students are in the laboratory.' → الطلاب في المختبر)",
+  "why_strong": "Team's own zero-copula pair; same point, and it matches the team exercise students already know."
+ },
+ {
+  "chapter": "Chapter 4",
+  "action": "replace",
+  "origin": "team:samiuallah_farghal_notes.txt",
+  "find": "'Translate: {{الطالب في المكتبة.}}'",
+  "replace": "'Translate: {{الطلاب في المختبر.}}'",
+  "removed": [
+   "Try question: Translate الطالب في المكتبة."
+  ],
+  "kept_replacement_source": "samiuallah_farghal_notes.txt (Exercise 1, stative verbs)",
+  "why_strong": "Keeps the try question aligned with the team example now used in the chapter."
+ },
+ {
+  "chapter": "Chapter 4",
+  "action": "replace",
+  "origin": "team:samiuallah_farghal_notes.txt",
+  "find": "'_The student is in the library._'",
+  "replace": "'_The students are in the laboratory._'",
+  "removed": [
+   "Try answer: The student is in the library."
+  ],
+  "kept_replacement_source": "samiuallah_farghal_notes.txt (Exercise 1, stative verbs)",
+  "why_strong": "Matching answer for the replaced question (same index)."
+ },
+ {
+  "chapter": "Chapter 4",
+  "action": "replace",
+  "origin": "team:shaikhah_slides_Grammatical_Equivalence_2.txt",
+  "find": "_She had lunch_ → {{تناولت الغداء}}",
+  "replace": "_She has her pills on time_ → {{تتناول الحبوب في الوقت المحدد}}",
+  "removed": [
+   "_She had lunch_ → تناولت الغداء (editor)"
+  ],
+  "kept_replacement_source": "shaikhah_slides_Grammatical_Equivalence_2.txt (slide 24: She has her pills on time = تتناول الحبوب في الوقت المحدد)",
+  "why_strong": "Team example from the editor's own slides; a less obvious meaning of have (take medicine), a medical context."
+ },
+ {
+  "chapter": "Chapter 4",
+  "action": "replace",
+  "origin": "team:shaikhah_slides_Grammatical_Equivalence_2.txt",
+  "find": "({{طالبان}}, two students)",
+  "replace": "({{المحكمان}}, the two arbitrators)",
+  "removed": [
+   "طالبان, two students (editor, trivial)"
+  ],
+  "kept_replacement_source": "shaikhah_slides_Grammatical_Equivalence_2.txt (slide 8: ويختار المحكمان المعينان ... → the two arbitrators thus appointed)",
+  "why_strong": "Team example from a real legal text (arbitration clause), where the dual must be rendered with 'two'."
+ },
+ {
+  "chapter": "Chapter 6",
+  "action": "replace",
+  "origin": "team:samiuallah_draft.txt",
+  "find": "'_slim_ ({{رشيق}}) is positive; _skinny_ ({{هزيل}}) is negative.',",
+  "replace": "'_kill_ ({{قتل}}) is neutral; _assassinate_ ({{اغتال}}) adds that the killing was political, so use it only when the source says so.',",
+  "removed": [
+   "_slim_ (رشيق) is positive; _skinny_ (هزيل) is negative (editor, simple word swap)"
+  ],
+  "kept_replacement_source": "samiuallah_draft.txt (Kill vs. Assassinated: قتل has no connotative meaning; اغتيال / تم قتله لأسباب سياسية has one; also in samiuallah_180_notes.txt)",
+  "why_strong": "Team example from news/politics where the choice of word is a real translation decision."
+ },
+ {
+  "chapter": "Chapter 8",
+  "action": "replace",
+  "origin": "team:samiuallah_farghal_notes.txt",
+  "find": "  '{{اتّخذ قراراً}} → _he made a decision_',\n",
+  "replace": "  '{{يقطع}} needs a different English verb with each partner: {{يقطع العلاقات الدبلوماسية}} → _to sever diplomatic relations_; {{يقطع الإشارة الضوئية}} → _to run a red light_; {{يقطع عهداً على نفسه}} → _to make a solemn promise_',\n",
+  "removed": [
+   "اتّخذ قراراً → he made a decision (editor, one-to-one swap)"
+  ],
+  "kept_replacement_source": "samiuallah_farghal_notes.txt (Exercise 18, Arabic collocations with يقطع)",
+  "why_strong": "Team example; mirrors the 'deliver' point in the AR → EN direction, with political and everyday contexts."
+ },
+ {
+  "chapter": "Chapter 9",
+  "action": "replace",
+  "origin": "team:samiuallah_draft.txt",
+  "find": "{{تعاشروا كالإخوة وتعاملوا كالأجانب}}",
+  "replace": "{{الشغل شغل}}",
+  "removed": [
+   "Business is business → تعاشروا كالإخوة وتعاملوا كالأجانب (not in team files; misquotes the usual saying تعاشروا كالإخوان وتعاملوا كالأجانب)"
+  ],
+  "kept_replacement_source": "samiuallah_farghal_notes.txt (Exercise 3: 'Business is business.' → الشغل شغل); samiuallah_draft.txt (Exercises Solving: Business is Business → الشغل شغل)",
+  "why_strong": "Team's own answer to the same proverb; a real, current Arabic saying used in the same situation."
+ },
+ {
+  "chapter": "Start here",
+  "action": "keep",
+  "origin": "editor",
+  "find": "{{ممنوع الدوس على العشب}}",
+  "replace": "{{ممنوع الدوس على العشب}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "Keep off the grass → ممنوع الدوس على العشب (not ابقَ بعيداً عن العشب)"
+  ],
+  "why_strong": "Real sign; shows the core decision (say what an Arabic sign says in that situation) and is referred back to in Chapter 1."
+ },
+ {
+  "chapter": "Chapter 1",
+  "action": "keep",
+  "origin": "editor",
+  "find": "A publisher asks you to translate a novel.",
+  "replace": "A publisher asks you to translate a novel.",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "Try: publisher asks you to translate a novel (commissioned or self-initiated?)"
+  ],
+  "why_strong": "Realistic scenario that tests the commissioned/self-initiated distinction from the team notes (samiuallah_draft 'Translator Types')."
+ },
+ {
+  "chapter": "Chapter 2",
+  "action": "keep",
+  "origin": "editor",
+  "find": "A hospital asks you to translate a medicine leaflet for its patients.",
+  "replace": "A hospital asks you to translate a medicine leaflet for its patients.",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "Try: medicine leaflet for patients (audience and style)"
+  ],
+  "why_strong": "Medical brief that makes the learner decide audience and style; applies the chapter's three questions."
+ },
+ {
+  "chapter": "Chapter 4",
+  "action": "keep",
+  "origin": "editor",
+  "find": "{{غير أنّ}} (however)",
+  "replace": "{{غير أنّ}} (however)",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "Linking words غير أنّ / لذلك / بالإضافة إلى ذلك / على سبيل المثال"
+  ],
+  "why_strong": "Accurate MSA connectors a beginner genuinely needs when joining short English sentences into one Arabic sentence."
+ },
+ {
+  "chapter": "Chapter 4",
+  "action": "keep",
+  "origin": "editor",
+  "find": "{{أنتما}} (two people)",
+  "replace": "{{أنتما}} (two people)",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "you → أنتَ / أنتِ / أنتما / أنتم / أنتنّ"
+  ],
+  "why_strong": "The clearest demonstration that Arabic must choose gender and number where English does not; accurate."
+ },
+ {
+  "chapter": "Chapter 4",
+  "action": "keep",
+  "origin": "editor",
+  "find": "{{ثلاثةُ طلاب}} but {{ثلاثُ طالبات}}",
+  "replace": "{{ثلاثةُ طلاب}} but {{ثلاثُ طالبات}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "ثلاثةُ طلاب / ثلاثُ طالبات (numbers 3 to 10)"
+  ],
+  "why_strong": "Non-obvious rule (reverse gender agreement) that beginners get wrong in translation; accurate."
+ },
+ {
+  "chapter": "Chapter 4",
+  "action": "keep",
+  "origin": "editor",
+  "find": "Rewrite as a verbal sentence: {{الطلاب حضروا المحاضرة.}}",
+  "replace": "Rewrite as a verbal sentence: {{الطلاب حضروا المحاضرة.}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "Try: الطلاب حضروا المحاضرة → حضر الطلابُ المحاضرة"
+  ],
+  "why_strong": "Tests VSO order plus singular verb agreement, a real error beginners make."
+ },
+ {
+  "chapter": "Chapter 5",
+  "action": "keep",
+  "origin": "editor",
+  "find": "'_after his arrival_ → {{بعد أن وصل}} (the noun",
+  "replace": "'_after his arrival_ → {{بعد أن وصل}} (the noun",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "after his arrival → بعد أن وصل"
+  ],
+  "why_strong": "Standard noun-to-verb shift; the same example is reused in the Chapter 13 news text, so it is needed for continuity."
+ },
+ {
+  "chapter": "Chapter 5",
+  "action": "keep",
+  "origin": "editor",
+  "find": "_He is a fast runner._",
+  "replace": "_He is a fast runner._",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "Try: He is a fast runner → يركض بسرعة; His arrival was late → وصل متأخراً"
+  ],
+  "why_strong": "Practice items that apply the chapter's two form changes; natural Arabic answers."
+ },
+ {
+  "chapter": "Chapter 6",
+  "action": "keep",
+  "origin": "editor",
+  "find": "_It’s freezing in here_",
+  "replace": "_It’s freezing in here_",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "It’s freezing in here → 'Please close the window'"
+  ],
+  "why_strong": "Gives an English case alongside the team's Arabic ones (أشعر بالحر), so the point works in both directions."
+ },
+ {
+  "chapter": "Chapter 6",
+  "action": "keep",
+  "origin": "editor",
+  "find": "_It’s rather warm in here_",
+  "replace": "_It’s rather warm in here_",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "Try: It’s rather warm in here"
+  ],
+  "why_strong": "Mirrors the team example أشعر بالحر; tests speaker meaning."
+ },
+ {
+  "chapter": "Chapter 7",
+  "action": "keep",
+  "origin": "editor",
+  "find": "_The doctor examined the case._",
+  "replace": "_The doctor examined the case._",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "Try: The doctor examined the case (case → حالة); شربنا من عين ماء باردة (عين → spring)"
+  ],
+  "why_strong": "Built on team words (case, عين); medical context shows why co-text decides the meaning."
+ },
+ {
+  "chapter": "Chapter 8",
+  "action": "keep",
+  "origin": "editor",
+  "find": "{{قدّم استقالته}} → _he resigned_",
+  "replace": "{{قدّم استقالته}} → _he resigned_",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "قدّم استقالته → he resigned; عقد اجتماعاً → he held a meeting"
+  ],
+  "why_strong": "News collocations; the first shows an Arabic verb+noun becoming one English verb, the second prepares the try question and the Chapter 13 news text (عقد مؤتمراً صحفياً)."
+ },
+ {
+  "chapter": "Chapter 8",
+  "action": "keep",
+  "origin": "editor",
+  "find": "'Translate: _deliver a lecture_'",
+  "replace": "'Translate: _deliver a lecture_'",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "Try: deliver a lecture → يلقي محاضرة"
+  ],
+  "why_strong": "Tests transfer from the team example deliver a speech → يلقي خطبة."
+ },
+ {
+  "chapter": "Chapter 9",
+  "action": "keep",
+  "origin": "editor",
+  "find": "_to play with fire_ → {{يلعب بالنار}}",
+  "replace": "_to play with fire_ → {{يلعب بالنار}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "kept": [
+   "to play with fire → يلعب بالنار"
+  ],
+  "why_strong": "Genuine case of an idiom with the same meaning and form in both languages, needed to illustrate Baker's first strategy (team slides list the strategy without an example)."
+ }
+]

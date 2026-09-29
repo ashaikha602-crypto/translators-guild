@@ -1,0 +1,84 @@
+C_kept.txt: examples KEPT in Chapters 19-27, 'Your journey continues' and 'Abbreviations' of c2b.js
+Format: [chapter] example | origin | source file or why_strong (editor-written)
+Revised criteria applied: team examples are kept (errors corrected); an editor-written example stays only if it is strong.
+
+CHAPTER 19
+- News: _Oil prices rose sharply on Monday._ -> ارتفعت أسعار النفط ارتفاعاً حادّاً يوم الاثنين | editor | why_strong: typical neutral news sentence; the Arabic starts with the verb and uses a natural cognate object (ارتفاعاً حادّاً) instead of copying "sharply"; correct MSA.
+- Legal: _This Agreement shall be governed by the laws of the State of Kuwait._ -> تخضع هذه الاتفاقية لقوانين دولة الكويت. | editor | why_strong: shows a real legal-drafting decision (obligation _shall_ -> Arabic present, not سوف); local (Kuwait) and accurate. Short why-clause added (C.json).
+- Political: _The two sides held frank and constructive talks._ -> أجرى الجانبان محادثاتٍ صريحةً وبنّاءةً. | editor | why_strong: the standard diplomatic formula in both languages; shows careful, neutral political wording.
+- Medical: _Take one tablet twice daily._ -> تناوَل قرصاً واحداً مرّتين يومياً. | editor | why_strong: shows the dose must be rendered exactly; reused in the Ch 24 try block; natural leaflet MSA.
+- Technical: _Press and hold the power button._ -> اضغط مطوّلاً على زرّ التشغيل. | editor | why_strong: non-trivial: _press and hold_ becomes the adverb مطوّلاً, and "power button" is زرّ التشغيل, not a literal rendering.
+- Literary: _It has been a long day._ -> لقد كان يوماً شاقّاً. | team | samiuallah_180_notes.txt, samiuallah_draft.txt (يوماً شاقاً correct / يوماً طويلاً incorrect)
+- Poetry: الخيلُ والليلُ والبيداءُ تعرفني (al-Mutanabbi) -> _The horses, the night and the desert know me._ | editor | why_strong: a famous, correctly quoted classical line; its images and rhythm show why poetry needs more freedom; the English is accurate.
+- Headline: _Man killed, woman wounded in shooting_ -> مقتل رجل وإصابة امرأة في إطلاق نار (passive -> مصدر) | team | shaikhah_slides_Translation_of_journalistic_texts.txt (slide 8)
+- Headline (replacement): _US launches air raids in Iraq_ -> الولايات المتحدة تشنّ غارات جوية في العراق | team | shaikhah_slides_Translation_of_journalistic_texts.txt (slide 6)
+- Headline: _Saudi Arabia to extend visa validity for expats_ -> السعودية ستمدّد فترة صلاحية تأشيرات الوافدين (corrected) | team | shaikhah_slides_Translation_of_journalistic_texts.txt (slide 7)
+- Headline: _Mustang Referral Customer Complaint_ -> شكوى زبون فورد موستنج من برنامج الإحالة (corrected) | team | shaikhah_slides_Translation_of_journalistic_texts.txt (slides 4-5)
+- _depression_ in psychology / economics / meteorology | team | shaikhah_slides_Technical_Translation_2.txt (slide 4). The Arabic equivalents (الاكتئاب، الكساد، منخفض جوي) are editor-added | why_strong: accurate standard terms for each field; they make the slide's question concrete.
+
+CHAPTER 20
+- _A suicide bomber killed ten people._ -> انتحاري / استشهادي | team | samiuallah_180_notes.txt, samiuallah_draft.txt ("A suicide bomber killed 10 Israelis")
+- _regime_ / _government_ (نظام / حكومة) | editor | why_strong: a real loaded-word decision in political texts; accurate. (The editor's slides also list "Regime" as a problem word: shaikhah_slides_Equivalence_at_the_word_level.txt, and نظام = regime/system/order in samiuallah_farghal_notes.txt.)
+- _Protesters were killed._ (قُتل متظاهرون) | editor | why_strong: shows how the passive hides the agent, the central idea of the chapter; accurate MSA.
+- Try block (regime; Protesters were killed) | editor | built on the two kept examples above.
+
+CHAPTER 21
+- _network security_ | team | shaikhah_terminology_class_Terminological_Analysis.txt; Arabic أمن الشبكات editor-added | why_strong: correct standard term; shows a multi-word term translated as one unit.
+- _CIA_, _CBC_ (complete blood count), _LASER_, _vol._ (volume), _super_ (superintendent) | team | masooma_182_slides.txt, masooma_samiuallah_terminology_chapter.txt
+- _allergic_ -> أرَجيّ, _allergen_ -> مادة مُحسِّسة, _contact eczema_ -> إكزيما التماس | team | shaikhah_slides_Technical_Translation_2.txt (الأرجية، المحسسة، أكزيما التماس). The remark on everyday تحسّسي is editor-added | why_strong: accurate, and it is the key technical-vs-everyday distinction.
+- _blackboard_ can be green | team | shaikhah_terminology_class_Term_and_Concept.txt
+- التطرّف الراديكالي (redundant term) | team | masooma_182_slides.txt (slide 45)
+- Term list: _governing law_ -> القانون الواجب التطبيق / القانون المطبَّق; القانون الحاكم = calque | team | samiuallah_180_notes.txt, samiuallah_draft.txt (Governing Law -> القانون المطبق correct / القانون الحاكم incorrect)
+- Term list: _provided that_ -> شريطةَ أن | team | samiuallah_180_notes.txt, samiuallah_draft.txt
+- Term list: _Article_ -> مادّة; clause -> بند | team | samiuallah_180_notes.txt, samiuallah_draft.txt (المادة / البند)
+- Term list: _CBC_ -> تعداد الدم الكامل / صورة الدم الكاملة | team (term: masooma_182_slides.txt); Arabic editor-added | why_strong: both are the usual Arabic names of this test; a real medical term-list entry.
+- Definition: a _thermometer_ (مقياس الحرارة) is an instrument that measures temperature | editor | why_strong: a clear genus-plus-difference definition, the method taught in shaikhah_terminology_class_Definitions_in_Terminology.txt; more useful to translators than the classic "man = rational animal".
+- Step 5: Article مادّة vs بند consistency | team | samiuallah_180_notes.txt (terms); scenario editor-written, built on them.
+- _aerial_ (British) / _antenna_ (American) | team | shaikhah_terminology_class_The_Situation_in_Terminology.txt; هوائي editor-added (accurate).
+- حاسوب / كمبيوتر | team | samiuallah_farghal_notes.txt (computer -> كمبيوتر / حاسوب)
+- Try: _LASER_ acronym | team | masooma_182_slides.txt
+
+CHAPTER 22
+- _It's raining cats and dogs._ -> تمطر بغزارة (MT literal: إنها تمطر قططاً وكلاباً) | team | samiuallah_180_notes.txt, samiuallah_draft.txt, masooma_terminology_idioms.txt; the literal MT output is editor-added | why_strong: exactly what MT does with idioms.
+- _The doctor finished her shift._ -> أنهى الطبيب نوبته (wrong) / أنهت الطبيبة نوبتها | editor | why_strong: a real, well-known MT failure (gender bias) that matters in Arabic, where verbs and nouns mark gender.
+- _Our new branch opens on Monday. Don't miss out!_ -> MT لا تفوّت الخروج ✗ / corrected يُفتتح فرعنا الجديد يوم الاثنين. لا تفوّتوا الفرصة! | editor | why_strong: a realistic business post-editing task: phrasal verb misread, and the corrected version uses the natural passive يُفتتح and plural address for an advert.
+
+CHAPTER 23
+- Subject-first vs verb-first: الحكومة أعلنت -> أعلنت الحكومة | editor example of a team principle (SVO -> VSO, samiuallah_180_notes.txt) | why_strong: the most frequent sign of translated Arabic.
+- قام الوزير بزيارة الكويت -> زار الوزير الكويت | editor | why_strong: standard revision advice against overusing قام بـ. (Note: samiuallah_180_notes.txt gives يقوم بزيارة as the correct collocation for _pay a visit_; the handbook targets overuse, which does not contradict it.)
+- تمّ افتتاح المعرض من قِبَل الوزير -> افتتح الوزير المعرض | editor | why_strong: the classic calqued passive; accurate correction.
+- ثلاث طلاب -> ثلاثة طلاب | editor | why_strong: number-gender polarity, a real and frequent error.
+- انشاء، مدرسه، الى -> إنشاء، مدرسة، إلى | editor | why_strong: the commonest spelling errors in student Arabic.
+- كسر القانون -> خالف القانون | team | samiuallah_180_notes.txt, samiuallah_draft.txt (كسر القانون vs مخالفة القانون)
+- English punctuation in Arabic (, ? -> ، ؟) | editor | why_strong: a real, frequent error in EN->AR drafts.
+- _brave and daring_ -> _very brave_ | team | samiuallah_draft.txt (شجاع ومغوار = brave and daring ✗ / brave or quite brave ✓)
+- _The life is beautiful._ -> _Life is beautiful._; _He in the office._ -> _He is in the office._; _He married from her._ -> _He married her._; _minister of health Ahmad Ali_ -> _Minister of Health Ahmad Ali_ | editor | why_strong: typical interference errors of Arabic speakers (article, missing copula, preposition from تزوّج من, title capitals).
+- Try: قام المدير بتوقيع العقد -> وقّع المديرُ العقد; the "and ... and" sentence split | editor | practise the two kept points above.
+
+CHAPTER 24 (risk matrix)
+- _governing law_ -> القانون الواجب التطبيق | team | samiuallah_180_notes.txt
+- _shall_ -> سوف ✗ | editor | why_strong: a genuinely high-risk legal error; ties to Ch 19.
+- _Persian Gulf_ / _Arabian Gulf_ | team | samiuallah_draft.txt ("Examples of word choice")
+- انتحاري / استشهادي | team | samiuallah_180_notes.txt, samiuallah_draft.txt
+- _warmed my heart_ -> أثلج صدري, not أدفأ قلبي (corrected) | team | samiuallah_draft.txt
+- علم: عَلَم / عِلْم / عَلِمَ | editor | why_strong: an unvowelled Arabic word with three meanings; a real reading risk.
+- Generic cells (lost "not", wrong dose / Hijri-Gregorian date, dialect word in a report, idiom word by word) | descriptions, not concrete examples.
+- Step 3: _This Agreement shall be governed..._ -> تخضع ... (not سوف تخضع) | editor | why_strong: see Ch 19.
+- Try: _Take one tablet twice daily_ | editor | reuses the kept Ch 19 medical example.
+
+CHAPTER 25
+- "The translator faced...", "The translator changed some parts to make them more comprehensible..." | team | samiuallah_draft.txt
+- "This was omitted because it is irrelevant to the target audience." | team | samiuallah_draft.txt ("due to its irrelevance to the target audience")
+- _dead letter_: حرفاً ميتاً vs حبراً على ورق (sample commentary) | team | samiuallah_180_notes.txt, samiuallah_draft.txt; commentary wording editor-written around it.
+- Try: _strong tea_ -> شاي ثقيل | team | samiuallah_180_notes.txt, samiuallah_draft.txt
+
+CHAPTER 26
+- _The Simpsons_ -> آل شمشون, beer -> soft drink | team | shaikhah_slides_Localization.txt ("The Simpsons in Arabic", cultural localization); the beer detail is editor-added | why_strong: a well-known, accurate case of cultural adaptation in Arabic dubbing.
+
+CHAPTER 27
+- Condensed subtitle: _Well, you know, I really don't think we should go out tonight, because it's going to rain._ -> لا أظنّ أن علينا الخروج الليلة، فالمطر قادم. | editor | why_strong: shows real condensation (fillers cut, reason kept with ف); natural MSA subtitle.
+- Fillers _well_, _you know_ | editor | why_strong: the standard examples of what subtitlers cut.
+- مدير المدرسة (do not split an idafa across lines) | editor | why_strong: a real Arabic line-break rule.
+
+YOUR JOURNEY CONTINUES / ABBREVIATIONS
+- No examples (the closing 'ex' is a motto; abbreviation entries are out of scope).

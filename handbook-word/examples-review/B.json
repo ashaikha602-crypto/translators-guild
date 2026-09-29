@@ -1,0 +1,419 @@
+[
+ {
+  "file": "c2a.js",
+  "find": "'_No smoking_ → {{ممنوع التدخين}}, not {{لا تدخين}}.'",
+  "replace": "'_It is raining now._ → {{الجو ماطر الآن}}, not {{إنه يمطر الآن}}: Arabic describes the weather instead of copying the English _it_.'",
+  "removed": [
+   "_No smoking_ → {{ممنوع التدخين}}, not {{لا تدخين}} (weak: {{لا تدخين}} is itself common on Arabic signs)"
+  ],
+  "kept_replacement_source": "samiuallah_farghal_notes.txt",
+  "chapter": "Chapter 11: Literal and free translation",
+  "action": "replace",
+  "origin": "team:samiuallah_farghal_notes.txt"
+ },
+ {
+  "file": "c2a.js",
+  "find": "'_Wet paint_ → {{انتبه، الطلاء لم يجفّ}}, not {{طلاء مبلّل}}.'",
+  "replace": "'_Wet paint_ → {{انتبه، الطلاء لم يجفّ}}, not {{طلاء مبلّل}}: an Arabic notice gives the warning, not a description.'",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 11: Literal and free translation",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "Newmark’s own classic notice example; the literal version is absurd in Arabic, so it shows clearly why communicative translation is needed."
+ },
+ {
+  "file": "c2a.js",
+  "find": "_He is as brave as a lion._ Without them, it is a **metaphor**: _He is a lion._",
+  "replace": "_She is as beautiful as the moon._ Without them, it is a **metaphor**: _She is a moon._",
+  "removed": [
+   "_He is as brave as a lion._",
+   "_He is a lion._"
+  ],
+  "kept_replacement_source": "samiuallah_draft.txt",
+  "chapter": "Chapter 12: Metaphoric translation",
+  "action": "replace",
+  "origin": "team:samiuallah_draft.txt"
+ },
+ {
+  "file": "c2a.js",
+  "find": "{{هو أسد}} is a concise simile",
+  "replace": "{{هي قمر}} is a concise simile",
+  "removed": [
+   "{{هو أسد}}"
+  ],
+  "kept_replacement_source": "samiuallah_draft.txt",
+  "chapter": "Chapter 12: Metaphoric translation",
+  "action": "replace",
+  "origin": "team:samiuallah_draft.txt"
+ },
+ {
+  "file": "c2a.js",
+  "find": "{{رأيتُ أسداً يخطب}}",
+  "replace": "{{رأيتُ أسداً يخطب}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 12: Metaphoric translation",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "The standard Arabic rhetoric (balagha) illustration of a استعارة: only the image is named; accurate and genuinely shows how Arabic draws the line differently."
+ },
+ {
+  "file": "c2a.js",
+  "find": "_He is a rock._ → {{إنه كالصخرة في ثباته}}",
+  "replace": "_He is a rock._ → {{إنه كالصخرة في ثباته}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 12: Metaphoric translation",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "Shows the real metaphor-to-simile-plus-sense procedure: the Arabic names the comparison and its ground (steadfastness); natural in both languages."
+ },
+ {
+  "file": "c2a.js",
+  "find": "_skyscraper_ → {{ناطحة سحاب}}",
+  "replace": "_shadow government_ → {{حكومة الظل}} (the established term, so the translator does not invent another)",
+  "removed": [
+   "_skyscraper_ → {{ناطحة سحاب}} (too well known, filler)"
+  ],
+  "kept_replacement_source": "samiuallah_draft.txt",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "replace",
+  "origin": "team:samiuallah_draft.txt"
+ },
+ {
+  "file": "c2a.js",
+  "find": "_The book is on the table._ → {{الكتاب على الطاولة}}",
+  "replace": "_My friend speaks German fluently._ → {{يتحدث صديقي الألمانية بطلاقة}} (only the word order changes, as Arabic grammar requires)",
+  "removed": [
+   "_The book is on the table._ → {{الكتاب على الطاولة}} (trivial)"
+  ],
+  "kept_replacement_source": "samiuallah_farghal_notes.txt",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "replace",
+  "origin": "team:samiuallah_farghal_notes.txt"
+ },
+ {
+  "file": "c2a.js",
+  "find": "({{الإبدال}}): _after his arrival_ → {{بعد أن وصل}}",
+  "replace": "({{الإبدال}}): _after his arrival_ → {{بعد أن وصل}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "A genuine, frequent English-to-Arabic shift: an English noun (arrival) becomes an Arabic verb clause; accurate and natural."
+ },
+ {
+  "file": "c2a.js",
+  "find": "_It is not difficult._ → {{إنه سهل}}",
+  "replace": "_You can’t miss it._ (giving directions) → {{ستجده بسهولة}} (the literal {{لا يمكنك أن تفوّته}} sounds foreign)",
+  "removed": [
+   "_It is not difficult._ → {{إنه سهل}} (shallow, and loses the hedge of “not difficult”)"
+  ],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "replace",
+  "origin": "editor",
+  "why_strong": "A real change of viewpoint (negative “can’t miss” becomes positive “will find easily”); the literal Arabic would sound strange, so the procedure is clearly needed."
+ },
+ {
+  "file": "c2a.js",
+  "find": "_Like father, like son._ → {{هذا الشبل من ذاك الأسد}}",
+  "replace": "_A burnt child dreads the fire._ → {{من تلدغه الحيّة يخاف من جرّة الحبل}} (a proverb is translated by a proverb, whatever its image)",
+  "removed": [
+   "_Like father, like son._ → {{هذا الشبل من ذاك الأسد}}"
+  ],
+  "kept_replacement_source": "samiuallah_farghal_notes.txt",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "replace",
+  "origin": "team:samiuallah_farghal_notes.txt"
+ },
+ {
+  "file": "c2a.js",
+  "find": "at the Sheraton and said the reforms were not impossible._",
+  "replace": "at the Sheraton._",
+  "removed": [
+   "…and said the reforms were not impossible (→ {{وقال إنّ الإصلاحات ممكنة}}): {{ممكنة}} loses the hedge of “not impossible”"
+  ],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "remove",
+  "origin": "editor",
+  "why_strong": "Rest of the sentence kept: it shows transposition, calque and borrowing-plus-addition working together in one realistic news sentence."
+ },
+ {
+  "file": "c2a.js",
+  "find": "في فندق شيراتون، وقال إنّ الإصلاحات ممكنة.",
+  "replace": "في فندق شيراتون.",
+  "removed": [
+   "{{وقال إنّ الإصلاحات ممكنة}}"
+  ],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "remove",
+  "origin": "editor"
+ },
+ {
+  "file": "c2a.js",
+  "find": ", '_not impossible_ → {{ممكنة}}: modulation'",
+  "replace": "",
+  "removed": [
+   "_not impossible_ → {{ممكنة}}: modulation"
+  ],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "remove",
+  "origin": "editor"
+ },
+ {
+  "file": "c2a.js",
+  "find": "'Which procedure? _email_ → {{إيميل}}'",
+  "replace": "'Which procedure? _garage_ → {{كراج}}'",
+  "removed": [
+   "_email_ → {{إيميل}} (try question)"
+  ],
+  "kept_replacement_source": "samiuallah_farghal_notes.txt",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "replace",
+  "origin": "team:samiuallah_farghal_notes.txt"
+ },
+ {
+  "file": "c2a.js",
+  "find": "'Which procedure? _honeymoon_ → {{شهر العسل}}'",
+  "replace": "'Which procedure? _the White House_ → {{البيت الأبيض}}'",
+  "removed": [
+   "_honeymoon_ → {{شهر العسل}} (try question; flagged by the editor as embarrassing)"
+  ],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "replace",
+  "origin": "editor",
+  "why_strong": "The editor’s own model: a calque that has become the established equivalent, so the translator has no free choice; real political usage."
+ },
+ {
+  "file": "c2a.js",
+  "find": "'Which procedure? _It is not easy._ → {{إنه صعب}}'",
+  "replace": "'Which procedure? _Parking for residents only._ → {{ممنوع الوقوف لغير السكان}}'",
+  "removed": [
+   "_It is not easy._ → {{إنه صعب}} (try question; shallow)"
+  ],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "replace",
+  "origin": "editor",
+  "why_strong": "A real viewpoint reversal (permission for some becomes prohibition for others), exactly how Arabic signs phrase it; answer stays “Modulation”."
+ },
+ {
+  "file": "c2a.js",
+  "find": "{{لا يُشقّ له غبار}} When",
+  "replace": "{{لا يُشقّ له غبار}}. When",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 14: Translation strategies",
+  "action": "keep",
+  "origin": "team:samiuallah_draft.txt"
+ },
+ {
+  "file": "c2a.js",
+  "find": "_5 miles_ → {{نحو 8 كيلومترات}}",
+  "replace": "_5 miles_ → {{نحو 8 كيلومترات}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 14: Translation strategies",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "Illustrates substitution of units of measurement, the case Shaikhah’s strategy slides single out; the figure is accurate (5 mi ≈ 8 km)."
+ },
+ {
+  "file": "c2a.js",
+  "find": "_the Fed_ → {{مجلس الاحتياطي الفيدرالي الأمريكي}}",
+  "replace": "_the Fed_ → {{مجلس الاحتياطي الفيدرالي الأمريكي}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 14: Translation strategies",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "Real news-text addition: an English short form that Arab readers need spelled out; accurate official name."
+ },
+ {
+  "file": "c2a.js",
+  "find": "{{أنتَ}}, {{أنتِ}}, {{أنتما}}, {{أنتم}} or {{أنتنّ}}",
+  "replace": "{{أنتَ}}, {{أنتِ}}, {{أنتما}}, {{أنتم}} or {{أنتنّ}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 14: Translation strategies",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "The clearest case of obligatory explicitation from English into Arabic (gender and number of “you”); a problem every beginner meets."
+ },
+ {
+  "file": "c2a.js",
+  "find": "_He took the Tube._ → {{ركب قطار الأنفاق في لندن}}",
+  "replace": "_He took the Tube._ → {{ركب قطار الأنفاق في لندن}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 14: Translation strategies",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "Optional explicitation of a culture-bound name; accurate and natural."
+ },
+ {
+  "file": "c2a.js",
+  "find": "_Kuwait’s National Assembly_ → {{مجلس الأمة}}",
+  "replace": "_Kuwait’s National Assembly_ → {{مجلس الأمة}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 14: Translation strategies",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "Local, realistic implicitation for a Kuwaiti readership; the official name is correct."
+ },
+ {
+  "file": "c2a.js",
+  "find": "_prawns_ and _shrimps_ → {{روبيان}}",
+  "replace": "{{خال}} and {{عمّ}} → _uncle_, when it does not matter which side of the family he is on",
+  "removed": [
+   "_prawns_ and _shrimps_ → {{روبيان}} (flagged by the editor as embarrassing)"
+  ],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 14: Translation strategies",
+  "action": "replace",
+  "origin": "editor",
+  "why_strong": "Built on the team’s kinship-gap point ({{خال}} = maternal uncle, samiuallah_farghal_notes.txt): English has no single word for each, so the general word “uncle” is a genuine, non-trivial generalisation."
+ },
+ {
+  "file": "c2a.js",
+  "find": "{{الديوانية}} can become _a men’s evening gathering_ (domestication) or stay _the diwaniya_ (foreignisation)",
+  "replace": "{{الديوانية}} can become _a men’s evening gathering_ (domestication) or stay _the diwaniya_ (foreignisation)",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 14: Translation strategies",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "A Kuwaiti culture-specific item that shows both options side by side; accurate and relevant to the readers."
+ },
+ {
+  "file": "c2b.js",
+  "find": "“Shall I compare thee to a summer’s day?” (Shakespeare, 1609) may choose spring for Arab readers: {{أأشبّهك بيومٍ ربيعيّ؟}}",
+  "replace": "“Shall I compare thee to a summer’s day?” (Shakespeare, 1609) may choose spring for Arab readers: {{أأشبّهك بيومٍ ربيعيّ؟}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 15: Cultural approximation",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "Famous, genuine case where climate reverses an image’s feeling (a hot summer is not pleasant for Arab readers); matches the team’s warmed-my-heart point."
+ },
+ {
+  "file": "c2b.js",
+  "find": "_Thank you for your hard work._ → {{يعطيك العافية}}",
+  "replace": "_Thank you for your hard work._ → {{يعطيك العافية}}",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 15: Cultural approximation",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "What people really say in that situation; the literal Arabic would sound translated; the regional label is accurate."
+ },
+ {
+  "file": "c2b.js",
+  "find": "_amphibious_ → {{برمائي}} ({{برّ}} + {{ماء}})",
+  "replace": "_amphibious_ → {{برمائي}} ({{برّ}} + {{ماء}})",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 17: Lexical creation",
+  "action": "keep",
+  "origin": "editor",
+  "why_strong": "The standard, accurate illustration of Arabic blending (النحت); the method is otherwise unillustrated."
+ },
+ {
+  "file": "c2a.js",
+  "find": "_computer_ → {{كمبيوتر}}'",
+  "replace": "_computer_ → {{كمبيوتر}} (common in everyday Arabic; formal texts prefer {{حاسوب}})'",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "keep",
+  "origin": "team:samiuallah_farghal_notes.txt",
+  "why_strong": "Team pair (Exercise 27) with a short decision note added: borrowing vs. the Arabic term حاسوب."
+ },
+ {
+  "file": "c2a.js",
+  "find": "['Borrowing.', 'Calque.', 'Modulation.']",
+  "replace": "['Borrowing (the Arabic word {{مرآب}} also exists).', 'Calque: it is the established equivalent, not a free choice.', 'Modulation: the same rule, seen from the other side.']",
+  "removed": [
+   "answers “Borrowing.”, “Calque.”, “Modulation.” (updated to match the new questions)"
+  ],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 13: The seven translation procedures",
+  "action": "replace",
+  "origin": "editor",
+  "why_strong": "Answers now say why each solution was chosen; مرآب is the team’s loan-translation of garage (samiuallah_farghal_notes.txt)."
+ },
+ {
+  "file": "c2a.js",
+  "find": "'Give a functional equivalent: _The agreement remained a dead letter._']",
+  "replace": "'Give a functional equivalent: _The agreement remained a dead letter._', 'Challenge: _The new law is still a dead letter._ Which version suits a formal legal report, and which a newspaper column? (a) {{لا يزال القانون الجديد حبراً على ورق}} (b) {{لم يُطبَّق القانون الجديد بعد}}']",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 10: Equivalence",
+  "action": "replace",
+  "origin": "editor",
+  "why_strong": "Real-world legal/news sentence where both equivalents are correct and the audience decides."
+ },
+ {
+  "file": "c2a.js",
+  "find": "'{{بقيت الاتفاقية حبراً على ورق.}}']]",
+  "replace": "'{{بقيت الاتفاقية حبراً على ورق.}}', '(b) for the legal report: plain and precise. (a) for the column: the idiom keeps the colour.']]",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 10: Equivalence",
+  "action": "replace",
+  "origin": "editor",
+  "why_strong": "Model answer for the challenge item."
+ },
+ {
+  "file": "c2a.js",
+  "find": "'Why is addition common from English into Arabic?']",
+  "replace": "'Why is addition common from English into Arabic?', 'Challenge: _The Fed raised interest rates._ For a general Arab newspaper, (a) {{رفع الفيدرالي أسعار الفائدة}} or (b) {{رفع مجلس الاحتياطي الفيدرالي الأمريكي أسعار الفائدة}}?']",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 14: Translation strategies",
+  "action": "replace",
+  "origin": "editor",
+  "why_strong": "Real business-news sentence; the choice depends on the audience (addition vs. the short form used by the financial press)."
+ },
+ {
+  "file": "c2a.js",
+  "find": "extra information.']]",
+  "replace": "extra information.', '(b): general readers may not know _the Fed_. A specialist financial readership may accept the short form (a).']]",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 14: Translation strategies",
+  "action": "replace",
+  "origin": "editor",
+  "why_strong": "Model answer for the challenge item."
+ },
+ {
+  "file": "c2b.js",
+  "find": "'Why does _warmed my heart_ become {{أثلجَ صدري}}?']",
+  "replace": "'Why does _warmed my heart_ become {{أثلجَ صدري}}?', 'Challenge: _I am sorry for your loss._ in a formal condolence letter from a Kuwaiti ministry: (a) {{عظّم الله أجركم}} or (b) {{البقية في حياتك}}?']",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 15: Cultural approximation",
+  "action": "replace",
+  "origin": "editor",
+  "why_strong": "Real situation where both phrases are what people say, but register and region decide; builds on the team’s Exercise 29 pair."
+ },
+ {
+  "file": "c2b.js",
+  "find": "not warmth.']]",
+  "replace": "not warmth.', '(a): it is formal and used in the Gulf. (b) is Egyptian spoken Arabic.']]",
+  "removed": [],
+  "kept_replacement_source": "",
+  "chapter": "Chapter 15: Cultural approximation",
+  "action": "replace",
+  "origin": "editor",
+  "why_strong": "Model answer for the challenge item."
+ }
+]

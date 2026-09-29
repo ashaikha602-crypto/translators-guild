@@ -32,12 +32,17 @@ function ar(t, o = {}) {
   return new TextRun({ text: t, rightToLeft: true, font: { ascii: ARABIC, hAnsi: ARABIC, cs: ARABIC }, size: o.size || 23, sizeComplexScript: o.size || 24, bold: o.bold, boldComplexScript: o.bold, color: o.color });
 }
 
+// a term's Arabic: 'preferred|alternative' shows the preferred equivalent first, then the alternative
+const arTerm = a => { const [p, alt] = a.split('|'); return alt ? [ar(p), new TextRun({ text: '; also ', font: LATIN, italics: true }), ar(alt)] : [ar(p)]; };
 // ---------- blocks ----------
 // every chapter's Remember box ends with the next step on the reader's path
-const TITLES = {}; let CLOSING = null;
-[...require('./c2a.js'), ...require('./c2b.js')].forEach(b => {
-  const m = b[0] === 'ch' && /^Chapter (\d+): (.*)$/.exec(b[1]); if (m) TITLES[+m[1]] = m[2];
-  if (b[0] === 'part' && b[2] === 'closing') CLOSING = b[1]; });
+const TITLES = {}, NEXT = {}; let CLOSING = null;
+{ const nav = [];
+  [...require('./c2a.js'), ...require('./c2b.js')].forEach(b => {
+    const m = b[0] === 'ch' && /^Chapter (\d+): (.*)$/.exec(b[1]); if (m) { TITLES[+m[1]] = m[2]; nav.push([+m[1], b[1]]); }
+    if (b[0] === 'page') nav.push([null, b[1]]);
+    if (b[0] === 'part' && b[2] === 'closing') { CLOSING = b[1]; nav.push([null, b[1]]); } });
+  nav.forEach(([n], i) => { if (n && nav[i + 1]) NEXT[n] = nav[i + 1][1]; }); }
 let inst = 0, afterPart = false, chapter = null, mainStart = null, pendingTerms = null;
 const body = [], glossary = [];
 // generous spacing so that pages are light for beginners
@@ -110,14 +115,18 @@ function block(b) {
       if (pendingTerms) {
         body.push(new Paragraph({ keepNext: true, shading: shade, spacing: { before: 160, after: 40, line: 290 },
           children: [new TextRun({ text: 'WORDS TO REMEMBER', bold: true, color: ACCENT, font: LATIN, size: 17, characterSpacing: 30 })] }));
-        pendingTerms.forEach(([t, arab, def]) => P([...runs(`**${t}**`), new TextRun({ text: ' (', font: LATIN }), ar(arab), new TextRun({ text: '): ', font: LATIN }), ...runs(def)],
+        pendingTerms.forEach(([t, arab, def]) => P([...runs(`**${t}**`), new TextRun({ text: ' (', font: LATIN }), ...arTerm(arab), new TextRun({ text: '): ', font: LATIN }), ...runs(def)],
           { numbering: { reference: 'bul', level: 0 }, spacing: { after: 40, line: 300 }, shading: shade, keepNext: true, keepLines: true }));
         pendingTerms = null;
       }
-      if (chapter) { const nx = TITLES[chapter + 1] ? `Chapter ${chapter + 1}: ${TITLES[chapter + 1]}` : CLOSING;
+      if (chapter) { const nx = NEXT[chapter] || CLOSING;
         if (nx) body.push(new Paragraph({ shading: shade, spacing: { before: 120, after: 0, line: 290 },
           children: [new TextRun({ text: 'NEXT  ', bold: true, color: ACCENT, font: LATIN, size: 17, characterSpacing: 30 }), new TextRun({ text: nx, italics: true, font: LATIN, size: 20 })] })); }
       boxEnd(); break;
+    case 'page':   // a one-page guide between chapters, listed in the contents
+      H(HeadingLevel.HEADING_1, a, { pageBreakBefore: true }); afterPart = false; chapter = null; break;
+    case 'box':    // a titled shaded list, e.g. DO / DON'T
+      boxTitle(a); c.forEach(t => P(runs(t), { shading: shade, keepNext: true, keepLines: true, indent: { left: 170 }, spacing: { after: 0, line: 300 } })); boxEnd(); break;
     case 'fact':   // a short, well-documented fact that shows why translation matters
       boxTitle('Did you know?');
       body.push(new Paragraph({ shading: shade, keepLines: true, spacing: { after: 0, line: 300 }, children: runs(a) }));
@@ -133,7 +142,8 @@ const img = (file, w, h, extra = {}) => new ImageRun({ type: file.endsWith('.png
 center([img('art/logo-dark.png', 228, 112)], { before: 900, after: 0 });
 body.push(new Paragraph({ spacing: { after: 1200 }, children: [] }));
 center([new TextRun({ text: 'Translation Handbook', font: SERIF, size: 56, bold: true, color: INK })], { after: 200 });
-center([new TextRun({ text: 'A beginner’s guide to translating between English and Arabic', font: LATIN, size: 26, italics: true, color: INK })], { after: 500 });
+center([new TextRun({ text: 'A beginner’s guide to translating between English and Arabic', font: LATIN, size: 26, italics: true, color: INK })], { after: 160 });
+center([new TextRun({ text: 'Learn. Practise. Revise. Translate.', font: LATIN, size: 22, bold: true, color: ACCENT, characterSpacing: 20 })], { after: 400 });
 body.push(new Paragraph({ bidirectional: true, alignment: AlignmentType.CENTER, spacing: { after: 120 }, children: [ar('دليل الترجمة', { size: 44, bold: true, color: ACCENT })] }));
 body.push(new Paragraph({ bidirectional: true, alignment: AlignmentType.CENTER, spacing: { after: 2400 }, children: [ar('مرشدٌ للمبتدئين في الترجمة بين العربية والإنجليزية', { size: 26, color: INK })] }));
 center([new TextRun({ text: 'First edition, 2026', font: LATIN, size: 20, color: GREY })], {});
@@ -166,12 +176,12 @@ block(['ul', [
   '**Newmark (1988)**, _A textbook of translation_: methods and procedures, with many examples.',
   '**Díaz Cintas and Remael (2021)**, _Subtitling_: a practical guide to the subtitler’s work, with many examples.',
 ]]);
-block(['part', 'Glossary', 'All the key terms defined in this handbook, in alphabetical order, with the chapter where each one is explained.']);
+block(['part', 'Glossary', 'All the key terms defined in this handbook, in alphabetical order, with the chapter where each one is explained. Where two Arabic equivalents are given, the first is the one this handbook prefers.']);
 let glossStart = body.length, glossEnd;
 const seen = new Map();
 glossary.forEach(g => { const k = g[0].toLowerCase(); if (!seen.has(k)) seen.set(k, g); });
 [...seen.values()].sort((x, y) => x[0].localeCompare(y[0])).forEach(([t, a, d, ch]) =>
-  P([...runs(`**${t}**`), new TextRun({ text: '  ', font: LATIN }), ar(a), new TextRun({ text: '  ', font: LATIN }), ...runs(d + ' '), new TextRun({ text: `(Chapter ${ch})`, font: LATIN, color: GREY })].map(r => r), { spacing: { after: 90, line: COLS ? 262 : 280 } }));
+  P([...runs(`**${t}**`), new TextRun({ text: '  ', font: LATIN }), ...arTerm(a), new TextRun({ text: '  ', font: LATIN }), ...runs(d + ' '), new TextRun({ text: `(Chapter ${ch})`, font: LATIN, color: GREY })].map(r => r), { spacing: { after: 90, line: COLS ? 262 : 280 } }));
 glossEnd = body.length;
 
 // ---------- references (APA 7) ----------

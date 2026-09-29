@@ -14,7 +14,7 @@ module.exports = [
 ['h1', '2. The handbook today'],
 ['ul', [
   'A guide for complete beginners in English–Arabic translation, written in English with examples in both languages.',
-  '92 pages, B5 size, in two editions with identical content: the **Midnight** edition (dark cover) and the **Light** edition (pale cover), each as an editable Word file and a PDF.',
+  '96 pages, B5 size, in two editions with identical content: the **Midnight** edition (dark cover) and the **Light** edition (pale cover), each as an editable Word file and a PDF.',
   '9 parts and 27 chapters, ordered from the basics to the most specialised topic (audiovisual translation), followed by a closing section, **Your journey continues**.',
   'Back matter: abbreviations, further reading, a glossary of 113 terms, 39 references, and a page with the QR code of the team’s website.',
   'Every chapter follows the same guided pattern: **Where we are** → numbered **steps** (problem first, then solution) → **Try it** with answers → **Remember**, **Words to remember** and **Next**. Ten chapters also have a **Did you know?** box.',
@@ -55,6 +55,9 @@ module.exports = [
   '**A stronger opening**: **Start here** now opens with where translation is found in daily life and with the House of Wisdom in Baghdad, before the four steps of every translation.',
   '**Did you know?**: ten short, well-documented facts (the Rosetta Stone; the Universal Declaration of Human Rights; {{كتاب العين}}; Arabic numerals; the verb _run_; the journey of _coffee_; the Damascus academy; the 1954 machine-translation demonstration; the _Mars Climate Orbiter_; silent-film intertitles).',
   '**Nothing that dates**: the one example tied to a recent event was replaced with a general one.',
+  '**Two one-page guides**: **The translator’s workflow** (end of Part 1: seven steps, each linked to its chapter, with Do and Don’t boxes) and **When in doubt** (before the closing section: what to do with an unknown word, two possible translations, or an answer from an AI tool).',
+  '**Examples reviewed**: every example was checked against the team’s documents and Shaikha’s notes. Team examples were kept, with their errors corrected; examples written for the handbook were kept only where they show a real translation decision, and weak ones were replaced, preferably with team examples (for example, _honeymoon_ and _prawns and shrimps_ were replaced). A short “challenge” question was added to Chapters 10, 14 and 15.',
+  '**Rules framed as tendencies**: statements such as “prefer a verbal sentence” and “use Modern Standard Arabic” now read as general tendencies that the text type, audience and purpose can change; where a term has two Arabic equivalents, the glossary gives the preferred one first.',
   '**A shorter book without cutting content**: chapters now follow on from each other, while each part still starts on a new page; the glossary is set in two columns; the margins and the space between paragraphs were reduced slightly. The book went from 102 to 92 pages with the same content.',
 ]],
 ['h2', '3.5 Design and layout'],

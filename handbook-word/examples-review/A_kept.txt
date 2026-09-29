@@ -1,0 +1,121 @@
+KEPT EXAMPLES, scope: Preface / Start here to end of Chapter 9 (c2a.js)
+Format: example | origin/source file | note
+
+== Start here ==
+Keep off the grass → ممنوع الدوس على العشب (not ابقَ بعيداً عن العشب) | editor | kept: strong (see A.json)
+
+== Chapter 1 ==
+Break a leg! → اكسر ساقاً ✗ / بالتوفيق ✓ | samiuallah_draft.txt, samiuallah_180_notes.txt ("To break a leg -> أن تكون محظوظاً"; handbook gives the natural Arabic wish) | team
+Try: publisher asks you to translate a novel | editor scenario (concept from samiuallah_draft.txt, Translator Types) | kept: strong
+
+== Chapter 2 ==
+KUNA news report: formal, neutral, readers interested in Kuwait | samiuallah_draft.txt (Analysing a text: Publisher KUNA; Audience readers interested in the Middle East or Kuwait; political text, formal language) | team
+It’s raining cats and dogs, so the match has been cancelled → أُلغيت المباراة بسبب الأمطار الغزيرة (word-by-word version ✗) | samiuallah_draft.txt (It's raining cats and dogs: تمطر بغزارة) + samiuallah_farghal_notes.txt (Exercise 2: The match was called off on account of rain → أُلغيت المباراة بسبب هطول الأمطار) | team
+Try: medicine leaflet for patients | editor scenario | kept: strong
+
+== Chapter 3 ==
+a fast colour → سريع / ثابت → لون ثابت | samiuallah_farghal_notes.txt (Exercise 25), samiuallah_draft.txt | team
+
+== Chapter 4 ==
+Sam ate the cake → سامٌ أكلَ الكعكةَ / أكلَ سامٌ الكعكةَ | samiuallah_draft.txt, samiuallah_translation1_notes.txt (team had التفاحة; corrected to الكعكة) | team
+[NEW] Ali often goes to bed early → ينامُ عليٌّ مبكراً | samiuallah_farghal_notes.txt (Exercise 1) | team, replaces editor example
+Linking words و / ف / ثمّ; غير أنّ, لذلك, بالإضافة إلى ذلك, على سبيل المثال | editor | kept: strong
+Translation is a fascinating field → الترجمةُ مجالٌ شائق / تُعدّ الترجمة مجالاً شائقاً | samiuallah_draft.txt (is → تعد; تعد الترجمة تخصصاً / مجالاً مثيراً للاهتمام), samiuallah_farghal_notes.txt (Translation is an interesting subject → تعد الترجمة تخصص ممتع) | team
+[NEW] الطلاب في المختبر → The students are in the laboratory (text + try Q/A) | samiuallah_farghal_notes.txt (Relevance of Grammar, Exercise 1) | team, replaces editor example
+She is kind → إنها طيبة (not هي تكون طيبة) | shaikhah_slides_Grammatical_Equivalence_2.txt (slides 19-20) | team
+I am leaving now → سأغادر الآن | shaikhah_slides_Grammatical_Equivalence_2.txt (team: أنا مغادر الآن) | team
+The child was sick → كان الطفلُ مريضاً | shaikhah_slides_Grammatical_Equivalence_2.txt (slide 21) | team
+Do not touch it → لا تلمسه; She did not eat → لم تأكل; Do you want to play? → هل تريد أن تلعب؟ | shaikhah_slides_Grammatical_Equivalence_2.txt (slide 22) | team
+I will do my best → سأبذل قصارى جهدي | shaikhah_slides_Grammatical_Equivalence_2.txt (slide 23: سأفعل ما بوسعي) | team (Arabic improved)
+She had a nice holiday → قضت عطلةً جميلة; She has money → تملك مالاً | shaikhah_slides_Grammatical_Equivalence_2.txt (slide 24) | team
+[NEW] She has her pills on time → تتناول الحبوب في الوقت المحدد | shaikhah_slides_Grammatical_Equivalence_2.txt (slide 24) | team, replaces editor "She had lunch"
+you → أنتَ / أنتِ / أنتما / أنتم / أنتنّ | editor | kept: strong
+ثلاثةُ طلاب / ثلاثُ طالبات | editor | kept: strong
+[NEW] dual: المحكمان, the two arbitrators | shaikhah_slides_Grammatical_Equivalence_2.txt (slide 8) | team, replaces editor طالبان
+I am a student → أنا طالب / أنا طالبة; clues Mr/Mrs, husband/wife | shaikhah_slides_Grammatical_Equivalence_2.txt (slides 10-12) | team
+نائبة / قاضية | samiuallah_draft.txt (Note on Nouns) | team
+He is in bed → إنه في فراشه / إنه نائم | samiuallah_draft.txt (He is in bed → نائم, not في السرير) | team
+As an officer → بصفتي ضابطاً; As the manager of the company → بصفتي مديرَ الشركة | samiuallah_draft.txt | team
+Shops stay open → تظلّ المحلات التجارية مفتوحة | samiuallah_draft.txt, samiuallah_farghal_notes.txt (Exercise 1) | team
+Eventually → في نهاية المطاف | samiuallah_draft.txt | team
+…to see the Roman ruins → لزيارة الآثار الرومانية | samiuallah_draft.txt, samiuallah_farghal_notes.txt | team
+شجاعٌ مِغوار → very brave | samiuallah_draft.txt, samiuallah_translation1_notes.txt | team
+Classical Arabic / MSA / dialects | samiuallah_draft.txt, samiuallah_translation1_notes.txt | team
+Four groups of problems (grammar, word choice, punctuation and style, general/technical) | samiuallah_draft.txt, samiuallah_translation1_notes.txt | team
+Try: الطلاب حضروا المحاضرة → حضر الطلابُ المحاضرة | editor | kept: strong
+Try: He is in bed | samiuallah_draft.txt | team
+
+== Chapter 5 ==
+He is a heavy smoker → يدخّن بشراهة | samiuallah_farghal_notes.txt (heavy smoker → مدخن شره, Exercises 4 and 25; handbook turns it into a verb) | team
+after his arrival → بعد أن وصل | editor | kept: strong (reused in Chapter 13)
+Bush’s poodle → بلير، تابعُ بوش / بلير، المنقاد لبوش | samiuallah_draft.txt ("Blair: Bush's puppy" → منقاد لبوش / تابع لبوش; corrected to poodle) | team
+Try: He is a fast runner → يركض بسرعة; His arrival was late → وصل متأخراً | editor | kept: strong
+
+== Chapter 6 ==
+die / pass away / kick the bucket (مات / تُوُفِّي) | samiuallah_draft.txt; samiuallah_farghal_notes.txt (die/pass away; kick the bucket → مات / وافته المنية) | team
+steed (جواد) / horse (حصان) | samiuallah_draft.txt | team
+friend (صديق) / comrade (رفيق) | samiuallah_draft.txt; samiuallah_farghal_notes.txt | team
+[NEW] kill (قتل) / assassinate (اغتال) | samiuallah_draft.txt, samiuallah_180_notes.txt (Kill vs. Assassinated) | team, replaces editor slim/skinny
+أشعرُ بالحرّ / أصبح الجوّ بارداً | samiuallah_draft.txt (Sentence vs speaker meaning) | team
+It’s freezing in here → "Please close the window" | editor | kept: strong
+ثكلى, lexical gap (orphan, widow) | shaikhah_slides_Equivalence_at_the_word_level.txt (slide 13) | team
+الهنود الحمر → Native Americans, not Red Indians | shaikhah_slides_Equivalence_at_the_word_level.txt (slide 14) | team
+شبر → span | shaikhah_slides_Equivalence_at_the_word_level.txt (slide 16) | team
+Try: obituary مات / تُوُفِّي | samiuallah_draft.txt | team
+Try: It’s rather warm in here | editor (mirrors team أشعر بالحر) | kept: strong
+
+== Chapter 7 ==
+لكلّ مقامٍ مقال | samiuallah_draft.txt | team
+Nizar Qabbani / Mahmoud Darwish as authors (macro context) | samiuallah_draft.txt | team
+Author-text-audience triangle with the translator in the middle | samiuallah_draft.txt; samiuallah_farghal_notes.txt | team
+bank → مصرف / ضفّة النهر | samiuallah_draft.txt; samiuallah_farghal_notes.txt | team
+case → حالة / قضية / علبة | samiuallah_draft.txt (situation, an issue, cover, container) | team
+عين: eye, spring, spy | samiuallah_draft.txt; samiuallah_farghal_notes.txt (Exercise 13) | team
+خط: line, handwriting, font, route | shaikhah_slides_Equivalence_at_the_word_level.txt (slide 17: line, path, track, font) | team
+تطهير الجرح / التطهير من الذنوب | samiuallah_draft.txt | team
+احتجاز المياه / احتجاز الرهائن | samiuallah_draft.txt | team
+Try: The doctor examined the case; شربنا من عين ماء باردة | editor sentences built on team words (samiuallah_draft.txt; farghal Exercise 13 "I went to the spring to drink water") | kept: strong
+
+== Chapter 8 ==
+pay money / pay attention / pay respect / pay a visit | samiuallah_draft.txt; samiuallah_farghal_notes.txt | team
+deliver a letter / a speech / the news / a blow / a verdict | shaikhah_slides_Beyond_word_level_1_collocations.txt (slides 6-7); samiuallah_farghal_notes.txt (Exercise 17, verdict → يصدر حكماً) | team
+close cooperation → تعاون وثيق; a close friend → صديق مقرّب | samiuallah_draft.txt | team
+strong tea → شاي ثقيل (not شاي قوي); weak coffee → قهوة خفيفة; a rough sea → بحر هائج | samiuallah_farghal_notes.txt (Exercise 25); samiuallah_draft.txt | team
+a fast colour → لون ثابت; a fast friend → صديق وفيّ | samiuallah_draft.txt; samiuallah_farghal_notes.txt | team
+break the law → يخالف القانون (not يكسر القانون) | samiuallah_draft.txt; samiuallah_farghal_notes.txt | team
+استلّ سيفه; يساورني القلق | samiuallah_draft.txt | team
+قدّم استقالته → he resigned; عقد اجتماعاً → he held a meeting | editor | kept: strong
+[NEW] يقطع العلاقات الدبلوماسية → to sever diplomatic relations; يقطع الإشارة الضوئية → to run a red light; يقطع عهداً على نفسه → to make a solemn promise | samiuallah_farghal_notes.txt (Exercise 18) | team, replaces editor اتّخذ قراراً
+Try: heavy rain → مطر غزير | samiuallah_farghal_notes.txt (Exercise 4) | team
+Try: deliver a lecture → يلقي محاضرة | editor | kept: strong
+Try: عقد مؤتمراً صحفياً → He held a press conference | editor | kept (linked to the kept عقد اجتماعاً and the Chapter 13 text)
+
+== Chapter 9 ==
+It’s a piece of cake | samiuallah_draft.txt; samiuallah_farghal_notes.txt | team
+as a matter of fact / ladies and gentlemen / all the best | shaikhah_slides_Beyond_word_level_2_idioms_and_fixed_expressions.txt (slide 6; Arabic added in the handbook) | team
+raining cats and dogs; by and large; like two peas in a pod | shaikhah_slides_Beyond_word_level_2_idioms_and_fixed_expressions.txt (slide 8) | team
+a piece of cake: literal meaning at a birthday party (قطعة من الكعكة) | samiuallah_draft.txt | team
+Five strategies (Baker) | shaikhah_slides_Beyond_word_level_2_idioms_and_fixed_expressions.txt (slide 10) | team
+to play with fire → يلعب بالنار | editor | kept: strong
+It’s raining cats and dogs → تمطر كأفواه القِرَب | English in team files (samiuallah_draft.txt; shaikhah idioms slides); Arabic idiom added in the handbook | team
+It’s raining cats and dogs → تمطر بغزارة | samiuallah_draft.txt | team
+to roll up one’s sleeves → شمّر عن ساعديه | samiuallah_draft.txt (team wrote "pull one's socks up"; corrected) | team
+over the moon → في قمّة السعادة | samiuallah_draft.txt | team
+He looks blue → يبدو حزيناً; I will go bananas → سأفقد صوابي | samiuallah_tarjama_mahiyatuha_p6-7.txt | team
+to be in the red → يعاني عجزاً مالياً | samiuallah_draft.txt (to be in the red = مديون) | team
+to spill the beans → أفشى السرّ | samiuallah_draft.txt; samiuallah_translation1_notes.txt; samiuallah_farghal_notes.txt; masooma_terminology_idioms.txt; shaikhah idioms slides | team
+I’m all ears → كلّي آذانٌ صاغية | samiuallah_draft.txt | team
+Break a leg! → بالتوفيق! | samiuallah_draft.txt | team
+Mark my words → تذكّر كلامي | samiuallah_draft.txt; samiuallah_translation1_notes.txt | team
+to hit the sack → أوى إلى فراشه | samiuallah_draft.txt | team
+to bury the hatchet; the long and the short of it | shaikhah_slides_Beyond_word_level_2_idioms_and_fixed_expressions.txt (slide 4) | team
+in a nutshell → باختصار | shaikhah_slides_Beyond_word_level_2_idioms_and_fixed_expressions.txt (slide 11) | team
+Don’t put words in my mouth → لا تتقوّل عليّ | samiuallah_draft.txt ("Don't put words on me → لا تتقول علي الأقاويل") | team
+كالمستجير من الرمضاء بالنار → out of the frying pan into the fire | samiuallah_draft.txt; samiuallah_translation1_notes.txt; samiuallah_farghal_notes.txt | team
+رجع بخُفَّي حُنين → he came back empty-handed | samiuallah_farghal_notes.txt (metaphors, p. 28: سيعود أحمد بخفي حنين) | team
+عصفورٌ في اليد خيرٌ من عشرةٍ على الشجرة → a bird in the hand… | samiuallah_farghal_notes.txt (Exercise 6) | team
+Boys will be boys → الولد ولد ولو صار قاضي بلد | samiuallah_draft.txt ("boys are boys → الولد ولد لو أنه قاضي بلد") | team
+[CORRECTED] Business is business → الشغل شغل | samiuallah_farghal_notes.txt (Exercise 3); samiuallah_draft.txt | team, Arabic replaced (handbook's تعاشروا كالإخوة… was not from the team and was misquoted)
+Try: piece of cake (exam); spill the beans; رجع بخفي حنين | team (as above) | team
+
+Not treated as examples (left untouched): key terms and their Arabic equivalents, book titles, citations and page-cited quotations (Newmark, Johnson, Jakobson, Firth, Eco), the al-Jāḥiẓ quotation, the Contributors text, and all 'fact' blocks.

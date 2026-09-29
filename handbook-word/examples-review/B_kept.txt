@@ -1,0 +1,116 @@
+KEPT EXAMPLES, Chapters 10-18 (team = found in srcs/; editor = not in team files, kept as strong under the revised criteria)
+
+CHAPTER 10: EQUIVALENCE
+- The agreement has remained a dead letter: formal / functional / ideational versions: team, samiuallah_draft.txt (also samiuallah_180_notes.txt; treaty version in samiuallah_farghal_notes.txt)
+- agreement = اتفاقية / treaty = معاهدة: team, samiuallah_draft.txt
+- You should think outside the box (formal / creative): team, samiuallah_draft.txt
+- Ali is second to none in writing poetry (لا يُشقّ له غبار / لا يُضاهى): team, samiuallah_draft.txt
+- Try questions 1 and 2 (second to none, dead letter): team, samiuallah_draft.txt
+- NEW challenge: The new law is still a dead letter (two versions): editor (see B.json why_strong)
+
+CHAPTER 11: LITERAL AND FREE TRANSLATION
+- to play a role → يلعب دوراً: team, samiuallah_draft.txt (also shaikhah_slides_Beyond_word_level_1_collocations.txt)
+- to pay a visit → يدفع زيارة ✗ / يقوم بزيارة: team, samiuallah_draft.txt; samiuallah_farghal_notes.txt
+- It has been a long day → لقد كان يوماً شاقّاً: team, samiuallah_draft.txt
+- What are you wearing on your biggest day? → يوم زفافك: team, samiuallah_draft.txt
+- Appointing new employees… equal opportunity → المحسوبية والواسطة والمحاباة: team, samiuallah_draft.txt
+- Going out can be risky these days (disease context): team, samiuallah_draft.txt
+- We have had heavy rainfall this winter → موسم زراعي مبشّر بالخير: team, samiuallah_draft.txt
+- His parents are not quite happy… (respecting parents): team, samiuallah_draft.txt
+- literal translation successful or destructive (قد تكون الترجمة الحرفية ناجحة أو مدمّرة): team, samiuallah_draft.txt
+- NEW (replaces No smoking): It is raining now → الجو ماطر الآن, not إنه يمطر الآن: team, samiuallah_farghal_notes.txt
+- Wet paint → انتبه، الطلاء لم يجفّ: editor (kept, why clause added)
+- Try questions (play a role; long day): team, samiuallah_draft.txt
+
+CHAPTER 12: METAPHORIC TRANSLATION
+- NEW (replaces lion simile/metaphor): She is as beautiful as the moon / She is a moon; هي قمر: team, samiuallah_draft.txt
+- رأيتُ أسداً يخطب (استعارة): editor (kept)
+- She is a snake → إنها أفعى: team, samiuallah_draft.txt
+- My hopes evaporated → تبخّرت آمالي: team, samiuallah_farghal_notes.txt; samiuallah_draft.txt (تبخرت أفكاري)
+- My paper will see the light of day next December: team, samiuallah_draft.txt
+- a throbbing headache (metaphor-based term): team, masooma_182_slides.txt
+- This is the tip of the iceberg → غيض من فيض / وما خفي كان أعظم: team, samiuallah_draft.txt
+- hands of a clock → عقارب الساعة: team, masooma_182_slides.txt (عقرب الساعة)
+- He is a rock → إنه كالصخرة في ثباته: editor (kept)
+- The news raised a few eyebrows → أثار الخبر استغراب بعضهم: team, samiuallah_draft.txt (raises the brows → shocked)
+- Try questions (evaporated; tip of the iceberg): team, samiuallah_draft.txt / samiuallah_farghal_notes.txt
+
+CHAPTER 13: THE SEVEN TRANSLATION PROCEDURES
+- computer → كمبيوتر (plus note حاسوب): team, samiuallah_farghal_notes.txt (Exercise 27)
+- NEW calque: shadow government → حكومة الظل: team, samiuallah_draft.txt
+- NEW literal: My friend speaks German fluently → يتحدث صديقي الألمانية بطلاقة: team, samiuallah_farghal_notes.txt (Exercise 14)
+- after his arrival → بعد أن وصل (transposition, list and Step 4): editor (kept)
+- NEW modulation: You can’t miss it → ستجده بسهولة: editor (new)
+- NEW equivalence: A burnt child dreads the fire → من تلدغه الحيّة يخاف من جرّة الحبل: team, samiuallah_farghal_notes.txt (Exercise 7)
+- They are like Romeo and Juliet → هما كقيسٍ وليلى: team, samiuallah_draft.txt; samiuallah_translation1_notes.txt
+- Step 4 sentence (trimmed): After his arrival in Kuwait… press conference at the Sheraton; press conference → مؤتمر صحفي; Sheraton → فندق شيراتون: editor (kept)
+- NEW try: garage → كراج (answer notes مرآب): team, samiuallah_farghal_notes.txt
+- NEW try: the White House → البيت الأبيض: editor (editor’s own model)
+- NEW try: Parking for residents only → ممنوع الوقوف لغير السكان: editor (new)
+
+CHAPTER 14: TRANSLATION STRATEGIES
+- key word → كلمة مفتاحية / كلمة دالّة: team, samiuallah_draft.txt; samiuallah_translation1_notes.txt
+- a dead letter → حبرٌ على ورق; second to none → لا يُشقّ له غبار: team, samiuallah_draft.txt
+- spill the beans → أفشى السرّ; mark my words → تذكّر كلامي: team, samiuallah_draft.txt; samiuallah_translation1_notes.txt
+- Romeo and Juliet → قيس وليلى (text and try): team, samiuallah_draft.txt
+- 5 miles → نحو 8 كيلومترات: editor (kept)
+- the Fed → مجلس الاحتياطي الفيدرالي الأمريكي: editor (kept)
+- شجاعٌ مِغوار → very brave (text and try): team, samiuallah_draft.txt; samiuallah_translation1_notes.txt
+- الزكاة, العِدّة (explanatory translation): team, samiuallah_draft.txt; samiuallah_translation1_notes.txt
+- you → أنتَ / أنتِ / أنتما / أنتم / أنتنّ: editor (kept)
+- He took the Tube → ركب قطار الأنفاق في لندن: editor (kept)
+- Kuwait’s National Assembly → مجلس الأمة: editor (kept)
+- NEW (replaces prawns/shrimps): خال and عمّ → uncle: editor, built on the team kinship gap in samiuallah_farghal_notes.txt
+- jet lag → الإرهاق الناتج عن فارق التوقيت: team, samiuallah_draft.txt (Jet lag: إعياء الطيران)
+- waqf (charitable endowment): team, samiuallah_draft.txt (Wakf: وقف)
+- algebra, algorithm, hijab: team, shaikhah_slides_Word-level_translation_strategies.txt
+- الديوانية → a men’s evening gathering / the diwaniya: editor (kept)
+- NEW challenge: The Fed raised interest rates (two versions): editor
+
+CHAPTER 15: CULTURAL APPROXIMATION
+- I have got the test in the bag → الامتحان في جيبي: team, samiuallah_draft.txt
+- Like mother, like daughter → اقلب الجرّة على فمها…: team, samiuallah_draft.txt; samiuallah_farghal_notes.txt
+- Ali and Ahmad are cut from the same cloth → من طينةٍ واحدة (text and try): team, samiuallah_draft.txt
+- a scapegoat → كبش فداء: team, samiuallah_draft.txt
+- to sleep like a log → نام كالقتيل: team, samiuallah_draft.txt; samiuallah_farghal_notes.txt
+- as busy as a bee → نشيطٌ كالنحلة: team, samiuallah_farghal_notes.txt (زي النحلة); samiuallah_draft.txt
+- The news warmed my heart → أثلجَ الخبرُ صدري (text and try): team, samiuallah_draft.txt; samiuallah_translation1_notes.txt
+- Shall I compare thee to a summer’s day? → spring: editor (kept)
+- the Home Office; the Chancellor of the Exchequer; the Secretary of the Treasury; the Secretary of State (text and try); sheriff: team, samiuallah_draft.txt; samiuallah_farghal_notes.txt
+- watchdog press / lapdog press: team, samiuallah_draft.txt; samiuallah_farghal_notes.txt
+- mocktail: team, samiuallah_draft.txt; samiuallah_translation1_notes.txt
+- product cannibalisation → مزاحمة منتج جديد…: team, samiuallah_draft.txt
+- God willing; We are very well; Welcome! It is an honour…: team, samiuallah_draft.txt; samiuallah_farghal_notes.txt (Exercise 29)
+- I am sorry for your loss → عظّم الله أجركم / البقية في حياتك: team pair, samiuallah_draft.txt (Arabic corrected)
+- Thank you for your hard work → يعطيك العافية: editor (kept)
+- NEW challenge: I am sorry for your loss in a formal ministry letter: editor
+
+CHAPTER 16: DESCRIPTIVE TRANSLATION
+- الزكاة → zakat (…): team, samiuallah_draft.txt; samiuallah_farghal_notes.txt
+- التيمّم → tayammum (…): team, samiuallah_draft.txt; samiuallah_farghal_notes.txt
+- البسملة, الحوقلة: team, samiuallah_draft.txt
+- العِدّة: team, samiuallah_draft.txt
+- العطوة → ʿatwa: team, samiuallah_draft.txt
+- Ali has been sectioned → أُودِع عليٌّ مستشفى…: team, samiuallah_draft.txt
+- Try: الوقف → waqf: team, samiuallah_draft.txt
+
+CHAPTER 17: LEXICAL CREATION
+- blog → مدوّنة: team, samiuallah_draft.txt
+- cloud seeding → الاستمطار (from مطر): team, masooma_182_slides.txt
+- قطار (line of camels → train): team, masooma_182_slides.txt
+- smartphone → الهاتف الذكي (text and try); shadow government → حكومة الظل; Thanksgiving → عيد الشكر: team, samiuallah_draft.txt; samiuallah_farghal_notes.txt
+- الصكوك → sukuk: team, samiuallah_draft.txt
+- radio → الراديو: team, samiuallah_draft.txt
+- strategy → استراتيجية; technology → تكنولوجيا: team, shaikhah_slides_Equivalence_at_the_word_level.txt
+- greenwashing → التضليل البيئي: team, samiuallah_draft.txt
+- cybersecurity → الأمن السيبراني: team, samiuallah_draft.txt
+- amphibious → برمائي (النحت): editor (kept)
+- manageable → قابل للإدارة; antibiotic → مضاد حيوي: team, masooma_182_slides.txt
+- greenish → مائل إلى الخضرة: team, samiuallah_farghal_notes.txt; samiuallah_draft.txt
+- global warming → الاحترار العالمي; greenhouse effect → الاحتباس الحراري: team, samiuallah_farghal_notes.txt; samiuallah_draft.txt
+- cancel culture → ثقافة الإلغاء: team, samiuallah_draft.txt
+- ('fact' block left untouched, out of scope)
+
+CHAPTER 18: TEXT ANALYSIS
+- KUNA news report on Kuwait–Australia relations (field, genre, tone, publisher, audience, style, strategy): team, samiuallah_draft.txt
+- (no other examples; Newmark quotation has a page citation)

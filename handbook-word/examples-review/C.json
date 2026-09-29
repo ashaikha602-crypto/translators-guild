@@ -1,0 +1,76 @@
+[
+ {
+  "chapter": "Chapter 19",
+  "action": "remove",
+  "origin": "editor",
+  "find": "with an example of each main genre.",
+  "replace": "with examples of the main genres.",
+  "removed": [],
+  "kept_replacement_source": "",
+  "note": "Intro adjusted because the advertising example below is removed."
+ },
+ {
+  "chapter": "Chapter 19",
+  "action": "remove",
+  "origin": "editor",
+  "find": " _Save more. Smile more._ → {{وفّر أكثر… وابتسم أكثر!}}",
+  "replace": "",
+  "removed": [
+   "_Save more. Smile more._ → {{وفّر أكثر… وابتسم أكثر!}}"
+  ],
+  "kept_replacement_source": "",
+  "note": "Weak: an invented filler slogan with a word-for-word rendering; shows no translation decision. The point (persuasion and rhythm) stands without it."
+ },
+ {
+  "chapter": "Chapter 19",
+  "action": "keep",
+  "origin": "editor",
+  "find": "لقوانين دولة الكويت.}}',",
+  "replace": "لقوانين دولة الكويت.}} (the Arabic present tense, not {{سوف}})',",
+  "removed": [],
+  "kept_replacement_source": "",
+  "why_strong": "Real legal-drafting decision: _shall_ of obligation is rendered by the Arabic present tense, not future {{سوف}}; accurate, natural MSA. Short 'why' clause added per editor guidance."
+ },
+ {
+  "chapter": "Chapter 19",
+  "action": "replace",
+  "origin": "team:shaikhah_slides_Translation_of_journalistic_texts.txt",
+  "find": "_Minister opens new hospital_ → {{الوزير يفتتح مستشفى جديداً}}",
+  "replace": "_US launches air raids in Iraq_ → {{الولايات المتحدة تشنّ غارات جوية في العراق}}",
+  "removed": [
+   "_Minister opens new hospital_ → {{الوزير يفتتح مستشفى جديداً}}"
+  ],
+  "kept_replacement_source": "shaikhah_slides_Translation_of_journalistic_texts.txt",
+  "note": "Editor-written generic headline replaced by the real (Aljazeera) headline from the editor's own slide 6, which illustrates exactly this point (simple present in headlines)."
+ },
+ {
+  "chapter": "Chapter 19",
+  "action": "keep",
+  "origin": "team:shaikhah_slides_Translation_of_journalistic_texts.txt",
+  "find": "_Saudi Arabia to extend visas for expats_ → {{السعودية ستمدّد تأشيرات الوافدين}}",
+  "replace": "_Saudi Arabia to extend visa validity for expats_ → {{السعودية ستمدّد فترة صلاحية تأشيرات الوافدين}}",
+  "removed": [],
+  "kept_replacement_source": "shaikhah_slides_Translation_of_journalistic_texts.txt",
+  "note": "Team example; corrected to the real Arab News headline and its translation as given on slide 7."
+ },
+ {
+  "chapter": "Chapter 19",
+  "action": "keep",
+  "origin": "team:shaikhah_slides_Translation_of_journalistic_texts.txt",
+  "find": "_Mustang customer complaint_ → {{شكوى زبون من سيارة فورد موستانج}}",
+  "replace": "_Mustang Referral Customer Complaint_ → {{شكوى زبون فورد موستنج من برنامج الإحالة}} (_Ford_ and {{برنامج}} are added)",
+  "removed": [],
+  "kept_replacement_source": "shaikhah_slides_Translation_of_journalistic_texts.txt",
+  "note": "Team example; corrected to the headline and translation on slides 4-5, with the slide's reason (additions) as a short clause."
+ },
+ {
+  "chapter": "Chapter 24",
+  "action": "keep",
+  "origin": "team:samiuallah_draft.txt",
+  "find": "'_warmed my heart_ → {{أدفأ قلبي}} ✗'",
+  "replace": "'_warmed my heart_ → {{أثلج صدري}}, not {{أدفأ قلبي}}: coolness, not warmth, brings comfort in Arab culture'",
+  "removed": [],
+  "kept_replacement_source": "samiuallah_draft.txt",
+  "note": "Team example (warmed my heart = اثلج صدري, with the note that cold has a good connotation in the Arab region). Row now shows the correct solution and why, not only the wrong one."
+ }
+]
