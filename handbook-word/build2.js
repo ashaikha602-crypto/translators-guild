@@ -106,7 +106,7 @@ function block(b) {
     case 'try': {
       H(HeadingLevel.HEADING_3, 'Try it');
       list(a, 'num');
-      P([new TextRun({ text: 'Answers', bold: true, color: GREY, font: LATIN })], { spacing: { before: 40, after: 60, line: 290 } });
+      P([new TextRun({ text: 'Check your answers', bold: true, color: GREY, font: LATIN })], { spacing: { before: 200, after: 60, line: 290 }, border: { top: { style: BorderStyle.DOTTED, size: 6, color: LINE, space: 6 } } });
       list(c, 'num', { run: { color: GREY } });
       break;
     }
@@ -154,7 +154,7 @@ small('**Translation Handbook: A Beginner’s Guide to Translating between Engli
 small('First edition, 2026. Prepared by the Translation Team, Guild Professional Club.');
 small('© 2026 Guild Professional Club, Translation Team. All rights reserved. No part of this handbook may be reproduced without permission, except for short quotations with acknowledgement.');
 small('Quotations from published works are used for teaching purposes and are fully acknowledged in the References. Unless another source is given, examples come from the Translation Team’s course materials or were written for this handbook.');
-small('AI assistance: parts of this handbook were organised, drafted and edited with the help of an AI tool (Claude, by Anthropic) and reviewed by the Translation Team.');
+small('AI assistance: an AI tool (Claude, by Anthropic) was used to help organise, draft and edit parts of this handbook. The selection of content, the translation decisions, the checking and the final approval were the responsibility of the Translation Team.');
 
 // ---------- contents ----------
 body.push(new Paragraph({ pageBreakBefore: true, spacing: { after: 240 }, children: [new TextRun({ text: 'Contents', font: LATIN, size: 36, bold: true, color: ACCENT })] }));
@@ -265,8 +265,8 @@ const doc = new Document({
     default: { document: { run: { font: LATIN, size: 22, color: INK } } },
     paragraphStyles: [
       // contents entries: compact, so that the list fits on one page
-      { id: 'TOC1', name: 'toc 1', basedOn: 'Normal', next: 'Normal', run: { size: 19 }, paragraph: { spacing: { before: 20, after: 0, line: 232 } } },
-      { id: 'TOC2', name: 'toc 2', basedOn: 'Normal', next: 'Normal', run: { size: 19 }, paragraph: { spacing: { before: 0, after: 0, line: 232 }, indent: { left: 280 } } },
+      { id: 'TOC1', name: 'toc 1', basedOn: 'Normal', next: 'Normal', run: { size: 18 }, paragraph: { spacing: { before: 14, after: 0, line: 222 } } },
+      { id: 'TOC2', name: 'toc 2', basedOn: 'Normal', next: 'Normal', run: { size: 18 }, paragraph: { spacing: { before: 0, after: 0, line: 222 }, indent: { left: 280 } } },
       { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { font: SERIF, size: 40, bold: true, color: ACCENT }, paragraph: { spacing: { before: 600, after: 200 }, outlineLevel: 0 } },
       { id: 'Heading2', name: 'Heading 2', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { font: SERIF, size: 30, bold: true, color: ACCENT }, paragraph: { spacing: { before: 240, after: 200 }, outlineLevel: 1, keepNext: true } },
       { id: 'Heading3', name: 'Heading 3', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { font: LATIN, size: 23, bold: true, color: INK }, paragraph: { spacing: { before: H3B, after: 140 }, outlineLevel: 2, keepNext: true } },

@@ -12,8 +12,8 @@ module.exports = [// ================= PART 5 =================
 ['p', '_I have got the test in the bag_ is not about a bag: the speaker is sure of success. Arabic says this with a different picture. When a picture carries a different feeling in the other culture, keep the feeling. This is called **cultural approximation**, and it needs a good knowledge of both cultures (Farghal & Shunnaq, 1999/2011).'],
 ['p', 'Often Arabic already has an expression with the same effect:'],
 ['ul', [
-  '_I have got the test in the bag._ → {{الامتحان في جيبي}} (informal: it is guaranteed)',
-  '_Like mother, like daughter._ → {{اقلب الجرّة على فمها تطلع البنت لأمّها}} (a colloquial proverb; in a formal text, give the meaning: {{البنتُ تُشبه أمَّها}})',
+  '_I have got the test in the bag._ → {{الامتحان في جيبي}} (informal); in formal writing, {{النجاح في الامتحان مضمون}}: the image changes, the confidence stays',
+  '_Like mother, like daughter._ → {{البنتُ تُشبه أمَّها}}; in informal speech, the Gulf proverb {{اقلب الجرّة على فمها تطلع البنت لأمّها}}',
   '_Ali and Ahmad are cut from the same cloth._ → {{عليّ وأحمد من طينةٍ واحدة}}',
   '_a scapegoat_ → {{كبش فداء}}',
   '_to sleep like a log_ → {{نام كالقتيل}}',
@@ -71,7 +71,7 @@ module.exports = [// ================= PART 5 =================
   '{{الحوقلة}} → _the hawqala_ (saying “There is no might and no power except by God”)',
   '{{العِدّة}} → _ʿidda_ (the waiting period before a divorced or widowed woman may remarry)',
   '{{العطوة}} → _ʿatwa_ (a temporary truce in tribal customary law, for example in Jordan)',
-  '_Ali has been sectioned._ (UK) → {{أُودِع عليٌّ مستشفى للأمراض النفسية بموجب القانون}}',
+  'EN → AR, a British legal term that Arab readers would not know: _Ali has been sectioned._ → {{أُودِع عليٌّ مستشفى للأمراض النفسية بموجب القانون}}',
 ]],
 ['h', 'Step 3: know when to use it'],
 ['p', 'When readers do not need the source word, give the description alone, as in the last example. Use descriptive translation as your last option, because it makes the text longer. It suits cultural words and complex technical terms.'],
@@ -96,7 +96,7 @@ module.exports = [// ================= PART 5 =================
   '**Explanation**: a term that explains the idea instead of copying the parts (“green” + “washing”): _greenwashing_ → {{التضليل البيئي}} (companies falsely claiming that their products are environmentally friendly)',
   '**Hybrid form**: part translated, part borrowed. _cybersecurity_ → {{الأمن السيبراني}}',
 ]],
-['p', 'Arabic can also blend two words into one, called {{النحت}}: _amphibious_ → {{برمائي}} ({{برّ}} + {{ماء}}).'],
+['p', 'Arabic can also blend words into one, called {{النحت}}: {{البسملة}} from {{بسم الله}}, {{الحمدلة}} from {{الحمد لله}}, and in modern science, _amphibious_ → {{برمائي}} ({{برّ}} + {{ماء}}).'],
 ['p', 'Many English prefixes and suffixes have regular Arabic equivalents: _manageable_ → {{قابل للإدارة}}; _antibiotic_ → {{مضاد حيوي}}; _greenish_ → {{مائل إلى الخضرة}}.'],
 ['h', 'Step 3: search before you create'],
 ['p', 'First search for an accepted term. The Arabic language academies, UNTERM (United Nations, n.d.) and Arabterm (ALECSO & GIZ, n.d.) record many new terms. For example: _global warming_ → {{الاحترار العالمي}}; _greenhouse effect_ → {{الاحتباس الحراري}}; _cancel culture_ → {{ثقافة الإلغاء}}.'],
@@ -216,7 +216,7 @@ module.exports = [// ================= PART 5 =================
 ['p', 'Many word choices show a point of view, shaped by the writer’s **ideology**, and your translation can keep, soften or strengthen it. A word that carries a judgement is a **loaded word**. Follow the client’s policy on sensitive words (Chapter 2).'],
 ['ul', [
   '_A suicide bomber killed ten people._ → {{انتحاري}} matches the English; {{استشهادي}} adds praise. The same person is seen from opposite points of view, so follow the client’s policy.',
-  '_regime_ or _government_ ({{نظام}} or {{حكومة}}): in political texts, “regime” is negative.',
+  '_regime_ or _government_ ({{نظام}} or {{حكومة}}): in many political texts, “regime” suggests criticism, but its meaning depends on the context and the source. Ask what judgement the word carries here.',
   '_Protesters were killed._ ({{قُتل متظاهرون}}): the passive hides who did the killing.',
 ]],
 ['h', 'Step 2: ask three questions'],
@@ -227,7 +227,7 @@ module.exports = [// ================= PART 5 =================
   '**The purpose**: whose interests does the text serve?',
 ]],
 ['try', ['Why is _regime_ not neutral?', 'What does the passive in _Protesters were killed_ hide?'],
-        ['It suggests a harsh or illegitimate government.', 'Who did the killing.']],
+        ['In many contexts it suggests a harsh or illegitimate government; check the context.', 'Who did the killing.']],
 ['summary', ['Notice loaded words and hidden doers.', 'Follow the client’s policy, and explain sensitive choices in your commentary (Chapter 25).']],
 
 // ================= PART 7 =================
@@ -276,7 +276,7 @@ module.exports = [// ================= PART 5 =================
   ['_Article_ (of a law)', '{{مادّة}}', 'Legal', 'A contract _clause_ is {{بند}}'],
   ['_CBC_', '{{تعداد الدم الكامل}}', 'Medical', 'Also {{صورة الدم الكاملة}}']],
  [28, 28, 14, 30]],
-['p', 'Other tools help too:'],
+['p', 'In your own list, add a column for the **source** where you checked each term, so that you and your team can verify it later. Other tools help too:'],
 ['ul', [
   '**Specialised dictionary** (Chapter 3): the terms of one field.',
   '**Termbase**: each entry holds the term in each language, with its definition, field, source and date. A team can share and update it.',
@@ -309,7 +309,7 @@ module.exports = [// ================= PART 5 =================
   '**CAT tools** combine these, for example Trados, memoQ, and the free OmegaT and Matecat.',
 ]],
 ['h', 'Step 2: decide when a machine can help'],
-['p', 'Machine translation can give a first draft of a simple text, or help you check your ideas. It is risky for legal, medical and religious texts, idioms, poetry and confidential texts.'],
+['p', 'Machine translation can help with some texts and tasks, but how reliable it is depends on the language pair, the field, the text type, the system and the quality needed. It is risky for legal, medical and religious texts, idioms, poetry and confidential texts. Human review is needed whenever accuracy and accountability matter.'],
 ['p', 'You, not the machine, are responsible for the final translation (Kenny, 2022).'],
 ['h', 'Step 3: learn the machine’s typical mistakes'],
 ['ul', [
@@ -432,8 +432,20 @@ module.exports = [// ================= PART 5 =================
 ['p', 'An example:'],
 ['ex', '_The source text says the agreement “remained a dead letter”. A literal translation, {{حرفاً ميتاً}}, would confuse Arab readers, so the translator chose the functional equivalent {{حبراً على ورق}}. The expression was checked in Arabic newspapers. It is a familiar idiom and suits the formal style of a news report._'],
 ['try', ['Write one commentary sentence for _strong tea_ → {{شاي ثقيل}}.'],
-        ['For example: “_Strong tea_ is a collocation, so it could not be translated word by word; the translator used the Arabic partner {{شاي ثقيل}}, which sounds natural to Arab readers.”']],
+        ['For example: “_Strong tea_ is a collocation, so a word-for-word translation would sound unnatural in Arabic. The translator therefore used the conventional Arabic collocation {{شاي ثقيل}}.”']],
 ['summary', ['Analysis → translation → commentary.', 'For each problem: problem, solution, procedure or strategy, resource, justification.']],
+
+// ---------- one-page guide ----------
+['page', 'Translation quality checklist'],
+['p', 'Before you deliver any translation, go through this list. Each point is explained in Chapters 23 to 25.'],
+['h', 'Meaning'],
+['check', ['Nothing is added.', 'Nothing is left out.', 'The meaning is transferred accurately.']],
+['h', 'Language'],
+['check', ['The target text reads naturally.', 'The grammar and spelling are checked.', 'The level of formality suits the reader.']],
+['h', 'Terms and names'],
+['check', ['Every term is checked in a reliable source.', 'Each term is used consistently.', 'Names and titles are correct.']],
+['h', 'Details and final reading'],
+['check', ['Numbers, dates, units and punctuation are correct.', 'Headings and formatting match the source.', 'You have read the translation on its own, then side by side with the source.']],
 
 // ================= PART 9 =================
 ['part', 'Part 9: Audiovisual translation'],
@@ -493,7 +505,7 @@ module.exports = [// ================= PART 5 =================
   ['Censorship', 'الرقابة', 'Removing or changing content that is considered unacceptable.'],
 ]],
 ['h', 'Step 1: learn the limits of a subtitle'],
-['p', 'Viewers read while they watch, so a subtitle normally has one or two lines. Each line traditionally holds about 37 to 39 characters; some streaming platforms allow up to 42. It must stay on screen long enough to be read, usually from about one to six or seven seconds. It must also appear and disappear with the speech: marking these in and out times is called **spotting** (Díaz Cintas & Remael, 2021). Always follow the client’s guidelines.'],
+['p', 'Viewers read while they watch, so a subtitle normally has one or two lines. Each line traditionally holds about 37 to 39 characters; some streaming platforms allow up to 42. It must stay on screen long enough to be read, usually from about one to six or seven seconds. It must also appear and disappear with the speech: marking these in and out times is called **spotting** (Díaz Cintas & Remael, 2021). **These are common conventions, not universal rules: always follow the client’s or the platform’s style guide.**'],
 ['p', 'There are several kinds:'],
 ['ul', [
   '**Intralingual**: the same language as the dialogue, for example subtitles for the deaf and hard of hearing (**SDH**), which also describe important sounds, or subtitles for language learners.',
@@ -515,7 +527,7 @@ module.exports = [// ================= PART 5 =================
 ['p', 'The fillers disappear, and the meaning stays.'],
 ['h', 'Step 3: write good Arabic subtitles'],
 ['ul', [
-  'Write in Modern Standard Arabic, even when the characters speak a dialect, unless the client asks otherwise.',
+  'Choose the variety of Arabic for the audience, the genre, the characters and the platform, following the client’s guidelines: Modern Standard Arabic suits most content, while a dialect may be right when a character’s identity or way of speaking matters.',
   'Break a line where the meaning breaks: keep a noun with its adjective, a preposition with its noun, and pairs such as {{مدير المدرسة}} together.',
   'Use Arabic punctuation.',
   'Work with the images, dialogue, music and sound effects. If the picture already shows something, the subtitle can be shorter. If the words refer to something on screen, make sure the subtitle still matches it.',
@@ -540,6 +552,23 @@ module.exports = [// ================= PART 5 =================
 ['try', ['What is the difference between open and closed subtitles?', 'Which strategy uses an accepted translation?', 'Why do viewers notice mistakes in subtitles easily?'],
         ['Open subtitles are burned into the picture; closed subtitles can be turned on and off.', 'The official equivalent.', 'Because they hear the original and read the translation at the same time, and many understand some of the original.']],
 ['summary', ['A subtitle normally has no more than two short lines, stays on screen long enough to be read, and works with images and sound.', 'Choose a strategy for each cultural reference, within the limits of space and time.', 'Follow the client’s guidelines on strong language.']],
+
+// ---------- final practice ----------
+['page', 'Put it all together'],
+['p', 'You have now met every step of the work. Translate this short press release into Arabic for a Kuwaiti newspaper, one step at a time.'],
+['ex', '_The College of Arts will hold its first Translation Week from 3 to 7 March, bringing together students, professional translators and representatives of government ministries. The programme includes workshops on legal and medical translation, a panel discussion on machine translation, and a subtitling competition for undergraduate teams._'],
+['ex', '_“Translation is no longer a quiet job done behind closed doors,” the organising committee said in a statement. “Every ministry, hospital and newsroom depends on it.”_'],
+['ex', '_Registration is free, but places are limited. Students must register through the university portal by 20 February, and all participants will receive a certificate of attendance._'],
+['ol', [
+  '**Brief**: who might ask for this translation, for what purpose, and for which readers (Chapter 2)?',
+  '**Analysis**: what is the genre, the tone and the level of formality (Chapters 18 and 19)?',
+  '**Research**: check _panel discussion_, _subtitling competition_, _university portal_ and _certificate of attendance_ (Chapters 3 and 21).',
+  '**First draft**: think about word order and natural collocations (Chapters 4 and 8).',
+  '**Problems**: does Arabic share the image in _behind closed doors_ (Chapter 12)? How will you present the quotation and the dates (Chapter 24)?',
+  '**Solutions**: name the procedure or strategy you used for each problem (Chapters 13 and 14).',
+  '**Revision**: use the Translation quality checklist, then read your final version once more as an Arab reader would.',
+  '**Commentary**: in about 100 words, explain your three most important decisions (Chapter 25).',
+]],
 
 // ---------- one-page guide ----------
 ['page', 'When in doubt'],

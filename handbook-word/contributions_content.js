@@ -5,7 +5,7 @@ module.exports = [
 ['ul', [
   'This is a working report by Shaikhah Alkhaledi, who edited the draft handbook. It explains how each team member’s material was used: what was taken, what was edited, what was left out, and why.',
   'The handbook it describes is a **draft for the team’s review**, not the final version. Every decision below can be discussed and changed.',
-  'The report follows the current draft: two editions (Midnight and Light) with the same content, 96 pages, 9 parts and 27 chapters, an opening section (**Start here**) and a closing section (**Your journey continues**).',
+  'The report follows the current draft: two editions (Midnight and Light) with the same content, 98 pages, 9 parts and 27 chapters, an opening section (**Start here**) and a closing section (**Your journey continues**).',
   'Members are listed in alphabetical order. Chapter numbers refer to the current draft.',
   'The item-by-item record of every document is in the Appendix: The Team’s Documents.',
 ]],
@@ -259,6 +259,8 @@ module.exports = [
   ['Ten “Did you know?” boxes and a “Next” line at the end of every chapter', 'Chapters 1–4, 7, 17, 21, 22, 24, 26; every chapter'],
   ['Removed everything tied to a date, an event or a product, so that the book can be used every year', 'Whole book'],
   ['Wrote two one-page guides: The translator’s workflow (with Do and Don’t boxes) and When in doubt', 'End of Part 1; before the closing section'],
+  ['Wrote a Translation quality checklist and a final task, Put it all together, which takes one short press release through every step of the book', 'End of Part 8; after Chapter 27'],
+  ['Revised the wording of rules and claims so that they read as tendencies, not absolute laws, and marked the preferred Arabic term where two exist', 'Chapters 4, 10, 11, 20, 22, 27; Glossary'],
   ['Reviewed every example against the team’s documents and her notes: team examples kept and corrected; weak examples replaced, preferably with team examples; challenge questions added', 'Chapters 1–27'],
   ['Designed the two covers (Midnight and Light), the page layout and the QR code; designed and developed the Translation Team’s website', 'Covers; inside pages; website'],
 ], [62, 38]],
