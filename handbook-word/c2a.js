@@ -442,7 +442,7 @@ module.exports = [
   '_Business is business._ → {{الشغل شغل}} (informal)',
 ]],
 ['h', 'Step 5: translate Kuwaiti expressions'],
-['p', 'Dialect expressions work like idioms: translate their function, not their words. A dictionary of Kuwaiti expressions gives these English equivalents (_Muʿjam al-taʿābīr_, n.d.):'],
+['p', 'Dialect expressions work like idioms: translate their function, not their words. A dictionary of Kuwaiti expressions gives these English equivalents (Bin Nasser, n.d.):'],
 ['ul', [
   '{{الحجي سهل}} → _Talk is cheap_ or _easier said than done_',
   '{{الحجي معاك ضايع}} → _It is like talking to a brick wall_',

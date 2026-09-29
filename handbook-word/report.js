@@ -60,7 +60,7 @@ function block([kind, a, b, c]) {
 // title page
 const tp = (t, size, opts = {}) => body.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 160 }, ...opts, children: runs(t, { size, bold: opts.bold }) }));
 tp(process.env.TITLE || 'Editorial Report', 44, { bold: true, spacing: { before: 3200, after: 300 } });
-tp('Translation Handbook ({{دليل الترجمة}})', 30, { spacing: { after: 120 } });
+tp('Translation Handbook ({{دليل الترجمة}}): working title', 30, { spacing: { after: 120 } });
 tp(process.env.EDITION || 'First edition', 24, { spacing: { after: 1600 } });
 tp(process.env.PREPARED || 'Prepared for the supervisor of the Translation Team', 22);
 if (process.env.NOTE) tp(process.env.NOTE, 20, { spacing: { after: 160 } });
