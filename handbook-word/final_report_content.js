@@ -28,7 +28,7 @@ module.exports = [
   'A new opening, **Start here**, explains to a complete beginner what a translator does, the four steps of every translation and the journey through the book.',
   'Every chapter was rewritten as a step-by-step guide. Each idea is explained with an example before its technical name is given.',
   'The key terms moved from the start to the end of each chapter (**Words to remember**).',
-  'The abbreviations moved to the back of the book; a **Contributors** list now closes the preface; the acknowledgements were removed.',
+  'The abbreviations moved to the back of the book; the acknowledgements and the Contributors list were removed from this draft; contributors will be credited in the final version.',
 ]],
 ['h2', '3.2 Content removed'],
 ['ul', [

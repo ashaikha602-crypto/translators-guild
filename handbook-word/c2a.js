@@ -15,12 +15,6 @@ module.exports = [
 ]],
 ['p', '_The Translation Team_'],
 
-['h', 'Contributors'],
-['p', '**Shaikhah Alkhaledi**, _editor and project coordinator_: planned and edited the handbook, contributed her study notes, designed the covers and the layout, and designed and developed the team’s website.'],
-['p', '**Loulwah Bin Saeed**, _audiovisual translation_: provided the notes for Chapters 26 and 27.'],
-['p', '**Masooma Almesri**, _terminology_: selected, with Samiuallah Mohammad, the material for Chapter 21.'],
-['p', '**Samiuallah Mohammad**, _first draft and planning_: compiled the first draft, set out the plan, and provided the text analysis model (Chapter 18).'],
-
 ['front', 'Start here'],
 ['p', 'Translation is everywhere. The medicine leaflet in your home, the subtitles of your favourite series, the menu of a video game and the news you read today have all passed through a translator’s hands. Most of the time nobody notices, because a good translation reads as if it had been written in your own language. This book shows you how that invisible work is done, and how you can do it yourself.'],
 ['p', 'It is also very old work. In Baghdad, more than a thousand years ago, the House of Wisdom ({{بيت الحكمة}}) brought together translators who put Greek, Persian and Indian works of science and philosophy into Arabic. Centuries later, many of them were translated from Arabic into Latin and helped to shape learning in Europe. You are about to join this long line of translators.'],
