@@ -58,6 +58,7 @@ module.exports = [
 // ================= LOULWAH =================
 ['h1', '4. Loulwah Bin Saeed'],
 ['p', 'Material received: the audiovisual translation notes (Intro to AVT and AVT 2), idiom notes, and her suggestion to include dictionaries. Her Principles of Translation notes, the Gamal article and the AVT Theory file have not yet reached the editor, and her other notes were lost.'],
+['p', 'A typed and organised version of the same notes (Audiovisual Translation.docx), posted by Samiuallah Mohammad, was compared with Chapters 26 and 27. It contains no new material: everything suitable for beginners was already in the handbook, and the parts left out are the same as below. It still gives the old line length (32 to 41 characters), which the handbook corrects. The parts left out would suit the website, as Samiuallah Mohammad suggested.'],
 ['h2', '4.1 Taken into the handbook'],
 ['table', ['What was taken', 'Where it is now'], [
   ['Why audiovisual translation matters, and what makes it different from other translation', 'Chapter 26, Step 1'],
@@ -135,7 +136,7 @@ module.exports = [
 
 // ================= SAMIUALLAH =================
 ['h1', '6. Samiuallah Mohammad'],
-['p', 'Material received: the first draft (Draft_one), the plan and recommendations (Latest updates and thoughts), the 180 course notes (typed and scanned), the Translation 1 notes, the notes on Farghal & Shunnaq, the Text Analysis Model, the text {{الترجمة: ماهيتها وكيفيتها}}, the framework document and the main document.'],
+['p', 'Material received: the typed version of the audiovisual translation notes (see Section 4), the first draft (Draft_one), the plan and recommendations (Latest updates and thoughts), the 180 course notes (typed and scanned), the Translation 1 notes, the notes on Farghal & Shunnaq, the Text Analysis Model, the text {{الترجمة: ماهيتها وكيفيتها}}, the framework document and the main document.'],
 ['h2', '6.1 The first draft: taken into the handbook'],
 ['p', 'The draft had 175 points. 8 were used as written, 148 were used after editing, and 19 were not used. Its 25 headings became the backbone of the handbook:'],
 ['table', ['Draft heading', 'Where it is now'], [
