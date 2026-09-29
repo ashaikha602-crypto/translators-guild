@@ -1,0 +1,1371 @@
+[
+ {
+  "source": "TRANSLATION Notes (180 course notes) (Samiuallah Mohammad)",
+  "rows": [
+   {
+    "item": "Translation as transferring or conveying meaning (“principles = foundations”); defined as “an activity / process of transferring textual meaning from one language to another language”",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 1; Words to remember, Chapter 1",
+    "note": "The definition is quoted and credited to the Translation Team’s course materials, and the lesson is put as “translation carries meaning, not words”."
+   },
+   {
+    "item": "Arabic as a derivational language and English as a compounding language",
+    "status": "Not used",
+    "where": "—",
+    "note": "Stated in one line only, and not needed at beginner level."
+   },
+   {
+    "item": "Aims of the course: process versus product, basic rules and principles, differences, difficulties, strategies and techniques",
+    "status": "Used and edited",
+    "where": "Preface",
+    "note": "Turned into the list of what readers should be able to do by the end; the process-versus-product point was left out."
+   },
+   {
+    "item": "Two characteristics of a translator: bilingual knowledge, and cultural knowledge equal to linguistic knowledge",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 4",
+    "note": "Rewritten as a short list: knows both languages and both cultures well."
+   },
+   {
+    "item": "The process of translating: break a paragraph into sentences, sentences into phrases and phrases into words; keep the links such as cause and effect",
+    "status": "Used and edited",
+    "where": "Chapter 2, section “While you translate”",
+    "note": "Kept as a working habit: break the text into pieces, work out each piece, then rebuild it."
+   },
+   {
+    "item": "Text defined as anything written (a word, a sentence or a paragraph); to analyse a text means to break it down and process it",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 18",
+    "note": "The text definition was widened to any written or spoken piece of language, and analysis is now “breaking down and studying a text before translating it”."
+   },
+   {
+    "item": "Main concepts of Translation Studies: equivalence (formal, functional, ideational) as a central concept",
+    "status": "Used and edited",
+    "where": "Chapter 10; Words to remember, Chapter 10",
+    "note": "Developed into a full chapter, with the three types explained by examples."
+   },
+   {
+    "item": "Abbreviations TS, SL and TL with their Arabic terms ({{علم دراسات الترجمة}}, {{لغة المصدر}}, {{لغة الهدف}}); SLC (source language culture) and TLC (target language culture)",
+    "status": "Used and edited",
+    "where": "Abbreviations",
+    "note": "Arabic wording adjusted to {{دراسات الترجمة}}, {{اللغة المصدر}} and {{اللغة الهدف}}, and the Arabic terms for SLC and TLC added."
+   },
+   {
+    "item": "Small vocabulary items: loose = {{فضفاض}}; semantics = {{علم المعاني}} / {{علم الدلالة}}; the rule of adding “s” to semantics and linguistics; NGOs = non-governmental organisations",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "A second definition of translation: an approximation process, mostly of cultural meaning",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 2; Words to remember, Chapter 1",
+    "note": "Kept with the reminder that an exact match is impossible; cultural meaning has its own chapter (Chapter 15)."
+   },
+   {
+    "item": "Two further ideas named without explanation: translation as “politicising” (diplomacy, asking a father for money) and relevance",
+    "status": "Not used",
+    "where": "—",
+    "note": "The notes name them without a full explanation."
+   },
+   {
+    "item": "Form and meaning as a pair; the rule that meaning matters more than form ({{المعنى أهم من البناء}}); behind any form there is meaning; you may change the form but not the meaning; form can be a clause, sentence, paragraph, text, word structure, preposition or compound",
+    "status": "Used and edited",
+    "where": "Chapter 5, Step 1; Words to remember, Chapter 5",
+    "note": "The Arabic word for form is now {{الشكل}} instead of {{البناء}}, and the list of forms is shortened to word, phrase, clause, sentence or text."
+   },
+   {
+    "item": "Intralingual versus interlingual communication; communication as understanding and being understood; the six elements (sender, receiver, channel, message, perceived value, noise)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out as too technical; Chapter 1, Step 3 only mentions that rewording in the same language is a wider kind of translation."
+   },
+   {
+    "item": "Product cannibalism: literal meaning versus the cultural meaning of one product competing with another",
+    "status": "Used and edited",
+    "where": "Chapter 15, Step 3",
+    "note": "Spelled “cannibalisation” and defined as a new product taking sales from another product of the same company."
+   },
+   {
+    "item": "Pay attention to the context; “every communicative situation has its own context” ({{لكل مقام مقال}})",
+    "status": "Used and edited",
+    "where": "Chapter 7, Step 1",
+    "note": "Kept as the saying that every situation has its own way of speaking."
+   },
+   {
+    "item": "Two side remarks: dichotomy explained as a two-way split ({{التفرع الثنائي}}, “di” means two), and “meaning is complex because it is cognitive”",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Structural adjustment: the same meaning can be carried by a different form, for example an adjective changed into a verb, or a verb into a noun",
+    "status": "Used and edited",
+    "where": "Chapter 5, Step 2; Chapter 13, Step 2",
+    "note": "Shown with a noun-to-verb example, and later named “transposition”."
+   },
+   {
+    "item": "Blair as Bush’s “puppy”: {{منقاد لبوش}}, {{تابع لبوش}} or a word such as “sheep”",
+    "status": "Used and edited",
+    "where": "Chapter 5, Step 3",
+    "note": "The animal is now “poodle”, the sheep suggestion was dropped, and the lesson is that the image changes while the meaning stays."
+   },
+   {
+    "item": "Denotation (the core meaning of a word) and connotation (the shades of meaning added to it), with the Arabic labels {{المعنى اللغوي}} / {{المعنى الحرفي}} and {{المعنى اصطلاحاً}}",
+    "status": "Used and edited",
+    "where": "Chapter 6, Step 1; Words to remember, Chapter 6",
+    "note": "Reworded in simpler words, and the Arabic labels became {{المعنى المعجمي}} and {{المعنى الإيحائي}}, because the notes use {{الاصطلاحي}} for idiomatic meaning too."
+   },
+   {
+    "item": "Key vocabulary: translation = {{الترجمة التحريرية}}; interpretation = {{الترجمة الشفهية}}",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 1",
+    "note": "Kept as the two basic terms, with “interpretation” changed to “interpreting”."
+   },
+   {
+    "item": "Legal vocabulary: provided that = {{شريطة أن}} / {{بشرط}}; Article 12, Governing Law = {{القانون المطبق}} (not {{القانون الحاكم}}); article = {{المادة}} in a constitution, {{البند}} in an agreement",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 4",
+    "note": "Put into a sample term list, with {{القانون الواجب التطبيق}} first and {{القانون الحاكم}} shown as a common calque instead of a mistake."
+   },
+   {
+    "item": "Died = {{قتل}} (denotation) and died = {{استشهد}} (connotation); kill versus assassinated",
+    "status": "Not used",
+    "where": "—",
+    "note": "The Arabic glosses were unclear ({{قتل}} means “killed”), and the handbook uses other examples."
+   },
+   {
+    "item": "Same meaning, different feeling: die, pass away and kick the bucket; steed = {{جواد}}, horse = {{حصان}}, mule = {{بغل}}; comrade ({{رفيق}}, same party) versus friend ({{صديق}})",
+    "status": "Used and edited",
+    "where": "Chapter 6, Step 1",
+    "note": "The dying words are described as neutral, polite and respectful, and informal and humorous (with {{مات}} and {{تُوُفِّي}} added), and mule was left out for space."
+   },
+   {
+    "item": "Sentence meaning versus speaker’s meaning: {{أشعر بالحر}} means “turn on the air conditioning”; {{أصبح الجو بارداً}} means “turn it off”",
+    "status": "Used and edited",
+    "where": "Chapter 6, Step 2; Words to remember, Chapter 6",
+    "note": "Made polite (“Please turn on the air conditioning”), and _It’s freezing in here_ was added."
+   },
+   {
+    "item": "Collocation defined as “the company a word keeps”; pay money, pay attention, pay respect, pay a visit",
+    "status": "Used and edited",
+    "where": "Chapter 8, Step 1; Words to remember, Chapter 8",
+    "note": "The definition is quoted and credited to the course materials, and the Arabic is now {{ينتبه}} / {{يُعير انتباهه}}, {{يُبدي احتراماً}} and {{يقوم بزيارة}}."
+   },
+   {
+    "item": "More collocations: close cooperation = {{تعاون وثيق}}, close friend = {{صديق مقرب}}; strong tea = {{شاي ثقيل}} (not {{شاي قوي}}); Arabic examples {{استل سيفه}} and {{يساورني القلق}}",
+    "status": "Used and edited",
+    "where": "Chapter 8, Step 3",
+    "note": "The English examples are kept as written, and the Arabic examples were given English equivalents (he drew his sword; I am worried)."
+   },
+   {
+    "item": "Idiom defined as an expression of more than one word whose total meaning is not the sum of its words; it cannot be translated word by word",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 1; Words to remember, Chapter 9",
+    "note": "Reworded, with tips added on how to spot an idiom."
+   },
+   {
+    "item": "Idioms: I am all ears = {{كلي آذان صاغية}}; It’s raining cats and dogs = {{تمطر بغزارة}}; over the moon = {{في قمة السعادة}}",
+    "status": "Used as written",
+    "where": "Chapter 9, Step 3",
+    "note": "Kept in the list of English idioms."
+   },
+   {
+    "item": "To pull one’s socks up = {{شمر عن ساعديه}}",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 3",
+    "note": "The English idiom was changed to “to roll up one’s sleeves”, which matches the Arabic."
+   },
+   {
+    "item": "A piece of cake: {{سهل}} as an idiom, {{قطعة من الكعك}} when meant literally, depending on context",
+    "status": "Used and edited",
+    "where": "Chapter 9, Steps 1 and 2",
+    "note": "Kept, with a birthday-party example for the literal meaning."
+   },
+   {
+    "item": "Basic principle for English into Arabic: start with the verb (English is SVO, Arabic is VSO)",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 1",
+    "note": "Softened to a general tendency, because a sentence that starts with the subject is also correct Arabic."
+   },
+   {
+    "item": "Exercise table: He is in bed = {{نائم}}; “as” = {{بصفتي ضابط}}, {{بصفتي مدير الشركة}}; Shops stay open = {{تظل}} / {{تبقى}}; eventually = {{في نهاية المطاف}}; to see the Roman ruins = {{لمشاهدة}} / {{لزيارة}} / {{لرؤية}}",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 4",
+    "note": "Kept with short explanations, and the Arabic endings corrected ({{بصفتي ضابطاً}}, {{بصفتي مديرَ الشركة}})."
+   },
+   {
+    "item": "Nouns with no feminine form ({{قاضي}}, {{نائب}}, {{ضابط}}), because {{قاضية}} and {{نائبة}} mean something else",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 3",
+    "note": "Given as “fatal” and “calamity”, with a note that both words are now widely used for women."
+   },
+   {
+    "item": "Exercise: boys are boys = {{الولد ولد لو أنه قاضي بلد}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Exercise: Business is business = {{العمل التجاري عمل تجاري}} or {{الشغل شغل}}",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 4",
+    "note": "Only the informal {{الشغل شغل}} is kept, and it is marked as informal."
+   },
+   {
+    "item": "Equivalence defined as matching two languages at different levels; the three types: formal (keep the form, such as passive for passive), functional and ideational",
+    "status": "Used and edited",
+    "where": "Chapter 10, Steps 1 and 3; Words to remember, Chapter 10",
+    "note": "Explained with one worked sentence, and presented as a framework rather than steps in a fixed order."
+   },
+   {
+    "item": "The agreement remained a dead letter: formal {{حرفاً ميتاً}}, functional {{حبراً على ورق}}, ideational {{لم يتم تطبيق…}}; treaty = {{معاهدة}}, agreement = {{اتفاقية}}",
+    "status": "Used and edited",
+    "where": "Chapter 10, Step 1",
+    "note": "The ideational version was reworded as {{لم تُطبَّق الاتفاقية…}}, and a comment was added on each version."
+   },
+   {
+    "item": "You should think outside the box (formal {{فكر خارج الصندوق}}; functional {{فكر بتفكير خلاق}}); Ali is second to none in writing poetry (functional {{لا يشق له غبار}}; ideational {{متميز}})",
+    "status": "Used and edited",
+    "where": "Chapter 10, Step 2; Chapter 14, Step 1",
+    "note": "The plain-meaning versions are labelled ideational ({{لا يُضاهى}} for the poetry sentence), and the formal box version is noted as now used in Arabic too."
+   },
+   {
+    "item": "Context defined as background information that helps us understand the text; micro context (inside, co-text) versus macro context (outside), also listed among the pairs of opposites",
+    "status": "Used and edited",
+    "where": "Chapter 7, Step 2; Words to remember, Chapter 7",
+    "note": "Reworded, and explained as looking “near” and then “far”."
+   },
+   {
+    "item": "Macro context: author ({{أحمد شوقي}}, {{نزار قباني}}, {{محمود درويش}}), audience, translator (bilingual and bicultural), time and place, economic, social and historical circumstances; the translation triangle with the translator in the middle",
+    "status": "Used and edited",
+    "where": "Chapter 7, Step 2",
+    "note": "Kept as author (Qabbani and Darwish only), audience, time, place and background, with the triangle described in words."
+   },
+   {
+    "item": "Homonymy (unrelated meanings) versus polysemy (related meanings)",
+    "status": "Used and edited",
+    "where": "Chapter 7, Step 3; Words to remember, Chapter 7",
+    "note": "Kept, with the Arabic terms {{المشترك اللفظي}} and {{تعدّد المعنى}} added."
+   },
+   {
+    "item": "Examples: {{عين}} (spy, eye, spring), {{تطهير}}, {{احتجاز}}, bank (financial institution, river bank), case (situation, issue, container); {{بناء}} (a building, a college)",
+    "status": "Used and edited",
+    "where": "Chapter 7, Step 3",
+    "note": "Kept with Arabic and English glosses, and a Try it question added; {{بناء}} and “cover of a mobile” were left out."
+   },
+   {
+    "item": "Literal translation (also “modified literal translation”); it can be successful or destructive: play a role = {{يلعب دوراً}} works, pay a visit = {{يدفع زيارة}} fails; It has been a long day; the wedding advert (“biggest day”)",
+    "status": "Used and edited",
+    "where": "Chapter 11, Step 1; Words to remember, Chapter 11",
+    "note": "Kept with the Arabic saying {{قد تكون الترجمة الحرفية ناجحة أو مدمّرة}}, and the wrong version of the advert now follows “biggest” with {{أكبر}}."
+   },
+   {
+    "item": "Translator types: commissioned (a client asks you) and self-initiated (you choose the text)",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 5; Words to remember, Chapter 1",
+    "note": "Explained with examples, and the Arabic terms {{مترجم بتكليف}} and {{مترجم بمبادرة ذاتية}} added."
+   },
+   {
+    "item": "The client’s ideology: A suicide bomber killed 10 Israelis, {{انتحاري}} versus {{استشهادي}}",
+    "status": "Used and edited",
+    "where": "Chapter 20, Step 1; Chapter 24, Step 2",
+    "note": "Made neutral (“killed ten people”) and shown as two points of view, so the translator follows the client’s policy."
+   },
+   {
+    "item": "Environmental and social terms: global warming = {{احترار أرضي}}; greenhouse effect = {{احتباس حراري}}; cancel culture = {{ثقافة الإلغاء}} (also {{ثقافة الاستبعاد}})",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 3",
+    "note": "Given as accepted terms, with {{الاحترار العالمي}} for global warming and only {{ثقافة الإلغاء}} for cancel culture."
+   },
+   {
+    "item": "Exercise 16: Don’t put words on me = {{لا تتقول علي الأقاويل}}; to hit the sac = {{أن يأوي إلى الفراش}}; to break a leg = {{أن تكون محظوظاً}}",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 3; Chapter 1, Step 1",
+    "note": "English corrected (“in my mouth”, “sack”) and Arabic reworded ({{لا تتقوّل عليّ}}, {{أوى إلى فراشه}}, {{بالتوفيق!}}), with a word-by-word version of “break a leg” added as a warning."
+   },
+   {
+    "item": "Exercise 16: Break the rules = {{خرق القواعد}} / {{مخالفة القواعد}} / {{تجاوز القواعد}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed here; “break the law” is covered in Chapter 8, Step 3."
+   },
+   {
+    "item": "Keywords: rhetoric = {{البلاغة}}, poetic = {{فصيح}} / {{جزل}}; poetry is very expressive; subjective ({{ذاتي}}) versus objective ({{موضوعي}}) table",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level; Chapter 12, Step 1 says only that poetry is rich in metaphors."
+   },
+   {
+    "item": "Metaphor and figurative language; metaphor as using a word in a non-basic meaning ({{استعارة}}); metaphor versus simile (“she is a moon”, “she is beautiful like a moon”); My thoughts evaporate = {{تبخرت أفكاري}}",
+    "status": "Used and edited",
+    "where": "Chapter 12, Steps 1 and 3; Words to remember, Chapter 12",
+    "note": "The simile example changed to “He is a lion” and “as brave as a lion”, and the evaporate example became “My hopes evaporated” = {{تبخّرت آمالي}}."
+   },
+   {
+    "item": "Three rules for metaphors: shared, translate literally (she is a snake = {{إنها أفعى}}); not shared, use another image ({{إنها كالثعلب}}); otherwise give the basic meaning ({{خطيرة}}, {{خبيثة}}), the worst choice",
+    "status": "Used and edited",
+    "where": "Chapter 12, Step 3",
+    "note": "Kept as ordered steps; the fox example is really a simile, so it became a separate step with a new example, and the last step now uses “The news raised a few eyebrows”."
+   },
+   {
+    "item": "Tip of the iceberg = {{غيض من فيض}} (negative), {{أول الغيث قطرة}} (positive), {{وما خفي أعظم}}",
+    "status": "Used and edited",
+    "where": "Chapter 12, Step 3",
+    "note": "{{غيضٌ من فيض}} and {{وما خفي كان أعظم}} are kept; {{أول الغيث قطرة}} was left out for space."
+   },
+   {
+    "item": "My paper will see light next December = {{ورقتي البحثية سترى النور…}}; raises the brows = {{تُصدم}}",
+    "status": "Used and edited",
+    "where": "Chapter 12, Step 3",
+    "note": "The English was completed to “see the light of day”, and the eyebrows example now reads {{أثار الخبر استغراب بعضهم}}."
+   },
+   {
+    "item": "Free translation (“ample freedom”, also loose translation; not only for literary works); some specialists see adaptation as a new text, not a translation",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 11; Chapter 11, Step 3",
+    "note": "Kept as definitions; the remark that it is not only for literary works was left out."
+   },
+   {
+    "item": "Free translation examples: Going out can be risky; Appointing new employees; heavy rainfall; his parents are not happy",
+    "status": "Used and edited",
+    "where": "Chapter 11, Steps 2 and 3",
+    "note": "Turned into a lesson on how free is too free, with the virus example softened to “a disease is spreading”."
+   },
+   {
+    "item": "Arabicisation as a form of naturalisation; a loan-word made by sound ({{الاستعارة الصوتية}}), radio = {{الراديو}}",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 2; Words to remember, Chapter 16",
+    "note": "Kept as transliteration and Arabicisation ({{التعريب}}), with {{النقل الصوتي}} as the Arabic term; the word “naturalisation” is not used."
+   },
+   {
+    "item": "Terms ({{مصطلحات}}) convey a complex meaning (a concept); translators sometimes coin words; terms mark technical texts; every branch has its own terms",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 1; Words to remember, Chapters 16 and 21",
+    "note": "Kept as: a term names a concept, and a translator may have to coin a word; the other points were left out."
+   },
+   {
+    "item": "The Jordanian Academy of the Arabic Language and its 74 specialised fields",
+    "status": "Not used",
+    "where": "—",
+    "note": "The figure is not used; Chapter 21, Step 2 names the Arabic academies in general, including Amman (source of that mention not checked)."
+   },
+   {
+    "item": "Exercise 24: a greenish field = {{حقل مائل للخضرة}}",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 2",
+    "note": "Used only as an example of English endings with regular Arabic equivalents: greenish = {{مائل إلى الخضرة}}."
+   },
+   {
+    "item": "Exercise 25: fast colour = {{لون ثابت}}; fast friend = {{صديق وفي}}; weak coffee = {{قهوة خفيفة}}; rough sea = {{بحر هائج}}; breach of the law, {{كسر القانون}} versus {{مخالفة القانون}}",
+    "status": "Used and edited",
+    "where": "Chapter 8, Step 3; Chapter 3, Step 1; Chapter 23, Step 2",
+    "note": "Kept as written, except that the law example now says {{يخالف القانون}} is more natural than {{يكسر القانون}}; “a fast colour” is also the dictionary example in Chapter 3."
+   },
+   {
+    "item": "Exercises 24 and 25, the remaining items: a readable book, a conceivable resolution, retrievable properties, an arguable issue, boyish behaviour, a feminist writer, laudable efforts, an unrealisable objective, the translatability of idioms; addled egg; plain = {{سادة}} / {{واضح}} / plains = {{سهول}}; cover news = publish news, not “cover”",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Exercise 26: {{هذه حديقة غناء}}; The thief escaped = {{لاذ اللص بالفرار}}; sounds great; {{يعد الطقس متقلب}}; a good wife; the copular verb (the auxiliary working as a main verb)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; the verb-first idea is in Chapter 4, Step 1 and the copula idea in Step 2."
+   },
+   {
+    "item": "Exercise 28: sheriff = {{مأمور الشرطة}} / {{عمدة الشرطة}}; watchdog press versus lap-dog press = {{الصحافة المعارضة للحكومة}} versus {{المؤيدة للحكومة}}",
+    "status": "Used and edited",
+    "where": "Chapter 15, Step 3",
+    "note": "The Arabic changed to {{رئيس شرطة المقاطعة}}, {{الصحافة الرقابية}} and {{الصحافة الموالية}}."
+   },
+   {
+    "item": "Exercise 28: sleep like a log = {{نام كنومة أهل الكهف}} / {{كالقتيل}} / {{كالميت}}",
+    "status": "Used and edited",
+    "where": "Chapter 15, Step 1",
+    "note": "Only {{نام كالقتيل}} is kept."
+   },
+   {
+    "item": "Exercise 29: God willing = {{إن شاء الله}}; We are well = {{الحمد لله}}",
+    "status": "Used and edited",
+    "where": "Chapter 15, Step 4",
+    "note": "Kept, with {{بخير}} added for “very well”."
+   },
+   {
+    "item": "Exercise 29: Sorry to hear your loss = {{تعيش انت، شعبان مات}}; Welcome, welcome, we have the pleasure of having you here = {{أهلاً أهلاً زارنا النبي}}",
+    "status": "Used and edited",
+    "where": "Chapter 15, Step 4",
+    "note": "The Arabic was replaced by common phrases ({{عظّم الله أجركم}}, {{البقية في حياتك}}, {{أهلاً وسهلاً، شرّفتمونا}}) instead of these lines from a novel."
+   },
+   {
+    "item": "Keywords: substitutes = {{بدائل}}, lexical items; bereavement = {{موت أو أحزان العائلة}}, bereaved families = {{العائلات الثكلى}}",
+    "status": "Used and edited",
+    "where": "Chapter 6, Step 3",
+    "note": "Only {{ثكلى}} is kept, as a word with no single English equivalent (“a bereaved mother”)."
+   },
+   {
+    "item": "Cultural approximation defined as bringing the meaning of the source language as close as possible to the target language; it needs cultural knowledge of both",
+    "status": "Used and edited",
+    "where": "Chapter 15, Step 1; Words to remember, Chapter 15",
+    "note": "Reworded and credited to Farghal & Shunnaq (1999/2011)."
+   },
+   {
+    "item": "I have got the test in the bag = {{الامتحان في جيبي}} (that is, guaranteed)",
+    "status": "Used and edited",
+    "where": "Chapter 15, Step 1",
+    "note": "Kept as the opening example, with a formal version {{النجاح في الامتحان مضمون}} added."
+   },
+   {
+    "item": "As busy as a bee = {{زي أم العروس}}; Like mother, like daughter = {{اقلب الجرة على فمها تطلع البنت لأمها}}; Ali and Ahmed are cut from the same cloth = {{من نفس الطينة}}; scapegoating = {{كبش الفداء}} / {{حطها برقبتي}}",
+    "status": "Used and edited",
+    "where": "Chapter 15, Step 1",
+    "note": "The bee example is now {{نشيطٌ كالنحلة}}, a plain version {{البنتُ تُشبه أمَّها}} was added, the cloth example is {{من طينةٍ واحدة}}, and the scapegoat is {{كبش فداء}} without the dialect phrases."
+   },
+   {
+    "item": "Jet lag = {{إعياء الطيران}}",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 4",
+    "note": "Used as a paraphrase example with {{الإرهاق الناتج عن فارق التوقيت}}."
+   },
+   {
+    "item": "Titles: the Home Office (UK), the Chancellor of the Exchequer (UK), the Secretary of the Treasury (US), the Secretary of State (US)",
+    "status": "Used and edited",
+    "where": "Chapter 15, Step 3",
+    "note": "Corrected to {{وزارة الداخلية البريطانية}} (not {{وزير}}) and {{وزير الخزانة الأمريكي}}, with the country added to each title."
+   },
+   {
+    "item": "Other cultural-approximation examples: Every jack must have his jill = {{لكل روح توأمه}}; What the hell are you talking = {{اتق الله يا شيخ}}; Calm down = {{وحدوا الله والمسامح كريم}}; Death is the great leveller = {{كل نفس ذائقة الموت}}; big sins = {{الكبائر}}; Minister of Foreign Affairs in Kuwait; House Managers at the Clinton impeachment trial; intern; scandal",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Descriptive translation: paraphrasing a source expression by describing its concept; first transliterate, then describe; put the description in brackets or a footnote",
+    "status": "Used and edited",
+    "where": "Chapter 16, Step 1; Words to remember, Chapter 16",
+    "note": "Turned into three steps (transliterate, describe, describe only the first time) and credited to Farghal & Shunnaq (1999/2011)."
+   },
+   {
+    "item": "Examples: {{زكاة}} = compulsory charity in Islam; {{تيمم}} = making ablutions with earth; {{الحوقلة}}; {{البسملة}}; Ali has been sectioned",
+    "status": "Used and edited",
+    "where": "Chapter 16, Step 2",
+    "note": "Kept with more exact descriptions, and the basmala and hawqala given with the phrases they stand for."
+   },
+   {
+    "item": "Further examples: {{التأريخ}}, {{القهقهة}}, {{القرقرة}}, Yin-Yang; psychology versus psychiatry; dust versus dirt",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Concept = complex meaning ({{مفهوم}})",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 16",
+    "note": "Rewritten as “an idea that a word or term stands for”."
+   },
+   {
+    "item": "Lexical creation as coinage of new words in the target language for culture-specific items; why it matters (a gap in the target language); title “Lexical Creation – {{النحت المعجمي}}”",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 1; Words to remember, Chapter 17",
+    "note": "The Arabic term is now {{التوليد المعجمي}}, and the idea is credited to Farghal & Shunnaq (1999/2011)."
+   },
+   {
+    "item": "Thanksgiving = {{عيد الشكر}}; shadow government = {{حكومة الظل}} (a literal translation that still counts as lexical creation)",
+    "status": "Used as written",
+    "where": "Chapter 17, Step 2; Chapter 13, Step 2",
+    "note": "Kept as loan-translation (calque) examples."
+   },
+   {
+    "item": "“To be lexicalised” = {{التعجيم}}, adding a new word to the dictionary officially",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 3",
+    "note": "The Arabic term is now {{المَعْجَمة}}."
+   },
+   {
+    "item": "Types of lexical creation: neologism, loan translation (calque), transliteration, explanation, hybrid form (CD = {{دسك مدمج}})",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 2",
+    "note": "Kept as the five methods, with the CD example replaced by cybersecurity."
+   },
+   {
+    "item": "Examples: smartphone = {{الهاتف الذكي}}; blog = {{مدونة}}; cyber security = {{الأمن السيبراني}}; green washing = {{التضليل البيئي}}",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 2",
+    "note": "Cybersecurity is shown as a hybrid form, blog is explained through {{دوّن}}, and greenwashing is defined."
+   },
+   {
+    "item": "Atwah = {{عطوة}}, a three-month truce in Jordanian culture",
+    "status": "Used and edited",
+    "where": "Chapter 16, Step 2",
+    "note": "Described as a temporary truce in tribal customary law, for example in Jordan; the three months were left out."
+   },
+   {
+    "item": "Wakf = {{وقف}} and Sukok = {{صكوك}} (transliteration plus a short explanation)",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 4; Chapter 16, Try it; Chapter 17, Step 2",
+    "note": "Spelled “waqf” and “sukuk”, and each is given a short definition."
+   },
+   {
+    "item": "Al-Istitaba = {{الاستتابة}} (“a kind of repentance / ultimatum”)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The meaning is unclear in the notes."
+   },
+   {
+    "item": "Other coinages: peace talk = {{المفاوضات}}; co-wife = {{الضرة}}; Valentine’s Day = {{عيد الحب}}; columnist; tribocracy, dictatocracy, puppycracy, patriocracy; subordination = {{تبعية}}; {{الخلوة الشرعية}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "To be in the red = {{مديون}}",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 3",
+    "note": "The Arabic is now {{يعاني عجزاً مالياً}}."
+   },
+   {
+    "item": "“is” as a main verb ({{تعد الترجمة تخصصاً مثيراً للاهتمام}}); stative sentences: the verb “to be” as the main verb (copula, {{ربط}}); Ali is a soldier = {{علي جندي}}; will = {{سـ}}; are = {{تعتبر}} / {{تعد}}",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 2",
+    "note": "Kept as: Arabic normally leaves out “is” and “are” in the present, with {{تُعدّ الترجمة مجالاً شائقاً}} as an option for formal writing."
+   },
+   {
+    "item": "Further grammar notes: “He could” as past ({{استطاع}}) or future ({{كان بإمكانه}}); non-stative sentences, transitive and intransitive verbs, the predicate, prepositional phrases ({{شبه جملة}}), Ali killed the snake, {{قتلت مخاوفي}}, a bare verb as a command (take, move, be); adjectives versus adverbs (high, fast, arrived, flew)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too technical for beginners."
+   }
+  ]
+ },
+ {
+  "source": "Translation 1 notes (Samiuallah Mohammad)",
+  "rows": [
+   {
+    "item": "Strategy: literal translation, which includes idiomatic translation; it usually fails; key word = {{كلمات دالة}}, not {{كلمات مفتاحية}}",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 1",
+    "note": "Kept as the first strategy; the handbook says the choice between {{كلمة مفتاحية}} and {{كلمة دالّة}} depends on the field."
+   },
+   {
+    "item": "Kick the bucket = {{يموت كالحقير}}; kick the chair = {{انتحر}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "The Arabic glosses could not be verified; Chapter 6, Step 1 describes the idiom as informal and humorous."
+   },
+   {
+    "item": "Strategy: functional translation, the translation of equivalents; spill the beans = {{يفشي السر}}; mark my words",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 1",
+    "note": "The functional examples are {{حبرٌ على ورق}} and {{لا يُشقّ له غبار}}; spill the beans and mark my words are used as plain-meaning examples ({{أفشى السرّ}}, {{تذكّر كلامي}})."
+   },
+   {
+    "item": "Strategy: cultural substitution; They are like Romeo and Juliet = {{هما كقيس وليلى}}",
+    "status": "Used and edited",
+    "where": "Chapter 13, Step 2; Chapter 14, Step 1; Words to remember, Chapter 14",
+    "note": "Used for the procedure called adaptation and for cultural substitution; the Arabic term is now {{الاستبدال الثقافي}}."
+   },
+   {
+    "item": "Strategy: addition, used from English into Arabic because Arabic is a language of elaboration ({{اسهاب}})",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 2",
+    "note": "Uses the Arabic word {{الإطناب}}, and adds the example _the Fed_ = {{مجلس الاحتياطي الفيدرالي الأمريكي}}."
+   },
+   {
+    "item": "Strategy: omission, used from Arabic into English, to be polite; {{شجاع ومغوار}} = brave or quite brave",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 2; Chapter 4, Step 4",
+    "note": "The example is now “very brave”, and politeness is described as avoiding words that would offend the reader."
+   },
+   {
+    "item": "Strategy: explanatory translation, the last option, for cultural and technical words such as {{الصدقة}}, {{الزكاة}}, {{العدة}}, {{الحرمان}}",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 2; Words to remember, Chapter 14",
+    "note": "{{الزكاة}} and {{العِدّة}} are kept as examples; {{الصدقة}} and {{الحرمان}} were left out."
+   },
+   {
+    "item": "Key skills: a walking encyclopedia, linguistic repertoire, mental lexicon, bilingual, bicultural, mastery of idiomaticity and phraseology",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 4",
+    "note": "Rewritten as a plain list (two languages, two cultures, curiosity, many idioms); the three special terms were not used."
+   },
+   {
+    "item": "Common challenges: grammar, semantics (choice of words), punctuation and style (formal language or dialect), general versus technical text",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 5",
+    "note": "Kept as four groups of problems, with style linked to register."
+   },
+   {
+    "item": "Table, sentence structure: English SVO versus Arabic VSO; Sam ate the cake",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 1",
+    "note": "The notes marked the subject-first Arabic as wrong (and used “apple”); the handbook calls it correct but less usual and uses {{الكعكة}}."
+   },
+   {
+    "item": "Table, sentence length: short English sentences, long Arabic sentences joined with commas",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 1",
+    "note": "Now says Arabic joins ideas with {{و}}, {{ف}} and {{ثمّ}}, with advice on joining or splitting sentences."
+   },
+   {
+    "item": "Table, language formality: formal versus informal; drama and dialogue are often informal",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 5; Words to remember, Chapter 4",
+    "note": "Turned into advice on choosing a dialect (for example in dubbing) and a definition of register."
+   },
+   {
+    "item": "Table, use of synonyms: no two synonyms side by side in English, but Arabic uses them for emphasis",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 4",
+    "note": "Shown with {{شجاعٌ مِغوار}} becoming “very brave”."
+   },
+   {
+    "item": "Types of Arabic: Classical (the Qur’an and pre-Islamic poetry), Standard, Dialectal",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 5; Words to remember, Chapter 4",
+    "note": "Classical Arabic is described as the Arabic of the Qur’an and classical poetry, and advice on which type to use was added."
+   },
+   {
+    "item": "Examples: mocktail (a drink without alcohol) and cocktail (a drink with alcohol) in the West",
+    "status": "Used and edited",
+    "where": "Chapter 15, Step 3",
+    "note": "Only mocktail is used, translated as {{مشروب مُنعش بلا كحول}}."
+   },
+   {
+    "item": "Warmed my heart = {{أثلج صدري}}, because winter has a good meaning in the Arab region",
+    "status": "Used and edited",
+    "where": "Chapter 15, Step 2; Chapter 24, Step 2",
+    "note": "Explained as coolness bringing comfort in a hot climate, and used again in the risk table."
+   },
+   {
+    "item": "{{كالمستجير من الرمضاء بالنار}} = out of the frying pan into the fire",
+    "status": "Used as written",
+    "where": "Chapter 9, Step 4",
+    "note": "Kept as a proverb pair; the same proverb is in the Farghal & Shunnaq notes."
+   },
+   {
+    "item": "Tip: fidelity ({{الأمانة}}), being honest and faithful by knowing the meaning of idioms",
+    "status": "Used and edited",
+    "where": "Chapter 2, section “While you translate”",
+    "note": "Explained as not adding or removing meaning."
+   },
+   {
+    "item": "Tip: always revise your translation, even the best ones",
+    "status": "Used and edited",
+    "where": "Chapter 2, section “After you translate”",
+    "note": "Merged with the advice to read the translation again; Chapter 23 explains how."
+   },
+   {
+    "item": "Tip: make the translation the most faithful, accurate and acceptable",
+    "status": "Used and edited",
+    "where": "Chapter 2, section “While you translate”",
+    "note": "Kept as “faithful, accurate and acceptable to the reader”."
+   },
+   {
+    "item": "Tip: translation is rewriting",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Tip: translation is like a minefield ({{حقل الألغام}}); know what is appropriate in both languages and cultures",
+    "status": "Used and edited",
+    "where": "Chapter 2, section “While you translate”",
+    "note": "Kept, with the Arabic {{الترجمة كحقل ألغام}}."
+   },
+   {
+    "item": "Tip: prose is stricter, and in poetry you may make creative changes",
+    "status": "Used and edited",
+    "where": "Chapter 2, section “After you translate”",
+    "note": "Rewritten: poetry often allows more creative freedom, but informative texts must be exact."
+   }
+  ]
+ },
+ {
+  "source": "Notes on Farghal & Shunnaq (2011) (Samiuallah Mohammad)",
+  "rows": [
+   {
+    "item": "The book itself: Farghal, M., & Shunnaq, A. T. (2011), Translation with reference to English and Arabic: A practical guide (Dar Al-Hilal for Translation)",
+    "status": "Used and edited",
+    "where": "References; cited in Chapters 4, 10, 12, 15, 16 and 17",
+    "note": "Listed as the 2011 edition with the original 1999 date, so citations read (Farghal & Shunnaq, 1999/2011)."
+   },
+   {
+    "item": "Nature and scope: translation as “a project for transferring messages”, “transferring and meaning”; interlingual versus intralingual communication (p. 2)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 1 uses the course notes’ definition of translation instead of these quotations."
+   },
+   {
+    "item": "Sentence meaning versus speaker meaning: “It’s raining” as a statement, a complaint, a warning or excitement (p. 4)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 6, Step 2 explains the same distinction with other examples ({{أشعر بالحر}}, _It’s freezing in here_)."
+   },
+   {
+    "item": "Denotation and connotation, with die / pass away and friend / comrade (p. 2)",
+    "status": "Used and edited",
+    "where": "Chapter 6, Step 1; Words to remember, Chapter 6",
+    "note": "The two example pairs are used (they are also in the 180 notes), and the definitions are in the handbook’s own words."
+   },
+   {
+    "item": "Collocations and idiomatic meaning: pay attention, pay respect, pay a visit; a piece of cake (p. 3)",
+    "status": "Used and edited",
+    "where": "Chapter 8, Step 1; Chapter 9, Steps 1 and 2",
+    "note": "The same examples are in the 180 notes, and the handbook explains them in its own words."
+   },
+   {
+    "item": "Margin notes (p. 5): cover up = concealment; collapse = failure",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Core syntactic rule (his margin note, p. 4): “Principle no 1: start with the verb”; goes to bed = {{ينام}}, not {{يذهب إلى الفراش}}",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 1",
+    "note": "Kept as a general tendency (verbal sentences often sound more natural), not a fixed rule."
+   },
+   {
+    "item": "Exercise 1 (ten sentences): Ali often goes to bed early; Translation is an interesting subject",
+    "status": "Used and edited",
+    "where": "Chapter 4, Steps 1 and 2",
+    "note": "Both are used, with {{تُعدّ}} shown as an option for formal writing in the second."
+   },
+   {
+    "item": "Exercise 1: Shops stay open until midnight in Amman; tourists come to see the Roman ruins in Jordan",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 4",
+    "note": "Only the phrases “shops stay open” and “to see the Roman ruins” are used, and they are also in the 180 notes."
+   },
+   {
+    "item": "Exercise 1: Sarah went shopping; my sister works as an officer; Maha is twenty; the police captured the killer; Layla failed her driving test; Ahmed will graduate",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Exercise 2 (idioms): an alibi; go to the dogs; saw red; the cold shoulder; takes after; called off",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Exercise 3 (colloquial utterances): Business is business = {{الشغل شغل}}",
+    "status": "Used as written",
+    "where": "Chapter 9, Step 4",
+    "note": "Kept and marked as informal."
+   },
+   {
+    "item": "Exercise 3: Let bygones be bygones; Enough is enough; War is war; A girl is a girl; Life is life; A father is a father",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Exercise 4 (Arabic collocations of “heavy”): heavy rain = {{مطر غزير}}",
+    "status": "Used and edited",
+    "where": "Chapter 8, Try it",
+    "note": "Used as a Try it question, with a warning against {{مطر ثقيل}}."
+   },
+   {
+    "item": "Exercise 4: heavy smoker, heavy sleep, heavy industry, heavy meal, heavy seas, heavy traffic, heavy politician, heavy fog, heavy bread",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; “a heavy smoker” appears in Chapter 5, Step 2, with different Arabic."
+   },
+   {
+    "item": "Equivalence: “a key concept”; formal, functional and ideational equivalence (p. 7)",
+    "status": "Used and edited",
+    "where": "Chapter 10, Steps 1 and 3; Words to remember, Chapter 10",
+    "note": "Cited as (Farghal & Shunnaq, 1999/2011), and the handbook says these three types are its framework."
+   },
+   {
+    "item": "Formal equivalence and idioms: “The treaty has remained dead letter since then”; idioms and proverbs often have no formal equivalent at all (pp. 7 and 10)",
+    "status": "Used and edited",
+    "where": "Chapter 10, Step 1",
+    "note": "The handbook uses “agreement” (as in the 180 notes) and explains the difference from “treaty”; the remark about idioms having no formal equivalent was not used."
+   },
+   {
+    "item": "Functional equivalence: out of the frying pan into the fire = {{كالمستجير من الرمضاء بالنار}} (p. 8)",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 4",
+    "note": "Given as a proverb pair; the same proverb is in the Translation 1 notes."
+   },
+   {
+    "item": "Exercise 5: seven proverbs with formal equivalents (All that glitters is not gold; Necessity is the mother of invention; The end justifies the means; and others)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; Chapter 9, Step 4 shows how to translate proverbs with other examples."
+   },
+   {
+    "item": "Exercise 6: A bird in the hand is worth two in the bush = {{عصفور في اليد خير من عشرة على الشجرة}}",
+    "status": "Used as written",
+    "where": "Chapter 9, Step 4",
+    "note": "Kept as a proverb example."
+   },
+   {
+    "item": "Exercise 7: A burnt child dreads the fire = {{من تلدغه الحية يخاف من جرة الحبل}}",
+    "status": "Used as written",
+    "where": "Chapter 13, Step 2",
+    "note": "Used as the example of the procedure called equivalence."
+   },
+   {
+    "item": "Exercises 6 and 7, the other proverbs: Cleanliness is next to godliness; Actions speak louder than words; Silence gives consent; Beauty is in the eye of the beholder; Even Homer sometimes nods; Don’t count your chickens; A live dog is better than a dead lion; After a storm comes calm; and others",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Exercise 8: eight sentences with functional and ideational versions (a deaf ear, stuck to his guns, sixes and sevens, move heaven and earth, A to Z, dog-eat-dog, wet behind the ears, seize opportunities)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; Chapter 10 shows the same functional and ideational pairing with the 180 notes’ sentences."
+   },
+   {
+    "item": "His margin notes (pp. 10–11): four Arabic proverbs matched to English ones (silence gives consent; circumstances alter cases; Even Homer sometimes nods; One man’s meat)",
+    "status": "Not used",
+    "where": "—",
+    "note": "They repeat proverbs already in Exercise 6."
+   },
+   {
+    "item": "Contextual factors: text, audience, author and translator; the translation triangle with the translator at the centre (p. 13)",
+    "status": "Used and edited",
+    "where": "Chapter 7, Step 2",
+    "note": "Described in the handbook’s own words; the same triangle is in the 180 notes, and Farghal & Shunnaq is not cited in Chapter 7."
+   },
+   {
+    "item": "The translator’s role: legal and religious texts favour the text (formal equivalence), a news report favours the audience (p. 14)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 10, Step 3 and its challenge question make a similar point (legal report versus newspaper column) in the team’s own words."
+   },
+   {
+    "item": "Micro context: linguistic context (co-text)",
+    "status": "Used and edited",
+    "where": "Chapter 7, Step 2; Words to remember, Chapter 7",
+    "note": "Explained as “near” context; the same idea is in the 180 notes."
+   },
+   {
+    "item": "Micro context: physical and psychological context; the sign “FALL BABY SALE” read as a sale of baby clothes (p. 19)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Word ambiguity: homonymy (bank as a financial institution or a river bank) and polysemy (blood bank, data bank) (pp. 17–18)",
+    "status": "Used and edited",
+    "where": "Chapter 7, Step 3; Words to remember, Chapter 7",
+    "note": "Only the bank example is used (it is also in the 180 notes); blood bank and data bank are not."
+   },
+   {
+    "item": "Exercise 9: the news report “Baby Steps for Peace” (baby steps, Hail Mary passes, lean on)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Exercise 11: ambiguous sentences (Mona can’t bear children; The chicken is ready to eat; They can fish in this place)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Exercise 12: the polysemous word “foot” (mountain, body, page, bed)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Exercise 13: the polysemous Arabic word {{عين}} (eye, spring, appointee, spy)",
+    "status": "Used and edited",
+    "where": "Chapter 7, Step 3 and Try it",
+    "note": "Eye, spring and spy are used (they are also in the 180 notes), and “appointee” is left out."
+   },
+   {
+    "item": "Metaphorical translation: “the translation of SL metaphors into TL metaphors”; literal versus word-for-word translation (pp. 23–26)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 11 explains literal translation in its own words."
+   },
+   {
+    "item": "Creative versus decorative metaphors: al-Sayyab’s “Your eyes are two palm orchards”; stock metaphors (a wild goose chase, jump the gun…); between the rock and the hard place = {{بين المطرقة والسندان}} (p. 27)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Three degrees of equivalence for a metaphor: “Ahmed will be flogging a dead horse…” with {{أدراج الرياح}}, {{بخفي حنين}} and a plain version (p. 28)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 12, Step 3 cites this book for its steps on translating metaphors but uses the 180 notes’ examples; {{بخُفَّي حُنين}} also appears in Chapter 9, Step 4 (source there not checked)."
+   },
+   {
+    "item": "His margin notes (p. 26): {{استعارة}}; “Literature < reality – imagination”; {{تبخرت أحلامكن}}",
+    "status": "Used and edited",
+    "where": "Chapter 12, Step 3",
+    "note": "Only the “evaporated” idea is used (it is also in the 180 notes), now as “My hopes evaporated” = {{تبخّرت آمالي}}."
+   },
+   {
+    "item": "Exercise 14 (literal translation): My friend speaks German fluently = {{يتحدث صديقي الألمانية بطلاقة}}",
+    "status": "Used as written",
+    "where": "Chapter 13, Step 2",
+    "note": "Used as the example of literal translation; the other four sentences were not used."
+   },
+   {
+    "item": "Exercise 15 (multi-word units that translate literally): human rights; global warming; greenhouse effect; United Nations; World Health Organization",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 3",
+    "note": "Only global warming ({{الاحترار العالمي}}) and greenhouse effect ({{الاحتباس الحراري}}) are used, as accepted terms."
+   },
+   {
+    "item": "Exercise 16 (idioms that cannot be translated literally): kick the bucket; a piece of cake; under the weather; spill the beans; bite the dust",
+    "status": "Used and edited",
+    "where": "Chapter 9, Steps 1 to 3; Chapter 14, Step 1; Chapter 6, Step 1",
+    "note": "Piece of cake, spill the beans ({{أفشى السرّ}}) and kick the bucket (English only) are used; under the weather and bite the dust are not."
+   },
+   {
+    "item": "Exercise 17: collocations of “deliver” (a letter, a speech, a baby, a blow, a verdict, news, goods)",
+    "status": "Used and edited",
+    "where": "Chapter 8, Step 2",
+    "note": "Letter, speech, news, blow and verdict are used; baby and goods were left out."
+   },
+   {
+    "item": "Exercise 18: Arabic collocations of {{يقطع}} (seven examples)",
+    "status": "Used and edited",
+    "where": "Chapter 8, Step 3",
+    "note": "Three are used (diplomatic relations, the red light, a solemn promise); the others were left out for space."
+   },
+   {
+    "item": "Exercise 19: five creative Arabic metaphors (The breeze dallied her hair; The minarets wept; Destiny smiled to her; and others)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Exercise 21: the High Street text (facelift, flurry of activity, light years away, blitz, “galleria”) and his margin notes",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Précis translation: a summary in the target language, for media reports and briefings (p. 31)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Adaptation versus free translation: definitions; plays adapted for the stage; his margin notes “Tailoring out”, {{تفصيل النص}} and “Two-faced for one coin” (pp. 32–33)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 11 explains free translation and adaptation using the 180 notes instead."
+   },
+   {
+    "item": "Loose or free translation examples: “You should buy a lock for your car”; “Honesty is the best policy” (p. 33)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The Arabic versions are unclear in the notes; Chapter 11 uses the 180 notes’ examples."
+   },
+   {
+    "item": "Nursery rhymes and lullabies: an English lullaby with Iraqi Bedouin and standard Arabic versions (pp. 33–35)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a beginner handbook."
+   },
+   {
+    "item": "Naturalisation: converting source usage into normal target usage at word, collocation and structure level (negotiable; pay attention; It is raining now = {{الجو ماطر الآن}}) (p. 35)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The term is not used; Chapters 2 and 8 cover writing naturally and collocations."
+   },
+   {
+    "item": "Arabicisation at sound level and concept level; loan-word versus loan-translation; garage = {{كراج}} / {{مرآب}} (p. 35)",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 2; Chapter 13, Try it",
+    "note": "Arabicisation is defined briefly in Chapter 17, and garage is a borrowing example in Chapter 13."
+   },
+   {
+    "item": "Exercise 24 (eleven phrases, such as a readable book, a greenish field) and his margin note on the suffix “-ish”",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 2",
+    "note": "Only greenish = {{مائل إلى الخضرة}} is used, as an example of suffixes with regular Arabic equivalents."
+   },
+   {
+    "item": "Exercise 25: fast colour = {{لون ثابت}}; a fast friend; strong tea = {{شاي ثقيل}}; weak coffee = {{قهوة خفيفة}}; a rough sea = {{بحر هائج}}; break the law = {{يخالف القانون}}",
+    "status": "Used and edited",
+    "where": "Chapter 8, Step 3; Chapter 3, Step 1; Chapter 23, Step 2",
+    "note": "Six of the eleven are used (also in the 180 notes), and a fast friend is {{صديق وفيّ}}, as in those notes."
+   },
+   {
+    "item": "Exercise 25: a heavy smoker, addled eggs, a plain shirt, rich food, give a party",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Exercise 26: seven naturalised sentences (How intelligent this girl is!; What a beautiful garden!; This idea sounds very convincing; and others) and his note on the verb-first preference",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; the verb-first idea is in Chapter 4, Step 1."
+   },
+   {
+    "item": "Exercise 27: sixteen English terms with a loan-word and a loan-translation (telephone, bus, automobile, computer, technology, goal-keeper, and others)",
+    "status": "Used and edited",
+    "where": "Chapter 13, Step 2; Chapter 17, Step 2; Chapter 21, Step 5",
+    "note": "Only computer ({{كمبيوتر}} / {{حاسوب}}) and technology ({{تكنولوجيا}}) are used."
+   },
+   {
+    "item": "Cultural approximation: definition; God = {{الله}}; American Secretary of State = {{وزير الخارجية الأمريكي}}; as busy as a bee = {{زي النحلة}}; Like mother like daughter (pp. 37–38)",
+    "status": "Used and edited",
+    "where": "Chapter 15, Steps 1 and 3",
+    "note": "The definition is cited as (Farghal & Shunnaq, 1999/2011), the bee example is now {{نشيطٌ كالنحلة}}, and God = {{الله}} is not used."
+   },
+   {
+    "item": "Exercise 28: British Home Office; sheriff; watchdog press; lap-dog press; sleep like a log (also the American Senate, Congress, violin, Every Jack must have his Jill, a cat on hot bricks, Attorney General)",
+    "status": "Used and edited",
+    "where": "Chapter 15, Steps 1 and 3",
+    "note": "The first five are used (they are also in the 180 notes) and the other six are not."
+   },
+   {
+    "item": "Exercise 29 (dialogue from Awlad Haritna): God willing; Fear God!; Calm down; I am sorry to hear you lost…; We are well; Welcome, welcome",
+    "status": "Used and edited",
+    "where": "Chapter 15, Step 4",
+    "note": "Four are used (the Arabic of two was changed) and “Fear God!” and “Calm down” are not."
+   },
+   {
+    "item": "Descriptive translation: definition; referential or cultural gaps (p. 39)",
+    "status": "Used and edited",
+    "where": "Chapter 16, Step 1; Words to remember, Chapter 16",
+    "note": "Cited as (Farghal & Shunnaq, 1999/2011) and turned into three steps."
+   },
+   {
+    "item": "Zakat (compulsory charity in Islam) and tayammum (making ablutions with earth) as descriptive examples",
+    "status": "Used and edited",
+    "where": "Chapter 16, Step 2",
+    "note": "The same two examples are in the 180 notes, with more exact descriptions."
+   },
+   {
+    "item": "Lexical gaps: {{خال}} has no single English equivalent (“maternal uncle”) (p. 40); his notes on {{خالة}}, {{خنصر}} and {{مختار}}",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 4",
+    "note": "Used differently: {{خال}} and {{عمّ}} both become “uncle” when the side of the family does not matter; the other words are not used."
+   },
+   {
+    "item": "Lexical coining: poor-tax = {{زكاة}}; co-wife = {{ضرة}}; Thanksgiving = {{عيد الشكر}}; shadow cabinet = {{حكومة الظل}} (p. 41)",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 2",
+    "note": "Thanksgiving and shadow government are used (both also in the 180 notes; “cabinet” became “government”), and poor-tax and co-wife are not."
+   },
+   {
+    "item": "Exercise 32: tribocracy = {{العشائروقراطية}}, and his note on a footnote or diacritic",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Exercise 30 (English to Arabic): alibi, dating, Good Friday, cohabitation, Thanksgiving, hooliganism, mug",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; Thanksgiving appears in Chapter 17 without a long description."
+   },
+   {
+    "item": "Exercise 31 (Arabic to English): {{ضرة}}, {{عمرة}}, family terms, fingers, {{مختار}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Some entries are inconsistent (for example {{حماة}} has two meanings), so the list could not be used as it stands."
+   },
+   {
+    "item": "Managing and ideological manipulation: “a departure from the faithful-translation contract”; UN Resolution 242 (“occupied territories”); said versus alleged; Israel versus the Zionist Entity (pp. 41–42)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The political examples are not neutral; Chapter 20 covers loaded words in a neutral way."
+   },
+   {
+    "item": "Lexicography: English dictionaries are alphabetical, traditional Arabic dictionaries are built on roots (pp. 42–47)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 3, Step 3 says only that Wehr’s dictionary lists words by root; the comparison was not made."
+   },
+   {
+    "item": "Homonymy and polysemy in dictionaries: bank; foot; {{نظام}} (regime, system, order)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Bank is covered in Chapter 7, Step 3; foot and {{نظام}} are not used."
+   },
+   {
+    "item": "Exercise 36: context-dependent words (head, chair, law and order, mug, check)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "The relevance of grammar: stative verbs and the copula; Arabic uses no “is” or “are” in the present (The weather is nice = {{الطقس جميل}}) (pp. 55–61)",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 2",
+    "note": "Kept as: Arabic normally leaves out “is” and “are” in the present."
+   },
+   {
+    "item": "Grammar section, exercise 1 (twelve stative sentences): The students are in the laboratory = {{الطالب في المختبر}}; Mohammed is an engineer; It will be cloudy tomorrow; and others",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 2 and Try it",
+    "note": "Only the laboratory sentence is used, in the Arabic-to-English direction, with {{الطلاب}} in place of {{الطالب}}."
+   },
+   {
+    "item": "Existential sentences (there is / there are = {{هناك}} / {{يوجد}} / {{ثمة}}) and grammar section, exercise 2 (seven sentences)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Non-stative verbs, sentence types (simple, compound, complex, compound-complex) and grammar section, exercise 3 (ten sentences)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   }
+  ]
+ },
+ {
+  "source": "Text Analysis Model V2-2 (Samiuallah Mohammad)",
+  "rows": [
+   {
+    "item": "Three-step process: analysis of the source text, translation, post-translation activity",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 1; Chapter 25",
+    "note": "The handbook calls the three phases analysis, translation and commentary."
+   },
+   {
+    "item": "Model based on Fairclough’s relational model (Fairclough, 2003)",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 3; References",
+    "note": "Cited as (Translation Team, n.d.; Fairclough, 2003), and Fairclough (2003) was added to the References."
+   },
+   {
+    "item": "Two components: the linguistic level and the external level",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 3",
+    "note": "Written as “look at two levels”, with the linguistic level split into a micro level and a macro level."
+   },
+   {
+    "item": "1.1.1 Lexical aspects",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 3",
+    "note": "Given as “Words”: vocabulary, terms, figurative language, official titles, cultural expressions and references."
+   },
+   {
+    "item": "1.1.2 Syntactical aspects",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 3",
+    "note": "Given as “Grammar”, and cohesion is explained as how sentences are linked."
+   },
+   {
+    "item": "1.1.3 Semantic level",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 3",
+    "note": "Given as “Meaning” and linked to Chapters 6 to 9; speaker’s, sentence and figurative meaning are not listed."
+   },
+   {
+    "item": "1.1.4 Morphological level",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 3",
+    "note": "Given as “Word forms” (prefixes and suffixes, compounds, acronyms, abbreviations); infixation, blending and clippings are not in that list, although blending is explained in Chapter 17 and clipping in Chapter 21."
+   },
+   {
+    "item": "1.1.5 Phonological level",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 3",
+    "note": "Given as “Sound”, with where it matters most (poems, slogans, adverts)."
+   },
+   {
+    "item": "1.2.1 Textual level",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 3",
+    "note": "Given as “The text” and linked to Chapter 19; texture and coherence are not listed."
+   },
+   {
+    "item": "1.2.2 Intertextual level",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 3",
+    "note": "Given as “Other texts” (quotations and allusions); frame-modification, re-modelling and Al-ta’reed were left out as too advanced."
+   },
+   {
+    "item": "1.2.3 Political and ideological level",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 3",
+    "note": "Given as “Point of view” and linked to Chapter 20."
+   },
+   {
+    "item": "2. The external level",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 3",
+    "note": "Written as three questions: what background led to the text, who the author is, and how the target culture and audience will affect the translation."
+   },
+   {
+    "item": "3. Post-translation activity: experience and commentary",
+    "status": "Used and edited",
+    "where": "Chapter 25, Step 2",
+    "note": "Added the advice to keep the analysis open while writing the commentary; monitoring, intrinsic and extrinsic managing were left out as too advanced."
+   },
+   {
+    "item": "Translation quality assessment",
+    "status": "Used and edited",
+    "where": "Chapter 18, Step 5",
+    "note": "One sentence added: the same model also helps you judge a finished translation (Chapter 23)."
+   },
+   {
+    "item": "Sample analyses (News, Speech, Climate change) and the course notes for the model",
+    "status": "Not used",
+    "where": "—",
+    "note": "These were not among the files received, so nothing could be used."
+   }
+  ]
+ },
+ {
+  "source": "الترجمة: ماهيتها وكيفيتها (scanned text) (Samiuallah Mohammad)",
+  "rows": [
+   {
+    "item": "Page 1: the title and the definition of a good translation (one that serves the same purpose in the new language as in the original)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The pages give no author or publication details, so it cannot be cited."
+   },
+   {
+    "item": "Page 1: views quoted from Foster (translation is like a painter choosing what to show), Edwards (approximate truth), Good speed and Prochazka (the reader should get the same impression as from the original)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The pages give no author or publication details, so it cannot be cited."
+   },
+   {
+    "item": "Page 1: meaning comes before style; content and form can conflict; no fixed rules for judging a translation (“Is this a good translation?”)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The handbook’s own rule that meaning comes before form is in Chapter 5, from the course notes."
+   },
+   {
+    "item": "Pages 1–2: four rules for a good translation (a complete copy of the ideas, the same style, natural and smooth expression, the same response in the reader)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The pages give no author or publication details, so it cannot be cited."
+   },
+   {
+    "item": "Page 2: six requirements for a good translator (knows the rules of both languages, both cultures and the subject, corrects unclear expressions, has a literary sense, reads widely)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 1, Step 4 has its own list of what a translator needs, taken from the team’s notes."
+   },
+   {
+    "item": "Page 2: the importance of dictionaries (general, bilingual, specialised, dialect) and the “little details” that matter",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 3 covers dictionaries in its own words."
+   },
+   {
+    "item": "Pages 2–3: words with no single Arabic equivalent (privatization = {{الخصخصة}} / {{التخصيص}} / {{التخصيصية}}; Islamization; holiday maker; the complicated nature of; long experience; great love; to briefly mention)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The pages give no author or publication details, so it cannot be cited."
+   },
+   {
+    "item": "Page 3: one English word with several Arabic meanings (section, record, institution / organisation / authority / agency; dozen; plot; sleeping policemen; snake and serpent, home and house)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 7 teaches the same skill (choosing a meaning from the context) with other examples."
+   },
+   {
+    "item": "Pages 4–5: common errors when translating into Arabic (listing nouns without {{و}}; overusing the absolute object; cover = {{يغطي}}; reach; according = {{طبقاً}}; cancel = {{لاغياً}}; still = {{لا زال}}; one-word equivalents)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 23, Step 2 gives its own list of common Arabic errors."
+   },
+   {
+    "item": "Page 5: language deviation, intended or unintended; {{نشاطركم الأفراح}} for {{نشاطركم الأحزان}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "The pages give no author or publication details, so it cannot be cited."
+   },
+   {
+    "item": "Pages 5–6: the titles “How to steal a bank?” and “How to rob a bank?”, and the joking versions {{كيف تسرق الجمل بما حمل؟}} and {{كيف تغتال مصرفاً؟}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "The pages give no author or publication details, so it cannot be cited."
+   },
+   {
+    "item": "Page 6: the heading “English phrases that may embarrass you” with idiom 2, He looks blue = {{يبدو حزيناً}}, and idiom 4, I will go bananas = {{سأجن}} / {{سأفقد عقلي}}",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 3",
+    "note": "Credited to the Translation Team’s course materials, and the Arabic for the second is now {{سأفقد صوابي}}."
+   },
+   {
+    "item": "Page 6: idiom 1, Break the ice = {{اكسر الثلج}}, figurative {{مهد الأمور}} / {{مهد الطريق}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "The figurative meaning given is not the usual one (easing the tension at a first meeting)."
+   },
+   {
+    "item": "Page 6: idiom 3, She is in the clouds = {{هي شاردة الذهن}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "The English idiom is normally “her head is in the clouds”."
+   },
+   {
+    "item": "Page 7: idiom 5, It rains cats and dogs = {{تمطر بغزارة}}, and idiom 7, It’s a piece of cake = {{إنه لأمر سهل جداً}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "The same two idioms are in Chapter 9, but they are also in the 180 course notes, so this page is not credited for them."
+   },
+   {
+    "item": "Page 7: idioms 6, 8, 9 and 10: This is nuts; He lives a dog’s life; He is a black sheep; This is hot air",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Page 8: idioms 11 to 13: He looks fishy; To achieve a breakthrough; A new approach to the subject",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Pages 8–9: how to translate words: translation equivalent versus formal correspondent; transliteration (intifada, jihad, technology, democracy) and Arabicisation",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapters 10 and 17 cover equivalence and transliteration from other notes."
+   },
+   {
+    "item": "Page 9: translation equivalents (candid camera, contact lenses; the proverbs {{في التأني السلامة}} and {{ميه من تحت تبن}}) and formal correspondents (to float currency, the first lady, to launder money, cold war, the premier, black market)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Pages 9–10: the door of the class = {{باب الفصل}}; She got seriously ill last night; two kinds of equivalence, formal and semantic; a medieval legal text as an example",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 10 explains equivalence with the course notes’ three types instead."
+   },
+   {
+    "item": "Pages 10–11: functional shift, or changing the grammar: adverb into other forms (He admires her greatly), adjective into noun, verb into adjective, verb into noun, adverb into verb, changing prepositions",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 13, Step 2 covers changing the word class as “transposition”, with its own example."
+   },
+   {
+    "item": "Page 11: “Is the translator’s poetic sense a condition for translating poetry?” (views of scholars)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Page 12: “Can poetry be translated?” (Robert Frost, Shihab Ghanem and the Rubaiyat), “Translation may be funny”, and differences between eras (Burns, Shakespeare’s summer day)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 15, Step 2 has a Shakespeare summer example, but it is cited to Shakespeare (1609), not to this text."
+   },
+   {
+    "item": "Pages 12–13: “The issue is not poetic sense”; creative translation as close to the original creation; the word {{الكركدن}} in a poem by Tawfiq Sayigh (a rhinoceros in the dictionary, a unicorn in the poem)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapters 2 and 19 mention poetry briefly, from other sources."
+   }
+  ]
+ }
+]

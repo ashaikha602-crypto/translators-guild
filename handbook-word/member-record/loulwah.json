@@ -1,0 +1,777 @@
+[
+ {
+  "source": "Intro to AVT",
+  "rows": [
+   {
+    "item": "Opening quotation (Pérez-González, 2014): audiovisual texts shape almost everyone’s life; audiences look for aesthetic and emotional experiences; viewing has become more varied",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 1",
+    "note": "The long quotation became one short sentence with the source kept; the points on emotions, memories and variety were left out for simplicity."
+   },
+   {
+    "item": "Audiovisual translation as the fastest-growing strand of Translation Studies in the last fifteen years",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 1",
+    "note": "Softened to “one of the fastest-growing areas”, and the fifteen-year span was removed because it goes out of date."
+   },
+   {
+    "item": "Four signs of growth: more research literature, undergraduate modules, postgraduate courses and PhDs, conferences",
+    "status": "Not used",
+    "where": "—",
+    "note": "Academic background that beginners do not need."
+   },
+   {
+    "item": "What prompted the growth: the development of communication technology, more exposure to visual semiotics, and the link between AVT and technological innovation",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 1",
+    "note": "Shortened to the role of technology (“Driven by technology”, “It depends heavily on technology”)."
+   },
+   {
+    "item": "The needs created by technology: theoretical frameworks, new research methods for audiovisual data, understanding new discourse communities",
+    "status": "Not used",
+    "where": "—",
+    "note": "Research-level content that beginners do not need."
+   },
+   {
+    "item": "What is so special about AVT: three relationships (words with pictures and soundtrack; foreign with target language and culture; spoken with written code) (Gambier, 2003)",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 1 (third bullet); Chapter 27, Step 3",
+    "note": "Only the link between words, pictures and sound is kept, with Gambier (2003); the spoken-to-written point is in Chapter 27, and the foreign-to-target culture point is not used."
+   },
+   {
+    "item": "Earlier names: film translation (before television and video), language transfer (ignored images, music and sound effects), screen translation (“too narrow”, O’Hagan 2007), multimedia translation (games, theatre, comics, CD-ROMs)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The history of the names is not needed at beginner level; the handbook uses only “audiovisual translation”."
+   },
+   {
+    "item": "Audiovisual translation (AVT) as the most widely used term",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 1; Words to remember, Chapter 26; Abbreviations",
+    "note": "Kept as the name used throughout, with a simple definition and the Arabic {{الترجمة السمعية البصرية}} added."
+   },
+   {
+    "item": "“AVT, translation or adaptation?”: why some scholars see AVT as adaptation because of spatial and temporal limits",
+    "status": "Not used",
+    "where": "—",
+    "note": "The debate is for advanced readers; the practical limits of space and time appear in Chapter 26, Step 4 and Chapter 27, Step 1."
+   },
+   {
+    "item": "Subtitles change the mode from oral to written and often omit words of the original",
+    "status": "Used and edited",
+    "where": "Chapter 27, Steps 2 and 3",
+    "note": "Turned into practical advice: condense the speech (Step 2) and cut it down to short written lines (Step 3)."
+   },
+   {
+    "item": "Dubbing ({{الدبلجة}}): replaces the source dialogue track with a target-language track; lip-synchronisation when the face or chest is visible in a medium shot",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 2; Words to remember, Chapter 26",
+    "note": "Shortened to new dialogue “often matched to the actors’ lips”; the medium-shot detail was left out."
+   },
+   {
+    "item": "Voice-over (half dubbing), with the Arabic gloss {{المعلق}} (for example, matches): documentaries, interviews and programmes translated and broadcast almost in time with the original, the original voice reduced",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 2; Words to remember, Chapter 26",
+    "note": "Kept with the documentary example; the Arabic term became {{التعليق الصوتي}} and “half dubbing” was dropped."
+   },
+   {
+    "item": "Free commentary: an adaptation for a new audience with additions, clarifications, omissions and comments; used for children’s programmes, documentaries and promotional videos",
+    "status": "Not used",
+    "where": "—",
+    "note": "The handbook introduces only four main types for beginners."
+   },
+   {
+    "item": "In-vision signing, for the deaf and hard of hearing",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not one of the four main types the handbook introduces; subtitles for the deaf and hard of hearing (SDH) are mentioned in Chapter 27."
+   },
+   {
+    "item": "Audio description, for the blind and partially sighted: describing action, body language, facial expressions and costumes",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 2; Words to remember, Chapter 26",
+    "note": "Shortened to “a spoken description of the action”, and the Arabic {{الوصف الصوتي}} was added; it is also a Try it question."
+   },
+   {
+    "item": "Audio-subtitling: subtitles spoken by an actor or a speech synthesiser",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not one of the four main types the handbook introduces."
+   },
+   {
+    "item": "Four YouTube links as examples",
+    "status": "Not used",
+    "where": "—",
+    "note": "The links were not checked; the handbook gives its own examples instead."
+   }
+  ]
+ },
+ {
+  "source": "Audiovisual Translation (typed notes)",
+  "rows": [
+   {
+    "item": "1. Introduction: AVT is in high demand because of the development of communication and translation and its link with technological innovation; AVT and technology go hand in hand",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 1",
+    "note": "Shortened to one idea: AVT is driven by technology and depends on it."
+   },
+   {
+    "item": "1. Early days: researchers were interested in filmmakers; today they are interested in pleasing the audience",
+    "status": "Not used",
+    "where": "—",
+    "note": "Research history that beginners do not need."
+   },
+   {
+    "item": "1. Why AVT is special: the only type of translation that relies entirely on technology",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 1 (first bullet)",
+    "note": "Softened to “It depends heavily on technology”, because “the only” and “entirely” are too absolute."
+   },
+   {
+    "item": "1. Why AVT is special: the only type with more than one element (visual, audio, textual), all working together to create meaning",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 1 (second bullet); Try it and Remember, Chapter 26",
+    "note": "Kept as images, sound and written words working together; the claim that it is the “only” type was dropped."
+   },
+   {
+    "item": "1. Why AVT is special: it links a foreign language and culture (possibly informal) with a target language and culture (possibly formal)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level; the differences between the two languages are covered in Chapter 4 and Chapter 26, Step 4."
+   },
+   {
+    "item": "1. Why AVT is special: the only type in which the medium may change, such as from spoken to written language",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 3",
+    "note": "Kept as “Speech must be cut down to short written lines”, applied to subtitles; “only” was dropped."
+   },
+   {
+    "item": "2.1 Film translation: the term used before television spread",
+    "status": "Not used",
+    "where": "—",
+    "note": "The history of the names is not needed; the handbook uses only “audiovisual translation”."
+   },
+   {
+    "item": "2.2 Language transfer: focused on language and ignored images, music and sound effects",
+    "status": "Not used",
+    "where": "—",
+    "note": "The history of the names is not needed at beginner level."
+   },
+   {
+    "item": "2.3 Screen translation: later a widely used term",
+    "status": "Not used",
+    "where": "—",
+    "note": "The history of the names is not needed at beginner level."
+   },
+   {
+    "item": "2.4 Multimedia translation: includes games, theatre, comics and digital resources",
+    "status": "Not used",
+    "where": "—",
+    "note": "The history of the names is not needed at beginner level."
+   },
+   {
+    "item": "2.5 Audiovisual translation: now the most common term",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 1; Words to remember, Chapter 26",
+    "note": "Kept as the term used throughout, with a definition and the Arabic {{الترجمة السمعية البصرية}} added."
+   },
+   {
+    "item": "3.1 Subtitling: a change of mode from oral to written language, often omitting words of the original",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 2; Chapter 27 (Words to remember, Steps 2 and 3)",
+    "note": "Shown as one of four main types with a chapter of its own; the definition also covers on-screen text and song lyrics, and the Arabic {{السترجة}} / {{الترجمة المرئية}} was added."
+   },
+   {
+    "item": "3.2 Dubbing: replaces source-language dialogue with target-language dialogue",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 2; Words to remember, Chapter 26",
+    "note": "Kept, with lip-matching mentioned and the Arabic {{الدبلجة}} added."
+   },
+   {
+    "item": "3.3 Voice-over: also called half dubbing, common in documentaries; the original voice is reduced or lowered; voice actors generally not used",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 2; Words to remember, Chapter 26",
+    "note": "The documentary example is kept; “half dubbing” and the remark on voice actors were left out, and the Arabic {{التعليق الصوتي}} was added."
+   },
+   {
+    "item": "3.4 Free commentary: adapts content for a new audience and may add to it; football commentary as an example",
+    "status": "Not used",
+    "where": "—",
+    "note": "The handbook introduces only four main types for beginners."
+   },
+   {
+    "item": "3.5 In-vision signing: for deaf and hard-of-hearing audiences",
+    "status": "Not used",
+    "where": "—",
+    "note": "The handbook introduces only four main types for beginners."
+   },
+   {
+    "item": "3.6 Audio description: for blind and partially sighted audiences; the translator describes the characters’ actions and visual events",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 2; Words to remember and Try it, Chapter 26",
+    "note": "Kept in one line, with the Arabic {{الوصف الصوتي}} added."
+   },
+   {
+    "item": "3.7 Audio subtitling: reading subtitles aloud for blind and partially sighted audiences",
+    "status": "Not used",
+    "where": "—",
+    "note": "The handbook introduces only four main types for beginners."
+   },
+   {
+    "item": "4.1 Skopos Theory: skopos means “aim” or “goal”; developed by Hans J. Vermeer; the aim is to fulfil the purpose set by the client, even by changing parts of the translation",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 3; Words to remember, Chapter 26",
+    "note": "Kept as “the purpose of a translation decides how it is translated”, credited to Reiss and Vermeer (1984), with the Arabic {{نظرية الغاية}}; the meaning of the word skopos and the changing of parts were left out."
+   },
+   {
+    "item": "4.1 Skopos Theory: emphasis on function (“How will the translation function for the target audience?”); the key elements are the client and the target audience",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 3 and Step 5; Chapter 2",
+    "note": "Turned into practical questions (what is it for, who will watch it, ask for the brief); the client’s role is taught in Chapter 2."
+   },
+   {
+    "item": "4.1 Skopos Theory aligns with dynamic equivalence, which seeks to give the audience the same emotions",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level; the chapter keeps one simple idea."
+   },
+   {
+    "item": "4.2 Descriptive Translation Studies (DTS): describes existing translations and why translators chose as they did; key aspects (for example humour subtitled from English into Arabic, norms, comparing source and target, quality assessment)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Advanced theory; the AVT chapters keep only Skopos theory."
+   },
+   {
+    "item": "4.3 Reception Studies: the audience’s reception and interpretation of translated audiovisual content; key aspects (viewer preferences, surveys, feedback loops, accessibility)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Advanced theory; the AVT chapters keep only Skopos theory."
+   },
+   {
+    "item": "4.4 Polysystem Theory (Multi-System Theory, Even-Zohar): how cultural and literary systems influence one another; key aspects (norms, conflict, cultural transfer)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Advanced theory; the AVT chapters keep only Skopos theory."
+   },
+   {
+    "item": "5. Challenges: AVT needs linguistic, cultural, technical and creative skills at the same time",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 4",
+    "note": "Became a step with four short bullets: culture, language, technology, creativity."
+   },
+   {
+    "item": "5.1 Cultural differences: bridging the gap between cultures; references with no direct equivalent",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 4 (“Culture”)",
+    "note": "Shortened to one line, with links to Chapters 15 to 17."
+   },
+   {
+    "item": "5.2 Linguistic differences: different grammar and vocabulary; complex dialogue must stay accurate, natural and concise",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 4 (“Language”)",
+    "note": "Shortened to “accurate and brief”, with a link to Chapter 4."
+   },
+   {
+    "item": "5.3 Technical constraints: subtitles and captions are limited by space and time",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 4 (“Technology”); Chapter 27, Step 1",
+    "note": "Kept in one line; the actual limits are explained in Chapter 27."
+   },
+   {
+    "item": "5.4 Creative demands: translators must often be creative",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 4 (“Creativity”)",
+    "note": "Kept and joined with the list of hard items (jokes, wordplay, songs, slang)."
+   },
+   {
+    "item": "5.5 Translating from English into Arabic: linguistic, cultural and technical differences",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 4",
+    "note": "Merged into the four general challenges instead of a separate English-to-Arabic heading."
+   },
+   {
+    "item": "5.5 Hard items: jokes, humour, wordplay, irony, sarcasm, songs, religious texts, slang, political speeches",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 4 (“Creativity”)",
+    "note": "Only jokes, wordplay, songs and slang were kept; humour, irony, sarcasm, religious texts and political speeches were left out for space."
+   },
+   {
+    "item": "6.1 Introduction and main idea: digital screens have replaced paper; the Arab world needs to adopt AVT more fully, update translation policies and train specialists",
+    "status": "Not used",
+    "where": "—",
+    "note": "A policy discussion beyond a beginner’s handbook, and the notes name no source for it."
+   },
+   {
+    "item": "6.2 The Arab context: a large young population and high illiteracy, so print translation is not enough; AVT as infotainment, largely overlooked by institutions",
+    "status": "Not used",
+    "where": "—",
+    "note": "A policy discussion beyond a beginner’s handbook, and the notes name no source for it."
+   },
+   {
+    "item": "6.3 Challenges to localising AVT: lack of definition and institutional reluctance; policy and vision deficits; linguistic and cultural context; technological shifts; the risk that AVT studies look imported",
+    "status": "Not used",
+    "where": "—",
+    "note": "A policy discussion beyond a beginner’s handbook, and the notes name no source for it."
+   },
+   {
+    "item": "6.4 Missed opportunities: film and international recognition (poor subtitling and awards), online presence, accessibility for disabled audiences, tourism, regional contrasts",
+    "status": "Not used",
+    "where": "—",
+    "note": "A policy discussion beyond a beginner’s handbook, and the notes name no source for it."
+   },
+   {
+    "item": "6.5 Research and education deficits: research that is too theoretical; neglected software skills, job-market needs and translation from Arabic; the gap between academia and industry; live news subtitling and pilgrimage translation services",
+    "status": "Not used",
+    "where": "—",
+    "note": "Advice for universities rather than for beginner translators, and the notes name no source for it."
+   },
+   {
+    "item": "6.6 Educational solutions: teach creative translation (for example film titles); host AVT conferences, update curricula, link academia and industry, share Arab culture through digital media",
+    "status": "Not used",
+    "where": "—",
+    "note": "Advice for universities rather than for beginner translators, and the notes name no source for it."
+   },
+   {
+    "item": "7. Introduction to dubbing: one of the oldest modes of AVT, widely used in Europe, America and Asia",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not kept; the handbook’s sentence on dubbing gives an Arab-world example instead."
+   },
+   {
+    "item": "7. Dubbing replaces the original soundtrack of source-language dialogue with a new soundtrack of target-language dialogue",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 26; Chapter 26, Step 2",
+    "note": "Kept in one short definition."
+   },
+   {
+    "item": "7. Dubbing is commonly used in cartoons, video games and commercials",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 2 (paragraph after the list)",
+    "note": "“Video games” became “games”, and the sentence was joined to an Arab-world example."
+   },
+   {
+    "item": "7.1 Types of dubbing and revoicing: dubbing (fully replaced), voice-over (translation heard over the original voice), audio description (scenes described for blind audiences)",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 2",
+    "note": "Only these three are kept, in a simple list together with subtitling."
+   },
+   {
+    "item": "7.1 Partial dubbing (only the main character is dubbed) and fandubbing (homemade dubbing by fans)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Specialised types that beginners do not need."
+   },
+   {
+    "item": "7.1 Free commentary (extra information beyond the speaker’s words) and audio subtitling (reading subtitles aloud)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The handbook introduces only four main types for beginners."
+   },
+   {
+    "item": "7.1 Interpreting: the live translation of spoken language or sign language",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not shown as a type of AVT; interpreting is explained in Chapter 1 as translating speech."
+   },
+   {
+    "item": "7.2 Challenges in dubbing: language and lip synchronisation; cultural adaptation and context; quality control and consistency",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 2 (paragraph after the list)",
+    "note": "Shortened to one sentence: matching lip movements, adapting cultural content and staying consistent across a series."
+   },
+   {
+    "item": "8. Introduction to subtitling: written text in the lower part of the screen conveying spoken dialogue, images and soundtrack information",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 27; Chapter 27, Step 1",
+    "note": "Rewritten as the dialogue shown at the bottom of the screen with important on-screen text and song lyrics, with the Arabic added."
+   },
+   {
+    "item": "8. Subtitles generally have 32 to 41 characters per line and at most two lines",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 1; Remember, Chapter 27",
+    "note": "Corrected to about 37 to 39 characters per line (up to 42 on some platforms), with a reminder to follow the client’s or platform’s style guide; two lines kept."
+   },
+   {
+    "item": "8.1 Linguistic parameters: intralingual subtitles (same language) and interlingual subtitles (source into target language)",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 1",
+    "note": "Examples added: subtitles for the deaf and hard of hearing (SDH) and for language learners; interlingual described as what translators usually make."
+   },
+   {
+    "item": "8.1 Linguistic parameters: bilingual subtitles (two languages in one video) and multilingual subtitles (three to seven languages)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Specialised kinds that beginners do not need."
+   },
+   {
+    "item": "8.1 Preparation time: pre-prepared (offline) and live (online) subtitles",
+    "status": "Used as written",
+    "where": "Chapter 27, Step 1",
+    "note": "Same two kinds; only a short example (live news) was added."
+   },
+   {
+    "item": "8.1 Technical parameters: open (burned-in) subtitles and closed subtitles that can be removed",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 1; Try it, Chapter 27",
+    "note": "Wording made clearer: closed subtitles “can be turned on and off”."
+   },
+   {
+    "item": "8.2 Surtitles (live performances) and fansubs (subtitles made by fans)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Specialised kinds that beginners do not need."
+   },
+   {
+    "item": "8.2 Intertitles: printed title cards between scenes in silent films",
+    "status": "Used and edited",
+    "where": "Chapter 26, fact box after Step 5",
+    "note": "Became a short fact box, with a sentence added on how distributors replaced the cards for foreign showings."
+   },
+   {
+    "item": "9. The semiotics of subtitling: semiotics is the study of signs",
+    "status": "Not used",
+    "where": "—",
+    "note": "Technical term left out; Chapter 27, Step 3 explains in plain words how the images and sound work with the subtitle."
+   },
+   {
+    "item": "9.1 Visual presentation: verbal signs (with words) and non-verbal signs (without words)",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 1 (second bullet); Chapter 27, Step 3 (fourth bullet)",
+    "note": "The terms “verbal” and “non-verbal” were replaced by plain words: images and written words on screen."
+   },
+   {
+    "item": "9.2 Acoustic presentation: verbal signs (dialogue) and non-verbal signs (sound effects)",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 1 (second bullet); Chapter 27, Step 3 (fourth bullet)",
+    "note": "The terms were replaced by plain words: dialogue, music and sound effects."
+   },
+   {
+    "item": "9.3 Anchoring: verbal information clarifies visual information",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 3 (fourth bullet)",
+    "note": "The term was left out; kept as one tip: the subtitle must still match what is on screen."
+   },
+   {
+    "item": "9.4 Redundancy: the visual and verbal modes give the same meaning without adding information",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 3 (fourth bullet)",
+    "note": "The term was left out; kept as the tip that a subtitle can be shorter when the picture already shows the meaning."
+   },
+   {
+    "item": "9.5 Semiotic cohesion: the relationship between dialogue, images and narrative context; subtitles are less coherent without visual support",
+    "status": "Not used",
+    "where": "—",
+    "note": "Technical concept that beginners do not need."
+   },
+   {
+    "item": "9.6 Subtitling vulnerability and change of medium from speech to writing",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 3 (“It is not easy” paragraph); Try it, Chapter 27",
+    "note": "Explained in plain words: viewers hear the original and read the translation, so they notice mistakes, and speech must be cut down to short written lines."
+   },
+   {
+    "item": "9.6 Speech may be scripted or spontaneous (everyday conversation, television news)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Detail that beginners do not need."
+   },
+   {
+    "item": "9.7 Dialogue lists: a written script of everything spoken in a film, used by producers to help translation",
+    "status": "Used and edited",
+    "where": "Words to remember and Step 2, Chapter 27; Chapter 26, Step 5",
+    "note": "Kept as a key term with the Arabic {{قائمة الحوار}} added and described as a script given to the translator."
+   },
+   {
+    "item": "10. Linguistic variation: the language of characters shows their personality and background",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 3 (“It is not easy” paragraph)",
+    "note": "Kept in one sentence: how characters speak shows who they are."
+   },
+   {
+    "item": "10.1 Linguistic meaning: denotative (literal) and connotative (emotional and cultural) meaning",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not repeated in the AVT chapters; denotation and connotation are taught in Chapter 6."
+   },
+   {
+    "item": "10.2 Marked speech: taboo words, swear words and emotionally charged utterances",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 5",
+    "note": "The term “marked speech” was left out; swearing and forbidden words are treated under taboo language."
+   },
+   {
+    "item": "10.3 Sociolect: a variety of language linked to a social group or class",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 3 (“It is not easy” paragraph)",
+    "note": "Explained as “social group”, with advice to keep it in the subtitles through word choice."
+   },
+   {
+    "item": "10.4 Slang: a type of jargon",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 3 (“It is not easy” paragraph); Chapter 26, Step 4",
+    "note": "Slang is named as part of how characters speak, but the definition “a type of jargon” was not carried over."
+   },
+   {
+    "item": "10.5 Idiolect: the speech habits of an individual speaker",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 3 (“It is not easy” paragraph)",
+    "note": "Explained as a speaker’s “personal habits”."
+   },
+   {
+    "item": "11. Culture-bound terms: extralinguistic references linked to a particular culture",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 27; Chapter 27, Step 4",
+    "note": "Defined simply as a reference to something from one culture, with the Arabic {{مصطلح ذو خصوصية ثقافية}} added and a link to Chapter 15."
+   },
+   {
+    "item": "11.1 Sources of cultural references: geographical; ethnographic (traditional food, holidays); sociopolitical (governmental or social institutions)",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 4 (first paragraph)",
+    "note": "Cited to Díaz Cintas and Remael (2007), with the examples widened to daily life and government."
+   },
+   {
+    "item": "12.1 Pedersen’s strategies: retention, specification, direct translation (calque), generalisation, substitution, omission, official equivalent",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 4; Try it, Chapter 27",
+    "note": "Merged with the second list into eight strategies with both names shown, such as “Loan (retention)” and “Calque (direct translation)”, and cited to Pedersen (2011)."
+   },
+   {
+    "item": "12.2 Díaz Cintas and Remael’s strategies: loan, calque, explicitation, substitution, compensation, omission",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 4",
+    "note": "Six of the nine strategies are kept in the merged list, cited to Díaz Cintas and Remael (2007)."
+   },
+   {
+    "item": "12.2 Díaz Cintas and Remael’s strategies: transposition, lexical recreation, addition",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out to keep the list to eight; the ideas overlap with substitution and explicitation, and coining new words is taught in Chapter 17."
+   },
+   {
+    "item": "13. Taboo language: social or religious restrictions on certain practices, expressions, people, places or things",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 27; Chapter 27, Step 5",
+    "note": "Simplified to “words that a society or religion forbids or restricts”, with the Arabic {{اللغة المحظورة}} added."
+   },
+   {
+    "item": "13. Taboo language is used for realism and emotion, characterisation and humour",
+    "status": "Used and edited",
+    "where": "Chapter 27, Step 5",
+    "note": "Shortened to “realism, character or humour”."
+   },
+   {
+    "item": "13.1 Censorship: institutional censorship and self-censorship",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 27; Chapter 27, Step 5",
+    "note": "Kept as authorities or broadcasters requiring changes versus subtitlers choosing them, with the Arabic {{الرقابة}} added."
+   },
+   {
+    "item": "References (heading only, no entries)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The heading was empty; the handbook’s own References list cites the works behind Chapters 26 and 27."
+   }
+  ]
+ },
+ {
+  "source": "Idiom notes",
+  "rows": [
+   {
+    "item": "He vanished from the surface of the earth",
+    "status": "Not used",
+    "where": "—",
+    "note": "Incomplete entry: no Arabic or Kuwaiti equivalent is given."
+   },
+   {
+    "item": "He’s a nosy parker",
+    "status": "Not used",
+    "where": "—",
+    "note": "Incomplete entry: no Arabic or Kuwaiti equivalent is given."
+   },
+   {
+    "item": "He lost his fame after being famous (he lost his spark): {{طاح سوقه}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Colloquial (dialect) equivalent, left out; the handbook keeps only six Kuwaiti expressions, chosen from the Kuwaiti expressions dictionary."
+   },
+   {
+    "item": "Near and dear to my heart",
+    "status": "Not used",
+    "where": "—",
+    "note": "Incomplete entry: no Arabic or Kuwaiti equivalent is given."
+   },
+   {
+    "item": "People in high places: {{عنده واسطه}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Colloquial (dialect) equivalent, left out; the handbook keeps only six Kuwaiti expressions, chosen from the Kuwaiti expressions dictionary."
+   },
+   {
+    "item": "Beat him black and blue",
+    "status": "Not used",
+    "where": "—",
+    "note": "Incomplete entry: no Arabic or Kuwaiti equivalent is given."
+   },
+   {
+    "item": "He swears like a sailor: {{لسانه متبري منه}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Colloquial (dialect) equivalent, left out; the handbook keeps only six Kuwaiti expressions, chosen from the Kuwaiti expressions dictionary."
+   },
+   {
+    "item": "He left bag and baggage: {{فكة روحه بلا رده}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Colloquial (dialect) equivalent, left out; the handbook keeps only six Kuwaiti expressions, chosen from the Kuwaiti expressions dictionary."
+   },
+   {
+    "item": "His cup run of over: {{مصخها طالت وشمخت}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "The English needed correcting (“my cup runneth over”), and the Arabic is a colloquial equivalent."
+   },
+   {
+    "item": "Go fresh with me: {{لا تطيح الميانه}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Colloquial (dialect) equivalent, left out; the handbook keeps only six Kuwaiti expressions, chosen from the Kuwaiti expressions dictionary."
+   },
+   {
+    "item": "Left them in the rare view mirror: {{عطاهم بو لباس}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "The English needed correcting (“rear-view mirror”), and the Arabic is a colloquial equivalent."
+   },
+   {
+    "item": "Take it on the (?)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Incomplete entry: the phrase is unfinished and has no Arabic equivalent."
+   },
+   {
+    "item": "He got his just desert: {{نال جزاءه}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "The English needed correcting (“just deserts”), and the phrase is not among the idioms the handbook teaches."
+   },
+   {
+    "item": "Stand straight: {{قوم على حيلك}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Colloquial (dialect) equivalent, left out; the handbook keeps only six Kuwaiti expressions, chosen from the Kuwaiti expressions dictionary."
+   },
+   {
+    "item": "All sizzle and no steak: {{بياع حجي}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Colloquial (dialect) equivalent, left out; the handbook keeps only six Kuwaiti expressions, chosen from the Kuwaiti expressions dictionary."
+   },
+   {
+    "item": "When pigs fly / fat chance: {{لما تحج البقر على قرونها}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Colloquial (dialect) equivalent, left out; the handbook keeps only six Kuwaiti expressions, chosen from the Kuwaiti expressions dictionary."
+   },
+   {
+    "item": "Speaking a different language: {{عجم لسانه}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "Colloquial (dialect) equivalent, left out; the handbook keeps only six Kuwaiti expressions, chosen from the Kuwaiti expressions dictionary."
+   },
+   {
+    "item": "Mister perfect",
+    "status": "Not used",
+    "where": "—",
+    "note": "Incomplete entry: no Arabic equivalent is given."
+   }
+  ]
+ },
+ {
+  "source": "Framework instructions (her proposals)",
+  "rows": [
+   {
+    "item": "A section near the end, on using digital tools and machine translation wisely and effectively, as a practical guide for beginner translators",
+    "status": "Used and edited",
+    "where": "Chapter 22",
+    "note": "Became Chapter 22, in Part 7 (Tools and resources), and widened to include translation memory and CAT tools."
+   },
+   {
+    "item": "A table of common English phrases, their Arabic meanings and, if possible, their Kuwaiti equivalents",
+    "status": "Not used",
+    "where": "—",
+    "note": "No such table was made; common expressions appear as lists with Arabic equivalents in Chapters 9 and 15, without Kuwaiti equivalents."
+   },
+   {
+    "item": "Kuwaiti expressions from her Kuwaiti dictionary, with English equivalents: {{الحجي سهل}}, {{الحجي معاك ضايع}}, {{السالفة أكبر من جدي}}, {{الدموع أربع أربع}}, {{الشمس منين طالعة؟}}, {{العين أوسع من الدار}}",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 5; Chapter 15, Step 1; Chapter 27, Step 3",
+    "note": "Six expressions were chosen and cited to the dictionary; {{الحجي معاك ضايع}} is used again in Chapter 27, and a Modern Standard Arabic version was added for {{الحجي سهل}}."
+   },
+   {
+    "item": "Simple guidance on using machine translation tools for phrases, while checking and editing the results",
+    "status": "Used and edited",
+    "where": "Chapter 22, Steps 2 to 6; one-page guide “When in doubt”",
+    "note": "Covers when a machine can help, its typical mistakes, post-editing, better ways to use it and four safety rules; no particular tool is named."
+   },
+   {
+    "item": "A brief guide to useful digital resources (the website Shaikhah mentioned and others) and how translators can benefit from them",
+    "status": "Used and edited",
+    "where": "Chapter 3, Steps 2 and 3; Chapter 21, Step 3; Chapter 22, Step 1",
+    "note": "No separate guide: digital dictionaries and term databases (UNTERM, Arabterm) are taught in Chapters 3 and 21, and translation memory and CAT tools in Chapter 22."
+   },
+   {
+    "item": "Practical examples showing how context affects the choice of translation",
+    "status": "Used and edited",
+    "where": "Chapter 7, Step 3 and Try it; Chapter 9, Step 2",
+    "note": "Built into the chapters on context and idioms (bank, case, {{عين}}, “a piece of cake”) instead of one separate section."
+   },
+   {
+    "item": "Practical examples showing common mistakes",
+    "status": "Used and edited",
+    "where": "Chapter 23, Steps 2 and 3; Chapter 22, Step 3",
+    "note": "Given as weak-then-better pairs for Arabic and English, plus a machine’s typical mistakes, instead of one separate section."
+   }
+  ]
+ },
+ {
+  "source": "Other material and suggestions",
+  "rows": [
+   {
+    "item": "Suggestion to include the dictionaries that helped the team and how to use them",
+    "status": "Used and edited",
+    "where": "Chapter 3, Steps 1 to 3",
+    "note": "Chapter 3 teaches the three-check rule, printed versus digital dictionaries and a starter list; the Kuwaiti dictionary is cited in the References rather than listed there."
+   },
+   {
+    "item": "Principles of Translation notes compiled from Baker and Munday (59.5 MB PDF)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not yet received."
+   },
+   {
+    "item": "The article “AVT in the Arab World” (Gamal)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not yet received."
+   },
+   {
+    "item": "The “AVT Theory” file",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not yet received."
+   },
+   {
+    "item": "The rest of her notes",
+    "status": "Not used",
+    "where": "—",
+    "note": "She said they were lost."
+   },
+   {
+    "item": "Dictionary examples requested from her in the plan, and the machine translation material her notes were said to contain",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not received."
+   }
+  ]
+ }
+]

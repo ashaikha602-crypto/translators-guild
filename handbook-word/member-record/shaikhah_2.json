@@ -1,0 +1,841 @@
+[
+ {
+  "source": "Terminology class notes: Terminology, Week 1 [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Discussion questions: what “terminology” brings to mind; terminology versus semantics and lexicography; examples of specialised terminologies",
+    "status": "Not used",
+    "where": "—",
+    "note": "Class discussion prompts, not teaching content."
+   },
+   {
+    "item": "Introduction: no agreement on what terminology is; it borrowed from semantics, lexicology and lexicography",
+    "status": "Not used",
+    "where": "—",
+    "note": "Theory about the field itself; too advanced for beginners."
+   },
+   {
+    "item": "Beginnings of modern terminology: advances in science and technology (genetics, space exploration, information science, telecommunications); contact between language communities; divergent views (standardising, technical lexicography, word lists)",
+    "status": "Not used",
+    "where": "—",
+    "note": "History and theory; too advanced for beginners."
+   },
+   {
+    "item": "Meanings of terminology: the technical terms of an art, science or subject, and later the study of those terms",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 21 has its own short entries for “Terminology” in Words to remember, so the history of the word was not needed."
+   },
+   {
+    "item": "The long definition of terminology as a discipline (identifying, analysing, creating and standardising terms) and the four work methods (term identification, contextual analysis, term creation, standardisation)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical; the handbook gives a one-line definition of terminology from another source and teaches the practical steps in Chapter 21 instead."
+   },
+   {
+    "item": "Term identification: simple terms, complex terms (two or more words for one concept) and phrases",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 1",
+    "note": "Only the idea that a term can be several words is kept; simple terms and phrases were left out."
+   },
+   {
+    "item": "Contextual analysis: finding a term’s meaning by delimiting its context and pinpointing semantic features",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too technical; the handbook keeps only the simple point that the context decides (Chapter 21, Step 3)."
+   },
+   {
+    "item": "Term creation: gaps between languages; the terminologist identifies existing terms and coins one only after all sources have been searched",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 3; Chapter 21, Step 3",
+    "note": "Kept in the handbook’s own words as ‘search for an accepted term first; create one only if none exists’; the point about gaps between languages is not stated separately."
+   },
+   {
+    "item": "Standardisation: research and standardisation go together; less arbitrary decisions on usage",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   }
+  ]
+ },
+ {
+  "source": "Terminology class notes: Terminology 2, Week 2 [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Specialised terms: each field (arts, science, business, economics, law, medicine) has its own special language; a special language holds general words and terms; terminology studies terms, not general vocabulary",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 21 opens with its own beginner explanation of terms, using contract and medical leaflet examples."
+   },
+   {
+    "item": "Definitions and contexts: terminologists check current usage; situational context versus written context; semantic features",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too technical; Chapter 7 teaches how context decides meaning in simpler terms."
+   },
+   {
+    "item": "Bilingual terminology: finding enough information on the source term in context to research the target equivalent (textual correspondence)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "The user’s need for means of expression: an advertiser’s needs differ from a scientist’s; users need to know what something is called",
+    "status": "Not used",
+    "where": "—",
+    "note": "Background theory; not needed at beginner level."
+   },
+   {
+    "item": "Terminology records: manual records replaced by computerised databases",
+    "status": "Not used",
+    "where": "—",
+    "note": "Record formats are too advanced for beginners."
+   },
+   {
+    "item": "Terminological media: databases (multiple access, fast retrieval); vocabularies (alphabetical; source entry, target equivalent, short definition, subfield); glossaries; teaching outlines and illustrations",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 21, Step 4 shows a simple term list instead."
+   },
+   {
+    "item": "Exercises: find simple terms, complex terms and phrases in a short text and set them out as a vocabulary; general language versus special languages; vocabulary versus terminology",
+    "status": "Not used",
+    "where": "—",
+    "note": "Class exercises; the handbook has its own Try it questions."
+   }
+  ]
+ },
+ {
+  "source": "Terminology class notes: Term and Concept, Week 5 [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Term and concept: the signifier (the word) and the signified (the object), linked through concepts in the mind",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "What is a term: a word or expression that designates a concept of a subject field; simple, complex or phrase",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 21 has its own one-line entry for “Term” in Words to remember."
+   },
+   {
+    "item": "Simple terms: coproduce, commentator, monochrome, and why their affixes do not make them complex",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too technical for beginners."
+   },
+   {
+    "item": "Complex terms: captive audience, laughmeter, director-producer, closeup, ultrawide-angle lens, to lip sync; one concept, and removing a word changes the concept",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 1",
+    "note": "Only the idea is kept (several words, one idea, translate as one unit), with the example network security; the television examples were not used."
+   },
+   {
+    "item": "Phrasal terms: request for copyright clearance, to preempt a program, filmed on location, on the air",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too technical for beginners."
+   },
+   {
+    "item": "Concept and essential characteristics: the concept watch (face and hands, tells time, worn on a wristband)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "Specificity to subject field: general words given new meanings (street furniture, information highway)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "One term in several fields: carrier in telecommunication, transportation, insurance and medicine; strictly, a term belongs to one field",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 4",
+    "note": "Only the idea is used (one word is a different term in each field), shown with the depression example instead of carrier."
+   },
+   {
+    "item": "Objects: material and immaterial; classes (entities, properties, activities, dimensions)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "The link between term and concept is arbitrary and based on convention",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "Motivation: films library, catwalk, soap opera; motivation is useful but not necessary (blackboard can be green); desirable in new terms",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3",
+    "note": "Only blackboard is kept, to show that a term’s parts can mislead and the context decides."
+   },
+   {
+    "item": "Classification of concepts: generic and partitive relations (sampling, bicycle); causal and opposite relations (biased sampling, systematic versus unsystematic)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "Exercise: list five motivated terms in a subject and explain why they are motivated",
+    "status": "Not used",
+    "where": "—",
+    "note": "Class exercise; the handbook has its own Try it questions."
+   }
+  ]
+ },
+ {
+  "source": "Terminology class notes: Definitions in Terminology, Week 10 [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Purpose of a terminological definition: the essential characteristics only; different from dictionary and encyclopedia definitions",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "Rules of definition: not obscure; not too broad or too narrow; able to replace the term",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced; the handbook gives one simple rule for definitions instead."
+   },
+   {
+    "item": "Rules of definition: not circular (herpetologist); not negative where a positive is possible (chair; exceptions undifferentiated, achromatic)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Definition by genus and difference: name the larger class, then what sets the concept apart (man as a rational animal)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 4",
+    "note": "Kept as a plain rule (name the general group, then say what makes the term different); the example is the handbook’s own, thermometer."
+   },
+   {
+    "item": "Other methods: partition definition, definition by description (mirror), operational definition (product), synonymous definition (bellis perennis as daisy)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced; one method is enough for a beginner."
+   },
+   {
+    "item": "Choice of method: evening dress by partition; cake by genus, parts or recipe",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Choice of defining words: nouns (techno-casualty, audiodontics), verbs (airdash, auralize), adjectives (congenial, ageist, disinformative, proactive, back-of-the-book), adverbs (hyperacutely, utopianly)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Grammar detail that is too advanced for beginners."
+   },
+   {
+    "item": "Good practice: adequacy, brevity (no longer than one sentence or phrase) and clarity",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 4",
+    "note": "Only brevity is kept: write the definition in one sentence."
+   }
+  ]
+ },
+ {
+  "source": "Terminology class notes: Term Formation and Standardization, Week 10 [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Introduction: terms are rarely invented from nothing; they come from new meanings, changed form or word class, and borrowing",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 17 teaches ways to make Arabic words instead."
+   },
+   {
+    "item": "Term formation in different fields: classical derivation in biology, borrowing in earth sciences, little borrowing in computer science",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Features of English term formation: productive; compounds and metaphor; borrowing from Latin, Greek, French and German",
+    "status": "Not used",
+    "where": "—",
+    "note": "These are about English; the handbook’s concern is Arabic."
+   },
+   {
+    "item": "Reasons for creating terms: innovation, changing attitudes, social change (policewoman, chairwoman, businesswoman), effective communication (telephone network)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 17, Step 1 gives the beginner reason for new words instead (gaps in the target language)."
+   },
+   {
+    "item": "Four processes of English term formation: semantic change, morphological change, conversion, borrowing",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too technical; Chapter 17 gives five ways to make Arabic words."
+   },
+   {
+    "item": "General rules of term formation: concision, linguistic accuracy, motivation, monosemy, ability to produce derivatives",
+    "status": "Not used",
+    "where": "—",
+    "note": "The handbook has its own one-sentence rule for a good term in Chapter 21, Step 3."
+   },
+   {
+    "item": "Who forms terms: inventors, and terminologists working with specialists",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Standardisation: consensus, expert committees, synonyms in different regions, and why it is triggered",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced; Chapter 21, Step 2 says only that the Arabic language academies create and approve terms."
+   }
+  ]
+ },
+ {
+  "source": "Terminology class notes: Subject Field Research, Week 5 [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Introduction: subject-field research is exhaustive and slow; six preliminary stages before scanning for terms",
+    "status": "Not used",
+    "where": "—",
+    "note": "Research on a whole field is too advanced; the handbook works term by term."
+   },
+   {
+    "item": "Stage 1, determining objectives with the client: purpose, target audience, scope (a few hundred or a few thousand concepts)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 2 asks three questions (client, purpose, audience) for a single translation instead."
+   },
+   {
+    "item": "Stage 2, estimating resources: staff, money, and documents, glossaries, bibliographic databases and term banks",
+    "status": "Not used",
+    "where": "—",
+    "note": "Project planning is too advanced for beginners."
+   },
+   {
+    "item": "Documentary resources: original documents in the source and target languages, not translations",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3",
+    "note": "Kept as advice to confirm the equivalent in a text written in Arabic by specialists, not in a translation."
+   },
+   {
+    "item": "Stage 3, becoming familiar with the field: read a short work for beginners; introductory textbooks and encyclopedia entries",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3",
+    "note": "Kept as: if the field is new, read a short introduction first, such as an encyclopedia entry."
+   },
+   {
+    "item": "Stage 4, selecting documentation: quality over quantity; three or four works plus a specialised dictionary; six to eight in the target language",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Stage 5, locating documentation: textbooks, handbooks, national standards (CSA, ASTM), librarians and specialists",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Stage 6, evaluating documentation: table of contents, index, quality of writing, author’s credibility",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced; Chapter 3, Step 2 asks readers to check a dictionary’s publisher instead."
+   },
+   {
+    "item": "Breakdown of the subject field into subfields and related fields",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Scanning for terms: each term must fit the breakdown; better to include too many at first",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 2 asks readers to list the key terms of a text instead."
+   }
+  ]
+ },
+ {
+  "source": "Terminology class notes: Terminology, Semantics and Lexicography, Week 3 [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Introduction: terminology is often confused with other disciplines; it is independent",
+    "status": "Not used",
+    "where": "—",
+    "note": "Theory about the field itself; too advanced for beginners."
+   },
+   {
+    "item": "Semantics: sign and referent; the historical approach (fish from Old English fisc; later meanings flesh, a mast piece, a cold person) and the descriptive approach (polysemy, semantic range)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical; Chapter 7 teaches polysemy with its own examples."
+   },
+   {
+    "item": "Terminology begins with context, not etymology (fish in biology)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "How terminology relates to semantics, and how semantic change (analogy, metonymy) forms terms",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "Terminology and lexicography: the whole lexicon versus a specialised stock; concept to sign versus sign to concept; encoding versus decoding",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "Work methods compared: nomenclature, term identification, analysis, definition",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Key information media: dictionary entry versus terminology record (one concept, tied to its context, an encoding tool)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Record formats are too advanced for beginners."
+   },
+   {
+    "item": "End products: the dictionary versus a growing file of terminology records",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Exercises: study bank, charge, mouse, virus, tank and cell as lexicographer and as terminologist; compare the two methods",
+    "status": "Not used",
+    "where": "—",
+    "note": "Class exercises; Chapter 7 uses other examples of words with several meanings."
+   }
+  ]
+ },
+ {
+  "source": "Terminology class notes: The Situation in Terminology, Week 3 [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Terminology has a social function; one concept has different labels in different situations (total impacts / gross audience)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The advertising example was not needed; the aerial and antenna example was used instead (next item)."
+   },
+   {
+    "item": "One concept, two labels by place: aerial in England, antenna in the United States",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 5",
+    "note": "Kept as an example of a concept with two accepted names; the handbook added the Arabic {{هوائي}} and a second pair, {{حاسوب}} and {{كمبيوتر}}."
+   },
+   {
+    "item": "The situational context comes first; the Palmer quotation on living languages; terminology cannot be built outside context",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "Situation and view of reality: each language sees the world differently, which affects equivalence",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "Comparative terminology: terms are not literal translations (whistleblower, goalkeeper, {{مجلات علمية}}); living terminology is idiomatic",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 11 already shows that word-for-word translation often fails."
+   },
+   {
+    "item": "Problems of living terminology: synonyms, several meanings, obscure wording; describing usage versus choosing it",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "The role of users: they help researchers; terminologists provide tools, not protection of terms",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Work methods: a real need, target audience, level of language, data gathering, signs and labels, selecting terms",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 2 asks about client, purpose and audience for a translation instead."
+   },
+   {
+    "item": "Situation and standardisation: describing usage versus prescribing it; the two are complementary",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   }
+  ]
+ },
+ {
+  "source": "Terminology class notes: Term Research, Week 5 [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Introduction and advantages: term research answers questions on single terms; it trains novices; clients need answers in 4 to 48 hours",
+    "status": "Not used",
+    "where": "—",
+    "note": "Describes the terminologist’s job, which is too advanced for beginners."
+   },
+   {
+    "item": "The six steps of term research (discuss with the client, check the concept, consult a specialist, research the solution, check the solution, present it)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 21, Step 3 has its own five-part routine for a student translator."
+   },
+   {
+    "item": "Discussion with the client: concept, field, situation, source term, what has been tried; be tactful",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3",
+    "note": "Reduced to “ask the client” when the meaning is unclear; the list of questions and the advice on tact were left out."
+   },
+   {
+    "item": "Checking the concept in source-language dictionaries",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 3 teaches dictionary checks."
+   },
+   {
+    "item": "Consulting a specialist: confirms the concept, suggests sources, clears up discrepancies",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3",
+    "note": "Kept as “ask a specialist”; the specialist’s roles were not listed."
+   },
+   {
+    "item": "Researching the solution: analyse the concept’s characteristics; the lighthouse rotating light (beacon); bilingual term banks and glossaries; “Can you find the Arabic?”",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed; the handbook lists its own Arabic sources in Chapter 21, Step 3."
+   },
+   {
+    "item": "Checking the solution in monolingual works before giving it to the client",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3",
+    "note": "Kept as advice to confirm the equivalent in a text written in Arabic; Chapter 3, Step 1 gives a similar check for dictionaries."
+   },
+   {
+    "item": "Presenting the solution: justify it, name the source and the specialist, or suggest by analogy",
+    "status": "Not used",
+    "where": "—",
+    "note": "Client reporting is too advanced; the source column in the term list (Chapter 21, Step 4) lets readers record where they checked."
+   },
+   {
+    "item": "Why consult general works before specialised ones: quicker, an overview, but less technical detail",
+    "status": "Not used",
+    "where": "—",
+    "note": "The reasons were left out; Chapter 21, Step 3 keeps only the advice to start with a short introduction."
+   },
+   {
+    "item": "Exercise slides (headings only in the notes)",
+    "status": "Not used",
+    "where": "—",
+    "note": "No content to use; the handbook has its own Try it questions."
+   }
+  ]
+ },
+ {
+  "source": "Terminology class notes: Comparative Terminology, Week 6 [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Introduction: bilingual research must compare source and target terms to see whether they are equivalent",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Full equivalence: same meaning and use in a field (black out and {{انقطاع الكهرباء}})",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 10 teaches equivalence in a simpler way (formal, functional and ideational)."
+   },
+   {
+    "item": "Partial equivalence: differences in meaning (general versus specific; shifts) and in use (register, region, age, frequency)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Limits of partial equivalence: coffee table; a language community’s right to its own terms",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Textual match: matching contexts and illustrations on a bilingual record prove that two terms are equivalent",
+    "status": "Not used",
+    "where": "—",
+    "note": "Record formats and proof of equivalence are too advanced for beginners."
+   },
+   {
+    "item": "Exercise: two Apple Watch support pages, one English and one Arabic",
+    "status": "Not used",
+    "where": "—",
+    "note": "Class exercise based on web pages; not suited to print."
+   }
+  ]
+ },
+ {
+  "source": "Terminology class notes: Terminological Records, Week 8 [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Why records: published glossaries are fixed, but a record is easy to change and update",
+    "status": "Not used",
+    "where": "—",
+    "note": "Record keeping is too advanced for beginners."
+   },
+   {
+    "item": "What a terminology record is; sequential and condensed formats; manual and computerised records",
+    "status": "Not used",
+    "where": "—",
+    "note": "Record formats are too advanced for beginners."
+   },
+   {
+    "item": "The 11 fields of a monolingual record",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed; Chapter 21, Step 4 names only the term, definition, field, source and date of a termbase entry."
+   },
+   {
+    "item": "Entry field rules: lower case, singular nouns, infinitive verbs, synonyms after a semicolon",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed for beginners."
+   },
+   {
+    "item": "Source field: a code, with the full reference on a separate record",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 4",
+    "note": "Reduced to one column for the source of each term in the term list; codes and separate source records were left out."
+   },
+   {
+    "item": "Date of publication; volume, issue and page number",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed for beginners."
+   },
+   {
+    "item": "Grammatical labels (cross over; ratings), usage and semantic labels, context, fields, author and date, access keys",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed for beginners."
+   },
+   {
+    "item": "Bilingual records: 18 fields, the target fields repeating the source fields",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed for beginners."
+   },
+   {
+    "item": "Key points: synonyms on separate cross-referenced records; shortening contexts with an ellipsis; source codes; label abbreviations",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed for beginners."
+   }
+  ]
+ },
+ {
+  "source": "Terminology class notes: Terminological Analysis, Week 6 [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Introduction: analysis identifies terms and studies their contexts; five factors for identifying terms",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too advanced for beginners."
+   },
+   {
+    "item": "Determinant and determinatum: desktop publishing, subliminal advertising, film editing; charitable institution versus charitable man; inessential (intricate technology product, initial verification technique) and essential (bait-and-switch advertising, advocacy advertising) determinants",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too technical for beginners."
+   },
+   {
+    "item": "Degree of lexicalisation: security of networks, network security and security as forms of one term",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 1",
+    "note": "Only network security is kept, as an example of a several-word term translated as one unit; lexicalisation is not explained."
+   },
+   {
+    "item": "Classification of concepts: unsystematic, systematic, cluster, area and stratified sampling",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too technical for beginners."
+   },
+   {
+    "item": "Collocations as terms: acknowledge receipt of a message, clear a buffer, formulate a query",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 8 teaches collocation on its own."
+   },
+   {
+    "item": "Typographic clues to terms: bold, italics, quotation marks, underlining",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed for beginners."
+   },
+   {
+    "item": "Contextual analysis: semantic features, choosing a context, and defining, explanatory and associative contexts",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too technical for beginners."
+   },
+   {
+    "item": "Exercise: find five terminology units in a text on nuclear weapons, choose contexts, and find Arabic equivalents",
+    "status": "Not used",
+    "where": "—",
+    "note": "Class exercise based on a separate text."
+   }
+  ]
+ },
+ {
+  "source": "Framework instructions (her proposals) [Shaikhah Alkhaledi]",
+  "rows": [
+   {
+    "item": "Opening aim: a handbook that is practical, engaging and useful for undergraduates, lasting rather than academic or dry; the sections below offered as ideas to discuss, not a fixed framework",
+    "status": "Used and edited",
+    "where": "Preface; Start here",
+    "note": "Kept as the aim of a plain, practical guide for beginners; the aim of lasting relevance is not stated in the book."
+   },
+   {
+    "item": "Breaking the Literal Trap: real legal, technical and news examples of moving beyond word-for-word translation",
+    "status": "Used and edited",
+    "where": "Start here; Chapter 1, Step 1; Chapter 11, Steps 1 to 4; Chapter 19, Steps 2 and 3",
+    "note": "Not a separate section; the news, legal and technical examples sit in the chapters they illustrate."
+   },
+   {
+    "item": "The Terminology Guide: established Arabic equivalents, Arabization ({{تعريب}}) and transliteration ({{نقحرة}})",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3; Chapter 17, Step 2; Chapter 16, Steps 1 and 2",
+    "note": "Covered as a chapter on terms; the book uses “Arabicisation” ({{التعريب}}) and {{النقل الصوتي}}, not {{نقحرة}}."
+   },
+   {
+    "item": "Quick-Reference Genre Checklists: step-by-step checklists for each text type",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 2; Chapter 18, Step 4; Translation quality checklist (end of Part 8)",
+    "note": "Merged into one checklist for any text, one short list of rules for each genre, and one final checklist."
+   },
+   {
+    "item": "The Common Pitfalls Clinic: common grammar, word and style mistakes with better versions",
+    "status": "Used and edited",
+    "where": "Chapter 23, Steps 2 and 3",
+    "note": "Shown as weak version then better version, for both directions, inside the revision chapter rather than as a separate clinic."
+   },
+   {
+    "item": "The Translation Brief (Skopos) Blueprint: before writing, ask who the client is, what the communicative purpose (Skopos) is, and who the target audience is",
+    "status": "Used and edited",
+    "where": "Chapter 2 (Before you start: ask three questions); Chapter 26, Step 3",
+    "note": "Kept as three questions that make the translation brief; the word Skopos appears only in Chapter 26."
+   },
+   {
+    "item": "The Interlingual Risk Assessment Matrix: judging a text by the consequences of a mistake, lower-risk general prose versus higher-risk legal and technical texts",
+    "status": "Used and edited",
+    "where": "Chapter 24; Chapter 22, Step 2",
+    "note": "Written as a table of risk areas with what to do; the text-type contrast is shown through the medicine leaflet and contract examples."
+   },
+   {
+    "item": "The Intertextual Mapping Protocol: before translating, find real target-language parallel texts (for example a Kuwaiti or Gulf decree) for terms, phrasing, style and register",
+    "status": "Used and edited",
+    "where": "Chapter 3, Step 1; Chapter 21, Step 3; When in doubt page; Your journey continues",
+    "note": "Only the habit of checking real texts in the target language is kept; the step-by-step protocol needs texts and practice."
+   },
+   {
+    "item": "Corpora and Digital Tool Literacy: use parallel corpora and reliable institutional glossaries (UNTERM, legislative portals) instead of relying only on dictionaries or raw machine translation",
+    "status": "Used and edited",
+    "where": "Chapter 3, Step 3; Chapter 21, Step 3; Chapter 22, Step 5",
+    "note": "UNTERM and Arabterm are recommended and machine output must be checked against reliable sources; corpora and legislative portals are not mentioned."
+   },
+   {
+    "item": "Dynamic Syntactic Restructuring (De-Anglicizing Syntax): avoid heavy nominalisation, long chains of prepositional phrases and needless passives; rebuild English sentences as natural Arabic verbal sentences",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 1; Chapter 5, Step 2; Chapter 23, Step 2",
+    "note": "Partly covered, not as a module: verb-first sentences, noun to verb, and copying the English passive; prepositional chains are not covered."
+   },
+   {
+    "item": "The Pragmatic Shift and Cultural Implicature Clinic: when a literal rendering fails, for English idioms and polite expressions, and keeping the interpersonal function",
+    "status": "Used and edited",
+    "where": "Chapter 6, Step 2; Chapter 9; Chapter 15, Steps 1 and 4",
+    "note": "Partly covered through speaker meaning, idioms and set polite phrases; there is no separate clinic and the word implicature is not used."
+   },
+   {
+    "item": "The “Invisible Translator” Ethical Audit: a reflective checklist on cultural assumptions, source-text bias, institutional expectations and neutrality",
+    "status": "Not used",
+    "where": "—",
+    "note": "Needs reflection and practice, and suits the website or a later edition; Chapter 20 and Chapter 22, Step 6 touch on point of view and responsibility."
+   },
+   {
+    "item": "Companion website, the reasoning: the printed book carries what lasts and the website what moves; a lean first edition; corrections and growth without a new print run; future team members contribute; the website to be the final step, still a proposal",
+    "status": "Not used",
+    "where": "—",
+    "note": "This is the case for the website, not reader content; the book carries only the code and address."
+   },
+   {
+    "item": "Companion website, Access: a QR code at the end of the handbook, one scan into the current version",
+    "status": "Used and edited",
+    "where": "Back cover (Midnight and Light editions); last page of the book; Your journey continues",
+    "note": "Kept as a QR code and the address translators-guild.vercel.app, with an invitation to visit the team’s website."
+   },
+   {
+    "item": "Companion website, The Library: current and earlier editions, corrections, a bank of practice texts across genres with model translations and commentary, a growing glossary, links to corpora and institutional glossaries",
+    "status": "Not used",
+    "where": "—",
+    "note": "Belongs on the website; the book has its own glossary and one practice text, Put it all together."
+   },
+   {
+    "item": "Companion website, The Practice Arena: the handbook becomes something students do",
+    "status": "Not used",
+    "where": "—",
+    "note": "Belongs on the website; the book has Try it questions at the end of each chapter."
+   },
+   {
+    "item": "Practice Arena: Text of the Week, a weekly passage; students submit a version and compare it with others and the commentary",
+    "status": "Not used",
+    "where": "—",
+    "note": "Needs weekly release and online submission, so it belongs on the website."
+   },
+   {
+    "item": "Practice Arena: Spot the Literal Trap, several renderings of one sentence and a choice of the natural one",
+    "status": "Not used",
+    "where": "—",
+    "note": "Website activity; Chapter 11, Step 2 compares three versions of one sentence as a worked example."
+   },
+   {
+    "item": "Practice Arena: Idiom Arena, timed rounds matching English idioms to Arabic equivalents",
+    "status": "Not used",
+    "where": "—",
+    "note": "Needs a timed online game; Chapter 9 lists idioms with their equivalents."
+   },
+   {
+    "item": "Practice Arena: De-Anglicize It, a nominalised passive English sentence rebuilt as a natural Arabic verbal sentence",
+    "status": "Not used",
+    "where": "—",
+    "note": "Website activity; Chapter 4 and Chapter 23 have Try it questions on rewriting sentences."
+   },
+   {
+    "item": "Practice Arena: Before and After, student translations beside polished versions, annotated",
+    "status": "Not used",
+    "where": "—",
+    "note": "Needs student work collected over time, so it belongs on the website."
+   },
+   {
+    "item": "Practice Arena: streaks, badges and a team leaderboard",
+    "status": "Not used",
+    "where": "—",
+    "note": "Needs an online system, so it belongs on the website."
+   },
+   {
+    "item": "Practice Arena: the Workshop Companion, a mode for Guild Season workshops",
+    "status": "Not used",
+    "where": "—",
+    "note": "Needs the website and live workshops."
+   }
+  ]
+ }
+]

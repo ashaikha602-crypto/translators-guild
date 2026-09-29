@@ -1,0 +1,890 @@
+[
+ {
+  "source": "Introduction to Terminology (182 slides)",
+  "rows": [
+   {
+    "item": "Title slide (slide 1): course name, lecturer and semester",
+    "status": "Not used",
+    "where": "—",
+    "note": "Course details, not teaching content."
+   },
+   {
+    "item": "Definition (slide 2): terminology is the discipline concerned with the study and compilation of specialised terms; not a new field, but systematically developed in recent decades",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 21 (Terminology); Chapter 21, Step 1",
+    "note": "Shortened to a one-line definition, with a citation to Cabré (1999) added."
+   },
+   {
+    "item": "Social and political aspects and origins (slides 2–4): the need for rules for creating terms as science became international in the 19th century; scientists leading in the 18th and 19th centuries and engineers and technicians in the 20th; naming of concepts in chemistry, botany and zoology; the start of the field in the 1930s",
+    "status": "Not used",
+    "where": "—",
+    "note": "History is not needed to use terms well."
+   },
+   {
+    "item": "The three schools and their founders (slides 5–7): Lotte and the Soviet School; the Prague School (based on Saussure); Wüster, an Austrian engineer and industrialist, founder of modern terminology and the Vienna School (1898–1977, with his portrait); technology needing agreement on terms",
+    "status": "Not used",
+    "where": "—",
+    "note": "History and schools are not needed to use terms well."
+   },
+   {
+    "item": "Development of the field (slides 8–11): social need; society changing from rural to industrial; the technologisation of society and the value of information; standard language and education; five social changes that affect terminology (new concepts from science and technology, new ways of communicating, mass communication, government intervention, growth of information and databases)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Theory beyond a beginner’s level."
+   },
+   {
+    "item": "The four periods of modern terminology (slides 12–15): origins 1930–1960 (Wüster and Lotte); structuring 1960–1975 (computers, first databank, first standardisation); boom 1975–1985 (language planning); expansion 1985–present (computer science, tools, a market for terminology)",
+    "status": "Not used",
+    "where": "—",
+    "note": "History is not needed to use terms well."
+   },
+   {
+    "item": "Three approaches of the classical schools (slides 16–18): an interdisciplinary and independent subject (Moscow and Prague); philosophy and concept systems (Vienna); the linguistic side, with terms as part of the lexicon (Prague); terminology theory rests on the first approach",
+    "status": "Not used",
+    "where": "—",
+    "note": "Theory beyond a beginner’s level."
+   },
+   {
+    "item": "Functions of terminology and four points of view (slides 19–21): linguists (special languages within the general language), specialists (terms and concepts), users (practical communication units judged by precision, suitability and standardisation), language planners (intervention and modernisation)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Theory beyond a beginner’s level."
+   },
+   {
+    "item": "Direct users of terminology (slides 22–23): specialists in each subject field, who define concepts, update terms and keep them in use",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Intermediary users (slide 23): translators, technical writers and linguists, who need glossaries and specialised dictionaries for technical writing and translating",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 2 (first point) and Step 4",
+    "note": "Kept as the idea that translators use glossaries, dictionaries and termbases; technical writers and linguists are not mentioned."
+   },
+   {
+    "item": "Importance of terminology (slide 24): the key to all sciences and fields; enriches language with technical terms that give formality and modernity; linked to translation studies, linguistics, computer science and information technology",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Working methods (slides 25–27): terminology adapted to the linguistic system (Vienna, Moscow, Prague); translation-oriented terminology (Quebec; UN, EU, UNESCO); terminology for language planning (minority languages)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Theory beyond a beginner’s level."
+   },
+   {
+    "item": "Characteristics of the field (slides 28 and 69): deals with concepts to produce terms; a descriptive approach; aims to serve translation and lexicography (slide 28) or language planning (slide 69) and to achieve standardisation",
+    "status": "Not used",
+    "where": "—",
+    "note": "Theory beyond a beginner’s level."
+   },
+   {
+    "item": "Translators and terminologists (slide 29): inventing terms is as old as language use; translators provide translations of foreign terms and work with two languages; the terminologist coins new terms and standardises them, and works with one language",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 2 (both points); Words to remember, Chapter 21 (Terminologist); Try it question 1",
+    "note": "Corrected: a terminologist works in one or more languages, and the contrast is now whole texts versus the terms of a field."
+   },
+   {
+    "item": "Terminology and translation (slide 30): the two fields are closely related; both use language as target, content and medium",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Skills of the translator (slide 31): fluency in the source and target languages; encyclopedic knowledge; awareness of the topic; proper experience",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 4",
+    "note": "Rewritten as simple points and merged with similar points from other notes; ‘encyclopedic knowledge’ is not a separate point."
+   },
+   {
+    "item": "Translators as users of terminology and technical translation (slides 32–34): translators mediate between specialists; technical translation is supported by multilingual terminology; a solid background in technical terms; content and form both preserved; large multilingual technical dictionaries",
+    "status": "Not used",
+    "where": "—",
+    "note": "Only the point that translators use glossaries and dictionaries is kept (see intermediary users above)."
+   },
+   {
+    "item": "When dictionaries and databanks fail, the translator thinks like a terminologist to provide the equivalent (slide 34)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3 (fourth point); Try it question 3",
+    "note": "Now says to search the client’s guide, UNTERM and Arabterm first, then create an accurate term and record it."
+   },
+   {
+    "item": "Categories of terms by form, part 1 (slide 35): terms formed by affixes or compounds, such as illness and afterburner",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Initialisms (slide 36): the initials of an organisation, document or process, such as CBC (Complete Blood Count) and CIA (Central Intelligence Agency)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 1 (CBC also appears in the term list in Step 4)",
+    "note": "Now defined by how the letters are read (one by one) instead of by what they stand for."
+   },
+   {
+    "item": "Acronyms (slide 36): words formed from the initial segments of a phrase, such as LASER (Light Amplification by Stimulated Emission of Radiation)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 1; Try it question 2",
+    "note": "Now defined by how the letters are read (as a word); the long form of LASER is not given."
+   },
+   {
+    "item": "Abbreviations (slide 37): forms that reproduce part of a word and act as its symbol, such as vol (volume) and 3rd (third)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 1",
+    "note": "Only vol. (volume) was kept."
+   },
+   {
+    "item": "Clippings (slide 37): the first part of a word or phrase, used to make speech economical, such as super (superintendent) and hyper (hyperactive)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 1",
+    "note": "Only super (superintendent) was kept, and the definition now says ‘often keeping its first part’."
+   },
+   {
+    "item": "Categories of terms by function (slide 38): nouns, verbs, adjectives and adverbs; terms in special languages are mostly nouns",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "Categories of terms by meaning (slide 39): objects (computer monitor), processes (placement test), features (dead language), relationships (collocations)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "Categories of terms by linguistic origin (slides 40–41): derivation and conversion; three kinds of borrowing: from a dead language (cranium, internus), from another living language (internet, Algebra), from other dialects or subject fields (McDonaldization; process data in computer science, application in law)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Borrowing is taught instead as a translation procedure (Chapter 13) and a way to make a word (Chapter 17), with other examples."
+   },
+   {
+    "item": "International guidelines for term creation, 1 and 2 (slide 42): create terms systematically (form, syntax, meaning, use); follow the spelling and pronunciation of the language",
+    "status": "Not used",
+    "where": "—",
+    "note": "Only the general idea of following the language’s normal rules for making words remains (Chapter 21, Step 3)."
+   },
+   {
+    "item": "International guidelines for term creation, 3 and 4 (slides 42–43): a widely accepted term should not be changed without good reasons; a replacement term must be accepted as a full substitute",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 5 (second paragraph)",
+    "note": "Kept as an instruction (‘do not change an accepted term without a good reason’); the point about full substitutes was left out."
+   },
+   {
+    "item": "Rules for names of terms, first group (slides 44–46): the term relates directly to the concept and expresses it clearly (1); follows the general rules of word-formation (3); is not redundant, such as {{التطرّف الراديكالي}} (4); has no unnecessary information (5); has no homonyms and is not ambiguous (7 and 8)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3 (fourth point)",
+    "note": "Reduced to one sentence: clear, short, one meaning, normal word-building and no repeating; the {{التطرّف الراديكالي}} example is kept."
+   },
+   {
+    "item": "Rules for names of terms, second group (slides 44–46): lexically systematic (2); no regional variants such as US and UK (6); independent of context (9); the homonym example fine (adjective) and fine (noun)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out to keep the rules short for beginners."
+   },
+   {
+    "item": "The Arabic academies as the bodies that examine and approve Arabic terms (slides 47, 55 and 57: the Egyptian, Iraqi and Jordanian academies)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 2 (paragraph after the two points); Step 3 (third point)",
+    "note": "Reduced to one sentence naming the academies in Cairo, Baghdad and Amman; Damascus and the Rabat bureau were added."
+   },
+   {
+    "item": "The Arabic Academy in Egypt, ten steps for term lists (slides 47–49): committees examine terms from universities, governments, specialists and individuals; give an Arabic equivalent and define it; circulate the lists; collect members’ opinions; discuss in the weekly council; present at the annual conference; publish in the journal; wait one year for objections from Arab scholars; accepted if there is no veto",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed for beginners; only the fact that academies approve terms is kept."
+   },
+   {
+    "item": "General language and special language (slide 50): the differences between them",
+    "status": "Not used",
+    "where": "—",
+    "note": "Only the slide title was in the text we have, and the topic is not needed at beginner level."
+   },
+   {
+    "item": "Terminology versus lexicography (slides 51–53)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Only the slide title was in the text we have, and the topic is not needed at beginner level."
+   },
+   {
+    "item": "How to translate a term (slide 54): study the term to understand its detailed meaning; study its etymology; find an equivalent that faithfully matches the concept",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3 (first three points)",
+    "note": "Kept as the first three points, with new examples, the client’s guide, UNTERM and Arabterm added, plus two more points on creating and recording a term."
+   },
+   {
+    "item": "Iraqi Academy of Science, term-formation methods (slides 55–56): specialists examine terms; old Arabic scientific books; consulting scientists, academies and journals; standardising six months after approval; balancing old and new terms; preferring Arabic-sounding to borrowed terms; one Arabic term for each foreign term; avoiding ambiguity",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed for beginners; the academy is only named (Baghdad)."
+   },
+   {
+    "item": "Jordanian Academy of Arabic, term-formation methods (slide 57): the Arabic term reflects the foreign one and shows its function; the old scientific term is preferred to a new coinage; a common foreign term is kept",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed for beginners; the academy is only named (Amman)."
+   },
+   {
+    "item": "Terminography (slide 58): a branch of lexicography and terminology dealing with technical and scientific terms; links linguistics, logic and information science",
+    "status": "Not used",
+    "where": "—",
+    "note": "Theory beyond a beginner’s level."
+   },
+   {
+    "item": "Technical dictionaries (slide 59): contain the standardised terms of one subject; subject-oriented; the product of terminography",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 4; Words to remember and Step 3, Chapter 3",
+    "note": "Renamed ‘specialised dictionary’ and reduced to one line; ‘standardised’ and terminography were dropped."
+   },
+   {
+    "item": "What is a termbase? (slide 60): a database containing terminology and related information, mostly multilingual",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 21 (Termbase); Chapter 21, Step 4",
+    "note": "Shortened to one line; the multilingual point appears as ‘the term in each language’ in Step 4."
+   },
+   {
+    "item": "Termbase entries and fields (slides 61–63): each entry has at least one term; an index field (the term) and a descriptive field with a definition, context or source, subject area, author, creation or modification, and verification status with an ID",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 4",
+    "note": "Reduced to ‘the term in each language, with its definition, field, source and date’; the two field names, author and verification status were left out."
+   },
+   {
+    "item": "Terminology management (slide 64): the technical approach of collecting, processing and presenting terms",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 21 (Terminology); Chapter 21, Step 1",
+    "note": "Not defined on its own; the idea of collecting and managing terms is inside the definition of terminology."
+   },
+   {
+    "item": "Why manage terminology? (slide 65): unmanaged terms become inconsistent, giving confusing translations that cannot be reused and cost more time and resources",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 5",
+    "note": "Shortened to several names for one concept, confused readers and less reuse; the cost in time and resources was left out."
+   },
+   {
+    "item": "Benefits of termbases (slides 66–68): up-to-date data in minutes; easy storage and web access; economy of time and money; spotting redundant terms",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 4",
+    "note": "Cut to one short sentence (‘A team can share and update it’); the benefits in time and money and in spotting mistakes were left out."
+   },
+   {
+    "item": "Goals of termbases (slide 68): translator assistance; standardisation and unification of terms; use of terminography",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level; a similar idea, keeping one term for one idea, appears in Chapter 22, Step 1."
+   },
+   {
+    "item": "Standardisation levels and bodies (slide 70): national, international and regional levels; ISO, ITU and IEC",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a first handbook."
+   },
+   {
+    "item": "What terminological standardisation is (slides 71–72 and 77–78): agreeing on terms with their definitions; national delegations agreeing on criteria; a choice among competing terms, decided by vote; three factors (economy, appropriateness, precision)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a first handbook."
+   },
+   {
+    "item": "ISO (slides 73–75): the name comes from the Greek isos (‘equal’) and is not an acronym; founded in 1947 in place of the national associations that stopped work in the Second World War; headquarters in Geneva; a non-governmental network of over 150 countries; official languages English, French and Russian; technical committees with one member per country; covers everything except electrical work (IEC)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a first handbook."
+   },
+   {
+    "item": "First international committee on terminology standardisation (slide 76): created in 1936 at the request of the Soviet Union; names concepts, unifies terms and prepares vocabularies",
+    "status": "Not used",
+    "where": "—",
+    "note": "History is not needed to use terms well."
+   },
+   {
+    "item": "How standards are agreed and used (slides 79–81): expert committees, consensus, then a ballot to accept, reject or abstain; standardisation is voluntary but becomes compulsory nationally by decree; international standards appear in several languages, national ones usually in one",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a first handbook."
+   },
+   {
+    "item": "Types of terminology standards (slide 82): de jure (made by an official body) and de facto (set by market share, such as smartphone, WhatsApp, BBM)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a first handbook."
+   },
+   {
+    "item": "Influential factors for the development of terminology translation (slide 83): the status of the language in the country; human resources; translation institutions; supportive legislation; academic research on terminology translation",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Criticism of dictionaries as a source of Arabic terms (slide 84): poor classification of terms ({{الصنوبر/الرز}}); terms not explained scientifically ({{الحشرة: الدواب الصغار}}); obsolete words",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a first handbook."
+   },
+   {
+    "item": "Other sources of Arabic terms (slide 85): language books such as {{كتاب النحل والعسل}}; classic science books such as {{كتاب الحاوي في الطب للرازي}} and {{في المنطق إبن سينا}}, which help avoid coining new terms",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a first handbook."
+   },
+   {
+    "item": "Literal versus sense translation of terms (slide 86): for example conference ({{مؤتمر أو الموازنة}}); literal translation is accepted if it matches the concept",
+    "status": "Not used",
+    "where": "—",
+    "note": "Literal and free translation is taught in Chapter 11, with other examples."
+   },
+   {
+    "item": "Affix translation (slide 86): manage – manageable ({{قابل للإدارة}}); anti-biotic ({{مضاد حيوي}})",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 2 (paragraph after the five methods)",
+    "note": "The same two examples were kept, spelt manageable and antibiotic, and a third (greenish) was added."
+   },
+   {
+    "item": "Derivation (slide 87): one of the most productive ways to make terms, forming a new word from part of an existing word",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 2 (first method)",
+    "note": "Kept as ‘derived from an Arabic root’ inside the neologism method."
+   },
+   {
+    "item": "Metaphor defined (slide 87): a figure of speech that uses comparison to make an analogy",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 12 defines metaphor in its own words."
+   },
+   {
+    "item": "Two types of metaphor in terms (slide 88): a relationship between the hidden figurative and the literal meaning ({{القصف}}: the sound of thunder or of artillery fire, figuratively); no such relationship ({{عقرب الساعة}})",
+    "status": "Used and edited",
+    "where": "Chapter 12, Step 3 (second point)",
+    "note": "Only the clock example was kept, as {{عقارب الساعة}}, to show that images differ between languages; the two types and {{القصف}} were left out."
+   },
+   {
+    "item": "Three approaches to Arabic terms, the translation approach (slide 89): translating the meaning; sources such as general-purpose dictionaries ({{لسان العرب، تاج العروس، الصحاّح}})",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a first handbook."
+   },
+   {
+    "item": "Generative approach, derivation (slide 90): {{الكلام المولّد}}; {{استمطار - مطر}} and {{أصيل - أصل}}",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 2 (first method)",
+    "note": "Only {{الاستمطار}} from {{مطر}} was kept, explained as ‘cloud seeding’; the generative approach is not named."
+   },
+   {
+    "item": "Generative approach, metaphor (slide 90): {{قطار – قافلة الجمال}}",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 2 (first method)",
+    "note": "Kept as ‘{{قطار}} once meant a line of camels; today it means a train’, without naming the metaphor method."
+   },
+   {
+    "item": "Metaphor-based terms (slide 91): more common in scientific than in administrative bodies, for example throbbing headache and dry cough",
+    "status": "Used and edited",
+    "where": "Chapter 12, Step 3 (first point)",
+    "note": "Only ‘a throbbing headache’ was kept ({{صداع نابض}}), as a shared metaphor that is translated literally; ‘dry cough’ and the comparison with administrative bodies were left out."
+   },
+   {
+    "item": "Borrowing (slide 91): loan words into the target language, such as {{إنترنت، تلفزيون، منجنيق}}",
+    "status": "Not used",
+    "where": "—",
+    "note": "The handbook’s examples of borrowing into Arabic (radio, strategy, technology) come from other notes."
+   },
+   {
+    "item": "How to cite references (slide 92): an English format (surname, initial, date, title in italics, city, publisher; example: Baker, In Other Words) and an Arabic format (title in bold; example: {{الأحمد، خالد. (٢٠٢٤). مدخل إلى المصطلح}})",
+    "status": "Not used",
+    "where": "—",
+    "note": "The handbook has no citing guide; its References list uses APA style (Baker appears there as the 2018 edition) and gives Arabic sources in transliteration."
+   }
+  ]
+ },
+ {
+  "source": "Terminology chapter (selected with Samiuallah Mohammad)",
+  "rows": [
+   {
+    "item": "Definition of terminology: the systematic discipline concerned with studying, compiling and managing specialised terms by analysing concepts to yield clear names",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 21 (Terminology); Chapter 21, Step 1",
+    "note": "Shortened to a plain definition with a citation to Cabré (1999); ‘systematic’ and ‘by analysing concepts’ were dropped, and a second meaning (the set of terms of one field) was added."
+   },
+   {
+    "item": "Historical background: naming in chemistry, botany and zoology in the 18th and 19th centuries, then engineering in the 20th; Wüster and the Vienna School in the 1930s; four periods (Origins 1930–1960, Structuring 1960–1975, Boom 1975–1985, Expansion 1985–present); three schools (Vienna, Moscow, Prague)",
+    "status": "Not used",
+    "where": "—",
+    "note": "History and schools are not needed to use terms well."
+   },
+   {
+    "item": "How a translator benefits from terms: translators as intermediary users who rely on terminology, glossaries and specialised dictionaries for technical translation; multilingual terminology keeps both content and form",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 2 (first point) and Step 4",
+    "note": "Shortened to one point; keeping content and form was left out."
+   },
+   {
+    "item": "When to act as a terminologist: when dictionaries or databanks give no equivalent, coin and establish an accurate term",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3 (fourth point); Try it question 3",
+    "note": "Now says to search the client’s guide, UNTERM and Arabterm first."
+   },
+   {
+    "item": "Functions of terminology, users’ definition: practical communication units judged by precision, suitability and standardisation",
+    "status": "Not used",
+    "where": "—",
+    "note": "Theory beyond a beginner’s level."
+   },
+   {
+    "item": "Functions of terminology, translators’ need for dictionaries and glossaries (translators, technical writers, linguists)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 2 and Step 4",
+    "note": "Kept for translators only; technical writers and linguists are not named."
+   },
+   {
+    "item": "Functions of terminology, standardisation to help translators: consensus and unification of terms",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 21 (Terminologist); Chapter 21, Step 2",
+    "note": "Reduced to terminologists and academies creating, approving or standardising terms, with the Rabat bureau helping to unify them; consensus is not mentioned."
+   },
+   {
+    "item": "Functions of terminology, changing accepted terms: once a term has gained wide acceptance, it should not be changed without good reasons",
+    "status": "Used as written",
+    "where": "Chapter 21, Step 5 (second paragraph)",
+    "note": "The same rule, now worded as an instruction."
+   },
+   {
+    "item": "Functions of terminology, importance of terminology management: unmanaged terms become inconsistent, giving confusing definitions and translations that cannot be reused, at a cost in time and resources",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 5",
+    "note": "Shortened; the cost in time and resources was left out."
+   },
+   {
+    "item": "Terminology and translation: the two fields are closely related; both use language as target, content and medium",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "How terminologists work, core role: a terminologist works within one language to coin and standardise terms, unlike a translator, who works across two",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 21 (Terminologist); Chapter 21, Step 2 (second point); Try it question 1",
+    "note": "Corrected: a terminologist works in one or more languages, and the contrast is now whole texts versus the terms of a field."
+   },
+   {
+    "item": "How terminologists work, processing orientations: linguistic system (Vienna, Moscow, Prague); translation-oriented (UN, EU, UNESCO, bilingual regions); language planning (minority or unstable languages)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Theory beyond a beginner’s level."
+   },
+   {
+    "item": "How terminologists work, methodology: collecting, processing, presenting and managing terms by morphological, syntactic, semantic and pragmatic rules",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 21 (Terminology); Chapter 21, Step 1",
+    "note": "Only collecting, naming and managing terms is kept, inside the definition of terminology; the rules were left out."
+   },
+   {
+    "item": "Skills of the translator: fluency in both languages; encyclopedic knowledge; awareness of the subject matter; proper translation experience",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 4",
+    "note": "Rewritten as simple points and merged with similar points from other notes; ‘encyclopedic knowledge’ is not a separate point."
+   },
+   {
+    "item": "Skills of the translator, technical background: a solid background in the technical terminology of the field, to preserve content and form",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not stated as a skill; Chapter 21 teaches how to find, record and use terms instead."
+   },
+   {
+    "item": "When dictionaries and databanks fail, the translator thinks like a terminologist to provide an accurate technical equivalent",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3 (fourth point); Try it question 3",
+    "note": "Now placed after searching the client’s guide, UNTERM and Arabterm."
+   },
+   {
+    "item": "Categories of terms by form: initialisms (CBC, CIA); acronyms (LASER); abbreviations (vol, 3rd); clippings (super, hyper)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 1 (CBC also in the term list in Step 4; LASER in Try it question 2)",
+    "note": "Definitions simplified around how the letters are read; 3rd and hyper were left out."
+   },
+   {
+    "item": "Categories of terms by meaning: objects (computer monitor), processes (placement test), features (dead language), relationships (collocations)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "Categories of terms by linguistic origin (borrowing): from a dead language (cranium, internus); from another living language (internet, Algebra); from other dialects or subject fields (McDonaldization, process data, application)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Borrowing is taught instead as a translation procedure (Chapter 13) and a way to make a word (Chapter 17), with other examples."
+   },
+   {
+    "item": "Rules for names of terms, first group: relates directly to the concept and expresses it clearly; follows the general rules of word-formation; not redundant; no unnecessary information; no homonyms; not ambiguous",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3 (fourth point)",
+    "note": "Reduced to one sentence: clear, short, one meaning and normal word-building; the {{التطرّف الراديكالي}} example comes from her slides."
+   },
+   {
+    "item": "Rules for names of terms, second group: lexically systematic; no morphological variants such as regional US and UK; independent of context",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out to keep the rules short for beginners."
+   },
+   {
+    "item": "Arabic academies ({{مجمع اللغة العربية}}): regional academies as language-planning bodies that coin, examine and standardise specialised Arabic terms",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 2 (paragraph after the two points)",
+    "note": "Reduced to one sentence naming the academies in Cairo, Baghdad and Amman; Damascus and the Rabat bureau were added."
+   },
+   {
+    "item": "Egyptian Academy method: committees examine proposed terms; write an Arabic equivalent and a technical definition; circulate lists to members and review them in council; present at the annual conference and publish in the journal; a one-year wait for objections, then the terms are accepted",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed for beginners."
+   },
+   {
+    "item": "Iraqi Academy method: specialist review; classical Arabic scientific texts; consulting scientists; Arabic-sounding terms preferred to borrowed ones; standardising six months after approval",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed for beginners."
+   },
+   {
+    "item": "Jordanian Academy method: the Arabic equivalent reflects the function of the foreign term; classical scientific terms preferred to new coinages; widely used foreign terms kept",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too detailed for beginners."
+   },
+   {
+    "item": "How to translate a term: study the term to understand its detailed meaning; examine its etymology; find an equivalent that faithfully matches the concept",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3 (first three points)",
+    "note": "Kept as the first three points, with new examples, the client’s guide, UNTERM and Arabterm added, plus two more points on creating and recording a term."
+   },
+   {
+    "item": "Technical dictionaries: contain the standardised terms of one subject and are subject-oriented; the main product of terminography; technical translators rely on multilingual technical dictionaries that cover a large number of terms",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 4; Words to remember and Step 3, Chapter 3",
+    "note": "Renamed ‘specialised dictionary’ and reduced to one line; ‘standardised’, terminography and the size of dictionaries were dropped."
+   },
+   {
+    "item": "Termbase, what it is: a database containing terminology and related information, usually multilingual",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 21 (Termbase); Chapter 21, Step 4",
+    "note": "Shortened to one line; the multilingual point appears as ‘the term in each language’ in Step 4."
+   },
+   {
+    "item": "Termbase, organisation: entries with at least one term in the source and target languages; an index field (the term) and a descriptive field (definition, context or source, subject area, author, creation or modification dates, verification status and ID)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 4",
+    "note": "Reduced to ‘the term in each language, with its definition, field, source and date’; the two field names, author and verification status were left out."
+   },
+   {
+    "item": "Termbase, benefits: updated data in minutes; simple storage with web access; economy of time and money; spotting and removing redundant terms",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 4",
+    "note": "Cut to one short sentence (‘A team can share and update it’)."
+   },
+   {
+    "item": "Standardisation bodies, operating levels: national, regional and international",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a first handbook."
+   },
+   {
+    "item": "Standardisation bodies, ISO, ITU and IEC: ISO founded in 1947 in Geneva, a non-governmental network of national standards institutes from over 150 countries, official languages English, French and Russian, covering everything except electrical and electronic engineering; ITU (listed without a description); IEC, exclusively electrical and electronic standards",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a first handbook."
+   },
+   {
+    "item": "Types of standards: de jure (official, from recognised bodies) and de facto (set by market share, such as smartphone and WhatsApp)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a first handbook."
+   }
+  ]
+ },
+ {
+  "source": "TerminologyIdioms document",
+  "rows": [
+   {
+    "item": "Outline, functions of terminology: the users’ definition (slide 20)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Theory beyond a beginner’s level."
+   },
+   {
+    "item": "Outline, functions of terminology: a translator’s need for specialised dictionaries and glossaries; terminology standardises terms and so helps translators",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 2 and Step 4",
+    "note": "Reduced to translators using glossaries, dictionaries and termbases; standardisation is mentioned only through terminologists and academies."
+   },
+   {
+    "item": "Outline, functions of terminology: once a term has gained wide acceptance, it should not be changed without good reasons (slide 42)",
+    "status": "Used as written",
+    "where": "Chapter 21, Step 5 (second paragraph)",
+    "note": "The same rule, now worded as an instruction."
+   },
+   {
+    "item": "Outline, functions of terminology: why is it important to manage terminology? (slide 65)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 5",
+    "note": "Shortened to several names for one concept, confused readers and less reuse."
+   },
+   {
+    "item": "Outline, terminology and translation (slide 30)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Outline, skills of the translator (slides 30–34)",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 4",
+    "note": "Rewritten as simple points and merged with similar points from other notes."
+   },
+   {
+    "item": "Outline, skills of the translator: when the dictionaries or databanks fail, think like a terminologist to provide the equivalent",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3 (fourth point); Try it question 3",
+    "note": "Now placed after searching the client’s guide, UNTERM and Arabterm."
+   },
+   {
+    "item": "Outline, categories of terms by form: initialisms, acronyms, abbreviations, clippings",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 1",
+    "note": "Kept with simplified definitions and fewer examples."
+   },
+   {
+    "item": "Outline, categories of terms by meaning (objects, processes, features, relationships) and by linguistic origin (three kinds of borrowing)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for beginners."
+   },
+   {
+    "item": "Outline, rules for names of terms (slides 44–46)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3 (fourth point)",
+    "note": "Reduced to one sentence."
+   },
+   {
+    "item": "Outline, how to translate a term (slide 54)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3",
+    "note": "Kept as the first three points, with more added."
+   },
+   {
+    "item": "Outline, technical dictionaries (slide 59)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 4; Chapter 3",
+    "note": "Renamed ‘specialised dictionary’ and reduced to one line."
+   },
+   {
+    "item": "Outline, termbase: what it is, how it is organised, and the benefits of termbases (slides 66–68)",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 21 (Termbase); Chapter 21, Step 4",
+    "note": "Kept what a termbase is and holds; the benefits are cut to ‘A team can share and update it’."
+   },
+   {
+    "item": "Idioms 1–5 of her list: put a bug in your ear; Rolling in the aisles; Heard it through the grapevine; Dish the dirt; Be beside yourself",
+    "status": "Not used",
+    "where": "—",
+    "note": "Informal, mostly American expressions; Chapter 9 already gives the most common idioms."
+   },
+   {
+    "item": "Idiom 6 of her list: Raining cats and dogs",
+    "status": "Used and edited",
+    "where": "Chapter 9, Steps 1 and 3; Chapter 2 (Your first translation, step by step); Chapter 22, Step 3",
+    "note": "Also in Samiuallah’s notes and Shaikhah’s slides; the handbook gives Arabic equivalents, which her list did not."
+   },
+   {
+    "item": "Idiom 7 of her list: Stuck their foot in their mouth",
+    "status": "Not used",
+    "where": "—",
+    "note": "A common idiom, but Chapter 9 keeps to a short list."
+   },
+   {
+    "item": "Idiom 8 of her list: Spill the beans",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 3 and Try it; Chapter 14, Step 1",
+    "note": "Also in Samiuallah’s notes; the handbook gives the Arabic {{أفشى السرّ}}, which her list did not."
+   },
+   {
+    "item": "Idioms 9–14 of her list: Main squeeze (marked ‘slang term’ in her list); Loose lips; Talked my arm off; Nose to the grindstone; Popped a cork; Hot-foot",
+    "status": "Not used",
+    "where": "—",
+    "note": "Mostly American slang, and ‘Loose lips’ and ‘Popped a cork’ are unclear on their own."
+   },
+   {
+    "item": "Idioms 15–19 of her list: Watering hole; Tie one on; In two shakes (of a lamb’s tail); Three sheets to the wind; Drunk as a skunk",
+    "status": "Not used",
+    "where": "—",
+    "note": "Four of these are about drinking or being drunk and ‘in two shakes’ is informal, so they do not suit this handbook."
+   },
+   {
+    "item": "Idioms 20–24 of her list: Tick someone off; A bull in a china shop; Wipe the floor with someone; Clean someone’s clock; A hole in the wall",
+    "status": "Not used",
+    "where": "—",
+    "note": "Informal or American slang, and not needed beside the common idioms in Chapter 9."
+   },
+   {
+    "item": "Idioms 25–29 of her list: Born with a silver spoon in their mouth; Joined at the hip; About to blow off; The whole shooting match; Can’t get my arm around this",
+    "status": "Not used",
+    "where": "—",
+    "note": "The first two are common but not needed beside Chapter 9, the third and fifth are unclear as written, and the fourth is American slang."
+   },
+   {
+    "item": "Idioms 30–35 of her list: Walk in the park; A real basket case; A can of worms; Out of whack; Bending my ears; Cock and bull story",
+    "status": "Not used",
+    "where": "—",
+    "note": "‘Walk in the park’ repeats ‘a piece of cake’ (Chapter 9), and the rest are slang, unclear or not needed beside the common idioms."
+   },
+   {
+    "item": "Idioms 36–41 of her list: Make a long story short; One’s heart is in one’s mouth; In a pickle; Flavor of the month; Crying a river; Be toast",
+    "status": "Not used",
+    "where": "—",
+    "note": "‘Make a long story short’ is covered by ‘in a nutshell’ and ‘the long and the short of it’ in Chapter 9, and the rest are informal, American or unclear."
+   },
+   {
+    "item": "Idioms 42–47 of her list: Hustle their bustle; Put lipstick on a pig; Throw someone in the pokey; Wet behind the ears; Feeding someone a line; Swallow something hook, line, and sinker",
+    "status": "Not used",
+    "where": "—",
+    "note": "Mostly American slang, and ‘Hustle their bustle’ is unclear as written."
+   },
+   {
+    "item": "Idioms 48–51 of her list: Throw caution to the wind; Lays rubber; Dumper than a stump; Someone is out cold",
+    "status": "Not used",
+    "where": "—",
+    "note": "‘Lays rubber’ is American slang and ‘Dumper than a stump’ is unclear as written, and the others are not needed beside Chapter 9."
+   },
+   {
+    "item": "Idiom 52 of her list: Kick the bucket",
+    "status": "Used and edited",
+    "where": "Chapter 6, Step 1",
+    "note": "Used only as an informal, humorous way to say ‘die’ (beside die and pass away); it is also in Samiuallah’s notes."
+   },
+   {
+    "item": "Idioms 53–58 of her list: Bought the farm; Pay through the nose; Take a powder; The icing on the cake; Soft-peddle; Fell off the deep end",
+    "status": "Not used",
+    "where": "—",
+    "note": "Mostly American slang, and ‘Fell off the deep end’ is unclear as written."
+   },
+   {
+    "item": "Idioms 59–62 of her list: Put my cards on the table; Wear your heart on your sleeve; Put that in your pipe and smoke it; How the cookie crumbles",
+    "status": "Not used",
+    "where": "—",
+    "note": "Informal or American, and not needed beside the common idioms in Chapter 9."
+   }
+  ]
+ },
+ {
+  "source": "Framework instructions (her proposals)",
+  "rows": [
+   {
+    "item": "Adding a glossary of important terms for reference",
+    "status": "Used as written",
+    "where": "Glossary (back of the book); Words to remember in each chapter",
+    "note": "Adopted as proposed: an A–Z list of every key term with its Arabic equivalent and the chapter where it is explained."
+   },
+   {
+    "item": "An opening chapter of tips, advice and techniques on how to prepare practically and mentally before practising, to prevent trifling mistakes and help students find the technique that suits them",
+    "status": "Used and edited",
+    "where": "Chapter 2",
+    "note": "Placed as Chapter 2, after the introduction in Chapter 1, and written as practical steps before, during and after translating."
+   },
+   {
+    "item": "Adding idioms as an independent chapter",
+    "status": "Used and edited",
+    "where": "Chapter 9",
+    "note": "An independent chapter, widened to proverbs, fixed expressions and Kuwaiti expressions."
+   },
+   {
+    "item": "Maybe in a future version, a chapter on the common mistakes students fall into, with tips to avoid them",
+    "status": "Used and edited",
+    "where": "Chapter 23",
+    "note": "Included in this edition, combined with revision, as ‘Revision and common mistakes’."
+   }
+  ]
+ },
+ {
+  "source": "Topics chosen from her slides in the team chat",
+  "rows": [
+   {
+    "item": "How a translator benefits from terms and when to act as a terminologist",
+    "status": "Used and edited",
+    "where": "Chapter 21, Steps 2 and 3",
+    "note": "Reduced to two points: translators use glossaries, dictionaries and termbases, and think like a terminologist when no term exists."
+   },
+   {
+    "item": "A short background and definition of terminology",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 21 (Terminology); Chapter 21, Step 1",
+    "note": "Only the definition was kept; the background was left out."
+   },
+   {
+    "item": "Categories of terms by form (initialisms, acronyms, abbreviations, clipping) and by function (nouns, verbs, adjectives)",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 1",
+    "note": "Only the four forms were kept; the categories by function were left out."
+   },
+   {
+    "item": "How a terminologist works",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 2; Words to remember, Chapter 21 (Terminologist)",
+    "note": "Reduced to what a terminologist does; the three working orientations were left out."
+   },
+   {
+    "item": "Skills a translator needs for technical texts",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 4; Chapter 21, Step 3",
+    "note": "Given as the general skills of a translator and as steps for handling terms, not as a separate list for technical texts."
+   },
+   {
+    "item": "Arabic academies",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 2",
+    "note": "Reduced to one sentence naming the academies; their methods were left out."
+   },
+   {
+    "item": "How to translate a term",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3",
+    "note": "Kept as the first three points, with new examples and two more points on creating and recording a term."
+   },
+   {
+    "item": "Termbases and their benefits",
+    "status": "Used and edited",
+    "where": "Words to remember, Chapter 21 (Termbase); Chapter 21, Step 4",
+    "note": "Kept what a termbase is and holds; the four benefits are cut to ‘A team can share and update it’."
+   },
+   {
+    "item": "Standardisation bodies",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too specialised for a first handbook."
+   },
+   {
+    "item": "Factors influencing the development of terminology translation",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "How to cite references in English and Arabic",
+    "status": "Not used",
+    "where": "—",
+    "note": "The handbook has no citing guide; its References list follows APA style."
+   }
+  ]
+ },
+ {
+  "source": "Documents not yet received",
+  "rows": [
+   {
+    "item": "Translation Texts document (texts from the 180 and 386 courses)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not received."
+   },
+   {
+    "item": "Stylistics summary",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not received."
+   }
+  ]
+ }
+]

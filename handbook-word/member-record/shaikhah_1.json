@@ -1,0 +1,899 @@
+[
+ {
+  "source": "Translation Studies (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Food for thought and key concepts: is translation, or the field of translation studies, old or new? Translating is long established but the discipline is new; it was once seen as language learning; it is now popular at undergraduate and postgraduate level",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "How the discipline began: comparative literature, translation workshops, contrastive analysis; James Holmes’s ‘Translation Studies Map’ (1972); translation studies as an interdisciplinary field",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook. Holmes is not mentioned anywhere in the handbook."
+   },
+   {
+    "item": "Translation versus interpretation: translation reproduces a written source-language text as a target-language text; interpretation reproduces spoken language as spoken language",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 3; Words to remember, Chapter 1",
+    "note": "Kept as the difference between written translation and interpreting, with both terms defined and given Arabic equivalents; simultaneous and consecutive interpreting are added, and the difference is a Try it question."
+   },
+   {
+    "item": "The process of translation: five phases (read and understand the source text; grasp its message, intent, form, type and audience; draft the target text; follow target-language norms; revise, edit and apply quality checks)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Duplicate: the handbook gives its own four steps (Plan, Understand, Write, Check) in Start here."
+   },
+   {
+    "item": "‘Translation’ means both the process and the product; there are many context-based definitions; three main types: intralingual (rewording, summarising or paraphrasing in the same language), interlingual (translation proper, needs two languages, the most common), intersemiotic (text into music, film or painting; some call it adaptation)",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 3",
+    "note": "Cut to one sentence: rewording in the same language and turning a story into a film count as translation in a wider sense (credited to Jakobson, 1959), and the book focuses on translating between two languages; the three technical names are not used."
+   },
+   {
+    "item": "What translation studies is: Holmes’s definition, ‘the complex of problems clustered round the phenomenon of translating and translations’; the need for an independent discipline; the growth of research in the 1990s; which other disciplines could benefit",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "The main goal of translation: to render the meaning of a text into another language in the way the author intended, aiming at linguistic, cultural and psychological equivalence",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 1",
+    "note": "Shortened to ‘rendering the meaning of a text into another language in the way that the author intended the text’ and credited to Newmark (1988); the equivalence clause is left out."
+   },
+   {
+    "item": "The main goal of the translator: to be a mediator between the source author, norms and culture and the target relationship, norms and culture",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "The translator is a reader before being a writer: understand the source text first, then put on the ‘writing hat’; many things to consider, especially for languages as different as Arabic and English",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 4",
+    "note": "Kept as one sentence: ‘a translator is a reader before being a writer: first understand the text fully, then write it again in the other language’; how different Arabic and English are is dealt with in Chapter 4."
+   },
+   {
+    "item": "Exercise: use Google Scholar to find three definitions of ‘translation’",
+    "status": "Not used",
+    "where": "—",
+    "note": "Class exercise; Chapter 1 gives its own definitions and practice questions."
+   }
+  ]
+ },
+ {
+  "source": "What do you know about translation (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Myth: translators and interpreters do the same thing (translation is written; interpreting is spoken, in real time and often simultaneous; they need different education and skills)",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 3; Words to remember, Chapter 1",
+    "note": "Only the written versus spoken difference is kept; the point about different education and skills is not."
+   },
+   {
+    "item": "Myth: translation is just an exchange of words (languages differ in vocabulary, grammar and structure; translate the sense, not the words; some words have no equivalent)",
+    "status": "Used and edited",
+    "where": "Start here; Chapter 1, Step 1; Chapter 6, Step 3",
+    "note": "Became the handbook’s first lesson that translation carries meaning, not words, with its own examples; the no-equivalent point appears as lexical gaps in Chapter 6."
+   },
+   {
+    "item": "Myth: bilinguals can be translators (a translator also needs education, a perfect command of both languages and knowledge of the subject)",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 4",
+    "note": "Kept as ‘knowing two languages is the start, not the end’, followed by a short list of what else a good translator needs."
+   },
+   {
+    "item": "Myth: translators do not have to understand the material (it is impossible to translate without understanding the concepts, terms and nuances)",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 4; Chapter 2, ‘Next: get to know the text’",
+    "note": "Kept as ‘learns about the topic of each text’ and ‘a translator is a reader before being a writer’; Chapter 2 tells the reader to find out about the topic."
+   },
+   {
+    "item": "Myth: translators need not know the culture of the target language (national history, holidays, idioms, cultural nuances)",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 4 and Remember",
+    "note": "Kept as ‘knows both cultures well’ and ‘a good translator needs two languages and two cultures’; the list of history and holidays is cut down to ‘knows many expressions and idioms in both languages’."
+   },
+   {
+    "item": "Myth: machine translation is beating the demand for human translation (its output is a draft that professionals must review; machines miss subject knowledge and cultural context)",
+    "status": "Used and edited",
+    "where": "Chapter 22, Steps 2 and 4; Remember, Chapter 22",
+    "note": "The idea is kept in the handbook’s own words: machine translation is a first draft that a human must check; nothing is quoted from the slide."
+   },
+   {
+    "item": "Myth: the need for translation is decreasing (the translation job market grew by 42% in 2020)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The statistic has no source in the slides, so it was not used."
+   },
+   {
+    "item": "Myth: translators work in all areas of expertise (legal, medical and economic translation each need their own expert and hundreds of specialised terms)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; Chapter 21 deals with the special words of each field."
+   },
+   {
+    "item": "Myth: translators and interpreters work in more than two languages",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Myth: translation can be free (online tools translate short phrases; quality work by professionals costs money)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   }
+  ]
+ },
+ {
+  "source": "Overview of the History and Theories of Translation (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "What translation studies is: an interdisciplinary field that studies the theory and practice of translation and interpreting, and its role in intercultural communication and globalisation",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "Ancient roots: the Rosetta Stone in Egypt, whose hieroglyphic text unlocked Egyptian script",
+    "status": "Used and edited",
+    "where": "Chapter 1, Did you know? box after Step 5",
+    "note": "Expanded into a short true story (a decree in three scripts, found in 1799, Greek used to decode the hieroglyphs)."
+   },
+   {
+    "item": "Ancient roots: Greek translators such as Herodotus; translation and law in Rome; translation as the route for science, philosophy and literature",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "The Middle Ages: Latin as the language of scholarship; monastic translators preserving Greek and Roman works; the way to the Renaissance",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "The Renaissance: revived interest in classical texts; translation into everyday European languages; the humanist spirit",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "The emergence of modern translation studies in the 20th century: journals and programmes; James Holmes; Eugene Nida and Bible translation; research centres",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook. Nida is quoted in Chapters 5 and 10 from his 1969 book, but this material is not used."
+   },
+   {
+    "item": "Descriptive Translation Studies (DTS): analysing and describing translations as they exist in practice",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "Skopos Theory (Hans J. Vermeer): the main aim of a translation is the communicative purpose set by the client",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 3; Words to remember, Chapter 26",
+    "note": "Shortened to one sentence, that the purpose decides how you translate, credited to Reiss and Vermeer (1984); the same idea appears in the audiovisual notes."
+   },
+   {
+    "item": "Equivalence Theory: balancing fidelity to the source with readability; formal and dynamic equivalence",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 10 teaches a different, simpler set of three types (formal, functional, ideational); dynamic equivalence is not mentioned."
+   },
+   {
+    "item": "The Cultural Turn: adapting cultural elements and conveying cultural nuance",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook. Culture is dealt with in practical terms in Chapter 15."
+   },
+   {
+    "item": "Poly-system theory (Even-Zohar): how cultural and literary systems influence each other",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "Machine translation and technology: Google Translate, corpus linguistics, opportunities and challenges",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook. Chapter 22 deals with machine translation in practical terms."
+   }
+  ]
+ },
+ {
+  "source": "Equivalence at the word level (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Words and languages: words as building blocks; a word as ‘the smallest unit of language that can be used by itself’; meaning carried by units smaller and larger than words",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "Morphemes: rebuild (re + build); break, breakable, unbreakable; tennis player → tenisci; happiness → {{سعادة}}; inconceivable (in + conceive + able); morphemes for plural, gender and tense (funds, manageress, considered); likeable, unhappy",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too technical for a beginner handbook; Chapter 17 gives a few English prefixes and suffixes with Arabic equivalents, but with other examples."
+   },
+   {
+    "item": "Lexical meaning has four types (propositional, expressive, presupposed, evoked); propositional meaning: shirt versus socks; an ‘inaccurate’ translation often questions propositional meaning",
+    "status": "Used and edited",
+    "where": "Chapter 6, Step 1",
+    "note": "Only the two-way split is kept: the handbook calls it denotation and connotation and mentions ‘propositional and expressive meaning’ once (Baker, 2018); the shirt example is not used."
+   },
+   {
+    "item": "Expressive meaning: the speaker’s feeling or attitude; Don’t complain versus Don’t whine; famous versus fameux",
+    "status": "Used and edited",
+    "where": "Chapter 6, Step 1",
+    "note": "Kept as connotation, the feeling a word carries, with different examples (die and pass away, steed and horse, slim and skinny); the slide’s examples are not used."
+   },
+   {
+    "item": "Presupposed meaning: selectional restrictions (a human subject for studious, an inanimate one for geometrical) and collocational restrictions (in English laws are broken, in Arabic they are contradicted)",
+    "status": "Used and edited",
+    "where": "Chapter 8, Step 3",
+    "note": "Only the collocation idea is kept, as break the law → {{يخالف القانون}} (more natural than {{يكسر القانون}}); the term ‘presupposed meaning’ and selectional restrictions are not used."
+   },
+   {
+    "item": "Evoked meaning: dialect and register; field, tenor and mode",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook. Dialect and register are explained in simpler form in Chapter 4 (Step 5 and Words to remember)."
+   },
+   {
+    "item": "Problem 1, lexical gaps: orphan, widow/er, but what about a mother who lost a child?",
+    "status": "Used and edited",
+    "where": "Chapter 6, Step 3; Words to remember, Chapter 6",
+    "note": "The slide’s question is answered: there is no single English word for {{ثكلى}}, so give the meaning (‘a bereaved mother’)."
+   },
+   {
+    "item": "Problem 2, false equivalents: {{الهنود الحمر}} is neutral in Arabic but Red Indians is offensive in English; what is the correct English?",
+    "status": "Used and edited",
+    "where": "Chapter 6, Step 3",
+    "note": "The slide’s question is answered: use Native Americans; the extra prompt ‘I have a cold’ is not used."
+   },
+   {
+    "item": "Problem 3, borrowing: {{استراتيجية}} (strategy), {{ديموقراطية}} (democracy) and {{تكنولوجيا}} (technology) are Arabised borrowings",
+    "status": "Used and edited",
+    "where": "Chapter 17, Step 2",
+    "note": "Kept strategy and technology, with radio added, as examples of Arabicisation; democracy is not used."
+   },
+   {
+    "item": "Problem 3, borrowing: false friends, borrowings that sound like English words but mean something else (Regime)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level; Chapter 20 discusses the word regime for a different reason (point of view)."
+   },
+   {
+    "item": "Problem 4, word frequency: {{شبر}} equals span, an obsolete measure (thumb tip to little-finger tip, about 9 inches), so readers would not recognise {{أشبار}} translated as spans",
+    "status": "Used and edited",
+    "where": "Chapter 6, Step 3",
+    "note": "Kept, with the advice to use a familiar measure (about 23 centimetres) instead of span."
+   },
+   {
+    "item": "Problem 5, ambiguity: {{خط}} could mean line, path, track or font",
+    "status": "Used and edited",
+    "where": "Chapter 7, Step 3",
+    "note": "Kept as an example of context choosing the meaning, with the senses given as a line, handwriting, a font or a route."
+   },
+   {
+    "item": "Exercises (six slides)",
+    "status": "Not used",
+    "where": "—",
+    "note": "The six slides came out with no text when converted, so their content could not be checked."
+   }
+  ]
+ },
+ {
+  "source": "Word-level translation strategies (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Introduction: professional translators use word-level and beyond-word-level strategies; words guide readers’ thinking, and the translator guides them in the same direction",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 14 opens with its own introduction."
+   },
+   {
+    "item": "Translation by a more general word (generalisation): common for non-equivalents, especially in propositional meaning; works in most languages because semantic fields are organised in hierarchies",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 4",
+    "note": "Kept with the example {{خال}} and {{عمّ}} → uncle; the deck’s example slide came out empty, so the handbook’s example could not be compared with it."
+   },
+   {
+    "item": "Translation by substitution: replace a culture-specific item with a target-language item that has a similar effect; times and units of measurement follow the target culture",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 1; Words to remember, Chapter 14",
+    "note": "Called cultural substitution; kept with measures following the reader’s culture (5 miles → about 8 kilometres)."
+   },
+   {
+    "item": "Arabic way of telling time: a third of an hour, {{ليلا}} (at night), {{فجرا}} (at dawn), none of which is standard in English",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Translation by a loan word, or a loan word plus explanation (retention, transliteration): for culture-specific items, modern concepts and buzz words; explain it once, then use it alone",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 4; Chapter 16, Step 1",
+    "note": "Kept with waqf as the example; the advice to explain the word the first time and then use it alone is repeated in Chapter 16."
+   },
+   {
+    "item": "Arabic words that entered English (alcohol, algebra, algorithm, jihad, hijab); translators may borrow for lexical gaps, technical terms and cultural concepts",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 4",
+    "note": "Kept algebra, algorithm and hijab; alcohol and jihad are not used."
+   },
+   {
+    "item": "Translation by paraphrase: an umbrella for ways of giving extra information when there is no direct equivalent; like a word game; used when the concept exists in the target language in a different form",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 4",
+    "note": "Kept as ‘paraphrase: explaining the meaning in other words’, with jet lag as the example; the word-game comparison is not used, and the deck’s example slide came out empty."
+   },
+   {
+    "item": "Translation by omission (deletion): acceptable when an item is not vital and explaining it would distract the reader; a last resort when smoothness outweighs accuracy",
+    "status": "Used and edited",
+    "where": "Chapter 14, Step 2",
+    "note": "Kept for repeated synonyms and words that would offend the reader, with a warning never to omit real information; the deck’s example slide came out empty."
+   }
+  ]
+ },
+ {
+  "source": "Beyond word level 1: collocations (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Beyond the word: words rarely occur alone and are not strung together at random; an English rule (determiners cannot follow a noun, so not ‘beautiful house the’); patterns govern use and translation",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; Chapter 8 starts directly with collocation."
+   },
+   {
+    "item": "What a collocation is: Bolinger and Sears (builders do not ‘produce a building’, authors do not ‘invent a novel’); semantically arbitrary restrictions; words that tend to occur together",
+    "status": "Used and edited",
+    "where": "Chapter 8, Step 1; Words to remember, Chapter 8",
+    "note": "Kept as the idea of words that naturally go together (‘the company a word keeps’); the quotation and its examples are not used."
+   },
+   {
+    "item": "Why words go together: cheque goes with bank, money, write, pay rather than moon, butter, playground, repair",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Why ‘pay a visit’ is fine but ‘perform a visit’ is not",
+    "status": "Used and edited",
+    "where": "Chapter 8, Step 1",
+    "note": "Kept as one of the partners of pay (pay a visit → {{يقوم بزيارة}}, not {{يدفع زيارة}}); the contrast with ‘perform a visit’ is not used."
+   },
+   {
+    "item": "Synonyms with different collocates: break rules but not break regulations; waste time but not squander time",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Translating collocations: deliver a letter, a speech, news, a blow, with the Arabic {{يسلم خطاباً}}, {{يلقي خطبةً}}, {{ينقل أخباراً}}, {{يوجه ضربةً}}; and ‘deliver a verdict?’",
+    "status": "Used and edited",
+    "where": "Chapter 8, Step 2; Try it, Chapter 8",
+    "note": "The Arabic is rewritten: letter is {{يسلّم رسالة}} and speech is {{يلقي خطاباً}}; news and blow are kept with small changes; the open question is answered ({{يُصدر حكماً}}), and deliver a lecture is a Try it question."
+   },
+   {
+    "item": "Collocational range: shrug (almost only shoulders) versus run (company, business, show, car, nose); the number of senses a word has, and the senses of run",
+    "status": "Used and edited",
+    "where": "Chapter 7, Did you know? box after Step 3",
+    "note": "Only run is kept, as the example of a word with hundreds of senses (a race, a company, a risk, a temperature); shrug is not used."
+   },
+   {
+    "item": "Level of specificity: bury (people, treasure, head, face, feelings, memories) has a wider range than its more specific relative entomb (only people)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too technical for a beginner handbook."
+   }
+  ]
+ },
+ {
+  "source": "Beyond word level 2: idioms and fixed expressions (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Collocations are flexible (deliver a letter, delivery of a letter, a letter has been delivered, having delivered a letter); idioms and fixed expressions are frozen and often not transparent",
+    "status": "Used and edited",
+    "where": "Chapter 9, introduction and Step 1",
+    "note": "Kept as ‘fixed, and together they mean something new’ and ‘its words are frozen’; the deliver variations are not used."
+   },
+   {
+    "item": "Idioms: meanings cannot be deduced from the words; bury the hatchet; the long and the short of it",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 3; Words to remember, Chapter 9",
+    "note": "Both idioms are given with Arabic equivalents ({{طوى صفحة الخلاف}}, {{خلاصة القول}}), and the definition of an idiom is in Words to remember."
+   },
+   {
+    "item": "What you cannot do to an idiom: change the word order, delete, add or replace a word, change the grammar (*the short and the long of it, *spill beans, *face the classical music, *bury a hatchet, *the music was faced)",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 1",
+    "note": "Reduced to one sentence (‘you usually cannot change their order or replace one of them’); the starred examples are not used."
+   },
+   {
+    "item": "Fixed expressions and proverbs: having said that, as a matter of fact, ladies and gentlemen, all the best; practice what you preach, waste not want not; clearer than idioms (unlike pull a fast one, fill the bill) but still read as one unit",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 1; Words to remember, Chapter 9",
+    "note": "Kept as a matter of fact, ladies and gentlemen and all the best, with Arabic equivalents; having said that, the two proverbs, pull a fast one and fill the bill are not used."
+   },
+   {
+    "item": "Why idioms are hard: non-native competence; the argument that translators should work only into their own language; recognising an idiom; rendering all its aspects of meaning",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Recognising idioms: they break truth (raining cats and dogs, food for thought); are ill-formed (by and large, trip the light fantastic, the world and his wife); start with ‘like’ (like a bat out of hell, like two peas in a pod); make little sense in context",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 1",
+    "note": "Kept as four tips with raining cats and dogs, by and large and like two peas in a pod; the other examples are not used."
+   },
+   {
+    "item": "Why idioms are hard to translate: there may be no equivalent; they are culture-specific; a counterpart may be used or felt differently; conventions and frequency differ",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "Five strategies: an idiom of similar meaning and form; similar meaning but different form; borrowing; paraphrase; omitting the whole idiom",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 3",
+    "note": "Kept in the same order with examples added and credited to Baker (2018); the handbook adds that the context decides and that omission is only for an idiom that adds nothing."
+   },
+   {
+    "item": "Exercise sentences: in a nutshell; my sister spilled the beans",
+    "status": "Used and edited",
+    "where": "Chapter 9, Step 3 (list of idioms); Try it, Chapter 9",
+    "note": "Both idioms are given with Arabic ({{باختصار}}, {{أفشى السرّ}}), and spill the beans is also a Try it question."
+   },
+   {
+    "item": "Exercise sentences: speak your mind and not pull any punches; driving like a bat out of hell; the world and his wife were there",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   }
+  ]
+ },
+ {
+  "source": "Grammatical Equivalence 2 (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Grammar and distinctions: every language selects different distinctions from a larger set (time, number, gender, shape, visibility, proximity, person, animacy)",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 3",
+    "note": "Kept as ‘each language chooses what its grammar must show’, with gender and number as the examples and Jakobson (1959) quoted; the other notions in the list are not mentioned."
+   },
+   {
+    "item": "What grammar is: morphology and syntax; grammar resists change and manipulation (poetry, jokes, adverts); no category is expressed the same way in every language",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "How grammar changes the message: information added to or deleted from the target text",
+    "status": "Not used",
+    "where": "—",
+    "note": "Chapter 14 covers addition and omission separately, for style and for the reader’s needs."
+   },
+   {
+    "item": "Number: English has singular and plural, Arabic has singular, dual and plural, Chinese marks number with separate words",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 3",
+    "note": "Kept for the Arabic dual only (‘Arabic has a dual; English uses two’); the Chinese example is not used."
+   },
+   {
+    "item": "Example: the clause about appointing three arbitrators ({{المحكمان}}); did the English add or delete?",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 3",
+    "note": "Only the word {{المحكمان}} (the two arbitrators) is kept, as the example of the dual; the full sentence and the question are not used."
+   },
+   {
+    "item": "Gender: nouns and pronouns are masculine or feminine; English shows it only in he and she; in Arabic gender changes verbs and adjectives",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 3",
+    "note": "Kept as: English I and you do not show gender, but Arabic verbs and adjectives do."
+   },
+   {
+    "item": "Example: ‘I am a student in the English department, and I specialize in Translation Studies’ (with ‘father of four’ or ‘nine-month pregnant’); what to do when there are no clues",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 3",
+    "note": "Shortened to I am a student → {{أنا طالب}} or {{أنا طالبة}}; the department sentence, the father and the pregnancy are not used."
+   },
+   {
+    "item": "Strategies for gender ambiguity: read the whole text; biological qualities of one gender; nouns such as husband and wife; titles such as sir, madam, Mr and Mrs",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 3",
+    "note": "Kept as ‘look for clues in the whole text: a name, a title such as Mr or Mrs, a word such as husband or wife’; a name is added and biological qualities are not used."
+   },
+   {
+    "item": "Person: first, second and third person; a gender or number dimension in some languages; a politeness dimension in many European languages but not in English",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 3; Chapter 14, Step 3",
+    "note": "Kept as a practical example: English you must be shown in Arabic as {{أنتَ}}, {{أنتِ}}, {{أنتما}}, {{أنتم}} or {{أنتنّ}}; the three persons and the politeness point are not used."
+   },
+   {
+    "item": "Tense and aspect: time relations (past, present, future) and aspect (completion, continuation)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "Voice: active and passive; how languages make agentless clauses; the passive is very common in written English",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook. Passives appear through examples in Chapters 19 and 23."
+   },
+   {
+    "item": "Common problems from English into Arabic: the two languages come from different families, and students wrongly assume the grammars translate each other directly",
+    "status": "Used and edited",
+    "where": "Chapter 4, opening",
+    "note": "Kept as the idea that most beginners’ mistakes come from the differences between the two languages."
+   },
+   {
+    "item": "The verb be (am, is, are, was, were): translating it as {{يكون}} is poor; She is kind ≠ {{هي تكون طيبة}}; I am leaving now; They are put in the same situation",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 2",
+    "note": "Kept the first two; I am leaving now becomes {{سأغادر الآن}} instead of {{أنا مغادر الآن}}; the passive example is not used."
+   },
+   {
+    "item": "Solution for be: drop it in the present simple, so verbal sentences become nominal; the -ing ending has no Arabic equivalent; She is kind = {{إنها طيبة}}",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 2",
+    "note": "Kept as ‘Arabic normally leaves them out’ and She is kind → {{إنها طيبة}}; the -ing point and the passive example are not used."
+   },
+   {
+    "item": "Exceptions in the past: The child was sick = {{كان الطفل مريضا}}; Our guests were playing; The food was eaten = {{أكل الطعام}}",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 2",
+    "note": "Kept as ‘in the past, use {{كان}}’ with The child was sick; the other two examples are not used."
+   },
+   {
+    "item": "Do and did as helping verbs have no Arabic word of their own: negative {{لا}}, {{لم}} or {{ما}}, questions {{هل}}; Do not touch this plate; She did not eat her lunch; Do you want to play football?",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 2",
+    "note": "Kept with shorter examples (Do not touch it, She did not eat, Do you want to play?); the rule about {{لم}} with the present and {{ما}} with the past is not given."
+   },
+   {
+    "item": "Do as a main verb: I will do my best; Some students do their homework quickly",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 2",
+    "note": "Kept I will do my best, with the Arabic changed to {{سأبذل قصارى جهدي}} (the slide has {{سأفعل ما بوسعي}}); the homework example is not used."
+   },
+   {
+    "item": "Have as a main verb: She had a nice holiday; The students have left early today; She has her pills on time; She has money",
+    "status": "Used and edited",
+    "where": "Chapter 4, Step 2",
+    "note": "Kept three of the four examples; the students example is not used, and {{تملك مالاً}} replaces the slide’s {{تملك النقود}}."
+   }
+  ]
+ },
+ {
+  "source": "Literary Translation (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Style as the key feature of literary texts: the standard of writing in a genre (business, medical) or an author’s own way of writing, ‘the verbal identity of a writer’",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 4",
+    "note": "Reduced to one sentence: in literary texts style matters as much as content."
+   },
+   {
+    "item": "Style and the translator: the translator’s own style (Boase-Beier, style as the outcome of choice); Baker’s ‘thumb-print’ and patterning",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "Elements of literary style: expansive and economical diction, vocabulary, sentence structure (short sentences may show agitation), use of dialogue (formality shows distance), tone, figures of speech, allusions and intertextuality; also lexical choices, syntax, thematic organisation, verb tense and metaphor",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 4",
+    "note": "Only four are kept, in one sentence: word choice, sentence length, tone and dialogue; the rest are not used (metaphors and similes are taught in Chapter 12)."
+   },
+   {
+    "item": "Style is language-specific: what is good style in one language may sound awkward in another (Arabic and English word order); ironing out the author’s style loses the feel of the source",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; word order is covered in Chapter 4, Step 1, with its own examples."
+   },
+   {
+    "item": "Exercise: an extract from Jane Eyre by Charlotte Brontë",
+    "status": "Not used",
+    "where": "—",
+    "note": "Class exercise; not needed in the handbook."
+   }
+  ]
+ },
+ {
+  "source": "Literary vs technical texts (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Literary texts convey ideas and evoke an emotional response (a ghost story may frighten); they appeal to mind and heart; genres: prose (fiction and non-fiction), novels, novellas, poetry, drama and theatre; literary translation should evoke a similar response",
+    "status": "Used and edited",
+    "where": "Chapter 19, Steps 1 and 2",
+    "note": "Cut down to ‘expressive texts … as in literature’ and one line on the literary genre (‘feeling, voice and natural dialogue’), plus poetry; the genre list is not used."
+   },
+   {
+    "item": "Features of literary writing: imaginative, subjective, free, less formal, personal, no standard format, tends to be long, first, second or third person",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Challenge: style and content matter equally, and style distinguishes one writer from another",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 4",
+    "note": "Kept as ‘style matters as much as content’."
+   },
+   {
+    "item": "Challenge: literal versus free translation (an ideal translation renders every word, but structures differ, so translators sometimes elaborate or condense)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Duplicate: Chapter 11 covers literal and free translation for all kinds of text."
+   },
+   {
+    "item": "Challenge: standard versus dialect (dialect shows place, identity and character)",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 4",
+    "note": "Kept as: if a character speaks in dialect to show who they are, find a way to keep that effect; the three reasons are not listed."
+   },
+   {
+    "item": "Challenge: cultural differences and culture-bound terms",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; Chapter 15 covers cultural approximation."
+   },
+   {
+    "item": "Slide titled Harry Potter and the Philosopher’s Stone",
+    "status": "Not used",
+    "where": "—",
+    "note": "Only the title came out when the slides were converted, so its content could not be checked."
+   }
+  ]
+ },
+ {
+  "source": "Technical Translation 2 (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Introduction: the growing importance of technical and scientific translation; Byrne (2012) on inventions and translation",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "What technical texts are: scientific (medicine, physics, astronomy, chemistry), applied technology (computers, engineering), less obviously scientific (geography, economics, architecture)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "The same term in different fields: depression in psychology, economics and meteorology",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 4",
+    "note": "Kept and completed with the Arabic ({{الاكتئاب}}, {{الكساد}}, {{منخفض جوي}}), with a pointer to Chapter 21."
+   },
+   {
+    "item": "Features of technical language: specialised, economical, avoids everyday associations, defines terms accurately",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Lexical problems: terms unfamiliar to a non-specialist translator; familiar words that look technical",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; Chapter 21, Step 3 shows how to research a term instead."
+   },
+   {
+    "item": "Example: a skin tests text (allergic skin reactions, allergenic substances, contact eczema) with the Arabic {{الأرجية}}, {{المحسسة}}, {{التماس}}",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 3",
+    "note": "Kept as medical examples: allergic → {{أرَجيّ}} (everyday {{تحسّسي}}), allergen → {{مادة مُحسِّسة}}, contact eczema → {{إكزيما التماس}}; the full text is not reproduced, and the slide’s table came out with footnote-style markers."
+   }
+  ]
+ },
+ {
+  "source": "Translation of journalistic texts (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Media texts and the parts of a news text: headline, lead paragraph, news story",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 3; Words to remember, Chapter 19",
+    "note": "Kept as the headline and first paragraph (the lead) with the details after; Headline is defined in Words to remember."
+   },
+   {
+    "item": "Headlinese: English headlines are telegraphic and elliptical (Verdonk, Swan, Shams)",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 3",
+    "note": "Kept as ‘English headlines have their own grammar’; the term headlinese and the authors are not used."
+   },
+   {
+    "item": "Headlines with nouns only: Mustang Referral Customer Complaint → {{شكوى زبون فورد موستنج من برنامج الإحالة}}, where Arabic adds Ford and program",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 3",
+    "note": "Kept as the example of adding what Arab readers may not know; the explanation is shorter."
+   },
+   {
+    "item": "Simple tenses: US launches air raids in Iraq (Aljazeera); Erdoğan discusses cooperation with EU delegation",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 3",
+    "note": "Kept the first example (the simple present reports a recent event); the Erdoğan example is not used and the newspaper is not named."
+   },
+   {
+    "item": "To + infinitive for the future: Saudi Arabia to extend visa validity for expats (Arab News); Libya to send 30 doctors to help Italy fight coronavirus (Libya Herald)",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 3",
+    "note": "Kept the Saudi example with {{ستمدّد}}; the Libya example is not used."
+   },
+   {
+    "item": "No articles and no ‘be’; a passive becomes a verbal noun: Man killed, woman wounded in shooting (Kansas City Star); Suspect arrested for kidnapping woman",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 3",
+    "note": "Kept the first example with {{مقتل رجل وإصابة امرأة}}, ending {{في إطلاق نار}} instead of {{خلال إطلاق نار}}; the second example is not used."
+   },
+   {
+    "item": "More headline examples: Stolen vehicle recovered, suspect arrested; Croatian soldier killed in Taliban attack in Kabul; Military sending doctors into New York hospitals (present progressive without be)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; the handbook keeps one example for each rule it covers."
+   },
+   {
+    "item": "Exercise: translate seven headlines (US arranges secret talks between Israel, UAE over Iran; Saudi-Israeli relations; Turkish public tired of elections; Hamas Threatens War if Diplomacy Fails; UAE, Saudi Arabia Prefer Diplomacy Over Confrontation With Iran; Rouhani Expects ‘Positive Results’; U.N. vote on settlements is a blow to Israeli policy)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Class exercise; the handbook has its own practice questions."
+   }
+  ]
+ },
+ {
+  "source": "Translation of Journalistic Texts 2 (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Structure of news stories: headline, then lead, then details; the story type decides the structure (inverted pyramid, hourglass, narrative)",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 3",
+    "note": "Only the headline, the lead and the inverted pyramid are kept; hourglass and narrative are not used."
+   },
+   {
+    "item": "The inverted pyramid: the most basic structure, most important information first; used since before the Civil War because telegraph wires could be cut",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 3; Words to remember, Chapter 19",
+    "note": "Kept as ‘most important facts first, details follow’, with advice to keep this order in the translation; the telegraph story is not used, and the slide’s diagram came out empty."
+   },
+   {
+    "item": "Advantages and disadvantages of the inverted pyramid (quick to read, easy to cut from the bottom, easy to update online; discourages reading on, weak endings)",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   },
+   {
+    "item": "The hourglass structure: main facts first, then a chronological account with details; suited to police stories, disasters and trials; its pros and cons",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level; the slide’s diagram also came out empty."
+   },
+   {
+    "item": "Narrative storytelling for online news: a narrator, an audience, events in time order",
+    "status": "Not used",
+    "where": "—",
+    "note": "Not needed at beginner level."
+   },
+   {
+    "item": "Hard news: verifiable facts about institutions, leaders, policies, disasters and discoveries, with no comment from the reporter",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 3",
+    "note": "Kept as ‘facts, such as decisions, disasters and discoveries, without the writer’s opinion’."
+   },
+   {
+    "item": "Soft news (human interest): picture stories, interviews, historical articles; the aim is to entertain and to move the reader",
+    "status": "Used and edited",
+    "where": "Chapter 19, Step 3",
+    "note": "Kept as ‘human stories, to interest or move the reader’; the categories are not listed."
+   },
+   {
+    "item": "Worked example: a house fire in Hohola, Port Moresby (Mrs Mary Ume and her two children), told first in time order and then as an inverted pyramid",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   }
+  ]
+ },
+ {
+  "source": "Localization (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "Quiz: is localisation ‘discovering the position of a text’ or ‘adapting a product to a local market’?",
+    "status": "Not used",
+    "where": "—",
+    "note": "Class quiz; the meaning is given in Chapter 1 instead."
+   },
+   {
+    "item": "Definitions: translating and adapting a software application, product or content so that it is linguistically and culturally right for a local market; the broad sense (products, services, communications) and the specific sense (websites, manuals, software)",
+    "status": "Used and edited",
+    "where": "Chapter 1, Step 3; Chapter 22, Step 5",
+    "note": "Reduced to one sentence: adapting a product, such as a website or an app, to another country’s language and culture."
+   },
+   {
+    "item": "Locale: the features of the user’s environment (language, country, culture) that set sort order, keyboard layout, and date, time, number and currency formats; software, multimedia, web, games",
+    "status": "Used and edited",
+    "where": "Chapter 22, Step 5",
+    "note": "The word ‘locale’ is not used; dates, numbers, currencies and units are listed as things to adapt."
+   },
+   {
+    "item": "Translation and localisation: translation is the linguistic part of localisation and a subset of its activities; its aim is meaning equivalence",
+    "status": "Used and edited",
+    "where": "Chapter 22, Step 5",
+    "note": "Kept as ‘translation is only one part’; the three kinds of equivalence (idiom, vocabulary, concept) are not used."
+   },
+   {
+    "item": "Examples of linguistic and cultural localisation, including The Simpsons in Arabic (a video link)",
+    "status": "Used and edited",
+    "where": "Chapter 26, Step 2",
+    "note": "Only The Simpsons is used (dubbed as {{آل شمشون}}, with Homer’s beer becoming a soft drink); the slides hold only images and a link, so these details could not be checked against them."
+   },
+   {
+    "item": "Website localisation: adapting to linguistic, functional and cultural needs; entering new markets; people buy more in their own language; how localised versions are reached (flag or language link, different URLs, operating-system language); localisation issues",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space; the slides on website structure and localisation issues came out empty."
+   }
+  ]
+ },
+ {
+  "source": "Terminology and Translation Technology (Shaikhah Alkhaledi’s course slides)",
+  "rows": [
+   {
+    "item": "What terminology is: no agreement on the concept; it borrowed from semantics, lexicology and lexicography; advances in science created a need for new means of expression",
+    "status": "Not used",
+    "where": "—",
+    "note": "Too theoretical for a beginner handbook."
+   },
+   {
+    "item": "Meanings and definition of terminology: the technical terms of a subject; the systematic study and identification of them; a discipline that identifies, analyses, creates and standardises terms; a linguistic discipline with its own methods",
+    "status": "Used and edited",
+    "where": "Chapter 21, Step 1; Words to remember, Chapter 21",
+    "note": "Shortened to two meanings in the glossary, the study, collection and management of terms and the set of terms of one field; ‘creating and standardising’ appears in the definition of a terminologist."
+   },
+   {
+    "item": "Translation technology: tools including machine translation, translation memory and terminology management; its history from rule-based to statistical systems; a discussion question on how it has evolved",
+    "status": "Used and edited",
+    "where": "Chapter 22, Step 1",
+    "note": "Kept as a short tour of the tools, with the development of machine translation in one sentence (rules, then statistics, then neural networks); the discussion question is not used."
+   },
+   {
+    "item": "Machine translation: software that translates automatically; neural machine translation is far more accurate; group task on strengths, limits and tools",
+    "status": "Used and edited",
+    "where": "Chapter 22, Steps 1 and 3; Words to remember, Chapter 22",
+    "note": "Defined in Words to remember; strengths and limits are shown through typical mistakes (an idiom translated word by word, a wrong gender); the group task is not used."
+   },
+   {
+    "item": "Translation memory: stores earlier translations so translators can reuse them; better efficiency and consistency",
+    "status": "Used and edited",
+    "where": "Chapter 22, Step 1; Words to remember, Chapter 22",
+    "note": "Kept with the same two benefits (time saved, consistent work); the handbook adds that it works sentence by sentence and is part of CAT tools."
+   },
+   {
+    "item": "Terminology management systems: let translators create and manage glossaries of key terms for consistency and accuracy",
+    "status": "Used and edited",
+    "where": "Chapter 22, Step 1; Chapter 21, Step 4; Words to remember, Chapter 21",
+    "note": "Kept as termbases that keep one term for one idea; the handbook adds what each entry holds (term, definition, field, source, date)."
+   },
+   {
+    "item": "Human versus machine: machines lack nuance and context but speed up work and cut costs; industry uses (e-commerce, software development, international business)",
+    "status": "Used and edited",
+    "where": "Chapter 22, Step 2",
+    "note": "Kept as ‘human review is needed whenever accuracy matters’; the speed and cost point and the industries are not used."
+   },
+   {
+    "item": "Future developments: better accuracy from machine learning; real-time translation",
+    "status": "Not used",
+    "where": "—",
+    "note": "Left out for space."
+   }
+  ]
+ }
+]
