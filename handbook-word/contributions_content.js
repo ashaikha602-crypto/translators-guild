@@ -261,6 +261,7 @@ module.exports = [
   ['Wrote two one-page guides: The translator’s workflow (with Do and Don’t boxes) and When in doubt', 'End of Part 1; before the closing section'],
   ['Wrote a Translation quality checklist and a final task, Put it all together, which takes one short press release through every step of the book', 'End of Part 8; after Chapter 27'],
   ['Revised the wording of rules and claims so that they read as tendencies, not absolute laws, and marked the preferred Arabic term where two exist', 'Chapters 4, 10, 11, 20, 22, 27; Glossary'],
+  ['Replaced the invented subtitling lines with famous, cited film lines (_The Godfather_; _Gone with the Wind_), each explained', 'Chapter 27'],
   ['Reviewed every example against the team’s documents and her notes: team examples kept and corrected; weak examples replaced, preferably with team examples; challenge questions added', 'Chapters 1–27'],
   ['Designed the two covers (Midnight and Light), the page layout and the QR code; designed and developed the Translation Team’s website', 'Covers; inside pages; website'],
 ], [62, 38]],

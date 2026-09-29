@@ -351,8 +351,8 @@ module.exports = [
   '{{احتجاز}}: holding water ({{احتجاز المياه}}) or holding hostages ({{احتجاز الرهائن}}).',
 ]],
 ['fact', 'The English verb _run_ has hundreds of senses in the _Oxford English Dictionary_: you can run a race, a company, a risk or a temperature. Only the context tells you which one a sentence means.'],
-['try', ['Translate _case_ in: _The doctor examined the case._', 'Translate {{عين}} in: {{شربنا من عين ماء باردة.}}'],
-        ['{{حالة}}.', '_We drank from a cold water spring._']],
+['try', ['_The doctor examined the case._ Which meaning of _case_ is used here, and how would you translate the sentence?', '{{شربنا من عين ماء باردة.}} Which meaning of {{عين}} is used here, and how would you translate the sentence?'],
+        ['The context (a doctor) shows that _case_ means a patient’s condition, not a container or a court case: {{فحص الطبيب الحالة.}}', 'The context (drinking cold water) shows that {{عين}} means a water spring, not an eye: _We drank from a cold water spring._']],
 ['summary', ['Context decides which meaning is correct.', 'Look at the words around a word (micro context) and at the whole situation (macro context).']],
 
 // ================= PART 3 =================

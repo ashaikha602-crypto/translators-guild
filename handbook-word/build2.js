@@ -33,7 +33,7 @@ function ar(t, o = {}) {
 }
 
 // a term's Arabic: 'preferred|alternative' shows the preferred equivalent first, then the alternative
-const arTerm = a => { const [p, alt] = a.split('|'); return alt ? [ar(p), new TextRun({ text: '; also ', font: LATIN, italics: true }), ar(alt)] : [ar(p)]; };
+const arTerm = a => { const [p, alt] = a.split('|'); return [ar(alt ? `${p} أو ${alt}` : p)]; };
 // ---------- blocks ----------
 // every chapter's Remember box ends with the next step on the reader's path
 const TITLES = {}, NEXT = {}; let CLOSING = null;
@@ -105,6 +105,7 @@ function block(b) {
     case 'table': table(a, c, d); break;
     case 'try': {
       H(HeadingLevel.HEADING_3, 'Try it');
+      P([new TextRun({ text: 'Practise what you have just learned. Answer on your own first, then check your answers below.', italics: true, color: GREY, font: LATIN, size: 20 })], { keepNext: true, spacing: { after: 120, line: 280 } });
       list(a, 'num');
       P([new TextRun({ text: 'Check your answers', bold: true, color: GREY, font: LATIN })], { keepNext: true, spacing: { before: 200, after: 60, line: 290 }, border: { top: { style: BorderStyle.DOTTED, size: 6, color: LINE, space: 6 } } });
       list(c, 'num', { run: { color: GREY } });
@@ -176,7 +177,7 @@ block(['ul', [
   '**Newmark (1988)**, _A textbook of translation_: methods and procedures, with many examples.',
   '**Díaz Cintas and Remael (2021)**, _Subtitling_: a practical guide to the subtitler’s work, with many examples.',
 ]]);
-block(['part', 'Glossary', 'All the key terms defined in this handbook, in alphabetical order, with the chapter where each one is explained. Where two Arabic equivalents are given, the first is the one this handbook prefers.']);
+block(['part', 'Glossary', 'All the key terms defined in this handbook, in alphabetical order, with the chapter where each one is explained. Where two Arabic equivalents are joined by {{أو}}, the first is the one this handbook prefers.']);
 let glossStart = body.length, glossEnd;
 const seen = new Map();
 glossary.forEach(g => { const k = g[0].toLowerCase(); if (!seen.has(k)) seen.set(k, g); });
@@ -194,11 +195,13 @@ const R = [
   'Baker, M. (2018). _In other words: A coursebook on translation_ (3rd ed.). Routledge.',
   'Baker, M., & Hanna, S. (2009). Arabic tradition. In M. Baker & G. Saldanha (Eds.), _Routledge encyclopedia of translation studies_ (2nd ed., pp. 328–337). Routledge.',
   'Cabré, M. T. (1999). _Terminology: Theory, methods and applications_ (J. C. Sager, Ed.; J. A. DeCesaris, Trans.). John Benjamins.',
+  'Coppola, F. F. (Director). (1972). _The godfather_ [Film]. Paramount Pictures.',
   'Dickins, J., Hervey, S., & Higgins, I. (2016). _Thinking Arabic translation: A course in translation method: Arabic to English_ (2nd ed.). Routledge.',
   'Eco, U. (2003). _Dire quasi la stessa cosa: Esperienze di traduzione_ [Saying almost the same thing: Experiences of translation]. Bompiani.',
   'Fairclough, N. (1992). _Discourse and social change_. Polity Press.',
   'Fairclough, N. (2003). _Analysing discourse: Textual analysis for social research_. Routledge.',
   'Farghal, M., & Shunnaq, A. T. (2011). _Translation with reference to English and Arabic: A practical guide_. Dar Al-Hilal for Translation. (Original work published 1999)',
+  'Fleming, V. (Director). (1939). _Gone with the wind_ [Film]. Selznick International Pictures.',
   'Firth, J. R. (1957). A synopsis of linguistic theory, 1930–1955. In _Studies in linguistic analysis_ (pp. 1–32). Blackwell.',
   'Ghazala, H. (2008). _Translation as problems and solutions: A textbook for university students and trainee translators_ (Special ed.). Dar El-Ilm Lilmalayin.',
   'Jakobson, R. (1959). On linguistic aspects of translation. In R. A. Brower (Ed.), _On translation_ (pp. 232–239). Harvard University Press.',
