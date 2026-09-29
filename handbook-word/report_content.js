@@ -102,7 +102,7 @@ module.exports = [
 ['h1', '6. Structure of the handbook'],
 ['h2', '6.1 Order of the book'],
 ['table', ['Section', 'Content', 'Reason for its place'],
- [['Front matter', 'Title page, copyright page, contents, preface and acknowledgements, and “Start here”, which explains to a complete beginner what a translator does, the four steps of every translation and the journey through the book.', 'Standard order for an academic book. Front pages are numbered i, ii, iii.'],
+ [['Front matter', 'Title page, copyright page, contents, preface with the Contributors list, and “Start here”, which explains to a complete beginner what a translator does, the four steps of every translation and the journey through the book.', 'Standard order for an academic book. Front pages are numbered i, ii, iii.'],
   ['Part 1: Getting started (Chapters 1–4)', 'What translation is and what a translator needs; tips and preparation; the main differences between English and Arabic.', 'The notes ask for tips at the beginning. A reader needs these basics before anything else.'],
   ['Part 2: Understanding meaning (Chapters 5–7)', 'Form and meaning; types of meaning; context.', 'Meaning is the basis of every later chapter.'],
   ['Part 3: Words that go together (Chapters 8–9)', 'Collocation; idioms, proverbs and fixed expressions.', 'Moves from single words to fixed groups of words.'],
@@ -221,7 +221,7 @@ module.exports = [
 
 ['h1', '9. What was added'],
 ['table', ['Addition', 'Where', 'Reason or source'],
- [['Front matter: copyright page, preface, acknowledgements and “Start here”', 'Front', 'Needed for a published book. The preface uses the objectives from the draft.'],
+ [['Front matter: copyright page, preface, Contributors list and “Start here”', 'Front', 'Needed for a published book. The preface uses the objectives from the draft.'],
   ['Key terms, “Try it” exercises and “Remember” summaries', 'Every chapter', 'The notes ask for definitions in every chapter. The exercises and summaries help beginners check their understanding.'],
   ['Chapters that had no content in the draft', 'Chapters 13, 19–24', 'The seven procedures, genres, words and points of view, dictionaries, terminology, machine translation and AI, revision and common mistakes, and the risk matrix, all requested in the notes.'],
   ['Added strategies and types of translation', 'Chapters 1 and 14', 'Requested in the notes (see Section 5).'],

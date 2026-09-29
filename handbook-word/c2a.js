@@ -15,9 +15,6 @@ module.exports = [
 ]],
 ['p', '_The Translation Team_'],
 
-['h', 'Acknowledgements'],
-['p', 'The Translation Team thanks every team member who collected material and examples for this handbook.'],
-
 ['h', 'Contributors'],
 ['p', '**Shaikhah Alkhaledi**, _editor and project coordinator_: planned and edited the handbook, contributed her study notes, designed the covers and the layout, and designed and developed the team’s website.'],
 ['p', '**Loulwah Bin Saeed**, _audiovisual translation_: provided the notes for Chapters 26 and 27.'],
