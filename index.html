@@ -1646,6 +1646,13 @@ a.ks-s-en:hover { color: var(--white); }
    a different colour from the rank beside it. */
 .chip-tag.booth { color: var(--mint-soft); border-color: rgba(46,217,160,.4);
   background: rgba(46,217,160,.1); }
+/* A half-earned field. Deliberately quieter than an earned one — it is
+   progress on the way to a title, not the title. */
+.chip-tag.booth.part { color: var(--mint-soft); border-color: rgba(46,217,160,.26);
+  background: transparent; border-style: dashed; opacity: .92;
+  display: inline-flex; align-items: center; gap: .32em; }
+.chip-tag.booth.part .half { font-style: normal; opacity: .85; }
+.chip-tag.booth.part b { font-weight: 600; letter-spacing: .04em; opacity: .75; }
 @media (max-width: 560px) {
 }
 
@@ -8711,7 +8718,7 @@ const PROFILE_COLS = "id,username,title,display_name,avatar_path,bio,motto,field
   "institution,academic_level,marks,rank_slug,profile_visibility,discoverable,show_progress," +
   "show_interests,show_institution,show_academic_level,allow_follows," +
   "who_can_message,show_online,read_receipts,verified,sees_profile_views," +
-  "interpreting_fields,interpreting_rank";
+  "interpreting_fields,interpreting_rank,interpreting_halves";
 
 async function loadMyProfile() {
   if (backend !== "supabase" || !session || !session.user) return null;
@@ -9988,14 +9995,33 @@ function verifiedMark(on) {
 /* What the booth has awarded, as chips beside the rank. A member who has
    turned their progress off returns an empty list from the view, so this
    draws nothing for them without having to know about the setting. */
+/* A field is earned by a qualifying round in BOTH directions. Half of
+   that is real work and it used to show as nothing at all — a member
+   banked twenty turns at the standard and their profile looked exactly
+   as it had before. The half is now drawn too, plainly marked as a half
+   and named with the direction it was earned in, so it can never be
+   mistaken for the title itself. */
 function interpretingChips(p) {
-  const list = (p && Array.isArray(p.interpreting_fields)) ? p.interpreting_fields : [];
-  return list
+  const won = (p && Array.isArray(p.interpreting_fields)) ? p.interpreting_fields : [];
+  const half = (p && Array.isArray(p.interpreting_halves)) ? p.interpreting_halves : [];
+  const full = won
     .map(f => BOOTH_FIELD_TITLES[f])
     .filter(Boolean)
     .map(t => '<span class="chip-tag booth" title="Earned in the Guild’s booth">' +
               esc(t.en) + '</span>')
     .join("");
+  const parts = half
+    .map(s => {
+      const cut = String(s).split(":");
+      const t = BOOTH_FIELD_TITLES[cut[0]];
+      if (!t || won.indexOf(cut[0]) >= 0) return "";
+      const way = cut[1] === "en-ar" ? "EN→AR" : "AR→EN";
+      return '<span class="chip-tag booth part" title="One direction of two banked ' +
+             'in the Guild’s booth. The other direction earns the title.">' +
+             '<i class="half">◐</i>' + esc(t.en) + ' <b>' + way + '</b></span>';
+    })
+    .join("");
+  return full + parts;
 }
 
 /* The three marks under a post, all drawn the same way so the row
@@ -12428,7 +12454,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0929-0330";
+const BUILD = "0929-0420";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -12503,7 +12529,7 @@ function renderSeal() {
   /* The booth's awards sit beside the translation rank, not inside it:
      two ladders, climbed separately, shown together. */
   const bchip = document.getElementById("chip-booth");
-  if (bchip) bchip.innerHTML = interpretingChips({ interpreting_fields: boothStanding.fields });
+  if (bchip) bchip.innerHTML = interpretingChips({ interpreting_fields: boothStanding.fields, interpreting_halves: boothStanding.halves });
   paintWho();
   renderCounts();
   renderIdent();
@@ -15157,7 +15183,7 @@ function boothQualifies(d, finished) {
 
 /* What this member has earned. Held in the page for the screens that
    need it now, and re-read from the profile whenever that is loaded. */
-let boothStanding = { fields: [], rank: null };
+let boothStanding = { fields: [], halves: [], rank: null };
 /* Rounds banked so far, per field and per direction:
      { medical: { "ar-en": 7, "en-ar": 4, total: 11 } }
    Twenty of them earns the field, so a member needs to see the count
@@ -15173,6 +15199,7 @@ function applyStanding(p) {
   if (!p) return;
   boothStanding = {
     fields: Array.isArray(p.interpreting_fields) ? p.interpreting_fields.slice() : [],
+    halves: Array.isArray(p.interpreting_halves) ? p.interpreting_halves.slice() : [],
     rank: p.interpreting_rank || null
   };
 }
@@ -15227,7 +15254,7 @@ async function refreshStanding() {
   if (backend !== "supabase" || !myId()) return;
   try {
     const r = await fetch(SUPABASE.url +
-      "/rest/v1/profiles?select=interpreting_fields,interpreting_rank",
+      "/rest/v1/profiles?select=interpreting_fields,interpreting_rank,interpreting_halves",
       { headers: await sbHeaders() });
     if (!r.ok) return;
     const rows = await r.json();
