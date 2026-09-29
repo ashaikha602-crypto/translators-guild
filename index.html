@@ -12428,7 +12428,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "0929-0155";
+const BUILD = "0929-0330";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -14703,21 +14703,59 @@ function arTokens(s) {
     .filter(w => w.length > 1 && !AR_STOP.has(w) && !AR_STOP.has(arBare(w)));
 }
 
+/* The same idea in English, and it should have been here from the start.
+   Articles, prepositions and auxiliaries are not content; an interpreter
+   is not marked on them. */
+const EN_STOP = new Set(("a an the of to for in on at by with from as and or but " +
+  "is are was were be been being has have had will would shall should may might can could " +
+  "he she it they we i you his her its their our my your that this these those there here " +
+  "do does did not no so than then out up off over into").split(" "));
+function enTokens(s) {
+  return norm(s).split(" ").filter(w => w.length > 1 && !EN_STOP.has(w));
+}
+/* How much of this target's content the answer carries, as a share of
+   it — the English twin of arShare. A word counts if it is there, or if
+   anything the field accepts in its place is there. */
+function enShare(target, answer) {
+  const want = enTokens(target);
+  if (!want.length) return 0;
+  const got = want.filter(w => keyMet(w, answer)).length;
+  return got / want.length;
+}
+
 /* ═══════════ HOW A RENDERING IS MARKED ═══════════
    Two people will not produce the same sentence, and an interpreter is
    not judged on wording. So nothing here is marked against a single
    right answer.
 
-     A term or a phrase passes on any of its accepted forms. The first
-     one listed is the form the field uses most often; the rest are
-     renderings a working interpreter would also give. Getting an
-     accepted one through is a pass, and the usual form is named
-     afterwards so the preferred term is still learned.
+     A TERM is one concept and has to arrive whole, but its accepted
+     forms are many and the article and word order are its own business.
+     The first form listed is the one the field uses most often; the
+     usual form is named afterwards so it is still learned.
+
+     A PHRASE is already a rendering, not a password. "Discussed ways of
+     strengthening cooperation" can be reached a dozen ways and an
+     interpreter picks one. So a phrase is marked on CONTENT, against
+     whichever accepted form the rendering came closest to, and most of
+     that content through is a pass.
+
+     This is the correction of a real fault. Phrases used to be matched
+     as STRINGS, the way a single term was — the answer had to contain
+     an accepted form more or less verbatim. "Discussed ways of boosting
+     cooperation" scored zero while "reviewed ways of boosting
+     cooperation" passed; "urged self restraint" scored zero while
+     "urged restraint" passed. Worse, a near miss scored the same as a
+     blank, so the scorecard could not tell a good rendering from no
+     rendering at all. Shaikha's brief said from the first day that the
+     marking must not require a word-for-word match. It does not now.
 
      A sentence or a full turn is marked on CONTENT, never on wording.
      It carries the things it has to get across — who, what, the number,
      the instruction — and most of them through is a pass. Say it your
      own way and it counts.
+
+     A rendering that falls short still keeps the share of the content
+     it did carry. Only a blank scores nothing.
 
    Working into Arabic the same rule applies, on Arabic's own terms: the
    definite article is forgiven, word order is not asked about, and the
@@ -14898,7 +14936,22 @@ const BOOTH_SYN = [
   ["papers", "the papers", "contributions"],
   ["fields", "areas", "sectors", "domains"],
   ["address", "speech", "remarks", "his words"],
-  ["id", "identification", "identity card", "civil id"]
+  ["id", "identification", "identity card", "civil id"],
+  /* verbs and nouns the diplomatic phrases turn on, where two
+     interpreters will simply not choose the same word */
+  ["sidelines", "margins", "fringes", "sideline", "margin"],
+  ["discussed", "reviewed", "examined", "explored", "looked at", "went over"],
+  ["strengthening", "boosting", "enhancing", "deepening", "bolstering", "strengthen",
+   "boost", "enhance", "deepen"],
+  ["called", "urged", "appealed", "calls", "urges"],
+  ["restraint", "self restraint", "selfrestraint", "calm"],
+  ["welcomed", "received", "greeted"],
+  ["expressed", "voiced", "conveyed"],
+  ["concern", "concerns", "disquiet", "worry"],
+  ["cooperation", "collaboration", "co operation"],
+  ["ways", "means", "avenues", "how"],
+  ["delegation", "the delegation", "party", "mission"],
+  ["visiting", "visitor", "guest", "incoming"]
 ];
 const BOOTH_SYN_MAP = (function () {
   const m = {};
@@ -14948,23 +15001,32 @@ function boothForms(item, into) {
    are built from — a rendering that carries four fifths of a turn is not
    the same as one that carries none, and marking both as "missed" threw
    that away. Wording is never consulted in either number. */
+/* How much of the target's content a rendering has to carry, by level.
+   A TERM is one concept and has to arrive whole. A PHRASE is already a
+   rendering — "discussed ways of strengthening cooperation" can be
+   reached a dozen ways and an interpreter picks one — so it is marked
+   the way a sentence is, on content, not against a list of strings. */
+function boothNeed(item) {
+  const k = item.level ? item.level.key : (item.keys && item.keys.length ? "sentences" : "terms");
+  if (k === "terms") return 1;
+  if (k === "phrases") return 0.7;
+  return 0.6;
+}
 function boothMark(item, input, dir) {
   const into = (dir || "ar-en") === "en-ar" ? "ar" : "en";
-  const long = item.level ? (item.level.key === "sentences" || item.level.key === "turns")
-                          : !!(item.keys && item.keys.length);
+  const k = item.level ? item.level.key : (item.keys && item.keys.length ? "sentences" : "terms");
+  const long = k === "sentences" || k === "turns";
   const forms = boothForms(item, into);
+  const need = boothNeed(item);
 
   if (into === "ar") {
     const a = arNorm(input);
     if (a.length < 2) return { hit: false, exact: false, share: 0 };
-    /* A long answer is marked on content; a term has to carry all of it,
-       though the article and the word order are its own business. */
-    const share = long ? 0.6 : 1;
     let best = 0;
     for (let i = 0; i < forms.length; i++) {
       best = Math.max(best, arShare(forms[i], a));
-      if (arCarries(forms[i], a, share)) {
-        return { hit: true, exact: i === 0, matched: forms[i], share: Math.max(best, share) };
+      if (arCarries(forms[i], a, need)) {
+        return { hit: true, exact: i === 0, matched: forms[i], share: Math.max(best, need) };
       }
     }
     return { hit: false, exact: false, share: best };
@@ -14974,15 +15036,31 @@ function boothMark(item, input, dir) {
     const a = norm(input);
     if (a.length < 4) return { hit: false, exact: false, share: 0 };
     const keys = item.keys || [];
-    const got = keys.filter(k => keyMet(k, a)).length;
-    const need = Math.ceil(keys.length * 0.7);
-    return { hit: !!need && got >= need, exact: false,
+    const got = keys.filter(x => keyMet(x, a)).length;
+    const want = Math.ceil(keys.length * 0.7);
+    return { hit: !!want && got >= want, exact: false,
              share: keys.length ? got / keys.length : 0 };
   }
+
+  /* An accepted form, arriving whole, is still the cleanest pass, and it
+     is the only one that can report WHICH form was matched. */
   for (let i = 0; i < forms.length; i++) {
     if (loose(input, [forms[i]])) return { hit: true, exact: i === 0, matched: forms[i], share: 1 };
   }
-  return { hit: false, exact: false, share: 0 };
+  /* Nothing matched as a string. That is not a zero — it was never a
+     spelling test. Mark it on content, against whichever accepted form
+     the rendering came closest to, and give back the share it earned
+     even when it falls short of a pass. Marking a near-miss the same as
+     a blank is what made the scorecard read so badly. */
+  const a = norm(input);
+  if (a.length < 2) return { hit: false, exact: false, share: 0 };
+  let best = 0, at = 0;
+  for (let i = 0; i < forms.length; i++) {
+    const s = enShare(forms[i], a);
+    if (s > best) { best = s; at = i; }
+  }
+  return { hit: best >= need, exact: false, matched: best >= need ? forms[at] : undefined,
+           share: best };
 }
 /* kept for the checks that call it directly */
 function boothHit(item, input, dir) { return boothMark(item, input, dir).hit; }
@@ -15042,12 +15120,18 @@ function boothRankAr(en) {
 /* The twenty is inside the round, not a count of rounds. Shaikha's point
    was that an interpreter is somebody still accurate on the twentieth
    turn, at speed — so the test is twenty turns against one clock, held to
-   90%, and it is that single sustained run which earns the field. Asking
-   for twenty separate runs was my misreading of it.
+   the standard, and it is that single sustained run which earns the
+   field. Asking for twenty separate runs was my misreading of it.
+
+   The bar is EIGHTY, on Shaikha's instruction — it was ninety and she
+   ruled that too high. The other two move with it: a meaning gate of 85
+   sitting above a composite gate of 80 would have made the stated bar a
+   lie, because meaning, not the composite, would have been doing the
+   refusing. All three keep their old proportions to one another.
 
    Mirrored in the database, which is what actually rules on a round and
    what actually writes the title. If one of these moves the other must. */
-const BOOTH_STANDARD = { composite: 0.90, meaning: 0.85, completeness: 0.70 };
+const BOOTH_STANDARD = { composite: 0.80, meaning: 0.75, completeness: 0.60 };
 const BOOTH_ROUNDS_NEEDED = 1;
 
 /* The four readings, from the per-item shares a round collected. */
@@ -15271,14 +15355,20 @@ function chooseGenre() {
     "Two interpreters do not produce the same sentence, and an interpreter is not judged on wording. " +
     "<b>Nothing here is marked against a single right answer.</b>"));
   marking.appendChild(el("ul", "how",
-    '<li><span><b>A term or a phrase</b> passes on any of its accepted forms &mdash; ' +
+    '<li><span><b>A term</b> passes on any of its accepted forms &mdash; ' +
       '<i>النيابة العامة</i>, <i>النيابة</i> and <i>الادعاء العام</i> all go through. The first form is the ' +
       'one you will meet most often, and it is named back to you afterwards so it is still learned.</span></li>' +
+    '<li><span><b>A phrase</b> is already a rendering, not a password, so it is marked on <b>content</b> too. ' +
+      '&ldquo;Discussed ways of <i>boosting</i> cooperation&rdquo; and &ldquo;examined ways to <i>strengthen</i> ' +
+      'cooperation&rdquo; are the same rendering, and both pass.</span></li>' +
     '<li><span><b>A sentence or a full turn</b> is marked on <b>content</b>, never on wording: who, what, ' +
       'the number, the instruction. Most of it through is a pass. <i>أين بالضبط تشعر بالألم؟</i> passes for ' +
       '<i>أين يؤلمك بالضبط؟</i> &mdash; different words, same question.</span></li>' +
     '<li><span><b>Working into Arabic</b>, the definite article is forgiven, word order is not asked about, ' +
       'and the vowel marks are ignored. Particles and pronouns are never required. A hamza never costs a mark.</span></li>' +
+    '<li><span><b>A rendering that falls short keeps what it carried.</b> Getting most of a turn through is ' +
+      'not the same as getting none of it through, and the dials count it that way. Only a blank scores ' +
+      'nothing.</span></li>' +
     '<li><span><b>Every answer shows the model rendering</b>, and where an item accepts more than one, the ' +
       'others are listed too. The point is to leave you knowing the term, not to have been right.</span></li>'));
   marking.appendChild(el("p", "vb",
@@ -15613,12 +15703,21 @@ function boothRound(genre) {
           go.addEventListener("click", () => { state.boothDir = other; save(); boothRound(genre); });
           award.appendChild(go);
         } else {
-          award.innerHTML = "Not at the field standard yet. " +
-            (dials.meaning < BOOTH_STANDARD.meaning
-              ? "Meaning is the one to work on: content before wording."
-              : dials.completeness < BOOTH_STANDARD.completeness
-                ? "The long items are where it went: hold the whole turn, then render it."
-                : "Close. Delivery is what is costing you &mdash; fewer left unanswered.");
+          /* Name the dial that is ACTUALLY lowest, not the first gate in
+             a fixed order. This used to blame delivery whenever meaning
+             and completeness were at standard — so a round with delivery
+             at 100% and terminology at 73% was told to leave fewer
+             unanswered, which was not merely unhelpful, it was wrong. */
+          const weakest = [
+            { at: dials.meaning,      say: "Meaning is the one to work on: content before wording." },
+            { at: dials.terminology,  say: "The terms and phrases are what is costing you &mdash; the short items, not the long ones." },
+            { at: dials.completeness, say: "The long items are where it went: hold the whole turn, then render it." },
+            { at: dials.delivery,     say: "Delivery is what is costing you &mdash; fewer left unanswered." }
+          ].sort((a, b) => a.at - b.at)[0];
+          const gap = BOOTH_STANDARD.composite - dials.composite;
+          award.innerHTML = "Not at the field standard yet" +
+            (gap <= 0.05 ? " &mdash; <b>" + Math.round(gap * 100) + " points off</b>. " : ". ") +
+            weakest.say;
         }
       });
 
