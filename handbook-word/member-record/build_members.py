@@ -20,7 +20,7 @@ def clean(t):
 STAT = ['Used as written', 'Used and edited', 'Not used']
 
 def srcname(src, prefix=''):
-    src = re.sub(r'\s*\((?:Shaikhah Alkhaledi’s course slides)\)|\s*\[Shaikhah Alkhaledi\]|\s*\(Samiuallah Mohammad\)', '', src)
+    src = re.sub(r'\s*\((?:Shaikha Alkhaldi’s course slides)\)|\s*\[Shaikha Alkhaldi\]|\s*\(Samiuallah Mohammad\)', '', src)
     return prefix + src
 def tables(sources, num_start, sec, prefix=''):
     """returns (js_text, next_number)"""
@@ -66,13 +66,13 @@ def cut(s, start, end):
 L = load('loulwah.json')
 pre, mid, post = cut(base, "['h2', '4.1 Taken into the handbook'],", "['h2', '4.2 Edited'],")
 s = pre + '@@L_SUM@@\n' + post
-pre, mid, post = cut(s, "['h2', '4.3 Not taken, and why'],", "['h2', '4.4 Added by Shaikhah Alkhaledi to her chapters'],")
+pre, mid, post = cut(s, "['h2', '4.3 Not taken, and why'],", "['h2', '4.4 Added by Shaikha Alkhaldi to her chapters'],")
 s = pre + '@@L_TAB@@\n' + post
 # ---- Masooma (section 5)
 Ma = load('masooma.json')
 pre, mid, post = cut(s, "['h2', '5.1 Taken into the handbook'],", "['h2', '5.2 Edited'],")
 s = pre + '@@M_SUM@@\n' + post
-pre, mid, post = cut(s, "['h2', '5.3 Not taken, and why'],", "['h2', '5.4 Added by Shaikhah Alkhaledi to her chapter'],")
+pre, mid, post = cut(s, "['h2', '5.3 Not taken, and why'],", "['h2', '5.4 Added by Shaikha Alkhaldi to her chapter'],")
 s = pre + '@@M_TAB@@\n' + post
 # ---- Samiuallah (section 6): keep 6.2, drop 6.1 and 6.3-6.5
 Sa = load('samiuallah_1.json', 'samiuallah_2.json')
@@ -80,7 +80,7 @@ pre, mid, post = cut(s, "['h2', '6.1 The first draft: taken into the handbook'],
 s = pre + '@@S_SUM@@\n' + post
 pre, mid, post = cut(s, "['h2', '6.3 The first draft: not taken, and why'],", "// ================= SHAIKHAH")
 s = pre + '@@S_TAB@@\n' + post
-# ---- Shaikhah: append after 7.8
+# ---- Shaikha: append after 7.8
 Sh1 = load('shaikhah_1.json'); Sh2 = load('shaikhah_2.json')
 for b in Sh1: b['_prefix'] = 'Course slides: '
 Sh = Sh1 + Sh2
@@ -94,18 +94,18 @@ def numbered(s, key, summ_js, tabs_js):
 js, n = summary(L, 4, 1); tabs, n2 = tables(L, 3, 4)
 s = s.replace('@@L_SUM@@\n', js).replace('@@L_TAB@@\n', tabs)
 s = s.replace("['h2', '4.2 Edited'],", "['h2', '4.2 What was corrected'],")
-s = s.replace("['h2', '4.4 Added by Shaikhah Alkhaledi to her chapters'],", "['h2', '4.%d Added by Shaikhah Alkhaledi to her chapters'],\n" % n2 if False else "['h2', '4.%d Added by Shaikhah Alkhaledi to her chapters']," % n2)
+s = s.replace("['h2', '4.4 Added by Shaikha Alkhaldi to her chapters'],", "['h2', '4.%d Added by Shaikha Alkhaldi to her chapters'],\n" % n2 if False else "['h2', '4.%d Added by Shaikha Alkhaldi to her chapters']," % n2)
 # Masooma
 js, n = summary(Ma, 5, 1); tabs, n2 = tables(Ma, 3, 5)
 s = s.replace('@@M_SUM@@\n', js).replace('@@M_TAB@@\n', tabs)
 s = s.replace("['h2', '5.2 Edited'],", "['h2', '5.2 What was corrected'],")
-s = s.replace("['h2', '5.4 Added by Shaikhah Alkhaledi to her chapter'],", "['h2', '5.%d Added by Shaikhah Alkhaledi to her chapter']," % n2)
+s = s.replace("['h2', '5.4 Added by Shaikha Alkhaldi to her chapter'],", "['h2', '5.%d Added by Shaikha Alkhaldi to her chapter']," % n2)
 # Samiuallah
 js, n = summary(Sa, 6, 2)
 tabs, n2 = tables(Sa, n, 6)
 s = s.replace("['h2', '6.2 The first draft: edited'],", "['h2', '6.1 Errors in the first draft that were corrected'],")
 s = s.replace('@@S_SUM@@\n', '').replace('@@S_TAB@@\n', js + tabs)
-# Shaikhah
+# Shaikha
 js, n = summary(Sh, 7, 9)
 tabs = ''
 n2 = n

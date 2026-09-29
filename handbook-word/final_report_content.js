@@ -299,7 +299,7 @@ module.exports = [
 ]],
 ['h2', '7.3 Decisions and details'],
 ['redul', [
-  'Confirm the names and roles on the new Contributors page (page iv): Shaikhah Alkhaledi, Loulwah Bin Saeed, Masooma Almesri and Samiuallah Mohammad. Decide whether to list all four alphabetically, as the team’s framework says, and whether to name the academic supervisor, Abdullah Bezea. The full account is in the Contributions Report.',
+  'Confirm the names and roles on the new Contributors page (page iv): Shaikha Alkhaldi, Loulwah Bin Saeed, Masooma Almesri and Samiuallah Mohammad. Decide whether to list all four alphabetically, as the team’s framework says, and whether to name the academic supervisor, Abdullah Bezea. The full account is in the Contributions Report.',
   'Decide whether to add to the glossary the terms explained only in the text (for example sight translation, spotting, SDH and the inverted pyramid).',
   'Confirm the club’s official name: it appears in three slightly different forms (title page, copyright line and reference entry).',
   'Confirm the copyright line and the statement on AI assistance.',

@@ -1,9 +1,9 @@
-// Contributions Report: a working report by Shaikhah Alkhaledi on how each member's material was used in the draft handbook.
+// Contributions Report: a working report by Shaikha Alkhaldi on how each member's material was used in the draft handbook.
 module.exports = [
 
 ['h1', '1. About this report'],
 ['ul', [
-  'This working report explains how each team member’s material was used in the draft handbook: what was taken, what was edited, what was left out, and why. Section 7 lists the work done on the handbook itself, under the name of Shaikhah Alkhaledi.',
+  'This working report explains how each team member’s material was used in the draft handbook: what was taken, what was edited, what was left out, and why. Section 7 lists the work done on the handbook itself, under the name of Shaikha Alkhaldi.',
   'The handbook it describes is a **draft for the team’s review**, not the final version. Every decision below can be discussed and changed.',
   'The report follows the current draft: two editions (Midnight and Light) with the same content, 98 pages, 9 parts and 27 chapters, an opening section (**Start here**) and a closing section (**Your journey continues**).',
   'Members are listed in alphabetical order. Chapter numbers refer to the current draft.',
@@ -24,35 +24,35 @@ module.exports = [
 ['h1', '3. Where each chapter comes from'],
 ['p', 'The table shows the main source of each part of the draft, and what else was added to it.'],
 ['table', ['Section', 'Main source', 'Also added'], [
-  ['Start here', 'Written by Shaikhah Alkhaledi', 'The news-report example (_came under pressure_); the House of Wisdom; the four steps'],
-  ['1 Translation and the translator', 'Samiuallah Mohammad (draft)', 'Shaikhah’s notes: three kinds of translation, the translator as a reader; the Rosetta Stone'],
-  ['2 Tips, advice and preparation', 'Masooma Almesri (idea); Samiuallah (draft tips and plan)', 'Shaikhah’s framework: the three questions (client, purpose, audience); a worked first translation'],
-  ['3 Printed and digital dictionaries', 'Loulwah Bin Saeed (idea); Samiuallah (plan)', 'Written by Shaikhah Alkhaledi from published sources; {{كتاب العين}}'],
-  ['4 English and Arabic: key differences', 'Samiuallah (draft; 180, Translation 1 and Farghal & Shunnaq notes)', 'Shaikhah’s notes: _be_, _do_, _have_, the dual, gender of _I_ and _you_; Arabic numerals'],
+  ['Start here', 'Written by Shaikha Alkhaldi', 'The news-report example (_came under pressure_); the House of Wisdom; the four steps'],
+  ['1 Translation and the translator', 'Samiuallah Mohammad (draft)', 'Shaikha’s notes: three kinds of translation, the translator as a reader; the Rosetta Stone'],
+  ['2 Tips, advice and preparation', 'Masooma Almesri (idea); Samiuallah (draft tips and plan)', 'Shaikha’s framework: the three questions (client, purpose, audience); a worked first translation'],
+  ['3 Printed and digital dictionaries', 'Loulwah Bin Saeed (idea); Samiuallah (plan)', 'Written by Shaikha Alkhaldi from published sources; {{كتاب العين}}'],
+  ['4 English and Arabic: key differences', 'Samiuallah (draft; 180, Translation 1 and Farghal & Shunnaq notes)', 'Shaikha’s notes: _be_, _do_, _have_, the dual, gender of _I_ and _you_; Arabic numerals'],
   ['5 Form and meaning', 'Samiuallah (draft)', '—'],
-  ['6 Types of meaning', 'Samiuallah (draft)', 'Shaikhah’s notes: lexical gaps, false equivalents, rare words'],
-  ['7 Context', 'Samiuallah (draft)', 'Shaikhah’s notes: {{خط}}; the verb _run_'],
-  ['8 Collocation', 'Samiuallah (draft)', 'Shaikhah’s notes: _deliver_; Farghal & Shunnaq notes: _weak coffee_, _a rough sea_, the collocations of {{يقطع}}'],
-  ['9 Idioms, proverbs and fixed expressions', 'Samiuallah (draft)', 'Shaikhah’s notes: fixed expressions, spotting idioms, five ways to translate them; 180 notes and {{الترجمة: ماهيتها وكيفيتها}}: three idioms; Kuwaiti expressions from the Kuwaiti dictionary (Loulwah’s proposal)'],
+  ['6 Types of meaning', 'Samiuallah (draft)', 'Shaikha’s notes: lexical gaps, false equivalents, rare words'],
+  ['7 Context', 'Samiuallah (draft)', 'Shaikha’s notes: {{خط}}; the verb _run_'],
+  ['8 Collocation', 'Samiuallah (draft)', 'Shaikha’s notes: _deliver_; Farghal & Shunnaq notes: _weak coffee_, _a rough sea_, the collocations of {{يقطع}}'],
+  ['9 Idioms, proverbs and fixed expressions', 'Samiuallah (draft)', 'Shaikha’s notes: fixed expressions, spotting idioms, five ways to translate them; 180 notes and {{الترجمة: ماهيتها وكيفيتها}}: three idioms; Kuwaiti expressions from the Kuwaiti dictionary (Loulwah’s proposal)'],
   ['10 Equivalence', 'Samiuallah (draft)', 'Citation of Farghal & Shunnaq'],
   ['11 Literal and free translation', 'Samiuallah (draft)', 'Communicative translation (requested in the Teams chat)'],
   ['12 Metaphoric translation', 'Samiuallah (draft)', 'Masooma’s slides: {{عقارب الساعة}}, _a throbbing headache_'],
-  ['13 The seven translation procedures', 'Samiuallah (plan); written by Shaikhah Alkhaledi from published sources', 'Examples from Samiuallah’s Farghal & Shunnaq notes and draft: _shadow government_, _My friend speaks German fluently_, _A burnt child dreads the fire_, _garage_'],
-  ['14 Translation strategies', 'Samiuallah (draft and Translation 1 notes)', 'Explicitation and implicitation (Teams chat); further strategies; Shaikhah’s notes: Arabic words in English'],
+  ['13 The seven translation procedures', 'Samiuallah (plan); written by Shaikha Alkhaldi from published sources', 'Examples from Samiuallah’s Farghal & Shunnaq notes and draft: _shadow government_, _My friend speaks German fluently_, _A burnt child dreads the fire_, _garage_'],
+  ['14 Translation strategies', 'Samiuallah (draft and Translation 1 notes)', 'Explicitation and implicitation (Teams chat); further strategies; Shaikha’s notes: Arabic words in English'],
   ['15 Cultural approximation', 'Samiuallah (draft)', 'Citation of Farghal & Shunnaq'],
   ['16 Descriptive translation', 'Samiuallah (draft)', 'Citation of Farghal & Shunnaq'],
-  ['17 Lexical creation', 'Samiuallah (draft)', 'Shaikhah’s notes: Arabicisation examples; Masooma’s slides: {{الاستمطار}}, {{قطار}}, affixes; the journey of _coffee_'],
+  ['17 Lexical creation', 'Samiuallah (draft)', 'Shaikha’s notes: Arabicisation examples; Masooma’s slides: {{الاستمطار}}, {{قطار}}, affixes; the journey of _coffee_'],
   ['18 Text analysis', 'Samiuallah (draft and Text Analysis Model)', '—'],
-  ['19 Text types and genres', 'Samiuallah (plan); Shaikhah (framework)', 'Shaikhah’s notes: news headlines, the inverted pyramid, technical and literary texts'],
-  ['20 Words and points of view', 'Samiuallah (plan: the relational model; draft: the _suicide bomber_ example)', 'Written by Shaikhah Alkhaledi from published sources'],
-  ['21 Terminology', 'Masooma and Samiuallah (terminology material from Masooma’s slides)', 'Shaikhah’s terminology class notes: the research steps; Shaikhah’s notes: medical examples; UNTERM, Arabterm, a sample term list; the Damascus academy'],
-  ['22 Machine translation', 'Samiuallah (draft: post-editing; plan); Loulwah (framework: a practical guide to digital tools)', 'Shaikhah’s notes: translation memory, CAT tools, localisation; the 1954 demonstration'],
-  ['23 Revision and common mistakes', 'Masooma (idea); Samiuallah (plan); Shaikhah (framework)', 'Written by Shaikhah Alkhaledi from published sources'],
-  ['24 Interlingual risk assessment', 'Shaikhah (framework)', 'The _Mars Climate Orbiter_'],
+  ['19 Text types and genres', 'Samiuallah (plan); Shaikha (framework)', 'Shaikha’s notes: news headlines, the inverted pyramid, technical and literary texts'],
+  ['20 Words and points of view', 'Samiuallah (plan: the relational model; draft: the _suicide bomber_ example)', 'Written by Shaikha Alkhaldi from published sources'],
+  ['21 Terminology', 'Masooma and Samiuallah (terminology material from Masooma’s slides)', 'Shaikha’s terminology class notes: the research steps; Shaikha’s notes: medical examples; UNTERM, Arabterm, a sample term list; the Damascus academy'],
+  ['22 Machine translation', 'Samiuallah (draft: post-editing; plan); Loulwah (framework: a practical guide to digital tools)', 'Shaikha’s notes: translation memory, CAT tools, localisation; the 1954 demonstration'],
+  ['23 Revision and common mistakes', 'Masooma (idea); Samiuallah (plan); Shaikha (framework)', 'Written by Shaikha Alkhaldi from published sources'],
+  ['24 Interlingual risk assessment', 'Shaikha (framework)', 'The _Mars Climate Orbiter_'],
   ['25 Translation commentary', 'Samiuallah (draft and Text Analysis Model)', '—'],
-  ['26 Introduction to audiovisual translation', 'Loulwah (AVT notes)', 'Shaikhah’s notes: the Arabic dubbing of _The Simpsons_; the AVT notes: silent-film intertitles (a Did you know? box)'],
+  ['26 Introduction to audiovisual translation', 'Loulwah (AVT notes)', 'Shaikha’s notes: the Arabic dubbing of _The Simpsons_; the AVT notes: silent-film intertitles (a Did you know? box)'],
   ['27 Subtitling', 'Loulwah (AVT notes)', 'Subtitle timing, SDH, a five-step method, rules for Arabic subtitles'],
-  ['Your journey continues', 'Written by Shaikhah Alkhaledi', '—'],
+  ['Your journey continues', 'Written by Shaikha Alkhaldi', '—'],
 ], [30, 32, 38]],
 
 // ================= LOULWAH =================
@@ -93,7 +93,7 @@ module.exports = [
   ['The quotation on “screen translation”', 'Not needed once the term was explained.'],
   ['The idiom notes', 'Several entries needed correcting (_my cup runneth over_, _rear-view mirror_, _just deserts_) or were incomplete, and most equivalents are colloquial.'],
 ], [45, 55]],
-['h2', '4.4 Added by Shaikhah Alkhaledi to her chapters'],
+['h2', '4.4 Added by Shaikha Alkhaldi to her chapters'],
 ['p', 'Subtitle display time and spotting, subtitles for the deaf and hard of hearing (SDH), a five-step subtitling method, a worked example of shortening a line, rules for Arabic subtitles, first steps for beginners, and full reference entries for the published sources her notes already named (Díaz Cintas & Remael; Pedersen; Pérez-González; Gambier; Reiss & Vermeer).'],
 
 // ================= MASOOMA =================
@@ -133,8 +133,8 @@ module.exports = [
   ['The format for citing references', 'It belongs to the References style, not to the text.'],
   ['Most of the idiom list', 'Mostly American slang, some about drinking; the common idioms are already in Chapter 9.'],
 ], [45, 55]],
-['h2', '5.4 Added by Shaikhah Alkhaledi to her chapter'],
-['p', 'UNTERM and Arabterm, a sample term list, medical examples (_allergic_, _allergen_, _contact eczema_), the research steps from Shaikhah Alkhaledi’s terminology class notes (see Section 7), and the Damascus academy and the Coordination Bureau of Arabization in Rabat.'],
+['h2', '5.4 Added by Shaikha Alkhaldi to her chapter'],
+['p', 'UNTERM and Arabterm, a sample term list, medical examples (_allergic_, _allergen_, _contact eczema_), the research steps from Shaikha Alkhaldi’s terminology class notes (see Section 7), and the Damascus academy and the Coordination Bureau of Arabization in Rabat.'],
 
 // ================= SAMIUALLAH =================
 ['h1', '6. Samiuallah Mohammad'],
@@ -236,8 +236,8 @@ module.exports = [
 ]],
 
 // ================= SHAIKHAH =================
-['h1', '7. Shaikhah Alkhaledi'],
-['p', 'This section lists the work done on the handbook by Shaikhah Alkhaledi, with the place in the book where each piece can be found and the reason for it. It covers her own material, the structure of the book, the sections written for it, the examples, the checking, and the design.'],
+['h1', '7. Shaikha Alkhaldi'],
+['p', 'This section lists the work done on the handbook by Shaikha Alkhaldi, with the place in the book where each piece can be found and the reason for it. It covers her own material, the structure of the book, the sections written for it, the examples, the checking, and the design.'],
 
 ['h2', '7.1 Her own material'],
 ['p', 'Her study notes (her course slides) were used in the chapters below. Each was rewritten in plain English, with an example before its technical name.'],

@@ -19,7 +19,7 @@ def load(*names):
 MEMBERS = [('A', 'Loulwah Bin Saeed', ['loulwah.json'], ''),
            ('B', 'Masooma Almesri', ['masooma.json'], ''),
            ('C', 'Samiuallah Mohammad', ['samiuallah_1.json', 'samiuallah_2.json'], ''),
-           ('D', 'Shaikhah Alkhaledi: course slides, terminology class notes and framework proposals', ['shaikhah_1.json', 'shaikhah_2.json'], '')]
+           ('D', 'Shaikha Alkhaldi: course slides, terminology class notes and framework proposals', ['shaikhah_1.json', 'shaikhah_2.json'], '')]
 out = ["['h1', 'How to read this appendix'],",
        "['p', 'This appendix is the full record behind the Contributions Report. For each member, every source document is listed with its specific content, what happened to each item in the handbook, where it can be found, and why anything was left out. Use the contents page to go to a member or a document.'],",
        "['ul', ['**Used as written**: kept almost unchanged.', '**Used and edited**: kept but rewritten, shortened, merged or corrected.', '**Not used**: not in the handbook, with the reason.']],"]
