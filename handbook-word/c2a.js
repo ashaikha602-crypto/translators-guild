@@ -18,13 +18,16 @@ module.exports = [
 ['front', 'Start here'],
 ['p', 'Translation is everywhere. The medicine leaflet in your home, the subtitles of your favourite series, the menu of a video game and the news you read today have all passed through a translator’s hands. Most of the time nobody notices, because a good translation reads as if it had been written in your own language. This book shows you how that invisible work is done, and how you can do it yourself.'],
 ['p', 'It is also very old work. In Baghdad, more than a thousand years ago, the House of Wisdom ({{بيت الحكمة}}) brought together translators who put Greek, Persian and Indian works of science and philosophy into Arabic. Centuries later, many of them were translated from Arabic into Latin and helped to shape learning in Europe. You are about to join this long line of translators.'],
-['p', 'This book is for you if you have never studied translation. You do not need any background: only good English, good Arabic and curiosity. We will start from zero and go one step at a time.'],
+['p', 'This book is for you if you have never studied translation. You do not need any background: only good English, good Arabic and curiosity. We will start from zero and go one step at a time. In the examples, **✓** marks a good translation and **✗** a poor one, and a note such as (Newmark, 1988) gives the source, listed in the References.'],
 ['h', 'What does a translator actually do?'],
-['p', 'Imagine you are walking in a park with a friend who reads only Arabic. You see a sign that says _Keep off the grass._ Your friend asks what it means.'],
-['p', 'You would not say {{ابقَ بعيداً عن العشب}}. You would say what an Arabic sign says in the same place: {{ممنوع الدوس على العشب}}. You understood the English, then said the same thing the way Arabic says it.'],
-['p', 'That is translation. Everything in this book grows from this simple idea.'],
+['p', 'A translator does more than replace the words of one language with the words of another. A translator interprets meaning, considers the context and the purpose, and decides how that meaning should be expressed naturally in the other language.'],
+['p', 'Consider this sentence from a news report: _The minister stopped short of ruling out further measures._ Translated word for word, it does not say what the English means:'],
+['ar', 'توقّف الوزير قبل استبعاد إجراءات إضافية. ✗'],
+['p', 'The translator must first understand what _stopped short of ruling out_ means here: the minister did not exclude the possibility of taking further action. A natural Arabic translation is therefore:'],
+['ar', 'لم يستبعد الوزير اتخاذ مزيد من الإجراءات. ✓'],
+['p', 'Notice what happened. The translator did not translate the words one by one. They understood the meaning, considered the context, and rebuilt the sentence so that it sounds natural to an Arab reader. That is translation. Everything in this book grows from this idea.'],
 ['h', 'The four steps of every translation'],
-['p', 'Whether you translate a sign, a letter or a book, the work usually goes through four steps:'],
+['p', 'Whether you translate a sentence, a letter or a book, the work usually goes through four steps:'],
 ['ol', [
   '**Plan.** Ask who will read your translation and why.',
   '**Understand.** Read the text until you know exactly what it means.',
@@ -42,14 +45,7 @@ module.exports = [
   '**Your journey continues**: how to keep growing after this book.',
 ]],
 ['h', 'How each chapter guides you'],
-['ul', [
-  '**Where we are** tells you what you already know and what comes next.',
-  'The chapter explains each idea with examples in English and Arabic.',
-  '**Try it** gives you a few questions, with the answers straight after.',
-  '**Remember** sums up the chapter, and **Words to remember** gives the new terms with their Arabic equivalents. All the terms are also in the glossary at the end.',
-  '**Next** tells you where the path goes, and **Did you know?** shares a true story about translation.',
-  '**EN → AR** means from English into Arabic, and **AR → EN** the reverse; **✓** marks a good translation and **✗** a poor one; a note in brackets, such as (Newmark, 1988), shows the source of an idea, listed in full in the References.',
-]],
+['p', 'Each chapter opens with **Where we are**, explains each idea with examples in English and Arabic, and gives you questions to **Try it**. It ends with **Remember**, **Words to remember** (all also in the glossary) and **Next**, which shows where the path goes. **Did you know?** boxes share true stories about translation.'],
 
 
 // ================= PART 1 =================

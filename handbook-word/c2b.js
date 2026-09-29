@@ -602,7 +602,7 @@ module.exports = [// ================= PART 5 =================
 
 // ================= CLOSING =================
 ['part', 'Your journey continues', 'closing'],
-['p', 'You started this book with a sign in a park. You can now plan a translation, understand a text, write it naturally in the other language, and check it. Here is how to keep growing.'],
+['p', 'You started this book with one sentence from a news report. You can now plan a translation, understand a text, write it naturally in the other language, and check it. Here is how to keep growing.'],
 ['h', 'Build a daily habit'],
 ['ul', [
   'Read something in English and something in Arabic every day. Good translators are good readers first.',
