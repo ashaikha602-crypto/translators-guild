@@ -303,6 +303,7 @@ module.exports = [
   'Confirm the copyright line and the statement on AI assistance.',
   'Check the ten “Did you know?” facts against a reference work (dates, numbers and names) before printing.',
   'Find a published source for the Arabic dubbing of _The Simpsons_ (Chapter 26), or replace the example.',
+  'Give the author, publisher and year of _Muʿjam al-taʿābīr al-iṣṭilāḥiyya al-Kuwaytiyya al-muqārana_ (the Kuwaiti expressions dictionary used in Chapters 9, 15 and 27), and confirm who shared it with the team.',
   'Ask a native Arabic specialist to check every Arabic equivalent in the glossary and the chapters, and to confirm the preferred terms.',
   'Decide the final English title (“Translation Handbook” or “Translator’s Equipment”) and whether to publish one edition or both.',
   'Decide whether the three practical questions in Chapter 20 are enough for the professor’s “relational model”.',

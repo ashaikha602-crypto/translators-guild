@@ -106,7 +106,7 @@ function block(b) {
     case 'try': {
       H(HeadingLevel.HEADING_3, 'Try it');
       list(a, 'num');
-      P([new TextRun({ text: 'Check your answers', bold: true, color: GREY, font: LATIN })], { spacing: { before: 200, after: 60, line: 290 }, border: { top: { style: BorderStyle.DOTTED, size: 6, color: LINE, space: 6 } } });
+      P([new TextRun({ text: 'Check your answers', bold: true, color: GREY, font: LATIN })], { keepNext: true, spacing: { before: 200, after: 60, line: 290 }, border: { top: { style: BorderStyle.DOTTED, size: 6, color: LINE, space: 6 } } });
       list(c, 'num', { run: { color: GREY } });
       break;
     }
@@ -206,6 +206,7 @@ const R = [
   'Johnson, S. (1897). Letter to Francesco Sastres, 21 August 1784. In G. B. Hill (Ed.), _Johnsonian miscellanies_ (Vol. 2, p. 309). Clarendon Press. (Original work written 1784)',
   'Kenny, D. (Ed.). (2022). _Machine translation for everyone: Empowering users in the age of artificial intelligence_. Language Science Press. https://doi.org/10.5281/zenodo.6653406',
   'Mossop, B. (2014). _Revising and editing for translators_ (3rd ed.). Routledge.',
+  '_Muʿjam al-taʿābīr al-iṣṭilāḥiyya al-Kuwaytiyya al-muqārana_ [Dictionary of comparative Kuwaiti idiomatic expressions]. (n.d.).',
   'Newmark, P. (1988). _A textbook of translation_. Prentice Hall.',
   'Nida, E. A., & Taber, C. R. (1969). _The theory and practice of translation_. E. J. Brill.',
   'Nord, C. (1997). _Translating as a purposeful activity: Functionalist approaches explained_. St. Jerome.',
