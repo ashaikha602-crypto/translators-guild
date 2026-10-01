@@ -760,6 +760,8 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
   color: var(--white); line-height: 1.4; margin: 0; max-width: 34ch; }
 .prompt .lit { font-size: .85rem; color: var(--lilac-dim); margin: 0; }
 .prompt .lit b { color: var(--coral); font-weight: 500; }
+.prompt .ctx { font-family: var(--f-ar-text); direction: rtl; font-size: 1.05rem; line-height: 1.9;
+  color: var(--lilac); margin: 0; max-width: 42ch; }
 
 .options { display: grid; gap: .7rem; }
 .opt { display: grid; grid-template-columns: 2rem 1fr; gap: .9rem; align-items: baseline;
@@ -3883,32 +3885,2517 @@ const PROVERBS = [
 ];
 
 /* ═══════════ أمثال كويتية · KUWAITI PROVERBS ═══════════
-   Deliberately empty, and it stays empty until the proverbs arrive.
-
-   A proverb is not something that can be worked out from the language.
-   It is either the sentence people actually say or it is nothing, and a
-   plausible-looking Kuwaiti proverb that no Kuwaiti has ever said would
-   be worse than an empty page — it would be a lie told in the one
-   register this site exists to protect. The Translation Handbook carries
-   no Kuwaiti material anywhere in it, so there is nothing here to seed
-   this from either. Shaikha is supplying them.
-
-   Each entry takes exactly the shape the PROVERBS pool above takes, so
-   nothing but the array has to change when they land:
-
-     { src: "المثل بالكويتي.",
-       lit: '"the word-for-word, if it helps"',       // optional
-       opts: [
-         { t: "the English that does the same work", tag: "the working equivalent", ok: true },
-         { t: "the word-for-word version",           tag: "literal — says nothing in English" },
-         { t: "a real English proverb that misses",  tag: "close — but about something else" }
-       ],
-       why: "why the right one is right and the others are not, in full, here",
-       ch: "Chapter 8" }                              // optional pointer
-
-   When the pool has entries the trial runs itself; until then the page
-   below says plainly that it is waiting, rather than pretending. */
-const KUWAITI = [];
+   Every expression, meaning, example sentence and English rendering below
+   comes from معجم التعابير الاصطلاحية الكويتية المقارنة, the pages Shaikha
+   supplied (letters ا and ب). Nothing here is invented: the right answer is
+   always the dictionary's own English. The two wrong answers are English
+   renderings of OTHER entries in the same dictionary, chosen because they
+   fit the surface of the example sentence — the money, the hand, the heart,
+   the sun — while doing a different job. `ctx` is the dictionary's own
+   example, shown under the expression, because these only have a meaning
+   inside a sentence. A run draws ten at random from the pool. */
+const KUWAITI = [
+ {
+  "src": "ياخذ فيك ويه الله",
+  "ctx": "شسوي، باخذ فيك ويه الله واساعدك.",
+  "opts": [
+   {
+    "t": "Out of the goodness of my heart.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "A helping hand.",
+    "tag": "names the help, not the reason for it"
+   },
+   {
+    "t": "Your wish is my command.",
+    "tag": "eager service — but nobody gave an order"
+   }
+  ],
+  "why": "<b>ياخذ فيك ويه الله</b> means <b>ابتغاءً لوجه الله</b>. Read the sentence it sits in: the English that does the same job there is <b>Out of the goodness of my heart.</b>"
+ },
+ {
+  "src": "باد حيله",
+  "ctx": "بس! باد حيلي بعد التمرين.",
+  "opts": [
+   {
+    "t": "I'm worn out.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "I have reached my limit.",
+    "tag": "the limit of patience — this is the body giving out"
+   },
+   {
+    "t": "Chomping at the bit.",
+    "tag": "the opposite: eager to start, not spent"
+   }
+  ],
+  "why": "<b>باد حيله</b> means <b>خارت قواه</b>. Read the sentence it sits in: the English that does the same job there is <b>I'm worn out.</b>"
+ },
+ {
+  "src": "باردة مبردة",
+  "ctx": "احنا نتعب واهو ياخذها باردة مبردة.",
+  "opts": [
+   {
+    "t": "Handed to him on a plate.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "By the skin of his teeth.",
+    "tag": "the opposite: only just, after great effort"
+   },
+   {
+    "t": "He is raking it in.",
+    "tag": "earning a lot — the point is that he did no work"
+   }
+  ],
+  "why": "<b>باردة مبردة</b> means <b>الظفر بالشيء بدون أي جهد يذكر</b>. Read the sentence it sits in: the English that does the same job there is <b>Handed to him on a plate.</b>"
+ },
+ {
+  "src": "بارك على حلال",
+  "ctx": "عمي طلع بارك على حلال واحنا ما ندري.",
+  "opts": [
+   {
+    "t": "He has been laying money away.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Has deep pockets.",
+    "tag": "rich, yes — but openly; this is money nobody knew about"
+   },
+   {
+    "t": "Under the table.",
+    "tag": "secret, but dishonest — the uncle did nothing wrong"
+   }
+  ],
+  "why": "<b>بارك على حلال</b> means <b>يملك مالاً دون علم الآخرين</b>. Read the sentence it sits in: the English that does the same job there is <b>He has been laying money away.</b>"
+ },
+ {
+  "src": "باسه گوي",
+  "ctx": "والله باسك گوي اللي للحين ما غيرت رايك.",
+  "opts": [
+   {
+    "t": "Hardheaded, set in his ways.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Has his ear.",
+    "tag": "being influenced — the opposite of refusing to budge"
+   },
+   {
+    "t": "Spoiling for a fight.",
+    "tag": "aggressive; stubborn is not the same as quarrelsome"
+   }
+  ],
+  "why": "<b>باسه گوي</b> means <b>عنيد، صعب المراس</b>. Read the sentence it sits in: the English that does the same job there is <b>Hardheaded, set in his ways.</b>"
+ },
+ {
+  "src": "باع ما وراه ودونه",
+  "ctx": "أحمد باع ما وراه ودونه عشان يشتري هالبيت.",
+  "opts": [
+   {
+    "t": "Paid through the nose.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Handed to him on a plate.",
+    "tag": "the opposite: got it for nothing"
+   },
+   {
+    "t": "Has deep pockets.",
+    "tag": "rich enough not to notice — this cost him everything"
+   }
+  ],
+  "why": "<b>باع ما وراه ودونه</b> means <b>أنفق كل ما لديه من أجل الحصول على شيء ما</b>. Read the sentence it sits in: the English that does the same job there is <b>Paid through the nose.</b>"
+ },
+ {
+  "src": "بال بذنه",
+  "ctx": "منو بال بذنك وخلاك تغير رايك؟",
+  "opts": [
+   {
+    "t": "Has his ear; twisted him round his little finger.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Set in his ways.",
+    "tag": "the opposite — this mind did change"
+   },
+   {
+    "t": "Spill the beans.",
+    "tag": "telling secrets — here someone is steering a decision"
+   }
+  ],
+  "why": "<b>بال بذنه</b> means <b>غيّر من رأي فلان ووجّه أفكاره</b>. Read the sentence it sits in: the English that does the same job there is <b>Has his ear; twisted him round his little finger.</b>"
+ },
+ {
+  "src": "بالخش والدس",
+  "ctx": "درت سبيكة إن اللي معاها تبي تضايقها بالخش والدس.",
+  "opts": [
+   {
+    "t": "Under the table, behind closed doors.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Keep it under your hat.",
+    "tag": "a kind secret — this is hidden malice"
+   },
+   {
+    "t": "Mum's the word.",
+    "tag": "a promise of silence, not a quiet scheme"
+   }
+  ],
+  "why": "<b>بالخش والدس</b> means <b>يبطن مكره</b>. Read the sentence it sits in: the English that does the same job there is <b>Under the table, behind closed doors.</b>"
+ },
+ {
+  "src": "بالسنة حسنة",
+  "ctx": "وين جراح؟ ما نشوفه إلا بالسنة حسنه.",
+  "opts": [
+   {
+    "t": "Hardly ever.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "On the twelfth of never.",
+    "tag": "never at all — Jarrah does turn up, just rarely"
+   },
+   {
+    "t": "Time flies!",
+    "tag": "years passing quickly, not rare visits"
+   }
+  ],
+  "why": "<b>بالسنة حسنة</b> means <b>عمل أو زيارة لا تحدث إلا مرة في السنة</b>. Read the sentence it sits in: the English that does the same job there is <b>Hardly ever.</b>"
+ },
+ {
+  "src": "بالطگاگ",
+  "ctx": "مو عاجبك شغلي؟ بالطگاگ!",
+  "opts": [
+   {
+    "t": "It's no skin off my nose.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Throw caution to the wind.",
+    "tag": "recklessness about risk — this is indifference to an opinion"
+   },
+   {
+    "t": "For crying out loud!",
+    "tag": "exasperation — the speaker isn't upset, just doesn't care"
+   }
+  ],
+  "why": "<b>بالطگاگ</b> means <b>لا يهمني ولا يعنيني</b>. Read the sentence it sits in: the English that does the same job there is <b>It's no skin off my nose.</b>"
+ },
+ {
+  "src": "بالع رادو",
+  "ctx": "بسك هذرة! بالع رادو؟",
+  "opts": [
+   {
+    "t": "Could talk the hind leg off a donkey.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "A blabbermouth.",
+    "tag": "tells secrets — the problem here is non-stop talk"
+   },
+   {
+    "t": "Full of hot air.",
+    "tag": "empty promises, not too much chatter"
+   }
+  ],
+  "why": "<b>بالع رادو</b> means <b>ثرثار</b>. Read the sentence it sits in: the English that does the same job there is <b>Could talk the hind leg off a donkey.</b>"
+ },
+ {
+  "src": "بالعگل",
+  "ctx": "بالعگل! أكو واحد يشتري شي بدون ما يشوفه؟",
+  "opts": [
+   {
+    "t": "Use your head.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "To be of sound mind.",
+    "tag": "a state of mind, not advice to think"
+   },
+   {
+    "t": "Has a few screws loose.",
+    "tag": "an insult — the speaker is asking him to think"
+   }
+  ],
+  "why": "<b>بالعگل</b> means <b>حدّث العاقل بما يعقل</b>. Read the sentence it sits in: the English that does the same job there is <b>Use your head.</b>"
+ },
+ {
+  "src": "بالع موس",
+  "ctx": "ميّن على ولدك بالع موس يوم عرف إنه عندك خبر بدرجاته.",
+  "opts": [
+   {
+    "t": "In a sticky situation.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "I got tongue-tied.",
+    "tag": "lost for words — this is being trapped"
+   },
+   {
+    "t": "Spill the beans.",
+    "tag": "what someone did to him, not the state he is in"
+   }
+  ],
+  "why": "<b>بالع موس</b> means <b>في موقف محرج لا يستطيع الخلاص منه</b>. Read the sentence it sits in: the English that does the same job there is <b>In a sticky situation.</b>"
+ },
+ {
+  "src": "بالعيد",
+  "ctx": "راح يعوضونك الخسارة بالعيد.",
+  "opts": [
+   {
+    "t": "On the twelfth of never.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Hardly ever.",
+    "tag": "rarely — this means it will never happen"
+   },
+   {
+    "t": "Just in the nick of time.",
+    "tag": "Eid sounds like a date — the meaning is no date at all"
+   }
+  ],
+  "why": "<b>بالعيد</b> means <b>يكاد يكون مستحيلاً، بيضة الديك</b>. Read the sentence it sits in: the English that does the same job there is <b>On the twelfth of never.</b>"
+ },
+ {
+  "src": "بالمخبة",
+  "ctx": "لا تحاتي، مديرك بالمخبة، أنا أكلمه.",
+  "opts": [
+   {
+    "t": "I have him in my back pocket.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Keep it under your hat.",
+    "tag": "المخبة suggests hiding — nothing here is secret"
+   },
+   {
+    "t": "Have no fear, it is in good hands.",
+    "tag": "reassuring, but about a task — this is control over a person"
+   }
+  ],
+  "why": "<b>بالمخبة</b> means <b>مضمون، تحت سيطرته</b>. Read the sentence it sits in: the English that does the same job there is <b>I have him in my back pocket.</b>"
+ },
+ {
+  "src": "باله وياه",
+  "ctx": "عمتي لگيل وفاتها الله يرحمها كان بالها وياها.",
+  "opts": [
+   {
+    "t": "She was of sound mind.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Use your head.",
+    "tag": "an order to think, not a mind intact"
+   },
+   {
+    "t": "May she rest in peace.",
+    "tag": "الله يرحمها is already in the sentence — the expression is about her mind"
+   }
+  ],
+  "why": "<b>باله وياه</b> means <b>بكامل قواه العقلية</b>. Read the sentence it sits in: the English that does the same job there is <b>She was of sound mind.</b>"
+ },
+ {
+  "src": "بانت فيلچا",
+  "ctx": "بانت فيلچا وعرفت منو يلعب بالحلال.",
+  "opts": [
+   {
+    "t": "Things fell into place.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Spill the beans.",
+    "tag": "someone told — here the truth showed itself"
+   },
+   {
+    "t": "Hell has frozen over!",
+    "tag": "the impossible happening, not a truth coming clear"
+   }
+  ],
+  "why": "<b>بانت فيلچا</b> means <b>ظهرت بوادر حقيقة ما</b>. Read the sentence it sits in: the English that does the same job there is <b>Things fell into place.</b>"
+ },
+ {
+  "src": "بايعها",
+  "ctx": "إنت بايعها يوم تغلط على الناظر.",
+  "opts": [
+   {
+    "t": "Throw caution to the wind.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "It's no skin off my nose.",
+    "tag": "not caring what others think — this is not caring about consequences"
+   },
+   {
+    "t": "Shot himself in the foot.",
+    "tag": "one self-inflicted blow — بايعها is a whole attitude"
+   }
+  ],
+  "why": "<b>بايعها</b> means <b>المستهتر الذي لا يهتم بتوابع الأمور</b>. Read the sentence it sits in: the English that does the same job there is <b>Throw caution to the wind.</b>"
+ },
+ {
+  "src": "بحسبة أخوي",
+  "ctx": "إنت بحسبة أخوي ما بيننا فلوس.",
+  "opts": [
+   {
+    "t": "My brother from another mother.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Nearest and dearest.",
+    "tag": "real family — he is only like a brother"
+   },
+   {
+    "t": "Has deep pockets.",
+    "tag": "the sentence mentions money; the expression doesn't"
+   }
+  ],
+  "why": "<b>بحسبة أخوي</b> means <b>رب أخ لك لم تلده أمك</b>. Read the sentence it sits in: the English that does the same job there is <b>My brother from another mother.</b>"
+ },
+ {
+  "src": "بح صوتي وأنا أگول لك",
+  "ctx": "بح صوتي وانا أگول لك إدرس، بس ماكو فايدة.",
+  "opts": [
+   {
+    "t": "What I said fell on deaf ears.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Cried my eyes out.",
+    "tag": "a literal reading of a lost voice"
+   },
+   {
+    "t": "I got tongue-tied.",
+    "tag": "losing your words, not being ignored"
+   }
+  ],
+  "why": "<b>بح صوتي وأنا أگول لك</b> means <b>أعرض عني بسمعه</b>. Read the sentence it sits in: the English that does the same job there is <b>What I said fell on deaf ears.</b>"
+ },
+ {
+  "src": "بخور السوگ",
+  "ctx": "شفيك صاير بخور السوگ؟ كل من عرف السالفة.",
+  "opts": [
+   {
+    "t": "A blabbermouth.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "All the rage.",
+    "tag": "the market suggests fashion — this is about secrets"
+   },
+   {
+    "t": "A bit of a chatterbox.",
+    "tag": "talks a lot, harmlessly — a blabbermouth leaks"
+   }
+  ],
+  "why": "<b>بخور السوگ</b> means <b>لا يستطيع كتم السر</b>. Read the sentence it sits in: the English that does the same job there is <b>A blabbermouth.</b>"
+ },
+ {
+  "src": "بربيع",
+  "ctx": "ناصر بربيع من ربح بالسوگ.",
+  "opts": [
+   {
+    "t": "On the gravy train.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Time flies!",
+    "tag": "the spring in the word, not the meaning"
+   },
+   {
+    "t": "A reversal of fortune.",
+    "tag": "a fall — Nasser's luck went up"
+   }
+  ],
+  "why": "<b>بربيع</b> means <b>في خير ونعيم</b>. Read the sentence it sits in: the English that does the same job there is <b>On the gravy train.</b>"
+ },
+ {
+  "src": "برد چبده",
+  "ctx": "برد چبدي يوم زف اللي غلط علي.",
+  "opts": [
+   {
+    "t": "It gave me real satisfaction.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Grinds my gears.",
+    "tag": "the opposite: بط چبده is anger, برد چبده is relief"
+   },
+   {
+    "t": "Rub salt into the wound.",
+    "tag": "what was done to him — not how the speaker feels"
+   }
+  ],
+  "why": "<b>برد چبده</b> means <b>أشفى غليله</b>. Read the sentence it sits in: the English that does the same job there is <b>It gave me real satisfaction.</b>"
+ },
+ {
+  "src": "بسابع نومة",
+  "ctx": "عبدالرحمن بسابع نومة وما يدري عن الدوام.",
+  "opts": [
+   {
+    "t": "Sleeping like a rock.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Dead tired.",
+    "tag": "exhausted, awake or not — this is how deep the sleep is"
+   },
+   {
+    "t": "Dazed and confused.",
+    "tag": "not knowing what is going on, but awake"
+   }
+  ],
+  "why": "<b>بسابع نومة</b> means <b>يغط في نوم عميق</b>. Read the sentence it sits in: the English that does the same job there is <b>Sleeping like a rock.</b>"
+ },
+ {
+  "src": "بس خلاص!",
+  "ctx": "بس خلاص! كل يوم تطلب مني فلوس؟",
+  "opts": [
+   {
+    "t": "For crying out loud!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "That is all I need!",
+    "tag": "a new misfortune — here someone is told to stop"
+   },
+   {
+    "t": "Just wanted to be done with it.",
+    "tag": "wanting a task over, not someone to stop"
+   }
+  ],
+  "why": "<b>بس خلاص!</b> means <b>فلتكف عن ذلك</b>. Read the sentence it sits in: the English that does the same job there is <b>For crying out loud!</b>"
+ },
+ {
+  "src": "بط الجربة",
+  "ctx": "ترى حمود بط الجربة والكل عرف سوالفك.",
+  "opts": [
+   {
+    "t": "Spilled the beans.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Keep it under your hat.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "Grinds my gears.",
+    "tag": "the same بط — but that one is anger"
+   }
+  ],
+  "why": "<b>بط الجربة</b> means <b>أخرج ما في جعبته وأشاع الخبر</b>. Read the sentence it sits in: the English that does the same job there is <b>Spilled the beans.</b>"
+ },
+ {
+  "src": "بط چبده",
+  "ctx": "بط چبدي يوم دريت إنه غاشني بالسعر.",
+  "opts": [
+   {
+    "t": "It really grinds my gears.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "It gave me real satisfaction.",
+    "tag": "the opposite: برد چبده"
+   },
+   {
+    "t": "Feel bitter as gall.",
+    "tag": "grief and disappointment — this is irritation"
+   }
+  ],
+  "why": "<b>بط چبده</b> means <b>أغاظه وأزعجه</b>. Read the sentence it sits in: the English that does the same job there is <b>It really grinds my gears.</b>"
+ },
+ {
+  "src": "بط مرارته",
+  "ctx": "بط مرارتي لما دريت إنه سقط بكل المواد.",
+  "opts": [
+   {
+    "t": "I felt bitter as gall.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "It really grinds my gears.",
+    "tag": "annoyance — this is deep disappointment"
+   },
+   {
+    "t": "Spilled the beans.",
+    "tag": "the same verb بط, a different expression"
+   }
+  ],
+  "why": "<b>بط مرارته</b> means <b>أحس بالمرارة الشديدة</b>. Read the sentence it sits in: the English that does the same job there is <b>I felt bitter as gall.</b>"
+ },
+ {
+  "src": "بطلعة الروح",
+  "ctx": "ما لگيت هالكتاب إلا بطلعة الروح.",
+  "opts": [
+   {
+    "t": "By the skin of my teeth.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Handed to me on a plate.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "Had a close brush with death.",
+    "tag": "the soul leaving tempts it — nobody was in danger"
+   }
+  ],
+  "why": "<b>بطلعة الروح</b> means <b>بشق الأنفس</b>. Read the sentence it sits in: the English that does the same job there is <b>By the skin of my teeth.</b>"
+ },
+ {
+  "src": "بطيني",
+  "ctx": "شفيك بطيني؟ لا تاكل الأكل كله.",
+  "opts": [
+   {
+    "t": "Shovels food into his mouth.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Chomping at the bit.",
+    "tag": "eager — for action, not food"
+   },
+   {
+    "t": "I do not care for this food.",
+    "tag": "about the food, not the eater"
+   }
+  ],
+  "why": "<b>بطيني</b> means <b>أكول</b>. Read the sentence it sits in: the English that does the same job there is <b>Shovels food into his mouth.</b>"
+ },
+ {
+  "src": "بعد چبدي",
+  "ctx": "يا بعد چبدي يا وليدي يا نظر عيني.",
+  "opts": [
+   {
+    "t": "Nearest and dearest.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "My brother from another mother.",
+    "tag": "a close friend — this is a parent to a child"
+   },
+   {
+    "t": "Grinds my gears.",
+    "tag": "چبد appears in anger too; this one is love"
+   }
+  ],
+  "why": "<b>بعد چبدي</b> means <b>يا أعز الناس بالنسبة لي</b>. Read the sentence it sits in: the English that does the same job there is <b>Nearest and dearest.</b>"
+ },
+ {
+  "src": "بگراطيسها",
+  "ctx": "أمس لولوه ماخذة سيارة بگراطيسها.",
+  "opts": [
+   {
+    "t": "Brand new.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "All the rage.",
+    "tag": "fashionable — not the same as unused"
+   },
+   {
+    "t": "Handed to her on a plate.",
+    "tag": "how she got it, not its condition"
+   }
+  ],
+  "why": "<b>بگراطيسها</b> means <b>أحدث البضائع</b>. Read the sentence it sits in: the English that does the same job there is <b>Brand new.</b>"
+ },
+ {
+  "src": "بلاغة شف",
+  "ctx": "فيك بلاغة شف تكرّه الواحد فيك.",
+  "opts": [
+   {
+    "t": "Such a nosey parker.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "A blabbermouth.",
+    "tag": "spreads news — this one hunts for it"
+   },
+   {
+    "t": "A bit of a chatterbox.",
+    "tag": "talks too much — this one asks too much"
+   }
+  ],
+  "why": "<b>بلاغة شف</b> means <b>فضولي يحب معرفة شؤون الآخرين</b>. Read the sentence it sits in: the English that does the same job there is <b>Such a nosey parker.</b>"
+ },
+ {
+  "src": "بلع لسانه",
+  "ctx": "شفيه منصور بلع لسانه؟ ليكون متوهگ؟",
+  "opts": [
+   {
+    "t": "Doesn't know whether he's coming or going.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "I got tongue-tied.",
+    "tag": "the same image — but the dictionary reads it as confusion, not nerves"
+   },
+   {
+    "t": "Mum's the word.",
+    "tag": "silence chosen to keep a secret"
+   }
+  ],
+  "why": "<b>بلع لسانه</b> means <b>انقطع عن الكلام ووقع في حيرة من أمره</b>. Read the sentence it sits in: the English that does the same job there is <b>Doesn't know whether he's coming or going.</b>"
+ },
+ {
+  "src": "بوس إيدك بالگلوب",
+  "ctx": "بوس ايدك بالگلوب واحمد ربك على النعمة.",
+  "opts": [
+   {
+    "t": "Count your blessings!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Bow and scrape.",
+    "tag": "kissing suggests deference — this is gratitude"
+   },
+   {
+    "t": "Consider yourself heartily thanked.",
+    "tag": "thanking a person, not God"
+   }
+  ],
+  "why": "<b>بوس إيدك بالگلوب</b> means <b>كن شكوراً ولا تشكُ الحال</b>. Read the sentence it sits in: the English that does the same job there is <b>Count your blessings!</b>"
+ },
+ {
+  "src": "بو شلاخ",
+  "ctx": "لا تسمع سالفته، ترى هذا بو شلاخ.",
+  "opts": [
+   {
+    "t": "Lies like he breathes.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Full of hot air.",
+    "tag": "empty promises — close, but this one simply lies"
+   },
+   {
+    "t": "A bit of a chatterbox.",
+    "tag": "talks a lot; not the same as lying"
+   }
+  ],
+  "why": "<b>بو شلاخ</b> means <b>كاذب</b>. Read the sentence it sits in: the English that does the same job there is <b>Lies like he breathes.</b>"
+ },
+ {
+  "src": "بو طبيع",
+  "ctx": "بو طبيع ما ايوز من طبعه.",
+  "opts": [
+   {
+    "t": "It is in his blood.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Set in his ways.",
+    "tag": "stubborn in opinion — this is a habit he cannot drop"
+   },
+   {
+    "t": "Chasing a fad.",
+    "tag": "the opposite: always changing"
+   }
+  ],
+  "why": "<b>بو طبيع</b> means <b>من شبّ على شيء شاب عليه</b>. Read the sentence it sits in: the English that does the same job there is <b>It is in his blood.</b>"
+ },
+ {
+  "src": "بو طير",
+  "ctx": "وخر عنه تراه شرّي بو طير.",
+  "opts": [
+   {
+    "t": "Goes hell for leather.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Spoiling for a fight.",
+    "tag": "aggressive — this is rash and hasty"
+   },
+   {
+    "t": "Chasing a fad.",
+    "tag": "flighty in tastes, not in temper"
+   }
+  ],
+  "why": "<b>بو طير</b> means <b>عجول، طائش الحلم</b>. Read the sentence it sits in: the English that does the same job there is <b>Goes hell for leather.</b>"
+ },
+ {
+  "src": "بو هبة",
+  "ctx": "إنت كل يوم تولّع بشي؟ صاير بو هبّة.",
+  "opts": [
+   {
+    "t": "Chasing a fad.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "All the rage.",
+    "tag": "the thing in fashion, not the person chasing it"
+   },
+   {
+    "t": "Goes hell for leather.",
+    "tag": "rashness, not short-lived enthusiasm"
+   }
+  ],
+  "why": "<b>بو هبة</b> means <b>ولعه قصير المدة</b>. Read the sentence it sits in: the English that does the same job there is <b>Chasing a fad.</b>"
+ },
+ {
+  "src": "بياع حچي",
+  "ctx": "روح زين! صح بياع حچي وملينا من كلامك.",
+  "opts": [
+   {
+    "t": "Full of hot air.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Talk is cheap.",
+    "tag": "a general truth — this labels a person"
+   },
+   {
+    "t": "Lies like he breathes.",
+    "tag": "outright lying — this is promising and not delivering"
+   }
+  ],
+  "why": "<b>بياع حچي</b> means <b>لا يفي بوعوده</b>. Read the sentence it sits in: the English that does the same job there is <b>Full of hot air.</b>"
+ },
+ {
+  "src": "بيت النازل",
+  "ctx": "الشاليه حالياً بيت النازل راح يكلفك سبعين ألف دينار.",
+  "opts": [
+   {
+    "t": "At the very least.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Paid through the nose.",
+    "tag": "it is expensive — but the expression gives the minimum"
+   },
+   {
+    "t": "Make yourself at home.",
+    "tag": "the house in the phrase, not its meaning"
+   }
+  ],
+  "why": "<b>بيت النازل</b> means <b>أقل شيء بالنسبة له</b>. Read the sentence it sits in: the English that does the same job there is <b>At the very least.</b>"
+ },
+ {
+  "src": "بيت شعر شماتة",
+  "ctx": "بسّك طنازة! صاير بيت شعر شماتة.",
+  "opts": [
+   {
+    "t": "Rubbing salt into the wound.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "You are a riot!",
+    "tag": "laughing with someone, not at them"
+   },
+   {
+    "t": "It gave me real satisfaction.",
+    "tag": "the gloater's pleasure, not the act of gloating"
+   }
+  ],
+  "why": "<b>بيت شعر شماتة</b> means <b>عابه عليه</b>. Read the sentence it sits in: the English that does the same job there is <b>Rubbing salt into the wound.</b>"
+ },
+ {
+  "src": "بيض الصعو",
+  "ctx": "صاير بيض الصعو ما نشوفك إلا بالعيد.",
+  "opts": [
+   {
+    "t": "As scarce as hen's teeth.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "On the twelfth of never.",
+    "tag": "never — but this person is seen, just rarely"
+   },
+   {
+    "t": "Brand new.",
+    "tag": "eggs and freshness — nothing to do with it"
+   }
+  ],
+  "why": "<b>بيض الصعو</b> means <b>عملة نادرة، أندر من الكبريت الأحمر</b>. Read the sentence it sits in: the English that does the same job there is <b>As scarce as hen's teeth.</b>"
+ },
+ {
+  "src": "بيّض الله ويهك",
+  "ctx": "بيض الله ويهك يا خالد، ما قصّرت ويانا.",
+  "opts": [
+   {
+    "t": "Consider yourself heartily thanked.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Count your blessings!",
+    "tag": "gratitude to God, not to Khalid"
+   },
+   {
+    "t": "Have some shame!",
+    "tag": "the face again — the opposite wish"
+   }
+  ],
+  "why": "<b>بيّض الله ويهك</b> means <b>من يزرع المعروف يحصد الشكر</b>. Read the sentence it sits in: the English that does the same job there is <b>Consider yourself heartily thanked.</b>"
+ },
+ {
+  "src": "بينهم حرب وضرب",
+  "ctx": "سلطان وسليمان بينهم حرب وضرب من عمر.",
+  "opts": [
+   {
+    "t": "There is no love lost between them.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "At daggers drawn.",
+    "tag": "a fresh quarrel — this is old, settled dislike"
+   },
+   {
+    "t": "Not on the same page.",
+    "tag": "a misunderstanding, not hostility"
+   }
+  ],
+  "why": "<b>بينهم حرب وضرب</b> means <b>يتبادلان العداوة والبغضاء</b>. Read the sentence it sits in: the English that does the same job there is <b>There is no love lost between them.</b>"
+ },
+ {
+  "src": "بينهم غمندة",
+  "ctx": "شوفهم يتساسرون أكيد بينهم غمندة.",
+  "opts": [
+   {
+    "t": "They are keeping a secret.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "There is no love lost between them.",
+    "tag": "whispering looks like plotting — they share a secret, not a grudge"
+   },
+   {
+    "t": "Behind closed doors.",
+    "tag": "where something happens, not what two people share"
+   }
+  ],
+  "why": "<b>بينهم غمندة</b> means <b>بينهم أسرار مكتومة</b>. Read the sentence it sits in: the English that does the same job there is <b>They are keeping a secret.</b>"
+ },
+ {
+  "src": "بينهم وگفة نفس",
+  "ctx": "بينهم وگفة نفس وما يكلمون بعض.",
+  "opts": [
+   {
+    "t": "At daggers drawn.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "There is no love lost between them.",
+    "tag": "long dislike — this is a quarrel that has stopped them talking"
+   },
+   {
+    "t": "I got tongue-tied.",
+    "tag": "not speaking — from nerves, not anger"
+   }
+  ],
+  "why": "<b>بينهم وگفة نفس</b> means <b>تخاصما</b>. Read the sentence it sits in: the English that does the same job there is <b>At daggers drawn.</b>"
+ },
+ {
+  "src": "بيني وبينك",
+  "ctx": "بيني وبينك ترى هاي تزوج.",
+  "opts": [
+   {
+    "t": "Keep it under your hat.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Not on the same page.",
+    "tag": "about two people differing"
+   },
+   {
+    "t": "Spill the beans.",
+    "tag": "the speaker is telling — but asking you not to"
+   }
+  ],
+  "why": "<b>بيني وبينك</b> means <b>أكتم الأمر وتفاصيله</b>. Read the sentence it sits in: the English that does the same job there is <b>Keep it under your hat.</b>"
+ },
+ {
+  "src": "أبركها ساعة",
+  "ctx": "أبركها ساعة يوم نقلوه إدارة ثانية عشان ما نشوفه.",
+  "opts": [
+   {
+    "t": "Glad it is over!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Just in the nick of time.",
+    "tag": "a lucky moment — this is relief to see someone go"
+   },
+   {
+    "t": "Don't let the door hit you on your way out!",
+    "tag": "said to the person leaving, to their face"
+   }
+  ],
+  "why": "<b>أبركها ساعة</b> means <b>ارتحنا منه</b>. Read the sentence it sits in: the English that does the same job there is <b>Glad it is over!</b>"
+ },
+ {
+  "src": "أبي الفكة",
+  "ctx": "بس! أبي الفكة من هالمشاكل.",
+  "opts": [
+   {
+    "t": "I just want to be done with it.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "For crying out loud!",
+    "tag": "exasperation at someone, not a wish to get out"
+   },
+   {
+    "t": "Glad it is over!",
+    "tag": "relief afterwards — this is still wanting out"
+   }
+  ],
+  "why": "<b>أبي الفكة</b> means <b>أريد الخلاص من هذا الأمر</b>. Read the sentence it sits in: the English that does the same job there is <b>I just want to be done with it.</b>"
+ },
+ {
+  "src": "إطگك على راسك",
+  "ctx": "راح إطگك على راسك إذا گلت لك منو استقال.",
+  "opts": [
+   {
+    "t": "Your jaw will drop.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Got his just deserts.",
+    "tag": "انطگ على راسه — punishment, a different expression"
+   },
+   {
+    "t": "I'll beat the living daylights out of you.",
+    "tag": "the literal blow, not the shock"
+   }
+  ],
+  "why": "<b>إطگك على راسك</b> means <b>سوف تصدم عند سماع الخبر</b>. Read the sentence it sits in: the English that does the same job there is <b>Your jaw will drop.</b>"
+ },
+ {
+  "src": "إخذه على گد عگله",
+  "ctx": "إخذ ياسين على گد عگله ولا تدقق بكلامه.",
+  "opts": [
+   {
+    "t": "Humour him — he's feather-brained.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Use your head.",
+    "tag": "advice to the listener — this is about not taking the other one seriously"
+   },
+   {
+    "t": "Has a few screws loose.",
+    "tag": "calls him mad; the advice is to humour him"
+   }
+  ],
+  "why": "<b>إخذه على گد عگله</b> means <b>لا تأخذه على محمل الجد</b>. Read the sentence it sits in: the English that does the same job there is <b>Humour him — he's feather-brained.</b>"
+ },
+ {
+  "src": "أذنات الدون",
+  "ctx": "عاد إنت تزعل على أذنات الدون.",
+  "opts": [
+   {
+    "t": "Get bent out of shape over nothing.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "It really grinds my gears.",
+    "tag": "annoyance — this stresses how small the cause is"
+   },
+   {
+    "t": "At the very least.",
+    "tag": "both point at the smallest thing — but one is a price"
+   }
+  ],
+  "why": "<b>أذنات الدون</b> means <b>على أقل شيء أو سبب</b>. Read the sentence it sits in: the English that does the same job there is <b>Get bent out of shape over nothing.</b>"
+ },
+ {
+  "src": "إذا لك خاطر",
+  "ctx": "إحنا بنروح البيت العوده إذا لك خاطر.",
+  "opts": [
+   {
+    "t": "If you wish to come.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Your wish is my command.",
+    "tag": "the wish again — but that obeys; this invites"
+   },
+   {
+    "t": "Pay what you want.",
+    "tag": "free choice about money, not company"
+   }
+  ],
+  "why": "<b>إذا لك خاطر</b> means <b>إذا أردت ذلك</b>. Read the sentence it sits in: the English that does the same job there is <b>If you wish to come.</b>"
+ },
+ {
+  "src": "أردى من أمه",
+  "ctx": "سالم أردى من أمه ما يقدر يشوف فيلم رعب.",
+  "opts": [
+   {
+    "t": "Chicken-hearted.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Scared witless.",
+    "tag": "one moment of fear — this is his nature"
+   },
+   {
+    "t": "Nearest and dearest.",
+    "tag": "the mother in the phrase"
+   }
+  ],
+  "why": "<b>أردى من أمه</b> means <b>جبان وهلوع</b>. Read the sentence it sits in: the English that does the same job there is <b>Chicken-hearted.</b>"
+ },
+ {
+  "src": "إرگد وآمن",
+  "ctx": "إرگد وآمن، وصيت أحد يحجز التذاكر.",
+  "opts": [
+   {
+    "t": "Have no fear, it is in good hands.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Sleeping like a rock.",
+    "tag": "literally rest — the meaning is don't worry"
+   },
+   {
+    "t": "I have him in my back pocket.",
+    "tag": "control over a person, not a task taken care of"
+   }
+  ],
+  "why": "<b>إرگد وآمن</b> means <b>لا تقلق فالأمر بأيدٍ أمينة</b>. Read the sentence it sits in: the English that does the same job there is <b>Have no fear, it is in good hands.</b>"
+ },
+ {
+  "src": "أزيدك من الشعر بيت",
+  "ctx": "أزيدك من الشعر بيت، الدوام راح يزيدون معاشنا.",
+  "opts": [
+   {
+    "t": "On top of that.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Rubbing salt into the wound.",
+    "tag": "بيت شعر شماتة — another line of poetry, a different job"
+   },
+   {
+    "t": "At the very least.",
+    "tag": "a minimum, not an addition"
+   }
+  ],
+  "why": "<b>أزيدك من الشعر بيت</b> means <b>علاوة على ذلك</b>. Read the sentence it sits in: the English that does the same job there is <b>On top of that.</b>"
+ },
+ {
+  "src": "إستح على ويهك",
+  "ctx": "إستح على ويهك! داخل وماخذ أغراض أخوك بدون ما تستأذن.",
+  "opts": [
+   {
+    "t": "Have some shame!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Shame on me for that.",
+    "tag": "blaming yourself, not him"
+   },
+   {
+    "t": "Go fly a kite!",
+    "tag": "telling someone to leave"
+   }
+  ],
+  "why": "<b>إستح على ويهك</b> means <b>عليك أن تشعر ببعض الخجل</b>. Read the sentence it sits in: the English that does the same job there is <b>Have some shame!</b>"
+ },
+ {
+  "src": "إستر على ما واجهت",
+  "ctx": "إستر على ما واجهت، الستر زين.",
+  "opts": [
+   {
+    "t": "Mum's the word.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Behind closed doors.",
+    "tag": "hidden dealing, not a request for discretion"
+   },
+   {
+    "t": "Spill the beans.",
+    "tag": "the opposite"
+   }
+  ],
+  "why": "<b>إستر على ما واجهت</b> means <b>أرجو أن تستر على زلتي</b>. Read the sentence it sits in: the English that does the same job there is <b>Mum's the word.</b>"
+ },
+ {
+  "src": "إشتغل على ركادة",
+  "ctx": "بزة إشتغلت على ركادة وسوت لها خوش مشروع.",
+  "opts": [
+   {
+    "t": "Worked diligently.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Goes hell for leather.",
+    "tag": "the opposite: rushing"
+   },
+   {
+    "t": "Go by the book.",
+    "tag": "following rules — ركادة is care and patience"
+   }
+  ],
+  "why": "<b>إشتغل على ركادة</b> means <b>عمل بتأنٍّ</b>. Read the sentence it sits in: the English that does the same job there is <b>Worked diligently.</b>"
+ },
+ {
+  "src": "أشگ هدومي",
+  "ctx": "أشگ هدومي من حنته.",
+  "opts": [
+   {
+    "t": "It drives me insane.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Cried my eyes out.",
+    "tag": "tearing clothes in grief — this is exasperation"
+   },
+   {
+    "t": "Has a few screws loose.",
+    "tag": "calls someone else mad"
+   }
+  ],
+  "why": "<b>أشگ هدومي</b> means <b>جن جنوني</b>. Read the sentence it sits in: the English that does the same job there is <b>It drives me insane.</b>"
+ },
+ {
+  "src": "أصل وفصل",
+  "ctx": "النعم بسليمان، أصل وفصل.",
+  "opts": [
+   {
+    "t": "Of noble origin.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Nearest and dearest.",
+    "tag": "family warmth, not a family name"
+   },
+   {
+    "t": "In a class of his own.",
+    "tag": "personal excellence, not lineage"
+   }
+  ],
+  "why": "<b>أصل وفصل</b> means <b>من عائلة عريقة الأصل</b>. Read the sentence it sits in: the English that does the same job there is <b>Of noble origin.</b>"
+ },
+ {
+  "src": "أضبط من ساعة الملا",
+  "ctx": "ما شاء الله الموظف أضبط من ساعة الملا وعمره ما تأخر.",
+  "opts": [
+   {
+    "t": "As regular as clockwork.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Just in the nick of time.",
+    "tag": "only just on time — this one is never late"
+   },
+   {
+    "t": "Go by the book.",
+    "tag": "rule-keeping, not punctuality"
+   }
+  ],
+  "why": "<b>أضبط من ساعة الملا</b> means <b>يحافظ على الميعاد</b>. Read the sentence it sits in: the English that does the same job there is <b>As regular as clockwork.</b>"
+ },
+ {
+  "src": "أگص إيدي من عرجها إذا",
+  "ctx": "أگص إيدي من عرجها إذا طلع كلامك صح.",
+  "opts": [
+   {
+    "t": "I'll eat my hat if...",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "I would give my right arm to...",
+    "tag": "the arm again — but that is wanting badly"
+   },
+   {
+    "t": "I'll beat the living daylights out of you.",
+    "tag": "a threat, not a bet"
+   }
+  ],
+  "why": "<b>أگص إيدي من عرجها إذا</b> means <b>أتحداك إذا...</b>. Read the sentence it sits in: the English that does the same job there is <b>I'll eat my hat if...</b>"
+ },
+ {
+  "src": "إگضب لسانك",
+  "ctx": "إگضب لسانك لما تگعد ويا الكبار.",
+  "opts": [
+   {
+    "t": "Mind your language.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Mum's the word.",
+    "tag": "silence to keep a secret — this is about manners"
+   },
+   {
+    "t": "I got tongue-tied.",
+    "tag": "losing words, not choosing them"
+   }
+  ],
+  "why": "<b>إگضب لسانك</b> means <b>صن لسانك</b>. Read the sentence it sits in: the English that does the same job there is <b>Mind your language.</b>"
+ },
+ {
+  "src": "إقطع عرج وسيّح دم",
+  "ctx": "بس خلاص! إقطع عرج وسيّح دم وفكنا من هالفوضى.",
+  "opts": [
+   {
+    "t": "Settle it once and for all.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "I'll skin you alive.",
+    "tag": "the blood looks literal — it means a clean decision"
+   },
+   {
+    "t": "Shot himself in the foot.",
+    "tag": "self-harm, not a decisive end"
+   }
+  ],
+  "why": "<b>إقطع عرج وسيّح دم</b> means <b>أنهِ الأمر وقدّم حلاً جذرياً</b>. Read the sentence it sits in: the English that does the same job there is <b>Settle it once and for all.</b>"
+ },
+ {
+  "src": "إگفل الشر",
+  "ctx": "بس خلاص إگفل الشر انت وياه بلا هواش.",
+  "opts": [
+   {
+    "t": "Knock it off!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Spoiling for a fight.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "Keep it under your hat.",
+    "tag": "closing as in hiding a secret"
+   }
+  ],
+  "why": "<b>إگفل الشر</b> means <b>اكظم غيظك، دع الشر يعبر</b>. Read the sentence it sits in: the English that does the same job there is <b>Knock it off!</b>"
+ },
+ {
+  "src": "إگلب ويهك",
+  "ctx": "إگلب ويهك! ماكو فلوس.",
+  "opts": [
+   {
+    "t": "Go fly a kite!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Have some shame!",
+    "tag": "the face again — that rebukes, this dismisses"
+   },
+   {
+    "t": "Count your blessings!",
+    "tag": "a lecture, not a dismissal"
+   }
+  ],
+  "why": "<b>إگلب ويهك</b> means <b>أغرب عن وجهي</b>. Read the sentence it sits in: the English that does the same job there is <b>Go fly a kite!</b>"
+ },
+ {
+  "src": "أكبرها وأسمنها",
+  "ctx": "عبدالمحسن من عايلة معروفة من أكبرها وأسمنها.",
+  "opts": [
+   {
+    "t": "The upper crust.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Shovels food into his mouth.",
+    "tag": "'the fattest' is literal — the meaning is status"
+   },
+   {
+    "t": "The head honcho.",
+    "tag": "the boss of a company, not of society"
+   }
+  ],
+  "why": "<b>أكبرها وأسمنها</b> means <b>علية القوم</b>. Read the sentence it sits in: the English that does the same job there is <b>The upper crust.</b>"
+ },
+ {
+  "src": "إگلها",
+  "ctx": "بالله إگلها! مو كنت تبي تشتري سيارة كشخة؟",
+  "opts": [
+   {
+    "t": "Face the music.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Go fly a kite!",
+    "tag": "dismissal, not consequences"
+   },
+   {
+    "t": "Got his just deserts.",
+    "tag": "the outcome — this tells him to bear it"
+   }
+  ],
+  "why": "<b>إگلها</b> means <b>تحمّل العواقب</b>. Read the sentence it sits in: the English that does the same job there is <b>Face the music.</b>"
+ },
+ {
+  "src": "إكملت",
+  "ctx": "بس اكملت! أمس اخترت السيارة واليوم انطفت الكهربا.",
+  "opts": [
+   {
+    "t": "That is all I need!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Glad it is over!",
+    "tag": "'complete' read as finished — it means things just got worse"
+   },
+   {
+    "t": "Things fell into place.",
+    "tag": "the opposite direction"
+   }
+  ],
+  "why": "<b>إكملت</b> means <b>ساءت الأمور</b>. Read the sentence it sits in: the English that does the same job there is <b>That is all I need!</b>"
+ },
+ {
+  "src": "الباب يامع جمل",
+  "ctx": "الباب يامع جمل ولا يكون نشوفك عندنا مرة ثانية.",
+  "opts": [
+   {
+    "t": "Don't let the door hit you on your way out!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Make yourself at home.",
+    "tag": "the door and the house — but the opposite welcome"
+   },
+   {
+    "t": "Hardly ever.",
+    "tag": "about how often, not about leaving"
+   }
+  ],
+  "why": "<b>الباب يامع جمل</b> means <b>أغرب عن وجهي</b>. Read the sentence it sits in: the English that does the same job there is <b>Don't let the door hit you on your way out!</b>"
+ },
+ {
+  "src": "البگي براسكم",
+  "ctx": "عظم الله أجركم البگي براسكم.",
+  "opts": [
+   {
+    "t": "My deepest condolences.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Consider yourself heartily thanked.",
+    "tag": "a formula — but for a favour, not a death"
+   },
+   {
+    "t": "Count your blessings!",
+    "tag": "advice, not sympathy"
+   }
+  ],
+  "why": "<b>البگي براسكم</b> means <b>لا أراكم الله مكروهاً في حبيب</b>. Read the sentence it sits in: the English that does the same job there is <b>My deepest condolences.</b>"
+ },
+ {
+  "src": "الحگ ينگال",
+  "ctx": "اليوم زحمة، بس الحگ ينگال، أحد قال لنا نطلع مبچر.",
+  "opts": [
+   {
+    "t": "Truth be told.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Shame on me for that.",
+    "tag": "admitting fault — this admits a fact"
+   },
+   {
+    "t": "Talk is cheap.",
+    "tag": "about words, not honesty"
+   }
+  ],
+  "why": "<b>الحگ ينگال</b> means <b>إحقاقاً للحق</b>. Read the sentence it sits in: the English that does the same job there is <b>Truth be told.</b>"
+ },
+ {
+  "src": "الحچي سهل",
+  "ctx": "إنت تگول تگدر تكتب كتاب بشهر بس ترى الحچي سهل.",
+  "opts": [
+   {
+    "t": "Talk is cheap.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Like talking to a brick wall.",
+    "tag": "nobody is ignoring anyone here"
+   },
+   {
+    "t": "Full of hot air.",
+    "tag": "labels a person — this states a truth"
+   }
+  ],
+  "why": "<b>الحچي سهل</b> means <b>القول أيسر من الفعل</b>. Read the sentence it sits in: the English that does the same job there is <b>Talk is cheap.</b>"
+ },
+ {
+  "src": "الحچي معاك ضايع",
+  "ctx": "الشرهة علي اللي ينصحك، الحچي معاك ضايع.",
+  "opts": [
+   {
+    "t": "Like talking to a brick wall.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Talk is cheap.",
+    "tag": "about saying vs doing — this is about not listening"
+   },
+   {
+    "t": "Not on the same page.",
+    "tag": "disagreement, not refusal to listen"
+   }
+  ],
+  "why": "<b>الحچي معاك ضايع</b> means <b>الحديث معك لا يغني ولا يسمن</b>. Read the sentence it sits in: the English that does the same job there is <b>Like talking to a brick wall.</b>"
+ },
+ {
+  "src": "الدموع أربع أربع",
+  "ctx": "الياهل گام يبچي والدموع أربع أربع.",
+  "opts": [
+   {
+    "t": "Bathed in tears.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "At sixes and sevens.",
+    "tag": "numbers again — but that is confusion"
+   },
+   {
+    "t": "Feel bitter as gall.",
+    "tag": "a feeling, not the flood of tears"
+   }
+  ],
+  "why": "<b>الدموع أربع أربع</b> means <b>يذرف الدموع بغزارة</b>. Read the sentence it sits in: the English that does the same job there is <b>Bathed in tears.</b>"
+ },
+ {
+  "src": "الدنيا دوارة",
+  "ctx": "لا تظلم أحد ترى الدنيا دوارة.",
+  "opts": [
+   {
+    "t": "What goes around comes around.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Time flies!",
+    "tag": "the world turning — but this is about payback"
+   },
+   {
+    "t": "A reversal of fortune.",
+    "tag": "close — but that just happens; this warns it will come back to you"
+   }
+  ],
+  "why": "<b>الدنيا دوارة</b> means <b>الدنيا قروض ومكافآت، يوم لك ويوم عليك</b>. Read the sentence it sits in: the English that does the same job there is <b>What goes around comes around.</b>"
+ },
+ {
+  "src": "الدنيا ركضة",
+  "ctx": "سامحنا ما زرناك، تدري الدنيا ركضة.",
+  "opts": [
+   {
+    "t": "The hustle and bustle of life.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Time flies!",
+    "tag": "years passing — this is being too busy"
+   },
+   {
+    "t": "Goes hell for leather.",
+    "tag": "running fast — a person's haste, not life's"
+   }
+  ],
+  "why": "<b>الدنيا ركضة</b> means <b>أشغلتنا الدنيا بأحداثها</b>. Read the sentence it sits in: the English that does the same job there is <b>The hustle and bustle of life.</b>"
+ },
+ {
+  "src": "الدوس عليه",
+  "ctx": "المحل هذا الدوس عليه.",
+  "opts": [
+   {
+    "t": "All the rage.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Chasing a fad.",
+    "tag": "the person, not the place"
+   },
+   {
+    "t": "Rubbing salt into the wound.",
+    "tag": "treading on someone — the literal دوس"
+   }
+  ],
+  "why": "<b>الدوس عليه</b> means <b>راج، آخر موضة</b>. Read the sentence it sits in: the English that does the same job there is <b>All the rage.</b>"
+ },
+ {
+  "src": "الزود عندي",
+  "ctx": "كل واحد فيهم يگول الزود عندي.",
+  "opts": [
+   {
+    "t": "In a class of his own.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "On top of that.",
+    "tag": "زود means more — but this is about being the best"
+   },
+   {
+    "t": "Of noble origin.",
+    "tag": "family, not merit"
+   }
+  ],
+  "why": "<b>الزود عندي</b> means <b>لا تشوبه شائبة</b>. Read the sentence it sits in: the English that does the same job there is <b>In a class of his own.</b>"
+ },
+ {
+  "src": "السالفة أكبر من چذي",
+  "ctx": "السالفة أكبر من چذي والموضوع ما ينحل بالسهولة.",
+  "opts": [
+   {
+    "t": "There is more to it than meets the eye.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Things fell into place.",
+    "tag": "the opposite: it became clear"
+   },
+   {
+    "t": "A hot mess.",
+    "tag": "a disaster — this is a hidden depth"
+   }
+  ],
+  "why": "<b>السالفة أكبر من چذي</b> means <b>ليس ظاهراً للعيان</b>. Read the sentence it sits in: the English that does the same job there is <b>There is more to it than meets the eye.</b>"
+ },
+ {
+  "src": "السنين تركض",
+  "ctx": "والله السنين تركض، توّنا متزوجين والحين كل واحد صاير أبو.",
+  "opts": [
+   {
+    "t": "Time flies!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "The hustle and bustle of life.",
+    "tag": "busy days, not years passing"
+   },
+   {
+    "t": "Goes hell for leather.",
+    "tag": "running — a person, not time"
+   }
+  ],
+  "why": "<b>السنين تركض</b> means <b>تمر الأيام</b>. Read the sentence it sits in: the English that does the same job there is <b>Time flies!</b>"
+ },
+ {
+  "src": "الشرهة علي",
+  "ctx": "الشرهة مو عليك، الشرهة علي أنا اللي عطيتك ويه.",
+  "opts": [
+   {
+    "t": "Shame on me for that.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Have some shame!",
+    "tag": "blaming the other"
+   },
+   {
+    "t": "Truth be told.",
+    "tag": "a confession of fact, not of fault"
+   }
+  ],
+  "why": "<b>الشرهة علي</b> means <b>الحق علي</b>. Read the sentence it sits in: the English that does the same job there is <b>Shame on me for that.</b>"
+ },
+ {
+  "src": "الشمس من وين طالعة؟",
+  "ctx": "الشمس من وين طالعة؟ إنت گمت تلعب رياضة؟",
+  "opts": [
+   {
+    "t": "Hell has frozen over!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "The sun is splitting the stones.",
+    "tag": "the sun is literal there — it's about heat"
+   },
+   {
+    "t": "Your jaw will drop.",
+    "tag": "a warning before news, not surprise at a person"
+   }
+  ],
+  "why": "<b>الشمس من وين طالعة؟</b> means <b>لا أصدق ما أراه! لقد حدث المستحيل</b>. Read the sentence it sits in: the English that does the same job there is <b>Hell has frozen over!</b>"
+ },
+ {
+  "src": "الشيطان ما مات",
+  "ctx": "لا تلعب بالمسدس ترى الشيطان ما مات.",
+  "opts": [
+   {
+    "t": "Do not tempt fate.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Throw caution to the wind.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "You are a riot!",
+    "tag": "the devil in the phrase"
+   }
+  ],
+  "why": "<b>الشيطان ما مات</b> means <b>لا تخاطر بحياتك</b>. Read the sentence it sits in: the English that does the same job there is <b>Do not tempt fate.</b>"
+ },
+ {
+  "src": "العين أوسع من الدار",
+  "ctx": "البيت بيتكم والعين أوسع من الدار.",
+  "opts": [
+   {
+    "t": "Make yourself at home.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Don't let the door hit you on your way out!",
+    "tag": "the opposite"
+   },
+   {
+    "t": "There is more to it than meets the eye.",
+    "tag": "the eye and seeing"
+   }
+  ],
+  "why": "<b>العين أوسع من الدار</b> means <b>أهلاً وسهلاً، أكرم وفادتك</b>. Read the sentence it sits in: the English that does the same job there is <b>Make yourself at home.</b>"
+ },
+ {
+  "src": "الگطوة تاكل عشاه",
+  "ctx": "مسكين محمد معيره، الگطوة تاكل عشاه.",
+  "opts": [
+   {
+    "t": "Couldn't fight his way out of a paper bag.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Shovels food into his mouth.",
+    "tag": "food again"
+   },
+   {
+    "t": "Chicken-hearted.",
+    "tag": "fear — this is helplessness"
+   }
+  ],
+  "why": "<b>الگطوة تاكل عشاه</b> means <b>لا رأي له</b>. Read the sentence it sits in: the English that does the same job there is <b>Couldn't fight his way out of a paper bag.</b>"
+ },
+ {
+  "src": "الكبر شين",
+  "ctx": "الواحد فينا ما يعيز يصعد وينزل نفس أول، صح الكبر شين.",
+  "opts": [
+   {
+    "t": "No spring chicken.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Time flies!",
+    "tag": "time passing — not what age does to you"
+   },
+   {
+    "t": "Dead tired.",
+    "tag": "today's tiredness, not the years"
+   }
+  ],
+  "why": "<b>الكبر شين</b> means <b>رقّت عظامه، طعن في السن</b>. Read the sentence it sits in: the English that does the same job there is <b>No spring chicken.</b>"
+ },
+ {
+  "src": "الكل بالكل",
+  "ctx": "أنور صار الكل بالكل بالشركة.",
+  "opts": [
+   {
+    "t": "The head honcho.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Everybody and their dog.",
+    "tag": "الكل is everyone — this is the one in charge"
+   },
+   {
+    "t": "In a class of his own.",
+    "tag": "the best, not the boss"
+   }
+  ],
+  "why": "<b>الكل بالكل</b> means <b>الرأس المدبر</b>. Read the sentence it sits in: the English that does the same job there is <b>The head honcho.</b>"
+ },
+ {
+  "src": "الله بالخير",
+  "ctx": "زياد الله بالخير مو صاحي.",
+  "opts": [
+   {
+    "t": "Has a few screws loose.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Consider yourself heartily thanked.",
+    "tag": "sounds like a blessing — it's a polite way of calling someone odd"
+   },
+   {
+    "t": "God willing.",
+    "tag": "God in the phrase, not the meaning"
+   }
+  ],
+  "why": "<b>الله بالخير</b> means <b>شخص غير سوي</b>. Read the sentence it sits in: the English that does the same job there is <b>Has a few screws loose.</b>"
+ },
+ {
+  "src": "الله عطاه عمر",
+  "ctx": "يبي يدعم الباص! الله عطاه عمر.",
+  "opts": [
+   {
+    "t": "Had a close brush with death.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "No spring chicken.",
+    "tag": "عمر is age — this is surviving"
+   },
+   {
+    "t": "Just in the nick of time.",
+    "tag": "arriving, not escaping"
+   }
+  ],
+  "why": "<b>الله عطاه عمر</b> means <b>نجا بأعجوبة</b>. Read the sentence it sits in: the English that does the same job there is <b>Had a close brush with death.</b>"
+ },
+ {
+  "src": "الله مرحي عليه",
+  "ctx": "خالد الله مرحي عليه ويگدر يسافر طول السنة.",
+  "opts": [
+   {
+    "t": "Has deep pockets.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "He has been laying money away.",
+    "tag": "secret savings — this wealth is visible"
+   },
+   {
+    "t": "Count your blessings!",
+    "tag": "advice to be grateful, not a description"
+   }
+  ],
+  "why": "<b>الله مرحي عليه</b> means <b>رزقه الله المال والثروة</b>. Read the sentence it sits in: the English that does the same job there is <b>Has deep pockets.</b>"
+ },
+ {
+  "src": "الله يا الدنيا",
+  "ctx": "الله يا الدنيا، حامد من مليونير لمديون!",
+  "opts": [
+   {
+    "t": "A reversal of fortune.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "What goes around comes around.",
+    "tag": "payback — Hamid's fall isn't called deserved"
+   },
+   {
+    "t": "Time flies!",
+    "tag": "time, not fortune"
+   }
+  ],
+  "why": "<b>الله يا الدنيا</b> means <b>سبحان مغير الأحوال</b>. Read the sentence it sits in: the English that does the same job there is <b>A reversal of fortune.</b>"
+ },
+ {
+  "src": "الله يابك",
+  "ctx": "الله يابك! شوف شسوّى عبدالكريم بأغراضي!",
+  "opts": [
+   {
+    "t": "Just in the nick of time.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Make yourself at home.",
+    "tag": "a welcome — this is relief at timing"
+   },
+   {
+    "t": "Hell has frozen over!",
+    "tag": "astonishment, not relief"
+   }
+  ],
+  "why": "<b>الله يابك</b> means <b>قبل فوات الأوان</b>. Read the sentence it sits in: the English that does the same job there is <b>Just in the nick of time.</b>"
+ },
+ {
+  "src": "إنگطع گلبه",
+  "ctx": "إنگطع گلب دلال وهي تشيل ولدها.",
+  "opts": [
+   {
+    "t": "Bone-tired.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "My heart missed a beat.",
+    "tag": "the heart again — fright, not exhaustion"
+   },
+   {
+    "t": "Feel bitter as gall.",
+    "tag": "a feeling, not fatigue"
+   }
+  ],
+  "why": "<b>إنگطع گلبه</b> means <b>وهن وتعب</b>. Read the sentence it sits in: the English that does the same job there is <b>Bone-tired.</b>"
+ },
+ {
+  "src": "إنهرگ بطنه",
+  "ctx": "إنهرگ بطن وسمية يوم شافت الحرامي.",
+  "opts": [
+   {
+    "t": "Scared witless.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Chicken-hearted.",
+    "tag": "a cowardly nature — this is one moment of fear"
+   },
+   {
+    "t": "Shovels food into his mouth.",
+    "tag": "the stomach in the phrase"
+   }
+  ],
+  "why": "<b>إنهرگ بطنه</b> means <b>خاف وارتعد</b>. Read the sentence it sits in: the English that does the same job there is <b>Scared witless.</b>"
+ },
+ {
+  "src": "إهني الرباط",
+  "ctx": "عرفنا ليش تسأل عن المعاش، إهني الرباط.",
+  "opts": [
+   {
+    "t": "That's the crux of the matter.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Settle it once and for all.",
+    "tag": "tying up — but this pinpoints the motive"
+   },
+   {
+    "t": "Things fell into place.",
+    "tag": "close — but this names the one key point"
+   }
+  ],
+  "why": "<b>إهني الرباط</b> means <b>هنا مربط الفرس</b>. Read the sentence it sits in: the English that does the same job there is <b>That's the crux of the matter.</b>"
+ },
+ {
+  "src": "أوديه ورا الشمس",
+  "ctx": "هددت الموظف اللي ما يداوم وگلت له إني راح أوديه ورا الشمس.",
+  "opts": [
+   {
+    "t": "Heads are gonna roll.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Go fly a kite!",
+    "tag": "sending away — dismissal, not ruin"
+   },
+   {
+    "t": "The sun is splitting the stones.",
+    "tag": "the sun, literally"
+   }
+  ],
+  "why": "<b>أوديه ورا الشمس</b> means <b>سوف أعرضه للتهلكة</b>. Read the sentence it sits in: the English that does the same job there is <b>Heads are gonna roll.</b>"
+ },
+ {
+  "src": "أوريك نيوم الگايلة",
+  "ctx": "هين أنا أوريك نيوم الگايلة.",
+  "opts": [
+   {
+    "t": "I'll beat the living daylights out of you.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Your jaw will drop.",
+    "tag": "seeing stars from surprise, not from a beating"
+   },
+   {
+    "t": "Hell has frozen over!",
+    "tag": "the stars at noon read as the impossible"
+   }
+  ],
+  "why": "<b>أوريك نيوم الگايلة</b> means <b>سوف أضربك ضرباً مبرحاً</b>. Read the sentence it sits in: the English that does the same job there is <b>I'll beat the living daylights out of you.</b>"
+ },
+ {
+  "src": "أوگف على حيلك",
+  "ctx": "لي شفتني داش أوگف على حيلك.",
+  "opts": [
+   {
+    "t": "Stand up straight!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Bone-tired.",
+    "tag": "حيل is strength — but this is an order to stand"
+   },
+   {
+    "t": "Make yourself at home.",
+    "tag": "the opposite tone"
+   }
+  ],
+  "why": "<b>أوگف على حيلك</b> means <b>قم على وجه التحية</b>. Read the sentence it sits in: the English that does the same job there is <b>Stand up straight!</b>"
+ },
+ {
+  "src": "أول الله",
+  "ctx": "راح أتخرج بعد شهرين، أول الله.",
+  "opts": [
+   {
+    "t": "God willing.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Out of the goodness of my heart.",
+    "tag": "God in the phrase — but that is a motive"
+   },
+   {
+    "t": "Truth be told.",
+    "tag": "an aside, but not a hope"
+   }
+  ],
+  "why": "<b>أول الله</b> means <b>بمشيئة الله</b>. Read the sentence it sits in: the English that does the same job there is <b>God willing.</b>"
+ },
+ {
+  "src": "أول باوّل",
+  "ctx": "بلغني أول باوّل شصير بالدوام.",
+  "opts": [
+   {
+    "t": "Keep me up to speed.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "As regular as clockwork.",
+    "tag": "regularity — this is updates as things happen"
+   },
+   {
+    "t": "Spill the beans.",
+    "tag": "one secret told, not steady news"
+   }
+  ],
+  "why": "<b>أول باوّل</b> means <b>أبقِه على اطلاع</b>. Read the sentence it sits in: the English that does the same job there is <b>Keep me up to speed.</b>"
+ },
+ {
+  "src": "الله يغربل إبليسك",
+  "ctx": "الله يغربل إبليسك! ضحكتني.",
+  "opts": [
+   {
+    "t": "You are a riot!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Do not tempt fate.",
+    "tag": "the devil in the phrase"
+   },
+   {
+    "t": "Go fly a kite!",
+    "tag": "sounds like a curse — it's affection"
+   }
+  ],
+  "why": "<b>الله يغربل إبليسك</b> means <b>باعث على الضحك</b>. Read the sentence it sits in: the English that does the same job there is <b>You are a riot!</b>"
+ },
+ {
+  "src": "اللي يحبه گلبك",
+  "ctx": "خذ لك البسكوت اللي يحبه گلبك.",
+  "opts": [
+   {
+    "t": "Just what the doctor ordered.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Nearest and dearest.",
+    "tag": "the heart — but people, not things"
+   },
+   {
+    "t": "Pay what you want.",
+    "tag": "free choice of price, not of taste"
+   }
+  ],
+  "why": "<b>اللي يحبه گلبك</b> means <b>غاية المرام، ما تهواه النفس</b>. Read the sentence it sits in: the English that does the same job there is <b>Just what the doctor ordered.</b>"
+ },
+ {
+  "src": "المكان يتعذرك",
+  "ctx": "أسفين أخوي، المكان يتعذرك.",
+  "opts": [
+   {
+    "t": "You are persona non grata here.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Make yourself at home.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "I have reached my limit.",
+    "tag": "the place is 'full' — but this is a ban"
+   }
+  ],
+  "why": "<b>المكان يتعذرك</b> means <b>غير مرحب بك</b>. Read the sentence it sits in: the English that does the same job there is <b>You are persona non grata here.</b>"
+ },
+ {
+  "src": "إمش سيده",
+  "ctx": "إمش سيده عشان محد يكلمك.",
+  "opts": [
+   {
+    "t": "Go by the book.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Goes hell for leather.",
+    "tag": "walking fast"
+   },
+   {
+    "t": "Stand up straight!",
+    "tag": "posture, not conduct"
+   }
+  ],
+  "why": "<b>إمش سيده</b> means <b>كن على الصراط المستقيم</b>. Read the sentence it sits in: the English that does the same job there is <b>Go by the book.</b>"
+ },
+ {
+  "src": "إمصخت السالفة",
+  "ctx": "لا عاد! ترى امصخت السالفة! كل شوي تبي فلوس.",
+  "opts": [
+   {
+    "t": "I have had enough of it!",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "That is all I need!",
+    "tag": "a new misfortune, not a last straw"
+   },
+   {
+    "t": "It's no skin off my nose.",
+    "tag": "indifference — this is fed up"
+   }
+  ],
+  "why": "<b>إمصخت السالفة</b> means <b>بلغ السيل الزبى</b>. Read the sentence it sits in: the English that does the same job there is <b>I have had enough of it!</b>"
+ },
+ {
+  "src": "أموت وأعرف",
+  "ctx": "أموت وأعرف شلون خلصت الثانوية؟",
+  "opts": [
+   {
+    "t": "I would give my right arm to know...",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Had a close brush with death.",
+    "tag": "dying taken literally"
+   },
+   {
+    "t": "I'll eat my hat if...",
+    "tag": "a bet, not a wish"
+   }
+  ],
+  "why": "<b>أموت وأعرف</b> means <b>مستعد أن أضحي في سبيل معرفة...</b>. Read the sentence it sits in: the English that does the same job there is <b>I would give my right arm to know...</b>"
+ },
+ {
+  "src": "أنا أدري عنه؟!",
+  "ctx": "أنا أدري عنه؟!! أكو أحد ينسى وين بيته؟",
+  "opts": [
+   {
+    "t": "What is his malfunction?",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Mum's the word.",
+    "tag": "refusing to say, not baffled"
+   },
+   {
+    "t": "Truth be told.",
+    "tag": "an honest aside, not exasperation"
+   }
+  ],
+  "why": "<b>أنا أدري عنه؟!</b> means <b>ما خطبه؟</b>. Read the sentence it sits in: the English that does the same job there is <b>What is his malfunction?</b>"
+ },
+ {
+  "src": "أنا لك",
+  "ctx": "هين! أنا لك يا بودعيج، وين بتروح مني؟",
+  "opts": [
+   {
+    "t": "I'll skin you alive.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Your wish is my command.",
+    "tag": "'I am yours' read as devotion — it is a threat"
+   },
+   {
+    "t": "My brother from another mother.",
+    "tag": "closeness, the wrong kind"
+   }
+  ],
+  "why": "<b>أنا لك</b> means <b>سوف أقتص منك</b>. Read the sentence it sits in: the English that does the same job there is <b>I'll skin you alive.</b>"
+ },
+ {
+  "src": "أنا وين وانت وين",
+  "ctx": "أنا وين وانت وين، خسرت فلوسي وانت تگول لي خل نسافر.",
+  "opts": [
+   {
+    "t": "We're not on the same page.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Hardly ever.",
+    "tag": "'where' read as place and time"
+   },
+   {
+    "t": "Like talking to a brick wall.",
+    "tag": "not listening — this is talking past each other"
+   }
+  ],
+  "why": "<b>أنا وين وانت وين</b> means <b>ما قلته لا علاقة له بما قلته لك</b>. Read the sentence it sits in: the English that does the same job there is <b>We're not on the same page.</b>"
+ },
+ {
+  "src": "إنت فصّل وأنا ألبس",
+  "ctx": "تامرني يا حمد، إنت فصل وأنا ألبس.",
+  "opts": [
+   {
+    "t": "Your wish is my command.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Brand new.",
+    "tag": "tailoring, clothes"
+   },
+   {
+    "t": "Go by the book.",
+    "tag": "following rules, not a person"
+   }
+  ],
+  "why": "<b>إنت فصّل وأنا ألبس</b> means <b>أنت من يخطط وأنا من ينفذ</b>. Read the sentence it sits in: the English that does the same job there is <b>Your wish is my command.</b>"
+ },
+ {
+  "src": "إنت ومدة إيدك",
+  "ctx": "راح نتحاطط ونشتري هدية حگ فرح، إنت ومدة إيدك.",
+  "opts": [
+   {
+    "t": "Pay what you want.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Light-fingered.",
+    "tag": "the hand again — theft"
+   },
+   {
+    "t": "A helping hand.",
+    "tag": "help, not a contribution you choose"
+   }
+  ],
+  "why": "<b>إنت ومدة إيدك</b> means <b>أياً كان المبلغ الذي تريد دفعه</b>. Read the sentence it sits in: the English that does the same job there is <b>Pay what you want.</b>"
+ },
+ {
+  "src": "إندگ گلبه",
+  "ctx": "إندگ گلبي لما دعمت سيارتها.",
+  "opts": [
+   {
+    "t": "My heart missed a beat.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Bone-tired.",
+    "tag": "إنگطع گلبه — exhaustion, a different heart"
+   },
+   {
+    "t": "Nearest and dearest.",
+    "tag": "the heart as love"
+   }
+  ],
+  "why": "<b>إندگ گلبه</b> means <b>ارتعب وفزع</b>. Read the sentence it sits in: the English that does the same job there is <b>My heart missed a beat.</b>"
+ },
+ {
+  "src": "إنربط لساني",
+  "ctx": "من شفت الشرطة إنربط لساني.",
+  "opts": [
+   {
+    "t": "I got tongue-tied.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Mum's the word.",
+    "tag": "choosing silence, not losing words"
+   },
+   {
+    "t": "Mind your language.",
+    "tag": "manners, not nerves"
+   }
+  ],
+  "why": "<b>إنربط لساني</b> means <b>معقود اللسان</b>. Read the sentence it sits in: the English that does the same job there is <b>I got tongue-tied.</b>"
+ },
+ {
+  "src": "إنطبخ",
+  "ctx": "إنطبخنا بهالحر.",
+  "opts": [
+   {
+    "t": "The sun is splitting the stones.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Shovels food into his mouth.",
+    "tag": "cooking, literally"
+   },
+   {
+    "t": "Bone-tired.",
+    "tag": "an effect of the heat, not the heat"
+   }
+  ],
+  "why": "<b>إنطبخ</b> means <b>تعرّض لأشعة الشمس الحارقة</b>. Read the sentence it sits in: the English that does the same job there is <b>The sun is splitting the stones.</b>"
+ },
+ {
+  "src": "إنطگ على راسه",
+  "ctx": "المحاسب اللي اختلس انطگ على راسه.",
+  "opts": [
+   {
+    "t": "Got his just deserts.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Your jaw will drop.",
+    "tag": "إطگك على راسك — shock, a different expression"
+   },
+   {
+    "t": "I'll beat the living daylights out of you.",
+    "tag": "a literal blow"
+   }
+  ],
+  "why": "<b>إنطگ على راسه</b> means <b>نال عقابه المستحق</b>. Read the sentence it sits in: the English that does the same job there is <b>Got his just deserts.</b>"
+ },
+ {
+  "src": "إيده بالدهن",
+  "ctx": "ماعنده شي يحاتيه، إيده بالدهن.",
+  "opts": [
+   {
+    "t": "Sitting pretty.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Light-fingered.",
+    "tag": "the hand again — theft"
+   },
+   {
+    "t": "Shovels food into his mouth.",
+    "tag": "grease read as food"
+   }
+  ],
+  "why": "<b>إيده بالدهن</b> means <b>يعيش حياة كريمة منعم باليسار</b>. Read the sentence it sits in: the English that does the same job there is <b>Sitting pretty.</b>"
+ },
+ {
+  "src": "إيده خفيفة",
+  "ctx": "أمس طردوا ولدك من الجمعية يدرون إيده خفيفة.",
+  "opts": [
+   {
+    "t": "Light-fingered.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "A helping hand.",
+    "tag": "a hand, but a kind one"
+   },
+   {
+    "t": "Goes hell for leather.",
+    "tag": "quick hands read as speed"
+   }
+  ],
+  "why": "<b>إيده خفيفة</b> means <b>لص، يسرق الكحل من العين</b>. Read the sentence it sits in: the English that does the same job there is <b>Light-fingered.</b>"
+ },
+ {
+  "src": "إيده طويلة",
+  "ctx": "المدرس يشتكي ويگول إن الطالب إيده طويلة.",
+  "opts": [
+   {
+    "t": "Spoiling for a fight.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Light-fingered.",
+    "tag": "elsewhere a long hand is a thief's — here it hits"
+   },
+   {
+    "t": "Has deep pockets.",
+    "tag": "reach read as wealth"
+   }
+  ],
+  "why": "<b>إيده طويلة</b> means <b>يعتدي على الآخرين</b>. Read the sentence it sits in: the English that does the same job there is <b>Spoiling for a fight.</b>"
+ },
+ {
+  "src": "إيد ورا وإيد جدام",
+  "ctx": "أمس دشت الاستقبال إيد ورا وإيد جدام.",
+  "opts": [
+   {
+    "t": "Empty-handed.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Bow and scrape.",
+    "tag": "the posture of the hands"
+   },
+   {
+    "t": "Light-fingered.",
+    "tag": "hands again — theft"
+   }
+  ],
+  "why": "<b>إيد ورا وإيد جدام</b> means <b>خالي اليدين فلم يحضر هدية</b>. Read the sentence it sits in: the English that does the same job there is <b>Empty-handed.</b>"
+ },
+ {
+  "src": "إيدي تحكني",
+  "ctx": "إيدي تحكني لازم أسوي شي.",
+  "opts": [
+   {
+    "t": "Chomping at the bit.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "Spoiling for a fight.",
+    "tag": "wanting a fight — this is wanting to act"
+   },
+   {
+    "t": "Light-fingered.",
+    "tag": "an itchy hand read as theft"
+   }
+  ],
+  "why": "<b>إيدي تحكني</b> means <b>يتأهب للقيام بشيء ما</b>. Read the sentence it sits in: the English that does the same job there is <b>Chomping at the bit.</b>"
+ },
+ {
+  "src": "إيدي وريولي",
+  "ctx": "أحتاج السايق تراه إيدي وريولي.",
+  "opts": [
+   {
+    "t": "My helping hand.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "My brother from another mother.",
+    "tag": "affection — this is practical help"
+   },
+   {
+    "t": "Pay what you want.",
+    "tag": "the hand again"
+   }
+  ],
+  "why": "<b>إيدي وريولي</b> means <b>عون، نصرته</b>. Read the sentence it sits in: the English that does the same job there is <b>My helping hand.</b>"
+ },
+ {
+  "src": "إيب حگ نفسه الحچي",
+  "ctx": "رفيجك إيب حگ نفسه الحچي، المفروض ما يتفلسف.",
+  "opts": [
+   {
+    "t": "Shot himself in the foot.",
+    "tag": "the working equivalent",
+    "ok": true
+   },
+   {
+    "t": "A blabbermouth.",
+    "tag": "talks too much — this is talking himself into trouble"
+   },
+   {
+    "t": "Talk is cheap.",
+    "tag": "a general truth, not his own mistake"
+   }
+  ],
+  "why": "<b>إيب حگ نفسه الحچي</b> means <b>رب كلمة تقول لصاحبها دعني</b>. Read the sentence it sits in: the English that does the same job there is <b>Shot himself in the foot.</b>"
+ }
+];
 
 
 const COURTESY = [
@@ -8314,11 +10801,8 @@ const ITEMS = [
     subject: "التعبير الاصطلاحي · Chapter 8",
     blurb: "Match the Arabic proverb to the English one that means the same &mdash; not says the same.",
     run: () => runChoice(PROVERBS, "Which English proverb does the same work?") },
-  /* published:false keeps it out of the Mark total until it has its
-     proverbs — the ring must never ask for a mark that cannot be earned. */
   { id: "kuwaiti", ar: "أمثالٌ كويتية", en: "Kuwaiti Proverbs", kind: "trial", section: "trials",
     subject: "الأمثال الكويتية",
-    published: false,
     blurb: "Ours, not the ones every Arabic speaker shares. Collected from the people who say them.",
     run: runKuwaiti },
   { id: "courtesy", ar: "خِزانة المُجامَلات", en: "Speech Acts", kind: "trial", section: "trials",
@@ -13642,6 +16126,7 @@ function runChoice(items, ask) {
     const isArSrc = !q.srcEn && AR_RE.test(q.src);
     card.appendChild(el("p", isArSrc ? "src" : "src-en", isArSrc ? q.src : "“" + q.src + "”"));
     if (q.lit) card.appendChild(el("p", "lit", 'word for word: <b>' + q.lit + '</b>'));
+    if (q.ctx) card.appendChild(el("p", "ctx", q.ctx));
     stage.appendChild(card);
 
     const wrap = el("div", "options");
@@ -13733,7 +16218,7 @@ function quitTrial(log, done, total) {
    the gap. */
 function runKuwaiti() {
   if (KUWAITI.length) {
-    runChoice(KUWAITI, "Which English rendering does the same work?");
+    runChoice(shuffled(KUWAITI).slice(0, 10), "Which English does the same work in this sentence?");
     return;
   }
 
