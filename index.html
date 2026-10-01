@@ -8314,13 +8314,13 @@ const ITEMS = [
     subject: "التعبير الاصطلاحي · Chapter 8",
     blurb: "Match the Arabic proverb to the English one that means the same &mdash; not says the same.",
     run: () => runChoice(PROVERBS, "Which English proverb does the same work?") },
-  /* Kuwaiti Proverbs is taken off the site until Shaikha sends the
-     entries as text. KUWAITI and runKuwaiti() stay below, so bringing it
-     back is this one entry:
-     { id: "kuwaiti", ar: "أمثالٌ كويتية", en: "Kuwaiti Proverbs", kind: "trial", section: "trials",
-       subject: "الأمثال الكويتية",
-       blurb: "Ours, not the ones every Arabic speaker shares. Collected from the people who say them.",
-       run: runKuwaiti }, */
+  /* published:false keeps it out of the Mark total until it has its
+     proverbs — the ring must never ask for a mark that cannot be earned. */
+  { id: "kuwaiti", ar: "أمثالٌ كويتية", en: "Kuwaiti Proverbs", kind: "trial", section: "trials",
+    subject: "الأمثال الكويتية",
+    published: false,
+    blurb: "Ours, not the ones every Arabic speaker shares. Collected from the people who say them.",
+    run: runKuwaiti },
   { id: "courtesy", ar: "خِزانة المُجامَلات", en: "Speech Acts", kind: "trial", section: "trials",
     subject: "الأفعال الكلامية · Chapter 5",
     blurb: "Gulf politeness formulas with exact English functions and no English words.",
