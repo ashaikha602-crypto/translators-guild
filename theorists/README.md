@@ -33,16 +33,16 @@ beside each one.
 | `theorists/theo-hermans.jpg` | Theo Hermans | awaiting the file |
 | `theorists/andre-lefevere.jpg` | André Lefevere | awaiting the file |
 | `theorists/gideon-toury.jpg` | Gideon Toury | awaiting the file |
-| `theorists/susan-bassnett.jpg` | Susan Bassnett | awaiting the file |
+| `theorists/susan-bassnett.jpg` | Susan Bassnett | on the site |
 | `lineage/lawrence-venuti.jpg` | Lawrence Venuti | on the site |
-| `theorists/george-steiner.jpg` | George Steiner | awaiting the file |
+| `theorists/george-steiner.jpg` | George Steiner | on the site |
 | `theorists/antoine-berman.jpg` | Antoine Berman | awaiting the file |
-| `theorists/jacques-derrida.jpg` | Jacques Derrida | awaiting the file |
-| `theorists/umberto-eco.jpg` | Umberto Eco | awaiting the file |
-| `theorists/sherry-simon.jpg` | Sherry Simon | awaiting the file |
+| `theorists/jacques-derrida.jpg` | Jacques Derrida | on the site |
+| `theorists/umberto-eco.jpg` | Umberto Eco | on the site |
+| `theorists/sherry-simon.jpg` | Sherry Simon | on the site |
 | `theorists/luise-von-flotow.jpg` | Luise von Flotow | awaiting the file |
-| `theorists/gayatri-spivak.jpg` | Gayatri Chakravorty Spivak | awaiting the file |
-| `theorists/pierre-bourdieu.jpg` | Pierre Bourdieu | awaiting the file |
-| `theorists/mona-baker.jpg` | Mona Baker | awaiting the file |
+| `theorists/gayatri-spivak.jpg` | Gayatri Chakravorty Spivak | on the site |
+| `theorists/pierre-bourdieu.jpg` | Pierre Bourdieu | on the site |
+| `theorists/mona-baker.jpg` | Mona Baker | on the site |
 | `theorists/daniel-gile.jpg` | Daniel Gile | awaiting the file |
 | `theorists/hu-gengshen.jpg` | Hu Gengshen | awaiting the file |
