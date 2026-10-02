@@ -1097,8 +1097,8 @@ a.ks-s-en:hover { color: var(--white); }
    component follows without being touched. The violet stays the accent; it
    simply has to earn its contrast against paper instead of against night. */
 :root[data-theme="light"] {
-  --void: #f6f2fb; --void-2: #ede5f7; --void-3: #e2d5f2;
-  --lilac: #402b58; --lilac-dim: #61507a; --white: #1a0f2b;
+  --void: #faf8fd; --void-2: #f1ecf8; --void-3: #e7dff3;
+  --lilac: #3a2b4f; --lilac-dim: #6b5d80; --white: #170d26;
   --magenta: #8218c7; --violet: #650fd0;
   --mag-ink: #8218c7;
 
@@ -1115,17 +1115,16 @@ a.ks-s-en:hover { color: var(--white); }
   --coral-soft: #a8182f; --mint-soft: #0b6e4f; --workshop-ink: #7a1bb0;
   --well: rgba(101,15,208,.055); --well-lit: #fff; --scrim: rgba(246,242,251,.92);
 
-  --grad-soft: linear-gradient(180deg, rgba(167,38,208,.10), rgba(101,15,208,.10));
-  --hair: 1px solid rgba(74,51,99,.20);
-  --hair-lit: 1px solid rgba(74,51,99,.34);
-  --shadow: 0 18px 44px -20px rgba(60,20,100,.32);
-  --glow: 0 0 30px -12px rgba(167,38,208,.34);
+  --grad-soft: linear-gradient(180deg, #ffffff, #fbf8ff);
+  --hair: 1px solid rgba(60,30,100,.10);
+  --hair-lit: 1px solid rgba(60,30,100,.16);
+  --shadow: 0 1px 2px rgba(40,20,70,.05), 0 8px 24px -12px rgba(40,20,70,.16);
+  --glow: 0 6px 18px -8px rgba(101,15,208,.45);
   color-scheme: light;
 }
 :root[data-theme="light"] body {
   background:
-    radial-gradient(68rem 46rem at 78% -14%, rgba(167,38,208,.16), transparent 62%),
-    radial-gradient(52rem 40rem at 6% 104%, rgba(101,15,208,.13), transparent 60%),
+    radial-gradient(60rem 26rem at 70% -12%, rgba(167,38,208,.07), transparent 65%),
     var(--void);
 }
 :root[data-theme="light"] .panel,
@@ -1135,7 +1134,9 @@ a.ks-s-en:hover { color: var(--white); }
 :root[data-theme="light"] .pair,
 :root[data-theme="light"] .block,
 :root[data-theme="light"] .j-tile {
-  background: rgba(255,255,255,.72);
+  background: #fff;
+  border: 1px solid rgba(60,30,100,.09);
+  box-shadow: 0 1px 2px rgba(40,20,70,.04), 0 10px 28px -16px rgba(40,20,70,.18);
 }
 /* Anything you type into is white on paper, never a tinted well — a field
    has to read as a field. */
@@ -1146,7 +1147,8 @@ a.ks-s-en:hover { color: var(--white); }
 :root[data-theme="light"] .adm-form textarea,
 :root[data-theme="light"] .adm-form select,
 :root[data-theme="light"] .adm-bar select { background: #fff; color: var(--white); }
-:root[data-theme="light"] #bottom-nav { background: rgba(246,242,251,.92); }
+:root[data-theme="light"] #bottom-nav { background: rgba(255,255,255,.94); border-top: 1px solid rgba(60,30,100,.08);
+  box-shadow: 0 -6px 20px -14px rgba(40,20,70,.25); }
 /* the spine is painted with a literal night colour, so it has to be told */
 :root[data-theme="light"] #spine {
   background: linear-gradient(180deg, rgba(246,242,251,.94), rgba(246,242,251,.6) 70%, transparent); }
@@ -1160,6 +1162,43 @@ a.ks-s-en:hover { color: var(--white); }
 :root[data-theme="light"] .note,
 :root[data-theme="light"] .c-subject,
 :root[data-theme="light"] .trial-subject { color: #5b4a75; }
+
+/* Paper, not lilac: white surfaces, one quiet tint behind the page, and
+   violet only where something can be pressed or has been chosen. */
+:root[data-theme="light"] .aura,
+:root[data-theme="light"] .grain { opacity: .25; }
+:root[data-theme="light"] .chip,
+:root[data-theme="light"] .chip-tag,
+:root[data-theme="light"] .opt,
+:root[data-theme="light"] button.ghost,
+:root[data-theme="light"] .th-person,
+:root[data-theme="light"] .th-row,
+:root[data-theme="light"] .th-tcard,
+:root[data-theme="light"] .th-trow,
+:root[data-theme="light"] .th-prof,
+:root[data-theme="light"] .th-col {
+  background: #fff; border-color: rgba(60,30,100,.13); box-shadow: 0 1px 2px rgba(40,20,70,.05); }
+:root[data-theme="light"] .opt:hover,
+:root[data-theme="light"] .chip:hover { border-color: rgba(101,15,208,.45); }
+:root[data-theme="light"] .chip.on { background: linear-gradient(135deg, #8a2be2, #650fd0); color: #fff; border-color: transparent; }
+:root[data-theme="light"] .prompt,
+:root[data-theme="light"] .verdict { background: #fff; border-color: rgba(60,30,100,.10);
+  box-shadow: 0 1px 2px rgba(40,20,70,.04), 0 10px 28px -16px rgba(40,20,70,.18); }
+:root[data-theme="light"] input,
+:root[data-theme="light"] textarea,
+:root[data-theme="light"] select { background: #fff; color: var(--white); border-color: rgba(60,30,100,.16); }
+:root[data-theme="light"] input:focus,
+:root[data-theme="light"] textarea:focus { border-color: #8a2be2; box-shadow: 0 0 0 3px rgba(138,43,226,.14); }
+:root[data-theme="light"] .th-step { background: #f3ecfc; border-color: rgba(101,15,208,.18); color: #3b1a66; }
+:root[data-theme="light"] .th-tr { background: #fff; }
+:root[data-theme="light"] .th-ig { border-color: rgba(60,30,100,.08); }
+:root[data-theme="light"] .th-face { background: #f3eefa; }
+/* violet-filled controls keep white text on paper too */
+:root[data-theme="light"] .auth-tab.on,
+:root[data-theme="light"] .btn-wide,
+:root[data-theme="light"] button.primary,
+:root[data-theme="light"] .th-learn,
+:root[data-theme="light"] .chip.on { color: #fff; }
 
 /* the switch itself, in the spine */
 .theme-btn {
@@ -14687,10 +14726,11 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1002-2100";
+const BUILD = "1003-0900";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
-  if (n) n.textContent = " \u00b7 build " + BUILD;
+  /* kept for the refresh check only; visitors do not need to see it */
+  if (n) n.textContent = "";
 }
 
 /* A phone does not reload a page it never closed. She has had this open
