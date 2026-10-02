@@ -761,6 +761,27 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .prompt .lit { font-size: .85rem; color: var(--lilac-dim); margin: 0; }
 .prompt .lit b { color: var(--coral); font-weight: 500; }
 .th-group { margin: 1.4rem 0 .6rem; }
+.th-face { flex: none; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; display: block;
+  background: rgba(214,191,234,.08); border: 1px dashed rgba(214,191,234,.35); }
+.th-face.has { border: 2px solid rgba(207,122,232,.55); }
+.th-face img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
+.th-face.big { width: 112px; height: 112px; }
+.th-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .7rem; }
+.th-prof { display: grid; justify-items: center; gap: .3rem; padding: 1rem .6rem; border-radius: 16px; text-align: center;
+  background: rgba(214,191,234,.05); border: 1px solid rgba(214,191,234,.15); color: inherit;
+  text-transform: none; letter-spacing: normal; font-weight: 400; box-shadow: none; }
+.th-prof .th-face { width: 72px; height: 72px; }
+.th-pn { font-weight: 600; color: var(--white); font-size: .92rem; line-height: 1.3; }
+.th-pl { font-size: .74rem; color: var(--lilac-dim); margin: 0; }
+.th-pr { font-size: .74rem; color: var(--mag-ink); }
+.th-phead { display: flex; gap: 1rem; align-items: center; margin: .8rem 0 1rem; }
+.th-ptxt h2 { margin: 0 0 .2rem; font-size: 1.3rem; color: var(--white); }
+.th-credit { margin: .4rem 0 0; font-size: .7rem; color: var(--lilac-dim); }
+.th-people { display: flex; flex-wrap: wrap; gap: .5rem; }
+.th-person { display: flex; align-items: center; gap: .5rem; padding: .3rem .7rem .3rem .3rem; border-radius: 999px;
+  background: rgba(214,191,234,.06); border: 1px solid rgba(214,191,234,.18); color: var(--white); font-size: .82rem;
+  text-transform: none; letter-spacing: normal; font-weight: 500; box-shadow: none; }
+.th-person .th-face { width: 32px; height: 32px; }
 .th-ghead { display: flex; align-items: center; gap: .7rem; }
 .th-ghead h3 { margin: 0; font-size: 1.05rem; color: var(--white); }
 .th-span { font-size: .76rem; letter-spacing: .08em; color: var(--lilac-dim); }
@@ -15837,13 +15858,174 @@ const TH_SHELF = [
   [2010, "Anthony Pym", "Exploring Translation Theories (later editions)", "Overview of the major paradigms"]
 ];
 
+/* ═══════════ THE THEORISTS ═══════════
+   One profile per scholar, linked to their entries in THEORIES by the
+   entry's English title. Dates are given only where they are certain;
+   otherwise the field is left out rather than guessed.
+
+   Portraits follow the lineage rule: a file served from this site,
+   supplied by the site owner, never fetched, never generated. Until a
+   file exists the frame stays empty with the name under it. Files go in
+   theorists/ with the filename in `img`; the four already supplied for
+   Translation in History are reused from lineage/. */
+const THEORISTS = [
+  { id: "cicero", name: "Cicero", life: "106 – 43 BCE", from: "Roman",
+    role: "Orator, statesman and translator", img: "theorists/cicero.jpg",
+    bio: "Rome’s greatest orator translated Greek speeches into Latin and described doing it as an orator, not as an interpreter: keeping the force of the argument rather than counting words. His remark is the oldest statement of the word-for-word vs. sense-for-sense debate.",
+    th: ["Word-for-Word vs. Sense-for-Sense"] },
+  { id: "jerome", name: "St. Jerome", life: "c. 347 – 420", from: "Roman Christian",
+    role: "Bible translator", img: "lineage/jerome.jpg", credit: "Painted depiction",
+    bio: "Translator of the Latin Bible later known as the Vulgate. In his Letter 57 he defended translating sense for sense, except in scripture — a defence that framed Western thinking about translation for over a thousand years.",
+    th: ["Word-for-Word vs. Sense-for-Sense"] },
+  { id: "schleiermacher", name: "Friedrich Schleiermacher", life: "1768 – 1834", from: "German",
+    role: "Theologian and philosopher", img: "lineage/friedrich-schleiermacher.jpg", credit: "Historical engraving",
+    bio: "Theologian, philosopher and translator of Plato. His 1813 lecture set out the two directions a translator can take — bring the author to the reader, or the reader to the author — the root of today’s domestication and foreignization debate.",
+    th: ["Schleiermacher: Two Methods of Translating"] },
+  { id: "benjamin", name: "Walter Benjamin", life: "1892 – 1940", from: "German",
+    role: "Philosopher and critic", img: "theorists/walter-benjamin.jpg",
+    bio: "Philosopher and literary critic who translated Baudelaire. His preface “The Task of the Translator” argued that translation is not about passing on information but about the relationship between languages.",
+    th: ["Benjamin: The Task of the Translator"] },
+  { id: "jakobson", name: "Roman Jakobson", life: "1896 – 1982", from: "Russian-American",
+    role: "Linguist", img: "theorists/roman-jakobson.jpg",
+    bio: "One of the founders of modern linguistics and semiotics. His short 1959 essay named three kinds of translation — intralingual, interlingual and intersemiotic — and is still a starting point for the field.",
+    th: ["Jakobson: Three Kinds of Translation"] },
+  { id: "vinay", name: "Jean-Paul Vinay & Jean Darbelnet", life: "1910 – 1999 · 1904 – 1990", from: "French · worked in Canada",
+    role: "Linguists", img: "theorists/vinay-darbelnet.jpg",
+    bio: "Comparing French and English, they catalogued the seven procedures a translator can use, from borrowing to adaptation. Their framework is still how translators name what they did to a phrase.",
+    th: ["Vinay & Darbelnet: Comparative Stylistics"] },
+  { id: "nida", name: "Eugene A. Nida", life: "1914 – 2011", from: "American",
+    role: "Linguist and Bible translator", img: "lineage/eugene-nida.jpg", credit: "Photograph",
+    bio: "Linguist at the American Bible Society who led Bible translation projects across many languages. He made the reader’s response central to translation with his distinction between formal and dynamic equivalence.",
+    th: ["Nida: Formal and Dynamic Equivalence"] },
+  { id: "catford", name: "J. C. Catford", life: "1917 – 2009", from: "Scottish",
+    role: "Linguist and phonetician", img: "theorists/jc-catford.jpg",
+    bio: "Phonetician and linguist who treated translation as an operation between language systems. He gave the field the term “translation shifts”.",
+    th: ["Catford: A Linguistic Theory of Translation"] },
+  { id: "koller", name: "Werner Koller", from: "German-language scholar",
+    role: "Translation scholar", img: "theorists/werner-koller.jpg",
+    bio: "Split the single idea of equivalence into five kinds — denotative, connotative, text-normative, pragmatic and formal-aesthetic — so a translator can say exactly what was kept and what was given up.",
+    th: ["Koller: Five Kinds of Equivalence"] },
+  { id: "newmark", name: "Peter Newmark", life: "1916 – 2011", from: "British, born in Czechoslovakia",
+    role: "Translation teacher", img: "theorists/peter-newmark.jpg",
+    bio: "One of the most influential teachers of translation. His distinction between semantic and communicative translation, and his <i>Textbook of Translation</i>, shaped translator training worldwide.",
+    th: ["Newmark: Semantic and Communicative Translation"] },
+  { id: "reiss", name: "Katharina Reiss", life: "1923 – 2018", from: "German",
+    role: "Translation scholar", img: "theorists/katharina-reiss.jpg",
+    bio: "Linked translation decisions to the type and function of the whole text, and co-wrote the founding book of Skopos theory with Hans Vermeer.",
+    th: ["Reiss: Text Types", "Skopos Theory"] },
+  { id: "vermeer", name: "Hans J. Vermeer", life: "1930 – 2010", from: "German",
+    role: "Linguist and translation scholar", img: "theorists/hans-vermeer.jpg",
+    bio: "Founder of Skopos theory: the purpose of a translation decides how it is made.",
+    th: ["Skopos Theory"] },
+  { id: "holz", name: "Justa Holz-Mänttäri", from: "German-born, worked in Finland",
+    role: "Translation scholar", img: "theorists/justa-holz-manttari.jpg",
+    bio: "Described translation as a professional action involving initiators, commissioners, translators and audiences — not just a transfer of words.",
+    th: ["Holz-Mänttäri: Translational Action"] },
+  { id: "nord", name: "Christiane Nord", from: "German",
+    role: "Translation scholar", img: "theorists/christiane-nord.jpg",
+    bio: "Developed functionalism into a teachable method with a detailed model of translation-oriented text analysis, and added the ethical principle of loyalty.",
+    th: ["Nord: Function Plus Loyalty"] },
+  { id: "house", name: "Juliane House", from: "German",
+    role: "Linguist and translation scholar", img: "theorists/juliane-house.jpg",
+    bio: "Built one of the best-known models of translation quality assessment and the distinction between overt and covert translation.",
+    th: ["House: Overt and Covert Translation"] },
+  { id: "hatim", name: "Basil Hatim & Ian Mason", from: "British universities",
+    role: "Translation scholars", img: "theorists/hatim-mason.jpg",
+    bio: "Brought discourse analysis, register and pragmatics into translation studies. Hatim’s work draws extensively on Arabic–English translation.",
+    th: ["Hatim & Mason: Discourse and the Translator"] },
+  { id: "gutt", name: "Ernst-August Gutt", from: "German",
+    role: "Linguist", img: "theorists/ernst-august-gutt.jpg",
+    bio: "Applied relevance theory from cognitive pragmatics to translation, treating it as interpretive use of language.",
+    th: ["Gutt: Relevance Theory"] },
+  { id: "evenzohar", name: "Itamar Even-Zohar", life: "b. 1939", from: "Israeli",
+    role: "Cultural researcher", img: "theorists/itamar-even-zohar.jpg",
+    bio: "Created polysystem theory, which studies the position translated literature holds within a culture’s literary system.",
+    th: ["Polysystem Theory"] },
+  { id: "hermans", name: "Theo Hermans", from: "Belgian",
+    role: "Translation scholar", img: "theorists/theo-hermans.jpg",
+    bio: "Edited <i>The Manipulation of Literature</i>, which gave its name to the school that sees translation as a form of rewriting.",
+    th: ["The Manipulation School and Rewriting"] },
+  { id: "lefevere", name: "André Lefevere", life: "1945 – 1996", from: "Belgian",
+    role: "Translation scholar", img: "theorists/andre-lefevere.jpg",
+    bio: "Showed how ideology, poetics and patronage shape translations, and with Susan Bassnett led the cultural turn.",
+    th: ["The Manipulation School and Rewriting", "The Cultural Turn"] },
+  { id: "toury", name: "Gideon Toury", life: "1942 – 2016", from: "Israeli",
+    role: "Translation scholar", img: "theorists/gideon-toury.jpg",
+    bio: "Founder of Descriptive Translation Studies: study what translators actually do, and the norms behind it.",
+    th: ["Descriptive Translation Studies"] },
+  { id: "bassnett", name: "Susan Bassnett", life: "b. 1945", from: "British",
+    role: "Translation and comparative literature scholar", img: "theorists/susan-bassnett.jpg",
+    bio: "Author of the classic introduction <i>Translation Studies</i>, and a leading voice of the cultural turn and of postcolonial translation studies.",
+    th: ["The Cultural Turn", "Postcolonial Translation Theory"] },
+  { id: "venuti", name: "Lawrence Venuti", life: "b. 1953", from: "American",
+    role: "Translator and theorist", img: "lineage/lawrence-venuti.jpg", credit: "Photograph",
+    bio: "Translator from Italian, French and Catalan. Named the translator’s invisibility and set domestication against foreignization.",
+    th: ["Venuti: Domestication and Foreignization"] },
+  { id: "steiner", name: "George Steiner", life: "1929 – 2020", from: "Born in Paris; British and American careers",
+    role: "Critic and philosopher", img: "theorists/george-steiner.jpg",
+    bio: "Literary critic whose <i>After Babel</i> describes translation as a four-stage act of interpretation.",
+    th: ["Steiner: The Hermeneutic Motion"] },
+  { id: "berman", name: "Antoine Berman", life: "1942 – 1991", from: "French",
+    role: "Translator and theorist", img: "theorists/antoine-berman.jpg",
+    bio: "Translator and theorist who argued for an ethics that respects the foreignness of the text, and listed the deforming tendencies that erase it.",
+    th: ["Berman: The Ethics of the Foreign"] },
+  { id: "derrida", name: "Jacques Derrida", life: "1930 – 2004", from: "French, born in Algeria",
+    role: "Philosopher", img: "theorists/jacques-derrida.jpg",
+    bio: "Founder of deconstruction, who questioned whether any text has a single stable meaning that translation could carry intact.",
+    th: ["Derrida: Deconstruction"] },
+  { id: "eco", name: "Umberto Eco", life: "1932 – 2016", from: "Italian",
+    role: "Novelist and semiotician", img: "theorists/umberto-eco.jpg",
+    bio: "Semiotician and novelist who worked closely with his own translators, and described translation as negotiation.",
+    th: ["Eco: Translation as Negotiation"] },
+  { id: "simon", name: "Sherry Simon & Luise von Flotow", from: "Canadian",
+    role: "Translation scholars", img: "theorists/simon-von-flotow.jpg",
+    bio: "Two of the founding voices of feminist translation studies, examining gender, visibility and the translator’s intervention.",
+    th: ["Feminist Translation Theory"] },
+  { id: "spivak", name: "Gayatri Chakravorty Spivak", life: "b. 1942", from: "Indian",
+    role: "Literary theorist and translator", img: "theorists/gayatri-spivak.jpg",
+    bio: "Postcolonial theorist and translator of Derrida and Mahasweta Devi, whose essay “The Politics of Translation” questions whose voice survives.",
+    th: ["Postcolonial Translation Theory"] },
+  { id: "bourdieu", name: "Pierre Bourdieu", life: "1930 – 2002", from: "French",
+    role: "Sociologist", img: "theorists/pierre-bourdieu.jpg",
+    bio: "Not a translation scholar, but his concepts of field, habitus and capital became the basis of the sociology of translation.",
+    th: ["Sociological Approaches"] },
+  { id: "baker", name: "Mona Baker", life: "b. 1953", from: "Egyptian-born British",
+    role: "Translation scholar", img: "theorists/mona-baker.jpg",
+    bio: "Author of <i>In Other Words</i>, pioneer of corpus-based translation studies and of narrative theory in translation.",
+    th: ["Baker: Equivalence at Multiple Levels", "Narrative Theory", "Corpus-Based Translation Studies", "Translation Universals"] },
+  { id: "gile", name: "Daniel Gile", from: "French",
+    role: "Interpreting scholar", img: "theorists/daniel-gile.jpg",
+    bio: "Conference interpreter and researcher whose Effort Models explain why interpreting is cognitively demanding.",
+    th: ["Gile’s Effort Models"] },
+  { id: "hu", name: "Hu Gengshen", from: "Chinese",
+    role: "Translation scholar", img: "theorists/hu-gengshen.jpg",
+    bio: "Proposed eco-translatology, which views translation as adaptation and selection within an environment.",
+    th: ["Eco-Translatology"] }
+];
+
 function runTheories(startAt) {
-  const TABS = ["Start here", "By school", "Timeline", "Compare", "Reading"];
+  const TABS = ["Start here", "Theorists", "By school", "Timeline", "Compare", "Reading"];
+  let who = null;   /* an open theorist profile */
   let tab = typeof startAt === "number" ? startAt : 0;
   let openId = null;
   setCount("A guide · the theories of translation");
 
   const typeChip = t => '<span class="th-type">' + t + '</span>';
+  /* A portrait is a file on this site or an empty frame — never initials,
+     never a stand-in, never generated. */
+  const face = (p, big) => {
+    const f = el("span", "th-face" + (big ? " big" : ""));
+    const im = new Image();
+    im.alt = p.credit ? p.credit + " of " + p.name.replace(/<[^>]+>/g, "") : "Portrait of " + p.name;
+    im.loading = "lazy";
+    im.onload = () => f.classList.add("has");
+    im.onerror = () => im.remove();
+    im.src = p.img;
+    f.appendChild(im);
+    return f;
+  };
+  const openWho = p => { who = p.id; tab = 1; render(); scrollTop(); };
+  const peopleOf = t => THEORISTS.filter(p => p.th.indexOf(t.en) >= 0);
   const flowRow = steps => {
     const f = el("div", "th-flow");
     steps.forEach((s, i) => {
@@ -15880,6 +16062,18 @@ function runTheories(startAt) {
       '<span class="th-who">' + t.who + '</span>' + typeChip(t.type);
     d.appendChild(s);
     const body = el("div", "th-body");
+    const ppl = peopleOf(t);
+    if (ppl.length) {
+      const row = el("div", "th-people");
+      ppl.forEach(p => {
+        const b = el("button", "th-person");
+        b.appendChild(face(p));
+        b.appendChild(el("span", null, p.name));
+        b.addEventListener("click", ev => { ev.preventDefault(); openWho(p); });
+        row.appendChild(b);
+      });
+      body.appendChild(row);
+    }
     body.appendChild(el("p", "th-core", "<b>Core question:</b> " + t.core));
     body.appendChild(el("p", "lede", t.idea));
     if (t.concepts) {
@@ -15903,7 +16097,7 @@ function runTheories(startAt) {
     const chips = el("div", "chips");
     TABS.forEach((label, k) => {
       const b = el("button", "chip" + (k === tab ? " on" : ""), label);
-      b.addEventListener("click", () => { tab = k; openId = null; render(); });
+      b.addEventListener("click", () => { tab = k; openId = null; who = null; render(); });
       chips.appendChild(b);
     });
     stage.appendChild(chips);
@@ -15926,7 +16120,45 @@ function runTheories(startAt) {
       stage.appendChild(v);
     }
 
-    if (tab === 1) {
+    if (tab === 1 && !who) {
+      stage.appendChild(el("p", "note", "The people behind the theories, in the order their key work appeared. Tap a profile."));
+      const grid = el("div", "th-grid");
+      const firstYear = p => Math.min.apply(null, p.th.map(n => (THEORIES.find(x => x.en === n) || { y: 9999 }).y));
+      THEORISTS.slice().sort((a, b) => firstYear(a) - firstYear(b)).forEach(p => {
+        const b = el("button", "th-prof");
+        b.appendChild(face(p));
+        b.appendChild(el("span", "th-pn", p.name));
+        b.appendChild(el("span", "th-pl", (p.life ? p.life + " · " : "") + p.from));
+        b.appendChild(el("span", "th-pr", p.role));
+        b.addEventListener("click", () => openWho(p));
+        grid.appendChild(b);
+      });
+      stage.appendChild(grid);
+    }
+    if (tab === 1 && who) {
+      const p = THEORISTS.find(x => x.id === who);
+      const back = el("button", "link", "← All theorists");
+      back.addEventListener("click", () => { who = null; render(); scrollTop(); });
+      stage.appendChild(back);
+      const head = el("div", "th-phead");
+      head.appendChild(face(p, true));
+      const txt = el("div", "th-ptxt");
+      txt.appendChild(el("h2", null, p.name));
+      txt.appendChild(el("p", "th-pl", (p.life ? p.life + " · " : "") + p.from));
+      txt.appendChild(el("span", "th-type", p.role));
+      if (p.credit) txt.appendChild(el("p", "th-credit", p.credit + " · supplied by the site owner"));
+      head.appendChild(txt);
+      stage.appendChild(head);
+      stage.appendChild(el("p", "lede", p.bio));
+      stage.appendChild(el("h3", "pub-h", p.th.length > 1 ? "Their theories" : "Their theory"));
+      p.th.forEach(name => {
+        const t = THEORIES.find(x => x.en === name);
+        if (t) { openId = "th-" + THEORIES.indexOf(t); stage.appendChild(card(t)); }
+      });
+      openId = null;
+    }
+
+    if (tab === 2) {
       stage.appendChild(el("p", "note", "Fourteen families, each with its dates. Tap a theory to open it."));
       TH_GROUPS.forEach(g => {
         const sec = el("section", "th-group");
@@ -15939,7 +16171,7 @@ function runTheories(startAt) {
       });
     }
 
-    if (tab === 2) {
+    if (tab === 3) {
       stage.appendChild(el("p", "note", "Every entry in the order its key text appeared. Tap one to read it."));
       const list = el("div", "th-time");
       THEORIES.slice().sort((a, b) => a.y - b.y).forEach(t => {
@@ -15948,7 +16180,7 @@ function runTheories(startAt) {
           '<span class="th-ty">' + (t.y < 0 ? Math.abs(t.y) + " BCE" : Math.floor(t.y)) + '</span>' +
           '<span class="th-tt"><b>' + t.en + '</b><span>' + t.who + ' · ' + g.n + ' ' + g.en + '</span></span>');
         b.addEventListener("click", () => {
-          tab = 1; openId = "th-" + THEORIES.indexOf(t); render();
+          tab = 2; openId = "th-" + THEORIES.indexOf(t); render();
           const n = document.getElementById(openId);
           if (n) n.scrollIntoView({ behavior: "smooth", block: "start" });
         });
@@ -15957,7 +16189,7 @@ function runTheories(startAt) {
       stage.appendChild(list);
     }
 
-    if (tab === 3) {
+    if (tab === 4) {
       stage.appendChild(el("p", "note", "One Arabic proverb, six theoretical lenses. Tap each one."));
       const src = el("p", "th-ar big", TH_COMPARE.ar); src.dir = "rtl"; src.lang = "ar";
       stage.appendChild(src);
@@ -15981,7 +16213,7 @@ function runTheories(startAt) {
       show(0);
     }
 
-    if (tab === 4) {
+    if (tab === 5) {
       stage.appendChild(el("p", "note", "Foundational reading, by year of first publication."));
       stage.appendChild(table([["<b>Year</b>", "<b>Work</b>", "<b>Contribution</b>"]].concat(
         TH_SHELF.map(([y, a, b, c]) => [String(y), a + ", <i>" + b + "</i>", c]))));
@@ -15991,9 +16223,9 @@ function runTheories(startAt) {
     }
 
     stage.appendChild(footNav({
-      back: tab > 0 ? (() => { tab--; openId = null; render(); scrollTop(); }) : null,
+      back: tab > 0 ? (() => { tab--; openId = null; who = null; render(); scrollTop(); }) : null,
       backLabel: tab > 0 ? TABS[tab - 1] : "",
-      next: tab < TABS.length - 1 ? (() => { tab++; openId = null; render(); scrollTop(); }) : null,
+      next: tab < TABS.length - 1 ? (() => { tab++; openId = null; who = null; render(); scrollTop(); }) : null,
       nextLabel: tab < TABS.length - 1 ? TABS[tab + 1] : "",
       note: TABS[tab]
     }));
