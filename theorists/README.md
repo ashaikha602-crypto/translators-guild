@@ -16,7 +16,7 @@ beside each one.
 | `theorists/walter-benjamin.jpg` | Walter Benjamin | on the site |
 | `theorists/roman-jakobson.jpg` | Roman Jakobson | on the site |
 | `theorists/jean-paul-vinay.jpg` | Jean-Paul Vinay | on the site |
-| `theorists/jean-darbelnet.jpg` | Jean Darbelnet | awaiting the file |
+| `theorists/jean-darbelnet.jpg` | Jean Darbelnet | on the site · UBC Archives Photograph Collection, 1.0027476 |
 | `lineage/eugene-nida.jpg` | Eugene A. Nida | on the site |
 | `theorists/jc-catford.jpg` | J. C. Catford | awaiting the file |
 | `theorists/werner-koller.jpg` | Werner Koller | awaiting the file |
