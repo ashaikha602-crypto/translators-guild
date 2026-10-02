@@ -18,10 +18,10 @@ beside each one.
 | `theorists/jean-paul-vinay.jpg` | Jean-Paul Vinay | on the site |
 | `theorists/jean-darbelnet.jpg` | Jean Darbelnet | on the site · UBC Archives Photograph Collection, 1.0027476 |
 | `lineage/eugene-nida.jpg` | Eugene A. Nida | on the site |
-| `theorists/jc-catford.jpg` | J. C. Catford | awaiting the file |
-| `theorists/werner-koller.jpg` | Werner Koller | awaiting the file |
-| `theorists/peter-newmark.jpg` | Peter Newmark | awaiting the file |
-| `theorists/katharina-reiss.jpg` | Katharina Reiss | awaiting the file |
+| `theorists/jc-catford.jpg` | J. C. Catford | on the site |
+| `theorists/werner-koller.jpg` | Werner Koller | on the site |
+| `theorists/peter-newmark.jpg` | Peter Newmark | on the site |
+| `theorists/katharina-reiss.jpg` | Katharina Reiss | on the site |
 | `theorists/hans-vermeer.jpg` | Hans J. Vermeer | awaiting the file |
 | `theorists/justa-holz-manttari.jpg` | Justa Holz-Mänttäri | awaiting the file |
 | `theorists/christiane-nord.jpg` | Christiane Nord | awaiting the file |
