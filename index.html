@@ -761,6 +761,35 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .prompt .lit { font-size: .85rem; color: var(--lilac-dim); margin: 0; }
 .prompt .lit b { color: var(--coral); font-weight: 500; }
 .th-group { margin: 1.4rem 0 .6rem; }
+.th-h { font-size: 1.35rem; color: var(--white); margin: .6rem 0; line-height: 1.35; }
+.th-fam { padding: 1rem; margin: .8rem 0; display: grid; gap: .5rem; }
+.th-fhead { display: flex; gap: .8rem; align-items: flex-start; }
+.th-fhead h3 { margin: 0; color: var(--white); font-size: 1.05rem; }
+.th-num { font-size: 1.4rem; font-weight: 700; color: var(--mag-ink); min-width: 2rem; }
+.th-row { display: flex; flex-wrap: wrap; gap: .4rem .6rem; align-items: center; justify-content: space-between; width: 100%;
+  padding: .7rem .8rem; border-radius: 12px; text-align: start; background: rgba(214,191,234,.05);
+  border: 1px solid rgba(214,191,234,.14); color: inherit; text-transform: none; letter-spacing: normal; font-weight: 400; box-shadow: none; }
+.th-row > span:first-child { display: grid; gap: .1rem; flex: 1 1 12rem; }
+.th-row b { color: var(--white); }
+.th-go { color: var(--mag-ink); font-size: .82rem; font-weight: 600; }
+.th-lhead { margin: .8rem 0 .4rem; display: grid; gap: .3rem; }
+.th-lhead h2 { margin: 0; font-size: 1.5rem; color: var(--white); }
+.th-meta { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.th-sec { display: flex; align-items: center; gap: .6rem; margin: 1.6rem 0 .6rem; font-size: 1rem; color: var(--white); }
+.th-sec .th-n { display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 50%;
+  background: rgba(167,38,208,.25); color: var(--white); font-size: .8rem; }
+.th-central { font-size: 1.05rem; color: var(--white); border-inline-start: 3px solid var(--magenta); padding-inline-start: .8rem; margin: .4rem 0; }
+.th-two { display: grid; gap: .7rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+.th-col { padding: .8rem 1rem; border-radius: 14px; background: rgba(214,191,234,.05); border: 1px solid rgba(214,191,234,.14); }
+.th-col ul { margin: .4rem 0 0; padding-inline-start: 1.1rem; }
+.th-col.good b { color: #5fe0b0; } .th-col.warn b { color: var(--coral, #ff8a8a); }
+.th-refs { margin: 0; padding-inline-start: 1.1rem; color: var(--lilac); }
+.th-quiz .options { margin-top: .6rem; }
+.th-q { color: var(--white); }
+.th-lnav { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: space-between; margin: 1.6rem 0 .6rem; }
+.th-cmp { padding: 1rem; margin: .6rem 0; display: grid; gap: .3rem; }
+.th-pq { margin: 1rem 0; display: grid; gap: .3rem; }
+.th-tally { font-weight: 600; color: var(--white); }
 .th-face { flex: none; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; display: block;
   background: rgba(214,191,234,.08); border: 1px dashed rgba(214,191,234,.35); }
 .th-face.has { border: 2px solid rgba(207,122,232,.55); }
@@ -14631,7 +14660,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1002-1920";
+const BUILD = "1002-2000";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -15451,6 +15480,7 @@ const THEORIES = [
   /* ── I · Historical foundations ── */
   { g: "hist", y: -46, when: "46 BCE · c. 395 CE", type: "Historical debate",
     en: "Word-for-Word vs. Sense-for-Sense", who: "Cicero · St. Jerome",
+    concepts: ["Word for word", "Sense for sense", "Fidelity", "Literal translation"],
     core: "Should the translator reproduce the words and formal structure of the source, or its meaning, force and effect?",
     idea: "One of the oldest debates in Western translation thought. Cicero described translating Greek oratory into Latin without rendering each word mechanically, keeping the force of the rhetoric instead. St. Jerome later defended translating <b>sense for sense</b> rather than word for word.",
     ex: [{ ar: "هو كسر حاجز الصمت.", r: [["Word-oriented", "He broke the barrier of silence."], ["Sense-oriented", "He broke the silence."]],
@@ -15460,6 +15490,7 @@ const THEORIES = [
 
   { g: "hist", y: 1813, when: "1813", type: "Theory",
     en: "Schleiermacher: Two Methods of Translating", who: "Friedrich Schleiermacher",
+    concepts: ["Moving the reader", "Moving the author", "Foreignness"],
     core: "Do you bring the author to the reader, or the reader to the author?",
     idea: "In “On the Different Methods of Translating” Schleiermacher set out two fundamental directions: move the author towards the reader, or move the reader towards the author. This later became the basis of the domestication / foreignization debate.",
     ex: [{ ar: "اجتمع الضيوف في الديوانية بعد صلاة المغرب.",
@@ -15484,6 +15515,7 @@ const THEORIES = [
 
   { g: "ling", y: 1959, when: "1959", type: "Theory",
     en: "Jakobson: Three Kinds of Translation", who: "Roman Jakobson",
+    concepts: ["Intralingual", "Interlingual", "Intersemiotic", "Equivalence in difference"],
     core: "What counts as translation at all?",
     idea: "In “On Linguistic Aspects of Translation” Jakobson identified three kinds of translation, widening the idea beyond two languages and linking it to semiotics and interpretation.",
     table: [["Intralingual", "Within one language", "Classical Arabic → Modern Standard Arabic"],
@@ -15495,6 +15527,7 @@ const THEORIES = [
 
   { g: "ling", y: 1964, when: "1964 · 1969", type: "Theory",
     en: "Nida: Formal and Dynamic Equivalence", who: "Eugene A. Nida · Charles R. Taber",
+    concepts: ["Formal equivalence", "Dynamic equivalence", "Functional equivalence", "Receptor response", "Naturalness"],
     core: "Should the translation keep the form, or produce the same response in its readers?",
     idea: "<b>Formal</b> equivalence keeps wording, structure and grammatical relationships. <b>Dynamic</b> equivalence (later called functional equivalence) aims for natural expression and a comparable response in the target reader. Nida’s work grew out of Bible translation, and later scholarship has critically reassessed it.",
     flow: ["Source text", "Linguistic meaning", "Context", "Target meaning", "Target text"],
@@ -15517,6 +15550,7 @@ const THEORIES = [
 
   { g: "ling", y: 1979, when: "1979", type: "Theory",
     en: "Koller: Five Kinds of Equivalence", who: "Werner Koller",
+    concepts: ["Denotative", "Connotative", "Text-normative", "Pragmatic", "Formal-aesthetic"],
     core: "Equivalent in what respect?",
     idea: "Koller splits equivalence into dimensions instead of one relationship. A translation can keep one while sacrificing another — and his terms let you say which.",
     table: [["Denotative", "Same factual content", "سيارة → car"],
@@ -15531,6 +15565,7 @@ const THEORIES = [
 
   { g: "ling", y: 1981, when: "1981 · 1988", type: "Method",
     en: "Newmark: Semantic and Communicative Translation", who: "Peter Newmark",
+    concepts: ["Semantic translation", "Communicative translation", "Text function", "Target reader"],
     core: "Should the translation stay close to the author, or serve the reader?",
     idea: "<b>Semantic</b> translation follows source meaning, style and the author’s expression. <b>Communicative</b> translation puts the target reader, naturalness and impact first. Newmark’s textbook is a staple of translator education.",
     ex: [{ ar: "دير بالك على نفسك.", r: [["Semantic", "Take care of yourself."], ["Communicative", "Take care."]] },
@@ -15541,6 +15576,7 @@ const THEORIES = [
 
   { g: "ling", y: 1992, when: "1992 · later editions", type: "Approach",
     en: "Baker: Equivalence at Multiple Levels", who: "Mona Baker",
+    concepts: ["Word level", "Above word level", "Grammatical", "Textual", "Pragmatic", "Semiotic"],
     core: "At which level is equivalence being achieved — or lost?",
     idea: "<i>In Other Words</i> works through equivalence at word level, above word level, grammar, text (theme, information structure, cohesion), pragmatics and semiotics, with a chapter on ethics. It bridges theory and translator training.",
     flow: ["Word", "Phrase", "Grammar", "Text", "Pragmatics", "Semiotics"],
@@ -15554,6 +15590,7 @@ const THEORIES = [
   /* ── III · Functionalist ── */
   { g: "func", y: 1971, when: "1971", type: "Theory",
     en: "Reiss: Text Types", who: "Katharina Reiss",
+    concepts: ["Informative", "Expressive", "Operative", "Audio-medial", "Text function"],
     core: "What is the whole text for?",
     idea: "Reiss moves attention from words to the function of the whole text, and ties translation priorities and assessment to text type.",
     table: [["Informative", "Reports, manuals, news", "Content and clarity"],
@@ -15566,8 +15603,9 @@ const THEORIES = [
 
   { g: "func", y: 1978, when: "1978 · 1984", type: "Theory",
     en: "Skopos Theory", who: "Hans J. Vermeer · with Katharina Reiss",
+    concepts: ["Skopos", "Translation brief", "Target audience", "Function", "Coherence", "Fidelity"],
     core: "Why is this translation being produced?",
-    idea: "<i>Skopos</i> is Greek for purpose. The purpose the translation must serve in the target context shapes every decision. Key concepts: skopos, translation brief, target audience, function, coherence, fidelity.",
+    idea: "<i>Skopos</i> is Greek for purpose. The purpose the translation must serve in the target context shapes every decision.",
     flow: ["Purpose", "Audience", "Brief", "Decisions", "Target text"],
     asks: ["Why is this being translated?", "Who will read it?", "What should they do, know or feel?", "Where will it be published?", "What genre should it follow?"],
     ex: [{ ar: "رمضان كريم", r: [["Academic article", "Ramadan Kareem is a common greeting exchanged during Ramadan."],
@@ -15579,6 +15617,7 @@ const THEORIES = [
 
   { g: "func", y: 1984, when: "1984", type: "Theory",
     en: "Holz-Mänttäri: Translational Action", who: "Justa Holz-Mänttäri",
+    concepts: ["Translational action", "Initiator", "Commissioner", "Message carrier", "Expert translator"],
     core: "Who is involved in a translation, and what roles do they play?",
     idea: "Translation is a communicative action involving several participants — not words moving from one language to another.",
     flow: ["Initiator", "Commissioner", "Translator", "Medium", "Target audience"],
@@ -15588,6 +15627,7 @@ const THEORIES = [
 
   { g: "func", y: 1988, when: "1988 · 1997", type: "Theory",
     en: "Nord: Function Plus Loyalty", who: "Christiane Nord",
+    concepts: ["Function", "Loyalty", "Translation brief", "Source-text analysis", "Documentary vs instrumental translation"],
     core: "Can a translation serve its purpose and still be honest to everyone involved?",
     idea: "Nord develops functionalism and adds <b>loyalty</b>: the translator has obligations to the people in the communication, not only to the purpose. Her text-analysis model looks at sender, recipient, motive, medium, time, place, subject matter, lexis, syntax and culture-specific elements.",
     ex: [{ ar: "", r: [], n: "A client asks for an Arabic political statement to be translated and says: “Make the accusation stronger.” Loyalty is where the translator separates translation from adaptation, rewriting or ideological modification." }],
@@ -15597,6 +15637,7 @@ const THEORIES = [
   /* ── IV · Discourse and pragmatic ── */
   { g: "disc", y: 1977, when: "1977 · 1997", type: "Model",
     en: "House: Overt and Covert Translation", who: "Juliane House",
+    concepts: ["Overt translation", "Covert translation", "Cultural filter", "Field", "Tenor", "Mode", "Genre"],
     core: "Should the translation read as a translation, or as an original target-culture text?",
     idea: "An <b>overt</b> translation openly works as a translation, tied to the source culture. A <b>covert</b> translation functions as a target-culture text. Her quality-assessment model analyses register (field, tenor, mode) and genre, and has been applied to Arabic–English research.",
     flow: ["Field + Tenor + Mode + Genre", "Translation profile", "Quality assessment"],
@@ -15607,6 +15648,7 @@ const THEORIES = [
 
   { g: "disc", y: 1990, when: "1990", type: "Approach",
     en: "Hatim & Mason: Discourse and the Translator", who: "Basil Hatim · Ian Mason",
+    concepts: ["Discourse", "Register", "Field", "Tenor", "Mode", "Genre", "Intertextuality"],
     core: "What is this text doing, for whom, in what situation?",
     idea: "Translation is analysed beyond the sentence: discourse, register, genre, pragmatics, intentionality and intertextuality. The translator is a mediator between cultures. Register is read as <b>field</b> (what is happening), <b>tenor</b> (who to whom) and <b>mode</b> (which channel).",
     ex: [{ ar: "لن نساوم على سيادتنا الوطنية.", r: [["Statement", "We will not compromise our national sovereignty."], ["Diplomatic briefing", "Our national sovereignty is non-negotiable."]],
@@ -15616,6 +15658,7 @@ const THEORIES = [
 
   { g: "disc", y: 1991, when: "1991", type: "Theory",
     en: "Gutt: Relevance Theory", who: "Ernst-August Gutt",
+    concepts: ["Relevance", "Inference", "Context", "Interpretive resemblance"],
     core: "How do readers infer meaning that the words alone do not carry?",
     idea: "Communication is inferential: words + context + inference. Gutt treats translation as interpretive use of language, aiming at interpretive resemblance to the source.",
     ex: [{ ar: "الجو لا يُطاق اليوم.", r: [["In context", "The weather is unbearable today."]], n: "In another situation it may be a complaint about the whole atmosphere. The translator infers, not just decodes." }],
@@ -15625,6 +15668,7 @@ const THEORIES = [
   /* ── V · Descriptive and systemic ── */
   { g: "desc", y: 1978, when: "1978 · 1990", type: "Theory",
     en: "Polysystem Theory", who: "Itamar Even-Zohar",
+    concepts: ["Polysystem", "Central", "Peripheral", "Innovative", "Conservative"],
     core: "What position does translated literature hold in a culture?",
     idea: "Literature is a dynamic system of interacting subsystems. Translated literature can be <b>central</b> or <b>peripheral</b>, <b>innovative</b> or <b>conservative</b>, and its position affects how translators translate.",
     ex: [{ ar: "", r: [], n: "Where foreign novels dominate the market, translation may be central and bring new forms in. In a culture with a strong national canon, translated fiction may sit on the periphery and conform to existing models." }],
@@ -15633,6 +15677,7 @@ const THEORIES = [
 
   { g: "desc", y: 1985, when: "1985 · 1992", type: "Approach",
     en: "The Manipulation School and Rewriting", who: "Theo Hermans · André Lefevere",
+    concepts: ["Rewriting", "Ideology", "Poetics", "Patronage"],
     core: "How does translation shape how a work is received?",
     idea: "Translation is one form of <b>rewriting</b>, alongside editing, criticism, historiography and anthologies. Lefevere examines the roles of <b>ideology</b>, <b>poetics</b> and <b>patronage</b>.",
     ex: [{ ar: "", r: [], n: "A published translation of a controversial novel omits passages, changes terminology and the title, and adds explanatory material. It is not just transmitting the text — it is rewriting how that text is represented." }],
@@ -15641,6 +15686,7 @@ const THEORIES = [
 
   { g: "desc", y: 1995, when: "1995", type: "Research paradigm",
     en: "Descriptive Translation Studies", who: "Gideon Toury",
+    concepts: ["Norms", "Target-orientation", "Description", "Adequacy", "Acceptability"],
     core: "Not “what should a translator do?” but “what do translators actually do?”",
     idea: "Translations are facts of the target culture, and translating is a <b>norm-governed</b> activity. DTS describes patterns before judging them.",
     flow: ["Source culture", "Translation process", "Target-culture norms", "Target text"],
@@ -15651,6 +15697,7 @@ const THEORIES = [
   /* ── VI · Cultural ── */
   { g: "cult", y: 1990, when: "1990 · 1998", type: "Approach",
     en: "The Cultural Turn", who: "Susan Bassnett · André Lefevere",
+    concepts: ["Culture", "Ideology", "Power", "Identity"],
     core: "What cultural meaning is carried across — and what disappears?",
     idea: "Focus moves from linguistic equivalence to culture, ideology, institutions, power, identity and social context. Translation becomes part of cultural studies.",
     ex: [{ ar: "فريج", r: [["Options", "neighbourhood · old neighbourhood · traditional quarter · fareej"]], n: "Every option does something culturally different." }],
@@ -15659,6 +15706,7 @@ const THEORIES = [
 
   { g: "cult", y: 1995, when: "1995", type: "Strategy",
     en: "Venuti: Domestication and Foreignization", who: "Lawrence Venuti",
+    concepts: ["Domestication", "Foreignization", "Invisibility", "Fluency"],
     core: "Should the translation make the foreign familiar, or let it stay foreign?",
     idea: "<b>Domestication</b> conforms to target-culture expectations; <b>foreignization</b> keeps the source culture visible. Venuti links these choices to the translator’s <b>invisibility</b> and to the cultural politics of translation — not just a vocabulary trick.",
     flow: ["Foreignization", "← Translator →", "Domestication"],
@@ -15669,6 +15717,7 @@ const THEORIES = [
   /* ── VII · Philosophical and hermeneutic ── */
   { g: "phil", y: 1923, when: "1923", type: "Theory",
     en: "Benjamin: The Task of the Translator", who: "Walter Benjamin",
+    concepts: ["Pure language", "Form", "Translatability"],
     core: "Is translation only about passing on information?",
     idea: "Benjamin rejects the idea that translation exists merely to transmit information, and emphasises the relationship between languages and a linguistic possibility beyond any single language.",
     ex: [{ ar: "", r: [], n: "In a line of poetry, meaning, rhythm, syntax, sound and ambiguity cannot all be reproduced. Benjamin asks not only “what does this sentence mean?” but “what does this linguistic form do?”" }],
@@ -15677,6 +15726,7 @@ const THEORIES = [
 
   { g: "phil", y: 1975, when: "1975", type: "Theory",
     en: "Steiner: The Hermeneutic Motion", who: "George Steiner",
+    concepts: ["Trust", "Aggression", "Incorporation", "Restitution"],
     core: "How does a translator understand a text before rebuilding it?",
     idea: "Translation is interpretation, in four stages: <b>trust</b> (there is meaning here), <b>aggression</b> (the translator penetrates the text), <b>incorporation</b> (the meaning enters the target language), <b>restitution</b> (compensating for what was taken).",
     flow: ["Trust", "Aggression", "Incorporation", "Restitution"],
@@ -15686,6 +15736,7 @@ const THEORIES = [
 
   { g: "phil", y: 1984, when: "1984", type: "Theory",
     en: "Berman: The Ethics of the Foreign", who: "Antoine Berman",
+    concepts: ["The foreign", "Deforming tendencies", "Rationalization", "Clarification", "Expansion", "Ennoblement"],
     core: "Does the translation respect the foreignness of the text?",
     idea: "Berman warns against reducing foreign texts too far to target-language norms. He lists <b>deforming tendencies</b>: rationalization, clarification, expansion, ennoblement, impoverishment, destruction of rhythm, of linguistic patterning, and of vernacular features.",
     ex: [{ ar: "كانت الدنيا تضيق به شيئاً فشيئاً.", r: [["Flattened", "He became increasingly distressed."], ["Text-sensitive", "The world seemed to close in around him, little by little."]] }],
@@ -15694,6 +15745,7 @@ const THEORIES = [
 
   { g: "phil", y: 1985, when: "1985", type: "Theory",
     en: "Derrida: Deconstruction", who: "Jacques Derrida",
+    concepts: ["Différance", "Instability of meaning", "Untranslatability"],
     core: "Does a text have one stable meaning to transfer?",
     idea: "Deconstruction challenges the idea of a single stable meaning that can move intact into another language. Translation depends on difference and exposes the instability of absolute equivalence.",
     ex: [{ ar: "عين", r: [["Possible senses", "eye · spring · source · spy · essence"]], n: "Where the source deliberately plays on ambiguity, English must choose. Deconstruction makes that instability central rather than a nuisance." }],
@@ -15702,6 +15754,7 @@ const THEORIES = [
 
   { g: "phil", y: 2003, when: "2003", type: "Theory",
     en: "Eco: Translation as Negotiation", who: "Umberto Eco",
+    concepts: ["Negotiation", "Loss and gain", "Reader expectations"],
     core: "What does the translator trade off against what?",
     idea: "Translation is negotiation under constraints — among meanings, cultural conventions, style, reader expectations and the text itself. It is rarely one-to-one substitution.",
     ex: [{ ar: "حياك الله", r: [["Possible", "Welcome. · Glad to have you. · May God bless you."]], n: "The translator negotiates literal meaning, social function, politeness, context and genre." }],
@@ -15711,6 +15764,7 @@ const THEORIES = [
   /* ── VIII · Feminist and gender ── */
   { g: "gend", y: 1996, when: "1996 · 1997", type: "Approach",
     en: "Feminist Translation Theory", who: "Sherry Simon · Luise von Flotow",
+    concepts: ["Gender", "Visibility", "Intervention", "Linguistic sexism"],
     core: "Who is represented, how, and who holds linguistic power?",
     idea: "Feminist approaches examine translation and gender, identity, authorship, linguistic sexism and visibility. Simon describes feminist translation as a cultural intervention that can create new meanings.",
     ex: [{ ar: "", r: [["English source", "Every student must submit his assignment."], ["Neutral rendering", "Every student must submit their assignment."]],
@@ -15720,9 +15774,10 @@ const THEORIES = [
 
   /* ── IX · Postcolonial ── */
   { g: "post", y: 1992, when: "1992 · 1999", type: "Approach",
-    en: "Postcolonial Translation Theory", who: "Gayatri Chakravorty Spivak · Susan Bassnett · Harish Trivedi",
+    en: "Postcolonial Approaches to Translation", who: "Key scholars include Gayatri Chakravorty Spivak, Susan Bassnett, Harish Trivedi, Tejaswini Niranjana and Maria Tymoczko",
+    concepts: ["Power", "Representation", "Language hierarchy", "Resistance"],
     core: "Whose categories does the translation reproduce?",
-    idea: "Translation seen through colonial history, power, language hierarchy, identity, resistance and representation.",
+    idea: "Not one theory with founders but a tradition of approaches. They read translation through colonial history, power, language hierarchy, identity, resistance and representation, and ask how translation has served — and can resist — unequal relations between cultures.",
     ex: [{ ar: "بدو", r: [["Common rendering", "Bedouins"]], n: "Is the source using the term neutrally, romantically, administratively or pejoratively? Who named this group, and does the translation reinforce a colonial representation?" }],
     use: "Historical, political and ethnographic texts.",
     refs: ["Spivak, “The Politics of Translation” (1992)", "Bassnett & Trivedi (eds), <i>Post-Colonial Translation: Theory and Practice</i> (1999)"] },
@@ -15730,6 +15785,7 @@ const THEORIES = [
   /* ── X · Narrative and sociological ── */
   { g: "soc", y: 1998, when: "1998 · 2016", type: "Approach",
     en: "Sociological Approaches", who: "Building on Pierre Bourdieu",
+    concepts: ["Field", "Habitus", "Capital", "Agency"],
     core: "What social environment made this choice likely?",
     idea: "Translation as social practice, shaped by field, habitus, capital, institutions, publishers, clients and norms. Sameh Hanna’s study of Shakespeare translation in Egypt applies this to Arabic.",
     ex: [{ ar: "", r: [], n: "The same English text, translated for a university press, a commercial publisher and a government institution. Deadlines, status, expected style and audiences differ — and so do the translations." }],
@@ -15738,6 +15794,7 @@ const THEORIES = [
 
   { g: "soc", y: 2006, when: "2006", type: "Theory",
     en: "Narrative Theory", who: "Mona Baker",
+    concepts: ["Narrative", "Framing", "Selective appropriation", "Relabelling", "Repositioning"],
     core: "Which story does the translation help to tell?",
     idea: "Translators and interpreters circulate, reinforce or contest narratives through <b>framing</b>, <b>selective appropriation</b>, <b>relabelling</b> and <b>repositioning</b> of participants.",
     ex: [{ ar: "مقاتلون", r: [["Choices", "fighters · combatants · militants · armed groups"]], n: "Not interchangeable in political discourse. The word frames the actors." }],
@@ -15747,6 +15804,7 @@ const THEORIES = [
   /* ── XI · Cognitive ── */
   { g: "cog", y: 1986, when: "1980s – today", type: "Research paradigm",
     en: "Cognitive Translation Studies", who: "Translation Process Research",
+    concepts: ["Process", "Think-aloud", "Keystroke logging", "Eye tracking", "Decision-making"],
     core: "What happens in the translator’s mind?",
     idea: "Studies comprehension, problem-solving, attention, memory, decision-making and revision, using think-aloud reports, keystroke logging, eye tracking and screen recording.",
     flow: ["Comprehension", "Problem", "Research", "Decision", "Draft", "Revision"],
@@ -15757,6 +15815,7 @@ const THEORIES = [
   /* ── XII · Corpus ── */
   { g: "corp", y: 1993, when: "1993 – today", type: "Research paradigm",
     en: "Corpus-Based Translation Studies", who: "Mona Baker",
+    concepts: ["Corpus", "Parallel corpus", "Comparable corpus", "Collocation"],
     core: "What patterns appear across thousands of translations?",
     idea: "Large collections of texts are used to study translated language, terminology, collocation, style and translator behaviour — moving from single examples to empirical patterns.",
     use: "Terminology, style and research.",
@@ -15764,6 +15823,7 @@ const THEORIES = [
 
   { g: "corp", y: 1993.5, when: "1993 – today", type: "Hypotheses",
     en: "Translation Universals", who: "Corpus researchers",
+    concepts: ["Explicitation", "Simplification", "Normalization", "Levelling-out"],
     core: "Do translations share tendencies whatever the languages?",
     idea: "A family of hypotheses, not laws: <b>explicitation</b>, <b>simplification</b>, <b>normalization</b> and <b>levelling-out</b>. Corpus research has tested them repeatedly; scholars disagree on how universal they are. Treat them as tendencies.",
     ex: [{ ar: "وصل متأخراً، لذلك اعتذر.", r: [["Explicitation", "He arrived late, so he apologized."]], n: "The logical link is made explicit." }],
@@ -15773,6 +15833,7 @@ const THEORIES = [
   /* ── XIII · Emerging ── */
   { g: "new", y: 2001, when: "2000s", type: "Approach",
     en: "Eco-Translatology", who: "Hu Gengshen",
+    concepts: ["Adaptation", "Selection", "Translational eco-environment"],
     core: "How does a translation adapt to its environment?",
     idea: "A more recent and less established framework, using an ecological metaphor: adaptation, selection, environment and balance between linguistic, cultural and communicative dimensions.",
     use: "Contemporary research; read alongside the established theories, not instead of them.",
@@ -15781,6 +15842,7 @@ const THEORIES = [
   /* ── XIV · Applied ── */
   { g: "app", y: 1990, when: "1990s – today", type: "Field",
     en: "Audiovisual Translation", who: "A field, not one theory",
+    concepts: ["Subtitling", "Dubbing", "Voice-over", "Captioning", "Reading speed"],
     core: "How do you translate for the screen?",
     idea: "<b>Subtitling</b> (time, space, reading speed, segmentation), <b>dubbing</b> (timing, rhythm, lip synchrony), <b>voice-over</b> and <b>captioning</b> for deaf and hard-of-hearing viewers. Connects to Skopos, functionalism, relevance, multimodality and discourse analysis.",
     use: "Film, TV, online video, accessibility.",
@@ -15788,6 +15850,7 @@ const THEORIES = [
 
   { g: "app", y: 1995, when: "1995", type: "Model",
     en: "Gile’s Effort Models", who: "Daniel Gile",
+    concepts: ["Listening effort", "Memory effort", "Production effort", "Coordination", "Processing capacity"],
     core: "Why do interpreters make errors even when they know the language?",
     idea: "Interpreting draws on limited processing capacity shared between <b>listening</b>, <b>production</b>, <b>memory</b> and <b>coordination</b>. When demand exceeds capacity: errors, omissions and delays.",
     flow: ["Listening", "Memory", "Production", "Coordination"],
@@ -15820,13 +15883,16 @@ const TH_ASKS = [
 
 const TH_COMPARE = {
   ar: "الوقت كالسيف إن لم تقطعه قطعك",
+  /* [label, translation, focus, theory title for the lesson link] */
   views: [
-    ["Formal (Nida)", "Time is like a sword; if you do not cut it, it cuts you.", "Keeps the image and the structure."],
-    ["Communicative (Newmark)", "Time waits for no one.", "Recreates the message with an English proverb."],
-    ["Foreignizing (Venuti)", "Time is like a sword; if you do not cut it, it will cut you.", "Keeps the Arabic image visible on purpose, so the reader meets a foreign way of thinking."],
-    ["Skopos (Vermeer)", "It depends.", "Literary, educational, journalistic or advertising purpose would each lead to a different rendering."],
-    ["Discourse (Hatim & Mason)", "Analyse first.", "Who says it, to whom, why, and with what rhetorical effect?"],
-    ["Narrative (Baker)", "Analyse first.", "What worldview does it build around time, agency and responsibility?"]
+    ["Nida · Formal equivalence", "Time is like a sword; if you do not cut it, it cuts you.", "Preserving the formal and semantic features of the source.", "Nida: Formal and Dynamic Equivalence"],
+    ["Nida · Dynamic equivalence", "Time waits for no one.", "Producing the same effect on an English reader as the Arabic has on an Arabic reader.", "Nida: Formal and Dynamic Equivalence"],
+    ["Newmark · Communicative translation", "Time waits for no one.", "Communicating the intended message naturally for the target reader.", "Newmark: Semantic and Communicative Translation"],
+    ["Venuti · Domestication", "Time waits for no one.", "Using a familiar target-culture expression, so the foreign origin disappears.", "Venuti: Domestication and Foreignization"],
+    ["Venuti · Foreignization", "Time is like a sword; if you do not cut it, it will cut you.", "Keeping the Arabic image visible on purpose, so the reader meets a foreign way of thinking.", "Venuti: Domestication and Foreignization"],
+    ["Vermeer · Skopos", "It depends on the purpose.", "A literary anthology might keep the sword; a business slide would use “Time waits for no one”; a proverbs textbook might give both.", "Skopos Theory"],
+    ["Hatim & Mason · Discourse", "Analyse first.", "Who says it, to whom, in what genre, and with what rhetorical effect?", "Hatim & Mason: Discourse and the Translator"],
+    ["Baker · Narrative", "Analyse first.", "What worldview does it build around time, agency and responsibility, and does the translation keep that story?", "Narrative Theory"]
   ]
 };
 
@@ -15964,7 +16030,7 @@ const THEORISTS = [
   { id: "bassnett", name: "Susan Bassnett", life: "b. 1945", from: "British",
     role: "Translation and comparative literature scholar", img: "theorists/susan-bassnett.jpg", credit: "Photograph",
     bio: "Author of the classic introduction <i>Translation Studies</i>, and a leading voice of the cultural turn and of postcolonial translation studies.",
-    th: ["The Cultural Turn", "Postcolonial Translation Theory"] },
+    th: ["The Cultural Turn", "Postcolonial Approaches to Translation"] },
   { id: "venuti", name: "Lawrence Venuti", life: "b. 1953", from: "American",
     role: "Translator and theorist", img: "theorists/lawrence-venuti.jpg", credit: "Photograph",
     bio: "Translator from Italian, French and Catalan. Named the translator’s invisibility and set domestication against foreignization.",
@@ -15996,7 +16062,7 @@ const THEORISTS = [
   { id: "spivak", name: "Gayatri Chakravorty Spivak", life: "b. 1942", from: "Indian",
     role: "Literary theorist and translator", img: "theorists/gayatri-spivak.jpg", credit: "Photograph",
     bio: "Postcolonial theorist and translator of Derrida and Mahasweta Devi, whose essay “The Politics of Translation” questions whose voice survives.",
-    th: ["Postcolonial Translation Theory"] },
+    th: ["Postcolonial Approaches to Translation"] },
   { id: "bourdieu", name: "Pierre Bourdieu", life: "1930 – 2002", from: "French",
     role: "Sociologist", img: "theorists/pierre-bourdieu.jpg", credit: "Photograph",
     bio: "Not a translation scholar, but his concepts of field, habitus and capital became the basis of the sociology of translation.",
@@ -16015,29 +16081,280 @@ const THEORISTS = [
     th: ["Eco-Translatology"] }
 ];
 
+/* Teaching layer for each entry in THEORIES, keyed by its English title:
+   the one-sentence central idea, strengths and limitations (so no theory
+   is taught as if it solved translation), and one scenario question with
+   its explanation. */
+const TH_MORE = {
+"Word-for-Word vs. Sense-for-Sense": {
+  central: "A translation can follow the source’s words or its meaning — and the two often pull apart.",
+  str: ["Gives students the most basic vocabulary for any translation decision", "Shows that literal is not the same as faithful"],
+  lim: ["Too binary: most real translations mix both", "Says nothing about purpose, audience or culture"],
+  quiz: { q: "You render هو كسر حاجز الصمت as “He broke the silence.” Which side of the debate is this?",
+    o: ["Word for word", "Sense for sense", "Neither"], a: 1,
+    why: "The image of a “barrier” is dropped because English expresses the same meaning naturally without it: meaning is kept, words are not." } },
+"Schleiermacher: Two Methods of Translating": {
+  central: "Either move the author towards the reader, or move the reader towards the author.",
+  str: ["Names the basic cultural choice every translator faces", "The root of Venuti’s domestication and foreignization"],
+  lim: ["Presents two poles where most translations sit in between", "Written about literary and philosophical texts, not all genres"],
+  quiz: { q: "You keep “diwaniya” in English with a short gloss. Which direction is that?",
+    o: ["Bringing the author to the reader", "Bringing the reader to the author", "Neither"], a: 1,
+    why: "The reader is asked to meet an Arabic cultural term on its own terms, which moves the reader towards the source." } },
+"Vinay & Darbelnet: Comparative Stylistics": {
+  central: "Translators move between languages through a small set of nameable procedures.",
+  str: ["Gives precise names for what you did to a phrase", "Very practical for training and commentary"],
+  lim: ["Procedures, not a theory of why you choose one", "Built on French–English; some categories overlap"],
+  quiz: { q: "بعد وصول الوفد → “after the delegation arrived”. Which procedure changed the noun into a verb?",
+    o: ["Calque", "Transposition", "Modulation"], a: 1,
+    why: "Transposition changes the word class (noun → verb) while keeping the meaning." } },
+"Jakobson: Three Kinds of Translation": {
+  central: "Translation happens within a language, between languages, and between sign systems.",
+  str: ["Widens what counts as translation", "Links translation to interpretation and semiotics"],
+  lim: ["A classification, not a method", "Says little about how to translate well"],
+  quiz: { q: "A novel is adapted into a film. Which kind of translation is that?",
+    o: ["Intralingual", "Interlingual", "Intersemiotic"], a: 2,
+    why: "Moving from words to images and sound is translation between sign systems: intersemiotic." } },
+"Nida: Formal and Dynamic Equivalence": {
+  central: "A translation can keep the form of the source, or aim for the same response in its new readers.",
+  str: ["Puts the reader’s understanding at the centre", "Explains why natural target-language renderings are often more faithful"],
+  lim: ["“Same response” is hard to measure", "Grew out of Bible translation with a missionary purpose; later criticised for that"],
+  quiz: { q: "ألف مبروك! → “Congratulations!” Which kind of equivalence is that?",
+    o: ["Formal", "Dynamic", "Textual"], a: 1,
+    why: "The number “a thousand” is dropped, but the effect — warm congratulations — is reproduced." } },
+"Catford: A Linguistic Theory of Translation": {
+  central: "Translation is replacing textual material in one language with equivalent material in another, with predictable shifts.",
+  str: ["Precise vocabulary for grammatical changes", "Useful for Arabic nominal style → English verbal style"],
+  lim: ["Works mostly at sentence level", "Leaves out context, culture and purpose"],
+  quiz: { q: "وصول (noun) becomes “arrived” (verb). Which shift is that in Catford’s terms?",
+    o: ["Level shift", "Class shift", "Unit shift"], a: 1,
+    why: "The word class changes from noun to verb: a class shift, one of Catford’s category shifts." } },
+"Koller: Five Kinds of Equivalence": {
+  central: "Equivalence is not one thing: a translation can be equivalent in one respect and not another.",
+  str: ["Lets you name exactly what was kept and what was lost", "Very useful for poetry, advertising and wordplay"],
+  lim: ["Does not tell you which kind to prioritise", "Can feel like a checklist rather than a method"],
+  quiz: { q: "A translated contract is rewritten to sound like an English contract. Which equivalence is prioritised?",
+    o: ["Connotative", "Text-normative", "Formal-aesthetic"], a: 1,
+    why: "Following the conventions of the target text type is text-normative equivalence." } },
+"Newmark: Semantic and Communicative Translation": {
+  central: "Semantic translation serves the author; communicative translation serves the reader.",
+  str: ["Clear, teachable method for a whole text", "Matches text types: expressive texts lean semantic, informative ones communicative"],
+  lim: ["The two methods overlap in practice", "Prescriptive: tells you what to do more than why"],
+  quiz: { q: "الوقت كالسيف إن لم تقطعه قطعك → “Time waits for no one.” Which method?",
+    o: ["Semantic", "Communicative", "Word for word"], a: 1,
+    why: "The image is replaced with a natural English proverb that carries the message: communicative translation." } },
+"Baker: Equivalence at Multiple Levels": {
+  central: "Equivalence can be achieved or lost at the level of the word, the phrase, the grammar, the text or the pragmatics.",
+  str: ["Diagnoses exactly where a problem sits", "Strong bridge between theory and practice"],
+  lim: ["A framework for analysis rather than a single theory", "Less about ideology (Baker addresses that elsewhere)"],
+  quiz: { q: "هل يمكنك إغلاق الباب؟ → “Could you close the door?” At which level is equivalence achieved?",
+    o: ["Word level", "Grammatical", "Pragmatic"], a: 2,
+    why: "The translation reproduces the speech act — a polite request — not a question about ability: pragmatic equivalence." } },
+"Reiss: Text Types": {
+  central: "How you translate depends on what the whole text is for: informing, expressing or persuading.",
+  str: ["Sets priorities before translating", "Gives criteria for judging a translation"],
+  lim: ["Many texts mix types", "The categories can be too neat for real texts"],
+  quiz: { q: "You translate a fundraising appeal. Which text type, and what is the priority?",
+    o: ["Informative — content", "Expressive — form", "Operative — the reader’s response"], a: 2,
+    why: "An appeal is meant to make readers act: operative, so the response matters most." } },
+"Skopos Theory": {
+  central: "The purpose the translation must serve in its target context decides how it is translated.",
+  str: ["Explains why one text can have several correct translations", "Fits professional work with clients and briefs"],
+  lim: ["Can seem to justify any change if “the purpose” demands it", "Raises questions about the translator’s duty to the source — which Nord’s “loyalty” answers"],
+  quiz: { q: "You translate a Kuwaiti government announcement for an international audience. What does Skopos theory ask you to establish first?",
+    o: ["The word order of the source", "The purpose and audience of the translation", "The author’s biography"], a: 1,
+    why: "Every decision follows from the skopos — the purpose and audience of the target text — so it comes first." } },
+"Holz-Mänttäri: Translational Action": {
+  central: "Translation is a professional action involving many participants, not just words moving between languages.",
+  str: ["Matches how professional translation actually works", "Gives the translator an expert role"],
+  lim: ["Abstract terminology", "Moves attention away from the source text"],
+  quiz: { q: "Who is the “commissioner” in a translation job?",
+    o: ["The person who reads the translation", "The person or body that orders it", "The author of the source"], a: 1,
+    why: "The commissioner orders the translation and sets its conditions; the reader is the target audience." } },
+"Nord: Function Plus Loyalty": {
+  central: "A translation serves its purpose, but the translator stays loyal to everyone in the communication.",
+  str: ["Adds ethics to functionalism", "Gives a detailed text-analysis model for students"],
+  lim: ["“Loyalty” can be hard to define in practice", "The analysis model is long to apply"],
+  quiz: { q: "A client asks you to make an accusation in a statement stronger. What does loyalty require?",
+    o: ["Do it — the client pays", "Refuse to translate", "Separate translation from rewriting, and make the change visible to the client"], a: 2,
+    why: "Loyalty means not misleading any party: an ideological change must be named as adaptation, not passed off as translation." } },
+"House: Overt and Covert Translation": {
+  central: "Some translations openly remain translations; others are made to work as original target-culture texts.",
+  str: ["A full model for assessing quality", "Explains why some texts need a “cultural filter”"],
+  lim: ["Detailed and time-consuming to apply", "The line between overt and covert is not always clear"],
+  quiz: { q: "A ministry announcement is rewritten as “Online scholarship applications are now open.” Which kind of translation?",
+    o: ["Overt", "Covert", "Intersemiotic"], a: 1,
+    why: "It reads like an original English institutional notice, not a visible translation: covert." } },
+"Hatim & Mason: Discourse and the Translator": {
+  central: "Meaning depends on context: who is speaking to whom, in which genre, with what intention.",
+  str: ["Brings register, genre and pragmatics into translation", "Draws heavily on Arabic–English examples"],
+  lim: ["Demanding analysis for every text", "Less about the act of choosing a single word"],
+  quiz: { q: "In Hatim & Mason’s register analysis, “tenor” refers to…",
+    o: ["The subject being discussed", "The relationship between the participants", "The channel: spoken or written"], a: 1,
+    why: "Field is what is happening, tenor who is talking to whom, mode the channel." } },
+"Gutt: Relevance Theory": {
+  central: "Readers infer meaning from words plus context; a translation should make the intended meaning recoverable.",
+  str: ["Explains implicit meaning, irony and indirectness", "Grounded in cognitive pragmatics"],
+  lim: ["Hard to apply as a step-by-step method", "Predicting readers’ context is difficult"],
+  quiz: { q: "Why does Gutt say translators cannot simply decode words?",
+    o: ["Because grammar differs", "Because meaning is partly inferred from context", "Because dictionaries are incomplete"], a: 1,
+    why: "Communication is inferential: words + context + inference. The translator must infer, then make it inferable." } },
+"Polysystem Theory": {
+  central: "Translated literature holds a position in a culture’s literary system, and that position shapes how it is translated.",
+  str: ["Explains why translations differ across cultures and periods", "Links translation to literary history"],
+  lim: ["Mostly about literature", "Abstract; says little about individual decisions"],
+  quiz: { q: "When translated literature is “central” in a culture, translations tend to…",
+    o: ["Conform to existing local models", "Introduce new forms and models", "Disappear from the market"], a: 1,
+    why: "In a central position, translation is innovative and brings new forms in; in a peripheral one it conforms." } },
+"The Manipulation School and Rewriting": {
+  central: "Translation is a form of rewriting shaped by ideology, poetics and patronage.",
+  str: ["Explains censorship, retitling and framing", "Shows that translations shape reputations"],
+  lim: ["Can make every translation sound like manipulation", "Focused on literary systems"],
+  quiz: { q: "A publisher cuts politically sensitive passages from a translated novel. Which of Lefevere’s factors is most at work?",
+    o: ["Poetics", "Patronage and ideology", "Equivalence"], a: 1,
+    why: "Those who control publication (patronage) apply ideological limits to what may appear." } },
+"Descriptive Translation Studies": {
+  central: "Study what translators actually do, and the norms that explain it, before judging it.",
+  str: ["Makes translation studies empirical", "Explains patterns across many translations"],
+  lim: ["Describes rather than guides a translator", "Norms can be hard to prove"],
+  quiz: { q: "Which question is typical of Descriptive Translation Studies?",
+    o: ["How should this be translated?", "What do translators of press releases actually do, and why?", "Which translation is correct?"], a: 1,
+    why: "DTS describes real behaviour and the norms behind it, rather than prescribing." } },
+"The Cultural Turn": {
+  central: "Translation moves between cultures, not just languages, and carries power, identity and ideology with it.",
+  str: ["Brings culture and power into the field", "Explains choices that equivalence cannot"],
+  lim: ["A broad movement rather than a method", "Can lose sight of the linguistic detail"],
+  quiz: { q: "Rendering فريج as “fareej”, “old neighbourhood” or “traditional quarter” — what does the cultural turn ask?",
+    o: ["Which is grammatically correct", "What cultural meaning each one carries and what disappears", "Which is shortest"], a: 1,
+    why: "Each option transmits a different cultural meaning; the cultural turn makes that the question." } },
+"Venuti: Domestication and Foreignization": {
+  central: "A translation can make the foreign familiar (domestication) or let it stay visibly foreign (foreignization) — and that choice is political.",
+  str: ["Makes the translator visible", "Connects small choices to cultural power"],
+  lim: ["Foreignization can make texts hard to read", "The two terms are a spectrum, not a switch"],
+  quiz: { q: "“Time waits for no one” for الوقت كالسيف… — which strategy?",
+    o: ["Domestication", "Foreignization", "Neither"], a: 0,
+    why: "A familiar English proverb replaces the Arabic image: domestication. Keeping the sword image would be foreignization." } },
+"Benjamin: The Task of the Translator": {
+  central: "Translation is not passing on information; it reveals the relationship between languages.",
+  str: ["Takes form and language seriously", "Central to literary translation thinking"],
+  lim: ["Philosophical and difficult", "Offers no practical method"],
+  quiz: { q: "What does Benjamin reject?",
+    o: ["Translating poetry", "The idea that translation only transmits information", "Literal translation"], a: 1,
+    why: "For Benjamin a translation that only passes on information is a bad one; form matters." } },
+"Steiner: The Hermeneutic Motion": {
+  central: "Translation is interpretation in four moves: trust, aggression, incorporation, restitution.",
+  str: ["Describes the translator’s experience of understanding", "Useful for metaphor and literary texts"],
+  lim: ["Metaphorical language", "Hard to test or apply step by step"],
+  quiz: { q: "In Steiner’s motion, which stage tries to compensate for what translation has taken?",
+    o: ["Trust", "Incorporation", "Restitution"], a: 2,
+    why: "Restitution restores balance after the translator has taken from the source." } },
+"Berman: The Ethics of the Foreign": {
+  central: "A good translation respects the foreignness of the text instead of smoothing it away.",
+  str: ["Lists concrete “deforming tendencies” to check a draft against", "Strong ethical voice for literary translation"],
+  lim: ["Can be hard to apply to practical texts", "Values the source very strongly over the reader"],
+  quiz: { q: "Turning كانت الدنيا تضيق به شيئاً فشيئاً into “He became increasingly distressed” is which deforming tendency?",
+    o: ["Expansion", "Rationalization / clarification", "Ennoblement"], a: 1,
+    why: "The image is explained away into plain meaning — clarification that destroys the figure." } },
+"Derrida: Deconstruction": {
+  central: "No text has one stable meaning that translation could carry across intact.",
+  str: ["Takes ambiguity and untranslatability seriously", "Challenges simple ideas of equivalence"],
+  lim: ["Very abstract", "Gives little practical guidance"],
+  quiz: { q: "عين can mean eye, spring, source or spy. What does deconstruction highlight?",
+    o: ["That the dictionary is wrong", "That meaning is unstable and translation must choose", "That the word is untranslatable and should be left out"], a: 1,
+    why: "Instability of meaning is central, not a nuisance: translation always selects." } },
+"Eco: Translation as Negotiation": {
+  central: "Translation is negotiation: the translator trades off meaning, style, culture and readability.",
+  str: ["Realistic picture of everyday decisions", "Accessible, with many examples"],
+  lim: ["Describes the process more than guiding it"],
+  quiz: { q: "حياك الله → “Welcome.” / “Glad to have you.” / “May God bless you.” What is Eco’s point?",
+    o: ["Only one is right", "The translator negotiates literal meaning, function and politeness", "All three are wrong"], a: 1,
+    why: "There is rarely one-to-one substitution; the choice is a negotiation among constraints." } },
+"Feminist Translation Theory": {
+  central: "Translation can reproduce or challenge how gender is represented, so the translator’s choices are never neutral.",
+  str: ["Makes gendered language and representation visible", "Recognises the translator as an agent"],
+  lim: ["Interventions can be seen as unfaithful", "Not a single unified method"],
+  quiz: { q: "What is a feminist translation approach most concerned with?",
+    o: ["Word counts", "Who is represented, how, and who holds linguistic power", "Machine translation"], a: 1,
+    why: "It examines representation, visibility and power, not only grammatical gender." } },
+"Postcolonial Approaches to Translation": {
+  central: "Translation happens between unequal languages and cultures, and can reproduce or resist colonial ways of seeing.",
+  str: ["Shows the power behind naming and representing", "Essential for historical and political texts"],
+  lim: ["A family of approaches, not one theory", "Can be hard to turn into concrete choices"],
+  quiz: { q: "A historical source uses بدو. What would a postcolonial approach ask first?",
+    o: ["How long the word is", "Who named this group, and whose categories the translation reproduces", "Which English word is most common"], a: 1,
+    why: "The question is power and representation: whose labels are being carried into English." } },
+"Sociological Approaches": {
+  central: "Translations are shaped by the social world of the translator: institutions, clients, status and norms.",
+  str: ["Explains why, not only what", "Applies well to Arabic translation history"],
+  lim: ["Can push the text itself into the background", "Needs research data to apply"],
+  quiz: { q: "The same text is translated for a university press and for a commercial publisher. Sociology of translation asks…",
+    o: ["Which version is better", "What social environment made each choice likely", "Which uses more words"], a: 1,
+    why: "It looks at field, habitus and capital: the social conditions behind decisions." } },
+"Narrative Theory": {
+  central: "Translators help tell stories about the world, and their choices can frame, reinforce or contest them.",
+  str: ["Powerful for political, media and conflict texts", "Shows how one word frames events"],
+  lim: ["Focused on ideology more than craft", "Easy to over-read intention"],
+  quiz: { q: "مقاتلون → “fighters”, “militants” or “armed groups”. What does narrative theory call this choice?",
+    o: ["Transposition", "Framing by relabelling", "Explicitation"], a: 1,
+    why: "Choosing a label positions the actors and frames the story: relabelling." } },
+"Cognitive Translation Studies": {
+  central: "Study what happens in the translator’s mind while translating, not only the final text.",
+  str: ["Measurable data (keystrokes, eye movements)", "Directly useful for training and tools"],
+  lim: ["Experiments are artificial", "Data is hard to interpret"],
+  quiz: { q: "Which method belongs to cognitive translation research?",
+    o: ["Comparing 100 published translations", "Keystroke logging and eye tracking", "Analysing a publisher’s politics"], a: 1,
+    why: "Process research observes the translator at work through keystrokes, gaze and think-aloud." } },
+"Corpus-Based Translation Studies": {
+  central: "Large collections of texts reveal patterns in translated language that single examples cannot.",
+  str: ["Evidence instead of anecdote", "Useful for terminology and style"],
+  lim: ["Shows patterns, not causes", "Depends on the corpus chosen"],
+  quiz: { q: "What makes a study “corpus-based”?",
+    o: ["It uses one famous example", "It analyses large collections of texts", "It interviews translators"], a: 1,
+    why: "Corpus studies work from large, searchable collections of texts." } },
+"Translation Universals": {
+  central: "Translations may share tendencies — explicitation, simplification, normalization — whatever the languages.",
+  str: ["Helps you notice your own habits", "Testable with corpora"],
+  lim: ["Hypotheses, not laws", "Scholars disagree how universal they are"],
+  quiz: { q: "Adding “so” to make وصل متأخراً، لذلك اعتذر explicit in English is an example of…",
+    o: ["Simplification", "Explicitation", "Levelling-out"], a: 1,
+    why: "Making a logical link explicit is explicitation." } },
+"Eco-Translatology": {
+  central: "Translation as adaptation and selection within a linguistic, cultural and communicative environment.",
+  str: ["A recent framework from Chinese translation studies", "Holistic view of the translator’s environment"],
+  lim: ["Less established than the classic theories", "Ecological metaphor can be vague"],
+  quiz: { q: "How should a student treat eco-translatology?",
+    o: ["As the most established theory", "As a newer, less established framework", "As a procedure"], a: 1,
+    why: "It is recent and still debated; read it alongside the established theories." } },
+"Audiovisual Translation": {
+  central: "Translating for the screen adds time, space, sound and image as constraints.",
+  str: ["Highly relevant to modern work", "Connects theory to practical constraints"],
+  lim: ["A field, not a single theory"],
+  quiz: { q: "Which is a constraint specific to subtitling?",
+    o: ["Lip synchrony", "Reading speed and line length", "Footnotes"], a: 1,
+    why: "Subtitles must be read in time and fit the screen; lip synchrony is a dubbing constraint." } },
+"Gile’s Effort Models": {
+  central: "Interpreting draws on limited mental capacity shared between listening, memory, production and coordination.",
+  str: ["Explains errors even in skilled interpreters", "Very practical for training"],
+  lim: ["A model, not a full theory of meaning", "Capacity is hard to measure directly"],
+  quiz: { q: "An interpreter starts omitting details when the speaker speeds up. Gile would explain this as…",
+    o: ["Poor vocabulary", "Processing demand exceeding available capacity", "Domestication"], a: 1,
+    why: "When the efforts together need more capacity than is available, errors and omissions appear." } }
+};
+
+/* The guide is a learning system, not a catalogue. LEARN is the heart:
+   families as a map, each theory opening as a lesson with the same ten
+   parts in the same order — what it is, central idea, key concepts, how
+   it works, an Arabic–English example, the same text under other
+   theories, when it is useful, strengths and limitations, key texts, and
+   a question to test yourself. Compare, Practice, Theorists, Timeline
+   and Reading all lead back into a lesson. */
 function runTheories(startAt) {
-  const TABS = ["Start here", "Theorists", "By school", "Timeline", "Compare", "Reading"];
-  let who = null;   /* an open theorist profile */
+  const TABS = ["Start here", "Learn", "Compare", "Practice", "Theorists", "Timeline", "Reading"];
   let tab = typeof startAt === "number" ? startAt : 0;
-  let openId = null;
+  let lesson = null;   /* index into THEORIES */
+  let who = null;      /* theorist id */
   setCount("A guide · the theories of translation");
 
   const typeChip = t => '<span class="th-type">' + t + '</span>';
-  /* A portrait is a file on this site or an empty frame — never initials,
-     never a stand-in, never generated. */
-  const face = (p, big) => {
-    const f = el("span", "th-face" + (big ? " big" : ""));
-    const im = new Image();
-    im.alt = p.credit ? p.credit + " of " + p.name.replace(/<[^>]+>/g, "") : "Portrait of " + p.name;
-    im.loading = "lazy";
-    im.onload = () => f.classList.add("has");
-    im.onerror = () => im.remove();
-    im.src = p.img;
-    f.appendChild(im);
-    return f;
-  };
-  const openWho = p => { who = p.id; tab = 1; render(); scrollTop(); };
-  const peopleOf = t => THEORISTS.filter(p => p.th.indexOf(t.en) >= 0);
   const flowRow = steps => {
     const f = el("div", "th-flow");
     steps.forEach((s, i) => {
@@ -16046,61 +16363,161 @@ function runTheories(startAt) {
     });
     return f;
   };
+  const table = rows => {
+    const t = el("div", "th-table");
+    rows.forEach(r => t.appendChild(el("div", "th-tr", r.map(c => '<span>' + c + '</span>').join(""))));
+    return t;
+  };
+  const face = (p, big) => {
+    const f = el("span", "th-face" + (big ? " big" : ""));
+    const im = new Image();
+    im.alt = p.credit ? p.credit + " of " + p.name : "Portrait of " + p.name;
+    im.loading = "lazy";
+    im.onload = () => f.classList.add("has");
+    im.onerror = () => im.remove();
+    im.src = p.img;
+    f.appendChild(im);
+    return f;
+  };
+  const peopleOf = t => THEORISTS.filter(p => p.th.indexOf(t.en) >= 0);
+  const groupOf = t => TH_GROUPS.find(g => g.id === t.g);
+  const more = t => TH_MORE[t.en] || {};
+  const go = (k, opts) => {
+    tab = k; lesson = (opts && opts.lesson != null) ? opts.lesson : null;
+    who = (opts && opts.who) || null; render(); scrollTop();
+  };
+  const openLesson = t => go(1, { lesson: THEORIES.indexOf(t) });
+  let secN = 0;
+  const sec = (n, title) => el("h3", "th-sec", '<span class="th-n">' + (n === "·" ? n : ++secN) + '</span>' + title);
+
   const exBlock = x => {
     const d = el("div", "block demand th-ex");
-    d.appendChild(el("span", "b-lab", "Example"));
+    d.appendChild(el("span", "b-lab", "Arabic → English"));
     if (x.ar) { const a = el("p", "th-ar", x.ar); a.dir = "rtl"; a.lang = "ar"; d.appendChild(a); }
     x.r.forEach(([lab, txt]) => {
       const p = el("p", "th-r", '<span class="th-rl">' + lab + '</span>' + txt);
       if (/[؀-ۿ]/.test(txt) && !/[a-z]/i.test(txt)) { p.dir = "rtl"; p.lang = "ar"; }
       d.appendChild(p);
     });
-    if (x.n) d.appendChild(el("p", "th-n", x.n));
+    if (x.n) d.appendChild(el("p", "th-n", "<b>Why:</b> " + x.n));
     return d;
   };
-  const table = rows => {
-    const t = el("div", "th-table");
-    rows.forEach(r => t.appendChild(el("div", "th-tr", r.map(c => '<span>' + c + '</span>').join(""))));
-    return t;
-  };
-  function card(t) {
-    const id = "th-" + THEORIES.indexOf(t);
-    const d = document.createElement("details");
-    d.className = "card th-card"; d.id = id;
-    if (openId === id) d.open = true;
-    const s = document.createElement("summary");
-    s.innerHTML = '<span class="th-when">' + t.when + '</span>' +
-      '<span class="th-name">' + t.en + '</span>' +
-      '<span class="th-who">' + t.who + '</span>' + typeChip(t.type);
-    d.appendChild(s);
-    const body = el("div", "th-body");
+
+  /* one multiple-choice question with its explanation; used in a lesson
+     and in Practice */
+  function quizBox(t, onDone) {
+    const q = more(t).quiz;
+    const box = el("div", "verdict th-quiz");
+    if (!q) return box;
+    box.appendChild(el("p", "vb th-q", q.q));
+    const opts = el("div", "options");
+    q.o.forEach((o, k) => {
+      const b = el("button", "opt", '<span class="key">' + "ABC"[k] + '</span><span class="txt">' + o + '</span>');
+      b.addEventListener("click", () => {
+        Array.from(opts.children).forEach((c, i) => {
+          c.disabled = true;
+          if (i === q.a) c.classList.add("right"); else if (i === k) c.classList.add("miss");
+        });
+        box.appendChild(el("span", "vh " + (k === q.a ? "win" : "lose"), k === q.a ? "✦ Correct" : "✧ Not quite"));
+        box.appendChild(el("p", "vb", q.why));
+        if (onDone) onDone(k === q.a);
+      });
+      opts.appendChild(b);
+    });
+    box.appendChild(opts);
+    return box;
+  }
+
+  function renderLesson(t) {
+    const i = THEORIES.indexOf(t), g = groupOf(t), m = more(t);
+    secN = 0;
+    const back = el("button", "link", "← All theories");
+    back.addEventListener("click", () => go(1));
+    stage.appendChild(back);
+
+    const head = el("div", "th-lhead");
+    head.appendChild(el("span", "th-when", g.n + " · " + g.en));
+    head.appendChild(el("h2", null, t.en));
+    head.appendChild(el("div", "th-meta",
+      typeChip(t.type) + '<span class="th-who">' + t.who + ' · ' + t.when + '</span>'));
+    stage.appendChild(head);
     const ppl = peopleOf(t);
     if (ppl.length) {
       const row = el("div", "th-people");
       ppl.forEach(p => {
         const b = el("button", "th-person");
-        b.appendChild(face(p));
-        b.appendChild(el("span", null, p.name));
-        b.addEventListener("click", ev => { ev.preventDefault(); openWho(p); });
+        b.appendChild(face(p)); b.appendChild(el("span", null, p.name));
+        b.addEventListener("click", () => go(4, { who: p.id }));
         row.appendChild(b);
       });
-      body.appendChild(row);
+      stage.appendChild(row);
     }
-    body.appendChild(el("p", "th-core", "<b>Core question:</b> " + t.core));
-    body.appendChild(el("p", "lede", t.idea));
+
+    stage.appendChild(sec(1, "What is it?"));
+    stage.appendChild(el("p", "lede", t.idea));
+    stage.appendChild(el("p", "th-core", "<b>The question it asks:</b> " + t.core));
+
+    if (m.central) {
+      stage.appendChild(sec(2, "The central idea"));
+      stage.appendChild(el("p", "th-central", m.central));
+    }
+
     if (t.concepts) {
+      stage.appendChild(sec(3, "Key concepts"));
       const c = el("div", "chips-row");
       t.concepts.forEach(k => c.appendChild(el("span", "chip-tag", k)));
-      body.appendChild(c);
+      stage.appendChild(c);
     }
-    if (t.flow) body.appendChild(flowRow(t.flow));
-    if (t.table) body.appendChild(table(t.table));
-    if (t.asks) body.appendChild(el("ul", "how", t.asks.map(a => "<li><span>" + a + "</span></li>").join("")));
-    (t.ex || []).forEach(x => body.appendChild(exBlock(x)));
-    if (t.use) body.appendChild(el("p", "th-use", "<b>Most useful for:</b> " + t.use));
-    if (t.refs) body.appendChild(el("p", "th-refs", "<b>Key " + (t.refs.length > 1 ? "texts" : "text") + ":</b> " + t.refs.join(" · ")));
-    d.appendChild(body);
-    return d;
+
+    if (t.flow || t.table || t.asks) {
+      stage.appendChild(sec(4, "How it works"));
+      if (t.flow) stage.appendChild(flowRow(t.flow));
+      if (t.table) stage.appendChild(table(t.table));
+      if (t.asks) stage.appendChild(el("ul", "how", t.asks.map(a => "<li><span>" + a + "</span></li>").join("")));
+    }
+
+    if (t.ex && t.ex.length) {
+      stage.appendChild(sec(5, "Example"));
+      t.ex.forEach(x => stage.appendChild(exBlock(x)));
+    }
+
+    stage.appendChild(sec(6, "Same text, different theory"));
+    const cmp = el("div", "block demand");
+    cmp.appendChild(el("p", "th-n", "See one Arabic proverb translated through six theories side by side, including this family’s view."));
+    const cb = el("button", "ghost small", "Open Compare →");
+    cb.addEventListener("click", () => go(2));
+    cmp.appendChild(cb);
+    stage.appendChild(cmp);
+
+    if (t.use) {
+      stage.appendChild(sec(7, "When is it useful?"));
+      stage.appendChild(el("p", "lede", t.use));
+    }
+
+    if (m.str || m.lim) {
+      stage.appendChild(sec(8, "Strengths and limitations"));
+      const two = el("div", "th-two");
+      if (m.str) two.appendChild(el("div", "th-col good", "<b>Useful because</b><ul>" + m.str.map(s => "<li>" + s + "</li>").join("") + "</ul>"));
+      if (m.lim) two.appendChild(el("div", "th-col warn", "<b>Limitations</b><ul>" + m.lim.map(s => "<li>" + s + "</li>").join("") + "</ul>"));
+      stage.appendChild(two);
+    }
+
+    if (t.refs) {
+      stage.appendChild(sec(9, "Key texts"));
+      stage.appendChild(el("ul", "th-refs", t.refs.map(r => "<li>" + r + "</li>").join("")));
+    }
+
+    if (m.quiz) {
+      stage.appendChild(sec(10, "Test yourself"));
+      stage.appendChild(quizBox(t));
+    }
+
+    const nav = el("div", "th-lnav");
+    const order = THEORIES.slice().sort((a, b) => TH_GROUPS.indexOf(groupOf(a)) - TH_GROUPS.indexOf(groupOf(b)) || a.y - b.y);
+    const k = order.indexOf(t);
+    if (k > 0) { const b = el("button", "ghost small", "← " + order[k - 1].en); b.addEventListener("click", () => openLesson(order[k - 1])); nav.appendChild(b); }
+    if (k < order.length - 1) { const b = el("button", "ghost small", order[k + 1].en + " →"); b.addEventListener("click", () => openLesson(order[k + 1])); nav.appendChild(b); }
+    stage.appendChild(nav);
   }
 
   function render() {
@@ -16109,30 +16526,96 @@ function runTheories(startAt) {
     const chips = el("div", "chips");
     TABS.forEach((label, k) => {
       const b = el("button", "chip" + (k === tab ? " on" : ""), label);
-      b.addEventListener("click", () => { tab = k; openId = null; who = null; render(); });
+      b.addEventListener("click", () => go(k));
       chips.appendChild(b);
     });
     stage.appendChild(chips);
 
     if (tab === 0) {
+      stage.appendChild(el("h2", "th-h", "There is no single theory that explains every translation."));
       stage.appendChild(el("p", "lede",
-        "Translation Studies has no single master theory. It is a collection of <b>competing and complementary paradigms</b> " +
-        "— schools, theories, approaches, models and strategies — each asking a different question. None of them is " +
-        "“the correct theory”: each produces different, defensible translation decisions."));
-      stage.appendChild(el("h3", "pub-h", "How the field has widened"));
+        "Translation Studies offers different <b>theories, approaches, models and strategies</b> for understanding how " +
+        "translators make decisions. Some focus on equivalence, others on purpose, culture, discourse, ideology, cognition " +
+        "or social context. None of them is “the correct theory”."));
+      stage.appendChild(el("h3", "pub-h", "One text can produce different translations. Why?"));
+      const src = el("p", "th-ar big", TH_COMPARE.ar); src.dir = "rtl"; src.lang = "ar";
+      stage.appendChild(src);
+      stage.appendChild(table([
+        ["<b>Keep the image</b>", "Time is like a sword; if you do not cut it, it will cut you."],
+        ["<b>Use an English proverb</b>", "Time waits for no one."]]));
+      stage.appendChild(el("p", "note", "Both are defensible. They come from different assumptions about what translation is for — that is what a theory is."));
+      const start = el("button", "primary", "Start learning →");
+      start.addEventListener("click", () => go(1));
+      stage.appendChild(start);
+      stage.appendChild(el("h3", "pub-h", "Theory, approach, model, strategy, procedure"));
+      stage.appendChild(table([["<b>Category</b>", "<b>Example</b>", "<b>What it does</b>"]].concat(TH_KINDS.map(([a, b, c]) => ["<b>" + a + "</b>", b, c]))));
+      stage.appendChild(el("p", "note", "Every entry in this guide is labelled with what it actually is: Vinay and Darbelnet’s are <b>procedures</b>, Venuti’s are <b>strategies</b>, Skopos is a <b>theory</b>."));
+      stage.appendChild(el("h3", "pub-h", "How the field widened"));
       stage.appendChild(flowRow(["Word", "Meaning", "Equivalence", "Text", "Function", "Culture", "Power", "Society", "Cognition", "Technology"]));
       stage.appendChild(el("p", "note", "Not a strict line — a map of how the object of study kept growing."));
-      stage.appendChild(el("h3", "pub-h", "The question each family asks"));
-      stage.appendChild(table(TH_ASKS.map(([a, b]) => ["<b>" + a + "</b>", b])));
-      stage.appendChild(el("h3", "pub-h", "Theory, strategy, procedure: not the same thing"));
-      stage.appendChild(table([["<b>Category</b>", "<b>Example</b>", "<b>What it does</b>"]].concat(TH_KINDS.map(([a, b, c]) => ["<b>" + a + "</b>", b, c]))));
-      const v = el("div", "verdict");
-      v.appendChild(el("span", "vh", "Why the labels matter"));
-      v.appendChild(el("p", "vb", "Vinay and Darbelnet’s borrowing, modulation and transposition are <b>procedures</b>. Venuti’s domestication and foreignization are <b>strategies</b>. Skopos is a <b>theory</b>. Every entry in this guide is labelled with what it actually is."));
-      stage.appendChild(v);
     }
 
-    if (tab === 1 && !who) {
+    if (tab === 1 && lesson != null) renderLesson(THEORIES[lesson]);
+    if (tab === 1 && lesson == null) {
+      stage.appendChild(el("p", "note", "Each family asks one question. Open a theory to learn it: what it is, how it works, an Arabic–English example, its limits, and a question to test yourself."));
+      TH_GROUPS.forEach((g, gi) => {
+        const ts = THEORIES.filter(t => t.g === g.id).sort((a, b) => a.y - b.y);
+        if (!ts.length) return;
+        const card = el("section", "card th-fam");
+        const names = [];
+        ts.forEach(t => peopleOf(t).forEach(p => { if (names.indexOf(p.name) < 0) names.push(p.name); }));
+        card.appendChild(el("div", "th-fhead",
+          '<span class="th-num">' + String(gi + 1).padStart(2, "0") + '</span>' +
+          '<div><h3>' + g.en + '</h3><p class="th-gq">' + g.q + '</p>' +
+          (names.length ? '<p class="th-who">Key scholars: ' + names.join(" · ") + '</p>' : '') + '</div>'));
+        ts.forEach(t => {
+          const b = el("button", "th-row", '<span><b>' + t.en + '</b><span class="th-who">' + t.when + '</span></span>' + typeChip(t.type) + '<span class="th-go">Explore →</span>');
+          b.addEventListener("click", () => openLesson(t));
+          card.appendChild(b);
+        });
+        stage.appendChild(card);
+      });
+    }
+
+    if (tab === 2) {
+      stage.appendChild(el("p", "note", "One Arabic proverb, many theories. Each produces a different translation — and each has a reason."));
+      const src = el("p", "th-ar big", TH_COMPARE.ar); src.dir = "rtl"; src.lang = "ar";
+      stage.appendChild(src);
+      TH_COMPARE.views.forEach(([lab, tr, focus, th]) => {
+        const c = el("div", "card th-cmp");
+        c.appendChild(el("span", "th-when", lab));
+        c.appendChild(el("p", "th-big", tr));
+        c.appendChild(el("p", "th-n", "<b>Focus:</b> " + focus));
+        const t = THEORIES.find(x => x.en === th);
+        if (t) { const b = el("button", "link", "Learn this theory →"); b.addEventListener("click", () => openLesson(t)); c.appendChild(b); }
+        stage.appendChild(c);
+      });
+    }
+
+    if (tab === 3) {
+      stage.appendChild(el("p", "note", "Apply the theories. Five questions drawn from the whole library; each answer links to the lesson."));
+      const pool = shuffled(THEORIES.filter(t => more(t).quiz)).slice(0, 5);
+      let right = 0, done = 0;
+      const tally = el("p", "th-tally", "");
+      pool.forEach((t, k) => {
+        const wrap = el("div", "th-pq");
+        wrap.appendChild(el("span", "th-when", "Question " + (k + 1)));
+        wrap.appendChild(quizBox(t, ok => {
+          done++; if (ok) right++;
+          const b = el("button", "link", "Study: " + t.en + " →");
+          b.addEventListener("click", () => openLesson(t));
+          wrap.appendChild(b);
+          if (done === pool.length) tally.textContent = right + " of " + pool.length + " correct.";
+        }));
+        stage.appendChild(wrap);
+      });
+      stage.appendChild(tally);
+      const again = el("button", "ghost small", "New questions");
+      again.addEventListener("click", () => go(3));
+      stage.appendChild(again);
+    }
+
+    if (tab === 4 && !who) {
       stage.appendChild(el("p", "note", "The people behind the theories, in the order their key work appeared. Tap a profile."));
       const grid = el("div", "th-grid");
       const firstYear = p => Math.min.apply(null, p.th.map(n => (THEORIES.find(x => x.en === n) || { y: 9999 }).y));
@@ -16142,15 +16625,15 @@ function runTheories(startAt) {
         b.appendChild(el("span", "th-pn", p.name));
         b.appendChild(el("span", "th-pl", (p.life ? p.life + " · " : "") + p.from));
         b.appendChild(el("span", "th-pr", p.role));
-        b.addEventListener("click", () => openWho(p));
+        b.addEventListener("click", () => go(4, { who: p.id }));
         grid.appendChild(b);
       });
       stage.appendChild(grid);
     }
-    if (tab === 1 && who) {
+    if (tab === 4 && who) {
       const p = THEORISTS.find(x => x.id === who);
       const back = el("button", "link", "← All theorists");
-      back.addEventListener("click", () => { who = null; render(); scrollTop(); });
+      back.addEventListener("click", () => go(4));
       stage.appendChild(back);
       const head = el("div", "th-phead");
       head.appendChild(face(p, true));
@@ -16158,74 +16641,48 @@ function runTheories(startAt) {
       txt.appendChild(el("h2", null, p.name));
       txt.appendChild(el("p", "th-pl", (p.life ? p.life + " · " : "") + p.from));
       txt.appendChild(el("span", "th-type", p.role));
-      if (p.credit) txt.appendChild(el("p", "th-credit", p.credit + " · supplied by the site owner"));
+      if (p.credit) txt.appendChild(el("p", "th-credit", p.credit));
       head.appendChild(txt);
       stage.appendChild(head);
+      stage.appendChild(sec("·", "Who were they?"));
       stage.appendChild(el("p", "lede", p.bio));
-      stage.appendChild(el("h3", "pub-h", p.th.length > 1 ? "Their theories" : "Their theory"));
-      p.th.forEach(name => {
-        const t = THEORIES.find(x => x.en === name);
-        if (t) { openId = "th-" + THEORIES.indexOf(t); stage.appendChild(card(t)); }
+      const ts = p.th.map(n => THEORIES.find(x => x.en === n)).filter(Boolean);
+      const concepts = [];
+      ts.forEach(t => (t.concepts || []).forEach(c => { if (concepts.indexOf(c) < 0) concepts.push(c); }));
+      stage.appendChild(sec("·", "Key question"));
+      ts.forEach(t => stage.appendChild(el("p", "th-central", t.core)));
+      if (concepts.length) {
+        stage.appendChild(sec("·", "Associated concepts"));
+        const c = el("div", "chips-row");
+        concepts.forEach(k => c.appendChild(el("span", "chip-tag", k)));
+        stage.appendChild(c);
+      }
+      stage.appendChild(sec("·", "Key text"));
+      stage.appendChild(el("ul", "th-refs", ts.map(t => "<li>" + (t.refs || [""])[0] + "</li>").join("")));
+      stage.appendChild(sec("·", "What changed because of their work"));
+      ts.forEach(t => { const c = more(t).central; if (c) stage.appendChild(el("p", "lede", c)); });
+      ts.forEach(t => {
+        const b = el("button", "primary wide", "Explore " + t.en + " →");
+        b.addEventListener("click", () => openLesson(t));
+        stage.appendChild(b);
       });
-      openId = null;
     }
 
-    if (tab === 2) {
-      stage.appendChild(el("p", "note", "Fourteen families, each with its dates. Tap a theory to open it."));
-      TH_GROUPS.forEach(g => {
-        const sec = el("section", "th-group");
-        sec.appendChild(el("div", "th-ghead",
-          '<span class="num-badge">' + g.n + '</span><div><h3>' + g.en + '</h3>' +
-          '<span class="th-span">' + g.span + '</span></div>'));
-        sec.appendChild(el("p", "th-gq", g.q));
-        THEORIES.filter(t => t.g === g.id).sort((a, b) => a.y - b.y).forEach(t => sec.appendChild(card(t)));
-        stage.appendChild(sec);
-      });
-    }
-
-    if (tab === 3) {
-      stage.appendChild(el("p", "note", "Every entry in the order its key text appeared. Tap one to read it."));
+    if (tab === 5) {
+      stage.appendChild(el("p", "note", "Every entry in the order its key text appeared. Tap one to open its lesson."));
       const list = el("div", "th-time");
       THEORIES.slice().sort((a, b) => a.y - b.y).forEach(t => {
-        const g = TH_GROUPS.find(x => x.id === t.g);
+        const g = groupOf(t);
         const b = el("button", "th-trow",
           '<span class="th-ty">' + (t.y < 0 ? Math.abs(t.y) + " BCE" : Math.floor(t.y)) + '</span>' +
-          '<span class="th-tt"><b>' + t.en + '</b><span>' + t.who + ' · ' + g.n + ' ' + g.en + '</span></span>');
-        b.addEventListener("click", () => {
-          tab = 2; openId = "th-" + THEORIES.indexOf(t); render();
-          const n = document.getElementById(openId);
-          if (n) n.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
+          '<span class="th-tt"><b>' + t.en + '</b><span>' + t.who + ' · ' + g.en + '</span></span>');
+        b.addEventListener("click", () => openLesson(t));
         list.appendChild(b);
       });
       stage.appendChild(list);
     }
 
-    if (tab === 4) {
-      stage.appendChild(el("p", "note", "One Arabic proverb, six theoretical lenses. Tap each one."));
-      const src = el("p", "th-ar big", TH_COMPARE.ar); src.dir = "rtl"; src.lang = "ar";
-      stage.appendChild(src);
-      const out = el("div", "verdict");
-      const row = el("div", "chips");
-      const show = k => {
-        Array.from(row.children).forEach((c, i) => c.classList.toggle("on", i === k));
-        const [lab, tr, why] = TH_COMPARE.views[k];
-        out.innerHTML = "";
-        out.appendChild(el("span", "vh", lab));
-        out.appendChild(el("p", "vb th-big", tr));
-        out.appendChild(el("p", "vb", why));
-      };
-      TH_COMPARE.views.forEach((v, k) => {
-        const b = el("button", "chip", v[0]);
-        b.addEventListener("click", () => show(k));
-        row.appendChild(b);
-      });
-      stage.appendChild(row);
-      stage.appendChild(out);
-      show(0);
-    }
-
-    if (tab === 5) {
+    if (tab === 6) {
       stage.appendChild(el("p", "note", "Foundational reading, by year of first publication."));
       stage.appendChild(table([["<b>Year</b>", "<b>Work</b>", "<b>Contribution</b>"]].concat(
         TH_SHELF.map(([y, a, b, c]) => [String(y), a + ", <i>" + b + "</i>", c]))));
@@ -16235,9 +16692,9 @@ function runTheories(startAt) {
     }
 
     stage.appendChild(footNav({
-      back: tab > 0 ? (() => { tab--; openId = null; who = null; render(); scrollTop(); }) : null,
+      back: tab > 0 ? (() => go(tab - 1)) : null,
       backLabel: tab > 0 ? TABS[tab - 1] : "",
-      next: tab < TABS.length - 1 ? (() => { tab++; openId = null; who = null; render(); scrollTop(); }) : null,
+      next: tab < TABS.length - 1 ? (() => go(tab + 1)) : null,
       nextLabel: tab < TABS.length - 1 ? TABS[tab + 1] : "",
       note: TABS[tab]
     }));
