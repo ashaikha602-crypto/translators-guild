@@ -32,7 +32,7 @@ beside each one.
 | `theorists/itamar-even-zohar.jpg` | Itamar Even-Zohar | awaiting the file |
 | `theorists/theo-hermans.jpg` | Theo Hermans | awaiting the file |
 | `theorists/andre-lefevere.jpg` | André Lefevere | awaiting the file |
-| `theorists/gideon-toury.jpg` | Gideon Toury | awaiting the file |
+| `theorists/gideon-toury.jpg` | Gideon Toury | on the site · Wikimedia Commons, Category:Gideon Toury (CC BY-SA 3.0) |
 | `theorists/susan-bassnett.jpg` | Susan Bassnett | on the site |
 | `lineage/lawrence-venuti.jpg` | Lawrence Venuti | on the site |
 | `theorists/george-steiner.jpg` | George Steiner | on the site |
