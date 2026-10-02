@@ -760,6 +760,9 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
   color: var(--white); line-height: 1.4; margin: 0; max-width: 34ch; }
 .prompt .lit { font-size: .85rem; color: var(--lilac-dim); margin: 0; }
 .prompt .lit b { color: var(--coral); font-weight: 500; }
+.vb.kw-ar { font-family: var(--f-ar-text); font-size: 1.08rem; line-height: 1.9; }
+.kw-kind { display: inline-block; margin-inline-start: .35rem; padding: .05rem .5rem; border-radius: 999px;
+  font-size: .72rem; color: var(--mag-ink); border: 1px solid rgba(214,191,234,.3); }
 
 .options { display: grid; gap: .7rem; }
 .opt { display: grid; grid-template-columns: 2rem 1fr; gap: .9rem; align-items: baseline;
@@ -3897,32 +3900,2052 @@ const PROVERBS = [
 ];
 
 /* ═══════════ أمثال كويتية · KUWAITI PROVERBS ═══════════
-   Deliberately empty, and it stays empty until the proverbs arrive.
+   Supplied by Shaikha as text. The Arabic of every proverb is hers,
+   character for character — nothing here was transcribed from an image.
 
-   A proverb is not something that can be worked out from the language.
-   It is either the sentence people actually say or it is nothing, and a
-   plausible-looking Kuwaiti proverb that no Kuwaiti has ever said would
-   be worse than an empty page — it would be a lie told in the one
-   register this site exists to protect. The Translation Handbook carries
-   no Kuwaiti material anywhere in it, so there is nothing here to seed
-   this from either. Shaikha is supplying them.
+   Each entry says which of three cases it is, because that is the
+   translation lesson:
+     eq — English has a genuine proverb or idiom doing the same job;
+     fn — it has none, so the right answer is a natural functional
+          rendering, never a word-for-word one;
+     ex — culturally specific: translate the sense and explain it.
+   The three wrong options are always plausible: a real English proverb
+   that shares the image but not the meaning, a misreading of a Kuwaiti
+   word (لا meaning إذا, طبع meaning "sank", تبوق meaning "steal"), or the
+   word-for-word version. None of them is right in some other context.
 
-   Each entry takes exactly the shape the PROVERBS pool above takes, so
-   nothing but the array has to change when they land:
-
-     { src: "المثل بالكويتي.",
-       lit: '"the word-for-word, if it helps"',       // optional
-       opts: [
-         { t: "the English that does the same work", tag: "the working equivalent", ok: true },
-         { t: "the word-for-word version",           tag: "literal — says nothing in English" },
-         { t: "a real English proverb that misses",  tag: "close — but about something else" }
-       ],
-       why: "why the right one is right and the others are not, in full, here",
-       ch: "Chapter 8" }                              // optional pointer
-
-   When the pool has entries the trial runs itself; until then the page
-   below says plainly that it is waiting, rather than pretending. */
-const KUWAITI = [];
+   Proverbs whose meaning still needs her confirmation are left out
+   rather than guessed. A run draws ten at random. */
+const KUWAITI = [
+ {
+  "src": "مال البخيل ياكله العيار",
+  "kind": "fn",
+  "meaning": "ما يجمعه البخيل ويحرم نفسه منه، ينتهي غالبًا في يد غيره، كالمسرف أو المحتال.",
+  "opts": [
+   {
+    "t": "What a miser hoards, someone else will squander.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Waste not, want not.",
+    "tag": "praises saving — the proverb mocks it"
+   },
+   {
+    "t": "A penny saved is a penny earned.",
+    "tag": "advice to save, the opposite point"
+   },
+   {
+    "t": "The miser's money is eaten by the rogue.",
+    "tag": "word for word — the image does not travel"
+   }
+  ],
+  "why": "English has no fixed proverb with this exact point, so the best rendering states it plainly: the hoarding brings the miser nothing, because another person enjoys it.",
+  "note": "Literally: “the miser’s money is eaten by the rogue”. العيّار is a wastrel or trickster — the opposite of the careful miser."
+ },
+ {
+  "src": "اللي ماله أول ماله تالي",
+  "kind": "fn",
+  "meaning": "من لا يعرف أصله ولا يحفظ ماضيه لا يُرتجى له مستقبل.",
+  "opts": [
+   {
+    "t": "He who has no past has no future.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Let bygones be bygones.",
+    "tag": "says forget the past — the proverb says keep it"
+   },
+   {
+    "t": "Every beginning has an end.",
+    "tag": "reads أول/تالي as start and finish, not roots and future"
+   },
+   {
+    "t": "History repeats itself.",
+    "tag": "about events recurring, not about roots"
+   }
+  ],
+  "why": "أول here is a person’s origins and history, تالي what comes after them. The English keeps both halves and the warning.",
+  "note": "Said of someone who forgets or disowns where they come from."
+ },
+ {
+  "src": "يغطه فبالبحر ويطلعه ناشف",
+  "kind": "fn",
+  "meaning": "شخص شديد الدهاء يستطيع أن يخدع غيره دون أن يشعر به أحد.",
+  "opts": [
+   {
+    "t": "He could fool anyone without them ever noticing.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "He's a fish out of water.",
+    "tag": "out of place — nothing to do with cunning"
+   },
+   {
+    "t": "He'd sell you the sea and keep you dry.",
+    "tag": "a made-up literal echo, not English usage"
+   },
+   {
+    "t": "Still waters run deep.",
+    "tag": "quiet people have hidden depths — a compliment, not trickery"
+   }
+  ],
+  "why": "Dipping someone in the sea and bringing him out dry is an impossible trick; the proverb uses it for a person who can pull off any deception.",
+  "note": "Literally: “he dunks him in the sea and brings him out dry”. Usually said with grudging admiration — or as a warning."
+ },
+ {
+  "src": "يا شين السرج عالبقر",
+  "kind": "eq",
+  "meaning": "زينة أو منصب يوضع على من لا يليق به، فيزداد منظره سوءًا.",
+  "opts": [
+   {
+    "t": "Fine feathers don’t make fine birds.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Clothes make the man.",
+    "tag": "the opposite: says the outfit does make the person"
+   },
+   {
+    "t": "Don’t put the cart before the horse.",
+    "tag": "an animal and harness, but about wrong order"
+   },
+   {
+    "t": "How ugly the saddle looks on a cow!",
+    "tag": "word for word — English readers miss the point"
+   }
+  ],
+  "why": "A saddle belongs on a horse; on a cow it only looks absurd. Both proverbs say finery does not change what is underneath.",
+  "note": "Literally: “how ugly the saddle on the cow”. Said when someone is given a role, title or look that does not suit them."
+ },
+ {
+  "src": "إذا طاح الجمل كثرت سكاكينه",
+  "kind": "eq",
+  "meaning": "إذا ضعف القوي أو سقط من مكانته، كثر من يهاجمه ويستغل ضعفه.",
+  "opts": [
+   {
+    "t": "When the tree falls, everyone runs to it with an axe.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "The bigger they are, the harder they fall.",
+    "tag": "about the fall itself, not the people who pounce"
+   },
+   {
+    "t": "Too many cooks spoil the broth.",
+    "tag": "many hands and knives, but about too many helpers"
+   },
+   {
+    "t": "When the camel falls, its knives multiply.",
+    "tag": "word for word — the image needs explaining"
+   }
+  ],
+  "why": "English has an old proverb with the same picture: once the great thing is down, everybody comes to cut a piece.",
+  "note": "A camel was only slaughtered once it fell; the knives gather around it. Said when a powerful person loses position."
+ },
+ {
+  "src": "مد رجولك على قد لحافك",
+  "kind": "eq",
+  "meaning": "عِش في حدود إمكانياتك ولا تنفق فوق طاقتك.",
+  "opts": [
+   {
+    "t": "Cut your coat according to your cloth.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "You’ve made your bed, now lie in it.",
+    "tag": "bedding again, but about accepting consequences"
+   },
+   {
+    "t": "Stretch your legs according to your blanket.",
+    "tag": "word for word — readable, but not English usage"
+   },
+   {
+    "t": "Look before you leap.",
+    "tag": "general caution, not money"
+   }
+  ],
+  "why": "This one has a genuine English equivalent: plan what you make by what you have. “Live within your means” says the same in plain words.",
+  "note": "The Kuwaiti image is a blanket that is only so long: stretch your legs past it and they are in the cold."
+ },
+ {
+  "src": "اللي ما يعرف الصقر يشويه",
+  "kind": "fn",
+  "meaning": "من لا يعرف قيمة الشيء يسيء استعماله ويضيّعه.",
+  "opts": [
+   {
+    "t": "Those who don’t know its worth will waste it.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "One man’s trash is another man’s treasure.",
+    "tag": "says value is personal — the proverb says ignorance wastes it"
+   },
+   {
+    "t": "Don’t kill the goose that lays the golden eggs.",
+    "tag": "greed destroying a source — here it is ignorance"
+   },
+   {
+    "t": "He who doesn’t know the falcon grills it.",
+    "tag": "word for word — loses the value of the falcon"
+   }
+  ],
+  "why": "To someone who doesn’t know falconry, a prized hunting falcon is just a bird to cook. The best English states the idea directly.",
+  "note": "In Kuwaiti and Gulf culture a trained falcon is precious and prestigious; grilling one is the height of ignorance."
+ },
+ {
+  "src": "اشعلم المعيدي باكل الزبيدي",
+  "kind": "eq",
+  "meaning": "من لم يعتد الشيء النفيس لا يعرف قيمته ولا يقدّره.",
+  "opts": [
+   {
+    "t": "Casting pearls before swine.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "There’s no accounting for taste.",
+    "tag": "taste differs — the proverb says he lacks the experience"
+   },
+   {
+    "t": "Beggars can’t be choosers.",
+    "tag": "about accepting what you get, not appreciating it"
+   },
+   {
+    "t": "What does the Ma’idi know about eating zubaidi?",
+    "tag": "word for word — both names need explaining"
+   }
+  ],
+  "why": "Both say something fine is lost on a person who has never learned to value it.",
+  "note": "الزبيدي is silver pomfret, Kuwait’s most prized fish. The proverb asks how an outsider to it could appreciate it."
+ },
+ {
+  "src": "ما يعرف رأسه من كرياسه",
+  "kind": "eq",
+  "meaning": "شديد الجهل أو الارتباك، لا يميّز أبسط الأمور.",
+  "opts": [
+   {
+    "t": "He doesn’t know which way is up.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "He’s head over heels.",
+    "tag": "a head again, but it means deeply in love"
+   },
+   {
+    "t": "He’s keeping his head down.",
+    "tag": "staying out of trouble, not confused"
+   },
+   {
+    "t": "He doesn’t know his head from his toilet.",
+    "tag": "word for word — crude in English and not idiomatic"
+   }
+  ],
+  "why": "English has its own body-part idioms for complete confusion; this one keeps the sense without the crudeness.",
+  "note": "كرياس is an old word for a latrine. The rhyme رأسه/كرياسه is what makes it stick."
+ },
+ {
+  "src": "ما يعرف كوعه من بوعه",
+  "kind": "eq",
+  "meaning": "جاهل جدًا لا يعرف أبسط الأشياء.",
+  "opts": [
+   {
+    "t": "He doesn’t know his elbow from his backside.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "He’s up to his elbows in work.",
+    "tag": "the elbow again — busy, not ignorant"
+   },
+   {
+    "t": "He bends over backwards.",
+    "tag": "goes to great effort for others"
+   },
+   {
+    "t": "He doesn’t know his elbow from his bu’.",
+    "tag": "half literal — keeps a word the reader cannot read"
+   }
+  ],
+  "why": "English has a near-identical idiom built on the same body-part contrast.",
+  "note": "كوع and بوع are two small bones whose names are easy to mix up; the rhyme makes the confusion sound comic."
+ },
+ {
+  "src": "واللي بالجدر يطلعه الملاس",
+  "kind": "eq",
+  "meaning": "ما في داخل الإنسان أو الأمر سيظهر في النهاية.",
+  "opts": [
+   {
+    "t": "What’s in the well comes up in the bucket.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Too many cooks spoil the broth.",
+    "tag": "a pot and cooking, but about too many people"
+   },
+   {
+    "t": "The proof of the pudding is in the eating.",
+    "tag": "food again — about testing, not revealing"
+   },
+   {
+    "t": "Whatever is in the pot, the ladle brings out.",
+    "tag": "word for word — readable, but not English usage"
+   }
+  ],
+  "why": "Both proverbs use a container and the thing that draws from it: what is inside eventually shows.",
+  "note": "الجدر is the cooking pot and الملاس the ladle. Often said of a person’s character showing through."
+ },
+ {
+  "src": "انطر يا حمار على ما يجيك الربيع",
+  "kind": "fn",
+  "meaning": "انتظار شيء لن يأتي قريبًا، أو وعد بلا جدوى.",
+  "opts": [
+   {
+    "t": "Don’t hold your breath.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Good things come to those who wait.",
+    "tag": "the opposite: patience pays off"
+   },
+   {
+    "t": "Patience is a virtue.",
+    "tag": "praises waiting — the proverb mocks it"
+   },
+   {
+    "t": "Wait, donkey, until spring comes to you.",
+    "tag": "word for word — the irony is lost"
+   }
+  ],
+  "why": "The proverb is sarcastic: the wait is long and probably pointless. English expresses that with “Don’t hold your breath.”",
+  "note": "A hungry donkey is told to wait for the spring grass — a long time with nothing to eat."
+ },
+ {
+  "src": "أقوله ثور يقولي احلبوه",
+  "kind": "fn",
+  "meaning": "شخص لا يفهم ما يُقال له، أو يصرّ على رأيه رغم وضوح الحقيقة.",
+  "opts": [
+   {
+    "t": "It’s like talking to a brick wall.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Take the bull by the horns.",
+    "tag": "a bull too, but it means face a problem bravely"
+   },
+   {
+    "t": "Don’t cry over spilt milk.",
+    "tag": "milk, but about regretting the past"
+   },
+   {
+    "t": "I tell him it’s a bull; he says milk it.",
+    "tag": "word for word — funny, but not English usage"
+   }
+  ],
+  "why": "You cannot milk a bull; the reply shows he isn’t listening at all. The English idiom names that frustration.",
+  "note": "Said in exasperation when someone keeps answering something that wasn’t said."
+ },
+ {
+  "src": "من قال “ها” سمع",
+  "kind": "fn",
+  "meaning": "من يستفز غيره أو يتكلم عليه فليتوقع الرد بالمثل.",
+  "opts": [
+   {
+    "t": "If you dish it out, expect to get it back.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Silence is golden.",
+    "tag": "praises keeping quiet, a different point"
+   },
+   {
+    "t": "Walls have ears.",
+    "tag": "hearing again, but a warning about being overheard"
+   },
+   {
+    "t": "Whoever says “ha” will hear.",
+    "tag": "word for word — meaningless in English"
+   }
+  ],
+  "why": "The proverb warns that provocation gets an answer. English says it with “dish it out”.",
+  "note": "“ها” stands for any remark or taunt; whoever starts it will hear one back."
+ },
+ {
+  "src": "مع الخيل يا شقرة",
+  "kind": "fn",
+  "meaning": "شخص يتبع الجماعة بلا رأي مستقل.",
+  "opts": [
+   {
+    "t": "Following the herd.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Hold your horses.",
+    "tag": "horses again, but it means wait"
+   },
+   {
+    "t": "Birds of a feather flock together.",
+    "tag": "about similar people, not blind following"
+   },
+   {
+    "t": "With the horses, O Shaqra.",
+    "tag": "word for word — the name means nothing to the reader"
+   }
+  ],
+  "why": "Shaqra (a chestnut mare) just runs where the other horses run. English uses the herd for the same idea.",
+  "note": "Usually said with a smile about someone who joins in without knowing why."
+ },
+ {
+  "src": "لا تبوق لا تخاف",
+  "kind": "fn",
+  "meaning": "إذا لم ترتكب خطأً فلا داعي للخوف.",
+  "opts": [
+   {
+    "t": "If you have nothing to hide, you have nothing to fear.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Don’t blow the horn and you won’t be afraid.",
+    "tag": "reads تبوق as بوق (horn) — a false friend"
+   },
+   {
+    "t": "Fortune favours the brave.",
+    "tag": "about courage, not innocence"
+   },
+   {
+    "t": "Nothing ventured, nothing gained.",
+    "tag": "about taking risks, a different point"
+   }
+  ],
+  "why": "تبوق is Kuwaiti for “steal”. The proverb says only the guilty need fear being caught.",
+  "note": "A good example of a Kuwaiti word looking like a different standard Arabic one."
+ },
+ {
+  "src": "الناس للناس والكل بالله",
+  "kind": "eq",
+  "meaning": "الناس يحتاج بعضهم إلى بعض، والاعتماد في النهاية على الله.",
+  "opts": [
+   {
+    "t": "No man is an island.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Every man for himself.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "God helps those who help themselves.",
+    "tag": "self-reliance, not mutual need"
+   },
+   {
+    "t": "People are for people, and all are with God.",
+    "tag": "word for word — stiff in English"
+   }
+  ],
+  "why": "The English carries the first half: nobody gets by alone. The second half, reliance on God, can be added if the context needs it.",
+  "note": "Said to encourage helping others, or to thank someone who helped."
+ },
+ {
+  "src": "لا فات الفوت ما ينفع الصوت",
+  "kind": "eq",
+  "meaning": "إذا فات الأوان فلا فائدة من الصياح أو الندم.",
+  "opts": [
+   {
+    "t": "It’s no use crying over spilt milk.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Better late than never.",
+    "tag": "the opposite: late is still worth it"
+   },
+   {
+    "t": "Speak now or forever hold your peace.",
+    "tag": "voice again, but about speaking in time"
+   },
+   {
+    "t": "Don’t let the moment pass without speaking up.",
+    "tag": "reads لا as “don’t” — here it means “when”"
+   }
+  ],
+  "why": "Once the chance is gone, complaining changes nothing. Note that لا here means إذا, a common Kuwaiti use.",
+  "note": "الفوت is the moment that has passed; الصوت the shouting afterwards."
+ },
+ {
+  "src": "أبو طبيع ما يوز من طبعه",
+  "kind": "eq",
+  "meaning": "صاحب الطبع لا يتخلى عن طبعه بسهولة.",
+  "opts": [
+   {
+    "t": "A leopard can’t change its spots.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "When in Rome, do as the Romans do.",
+    "tag": "about adapting — the opposite idea"
+   },
+   {
+    "t": "Clothes make the man.",
+    "tag": "about appearance, not nature"
+   },
+   {
+    "t": "The man of habit won’t leave his habit.",
+    "tag": "word for word — flat in English"
+   }
+  ],
+  "why": "Both say a person’s nature does not change. يوز is Kuwaiti for يجوز, here “give up”.",
+  "note": "Often said with a sigh when someone does the same thing again."
+ },
+ {
+  "src": "لا بغيت صاحبك دوم حاسبه كل يوم",
+  "kind": "eq",
+  "meaning": "إذا أردت أن تدوم الصداقة، فسوِّ الحسابات المالية أولًا بأول.",
+  "opts": [
+   {
+    "t": "Short reckonings make long friends.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Don’t keep counting with your friend every day.",
+    "tag": "reads لا as “don’t” — it means “if”"
+   },
+   {
+    "t": "A friend in need is a friend indeed.",
+    "tag": "about loyalty in hard times"
+   },
+   {
+    "t": "Neither a borrower nor a lender be.",
+    "tag": "says avoid lending — not settle up quickly"
+   }
+  ],
+  "why": "English has the exact proverb: settle accounts promptly and friendships last.",
+  "note": "Another case where Kuwaiti لا means إذا."
+ },
+ {
+  "src": "لا حبتك عيني ما ضامك الدهر",
+  "kind": "fn",
+  "meaning": "إذا أحببتك ووقفت معك، فلن يصيبك ضرر ما دمت إلى جانبك.",
+  "opts": [
+   {
+    "t": "As long as I’m on your side, nothing can harm you.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Love is blind.",
+    "tag": "the eye again, but about not seeing faults"
+   },
+   {
+    "t": "Out of sight, out of mind.",
+    "tag": "the eye, but about forgetting"
+   },
+   {
+    "t": "If my eye didn’t love you, time wouldn’t harm you.",
+    "tag": "reads لا as negation and scrambles the meaning"
+   }
+  ],
+  "why": "A promise of protection: whoever I love, I stand by. English has no fixed proverb, so the meaning is said directly.",
+  "note": "عيني here is “I myself”; الدهر is time or fate."
+ },
+ {
+  "src": "لا حجت البقر على قرونها",
+  "kind": "eq",
+  "meaning": "شيء لن يحدث أبدًا.",
+  "opts": [
+   {
+    "t": "When pigs fly.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Till the cows come home.",
+    "tag": "cows again, but it means a very long time, not never"
+   },
+   {
+    "t": "Take the bull by the horns.",
+    "tag": "horns, but it means act bravely"
+   },
+   {
+    "t": "When the cows go on pilgrimage on their horns.",
+    "tag": "word for word — vivid but not English usage"
+   }
+  ],
+  "why": "Both name an impossible event. “Till the cows come home” is the trap: long, but not never.",
+  "note": "Again لا means إذا: “when the cows make the pilgrimage on their horns”."
+ },
+ {
+  "src": "لا صار حبيبك عسل لا تاكله كله",
+  "kind": "fn",
+  "meaning": "لا تستغل طيبة صديقك وكرمه حتى تستنفده.",
+  "opts": [
+   {
+    "t": "Don’t take advantage of a good friend.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "You can’t have your cake and eat it.",
+    "tag": "sweet food again — about choosing between two things"
+   },
+   {
+    "t": "The way to a man’s heart is through his stomach.",
+    "tag": "food and love, a different point"
+   },
+   {
+    "t": "Don’t make your friend honey.",
+    "tag": "reads the first لا as “don’t” — it means “if”"
+   }
+  ],
+  "why": "If your friend is sweet as honey, don’t eat it all: kindness used up is lost. English needs a plain rendering.",
+  "note": "The first لا is “if”, the second is “don’t” — a classic trap for readers of standard Arabic."
+ },
+ {
+  "src": "مداح نفسه يبي له رفسه",
+  "kind": "eq",
+  "meaning": "من يمدح نفسه بإفراط يستحق التوبيخ.",
+  "opts": [
+   {
+    "t": "Self-praise is no recommendation.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Blow your own trumpet.",
+    "tag": "names the boasting, not the judgment on it"
+   },
+   {
+    "t": "Fortune favours the bold.",
+    "tag": "about courage"
+   },
+   {
+    "t": "He who praises himself needs a kick.",
+    "tag": "word for word — rough in English"
+   }
+  ],
+  "why": "English has a fixed proverb with the same judgment. The Kuwaiti one adds a rhyme (مداح/رفسه) and a kick.",
+  "note": "Said, half joking, to someone talking up their own achievements."
+ },
+ {
+  "src": "من طمع طبع",
+  "kind": "eq",
+  "meaning": "الطمع يؤدي إلى الخسارة والهلاك.",
+  "opts": [
+   {
+    "t": "Grasp all, lose all.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Greed becomes a habit.",
+    "tag": "reads طبع as “nature/habit” — in Kuwaiti it means “sank”"
+   },
+   {
+    "t": "Greed is good.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "The early bird catches the worm.",
+    "tag": "about being first, not greedy"
+   }
+  ],
+  "why": "In Kuwaiti طبع means sank or drowned: the greedy one goes under. The English proverb carries the same warning.",
+  "note": "A seafaring image: an overloaded boat sinks."
+ },
+ {
+  "src": "ما يمدح السوق إلا من ربح فيه",
+  "kind": "eq",
+  "meaning": "يمدح الإنسان الشيء الذي استفاد منه.",
+  "opts": [
+   {
+    "t": "Everyone speaks well of the bridge that carries them over.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "The customer is always right.",
+    "tag": "the market, but a different idea"
+   },
+   {
+    "t": "Buy low, sell high.",
+    "tag": "trading advice"
+   },
+   {
+    "t": "Only who profited praises the market.",
+    "tag": "word for word — understandable but flat"
+   }
+  ],
+  "why": "English has an old proverb with the same point: we praise what has served us.",
+  "note": "Said when someone’s praise is clearly coloured by what they gained."
+ },
+ {
+  "src": "من طلع من داره قل مقداره",
+  "kind": "fn",
+  "meaning": "من يبتعد عن بيته وأهله يفقد مكانته وقدره.",
+  "opts": [
+   {
+    "t": "Away from home, you lose your standing.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "There’s no place like home.",
+    "tag": "about comfort, not standing"
+   },
+   {
+    "t": "A prophet is not honoured in his own country.",
+    "tag": "the opposite: respect comes from outside"
+   },
+   {
+    "t": "Home is where the heart is.",
+    "tag": "about love of home, not status"
+   }
+  ],
+  "why": "The proverb is about status: at home people know who you are. English has no fixed match.",
+  "note": "Rhymes on داره/مقداره."
+ },
+ {
+  "src": "إسأل مجرب ولا تسأل طبيب",
+  "kind": "eq",
+  "meaning": "خبرة من جرّب أنفع أحيانًا من المعرفة النظرية.",
+  "opts": [
+   {
+    "t": "Experience is the best teacher.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "An apple a day keeps the doctor away.",
+    "tag": "the doctor again — about health"
+   },
+   {
+    "t": "Doctor knows best.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "Ask someone who has tried it, not a doctor.",
+    "tag": "word for word — sounds like medical advice"
+   }
+  ],
+  "why": "The doctor stands for book knowledge; the proverb prefers lived experience.",
+  "note": "Used well beyond medicine — for any practical question."
+ },
+ {
+  "src": "إش حادك يا المسمار؟ قال المطرقة",
+  "kind": "eq",
+  "meaning": "الإنسان يفعل الأمر الصعب لأنه مُجبر عليه.",
+  "opts": [
+   {
+    "t": "Needs must when the devil drives.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Between a rock and a hard place.",
+    "tag": "a dilemma between two bad choices"
+   },
+   {
+    "t": "Hit the nail on the head.",
+    "tag": "the nail again, but it means exactly right"
+   },
+   {
+    "t": "What drove you, nail? The hammer.",
+    "tag": "word for word — the point needs explaining"
+   }
+  ],
+  "why": "The nail does not go in by choice — the hammer drives it. English says pressure leaves no choice.",
+  "note": "Usually the answer to “why did you do that?”"
+ },
+ {
+  "src": "إصرف ما في الجيب يأتيك ما في الغيب",
+  "kind": "eq",
+  "meaning": "أنفق وكن كريمًا، ولا تقلق كثيرًا بشأن الغد، فالرزق آتٍ.",
+  "opts": [
+   {
+    "t": "Tomorrow will take care of itself.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Save for a rainy day.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "Money doesn’t grow on trees.",
+    "tag": "warns against spending"
+   },
+   {
+    "t": "Spend what’s in the pocket, what’s unseen will come.",
+    "tag": "word for word — stiff"
+   }
+  ],
+  "why": "Its meaning shifts with context: as generosity, or as trust that provision will come. The English captures the trust.",
+  "note": "The rhyme الجيب/الغيب carries it."
+ },
+ {
+  "src": "أضبط ساعتك على الملا",
+  "kind": "eq",
+  "meaning": "شخص منضبط جدًا في مواعيده.",
+  "opts": [
+   {
+    "t": "You could set your watch by him.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Time is money.",
+    "tag": "time, but a different point"
+   },
+   {
+    "t": "Better late than never.",
+    "tag": "about being late"
+   },
+   {
+    "t": "Set your clock by the mullah.",
+    "tag": "word for word — the mullah needs explaining"
+   }
+  ],
+  "why": "English has an almost identical idiom for someone who is always exactly on time.",
+  "note": "Literally: “set your watch by the mulla” — someone whose timing never slips."
+ },
+ {
+  "src": "إكل اللي تبيه وإلبس اللي يعجب الناس",
+  "kind": "eq",
+  "meaning": "في الأكل اتبع ذوقك، وفي اللباس راعِ ذوق الناس.",
+  "opts": [
+   {
+    "t": "Eat to please yourself, but dress to please others.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "You are what you eat.",
+    "tag": "food, but a different point"
+   },
+   {
+    "t": "Beauty is in the eye of the beholder.",
+    "tag": "taste differs, not the advice"
+   },
+   {
+    "t": "Clothes make the man.",
+    "tag": "clothes, but no advice about eating"
+   }
+  ],
+  "why": "Benjamin Franklin wrote almost exactly this, so English has a genuine equivalent.",
+  "note": "What you eat is private; what you wear is seen."
+ },
+ {
+  "src": "إن طاعك الزمان وإلا طيعه",
+  "kind": "fn",
+  "meaning": "إذا لم تجرِ الأمور كما تريد، فتكيّف معها.",
+  "opts": [
+   {
+    "t": "If you can’t change things, adapt to them.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Time and tide wait for no man.",
+    "tag": "time again — about not delaying"
+   },
+   {
+    "t": "Where there’s a will, there’s a way.",
+    "tag": "the opposite: force things your way"
+   },
+   {
+    "t": "If time obeys you, fine; otherwise obey it.",
+    "tag": "word for word — understandable but stiff"
+   }
+  ],
+  "why": "الزمان is circumstance. The advice is to bend rather than break.",
+  "note": "Said to someone fighting a situation that will not change."
+ },
+ {
+  "src": "نام مظلوم ولا تنام ظالم",
+  "kind": "fn",
+  "meaning": "أن تكون مظلومًا خير من أن تكون ظالمًا.",
+  "opts": [
+   {
+    "t": "Better to suffer a wrong than to do one.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Two wrongs don’t make a right.",
+    "tag": "about revenge, not this choice"
+   },
+   {
+    "t": "Let sleeping dogs lie.",
+    "tag": "sleep again — about not stirring trouble"
+   },
+   {
+    "t": "Sleep wronged rather than wrongdoer.",
+    "tag": "word for word — unclear in English"
+   }
+  ],
+  "why": "The image is going to sleep at night: better to sleep as the wronged than as the wrongdoer.",
+  "note": "A moral teaching often said to children."
+ },
+ {
+  "src": "لا تكثر الدوس يا خلي تراهم يملونك، لا أنت ولدهم ولا طفل يربونك.",
+  "kind": "eq",
+  "meaning": "لا تكثر الزيارة فيملّك الناس، فأنت لست من أهل البيت.",
+  "opts": [
+   {
+    "t": "Don’t wear out your welcome.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Make yourself at home.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "Blood is thicker than water.",
+    "tag": "family again, but about loyalty"
+   },
+   {
+    "t": "Don’t tread too much, my friend.",
+    "tag": "word for word — sounds like walking"
+   }
+  ],
+  "why": "الدوس is visiting (literally treading the doorstep). English says exactly this.",
+  "note": "A rhymed couplet."
+ },
+ {
+  "src": "جا يكحلها عماها",
+  "kind": "fn",
+  "meaning": "حاول أن يصلح الأمر فأفسده أكثر.",
+  "opts": [
+   {
+    "t": "He tried to fix it and made it worse.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "If it ain’t broke, don’t fix it.",
+    "tag": "advice beforehand — the proverb describes the failure"
+   },
+   {
+    "t": "Beauty is only skin deep.",
+    "tag": "cosmetics, but a different point"
+   },
+   {
+    "t": "The blind leading the blind.",
+    "tag": "blindness, but about ignorance"
+   }
+  ],
+  "why": "Kohl is meant to beautify the eye; he blinded it instead. English says it plainly.",
+  "note": "Used about well-meant help that backfires."
+ },
+ {
+  "src": "بغيناه عون صار فرعون",
+  "kind": "eq",
+  "meaning": "طلبنا منه المساعدة فتسلّط واستبدّ.",
+  "opts": [
+   {
+    "t": "Give him an inch and he’ll take a mile.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Don’t bite the hand that feeds you.",
+    "tag": "about ingratitude, not taking over"
+   },
+   {
+    "t": "Many hands make light work.",
+    "tag": "about help, a different point"
+   },
+   {
+    "t": "We wanted him as a helper; he became Pharaoh.",
+    "tag": "word for word — the image needs explaining"
+   }
+  ],
+  "why": "The helper took over. English uses “an inch and a mile”.",
+  "note": "عون/فرعون rhyme; Pharaoh is the tyrant figure."
+ },
+ {
+  "src": "تجيك التهايم وإنت نايم",
+  "kind": "fn",
+  "meaning": "قد تُتّهم أو تقع عليك المشاكل وأنت بريء لا شأن لك.",
+  "opts": [
+   {
+    "t": "Trouble can find you even when you’ve done nothing.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Let sleeping dogs lie.",
+    "tag": "sleep again — about not stirring trouble"
+   },
+   {
+    "t": "The early bird catches the worm.",
+    "tag": "about getting up early"
+   },
+   {
+    "t": "Accusations come to you while you sleep.",
+    "tag": "word for word — understandable but odd"
+   }
+  ],
+  "why": "Sleeping stands for innocence and doing nothing.",
+  "note": "Rhymes التهايم/نايم."
+ },
+ {
+  "src": "الحشرة مع الناس عيد",
+  "kind": "eq",
+  "meaning": "الشدة إذا شاركك فيها الناس هانت وصارت محتملة.",
+  "opts": [
+   {
+    "t": "A trouble shared is a trouble halved.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Misery loves company.",
+    "tag": "the unhappy want others unhappy too — not the same point"
+   },
+   {
+    "t": "The more, the merrier.",
+    "tag": "a happy crowd, not shared hardship"
+   },
+   {
+    "t": "Crowding with people is a feast.",
+    "tag": "word for word — loses the hardship"
+   }
+  ],
+  "why": "الحشرة here is a tight spot. Shared with others it becomes as bearable as a feast.",
+  "note": "Compare المصيبة إذا عمّت هانت."
+ },
+ {
+  "src": "خبز خبزتيه يا الرفلة إكليه",
+  "kind": "eq",
+  "meaning": "تحمّل نتيجة ما فعلته بنفسك.",
+  "opts": [
+   {
+    "t": "You’ve made your bed, now lie in it.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Half a loaf is better than none.",
+    "tag": "bread again — accept what you get"
+   },
+   {
+    "t": "Too many cooks spoil the broth.",
+    "tag": "cooking, a different point"
+   },
+   {
+    "t": "Eat the bread you baked, clumsy woman.",
+    "tag": "word for word — harsh and unclear"
+   }
+  ],
+  "why": "A genuine equivalent: you made it, you live with it.",
+  "note": "الرفلة is a clumsy woman; the bread came out badly and she must eat it."
+ },
+ {
+  "src": "راعي النصيفة سالم",
+  "kind": "fn",
+  "meaning": "من يتعامل بالعدل والإنصاف يسلم من المشاكل واللوم.",
+  "opts": [
+   {
+    "t": "Be fair and you’ll stay out of trouble.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "All’s fair in love and war.",
+    "tag": "the opposite: anything goes"
+   },
+   {
+    "t": "Safety first.",
+    "tag": "safety, but no fairness"
+   },
+   {
+    "t": "The keeper of half is safe.",
+    "tag": "word for word — meaningless"
+   }
+  ],
+  "why": "النصيفة is fair dealing — giving everyone their due.",
+  "note": "Said in disputes and business."
+ },
+ {
+  "src": "نوم الظالم عبادة",
+  "kind": "fn",
+  "meaning": "سخرية من الظالم: نومه خير من يقظته لأنه لا يؤذي أحدًا وهو نائم.",
+  "opts": [
+   {
+    "t": "The world is safer while the tyrant sleeps.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Let sleeping dogs lie.",
+    "tag": "sleep again — about not disturbing trouble"
+   },
+   {
+    "t": "The wicked never rest.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "A tyrant’s sleep is worship.",
+    "tag": "word for word — the irony is lost"
+   }
+  ],
+  "why": "Sarcasm: the best thing the oppressor does is sleep.",
+  "note": "Often said of a bully or harsh boss."
+ },
+ {
+  "src": "طارت الطيور بأرزاقها",
+  "kind": "eq",
+  "meaning": "فاتت الفرصة وأخذ كل واحد نصيبه.",
+  "opts": [
+   {
+    "t": "You’ve missed the boat.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "The early bird catches the worm.",
+    "tag": "birds again — advice, not loss"
+   },
+   {
+    "t": "A bird in the hand is worth two in the bush.",
+    "tag": "birds, but about certainty"
+   },
+   {
+    "t": "The birds flew off with their provisions.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "Everyone has taken their share and gone. English says the chance is gone.",
+  "note": "Said to someone who arrives too late."
+ },
+ {
+  "src": "ما للصلايب إلا أهلها",
+  "kind": "fn",
+  "meaning": "الأمور الصعبة لا يقدر عليها إلا الأقوياء وأهل الخبرة.",
+  "opts": [
+   {
+    "t": "Tough jobs need people who are made for them.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Many hands make light work.",
+    "tag": "numbers, not ability"
+   },
+   {
+    "t": "No pain, no gain.",
+    "tag": "effort pays off, a different point"
+   },
+   {
+    "t": "The hard things have only their people.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "الصلايب are hard matters. The proverb says leave them to those able.",
+  "note": "Said when someone steps up to a difficult task."
+ },
+ {
+  "src": "الطول طول نخلة والعقل عقل صخلة",
+  "kind": "fn",
+  "meaning": "شخص كبير الجسم أو المظهر لكنه قليل العقل.",
+  "opts": [
+   {
+    "t": "All brawn and no brains.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Still waters run deep.",
+    "tag": "quiet people have depths"
+   },
+   {
+    "t": "A big fish in a small pond.",
+    "tag": "size, but about status"
+   },
+   {
+    "t": "Tall as a palm tree, with the brain of a young goat.",
+    "tag": "word for word — vivid but not English usage"
+   }
+  ],
+  "why": "Size and sense set side by side. English has a fixed contrast.",
+  "note": "صخلة is a young goat. The palm and the goat rhyme."
+ },
+ {
+  "src": "لا تسرف لو من البحر تغرف",
+  "kind": "eq",
+  "meaning": "لا تبذّر حتى لو كان المورد وفيرًا.",
+  "opts": [
+   {
+    "t": "Waste not, want not.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "There are plenty more fish in the sea.",
+    "tag": "the sea again — about other chances"
+   },
+   {
+    "t": "A drop in the ocean.",
+    "tag": "the ocean, but means too small to matter"
+   },
+   {
+    "t": "Don’t waste even if from the sea you scoop.",
+    "tag": "word for word — stiff"
+   }
+  ],
+  "why": "لو here means “even if”.",
+  "note": "A sea-faring people’s image."
+ },
+ {
+  "src": "فال الله ولا فالك",
+  "kind": "eq",
+  "meaning": "تُقال لمن تفوّه بكلام متشائم: نرجو ما يقدّره الله لا ما تقوله.",
+  "opts": [
+   {
+    "t": "Heaven forbid!",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "God willing.",
+    "tag": "a hope, not a rejection of a bad omen"
+   },
+   {
+    "t": "Speak of the devil.",
+    "tag": "about someone arriving"
+   },
+   {
+    "t": "God’s omen, not yours.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "A quick reply to an ominous remark. English uses Heaven forbid or touch wood.",
+  "note": "الفال is an omen; the speaker refuses yours."
+ },
+ {
+  "src": "العين ما تعلى على الحاجب",
+  "kind": "fn",
+  "meaning": "الأدنى منزلة لا يتعالى على الأعلى منه.",
+  "opts": [
+   {
+    "t": "Know your place.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "An eye for an eye.",
+    "tag": "the eye again — about revenge"
+   },
+   {
+    "t": "Beauty is in the eye of the beholder.",
+    "tag": "the eye, but about taste"
+   },
+   {
+    "t": "The eye does not rise above the eyebrow.",
+    "tag": "word for word — the image needs explaining"
+   }
+  ],
+  "why": "The eyebrow sits above the eye. Said to someone overstepping a senior.",
+  "note": "Often said to younger people."
+ },
+ {
+  "src": "قراقيع صيف",
+  "kind": "eq",
+  "meaning": "كلام كثير وتهديد بلا فعل، مثل رعد الصيف بلا مطر.",
+  "opts": [
+   {
+    "t": "All bark and no bite.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "A storm in a teacup.",
+    "tag": "a fuss over something small"
+   },
+   {
+    "t": "Make hay while the sun shines.",
+    "tag": "summer again — use the chance"
+   },
+   {
+    "t": "Summer rattles.",
+    "tag": "word for word — meaningless"
+   }
+  ],
+  "why": "Noise with nothing behind it.",
+  "note": "Literally: “summer clatter” — noise that brings nothing with it."
+ },
+ {
+  "src": "فوق شينه قوات عينه",
+  "kind": "fn",
+  "meaning": "مخطئ أو سيئ، وفوق ذلك وقح لا يستحي.",
+  "opts": [
+   {
+    "t": "In the wrong, and brazen with it.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Adding insult to injury.",
+    "tag": "doing more harm to someone"
+   },
+   {
+    "t": "Beauty is only skin deep.",
+    "tag": "reads شين as ugliness"
+   },
+   {
+    "t": "On top of his ugliness, the strength of his eye.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "شين is a fault; قوات عين is boldness. English needs a plain rendering.",
+  "note": "Rhymes on شينه/عينه."
+ },
+ {
+  "src": "كثر الدق يفك اللحام",
+  "kind": "eq",
+  "meaning": "كثرة الضغط والتكرار تفكك حتى الأقوى.",
+  "opts": [
+   {
+    "t": "Constant dripping wears away the stone.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Strike while the iron is hot.",
+    "tag": "metal again — act at the right time"
+   },
+   {
+    "t": "Practice makes perfect.",
+    "tag": "repetition improves, not wears down"
+   },
+   {
+    "t": "Much hammering undoes the weld.",
+    "tag": "word for word — understandable but not English usage"
+   }
+  ],
+  "why": "Both say steady pressure wears down even strong things.",
+  "note": "Said of nagging, or persistent persuasion."
+ },
+ {
+  "src": "سو خير وقطه بحر",
+  "kind": "fn",
+  "meaning": "افعل الخير ولا تنتظر مقابلًا أو شكرًا.",
+  "opts": [
+   {
+    "t": "Do good and expect nothing in return.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Charity begins at home.",
+    "tag": "about whom to help first"
+   },
+   {
+    "t": "No good deed goes unpunished.",
+    "tag": "cynical — the opposite mood"
+   },
+   {
+    "t": "Do good and throw it in the sea.",
+    "tag": "word for word — sounds like wasting it"
+   }
+  ],
+  "why": "Throwing it in the sea means forgetting it, not wasting it.",
+  "note": "A sea-faring image again."
+ },
+ {
+  "src": "كوم حجار ولا هالجار",
+  "kind": "fn",
+  "meaning": "جار سيئ أسوأ من لا جار.",
+  "opts": [
+   {
+    "t": "Better no neighbour than a bad one.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Good fences make good neighbours.",
+    "tag": "about boundaries, not choosing"
+   },
+   {
+    "t": "Love thy neighbour.",
+    "tag": "the opposite tone"
+   },
+   {
+    "t": "A pile of stones rather than this neighbour.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "A heap of stones next door is better than this person.",
+  "note": "Rhymes حجار/جار."
+ },
+ {
+  "src": "إيد وحدة ما تصفق",
+  "kind": "eq",
+  "meaning": "لا يتم الأمر دون تعاون الطرفين.",
+  "opts": [
+   {
+    "t": "It takes two to tango.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Too many cooks spoil the broth.",
+    "tag": "the opposite: too many people"
+   },
+   {
+    "t": "Give them a big hand.",
+    "tag": "clapping again — applause"
+   },
+   {
+    "t": "One hand doesn’t clap.",
+    "tag": "word for word — understandable"
+   }
+  ],
+  "why": "Some things need both sides.",
+  "note": "Used both for cooperation and for shared blame."
+ },
+ {
+  "src": "البحر ماله أمان",
+  "kind": "fn",
+  "meaning": "البحر لا يؤمَن جانبه، ويقال لكل ما يتقلّب ولا يُوثق به.",
+  "opts": [
+   {
+    "t": "Never trust the sea.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "There are plenty more fish in the sea.",
+    "tag": "the sea again — other chances"
+   },
+   {
+    "t": "Still waters run deep.",
+    "tag": "hidden depths in quiet people"
+   },
+   {
+    "t": "The sea has its own rules.",
+    "tag": "close but not the point"
+   }
+  ],
+  "why": "Here the near-literal rendering is the right one: it already works in English.",
+  "note": "Kuwait’s pearl-diving past."
+ },
+ {
+  "src": "اللي ما يستحي منك لا تستحي منه",
+  "kind": "fn",
+  "meaning": "عامل الناس بمثل ما يعاملونك به.",
+  "opts": [
+   {
+    "t": "Treat people the way they treat you.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Do unto others as you would have them do unto you.",
+    "tag": "treat others as you want to be treated — not as they treat you"
+   },
+   {
+    "t": "Turn the other cheek.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "Don’t be shy with the one not shy with you.",
+    "tag": "word for word — stiff"
+   }
+  ],
+  "why": "If someone has no consideration for you, owe them none.",
+  "note": "Said when someone has been rude."
+ },
+ {
+  "src": "اللي ما يطول العنب حامضٍ عنه يقول",
+  "kind": "eq",
+  "meaning": "من لا يستطيع الحصول على شيء يقلّل من قيمته.",
+  "opts": [
+   {
+    "t": "Sour grapes.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "The grass is always greener on the other side.",
+    "tag": "envy, not belittling"
+   },
+   {
+    "t": "You can’t have your cake and eat it.",
+    "tag": "food, but about choosing"
+   },
+   {
+    "t": "Who can’t reach the grapes says they’re sour.",
+    "tag": "word for word — it is Aesop’s fable"
+   }
+  ],
+  "why": "The same fable, so English has the same idiom.",
+  "note": "One of the clearest shared images between Arabic and English."
+ },
+ {
+  "src": "اللي هذا أوله ينعاف تاليه",
+  "kind": "eq",
+  "meaning": "إذا كانت البداية سيئة فالنهاية أسوأ.",
+  "opts": [
+   {
+    "t": "A bad beginning makes a bad ending.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Well begun is half done.",
+    "tag": "the opposite: a good start"
+   },
+   {
+    "t": "All’s well that ends well.",
+    "tag": "the end matters most"
+   },
+   {
+    "t": "If this is its first, its last is to be refused.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "The start tells you how it will end.",
+  "note": "ينعاف means to be shunned."
+ },
+ {
+  "src": "إذا شبع الحمار نهق",
+  "kind": "fn",
+  "meaning": "إذا نال الجاهل ما يريد تعالى وأزعج غيره.",
+  "opts": [
+   {
+    "t": "Give a fool plenty and he grows insolent.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Give a fool enough rope and he’ll hang himself.",
+    "tag": "the fool ruins himself — a different point"
+   },
+   {
+    "t": "Empty vessels make the most noise.",
+    "tag": "noise, but about the ignorant"
+   },
+   {
+    "t": "When the donkey is full, it brays.",
+    "tag": "word for word — understandable"
+   }
+  ],
+  "why": "Comfort makes the ungrateful loud.",
+  "note": "Said of someone who forgets themselves once well off."
+ },
+ {
+  "src": "الوجه بالوجه أبيض",
+  "kind": "fn",
+  "meaning": "المصارحة وجهًا لوجه أفضل من الكلام من وراء الظهر.",
+  "opts": [
+   {
+    "t": "Better to say it to someone’s face.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Two-faced.",
+    "tag": "the face again — hypocrite"
+   },
+   {
+    "t": "To lose face.",
+    "tag": "the face — humiliation"
+   },
+   {
+    "t": "The face to the face is white.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "أبيض means honourable.",
+  "note": "Said before an honest conversation."
+ },
+ {
+  "src": "لو فيه خير ما عافه الطير",
+  "kind": "fn",
+  "meaning": "لو كان الشيء جيدًا لما تركه غيرك.",
+  "opts": [
+   {
+    "t": "If it were any good, it wouldn’t have been left.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Don’t look a gift horse in the mouth.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "A bird in the hand is worth two in the bush.",
+    "tag": "birds, but about certainty"
+   },
+   {
+    "t": "If it had good in it, the bird wouldn’t have left it.",
+    "tag": "word for word — readable"
+   }
+  ],
+  "why": "Something left untouched is suspect.",
+  "note": "Often said of a bargain."
+ },
+ {
+  "src": "اللي يجي من الله حيّاه الله",
+  "kind": "fn",
+  "meaning": "نتقبّل ما يأتي به القدر برضا.",
+  "opts": [
+   {
+    "t": "Whatever God sends is welcome.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "God helps those who help themselves.",
+    "tag": "self-reliance, a different idea"
+   },
+   {
+    "t": "Don’t look a gift horse in the mouth.",
+    "tag": "about not criticising a gift"
+   },
+   {
+    "t": "What comes from God, God greet it.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "A statement of acceptance.",
+  "note": "حيّاه الله is a welcome."
+ },
+ {
+  "src": "لا تدخل عصك بشي ما يخصك",
+  "kind": "eq",
+  "meaning": "لا تتدخل فيما لا يعنيك.",
+  "opts": [
+   {
+    "t": "Mind your own business.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Spare the rod and spoil the child.",
+    "tag": "a stick again — discipline"
+   },
+   {
+    "t": "Don’t put all your eggs in one basket.",
+    "tag": "about risk"
+   },
+   {
+    "t": "Don’t put your stick in what isn’t yours.",
+    "tag": "word for word — understandable"
+   }
+  ],
+  "why": "English also has “don’t stick your oar in”.",
+  "note": "عصك is your stick."
+ },
+ {
+  "src": "لا تأمن على فار شحمه",
+  "kind": "eq",
+  "meaning": "لا تأتمن شخصًا على شيء يطمع فيه.",
+  "opts": [
+   {
+    "t": "Don’t let the fox guard the henhouse.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "When the cat’s away, the mice will play.",
+    "tag": "a mouse again — about lack of supervision"
+   },
+   {
+    "t": "Trust, but verify.",
+    "tag": "trust with checks, not refusal"
+   },
+   {
+    "t": "Don’t trust a mouse with its fat.",
+    "tag": "word for word — readable"
+   }
+  ],
+  "why": "English uses a fox and hens for the same idea.",
+  "note": "The mouse and the fat are in the Kuwaiti."
+ },
+ {
+  "src": "القلوب شواهد",
+  "kind": "fn",
+  "meaning": "المشاعر متبادلة، والقلب يحس بما في القلب الآخر.",
+  "opts": [
+   {
+    "t": "Hearts know each other.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Absence makes the heart grow fonder.",
+    "tag": "the heart, but about distance"
+   },
+   {
+    "t": "Wear your heart on your sleeve.",
+    "tag": "showing feelings openly"
+   },
+   {
+    "t": "Hearts are witnesses.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "Feelings are sensed without words, and usually returned.",
+  "note": "Said when two people feel the same about each other."
+ },
+ {
+  "src": "اللي ما يعرفك ما يثمنك",
+  "kind": "fn",
+  "meaning": "من لا يعرفك جيدًا لا يعرف قيمتك.",
+  "opts": [
+   {
+    "t": "Those who don’t know you can’t value you.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Familiarity breeds contempt.",
+    "tag": "the opposite: knowing lowers value"
+   },
+   {
+    "t": "Don’t judge a book by its cover.",
+    "tag": "advice to the judge, not this point"
+   },
+   {
+    "t": "Who doesn’t know you won’t price you.",
+    "tag": "word for word — sounds commercial"
+   }
+  ],
+  "why": "Worth is seen by those who know you.",
+  "note": "يثمنك means to put a value on you."
+ },
+ {
+  "src": "أستر على ما واجهت",
+  "kind": "fn",
+  "meaning": "طلب ستر زلة أو موقف محرج رآه الآخر.",
+  "opts": [
+   {
+    "t": "Please keep what you saw between us.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Let bygones be bygones.",
+    "tag": "forgive and forget — not keep quiet"
+   },
+   {
+    "t": "Face the music.",
+    "tag": "accept consequences"
+   },
+   {
+    "t": "Cover what you faced.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "A request for discretion.",
+  "note": "Said after an embarrassing moment."
+ },
+ {
+  "src": "أكل وراحة ونومة في البراحة",
+  "kind": "eq",
+  "meaning": "حياة مريحة بلا تعب ولا مسؤولية.",
+  "opts": [
+   {
+    "t": "Living the life of Riley.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Early to bed, early to rise.",
+    "tag": "a routine, not leisure"
+   },
+   {
+    "t": "No rest for the wicked.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "Food, rest and sleep in the courtyard.",
+    "tag": "word for word — readable"
+   }
+  ],
+  "why": "A carefree, idle life.",
+  "note": "البراحة is the open yard."
+ },
+ {
+  "src": "أحر ما عندي أبرد ما عندك",
+  "kind": "fn",
+  "meaning": "ما أراه أمرًا ملحًّا ومهمًّا تراه أنت بلا اهتمام.",
+  "opts": [
+   {
+    "t": "I care about this far more than you do.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Blow hot and cold.",
+    "tag": "inconsistency"
+   },
+   {
+    "t": "Strike while the iron is hot.",
+    "tag": "timing"
+   },
+   {
+    "t": "My hottest is your coldest.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "One side burns with concern, the other is indifferent.",
+  "note": "Said in frustration."
+ },
+ {
+  "src": "أطعم الفم تستحي العين",
+  "kind": "fn",
+  "meaning": "الإكرام يجعل المُكرَم أكثر حياءً وامتنانًا.",
+  "opts": [
+   {
+    "t": "Generosity buys goodwill.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "The way to a man’s heart is through his stomach.",
+    "tag": "food and love, a different point"
+   },
+   {
+    "t": "Don’t bite the hand that feeds you.",
+    "tag": "a warning to the receiver"
+   },
+   {
+    "t": "Feed the mouth and the eye will be shy.",
+    "tag": "word for word — readable"
+   }
+  ],
+  "why": "A gift makes the receiver hold back.",
+  "note": "Often about bribes as well."
+ },
+ {
+  "src": "طرار ويتشرط",
+  "kind": "eq",
+  "meaning": "محتاج ويفرض الشروط.",
+  "opts": [
+   {
+    "t": "Beggars can’t be choosers.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Ask and you shall receive.",
+    "tag": "encouragement to ask"
+   },
+   {
+    "t": "Charity begins at home.",
+    "tag": "about whom to help"
+   },
+   {
+    "t": "A beggar who sets conditions.",
+    "tag": "word for word — readable"
+   }
+  ],
+  "why": "English has the exact proverb.",
+  "note": "طرار is a beggar."
+ },
+ {
+  "src": "سيل ما يبلك ما يهمك",
+  "kind": "fn",
+  "meaning": "ما لا يمسّك لا داعي لأن تهتم به.",
+  "opts": [
+   {
+    "t": "If it doesn’t affect you, don’t worry about it.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Like water off a duck’s back.",
+    "tag": "criticism not affecting someone"
+   },
+   {
+    "t": "Don’t cross that bridge till you come to it.",
+    "tag": "about future worries"
+   },
+   {
+    "t": "A flood that doesn’t wet you doesn’t concern you.",
+    "tag": "word for word — readable"
+   }
+  ],
+  "why": "Said to someone worrying over others’ affairs.",
+  "note": "The flood is a desert flash flood."
+ },
+ {
+  "src": "الفرس من خيالها والمره من رجالها",
+  "kind": "fn",
+  "meaning": "قول تقليدي: الفرس تُعرف بفارسها، والمرأة تُمدح أو تُذم بحسب رجالها.",
+  "opts": [
+   {
+    "t": "A horse is known by its rider.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "You can lead a horse to water, but you can’t make it drink.",
+    "tag": "horses — about forcing"
+   },
+   {
+    "t": "Behind every great man is a great woman.",
+    "tag": "the reverse"
+   },
+   {
+    "t": "The mare is from her rider, the woman from her men.",
+    "tag": "word for word — reads oddly"
+   }
+  ],
+  "why": "Only the first half travels as an English saying. The second half reflects a traditional view.",
+  "note": "Reflects older social attitudes."
+ },
+ {
+  "src": "القطو العود ما يتربى",
+  "kind": "eq",
+  "meaning": "الكبير يصعب تعليمه أو تغيير عاداته.",
+  "opts": [
+   {
+    "t": "You can’t teach an old dog new tricks.",
+    "tag": "the English equivalent",
+    "ok": true
+   },
+   {
+    "t": "Curiosity killed the cat.",
+    "tag": "a cat — but about nosiness"
+   },
+   {
+    "t": "A leopard can’t change its spots.",
+    "tag": "inborn nature, not learning at a late age"
+   },
+   {
+    "t": "The old cat can’t be raised.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "English swaps the cat for a dog. Same point.",
+  "note": "العود means old."
+ },
+ {
+  "src": "الشيفة شيفة والمعاني ضعيفة",
+  "kind": "fn",
+  "meaning": "المظهر حسن لكن المضمون ضعيف.",
+  "opts": [
+   {
+    "t": "All style and no substance.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Beauty is in the eye of the beholder.",
+    "tag": "taste differs"
+   },
+   {
+    "t": "Looks can kill.",
+    "tag": "an angry look"
+   },
+   {
+    "t": "The look is a look, the meanings are weak.",
+    "tag": "word for word — unclear"
+   }
+  ],
+  "why": "Good looks, little behind them.",
+  "note": "Rhymes شيفة/ضعيفة."
+ },
+ {
+  "src": "تموت الدجاجة وعينها على السبوس",
+  "kind": "fn",
+  "meaning": "الطماع يبقى طماعًا حتى النهاية.",
+  "opts": [
+   {
+    "t": "Greedy to the very end.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Don’t count your chickens before they hatch.",
+    "tag": "chickens — premature hope"
+   },
+   {
+    "t": "Curiosity killed the cat.",
+    "tag": "an animal’s fatal flaw — nosiness"
+   },
+   {
+    "t": "The hen dies with her eye on the bran.",
+    "tag": "word for word — readable"
+   }
+  ],
+  "why": "Even dying, the hen is looking at the feed.",
+  "note": "السبوس is bran."
+ },
+ {
+  "src": "ردت حليمة لعادتها القديمة",
+  "kind": "fn",
+  "meaning": "عاد الشخص إلى عادته القديمة.",
+  "opts": [
+   {
+    "t": "Back to old habits.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Turning over a new leaf.",
+    "tag": "the opposite"
+   },
+   {
+    "t": "Old is gold.",
+    "tag": "praises old things"
+   },
+   {
+    "t": "Halima returned to her old custom.",
+    "tag": "word for word — the name means nothing"
+   }
+  ],
+  "why": "A relapse after seeming to change.",
+  "note": "Halima is a stock name."
+ },
+ {
+  "src": "من طول الغيبات جاب الغنايم",
+  "kind": "fn",
+  "meaning": "الغائب طويلًا قد يعود بالخير والمكاسب.",
+  "opts": [
+   {
+    "t": "A long absence can bring back rewards.",
+    "tag": "a natural functional translation",
+    "ok": true
+   },
+   {
+    "t": "Absence makes the heart grow fonder.",
+    "tag": "about feelings, not gains"
+   },
+   {
+    "t": "Out of sight, out of mind.",
+    "tag": "about forgetting"
+   },
+   {
+    "t": "Whoever is long absent brings spoils.",
+    "tag": "word for word — sounds like war"
+   }
+  ],
+  "why": "Said to welcome someone returning from travel.",
+  "note": "Rhymes الغيبات/الغنايم."
+ }
+];
 
 
 const COURTESY = [
@@ -8328,11 +10351,8 @@ const ITEMS = [
     subject: "التعبير الاصطلاحي · Chapter 8",
     blurb: "Match the Arabic proverb to the English one that means the same &mdash; not says the same.",
     run: () => runChoice(PROVERBS, "Which English proverb does the same work?") },
-  /* published:false keeps it out of the Mark total until it has its
-     proverbs — the ring must never ask for a mark that cannot be earned. */
   { id: "kuwaiti", ar: "أمثالٌ كويتية", en: "Kuwaiti Proverbs", kind: "trial", section: "trials",
     subject: "الأمثال الكويتية",
-    published: false,
     blurb: "Ours, not the ones every Arabic speaker shares. Collected from the people who say them.",
     run: runKuwaiti },
   { id: "courtesy", ar: "خِزانة المُجامَلات", en: "Speech Acts", kind: "trial", section: "trials",
@@ -13793,7 +15813,20 @@ function runChoice(items, ask) {
 
     const v = el("div", "verdict");
     v.appendChild(el("span", "vh " + (hit ? "win" : "lose"), hit ? "✦ Well rendered" : "✧ Not the natural one"));
-    v.appendChild(el("p", "vb", q.why));
+    if (q.meaning) {
+      const best = q.opts.find(o => o.ok);
+      const KIND = { eq: "Genuine English equivalent", fn: "Functional translation — English has no fixed proverb",
+                     ex: "Culturally specific — translated and explained" };
+      v.appendChild(el("p", "vb", "<b>Meaning</b>"));
+      const mn = el("p", "vb kw-ar", esc(q.meaning)); mn.dir = "rtl"; mn.lang = "ar";
+      v.appendChild(mn);
+      v.appendChild(el("p", "vb", "<b>Best English:</b> " + esc(best.t) +
+        (KIND[q.kind] ? ' <span class="kw-kind">' + KIND[q.kind] + '</span>' : "")));
+      v.appendChild(el("p", "vb", "<b>Why it fits:</b> " + esc(q.why)));
+      if (q.note) v.appendChild(el("p", "vb", "<b>Cultural note:</b> " + esc(q.note)));
+    } else {
+      v.appendChild(el("p", "vb", q.why));
+    }
     /* The reasoning stands on its own above; the chapter is where to go
        for more, not where the explanation lives. Somebody working from
        the site alone should never need the book to understand this. */
@@ -13852,7 +15885,7 @@ function quitTrial(log, done, total) {
    the gap. */
 function runKuwaiti() {
   if (KUWAITI.length) {
-    runChoice(KUWAITI, "Which English rendering does the same work?");
+    runChoice(shuffled(KUWAITI).slice(0, 10), "Choose the best English translation");
     return;
   }
 
