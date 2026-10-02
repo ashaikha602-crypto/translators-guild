@@ -14631,7 +14631,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1002-1640";
+const BUILD = "1002-1720";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -15870,7 +15870,7 @@ const TH_SHELF = [
    Translation in History are reused from lineage/. */
 const THEORISTS = [
   { id: "cicero", name: "Cicero", life: "106 – 43 BCE", from: "Roman",
-    role: "Orator, statesman and translator", img: "theorists/cicero.jpg",
+    role: "Orator, statesman and translator", img: "theorists/cicero.jpg", credit: "Ancient marble bust",
     bio: "Rome’s greatest orator translated Greek speeches into Latin and described doing it as an orator, not as an interpreter: keeping the force of the argument rather than counting words. His remark is the oldest statement of the word-for-word vs. sense-for-sense debate.",
     th: ["Word-for-Word vs. Sense-for-Sense"] },
   { id: "jerome", name: "St. Jerome", life: "c. 347 – 420", from: "Roman Christian",
@@ -15882,16 +15882,20 @@ const THEORISTS = [
     bio: "Theologian, philosopher and translator of Plato. His 1813 lecture set out the two directions a translator can take — bring the author to the reader, or the reader to the author — the root of today’s domestication and foreignization debate.",
     th: ["Schleiermacher: Two Methods of Translating"] },
   { id: "benjamin", name: "Walter Benjamin", life: "1892 – 1940", from: "German",
-    role: "Philosopher and critic", img: "theorists/walter-benjamin.jpg",
+    role: "Philosopher and critic", img: "theorists/walter-benjamin.jpg", credit: "Photograph",
     bio: "Philosopher and literary critic who translated Baudelaire. His preface “The Task of the Translator” argued that translation is not about passing on information but about the relationship between languages.",
     th: ["Benjamin: The Task of the Translator"] },
   { id: "jakobson", name: "Roman Jakobson", life: "1896 – 1982", from: "Russian-American",
-    role: "Linguist", img: "theorists/roman-jakobson.jpg",
+    role: "Linguist", img: "theorists/roman-jakobson.jpg", credit: "Photograph",
     bio: "One of the founders of modern linguistics and semiotics. His short 1959 essay named three kinds of translation — intralingual, interlingual and intersemiotic — and is still a starting point for the field.",
     th: ["Jakobson: Three Kinds of Translation"] },
-  { id: "vinay", name: "Jean-Paul Vinay & Jean Darbelnet", life: "1910 – 1999 · 1904 – 1990", from: "French · worked in Canada",
-    role: "Linguists", img: "theorists/vinay-darbelnet.jpg",
-    bio: "Comparing French and English, they catalogued the seven procedures a translator can use, from borrowing to adaptation. Their framework is still how translators name what they did to a phrase.",
+  { id: "vinay", name: "Jean-Paul Vinay", life: "1910 – 1999", from: "French, worked in Canada",
+    role: "Linguist", img: "theorists/jean-paul-vinay.jpg", credit: "Photograph",
+    bio: "Linguist who, with Jean Darbelnet, compared French and English and catalogued the seven procedures a translator can use, from borrowing to adaptation. Their framework is still how translators name what they did to a phrase.",
+    th: ["Vinay & Darbelnet: Comparative Stylistics"] },
+  { id: "darbelnet", name: "Jean Darbelnet", life: "1904 – 1990", from: "French, worked in Canada",
+    role: "Linguist", img: "theorists/jean-darbelnet.jpg",
+    bio: "Co-author, with Jean-Paul Vinay, of <i>Comparative Stylistics of French and English</i> and its seven translation procedures.",
     th: ["Vinay & Darbelnet: Comparative Stylistics"] },
   { id: "nida", name: "Eugene A. Nida", life: "1914 – 2011", from: "American",
     role: "Linguist and Bible translator", img: "lineage/eugene-nida.jpg", credit: "Photograph",
@@ -15929,9 +15933,13 @@ const THEORISTS = [
     role: "Linguist and translation scholar", img: "theorists/juliane-house.jpg",
     bio: "Built one of the best-known models of translation quality assessment and the distinction between overt and covert translation.",
     th: ["House: Overt and Covert Translation"] },
-  { id: "hatim", name: "Basil Hatim & Ian Mason", from: "British universities",
-    role: "Translation scholars", img: "theorists/hatim-mason.jpg",
-    bio: "Brought discourse analysis, register and pragmatics into translation studies. Hatim’s work draws extensively on Arabic–English translation.",
+  { id: "hatim", name: "Basil Hatim", from: "Arab-British",
+    role: "Translation scholar", img: "theorists/basil-hatim.jpg",
+    bio: "Brought discourse analysis, register and pragmatics into translation studies with Ian Mason. His work draws extensively on Arabic–English translation.",
+    th: ["Hatim & Mason: Discourse and the Translator"] },
+  { id: "mason", name: "Ian Mason", from: "British",
+    role: "Translation and interpreting scholar", img: "theorists/ian-mason.jpg",
+    bio: "Co-author, with Basil Hatim, of <i>Discourse and the Translator</i> and <i>The Translator as Communicator</i>.",
     th: ["Hatim & Mason: Discourse and the Translator"] },
   { id: "gutt", name: "Ernst-August Gutt", from: "German",
     role: "Linguist", img: "theorists/ernst-august-gutt.jpg",
@@ -15977,9 +15985,13 @@ const THEORISTS = [
     role: "Novelist and semiotician", img: "theorists/umberto-eco.jpg",
     bio: "Semiotician and novelist who worked closely with his own translators, and described translation as negotiation.",
     th: ["Eco: Translation as Negotiation"] },
-  { id: "simon", name: "Sherry Simon & Luise von Flotow", from: "Canadian",
-    role: "Translation scholars", img: "theorists/simon-von-flotow.jpg",
-    bio: "Two of the founding voices of feminist translation studies, examining gender, visibility and the translator’s intervention.",
+  { id: "simon", name: "Sherry Simon", from: "Canadian",
+    role: "Translation scholar", img: "theorists/sherry-simon.jpg",
+    bio: "Author of <i>Gender in Translation</i>, which describes feminist translation as a cultural intervention that can create new meanings.",
+    th: ["Feminist Translation Theory"] },
+  { id: "flotow", name: "Luise von Flotow", from: "Canadian",
+    role: "Translation scholar", img: "theorists/luise-von-flotow.jpg",
+    bio: "Author of <i>Translation and Gender</i>, one of the founding overviews of feminist translation studies.",
     th: ["Feminist Translation Theory"] },
   { id: "spivak", name: "Gayatri Chakravorty Spivak", life: "b. 1942", from: "Indian",
     role: "Literary theorist and translator", img: "theorists/gayatri-spivak.jpg",
