@@ -24,7 +24,7 @@ beside each one.
 | `theorists/katharina-reiss.jpg` | Katharina Reiss | on the site |
 | `theorists/hans-vermeer.jpg` | Hans J. Vermeer | awaiting the file |
 | `theorists/justa-holz-manttari.jpg` | Justa Holz-Mänttäri | awaiting the file |
-| `theorists/christiane-nord.jpg` | Christiane Nord | awaiting the file |
+| `theorists/christiane-nord.jpg` | Christiane Nord | on the site |
 | `theorists/juliane-house.jpg` | Juliane House | awaiting the file |
 | `theorists/basil-hatim.jpg` | Basil Hatim | awaiting the file |
 | `theorists/ian-mason.jpg` | Ian Mason | awaiting the file |
