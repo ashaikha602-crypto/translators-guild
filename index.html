@@ -790,6 +790,33 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .th-cmp { padding: 1rem; margin: .6rem 0; display: grid; gap: .3rem; }
 .th-pq { margin: 1rem 0; display: grid; gap: .3rem; }
 .th-tally { font-weight: 600; color: var(--white); }
+.th-intro { margin: .4rem 0 .8rem; }
+.th-search { width: 100%; margin: 0 0 .6rem; }
+.th-filters { margin-bottom: .4rem; flex-wrap: nowrap !important; overflow-x: auto; scrollbar-width: none; padding-bottom: .2rem; }
+.th-filters::-webkit-scrollbar { display: none; }
+.th-filters .chip { flex: none; padding: .3rem .8rem; font-size: .72rem; }
+.th-search { padding: .55rem .9rem; }
+.th-iglist { display: grid; gap: .2rem; }
+.th-ig { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .3rem .8rem;
+  padding: .7rem .2rem; border-bottom: 1px solid rgba(214,191,234,.1); }
+.th-ig > button:not(.th-learn) { background: none; border: 0; padding: 0; box-shadow: none; text-transform: none; letter-spacing: normal; font-weight: 400; color: inherit; text-align: start; }
+.th-igtxt { display: grid; gap: .1rem; min-width: 0; }
+.th-igth { font-size: .84rem; color: var(--mag-ink); font-weight: 600; }
+.th-igq { grid-column: 2 / 4; margin: 0; font-size: .8rem; color: var(--lilac-dim); font-style: italic; }
+.th-face.ig { width: 64px; height: 64px; }
+.th-face.sm { width: 34px; height: 34px; margin-inline-end: -8px; border-width: 2px; }
+.th-face.big { width: 112px; height: 112px; }
+.th-learn { padding: .45rem 1.1rem; font-size: .82rem; }
+.th-more { margin: 1.4rem 0; color: var(--lilac); }
+.th-more summary { cursor: pointer; font-weight: 600; color: var(--white); margin-bottom: .6rem; }
+.th-tcard { display: grid; grid-template-columns: auto 1fr; gap: .4rem .8rem; align-items: center; width: 100%;
+  padding: .9rem; margin: .5rem 0; border-radius: 16px; text-align: start; background: rgba(214,191,234,.05);
+  border: 1px solid rgba(214,191,234,.15); color: inherit; text-transform: none; letter-spacing: normal; font-weight: 400; box-shadow: none; }
+.th-faces { display: flex; padding-inline-end: 8px; }
+.th-ttx { display: grid; gap: .15rem; min-width: 0; }
+.th-ttx b { color: var(--white); }
+.th-tmeta { grid-column: 1 / 3; display: flex; justify-content: space-between; align-items: center; }
+.th-try textarea { margin: .4rem 0; }
 .th-face { flex: none; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; display: block;
   background: rgba(214,191,234,.08); border: 1px dashed rgba(214,191,234,.35); }
 .th-face.has { border: 2px solid rgba(207,122,232,.55); }
@@ -14660,7 +14687,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1002-2000";
+const BUILD = "1002-2100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   if (n) n.textContent = " \u00b7 build " + BUILD;
@@ -16340,27 +16367,42 @@ const TH_MORE = {
     why: "When the efforts together need more capacity than is available, errors and omissions appear." } }
 };
 
-/* The guide is a learning system, not a catalogue. LEARN is the heart:
-   families as a map, each theory opening as a lesson with the same ten
-   parts in the same order — what it is, central idea, key concepts, how
-   it works, an Arabic–English example, the same text under other
-   theories, when it is useful, strengths and limitations, key texts, and
-   a question to test yourself. Compare, Practice, Theorists, Timeline
-   and Reading all lead back into a lesson. */
+/* People first. The guide opens on a list of theorists — face, name,
+   dates, the theory they are known for, the question it asks, and a
+   Learn button — like a follower list. Tap a person: their theory,
+   taught in one fixed order, then practice. The families survive only
+   as filters, and the timeline as a sort, so nobody has to learn the
+   taxonomy before learning a theory. */
+const TH_FILTERS = [
+  ["All", null], ["Foundations", ["hist"]], ["Equivalence", ["ling"]], ["Functionalism", ["func"]],
+  ["Discourse", ["disc"]], ["Descriptive", ["desc"]], ["Culture & power", ["cult", "gend", "post", "soc"]],
+  ["Philosophy", ["phil"]], ["Cognition & data", ["cog", "corp", "new"]], ["Interpreting & screen", ["app"]]
+];
+/* free-translation practice; theories without one fall back to their
+   own first Arabic example */
+const TH_TRY = {
+  "Nida: Formal and Dynamic Equivalence": { ar: "الله يعطيك العافية", ctx: "Said to a colleague who has just finished a long task.",
+    r: [["Formal", "May God give you health."], ["Dynamic", "Thanks for all your hard work."]],
+    n: "The formal version keeps the blessing but sounds odd in English; the dynamic one reproduces what the phrase does in the situation — appreciation." },
+  "Skopos Theory": { ar: "على بركة الله نبدأ.", ctx: "Opening line of a speech at an international conference.",
+    r: [["Religious publication", "With God’s blessing, we begin."], ["International conference", "Let us begin."], ["Cultural guide", "“Ala barakat Allah” — a phrase used to begin an activity with a blessing."]],
+    n: "Same sentence, three purposes, three translations. Skopos theory says the conference version fits this brief." },
+  "Venuti: Domestication and Foreignization": { ar: "فريج", ctx: "In a short story set in old Kuwait.",
+    r: [["Domesticating", "neighbourhood · old neighbourhood"], ["Foreignizing", "fareej (with or without a gloss)"]],
+    n: "“Neighbourhood” reads smoothly but loses the Kuwaiti texture; “fareej” keeps it visible and asks more of the reader. What is gained and lost?" }
+};
+
 function runTheories(startAt) {
-  const TABS = ["Start here", "Learn", "Compare", "Practice", "Theorists", "Timeline", "Reading"];
+  const TABS = ["Theorists", "Theories", "Practice", "Compare", "Reading"];
   let tab = typeof startAt === "number" ? startAt : 0;
-  let lesson = null;   /* index into THEORIES */
-  let who = null;      /* theorist id */
+  let who = null, lesson = null, filt = 0, q = "", sortBy = "family";
   setCount("A guide · the theories of translation");
 
   const typeChip = t => '<span class="th-type">' + t + '</span>';
+  const shortName = t => t.en.replace(/^[^:]+:\s*/, "");
   const flowRow = steps => {
     const f = el("div", "th-flow");
-    steps.forEach((s, i) => {
-      if (i) f.appendChild(el("span", "th-arr", "→"));
-      f.appendChild(el("span", "th-step", s));
-    });
+    steps.forEach((s, i) => { if (i) f.appendChild(el("span", "th-arr", "→")); f.appendChild(el("span", "th-step", s)); });
     return f;
   };
   const table = rows => {
@@ -16368,8 +16410,8 @@ function runTheories(startAt) {
     rows.forEach(r => t.appendChild(el("div", "th-tr", r.map(c => '<span>' + c + '</span>').join(""))));
     return t;
   };
-  const face = (p, big) => {
-    const f = el("span", "th-face" + (big ? " big" : ""));
+  const face = (p, size) => {
+    const f = el("span", "th-face" + (size ? " " + size : ""));
     const im = new Image();
     im.alt = p.credit ? p.credit + " of " + p.name : "Portrait of " + p.name;
     im.loading = "lazy";
@@ -16380,47 +16422,42 @@ function runTheories(startAt) {
     return f;
   };
   const peopleOf = t => THEORISTS.filter(p => p.th.indexOf(t.en) >= 0);
+  const theoriesOf = p => p.th.map(n => THEORIES.find(x => x.en === n)).filter(Boolean);
   const groupOf = t => TH_GROUPS.find(g => g.id === t.g);
   const more = t => TH_MORE[t.en] || {};
-  const go = (k, opts) => {
-    tab = k; lesson = (opts && opts.lesson != null) ? opts.lesson : null;
-    who = (opts && opts.who) || null; render(); scrollTop();
-  };
+  const inFilter = t => !TH_FILTERS[filt][1] || TH_FILTERS[filt][1].indexOf(t.g) >= 0;
+  const go = (k, o) => { tab = k; who = (o && o.who) || null; lesson = (o && o.lesson != null) ? o.lesson : null; render(); scrollTop(); };
+  const openWho = p => go(0, { who: p.id });
   const openLesson = t => go(1, { lesson: THEORIES.indexOf(t) });
   let secN = 0;
-  const sec = (n, title) => el("h3", "th-sec", '<span class="th-n">' + (n === "·" ? n : ++secN) + '</span>' + title);
+  const sec = title => el("h3", "th-sec", '<span class="th-n">' + (++secN) + '</span>' + title);
 
-  const exBlock = x => {
+  const exBlock = (x, lab) => {
     const d = el("div", "block demand th-ex");
-    d.appendChild(el("span", "b-lab", "Arabic → English"));
+    d.appendChild(el("span", "b-lab", lab || "Arabic → English"));
     if (x.ar) { const a = el("p", "th-ar", x.ar); a.dir = "rtl"; a.lang = "ar"; d.appendChild(a); }
-    x.r.forEach(([lab, txt]) => {
-      const p = el("p", "th-r", '<span class="th-rl">' + lab + '</span>' + txt);
+    x.r.forEach(([l, txt]) => {
+      const p = el("p", "th-r", '<span class="th-rl">' + l + '</span>' + txt);
       if (/[؀-ۿ]/.test(txt) && !/[a-z]/i.test(txt)) { p.dir = "rtl"; p.lang = "ar"; }
       d.appendChild(p);
     });
-    if (x.n) d.appendChild(el("p", "th-n", "<b>Why:</b> " + x.n));
+    if (x.n) d.appendChild(el("p", "th-n", "<b>Why the choice changes:</b> " + x.n));
     return d;
   };
 
-  /* one multiple-choice question with its explanation; used in a lesson
-     and in Practice */
   function quizBox(t, onDone) {
-    const q = more(t).quiz;
-    const box = el("div", "verdict th-quiz");
-    if (!q) return box;
-    box.appendChild(el("p", "vb th-q", q.q));
+    const qz = more(t).quiz, box = el("div", "verdict th-quiz");
+    if (!qz) return box;
+    box.appendChild(el("p", "vb th-q", qz.q));
     const opts = el("div", "options");
-    q.o.forEach((o, k) => {
+    qz.o.forEach((o, k) => {
       const b = el("button", "opt", '<span class="key">' + "ABC"[k] + '</span><span class="txt">' + o + '</span>');
       b.addEventListener("click", () => {
-        Array.from(opts.children).forEach((c, i) => {
-          c.disabled = true;
-          if (i === q.a) c.classList.add("right"); else if (i === k) c.classList.add("miss");
-        });
-        box.appendChild(el("span", "vh " + (k === q.a ? "win" : "lose"), k === q.a ? "✦ Correct" : "✧ Not quite"));
-        box.appendChild(el("p", "vb", q.why));
-        if (onDone) onDone(k === q.a);
+        Array.from(opts.children).forEach((c, i) => { c.disabled = true;
+          if (i === qz.a) c.classList.add("right"); else if (i === k) c.classList.add("miss"); });
+        box.appendChild(el("span", "vh " + (k === qz.a ? "win" : "lose"), k === qz.a ? "✦ Correct" : "✧ Not quite"));
+        box.appendChild(el("p", "vb", qz.why));
+        if (onDone) onDone(k === qz.a);
       });
       opts.appendChild(b);
     });
@@ -16428,96 +16465,89 @@ function runTheories(startAt) {
     return box;
   }
 
-  function renderLesson(t) {
-    const i = THEORIES.indexOf(t), g = groupOf(t), m = more(t);
+  /* translate it yourself, then reveal how the theory would handle it */
+  function tryBox(t) {
+    const x = TH_TRY[t.en] || (t.ex || []).find(e => e.ar && e.r.length);
+    if (!x) return null;
+    const box = el("div", "block demand th-try");
+    box.appendChild(el("span", "b-lab", "Try it"));
+    const a = el("p", "th-ar", x.ar); a.dir = "rtl"; a.lang = "ar"; box.appendChild(a);
+    if (x.ctx) box.appendChild(el("p", "th-n", "<b>Situation:</b> " + x.ctx));
+    const ta = document.createElement("textarea");
+    ta.className = "f-in f-area"; ta.rows = 2; ta.dir = "auto"; ta.placeholder = "Your translation…";
+    box.appendChild(ta);
+    const b = el("button", "ghost small", "Reveal possible approaches");
+    b.addEventListener("click", () => {
+      b.remove();
+      x.r.forEach(([l, txt]) => box.appendChild(el("p", "th-r", '<span class="th-rl">' + l + '</span>' + txt)));
+      if (x.n) box.appendChild(el("p", "th-n", "<b>Why:</b> " + x.n));
+      box.appendChild(el("p", "th-n", "Compare with yours: which approach did you take without naming it?"));
+    });
+    box.appendChild(b);
+    return box;
+  }
+
+  function lessonBody(t) {
+    const m = more(t);
     secN = 0;
-    const back = el("button", "link", "← All theories");
-    back.addEventListener("click", () => go(1));
-    stage.appendChild(back);
-
-    const head = el("div", "th-lhead");
-    head.appendChild(el("span", "th-when", g.n + " · " + g.en));
-    head.appendChild(el("h2", null, t.en));
-    head.appendChild(el("div", "th-meta",
-      typeChip(t.type) + '<span class="th-who">' + t.who + ' · ' + t.when + '</span>'));
-    stage.appendChild(head);
-    const ppl = peopleOf(t);
-    if (ppl.length) {
-      const row = el("div", "th-people");
-      ppl.forEach(p => {
-        const b = el("button", "th-person");
-        b.appendChild(face(p)); b.appendChild(el("span", null, p.name));
-        b.addEventListener("click", () => go(4, { who: p.id }));
-        row.appendChild(b);
-      });
-      stage.appendChild(row);
-    }
-
-    stage.appendChild(sec(1, "What is it?"));
+    stage.appendChild(sec("The idea in one sentence"));
+    stage.appendChild(el("p", "th-central", m.central || t.core));
+    stage.appendChild(el("p", "th-core", "<b>Core question:</b> " + t.core));
+    stage.appendChild(sec("Simple explanation"));
     stage.appendChild(el("p", "lede", t.idea));
-    stage.appendChild(el("p", "th-core", "<b>The question it asks:</b> " + t.core));
-
-    if (m.central) {
-      stage.appendChild(sec(2, "The central idea"));
-      stage.appendChild(el("p", "th-central", m.central));
-    }
-
     if (t.concepts) {
-      stage.appendChild(sec(3, "Key concepts"));
+      stage.appendChild(sec("Key concepts"));
       const c = el("div", "chips-row");
       t.concepts.forEach(k => c.appendChild(el("span", "chip-tag", k)));
       stage.appendChild(c);
     }
-
     if (t.flow || t.table || t.asks) {
-      stage.appendChild(sec(4, "How it works"));
+      stage.appendChild(sec("How it works"));
       if (t.flow) stage.appendChild(flowRow(t.flow));
       if (t.table) stage.appendChild(table(t.table));
       if (t.asks) stage.appendChild(el("ul", "how", t.asks.map(a => "<li><span>" + a + "</span></li>").join("")));
     }
-
     if (t.ex && t.ex.length) {
-      stage.appendChild(sec(5, "Example"));
+      stage.appendChild(sec("Arabic → English example"));
       t.ex.forEach(x => stage.appendChild(exBlock(x)));
     }
-
-    stage.appendChild(sec(6, "Same text, different theory"));
-    const cmp = el("div", "block demand");
-    cmp.appendChild(el("p", "th-n", "See one Arabic proverb translated through six theories side by side, including this family’s view."));
-    const cb = el("button", "ghost small", "Open Compare →");
-    cb.addEventListener("click", () => go(2));
-    cmp.appendChild(cb);
-    stage.appendChild(cmp);
-
-    if (t.use) {
-      stage.appendChild(sec(7, "When is it useful?"));
-      stage.appendChild(el("p", "lede", t.use));
-    }
-
     if (m.str || m.lim) {
-      stage.appendChild(sec(8, "Strengths and limitations"));
+      stage.appendChild(sec("Strengths and limitations"));
       const two = el("div", "th-two");
       if (m.str) two.appendChild(el("div", "th-col good", "<b>Useful because</b><ul>" + m.str.map(s => "<li>" + s + "</li>").join("") + "</ul>"));
       if (m.lim) two.appendChild(el("div", "th-col warn", "<b>Limitations</b><ul>" + m.lim.map(s => "<li>" + s + "</li>").join("") + "</ul>"));
       stage.appendChild(two);
     }
-
+    if (t.use) { stage.appendChild(sec("When is it useful?")); stage.appendChild(el("p", "lede", t.use)); }
     if (t.refs) {
-      stage.appendChild(sec(9, "Key texts"));
+      stage.appendChild(sec("Key texts"));
       stage.appendChild(el("ul", "th-refs", t.refs.map(r => "<li>" + r + "</li>").join("")));
     }
+    stage.appendChild(sec("Practice"));
+    const tb = tryBox(t); if (tb) stage.appendChild(tb);
+    if (m.quiz) stage.appendChild(quizBox(t));
+    const cmp = el("button", "ghost small", "Compare with other theories →");
+    cmp.addEventListener("click", () => go(3));
+    stage.appendChild(cmp);
+  }
 
-    if (m.quiz) {
-      stage.appendChild(sec(10, "Test yourself"));
-      stage.appendChild(quizBox(t));
-    }
-
-    const nav = el("div", "th-lnav");
-    const order = THEORIES.slice().sort((a, b) => TH_GROUPS.indexOf(groupOf(a)) - TH_GROUPS.indexOf(groupOf(b)) || a.y - b.y);
-    const k = order.indexOf(t);
-    if (k > 0) { const b = el("button", "ghost small", "← " + order[k - 1].en); b.addEventListener("click", () => openLesson(order[k - 1])); nav.appendChild(b); }
-    if (k < order.length - 1) { const b = el("button", "ghost small", order[k + 1].en + " →"); b.addEventListener("click", () => openLesson(order[k + 1])); nav.appendChild(b); }
-    stage.appendChild(nav);
+  function personRow(p) {
+    const ts = theoriesOf(p), t = ts[0];
+    const row = el("div", "th-ig");
+    const fb = el("button", "th-igface"); fb.appendChild(face(p, "ig"));
+    fb.addEventListener("click", () => openWho(p));
+    row.appendChild(fb);
+    const txt = el("button", "th-igtxt",
+      '<span class="th-pn">' + p.name + '</span>' +
+      '<span class="th-igth">' + ts.map(shortName).join(" · ") + '</span>' +
+      '<span class="th-pl">' + (p.life ? p.life : p.from) + '</span>');
+    txt.addEventListener("click", () => openWho(p));
+    row.appendChild(txt);
+    const b = el("button", "primary th-learn", "Learn");
+    b.addEventListener("click", () => openWho(p));
+    row.appendChild(b);
+    if (t) row.appendChild(el("p", "th-igq", t.core));
+    return row;
   }
 
   function render() {
@@ -16531,53 +16561,163 @@ function runTheories(startAt) {
     });
     stage.appendChild(chips);
 
-    if (tab === 0) {
-      stage.appendChild(el("h2", "th-h", "There is no single theory that explains every translation."));
-      stage.appendChild(el("p", "lede",
-        "Translation Studies offers different <b>theories, approaches, models and strategies</b> for understanding how " +
-        "translators make decisions. Some focus on equivalence, others on purpose, culture, discourse, ideology, cognition " +
-        "or social context. None of them is “the correct theory”."));
-      stage.appendChild(el("h3", "pub-h", "One text can produce different translations. Why?"));
-      const src = el("p", "th-ar big", TH_COMPARE.ar); src.dir = "rtl"; src.lang = "ar";
-      stage.appendChild(src);
-      stage.appendChild(table([
-        ["<b>Keep the image</b>", "Time is like a sword; if you do not cut it, it will cut you."],
-        ["<b>Use an English proverb</b>", "Time waits for no one."]]));
-      stage.appendChild(el("p", "note", "Both are defensible. They come from different assumptions about what translation is for — that is what a theory is."));
-      const start = el("button", "primary", "Start learning →");
-      start.addEventListener("click", () => go(1));
-      stage.appendChild(start);
-      stage.appendChild(el("h3", "pub-h", "Theory, approach, model, strategy, procedure"));
-      stage.appendChild(table([["<b>Category</b>", "<b>Example</b>", "<b>What it does</b>"]].concat(TH_KINDS.map(([a, b, c]) => ["<b>" + a + "</b>", b, c]))));
-      stage.appendChild(el("p", "note", "Every entry in this guide is labelled with what it actually is: Vinay and Darbelnet’s are <b>procedures</b>, Venuti’s are <b>strategies</b>, Skopos is a <b>theory</b>."));
-      stage.appendChild(el("h3", "pub-h", "How the field widened"));
-      stage.appendChild(flowRow(["Word", "Meaning", "Equivalence", "Text", "Function", "Culture", "Power", "Society", "Cognition", "Technology"]));
-      stage.appendChild(el("p", "note", "Not a strict line — a map of how the object of study kept growing."));
-    }
-
-    if (tab === 1 && lesson != null) renderLesson(THEORIES[lesson]);
-    if (tab === 1 && lesson == null) {
-      stage.appendChild(el("p", "note", "Each family asks one question. Open a theory to learn it: what it is, how it works, an Arabic–English example, its limits, and a question to test yourself."));
-      TH_GROUPS.forEach((g, gi) => {
-        const ts = THEORIES.filter(t => t.g === g.id).sort((a, b) => a.y - b.y);
-        if (!ts.length) return;
-        const card = el("section", "card th-fam");
-        const names = [];
-        ts.forEach(t => peopleOf(t).forEach(p => { if (names.indexOf(p.name) < 0) names.push(p.name); }));
-        card.appendChild(el("div", "th-fhead",
-          '<span class="th-num">' + String(gi + 1).padStart(2, "0") + '</span>' +
-          '<div><h3>' + g.en + '</h3><p class="th-gq">' + g.q + '</p>' +
-          (names.length ? '<p class="th-who">Key scholars: ' + names.join(" · ") + '</p>' : '') + '</div>'));
-        ts.forEach(t => {
-          const b = el("button", "th-row", '<span><b>' + t.en + '</b><span class="th-who">' + t.when + '</span></span>' + typeChip(t.type) + '<span class="th-go">Explore →</span>');
-          b.addEventListener("click", () => openLesson(t));
-          card.appendChild(b);
-        });
-        stage.appendChild(card);
+    /* ── THEORISTS: the front door ── */
+    if (tab === 0 && !who) {
+      stage.appendChild(el("p", "note th-intro", "Tap a person to learn their theory, see it in Arabic and English, then practise."));
+      const s = document.createElement("input");
+      s.type = "search"; s.className = "f-in th-search"; s.placeholder = "Search a name or a theory…"; s.value = q;
+      stage.appendChild(s);
+      const fr = el("div", "chips th-filters");
+      TH_FILTERS.forEach(([lab], k) => {
+        const b = el("button", "chip" + (k === filt ? " on" : ""), lab);
+        b.addEventListener("click", () => { filt = k; render(); });
+        fr.appendChild(b);
       });
+      stage.appendChild(fr);
+      const list = el("div", "th-iglist");
+      const firstYear = p => Math.min.apply(null, theoriesOf(p).map(t => t.y));
+      const draw = () => {
+        list.innerHTML = "";
+        const needle = q.trim().toLowerCase();
+        const ppl = THEORISTS.slice().sort((a, b) => firstYear(a) - firstYear(b)).filter(p => {
+          const ts = theoriesOf(p);
+          if (!ts.some(inFilter)) return false;
+          if (!needle) return true;
+          return (p.name + " " + ts.map(t => t.en + " " + (t.concepts || []).join(" ")).join(" ")).toLowerCase().indexOf(needle) >= 0;
+        });
+        ppl.forEach(p => list.appendChild(personRow(p)));
+        if (!ppl.length) list.appendChild(el("p", "note", "Nobody matches that."));
+      };
+      s.addEventListener("input", () => { q = s.value; draw(); });
+      stage.appendChild(list);
+      draw();
+      const d = document.createElement("details");
+      d.className = "th-more";
+      d.innerHTML = "<summary>Theory, approach, model, strategy, procedure — what is the difference?</summary>";
+      d.appendChild(table([["<b>Category</b>", "<b>Example</b>", "<b>What it does</b>"]].concat(TH_KINDS.map(([a, b, c]) => ["<b>" + a + "</b>", b, c]))));
+      d.appendChild(el("p", "note", "There is no single theory that explains every translation. Each one asks a different question, and every entry here is labelled with what it actually is."));
+      stage.appendChild(d);
     }
 
+    /* ── a theorist: who they are, then straight into the theory ── */
+    if (tab === 0 && who) {
+      const p = THEORISTS.find(x => x.id === who), ts = theoriesOf(p);
+      const back = el("button", "link", "← All theorists");
+      back.addEventListener("click", () => go(0));
+      stage.appendChild(back);
+      const head = el("div", "th-phead");
+      head.appendChild(face(p, "big"));
+      const txt = el("div", "th-ptxt");
+      txt.appendChild(el("h2", null, p.name));
+      txt.appendChild(el("p", "th-pl", (p.life ? p.life + " · " : "") + p.from + " · " + p.role));
+      if (p.credit) txt.appendChild(el("p", "th-credit", p.credit));
+      head.appendChild(txt);
+      stage.appendChild(head);
+      stage.appendChild(el("p", "lede", p.bio));
+      let cur = lesson != null ? THEORIES[lesson] : ts[0];
+      if (ts.length > 1) {
+        const pick = el("div", "chips");
+        ts.forEach(t => {
+          const b = el("button", "chip" + (t === cur ? " on" : ""), shortName(t));
+          b.addEventListener("click", () => { lesson = THEORIES.indexOf(t); render(); });
+          pick.appendChild(b);
+        });
+        stage.appendChild(pick);
+      }
+      if (cur) {
+        const th = el("div", "th-lhead");
+        th.appendChild(el("span", "th-when", groupOf(cur).en + " · " + cur.when));
+        th.appendChild(el("h2", null, shortName(cur)));
+        th.appendChild(el("div", "th-meta", typeChip(cur.type)));
+        stage.appendChild(th);
+        const others = peopleOf(cur).filter(x => x.id !== p.id);
+        if (others.length) {
+          const row = el("div", "th-people");
+          row.appendChild(el("span", "th-pl", "Also: "));
+          others.forEach(o => { const b = el("button", "th-person"); b.appendChild(face(o)); b.appendChild(el("span", null, o.name));
+            b.addEventListener("click", () => openWho(o)); row.appendChild(b); });
+          stage.appendChild(row);
+        }
+        lessonBody(cur);
+      }
+    }
+
+    /* ── THEORIES: the same lessons, listed by idea ── */
+    if (tab === 1 && lesson != null) {
+      const t = THEORIES[lesson];
+      const back = el("button", "link", "← All theories");
+      back.addEventListener("click", () => go(1));
+      stage.appendChild(back);
+      const th = el("div", "th-lhead");
+      th.appendChild(el("span", "th-when", groupOf(t).en + " · " + t.when));
+      th.appendChild(el("h2", null, shortName(t)));
+      th.appendChild(el("div", "th-meta", typeChip(t.type)));
+      stage.appendChild(th);
+      const row = el("div", "th-people");
+      peopleOf(t).forEach(o => { const b = el("button", "th-person"); b.appendChild(face(o)); b.appendChild(el("span", null, o.name));
+        b.addEventListener("click", () => openWho(o)); row.appendChild(b); });
+      stage.appendChild(row);
+      lessonBody(t);
+    }
+    if (tab === 1 && lesson == null) {
+      const sw = el("div", "chips");
+      [["family", "By family"], ["year", "By year"]].forEach(([k, l]) => {
+        const b = el("button", "chip" + (sortBy === k ? " on" : ""), l);
+        b.addEventListener("click", () => { sortBy = k; render(); });
+        sw.appendChild(b);
+      });
+      stage.appendChild(sw);
+      const card = t => {
+        const b = el("button", "th-tcard");
+        const faces = el("span", "th-faces");
+        peopleOf(t).slice(0, 3).forEach(p => faces.appendChild(face(p, "sm")));
+        b.appendChild(faces);
+        b.appendChild(el("span", "th-ttx",
+          '<b>' + shortName(t) + '</b><span class="th-pl">' + t.who + ' · ' + t.when + '</span>' +
+          '<span class="th-igq">' + t.core + '</span>'));
+        b.appendChild(el("span", "th-tmeta", typeChip(t.type) + '<span class="th-go">Learn →</span>'));
+        b.addEventListener("click", () => openLesson(t));
+        return b;
+      };
+      if (sortBy === "year") {
+        THEORIES.slice().sort((a, b) => a.y - b.y).forEach(t => stage.appendChild(card(t)));
+      } else {
+        TH_GROUPS.forEach(g => {
+          const ts = THEORIES.filter(t => t.g === g.id).sort((a, b) => a.y - b.y);
+          if (!ts.length) return;
+          stage.appendChild(el("h3", "pub-h", g.en));
+          stage.appendChild(el("p", "th-gq", g.q));
+          ts.forEach(t => stage.appendChild(card(t)));
+        });
+      }
+    }
+
+    /* ── PRACTICE ── */
     if (tab === 2) {
+      stage.appendChild(el("p", "note", "Five questions from across the library. Each answer links to the lesson."));
+      const pool = shuffled(THEORIES.filter(t => more(t).quiz)).slice(0, 5);
+      let right = 0, done = 0;
+      const tally = el("p", "th-tally", "");
+      pool.forEach((t, k) => {
+        const wrap = el("div", "th-pq");
+        wrap.appendChild(el("span", "th-when", "Question " + (k + 1)));
+        wrap.appendChild(quizBox(t, ok => {
+          done++; if (ok) right++;
+          const b = el("button", "link", "Learn: " + shortName(t) + " →");
+          b.addEventListener("click", () => openLesson(t));
+          wrap.appendChild(b);
+          if (done === pool.length) tally.textContent = right + " of " + pool.length + " correct.";
+        }));
+        stage.appendChild(wrap);
+      });
+      stage.appendChild(tally);
+      const again = el("button", "ghost small", "New questions");
+      again.addEventListener("click", () => go(2));
+      stage.appendChild(again);
+    }
+
+    /* ── COMPARE ── */
+    if (tab === 3) {
       stage.appendChild(el("p", "note", "One Arabic proverb, many theories. Each produces a different translation — and each has a reason."));
       const src = el("p", "th-ar big", TH_COMPARE.ar); src.dir = "rtl"; src.lang = "ar";
       stage.appendChild(src);
@@ -16592,97 +16732,8 @@ function runTheories(startAt) {
       });
     }
 
-    if (tab === 3) {
-      stage.appendChild(el("p", "note", "Apply the theories. Five questions drawn from the whole library; each answer links to the lesson."));
-      const pool = shuffled(THEORIES.filter(t => more(t).quiz)).slice(0, 5);
-      let right = 0, done = 0;
-      const tally = el("p", "th-tally", "");
-      pool.forEach((t, k) => {
-        const wrap = el("div", "th-pq");
-        wrap.appendChild(el("span", "th-when", "Question " + (k + 1)));
-        wrap.appendChild(quizBox(t, ok => {
-          done++; if (ok) right++;
-          const b = el("button", "link", "Study: " + t.en + " →");
-          b.addEventListener("click", () => openLesson(t));
-          wrap.appendChild(b);
-          if (done === pool.length) tally.textContent = right + " of " + pool.length + " correct.";
-        }));
-        stage.appendChild(wrap);
-      });
-      stage.appendChild(tally);
-      const again = el("button", "ghost small", "New questions");
-      again.addEventListener("click", () => go(3));
-      stage.appendChild(again);
-    }
-
-    if (tab === 4 && !who) {
-      stage.appendChild(el("p", "note", "The people behind the theories, in the order their key work appeared. Tap a profile."));
-      const grid = el("div", "th-grid");
-      const firstYear = p => Math.min.apply(null, p.th.map(n => (THEORIES.find(x => x.en === n) || { y: 9999 }).y));
-      THEORISTS.slice().sort((a, b) => firstYear(a) - firstYear(b)).forEach(p => {
-        const b = el("button", "th-prof");
-        b.appendChild(face(p));
-        b.appendChild(el("span", "th-pn", p.name));
-        b.appendChild(el("span", "th-pl", (p.life ? p.life + " · " : "") + p.from));
-        b.appendChild(el("span", "th-pr", p.role));
-        b.addEventListener("click", () => go(4, { who: p.id }));
-        grid.appendChild(b);
-      });
-      stage.appendChild(grid);
-    }
-    if (tab === 4 && who) {
-      const p = THEORISTS.find(x => x.id === who);
-      const back = el("button", "link", "← All theorists");
-      back.addEventListener("click", () => go(4));
-      stage.appendChild(back);
-      const head = el("div", "th-phead");
-      head.appendChild(face(p, true));
-      const txt = el("div", "th-ptxt");
-      txt.appendChild(el("h2", null, p.name));
-      txt.appendChild(el("p", "th-pl", (p.life ? p.life + " · " : "") + p.from));
-      txt.appendChild(el("span", "th-type", p.role));
-      if (p.credit) txt.appendChild(el("p", "th-credit", p.credit));
-      head.appendChild(txt);
-      stage.appendChild(head);
-      stage.appendChild(sec("·", "Who were they?"));
-      stage.appendChild(el("p", "lede", p.bio));
-      const ts = p.th.map(n => THEORIES.find(x => x.en === n)).filter(Boolean);
-      const concepts = [];
-      ts.forEach(t => (t.concepts || []).forEach(c => { if (concepts.indexOf(c) < 0) concepts.push(c); }));
-      stage.appendChild(sec("·", "Key question"));
-      ts.forEach(t => stage.appendChild(el("p", "th-central", t.core)));
-      if (concepts.length) {
-        stage.appendChild(sec("·", "Associated concepts"));
-        const c = el("div", "chips-row");
-        concepts.forEach(k => c.appendChild(el("span", "chip-tag", k)));
-        stage.appendChild(c);
-      }
-      stage.appendChild(sec("·", "Key text"));
-      stage.appendChild(el("ul", "th-refs", ts.map(t => "<li>" + (t.refs || [""])[0] + "</li>").join("")));
-      stage.appendChild(sec("·", "What changed because of their work"));
-      ts.forEach(t => { const c = more(t).central; if (c) stage.appendChild(el("p", "lede", c)); });
-      ts.forEach(t => {
-        const b = el("button", "primary wide", "Explore " + t.en + " →");
-        b.addEventListener("click", () => openLesson(t));
-        stage.appendChild(b);
-      });
-    }
-
-    if (tab === 5) {
-      stage.appendChild(el("p", "note", "Every entry in the order its key text appeared. Tap one to open its lesson."));
-      const list = el("div", "th-time");
-      THEORIES.slice().sort((a, b) => a.y - b.y).forEach(t => {
-        const g = groupOf(t);
-        const b = el("button", "th-trow",
-          '<span class="th-ty">' + (t.y < 0 ? Math.abs(t.y) + " BCE" : Math.floor(t.y)) + '</span>' +
-          '<span class="th-tt"><b>' + t.en + '</b><span>' + t.who + ' · ' + g.en + '</span></span>');
-        b.addEventListener("click", () => openLesson(t));
-        list.appendChild(b);
-      });
-      stage.appendChild(list);
-    }
-
-    if (tab === 6) {
+    /* ── READING ── */
+    if (tab === 4) {
       stage.appendChild(el("p", "note", "Foundational reading, by year of first publication."));
       stage.appendChild(table([["<b>Year</b>", "<b>Work</b>", "<b>Contribution</b>"]].concat(
         TH_SHELF.map(([y, a, b, c]) => [String(y), a + ", <i>" + b + "</i>", c]))));
@@ -16692,10 +16743,8 @@ function runTheories(startAt) {
     }
 
     stage.appendChild(footNav({
-      back: tab > 0 ? (() => go(tab - 1)) : null,
-      backLabel: tab > 0 ? TABS[tab - 1] : "",
-      next: tab < TABS.length - 1 ? (() => go(tab + 1)) : null,
-      nextLabel: tab < TABS.length - 1 ? TABS[tab + 1] : "",
+      back: tab > 0 ? (() => go(tab - 1)) : null, backLabel: tab > 0 ? TABS[tab - 1] : "",
+      next: tab < TABS.length - 1 ? (() => go(tab + 1)) : null, nextLabel: tab < TABS.length - 1 ? TABS[tab + 1] : "",
       note: TABS[tab]
     }));
   }
