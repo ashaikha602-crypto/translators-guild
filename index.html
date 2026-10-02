@@ -1256,6 +1256,17 @@ a.ks-s-en:hover { color: var(--white); }
   padding: .22rem .55rem; border-radius: 999px; border: 1px solid var(--magenta); color: var(--mag-ink); }
 .ptag.dim { border-color: rgba(214,191,234,.28); color: var(--ink-soft); font-weight: 500; letter-spacing: .06em; }
 .post-title { font-family: var(--f-serif); font-size: 1.05rem; margin: .15rem 0 0; color: var(--white); }
+.mention { color: var(--mag-ink); font-weight: 600; cursor: pointer; }
+.mention:hover, .mention:focus-visible { text-decoration: underline; outline: none; }
+.mention-pop { position: absolute; z-index: 60; min-width: 220px; max-width: 320px; max-height: 260px;
+  overflow-y: auto; padding: .3rem; border-radius: 14px; background: var(--void-2); color: var(--white);
+  border: 1px solid rgba(214,191,234,.25); box-shadow: 0 12px 32px rgba(0,0,0,.35); }
+.mention-pop button { display: flex; align-items: center; gap: .55rem; width: 100%; padding: .45rem .55rem;
+  border: 0; border-radius: 10px; background: transparent; color: inherit; text-align: start; cursor: pointer; }
+.mention-pop button:hover, .mention-pop button.on { background: rgba(167,38,208,.18); transform: none; }
+.mention-pop .mp-txt { display: grid; min-width: 0; }
+.mention-pop .mp-name { font-size: .88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mention-pop .mp-user { font-size: .76rem; color: var(--lilac-dim); }
 .post-body { font-size: .92rem; line-height: 1.6; margin: 0; color: var(--ink-soft); white-space: pre-wrap; }
 .src-block { border-inline-start: 2px solid rgba(214,191,234,.3); padding-inline-start: .8rem; }
 .src-lab { display: block; font-size: .62rem; font-weight: 700; letter-spacing: .14em;
@@ -10088,6 +10099,89 @@ function esc(t) {
   return String(t == null ? "" : t).replace(/[&<>"]/g,
     c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 }
+/* ─── Tagging. A member is tagged by writing @username. Text is escaped
+   first and only then are the handles turned into links, so nothing a
+   member types can become markup. Usernames are a-z, 0-9 and _, 3–24
+   long, the same rule the username field enforces. ─── */
+const MENTION_RE = /(^|[^a-z0-9_@])@([a-z0-9_]{3,24})(?![a-z0-9_])/gi;
+function linkMentions(text) {
+  return esc(text).replace(MENTION_RE, (m, pre, u) =>
+    pre + '<a class="mention" href="#u=' + encodeURIComponent(u.toLowerCase()) +
+    '" data-u="' + u.toLowerCase() + '">@' + u + '</a>');
+}
+/* One listener for every tag on every screen. A tag usually sits inside a
+   card that opens the post, so the click stops here. */
+document.addEventListener("click", async e => {
+  const a = e.target.closest && e.target.closest("a.mention");
+  if (!a) return;
+  e.preventDefault(); e.stopPropagation();
+  try {
+    const rows = await sbGet("profiles_public?select=id,username,display_name&username=eq." +
+                             encodeURIComponent(a.dataset.u));
+    if (rows[0]) openPublic(rows[0]);
+    else { a.classList.add("dimmed"); a.title = "No member has this username."; }
+  } catch (err) {}
+}, true);
+
+/* Typing @ in a box offers matching members; picking one writes the
+   handle in. Arrow keys and Enter work too. The list is the same member
+   directory the Members screen searches, so it shows only who that
+   screen would show. */
+function attachMentions(box) {
+  let pop = null, items = [], sel = 0, token = null, seq = 0;
+  const close = () => { if (pop) pop.remove(); pop = null; items = []; token = null; };
+  const place = () => {
+    const r = box.getBoundingClientRect();
+    pop.style.left = (r.left + window.scrollX) + "px";
+    pop.style.top = (r.bottom + window.scrollY + 6) + "px";
+  };
+  const pick = m => {
+    if (!token) return;
+    const v = box.value, ins = "@" + m.username + " ";
+    box.value = v.slice(0, token.start) + ins + v.slice(token.end);
+    const at = token.start + ins.length;
+    box.setSelectionRange(at, at); box.focus();
+    close();
+  };
+  const draw = () => {
+    pop.innerHTML = "";
+    items.forEach((m, i) => {
+      const b = document.createElement("button");
+      b.type = "button"; if (i === sel) b.className = "on";
+      const av = el("span", "avatar sm"); paintFace(av, m.avatar_path, m.display_name);
+      b.appendChild(av);
+      b.appendChild(el("span", "mp-txt",
+        '<span class="mp-name">' + esc(withTitle(m.title, m.display_name)) + '</span>' +
+        '<span class="mp-user">@' + esc(m.username) + '</span>'));
+      b.addEventListener("mousedown", ev => { ev.preventDefault(); pick(m); });
+      pop.appendChild(b);
+    });
+  };
+  box.addEventListener("input", async () => {
+    const upto = box.value.slice(0, box.selectionStart);
+    const m = /(^|[^a-z0-9_@])@([a-z0-9_]{0,24})$/i.exec(upto);
+    if (!m) { close(); return; }
+    const q = m[2];
+    token = { start: upto.length - q.length - 1, end: box.selectionStart };
+    const mine = ++seq;
+    let rows = [];
+    try { rows = await findMembers(q); } catch (e) { return; }
+    if (mine !== seq || !token) return;
+    items = rows.filter(r => r.username).slice(0, 8);
+    if (!items.length) { close(); token = { start: upto.length - q.length - 1, end: box.selectionStart }; return; }
+    if (!pop) { pop = el("div", "mention-pop"); document.body.appendChild(pop); }
+    sel = 0; place(); draw();
+  });
+  box.addEventListener("keydown", e => {
+    if (!pop || !items.length) return;
+    if (e.key === "ArrowDown") { sel = (sel + 1) % items.length; draw(); e.preventDefault(); }
+    else if (e.key === "ArrowUp") { sel = (sel - 1 + items.length) % items.length; draw(); e.preventDefault(); }
+    else if (e.key === "Enter" || e.key === "Tab") { pick(items[sel]); e.preventDefault(); }
+    else if (e.key === "Escape") { close(); }
+  });
+  box.addEventListener("blur", () => setTimeout(close, 150));
+}
+
 function rankName(slug) {
   const r = RANKS.find(x => (x.slug || x.en.toLowerCase()) === slug);
   return r ? r.en : "";
@@ -10485,10 +10579,10 @@ function postCard(r, opts) {
 
   /* A post written in Arabic should read as Arabic: the browser decides
      the direction from the first strong character in it. */
-  if (r.title)   { const t = el("h3", "post-title", esc(r.title)); t.dir = "auto"; card.appendChild(t); }
-  if (r.content) { const c = el("p", "post-body", esc(r.content)); c.dir = "auto"; card.appendChild(c); }
+  if (r.title)   { const t = el("h3", "post-title", linkMentions(r.title)); t.dir = "auto"; card.appendChild(t); }
+  if (r.content) { const c = el("p", "post-body", linkMentions(r.content)); c.dir = "auto"; card.appendChild(c); }
   if (r.repost_of && r.orig_text) {
-    const o = el("p", "post-body", esc(r.orig_text)); o.dir = "auto"; card.appendChild(o);
+    const o = el("p", "post-body", linkMentions(r.orig_text)); o.dir = "auto"; card.appendChild(o);
   }
 
   /* She asked for the picture to be on the card, not behind a tap. The
@@ -10513,7 +10607,7 @@ function postCard(r, opts) {
   if (r.translated_text) card.appendChild(block(r.post_type === "help" ? "My attempt" : "My translation",
                                                 r.translated_text, dirOf(r.target_language)));
   if (r.translation_note) {
-    const nt = el("p", "post-note", esc(r.translation_note));
+    const nt = el("p", "post-note", linkMentions(r.translation_note));
     nt.dir = "auto"; card.appendChild(nt);
   }
 
@@ -10787,8 +10881,12 @@ function postForm(kind) {
                 : kind.id==="reel" ? "What is in the video"
                 : kind.id==="other" ? "What you want to say"
                 : "Context",
-                  kind.id==="help" ? "What exactly are you unsure about?" : null, area(6000, 4));
+                  kind.id==="help" ? "What exactly are you unsure about? Type @ to tag a member."
+                                   : "Type @ to tag a member.", area(6000, 4));
+  attachMentions(body);
+  if (title) attachMentions(title);
   const note = wants.note ? mk("Translation note", "Optional.", area(1000, 2)) : null;
+  if (note) attachMentions(note);
   const diff = wants.difficulty ? mk("Difficulty", null, select(["Beginner","Intermediate","Advanced"],"Intermediate")) : null;
   let dead = null;
   if (wants.deadline) { const d=document.createElement("input"); d.type="date"; d.className="f-in";
@@ -11023,7 +11121,7 @@ async function runPost(id) {
       '<div class="c-head"><span class="mm-name">' + esc(withTitle(w.title, w.display_name)) + '</span>' +
       '<span class="mm-meta">' + (w.username ? "@" + esc(w.username) + " · " : "") + when(c.created_at) + '</span></div>' +
       (c.quoted ? '<blockquote class="c-quote" dir="auto">' + esc(c.quoted) + '</blockquote>' : '') +
-      '<p class="c-body" dir="auto">' + esc(c.content) + '</p>';
+      '<p class="c-body" dir="auto">' + linkMentions(c.content) + '</p>';
     const re = el("button","c-reply","Reply");
     re.addEventListener("click", () => writeComment(id, c.id, () => runPost(id)));
     d.appendChild(re);
@@ -11052,6 +11150,7 @@ function writeComment(postId, parentId, done, quoteOpts) {
   const t = document.createElement("textarea");
   t.className="f-in f-area"; t.rows=3; t.maxLength=3000; t.dir="auto";
   t.placeholder = parentId ? "Your reply" : "What would you change, and why?";
+  attachMentions(t);
   const b = el("button","ghost small", parentId ? "Post reply" : "Post comment");
   const m = el("span","f-hint","");
   b.addEventListener("click", async () => {
