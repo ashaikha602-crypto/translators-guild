@@ -1258,11 +1258,14 @@ a.ks-s-en:hover { color: var(--white); }
 .post-title { font-family: var(--f-serif); font-size: 1.05rem; margin: .15rem 0 0; color: var(--white); }
 .mention { color: var(--mag-ink); font-weight: 600; cursor: pointer; }
 .mention:hover, .mention:focus-visible { text-decoration: underline; outline: none; }
-.mention-pop { position: absolute; z-index: 60; min-width: 220px; max-width: 320px; max-height: 260px;
-  overflow-y: auto; padding: .3rem; border-radius: 14px; background: var(--void-2); color: var(--white);
-  border: 1px solid rgba(214,191,234,.25); box-shadow: 0 12px 32px rgba(0,0,0,.35); }
+.mention-pop { margin-top: .35rem; max-height: 280px; overflow-y: auto; padding: .3rem;
+  border-radius: 14px; background: var(--void-2); color: var(--white);
+  border: 1px solid rgba(214,191,234,.25); box-shadow: 0 12px 32px rgba(0,0,0,.25); }
+.mention-pop .mp-say { margin: .2rem .5rem .3rem; font-size: .76rem; color: var(--lilac-dim); }
+.mention-pop button.none { opacity: .5; cursor: default; }
 .mention-pop button { display: flex; align-items: center; gap: .55rem; width: 100%; padding: .45rem .55rem;
-  border: 0; border-radius: 10px; background: transparent; color: inherit; text-align: start; cursor: pointer; }
+  border: 0; border-radius: 10px; background: transparent; color: inherit; text-align: start; cursor: pointer;
+  text-transform: none; letter-spacing: normal; font-weight: 400; box-shadow: none; }
 .mention-pop button:hover, .mention-pop button.on { background: rgba(167,38,208,.18); transform: none; }
 .mention-pop .mp-txt { display: grid; min-width: 0; }
 .mention-pop .mp-name { font-size: .88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -10119,67 +10122,84 @@ document.addEventListener("click", async e => {
     const rows = await sbGet("profiles_public?select=id,username,display_name&username=eq." +
                              encodeURIComponent(a.dataset.u));
     if (rows[0]) openPublic(rows[0]);
-    else { a.classList.add("dimmed"); a.title = "No member has this username."; }
-  } catch (err) {}
+    else flash("No member has the username @" + a.dataset.u + ".");
+  } catch (err) { flash("That profile could not be opened.", err); }
 }, true);
 
-/* Typing @ in a box offers matching members; picking one writes the
-   handle in. Arrow keys and Enter work too. The list is the same member
-   directory the Members screen searches, so it shows only who that
-   screen would show. */
+/* Typing @ in a box opens a list of members right under the box, in the
+   page itself rather than floating over it, so it cannot end up off
+   screen on a phone. Typing more letters narrows it by name or username;
+   tapping a member writes their @username in. The list always says what
+   is happening — searching, nobody found, or that it could not load —
+   so it never looks like nothing happened. */
 function attachMentions(box) {
-  let pop = null, items = [], sel = 0, token = null, seq = 0;
-  const close = () => { if (pop) pop.remove(); pop = null; items = []; token = null; };
-  const place = () => {
-    const r = box.getBoundingClientRect();
-    pop.style.left = (r.left + window.scrollX) + "px";
-    pop.style.top = (r.bottom + window.scrollY + 6) + "px";
+  let list = null, items = [], sel = 0, token = null, seq = 0;
+  const close = () => { if (list) list.remove(); list = null; items = []; token = null; };
+  const open = () => {
+    if (!list) { list = el("div", "mention-pop"); box.insertAdjacentElement("afterend", list); }
+    return list;
   };
+  const say = words => { open().innerHTML = ""; list.appendChild(el("p", "mp-say", words)); };
   const pick = m => {
-    if (!token) return;
+    if (!token || !m.username) return;
     const v = box.value, ins = "@" + m.username + " ";
     box.value = v.slice(0, token.start) + ins + v.slice(token.end);
     const at = token.start + ins.length;
-    box.setSelectionRange(at, at); box.focus();
-    close();
+    close(); box.focus();
+    try { box.setSelectionRange(at, at); } catch (e) {}
   };
   const draw = () => {
-    pop.innerHTML = "";
+    open().innerHTML = "";
+    list.appendChild(el("p", "mp-say", "Tap a member to tag them"));
     items.forEach((m, i) => {
       const b = document.createElement("button");
-      b.type = "button"; if (i === sel) b.className = "on";
+      b.type = "button";
+      b.className = (i === sel ? "on" : "") + (m.username ? "" : " none");
       const av = el("span", "avatar sm"); paintFace(av, m.avatar_path, m.display_name);
       b.appendChild(av);
       b.appendChild(el("span", "mp-txt",
         '<span class="mp-name">' + esc(withTitle(m.title, m.display_name)) + '</span>' +
-        '<span class="mp-user">@' + esc(m.username) + '</span>'));
-      b.addEventListener("mousedown", ev => { ev.preventDefault(); pick(m); });
-      pop.appendChild(b);
+        '<span class="mp-user">' + (m.username ? "@" + esc(m.username) : "No username yet, so cannot be tagged") + '</span>'));
+      /* pointerdown keeps the keyboard up; click does the work, so a
+         scroll through the list is not taken for a choice */
+      b.addEventListener("pointerdown", ev => ev.preventDefault());
+      b.addEventListener("click", ev => { ev.preventDefault(); pick(m); });
+      list.appendChild(b);
     });
   };
-  box.addEventListener("input", async () => {
-    const upto = box.value.slice(0, box.selectionStart);
-    const m = /(^|[^a-z0-9_@])@([a-z0-9_]{0,24})$/i.exec(upto);
+  const look = async () => {
+    const upto = box.value.slice(0, box.selectionStart == null ? box.value.length : box.selectionStart);
+    const m = /(^|[^a-z0-9_@＠])[@＠]([^\s@＠]{0,30})$/i.exec(upto);
     if (!m) { close(); return; }
     const q = m[2];
-    token = { start: upto.length - q.length - 1, end: box.selectionStart };
+    token = { start: upto.length - q.length - 1, end: upto.length };
     const mine = ++seq;
-    let rows = [];
-    try { rows = await findMembers(q); } catch (e) { return; }
+    if (!list || !items.length) say("Searching members…");
+    let rows;
+    try { rows = await findMembers(q); }
+    catch (e) { if (mine === seq) say("Members could not be loaded. Check you are logged in."); return; }
     if (mine !== seq || !token) return;
-    items = rows.filter(r => r.username).slice(0, 8);
-    if (!items.length) { close(); token = { start: upto.length - q.length - 1, end: box.selectionStart }; return; }
-    if (!pop) { pop = el("div", "mention-pop"); document.body.appendChild(pop); }
-    sel = 0; place(); draw();
-  });
+    /* tagged ones first: a member without a username is shown, greyed,
+       so it is clear why they cannot be picked */
+    items = rows.slice(0, 12).sort((x, y) => (y.username ? 1 : 0) - (x.username ? 1 : 0));
+    if (!items.length) { say(q ? "No member matches “" + q + "”." : "No members found."); return; }
+    sel = Math.max(0, items.findIndex(x => x.username));
+    draw();
+  };
+  box.addEventListener("input", look);
   box.addEventListener("keydown", e => {
-    if (!pop || !items.length) return;
-    if (e.key === "ArrowDown") { sel = (sel + 1) % items.length; draw(); e.preventDefault(); }
-    else if (e.key === "ArrowUp") { sel = (sel - 1 + items.length) % items.length; draw(); e.preventDefault(); }
+    if (!list || !items.length) return;
+    const ok = items.filter(x => x.username);
+    if (!ok.length) return;
+    const step = d => { do { sel = (sel + d + items.length) % items.length; } while (!items[sel].username); draw(); };
+    if (e.key === "ArrowDown") { step(1); e.preventDefault(); }
+    else if (e.key === "ArrowUp") { step(-1); e.preventDefault(); }
     else if (e.key === "Enter" || e.key === "Tab") { pick(items[sel]); e.preventDefault(); }
     else if (e.key === "Escape") { close(); }
   });
-  box.addEventListener("blur", () => setTimeout(close, 150));
+  box.addEventListener("blur", () => setTimeout(() => {
+    if (document.activeElement !== box) close();
+  }, 250));
 }
 
 function rankName(slug) {
