@@ -2063,7 +2063,17 @@ a.ks-s-en:hover { color: var(--white); }
 .c-src { font-size: .78rem; font-weight: 600; color: var(--mag-ink); text-decoration: none;
   overflow-wrap: anywhere; }
 .c-src:hover { text-decoration: underline; }
-.c-vid { border-radius: var(--r-lg); border: var(--hair); overflow: hidden; background: rgba(255,255,255,.035); }
+.c-watch { display: grid; gap: .55rem; min-width: 0; }
+.c-watch-head { display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; }
+.c-watch-n { font-size: .72rem; font-weight: 600; color: var(--lilac-dim); white-space: nowrap; }
+.c-vids { display: flex; gap: .7rem; overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none; padding-bottom: .2rem; overscroll-behavior-x: contain; }
+.c-vids::-webkit-scrollbar { display: none; }
+.c-vids > .c-vid { flex: 0 0 84%; scroll-snap-align: start; display: flex; flex-direction: column; }
+.c-vids.is-one > .c-vid { flex-basis: 100%; }
+.c-vids .c-vid-foot { flex: 1; align-content: start; }
+@media (min-width: 720px) { .c-vids > .c-vid { flex-basis: 62%; } }
+.c-vid { border-radius: var(--r-lg); border: var(--hair); overflow: hidden; background: var(--void-2); }
 .c-vid-play { all: unset; box-sizing: border-box; cursor: pointer; width: 100%; aspect-ratio: 16/9;
   display: flex; flex-direction: column; justify-content: flex-end; gap: .7rem; padding: 1rem 1.1rem;
   background: radial-gradient(120% 90% at 20% 10%, #a726d0 0%, #4a0f9e 55%, #1a0a2f 100%); color: #fff; position: relative; }
@@ -2079,7 +2089,8 @@ a.ks-s-en:hover { color: var(--white); }
 .c-vid-by { font-size: .78rem; color: rgba(255,255,255,.8); }
 .c-vid-frame { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; }
 .c-vid-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.c-vid-foot { padding: .7rem 1.1rem .85rem; display: grid; gap: .3rem; }
+.c-vid-foot { padding: .7rem 1.1rem .85rem; display: grid; gap: .3rem; position: relative; background: var(--void-2); }
+:root[data-theme="light"] .c-vid-foot { background: #fff; }
 .c-vid-foot p { margin: 0; font-size: .9rem; line-height: 1.5; color: var(--ink); }
 :root[data-theme="light"] .c-topic,
 :root[data-theme="light"] .c-case,
@@ -10242,8 +10253,8 @@ const KU_COURSE_MORE = {
         src: [["Ich bin ein Berliner — Wikipedia", "https://en.wikipedia.org/wiki/Ich_bin_ein_Berliner"]] }
     ],
     videos: [
-      { id: "oltwkG_d-Ko", t: "Translation Studies — Equivalence (Eugene Nida)", why: "Formal and dynamic equivalence, the vocabulary this course is built on." },
-      { id: "RKK7wGAYP6k", t: "How language shapes the way we think", by: "Lera Boroditsky · TED", why: "Why two languages do not divide the world the same way &mdash; the reason word-for-word fails." }
+      { id: "erRbzFuOiQs", t: "Mona Baker on <i>In Other Words</i>", by: "Mona Baker · interview", why: "The author of the coursebook this course follows, on equivalence and why she organised it from the word upward." },
+      { id: "GyTYbHMdvE0", t: "Is That a Fish in Your Ear?", by: "David Bellos · Penguin Books", why: "A Princeton translator and scholar on what translation is, and what it is not, in a few minutes." }
     ]
   },
 
@@ -10263,8 +10274,8 @@ const KU_COURSE_MORE = {
         src: [["Mars Climate Orbiter — Wikipedia", "https://en.wikipedia.org/wiki/Mars_Climate_Orbiter"]] }
     ],
     videos: [
-      { id: "QS8MqZ5zc7o", t: "مفهوم المصطلح ووظائفه", by: "أ.د. عز الدين البوشيخي", why: "Term and concept, in Arabic &mdash; the opening of the course." },
-      { id: "g0b8qtPr3CA", t: "Mars Climate Orbiter: A Metric Mishap", why: "The case above, told by the engineers' side." }
+      { id: "9PoaotqyQms", t: "IATE, the EU terminology database", by: "European Union", why: "The termbase the EU institutions share: millions of terms in 24 languages, each with its source and reliability." },
+      { id: "QS8MqZ5zc7o", t: "مفهوم المصطلح ووظائفه", by: "أ.د. عز الدين البوشيخي", why: "Term and concept, in Arabic, from a terminology scholar." }
     ]
   },
 
@@ -10291,8 +10302,7 @@ const KU_COURSE_MORE = {
               ["Spear's", "https://spearswms.com/wealth/hsbc-to-launch-10m-private-banking-rebranding/"]] }
     ],
     videos: [
-      { id: "cXNTArhA0Jg", t: "How interpreters juggle two languages at once", by: "Ewandro Magalhães · TED-Ed", why: "What the brain does between hearing one language and producing another." },
-      { id: "xkUoCmEUoYU", t: "What are collocations in English?", why: "The single biggest topic in a first translation course, in five minutes." }
+      { id: "cXNTArhA0Jg", t: "How interpreters juggle two languages at once", by: "Ewandro Magalhães · TED-Ed", why: "What happens between hearing one language and producing another, from a former UN chief interpreter." }
     ]
   },
 
@@ -10321,7 +10331,8 @@ const KU_COURSE_MORE = {
         src: [["King James Version — Wikipedia", "https://en.wikipedia.org/wiki/King_James_Version"]] }
     ],
     videos: [
-      { id: "lwQvQDs_eEY", t: "How does a translation memory work in a CAT tool?", why: "How professionals keep page 300 consistent with page 3." }
+      { id: "xtbmFfqFp68", t: "24 languages, one Europe — inside DG Translation", by: "European Commission · Translating for Europe", why: "How the EU translates every law into 24 languages, all of them equally authentic. This is the setting of the CILFIT case below." },
+      { id: "nTpwDzVKmvs", t: "Translation memories in memoQ", by: "memoQ", why: "How professionals keep page 300 consistent with page 3." }
     ]
   },
 
@@ -10346,7 +10357,7 @@ const KU_COURSE_MORE = {
         src: [["NZ History — differences between the texts", "https://nzhistory.govt.nz/politics/treaty/read-the-treaty/differences-between-the-texts"]] }
     ],
     videos: [
-      { id: "xd2a-XEiX6I", t: "Field, Tenor, Mode", why: "The three questions of register, the analysis this course teaches you to run on every text." }
+      { id: "KdC3y2d3p9M", t: "Functions in translation, part 1", by: "Christiane Nord · lecture, Tarragona", why: "The author of the standard model of source-text analysis for translators, explaining function and purpose." }
     ]
   },
 
@@ -10368,8 +10379,8 @@ const KU_COURSE_MORE = {
               ["Complex", "https://www.complex.com/pop-culture/2014/04/captain-america-easter-egg"]] }
     ],
     videos: [
-      { id: "oQ5i44Orbt0", t: "6 details Inside Out changed in each country", why: "The case above, shown frame by frame." },
-      { id: "ObaVGOt4iFU", t: "12 “untranslatable” words from around the world", why: "Where a culture has a word and yours has a paragraph." }
+      { id: "hk7wdwmTuRc", t: "Inside Out's broccoli pizza, explained", by: "Pixar", why: "The studio itself on the broccoli case below." },
+      { id: "RKK7wGAYP6k", t: "How language shapes the way we think", by: "Lera Boroditsky · TED", why: "Why two languages, and two cultures, do not divide the world the same way." }
     ]
   },
 
@@ -10399,8 +10410,8 @@ const KU_COURSE_MORE = {
         src: [["Treaty of Wuchale — Wikipedia", "https://en.wikipedia.org/wiki/Treaty_of_Wuchale"]] }
     ],
     videos: [
-      { id: "x8dqTZ4Hsac", t: "The Willie Ramirez case: failed communication and tragic results (preview)", by: "Gail Price-Wise", why: "The medical case above, from the researcher who documented it." },
-      { id: "_RCtvRyABEA", t: "Legal translation: translating legal concepts or legal terms?", why: "Why a legal term can only be translated after the concept behind it is understood." }
+      { id: "Yd8h31qm-yA", t: "Inside EU careers: lawyer-linguist", by: "European Union careers (EPSO)", why: "The people who translate law: lawyers who are also translators, and why the job needs both." },
+      { id: "x8dqTZ4Hsac", t: "The Willie Ramirez case: failed communication and tragic results (preview)", by: "Gail Price-Wise", why: "The medical case below, from the researcher who documented it." }
     ]
   },
 
@@ -10431,9 +10442,9 @@ const KU_COURSE_MORE = {
         src: [["The Booker Prizes", "https://thebookerprizes.com/the-booker-library/books/celestial-bodies"]] }
     ],
     videos: [
-      { id: "aPvy-KFlkcY", t: "In conversation with Jokha Alharthi, winner of the International Booker Prize", why: "The author of the Arabic case above." },
-      { id: "DZTvSfZaYh4", t: "Warts and all: sustaining a career in literary translation", why: "Nariman Youssef, Alice Guthrie, Anton Hur and Ruth Martin on what the work is actually like." },
-      { id: "mY5RvWnrL8c", t: "Getting started in literary translation", by: "Jen Calleja", why: "How translators get their first book." }
+      { id: "f_xpcHuA9h4", t: "Gregory Rabassa interviewed by Elizabeth Lowe", by: "American Literary Translators Association, 2007", why: "García Márquez's translator on his craft." },
+      { id: "NUOQGmWvySA", t: "Interview with Marilyn Booth", by: "Marilyn Booth", why: "The translator of <i>سيدات القمر</i> on translating Arabic literature into English." },
+      { id: "aPvy-KFlkcY", t: "In conversation with Jokha Alharthi", by: "Jokha Alharthi", why: "The author of the Arabic novel in the cases below." }
     ]
   },
 
@@ -10458,7 +10469,7 @@ const KU_COURSE_MORE = {
       { k: "Subtitles", yr: "2019", t: "Parasite: “ram-don” and “Oxford”",
         what: "Darcy Paquet subtitled Bong Joon-ho's <i>Parasite</i>. <i>Jjapaguri</i>, a mix of two instant-noodle brands, became <i>ram-don</i> (ramen + udon), a word he invented. Seoul National University became <i>Oxford</i>. KakaoTalk became WhatsApp. The film went on to win Best Picture.",
         pair: ["짜파구리 · jjapaguri", "ram-don"],
-        point: "Each choice trades accuracy for speed of understanding, because a subtitle is read once, in about two seconds, while the picture keeps moving. Paquet explains every one of them in the first video below.",
+        point: "Each choice trades accuracy for speed of understanding, because a subtitle is read once, in about two seconds, while the picture keeps moving. Paquet explains every one of them in the first video at the top of this page.",
         src: [["ATA Audiovisual Division", "https://ata-divisions.org/AVD/ata-61-recap-translating-into-hollywood-a-case-study-of-the-oscar-winning-film-parasite"],
               ["The Jakarta Post", "https://newgelora.thejakartapost.com/life/2020/02/08/translation-wings-that-helped-parasite-soar-free-and-high"]] },
       { k: "Captions", yr: "2021", t: "Squid Game: subtitles against captions",
@@ -10473,10 +10484,11 @@ const KU_COURSE_MORE = {
         src: [["Bulbapedia — Rice balls", "https://bulbapedia.bulbagarden.net/wiki/Rice_balls"]] }
     ],
     videos: [
-      { id: "uFJkrGYWi7Q", t: "Darcy Paquet on doing the subtitles for Parasite", why: "The translator explains the choices in the case above." },
+      { id: "KAZUKcCs9bc", t: "Translating Parasite: the many challenges of film subtitle translation", by: "Darcy Paquet · lecture, Academy of Korean Studies", why: "The translator walks through his subtitles for the film in the case below." },
+      { id: "uFJkrGYWi7Q", t: "Darcy Paquet on doing the subtitles for Parasite", by: "Asia Society Korea", why: "A shorter interview on the same choices." },
       { id: "r_5WAY61muE", t: "Behind Netflix's global dubbing strategy", by: "The Wall Street Journal", why: "Why more viewers watched Squid Game dubbed than subtitled, and how a dub is made." },
-      { id: "UoElgXzBIqE", t: "Complete guide to subtitling: Netflix, BBC and more", why: "The technical rules, applied in subtitling software." },
-      { id: "YuRj9ZZUwXI", t: "What is audio description, and why is it necessary?", why: "The part of AVT for viewers who cannot see the screen." }
+      { id: "MCCajNjt5F4", t: "How to prepare subtitles for Netflix", by: "EZTitles", why: "The Netflix rules in the box below, applied in professional subtitling software." },
+      { id: "y89reMUP1Jk", t: "Audio description at a glance", by: "American Council of the Blind", why: "Audio description and its best practices, from the organisation that runs the Audio Description Project." }
     ]
   },
 
@@ -10509,8 +10521,8 @@ const KU_COURSE_MORE = {
     ],
     videos: [
       { id: "X4BmV2t83SM", t: "How computers translate human language", by: "Ioannis Papachimonas · TED-Ed", why: "Machine translation, from rules to neural networks." },
-      { id: "5GhX1XA_vsA", t: "What is a CAT tool? — Translation 101", why: "The workstation, explained before you open one." },
-      { id: "lwQvQDs_eEY", t: "How does a translation memory work in a CAT tool?", why: "Matches, fuzzy matches, and why TM is the backbone of professional work." }
+      { id: "nTpwDzVKmvs", t: "Translation memories in memoQ", by: "memoQ", why: "Segments, matches and fuzzy matches, inside a real CAT tool." },
+      { id: "xqNiceZDIII", t: "The future of translating: is machine translation the only way forward?", by: "European Commission · Translating Europe", why: "Professionals from the EU's own translation service on machine translation." }
     ]
   }
 };
@@ -15019,7 +15031,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1003-1400";
+const BUILD = "1003-1600";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -18328,13 +18340,53 @@ function runMinor() {
         (c.group.status === "Elective" ? "choose two" : "take all four") + '</span>';
     stage.appendChild(facts);
 
+    const more = KU_COURSE_MORE[c.code] || {};
+
+    /* Near the top, as a strip you swipe, because a video at the bottom
+       of a long page is a video nobody finds. Videos load only when tapped: no player, and nothing sent to
+       YouTube, until someone asks for it. */
+    if (more.videos && more.videos.length) {
+      const n = more.videos.length;
+      const watch = el("section", "c-watch");
+      watch.innerHTML = '<div class="c-watch-head"><h3 class="c-h">Watch first</h3>' +
+        '<span class="c-watch-n">' + n + (n === 1 ? ' video' : ' videos') +
+        (n > 1 ? ' · swipe <span aria-hidden="true">→</span>' : '') + '</span></div>';
+      const track = el("div", "c-vids" + (n === 1 ? " is-one" : ""));
+      watch.appendChild(track);
+      stage.appendChild(watch);
+      more.videos.forEach(vd => {
+        const card = el("div", "c-vid");
+        const play = el("button", "c-vid-play");
+        play.type = "button";
+        play.setAttribute("aria-label", "Play: " + vd.t.replace(/<[^>]+>/g, ""));
+        play.innerHTML = '<span class="c-vid-icon" aria-hidden="true"></span>' +
+          '<span class="c-vid-txt"><span class="c-vid-t" dir="auto">' + vd.t + '</span>' +
+          (vd.by ? '<span class="c-vid-by" dir="auto">' + vd.by + '</span>' : '') + '</span>';
+        play.addEventListener("click", () => {
+          const fr = document.createElement("iframe");
+          fr.src = "https://www.youtube-nocookie.com/embed/" + vd.id + "?autoplay=1&rel=0&playsinline=1";
+          fr.title = vd.t.replace(/<[^>]+>/g, "");
+          fr.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+          fr.allowFullscreen = true;
+          fr.loading = "lazy";
+          const box = el("div", "c-vid-frame");
+          box.appendChild(fr);
+          play.replaceWith(box);
+        });
+        card.appendChild(play);
+        const foot = el("div", "c-vid-foot");
+        foot.innerHTML = '<p>' + vd.why + '</p>' +
+          '<a class="c-src" href="https://www.youtube.com/watch?v=' + vd.id + '" target="_blank" rel="noopener">Open on YouTube ↗</a>';
+        card.appendChild(foot);
+        track.appendChild(card);
+      });
+    }
+
     /* The subject, as prose. Not a labelled box — a labelled box is a
        form, and a form does not explain anything. */
     const body = el("div", "c-body");
     body.innerHTML = '<h3 class="c-h">The subject</h3><p>' + c.body + '</p>';
     stage.appendChild(body);
-
-    const more = KU_COURSE_MORE[c.code] || {};
 
     /* The course in sections. Where its units are written they are the
        sections, and each one opens; otherwise the outline, so the page
@@ -18402,40 +18454,6 @@ function runMinor() {
           '<div class="c-case-point"><span class="c-asks-lab">Why it matters</span><p>' + x.point + '</p></div>' +
           '<div class="c-case-src">' + x.src.map(sr =>
             '<a class="c-src" href="' + sr[1] + '" target="_blank" rel="noopener">' + sr[0] + ' ↗</a>').join("") + '</div>';
-        stage.appendChild(card);
-      });
-    }
-
-    /* Videos load only when tapped: no player, and nothing sent to
-       YouTube, until someone asks for it. */
-    if (more.videos && more.videos.length) {
-      const h = el("div", "c-body");
-      h.innerHTML = '<h3 class="c-h">Watch</h3>';
-      stage.appendChild(h);
-      more.videos.forEach(vd => {
-        const card = el("div", "c-vid");
-        const play = el("button", "c-vid-play");
-        play.type = "button";
-        play.setAttribute("aria-label", "Play: " + vd.t.replace(/<[^>]+>/g, ""));
-        play.innerHTML = '<span class="c-vid-icon" aria-hidden="true"></span>' +
-          '<span class="c-vid-txt"><span class="c-vid-t" dir="auto">' + vd.t + '</span>' +
-          (vd.by ? '<span class="c-vid-by" dir="auto">' + vd.by + '</span>' : '') + '</span>';
-        play.addEventListener("click", () => {
-          const fr = document.createElement("iframe");
-          fr.src = "https://www.youtube-nocookie.com/embed/" + vd.id + "?autoplay=1&rel=0&playsinline=1";
-          fr.title = vd.t.replace(/<[^>]+>/g, "");
-          fr.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-          fr.allowFullscreen = true;
-          fr.loading = "lazy";
-          const box = el("div", "c-vid-frame");
-          box.appendChild(fr);
-          play.replaceWith(box);
-        });
-        card.appendChild(play);
-        const foot = el("div", "c-vid-foot");
-        foot.innerHTML = '<p>' + vd.why + '</p>' +
-          '<a class="c-src" href="https://www.youtube.com/watch?v=' + vd.id + '" target="_blank" rel="noopener">Open on YouTube ↗</a>';
-        card.appendChild(foot);
         stage.appendChild(card);
       });
     }
