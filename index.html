@@ -15031,7 +15031,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1003-1600";
+const BUILD = "1003-1800";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -16718,6 +16718,59 @@ const TH_MORE = {
    taught in one fixed order, then practice. The families survive only
    as filters, and the timeline as a sort, so nobody has to learn the
    taxonomy before learning a theory. */
+
+/* Videos of the theorists themselves: their own lectures, or interviews
+   with them, from sources that can be named. Many were recorded by
+   Anthony Pym for the Intercultural Studies Group in Tarragona. Where no
+   such recording could be found, the person has no videos. That is better
+   than a stranger's summary. */
+const TH_VIDEOS = {
+  nord: [
+    { id: "KdC3y2d3p9M", t: "Functions in translation, part 1", by: "Christiane Nord · lecture, Tarragona, 2008", why: "Nord on function and purpose, in her own words." },
+    { id: "lhzgOzkJ1sw", t: "Christiane Nord, interviewed", by: "Interview by Anthony Pym", why: "Her career and her model, in conversation." } ],
+  house: [
+    { id: "j-muOJUhBjc", t: "Juliane House, interviewed", by: "Interview by Anthony Pym", why: "On quality assessment, and overt and covert translation." },
+    { id: "-mnqpo7iAyM", t: "Translation as communication across languages and cultures", by: "Juliane House · webinar", why: "A full talk by House on the ideas behind her model." } ],
+  hermans: [
+    { id: "Sk3Qdphmwfw", t: "Theo Hermans, interviewed", by: "Interview by Anthony Pym, 2005", why: "On norms, and on the manipulation school." },
+    { id: "g_SUypAw6Io", t: "Self-reference in translation studies", by: "Theo Hermans · lecture, Tarragona, 2004", why: "A lecture by Hermans." } ],
+  toury: [
+    { id: "yr6MHzcmHFI", t: "On sociocultural approaches to translation", by: "Gideon Toury · Tarragona, 2005", why: "Toury on norms and on describing translations rather than prescribing them." } ],
+  evenzohar: [
+    { id: "x1upxc0vmYc", t: "Itamar Even-Zohar, interviewed", by: "Interview by Anthony Pym, Tarragona, 2008", why: "The founder of polysystem theory on his work." } ],
+  flotow: [
+    { id: "Giow8vU_5eU", t: "Luise von Flotow, interviewed", by: "Interview by Anthony Pym, Ottawa, 2017", why: "On feminist translation, and how it has changed." } ],
+  mason: [
+    { id: "0c6pmzx136M", t: "Ian Mason, interviewed", by: "Interview by Anthony Pym, Tarragona", why: "On discourse, and on the work he did with Basil Hatim." } ],
+  simon: [
+    { id: "I-lRRKZb30Y", t: "Translation sites and cities in translation", by: "Sherry Simon · Routledge", why: "Simon on translation and the multilingual city." } ],
+  venuti: [
+    { id: "rxad8x5fijI", t: "Lawrence Venuti in conversation", by: "Lawrence Venuti", why: "Venuti on translation, invisibility and his own work." },
+    { id: "iMnXXBmJj7E", t: "The trouble with subtitling is a matter of interpretation", by: "Lawrence Venuti · lecture, 3 December 2020", why: "His theory applied to the screen." } ],
+  bassnett: [
+    { id: "Ih6wBl-n9qw", t: "Susan Bassnett on translation", by: "Bristol Translates 2022 · keynote", why: "Bassnett introduces what she calls the translational imagination." } ],
+  spivak: [
+    { id: "_ZQOX0tfBx4", t: "Translation! Ever new, ever elusive", by: "Gayatri Chakravorty Spivak · University of Iowa, 2023", why: "A lecture by Spivak on translation." } ],
+  baker: [
+    { id: "erRbzFuOiQs", t: "Mona Baker on <i>In Other Words</i>", by: "Mona Baker · interview", why: "The coursebook behind most equivalence teaching, by its author." },
+    { id: "C3MqtltX7Ao", t: "Interview with Mona Baker", by: "Interview by Tomás Costal (UNED)", why: "On her career, narrative theory and activism." } ],
+  gile: [
+    { id: "dKm_t0WfyFM", t: "Cognitive challenges of conference interpreting", by: "Daniel Gile · Université Sorbonne Nouvelle", why: "The Effort Models, from the person who proposed them." } ],
+  steiner: [
+    { id: "7bEeAiVnGbM", t: "Full interview with George Steiner, part one", by: "Interview, 2007", why: "Steiner on his life and work: language, Babel and reading." } ],
+  eco: [
+    { id: "5Mx3P10McjI", t: "Dire quasi la stessa cosa", by: "Umberto Eco · 2004 · in Italian", why: "Eco on his book about translation, <i>Saying Almost the Same Thing</i>." } ],
+  derrida: [
+    { id: "kkGVq7aQj9Q", t: "Re-reading Derrida's “What is a ‘relevant’ translation?”", by: "Kathryn Batchelor · BCLT research seminar", why: "A translation scholar reads Derrida's lecture on translation closely." } ]
+};
+/* Videos about a theory as such, where its theorists left none. */
+const TH_THEORY_VIDEOS = {
+  "Skopos Theory": [
+    { id: "zfLV1V96cP0", t: "Skopos and risk in translation", by: "Anthony Pym · Beijing Foreign Studies University, 2019", why: "Skopos theory, and what it leaves out, by the author of <i>Exploring Translation Theories</i>." } ]
+};
+const TH_OVERVIEW_VIDEO = [
+  { id: "gP3bheM6fmg", t: "Exploring translation theories", by: "Anthony Pym", why: "An overview of the field by the author of the standard textbook on it." } ];
+
 const TH_FILTERS = [
   ["All", null], ["Foundations", ["hist"]], ["Equivalence", ["ling"]], ["Functionalism", ["func"]],
   ["Discourse", ["disc"]], ["Descriptive", ["desc"]], ["Culture & power", ["cult", "gend", "post", "soc"]],
@@ -16745,6 +16798,13 @@ function runTheories(startAt) {
 
   const typeChip = t => '<span class="th-type">' + t + '</span>';
   const shortName = t => t.en.replace(/^[^:]+:\s*/, "");
+  /* the theory's own videos, then each of its theorists', once each */
+  const theoryVideos = t => {
+    const seen = {}, out = [];
+    const all = [].concat(TH_THEORY_VIDEOS[t.en] || [], ...peopleOf(t).map(p => TH_VIDEOS[p.id] || []));
+    all.forEach(v => { if (!seen[v.id]) { seen[v.id] = 1; out.push(v); } });
+    return out;
+  };
   const flowRow = steps => {
     const f = el("div", "th-flow");
     steps.forEach((s, i) => { if (i) f.appendChild(el("span", "th-arr", "→")); f.appendChild(el("span", "th-step", s)); });
@@ -16959,6 +17019,7 @@ function runTheories(startAt) {
       head.appendChild(txt);
       stage.appendChild(head);
       stage.appendChild(el("p", "lede", p.bio));
+      if (TH_VIDEOS[p.id]) stage.appendChild(videoStrip(TH_VIDEOS[p.id], "Watch " + p.name.split(" ").pop()));
       let cur = lesson != null ? THEORIES[lesson] : ts[0];
       if (ts.length > 1) {
         const pick = el("div", "chips");
@@ -17002,9 +17063,12 @@ function runTheories(startAt) {
       peopleOf(t).forEach(o => { const b = el("button", "th-person"); b.appendChild(face(o)); b.appendChild(el("span", null, o.name));
         b.addEventListener("click", () => openWho(o)); row.appendChild(b); });
       stage.appendChild(row);
+      const tv = theoryVideos(t);
+      if (tv.length) stage.appendChild(videoStrip(tv, "Watch"));
       lessonBody(t);
     }
     if (tab === 1 && lesson == null) {
+      stage.appendChild(videoStrip(TH_OVERVIEW_VIDEO, "Start here"));
       const sw = el("div", "chips");
       [["family", "By family"], ["year", "By year"]].forEach(([k, l]) => {
         const b = el("button", "chip" + (sortBy === k ? " on" : ""), l);
@@ -18268,6 +18332,46 @@ function runKsl() {
   home();
 }
 
+/* A swipeable strip of YouTube videos. Nothing loads, and nothing is
+   sent to YouTube, until a card is tapped. Used by the course pages,
+   the theorists and the theories. */
+function videoStrip(videos, title) {
+  const n = videos.length;
+  const watch = el("section", "c-watch");
+  watch.innerHTML = '<div class="c-watch-head"><h3 class="c-h">' + title + '</h3>' +
+    '<span class="c-watch-n">' + n + (n === 1 ? ' video' : ' videos') +
+    (n > 1 ? ' · swipe <span aria-hidden="true">→</span>' : '') + '</span></div>';
+  const track = el("div", "c-vids" + (n === 1 ? " is-one" : ""));
+  watch.appendChild(track);
+  videos.forEach(vd => {
+    const card = el("div", "c-vid");
+    const play = el("button", "c-vid-play");
+    play.type = "button";
+    const plain = vd.t.replace(/<[^>]+>/g, "");
+    play.setAttribute("aria-label", "Play: " + plain);
+    play.innerHTML = '<span class="c-vid-icon" aria-hidden="true"></span>' +
+      '<span class="c-vid-txt"><span class="c-vid-t" dir="auto">' + vd.t + '</span>' +
+      (vd.by ? '<span class="c-vid-by" dir="auto">' + vd.by + '</span>' : '') + '</span>';
+    play.addEventListener("click", () => {
+      const fr = document.createElement("iframe");
+      fr.src = "https://www.youtube-nocookie.com/embed/" + vd.id + "?autoplay=1&rel=0&playsinline=1";
+      fr.title = plain;
+      fr.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      fr.allowFullscreen = true;
+      const box = el("div", "c-vid-frame");
+      box.appendChild(fr);
+      play.replaceWith(box);
+    });
+    card.appendChild(play);
+    const foot = el("div", "c-vid-foot");
+    foot.innerHTML = (vd.why ? '<p>' + vd.why + '</p>' : '') +
+      '<a class="c-src" href="https://www.youtube.com/watch?v=' + vd.id + '" target="_blank" rel="noopener">Open on YouTube ↗</a>';
+    card.appendChild(foot);
+    track.appendChild(card);
+  });
+  return watch;
+}
+
 function runMinor() {
   let open = null;
   setCount("24 credits · ten courses");
@@ -18342,45 +18446,9 @@ function runMinor() {
 
     const more = KU_COURSE_MORE[c.code] || {};
 
-    /* Near the top, as a strip you swipe, because a video at the bottom
-       of a long page is a video nobody finds. Videos load only when tapped: no player, and nothing sent to
-       YouTube, until someone asks for it. */
-    if (more.videos && more.videos.length) {
-      const n = more.videos.length;
-      const watch = el("section", "c-watch");
-      watch.innerHTML = '<div class="c-watch-head"><h3 class="c-h">Watch first</h3>' +
-        '<span class="c-watch-n">' + n + (n === 1 ? ' video' : ' videos') +
-        (n > 1 ? ' · swipe <span aria-hidden="true">→</span>' : '') + '</span></div>';
-      const track = el("div", "c-vids" + (n === 1 ? " is-one" : ""));
-      watch.appendChild(track);
-      stage.appendChild(watch);
-      more.videos.forEach(vd => {
-        const card = el("div", "c-vid");
-        const play = el("button", "c-vid-play");
-        play.type = "button";
-        play.setAttribute("aria-label", "Play: " + vd.t.replace(/<[^>]+>/g, ""));
-        play.innerHTML = '<span class="c-vid-icon" aria-hidden="true"></span>' +
-          '<span class="c-vid-txt"><span class="c-vid-t" dir="auto">' + vd.t + '</span>' +
-          (vd.by ? '<span class="c-vid-by" dir="auto">' + vd.by + '</span>' : '') + '</span>';
-        play.addEventListener("click", () => {
-          const fr = document.createElement("iframe");
-          fr.src = "https://www.youtube-nocookie.com/embed/" + vd.id + "?autoplay=1&rel=0&playsinline=1";
-          fr.title = vd.t.replace(/<[^>]+>/g, "");
-          fr.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-          fr.allowFullscreen = true;
-          fr.loading = "lazy";
-          const box = el("div", "c-vid-frame");
-          box.appendChild(fr);
-          play.replaceWith(box);
-        });
-        card.appendChild(play);
-        const foot = el("div", "c-vid-foot");
-        foot.innerHTML = '<p>' + vd.why + '</p>' +
-          '<a class="c-src" href="https://www.youtube.com/watch?v=' + vd.id + '" target="_blank" rel="noopener">Open on YouTube ↗</a>';
-        card.appendChild(foot);
-        track.appendChild(card);
-      });
-    }
+    /* Near the top, because a video at the bottom of a long page is a
+       video nobody finds. */
+    if (more.videos && more.videos.length) stage.appendChild(videoStrip(more.videos, "Watch first"));
 
     /* The subject, as prose. Not a labelled box — a labelled box is a
        form, and a form does not explain anything. */
