@@ -6,7 +6,7 @@
 <!-- The browser enforces this list. Scripts may come from this page and nowhere
      else, and the page may only talk to its own database, so a widget or
      tracker added later cannot run here or carry a member's session away. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://bldqausimrsusdzfbubk.supabase.co; connect-src 'self' https://bldqausimrsusdzfbubk.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://bldqausimrsusdzfbubk.supabase.co; connect-src 'self' https://bldqausimrsusdzfbubk.supabase.co; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>The Translators' Guild — Learn Arabic–English Translation</title>
 <!-- What a search engine and a shared link will show. It describes what the
      site actually contains now, and names its companion book, because the two
@@ -2026,6 +2026,68 @@ a.ks-s-en:hover { color: var(--white); }
 .c-asks p { margin: 0; font-family: var(--f-serif); font-size: 1.02rem; font-style: italic;
   line-height: 1.6; color: var(--white); }
 
+/* Course sections, real cases, videos. */
+.c-topics { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; counter-reset: ct; }
+.c-topic { counter-increment: ct; position: relative; display: grid; gap: .2rem;
+  padding: .75rem .9rem .75rem 2.9rem; border-radius: var(--r-md); border: var(--hair);
+  background: rgba(255,255,255,.035); }
+.c-topic::before { content: counter(ct); position: absolute; left: .9rem; top: .72rem;
+  width: 1.45rem; height: 1.45rem; border-radius: 50%; display: grid; place-items: center;
+  font-size: .72rem; font-weight: 700; color: var(--on-grad); background: var(--grad); }
+.c-tn { font-weight: 600; color: var(--white); font-size: .98rem; line-height: 1.35; }
+.c-tar { display: block; font-family: var(--f-ar); font-weight: 400; font-size: .9rem; color: var(--lilac); }
+.c-tsay { font-size: .9rem; font-weight: 300; line-height: 1.55; color: var(--ink-soft); }
+.c-rule { border-radius: var(--r-lg); border: var(--hair-lit); background: var(--grad-soft);
+  padding: .9rem 1.1rem; display: grid; gap: .55rem; }
+.c-rule-grid { display: grid; gap: .4rem; }
+.c-rule-row { display: grid; grid-template-columns: 5.6rem 1fr; gap: .6rem; align-items: baseline; }
+.c-rule-row b { font-family: var(--f-serif); font-size: 1.1rem; color: var(--white); }
+.c-rule-row span { font-size: .9rem; color: var(--ink); line-height: 1.45; }
+.c-case { border-radius: var(--r-lg); border: var(--hair); background: rgba(255,255,255,.035);
+  padding: 1rem 1.1rem; display: grid; gap: .55rem; min-width: 0; }
+.c-case-top { display: flex; justify-content: space-between; gap: .5rem; align-items: center; }
+.c-case-k { font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--magenta); }
+.c-case-yr { font-size: .75rem; font-weight: 600; color: var(--lilac-dim); }
+.c-case-t { margin: 0; font-family: var(--f-serif); font-size: 1.2rem; line-height: 1.3; color: var(--white); }
+.c-case-what { margin: 0; font-size: .96rem; font-weight: 300; line-height: 1.7; color: var(--ink); }
+.c-case-what i, .c-case-point i { color: var(--white); }
+.c-pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: .5rem; align-items: center;
+  padding: .6rem .75rem; border-radius: var(--r-md); background: var(--well); border: var(--hair);
+  font-size: .88rem; line-height: 1.4; color: var(--white); }
+.c-pair > span { min-width: 0; overflow-wrap: anywhere; }
+.c-pair-arr { color: var(--magenta); font-weight: 700; }
+.c-case-point { border-inline-start: 3px solid var(--magenta); padding-inline-start: .8rem; display: grid; gap: .2rem; }
+.c-case-point p { margin: 0; font-size: .94rem; line-height: 1.6; color: var(--white); }
+.c-case-src { display: flex; flex-wrap: wrap; gap: .35rem .9rem; }
+.c-src { font-size: .78rem; font-weight: 600; color: var(--mag-ink); text-decoration: none;
+  overflow-wrap: anywhere; }
+.c-src:hover { text-decoration: underline; }
+.c-vid { border-radius: var(--r-lg); border: var(--hair); overflow: hidden; background: rgba(255,255,255,.035); }
+.c-vid-play { all: unset; box-sizing: border-box; cursor: pointer; width: 100%; aspect-ratio: 16/9;
+  display: flex; flex-direction: column; justify-content: flex-end; gap: .7rem; padding: 1rem 1.1rem;
+  background: radial-gradient(120% 90% at 20% 10%, #a726d0 0%, #4a0f9e 55%, #1a0a2f 100%); color: #fff; position: relative; }
+.c-vid-play:focus-visible { outline: 3px solid var(--magenta); outline-offset: -3px; }
+.c-vid-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-62%);
+  width: 3.6rem; height: 3.6rem; border-radius: 50%; background: rgba(255,255,255,.95);
+  box-shadow: 0 10px 30px -8px rgba(0,0,0,.6); }
+.c-vid-icon::after { content: ""; position: absolute; left: 54%; top: 50%; transform: translate(-50%,-50%);
+  border-style: solid; border-width: .62rem 0 .62rem 1rem; border-color: transparent transparent transparent #650fd0; }
+.c-vid-play:hover .c-vid-icon { transform: translate(-50%,-62%) scale(1.06); }
+.c-vid-txt { display: grid; gap: .15rem; position: relative; }
+.c-vid-t { font-family: var(--f-serif); font-size: 1.05rem; line-height: 1.3; font-weight: 700; color: #fff; }
+.c-vid-by { font-size: .78rem; color: rgba(255,255,255,.8); }
+.c-vid-frame { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; }
+.c-vid-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.c-vid-foot { padding: .7rem 1.1rem .85rem; display: grid; gap: .3rem; }
+.c-vid-foot p { margin: 0; font-size: .9rem; line-height: 1.5; color: var(--ink); }
+:root[data-theme="light"] .c-topic,
+:root[data-theme="light"] .c-case,
+:root[data-theme="light"] .c-vid { background: #fff; border-color: rgba(60,30,100,.12);
+  box-shadow: 0 1px 2px rgba(40,20,70,.04), 0 10px 28px -18px rgba(40,20,70,.2); }
+:root[data-theme="light"] .c-pair { background: #f6f1fc; border-color: rgba(101,15,208,.14); }
+:root[data-theme="light"] .c-rule { background: #f6f1fc; border-color: rgba(101,15,208,.16); }
+:root[data-theme="light"] .c-src { color: #7a1fb0; }
 .m-links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .3rem; }
 /* A long chamber name must wrap rather than push the panel wider than
    the phone it is being read on. */
@@ -10045,13 +10107,6 @@ const KU_MINOR = {
           line: "What translation is, before you are any good at it.",
           body: "The foundation course, and the prerequisite for everything else in the minor. It separates <b>form</b> from <b>meaning</b> &mdash; the shape a language happens to use, and the thing being said &mdash; and shows that keeping one usually costs you the other." +
                 "<p>From there come the choices a translator actually makes: literal or free, and which of the procedures the sentence in front of you needs. The course's real subject is that these are <i>decisions</i>, made by a person, for reasons that can be stated.</p>",
-          ex: {
-            pre: "The subject, in one example", lab: "One sentence, two ways of being faithful",
-            srcLab: "English", src: "He is a heavy smoker.", srcDir: "ltr",
-            litLab: "The form kept", lit: "هو مُدخِّن ثقيل &mdash; every word matched, and not a sentence an Arabic speaker would produce",
-            outLab: "The meaning kept", out: "يُدخِّن بشراهة", outDir: "rtl",
-            note: "A noun phrase became a verb. Nothing was added and nothing was lost; the <b>form</b> changed because the <b>meaning</b> required it. That move has a name &mdash; transposition &mdash; and being able to name it is what separates this course from guessing."
-          },
           settings: ["Every course above it", "Any first commission", "The basis of a commentary"],
           asks: "That you stop translating words and start translating messages — and that you can say afterwards what you did, and why.",
           meets: ["procedures", "toolkit"],
@@ -10062,13 +10117,6 @@ const KU_MINOR = {
           line: "A discipline about concepts, which happens to produce words.",
           body: "Not vocabulary learning. Terminology starts from the <b>concept</b> &mdash; a thing a field needs to refer to precisely &mdash; and asks which <b>term</b> is allowed to stand for it, who decided, and where that decision is written down." +
                 "<p>Then the practical half: how a termbase or a glossary is built, kept current, and shared, so that the next translator inherits the decision instead of making it again differently.</p>",
-          ex: {
-            pre: "The subject, in one example", lab: "Two words that are not versions of each other",
-            srcLab: "English", src: "informed consent", srcDir: "ltr",
-            litLab: "The near-enough word", lit: "موافقة &mdash; consent, which is what a patient gives to anything at all",
-            outLab: "The term", out: "موافقة مستنيرة", outDir: "rtl",
-            note: "<b>موافقة</b> is not a shorter way of saying it. In law they are different things: one is agreement, the other is agreement after the risks have been explained and understood. Terminology is the discipline that fixes which string of letters may carry which concept &mdash; and then records it, with its source, so nobody has to guess twice."
-          },
           settings: ["Ministries and courts", "Hospitals", "Standards bodies", "The UN", "Any termbase"],
           asks: "Precision, and a record. A term without a source is a guess, however confident it sounds.",
           meets: ["glossary"],
@@ -10079,13 +10127,6 @@ const KU_MINOR = {
           line: "The first course where the work has your name on it.",
           body: "General texts, in both directions, translated and then defended out loud. Where the framework from 180 stops being something to recite and becomes a series of decisions you have to make and stand behind." +
                 "<p>Most of the difficulty is not vocabulary. It is that words arrive in company, and a dictionary that hands them over one at a time will mislead you roughly once a paragraph.</p>",
-          ex: {
-            pre: "The subject, in one example", lab: "Every word right, the sentence wrong",
-            srcLab: "English", src: "She paid a visit to her grandmother.", srcDir: "ltr",
-            litLab: "Word by word", lit: "دفعت زيارة لجدّتها &mdash; <i>pay</i> is <i>يدفع</i>, and the result is not Arabic",
-            outLab: "The partnership translated", out: "زارت جدّتها.", outDir: "rtl",
-            note: "<b>Pay a visit</b> is one unit meaning <i>visit</i>; the verb is not doing its own job. Collocation is the commonest cause of a rendering that is defensible word by word and wrong as a sentence, and it is most of what this course fixes."
-          },
           settings: ["Correspondence", "Journalism", "General prose", "The ground every specialism stands on"],
           asks: "Volume, and the habit of revision. The gap between a first draft and a finished rendering is the course.",
           meets: ["commentary", "colloc"]
@@ -10095,13 +10136,6 @@ const KU_MINOR = {
           line: "The step from a passage to a whole document.",
           body: "Longer texts, harder genres, and revision treated as part of the work rather than as something done if time allows. A file behaves differently from a paragraph: it has to hold together across pages that will be read hours apart." +
                 "<p>Which makes consistency the new skill. Not elegance &mdash; sameness, in the places where sameness is what carries the meaning.</p>",
-          ex: {
-            pre: "The subject, in one example", lab: "Three good renderings, one bad document",
-            srcLab: "Arabic, recurring through a report", src: "الجهة المختصّة", srcDir: "rtl",
-            litLab: "Rendered freshly each time", lit: "<i>the competent authority</i> on page 1 &middot; <i>the relevant body</i> on page 7 &middot; <i>the concerned party</i> on page 14",
-            outLab: "Chosen once, used throughout", out: "the competent authority &mdash; all fourteen times", outDir: "ltr",
-            note: "Each of the three is defensible on its own line. Across a document they read as three different bodies, and in a contract that can be argued in court. This is why 281 puts revision inside the work rather than after it."
-          },
           settings: ["Reports", "Articles", "Contracts", "Book chapters"],
           asks: "Consistency across length, and the discipline of reading the draft three times for three different things.",
           meets: ["errors", "commentary"]
@@ -10118,13 +10152,6 @@ const KU_MINOR = {
           line: "The reading that decides the translation.",
           body: "Taking a text apart before translating a word of it: its field, its tone, its genre, who wrote it, who it was written for, and what it is trying to make happen." +
                 "<p>The analysis <i>is</i> the decision. The translating carries it out. Most bad translations are not failures of vocabulary &mdash; they are failures to have read.</p>",
-          ex: {
-            pre: "The subject, in one example", lab: "Three words, two texts, two renderings",
-            srcLab: "Arabic", src: "يُمنع التدخين", srcDir: "rtl",
-            litLab: "On a sign in a hospital corridor", lit: "<b>No smoking.</b> Two words, read at walking pace, obeyed or not within a second.",
-            outLab: "In a company's written policy", out: "<b>Smoking is prohibited on these premises.</b> A sentence that has to survive being quoted back at someone.", outDir: "ltr",
-            note: "Nothing in the Arabic tells you which one. <b>Field, audience and purpose do</b> &mdash; and they are not in the sentence, they are in the brief. That is the whole argument for analysing first."
-          },
           settings: ["Every commission", "Especially the ones that look simple"],
           asks: "Patience at the start, and the willingness to ask a client a question before beginning.",
           meets: ["texttypes", "context"]
@@ -10134,13 +10161,6 @@ const KU_MINOR = {
           line: "What to do when the difficulty is not linguistic.",
           body: "Culture-specific items, proverbs, politeness, religion, institutions &mdash; the places where both languages are perfectly clear and the reader still will not understand." +
                 "<p>And the choice underneath all of them: bring the text to the reader, or take the reader to the text. Neither is automatically right, and the reader is entitled to know which one you chose.</p>",
-          ex: {
-            pre: "The subject, in one example", lab: "An institution is not its name",
-            srcLab: "English", src: "The Home Office issued a statement.", srcDir: "ltr",
-            litLab: "The name carried over", lit: "أصدر مكتب البيت بياناً &mdash; a government department has become a house",
-            outLab: "The function rendered", out: "أصدرت وزارة الداخلية البريطانية بياناً.", outDir: "rtl",
-            note: "Two things happened. The institution was translated by <b>what it does</b>, not by what it is called &mdash; and <b>البريطانية</b> was added, because an Arabic reader has no reason to know whose Home Office this is. The addition is not decoration; without it the sentence is not true for its new reader."
-          },
           settings: ["Literature", "Subtitling", "Advertising", "Diplomacy", "News"],
           asks: "A decision you can defend — and the honesty to notice when you smoothed something away.",
           meets: ["cultural", "proverb", "lineage"],
@@ -10151,13 +10171,6 @@ const KU_MINOR = {
           line: "Where a wrong word stops being a style problem.",
           body: "Language for specific purposes: legal, medical, technical, commercial. Each field has its own terminology, its own register, its own conventions of layout, and its own idea of what an error costs." +
                 "<p>Most paid translation work is this. It is also where <b>risk</b> lives, and where risk assessment stops being an academic exercise.</p>",
-          ex: {
-            pre: "The subject, in one example", lab: "Two renderings, one of them dangerous",
-            srcLab: "Arabic, on a prescription", src: "قرص واحد كل ٨ ساعات", srcDir: "rtl",
-            litLab: "The natural English", lit: "<b>one tablet three times a day</b> &mdash; which is how people speak, and is a different instruction",
-            outLab: "The instruction, unchanged", out: "one tablet every 8 hours", outDir: "ltr",
-            note: "<i>Three times a day</i> means waking hours; <b>every eight hours</b> means a clock, including the middle of the night. In a leaflet the difference is a matter of tone. On a prescription it changes how much of the drug is in a patient at three in the morning. That gap is what the course means by <b>risk</b>."
-          },
           settings: ["Law", "Medicine", "Engineering", "Finance", "Certified translation"],
           asks: "That you know the subject well enough to know when you do not — and say so rather than guess.",
           meets: ["register", "booth"]
@@ -10174,13 +10187,6 @@ const KU_MINOR = {
           line: "Where what crosses is not only the information.",
           body: "Prose and poetry, in which voice, rhythm, register and effect are not decoration on the meaning &mdash; they are part of it. The course where the question of what <i>cannot</i> cross is asked most seriously, and answered least comfortably." +
                 "<p>It is also the course that asks most of your writing. A literary translator who is not a writer produces information about a book.</p>",
-          ex: {
-            pre: "The subject, in one example", lab: "Not what the words mean — what they are doing",
-            srcLab: "Arabic", src: "وكان يا ما كان في قديم الزمان", srcDir: "rtl",
-            litLab: "The words", lit: "<i>And there was, oh what there was, in ancient time</i> &mdash; accurate, and it tells an English child nothing",
-            outLab: "The work the words do", out: "Once upon a time", outDir: "ltr",
-            note: "The two formulas share no vocabulary at all. What they share is the <b>function</b>: both tell a listener that a story is beginning and that its literal truth is not the point. Literary translation is mostly decisions of this shape."
-          },
           settings: ["Publishing", "Poetry", "Theatre", "Literary prizes and translation projects"],
           asks: "That you write well in the target language, and that you know when to lose something on purpose.",
           meets: ["lineage", "commentary"]
@@ -10190,13 +10196,6 @@ const KU_MINOR = {
           line: "Translation with a stopwatch and a ruler.",
           body: "Translation for screen: subtitling, dubbing, voice-over, and audio description for viewers who cannot see. Its defining feature is <b>constraint</b> &mdash; characters per line, seconds on screen, lip movement." +
                 "<p>And a reader who can hear the original while reading you, which no other kind of translation has to survive.</p>",
-          ex: {
-            pre: "The subject, in one example", lab: "Thirty-five characters too many",
-            srcLab: "Arabic, spoken", src: "يا أخي، أنا قلت لك من أوّل الشهر ولا سمعتني.", srcDir: "rtl",
-            litLab: "Everything rendered", lit: "<i>My brother, I told you from the beginning of the month and you did not listen to me.</i> &mdash; 78 characters, on screen for 1.8 seconds",
-            outLab: "What fits", out: "I told you weeks ago. You didn't listen.", outDir: "ltr",
-            note: "<b>يا أخي</b> is exasperation, not family, and it survives as a full stop and a word order rather than as words. Nothing was cut that was carrying meaning; what was cut was carrying syllables. This is the skill the course is built on."
-          },
           settings: ["Streaming", "Broadcast", "Film festivals", "Corporate video", "Accessibility"],
           asks: "Ruthless compression without loss of sense, and the nerve to be checked in real time by an audience that half-understands the source.",
           meets: ["subtitle"]
@@ -10206,13 +10205,6 @@ const KU_MINOR = {
           line: "The tools, and why you are still the one responsible.",
           body: "What the profession actually runs on: computer-assisted translation, translation memory, terminology management, machine translation and post-editing &mdash; and now generative systems, including what they produce when they do not know." +
                 "<p>Translation memory and a termbase are not optional extras in professional work. They are how consistency and a delivery date are met at once.</p>",
-          ex: {
-            pre: "The subject, in one example", lab: "Correct, fluent, and unmistakably translated",
-            srcLab: "English", src: "The minister opened the exhibition.", srcDir: "ltr",
-            litLab: "What the machine returns", lit: "تمّ افتتاح المعرض من قِبَل الوزير &mdash; grammatical, fluent, and carrying the English passive straight over",
-            outLab: "What a post-editor writes", out: "افتتح الوزير المعرض.", outDir: "rtl",
-            note: "There is no error here you can circle. The machine produced a sentence that is <b>correct and wrong</b>, which is the characteristic failure of machine translation between these two languages. Post-editing is the skill of hearing it &mdash; and it is a skill, not a lower grade of translating."
-          },
           settings: ["Agencies", "Institutions", "Localisation", "Post-editing work"],
           asks: "That you stay the editor. A tool faster than you is still not responsible for the output — you are.",
           meets: ["glossary", "errors"]
@@ -10220,6 +10212,307 @@ const KU_MINOR = {
       ]
     }
   ]
+};
+
+/* ── What each minor course page carries beyond its description ──
+   topics  the course in sections, for the courses whose units are not
+           written yet (180, 182 and 284 have real units instead)
+   cases   things that actually happened, each with where it is reported.
+           Nothing here is invented: no made-up sentence pairs standing in
+           for "an example". If a case cannot be sourced it does not go in.
+   videos  YouTube, loaded only when tapped, so a course page does not pull
+           in four players nobody asked for.                             */
+const KU_COURSE_MORE = {
+  "180": {
+    cases: [
+      { k: "Scripture", yr: "c. 400", t: "Why Michelangelo's Moses has horns",
+        what: "Translating the Hebrew Bible into Latin, Jerome met <i>qaran</i> in Exodus 34, where Moses comes down from Sinai. The root can mean <i>to shine</i> or <i>horn</i>. The Vulgate reads <i>cornuta</i>, horned &mdash; and for a thousand years European art gave Moses horns, Michelangelo's statue in Rome included.",
+        pair: ["קָרַן · qaran (shone / sent out rays)", "cornuta · horned"],
+        point: "One word with two senses, and the translator picked one. Whether Jerome misread or meant it figuratively is still argued; what is not argued is that the choice outlived him by a millennium. Form against meaning, at its most visible.",
+        src: [["Horns of Moses — Wikipedia", "https://en.wikipedia.org/wiki/Horns_of_Moses"]] },
+      { k: "Diplomacy", yr: "1956", t: "“We will bury you”",
+        what: "Khrushchev told Western ambassadors in Moscow <i>Мы вас похороним</i>. Rendered word for word, <i>We will bury you</i> ran on front pages as a threat. In context it was a Marxist commonplace: communism will outlive capitalism and be there at its funeral.",
+        pair: ["Мы вас похороним", "We will bury you · meant: we will outlast you"],
+        point: "Every word was correct. The meaning was not. This is the course's central distinction &mdash; between what a sentence says and what it is used to say &mdash; with a Cold War attached.",
+        src: [["We will bury you — Wikipedia", "https://en.wikipedia.org/wiki/We_will_bury_you"],
+              ["Language Log", "https://languagelog.ldc.upenn.edu/nll/?p=61527"]] },
+      { k: "Myth", yr: "1963", t: "Kennedy was not a jelly doughnut",
+        what: "Kennedy's <i>Ich bin ein Berliner</i> is often said to mean <i>I am a doughnut</i>, because a <i>Berliner</i> is also a pastry. Germans in the crowd understood him perfectly: the article <i>ein</i> is correct for a figurative claim of belonging.",
+        point: "Included as a warning. Half the famous “translation blunders” online are invented. Before you quote one, find where it was reported &mdash; which is why every case on this page links to its source.",
+        src: [["Ich bin ein Berliner — Wikipedia", "https://en.wikipedia.org/wiki/Ich_bin_ein_Berliner"]] }
+    ],
+    videos: [
+      { id: "oltwkG_d-Ko", t: "Translation Studies — Equivalence (Eugene Nida)", why: "Formal and dynamic equivalence, the vocabulary this course is built on." },
+      { id: "RKK7wGAYP6k", t: "How language shapes the way we think", by: "Lera Boroditsky · TED", why: "Why two languages do not divide the world the same way &mdash; the reason word-for-word fails." }
+    ]
+  },
+
+  "182": {
+    cases: [
+      { k: "Health", yr: "2022", t: "Monkeypox becomes mpox",
+        what: "On 28 November 2022 the World Health Organization made <i>mpox</i> the preferred term, phasing out <i>monkeypox</i> over a year. The concept did not change; the term did, because the old one was feeding stigma and keeping people from testing.",
+        point: "A term is a decision made by someone with authority, recorded with a date. Your termbase entry for this concept now needs both forms, which one is current, and since when.",
+        src: [["WHO news release", "https://www.who.int/news/item/28-11-2022-who-recommends-new-name-for-monkeypox-disease"]] },
+      { k: "Science", yr: "2006", t: "Pluto loses a definition",
+        what: "Nothing about Pluto changed in 2006. The International Astronomical Union wrote, for the first time, a definition of <i>planet</i> &mdash; and Pluto no longer met it. A new term, <i>dwarf planet</i>, was created for what was left over.",
+        point: "Terminology starts from the concept. Change the definition and the term's coverage changes with it. Every language's term for <i>planet</i> had to follow.",
+        src: [["IAU definition of planet — Wikipedia", "https://en.wikipedia.org/wiki/IAU_definition_of_planet"]] },
+      { k: "Engineering", yr: "1999", t: "Mars Climate Orbiter",
+        what: "One team's software reported thrust in pound-force seconds; NASA's navigation software expected newton-seconds. Nobody converted. The $125 million spacecraft entered Mars's atmosphere too low and was lost.",
+        point: "Two teams, one word, two concepts underneath it &mdash; and no shared record saying which one. This is exactly what a termbase and an agreed standard exist to prevent.",
+        src: [["Mars Climate Orbiter — Wikipedia", "https://en.wikipedia.org/wiki/Mars_Climate_Orbiter"]] }
+    ],
+    videos: [
+      { id: "QS8MqZ5zc7o", t: "مفهوم المصطلح ووظائفه", by: "أ.د. عز الدين البوشيخي", why: "Term and concept, in Arabic &mdash; the opening of the course." },
+      { id: "g0b8qtPr3CA", t: "Mars Climate Orbiter: A Metric Mishap", why: "The case above, told by the engineers' side." }
+    ]
+  },
+
+  "280": {
+    topics: [
+      { en: "Reading before translating", ar: "القراءة قبل الترجمة", say: "Who wrote it, for whom, and what it is for &mdash; settled before the first sentence." },
+      { en: "The unit of translation", ar: "وحدة الترجمة", say: "Not the word: the phrase, the clause, sometimes the sentence. Choosing the unit is the first decision." },
+      { en: "Collocation and fixed phrases", ar: "المتلازمات والتعابير الثابتة", say: "Words that travel together and must be translated together &mdash; the commonest source of a sentence that is right word by word and wrong as a whole." },
+      { en: "Word order and sentence structure", ar: "ترتيب الكلمات وبناء الجملة", say: "Nominal and verbal sentences, passive and active, where English and Arabic put the weight." },
+      { en: "Into English, into Arabic", ar: "الترجمة في الاتجاهين", say: "General texts both ways, and why each direction fails differently." },
+      { en: "Register", ar: "مستوى اللغة", say: "Formal, neutral, familiar &mdash; and the cost of getting it wrong in front of a reader." },
+      { en: "Revision and self-assessment", ar: "المراجعة والتقييم الذاتي", say: "Reading your draft as a stranger would, and defending each choice out loud." }
+    ],
+    cases: [
+      { k: "Interpreting", yr: "1977", t: "Carter in Warsaw",
+        what: "On President Carter's visit to Poland, a contract interpreter rendered <i>your desires for the future</i> with a word that suggested carnal lusts, and <i>when I left the United States</i> as though Carter had abandoned it for good &mdash; in a Polish peppered with Russian. He was replaced.",
+        point: "Each word had a dictionary behind it. What failed was register and collocation: which Polish word a Pole would use, in that sentence, at a state occasion.",
+        src: [["Mental Floss", "https://www.mentalfloss.com/article/19249/president-jimmy-carters-carnal-mistake"],
+              ["NPR", "https://www.npr.org/2017/07/07/536025780/former-carter-speechwriter-reflects-on-how-presidents-used-to-speak-overseas"]] },
+      { k: "Advertising", yr: "2009", t: "“Assume nothing” — “Do nothing”",
+        what: "HSBC's private-banking slogan <i>Assume nothing</i> was rendered in several markets as <i>Do nothing</i>. In 2009 the bank spent around $10 million replacing the line worldwide.",
+        point: "Three words, translated without asking what they were for. A short text is not an easy text; it is a text with nowhere to hide.",
+        src: [["Campaign", "https://www.campaignlive.co.uk/article/hsbc-roll-global-rebrand-hsbc-private-bank/879870"],
+              ["Spear's", "https://spearswms.com/wealth/hsbc-to-launch-10m-private-banking-rebranding/"]] }
+    ],
+    videos: [
+      { id: "cXNTArhA0Jg", t: "How interpreters juggle two languages at once", by: "Ewandro Magalhães · TED-Ed", why: "What the brain does between hearing one language and producing another." },
+      { id: "xkUoCmEUoYU", t: "What are collocations in English?", why: "The single biggest topic in a first translation course, in five minutes." }
+    ]
+  },
+
+  "281": {
+    topics: [
+      { en: "From passage to document", ar: "من الفقرة إلى الوثيقة", say: "What changes when a text runs to pages: cross-references, headings, a reader who will not read it in one sitting." },
+      { en: "Consistency", ar: "الاتساق", say: "One term, one rendering, everywhere it carries the same thing &mdash; and knowing where variation is allowed." },
+      { en: "Genres: report, article, contract", ar: "الأجناس النصية: التقرير والمقالة والعقد", say: "Each has conventions of layout and phrasing the reader expects, in each language." },
+      { en: "Cohesion across paragraphs", ar: "السبك عبر الفقرات", say: "Reference, connectors, repetition &mdash; the threads that hold a long text together, and do not cross languages one for one." },
+      { en: "Glossaries and style sheets", ar: "المسارد ودليل الأسلوب", say: "Writing decisions down so the last page agrees with the first." },
+      { en: "Revision in passes", ar: "المراجعة على مراحل", say: "One pass for meaning, one for terms, one for the target language as a reader meets it." },
+      { en: "Editing other people's translations", ar: "مراجعة ترجمات الآخرين", say: "What to change, what to leave, and how to say why." }
+    ],
+    cases: [
+      { k: "Law", yr: "1982", t: "Twenty-four originals, one law",
+        what: "Every language version of EU legislation is equally authentic. In <i>CILFIT</i> the European Court of Justice ruled that interpreting a provision may mean comparing the language versions &mdash; so an inconsistency in one of them is not a slip, it is a different law.",
+        point: "This is consistency with consequences: the same concept must be the same term, every time, in every version, because someone will line them up side by side.",
+        src: [["CILFIT, Case 283/81 — EUR-Lex", "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:61981CJ0283"]] },
+      { k: "Publishing", yr: "1997–2007", t: "Seven books, one Hogwarts",
+        what: "Harry Potter's translators named things in book one &mdash; <i>Poudlard</i> for Hogwarts in French, <i>Silente</i> for Dumbledore in Italian &mdash; and were held to those choices for six more books. Book two then hid an anagram in a name &mdash; <i>Tom Marvolo Riddle</i> = <i>I am Lord Voldemort</i> &mdash; and every language had to rebuild it around the name it had already chosen (in French, <i>Tom Elvis Jedusor</i>).",
+        point: "A long text is a promise to your past self. A name chosen on page 40 binds page 4,000; that is why 281 puts the glossary inside the work.",
+        src: [["Harry Potter in translation — Wikipedia", "https://en.wikipedia.org/wiki/Harry_Potter_in_translation"]] },
+      { k: "Scripture", yr: "1604–1611", t: "The King James Bible, by committee",
+        what: "About fifty scholars in six companies translated it, and each company's draft was sent round the others for review &mdash; one of the earliest documented revision systems for a long translation.",
+        point: "Revision built into the process, not added at the end, by people who had not written the draft.",
+        src: [["King James Version — Wikipedia", "https://en.wikipedia.org/wiki/King_James_Version"]] }
+    ],
+    videos: [
+      { id: "lwQvQDs_eEY", t: "How does a translation memory work in a CAT tool?", why: "How professionals keep page 300 consistent with page 3." }
+    ]
+  },
+
+  "283": {
+    topics: [
+      { en: "Text and context", ar: "النص والسياق", say: "A text never arrives alone: it has an author, a reader, a time and a purpose." },
+      { en: "Register: field, tenor, mode", ar: "السجل: المجال والعلاقة والوسيلة", say: "What it is about, who is talking to whom, and in what medium &mdash; Halliday's three questions." },
+      { en: "Text types and function", ar: "أنماط النصوص ووظائفها", say: "Informative, expressive, operative: what the text is trying to do decides what must survive." },
+      { en: "Genre conventions", ar: "أعراف الجنس النصي", say: "A recipe, a contract, an obituary &mdash; each looks different in each culture." },
+      { en: "Cohesion and coherence", ar: "السبك والحبك", say: "How a text holds together on the surface, and in the reader's head." },
+      { en: "Intertextuality", ar: "التناص", say: "Quotation, allusion, the Qur'an or Shakespeare under the surface." },
+      { en: "The brief", ar: "تكليف الترجمة", say: "Who the translation is for, and what they will do with it &mdash; the analysis turned into instructions." }
+    ],
+    cases: [
+      { k: "Diplomacy", yr: "1967", t: "Resolution 242 and a missing “the”",
+        what: "The English text of UN Security Council Resolution 242 calls for withdrawal “from territories occupied”; the French, equally official, reads “des territoires occupés” &mdash; which most readers take as <i>the</i> territories. The ambiguity in English was drafted on purpose.",
+        point: "Some vagueness is the point of the text. Reading for purpose means noticing when the author wanted not to be precise &mdash; and knowing that your language may not allow you to stay vague.",
+        src: [["UNSC Resolution 242 — Wikipedia", "https://en.wikipedia.org/wiki/United_Nations_Security_Council_Resolution_242"]] },
+      { k: "Treaty", yr: "1840", t: "Waitangi: sovereignty and kāwanatanga",
+        what: "In the English text of the Treaty of Waitangi, Māori chiefs cede “all the rights and powers of sovereignty”. The Māori text most of them signed gives the Queen <i>kāwanatanga</i> &mdash; governorship, a word coined from <i>governor</i> &mdash; while promising the chiefs <i>tino rangatiratanga</i>, full chieftainship.",
+        point: "The two texts do different things. New Zealand is still working out the consequences in its courts and its tribunal.",
+        src: [["NZ History — differences between the texts", "https://nzhistory.govt.nz/politics/treaty/read-the-treaty/differences-between-the-texts"]] }
+    ],
+    videos: [
+      { id: "xd2a-XEiX6I", t: "Field, Tenor, Mode", why: "The three questions of register, the analysis this course teaches you to run on every text." }
+    ]
+  },
+
+  "284": {
+    cases: [
+      { k: "Film", yr: "2015", t: "Inside Out: broccoli is not disgusting in Japan",
+        what: "Riley refuses broccoli in Pixar's <i>Inside Out</i>. Japanese children like broccoli, so the Japanese release shows green peppers instead. Pixar re-made 28 graphics across 45 shots for different countries &mdash; hockey became football in some of them.",
+        point: "Domestication, done in the image itself. The joke is “food a child hates”; the food was only the carrier.",
+        src: [["/Film", "https://slashfilm.com/727914/why-inside-out-changed-so-many-scenes-for-its-overseas-release"],
+              ["SoraNews24", "https://soranews24.com/2015/07/24/pixar-alters-inside-outs-visuals-for-japanese-release-removes-broccoli/amp/"]] },
+      { k: "Film", yr: "2016", t: "Zootopia's newsreader changes species",
+        what: "The news anchor in <i>Zootopia</i> is a moose in the US and Canada, a koala in Australia and New Zealand, a panda in China, a jaguar in Brazil, a tanuki in Japan and a corgi in the UK &mdash; each voiced by a local broadcaster.",
+        point: "A cultural reference that only works if the audience recognises it. Disney chose to replace it rather than explain it.",
+        src: [["Mental Floss", "https://mentalfloss.com/article/76784/zootopia-has-different-news-anchors-different-countries"]] },
+      { k: "Film", yr: "2014", t: "Captain America's to-do list",
+        what: "Steve Rogers keeps a list of what he missed while frozen. In <i>The Winter Soldier</i> it differs by country: the moon landing and <i>Troubleman</i> in the US, the Beatles and <i>Sherlock</i> in the UK, <i>Oldboy</i> in South Korea, the 1998 World Cup in France.",
+        point: "The list's job is “things everyone here knows”. Translating the words would have kept an American list and lost the job.",
+        src: [["/Film", "https://slashfilm.com/captain-america-2-international-versions"],
+              ["Complex", "https://www.complex.com/pop-culture/2014/04/captain-america-easter-egg"]] }
+    ],
+    videos: [
+      { id: "oQ5i44Orbt0", t: "6 details Inside Out changed in each country", why: "The case above, shown frame by frame." },
+      { id: "ObaVGOt4iFU", t: "12 “untranslatable” words from around the world", why: "Where a culture has a word and yours has a paragraph." }
+    ]
+  },
+
+  "285": {
+    topics: [
+      { en: "Language for specific purposes", ar: "اللغة لأغراض خاصة", say: "What makes a specialised text different: terms, density, conventions, a reader who knows the field." },
+      { en: "Legal translation", ar: "الترجمة القانونية", say: "Contracts, judgments, legislation. Two legal systems, not just two languages." },
+      { en: "Medical translation", ar: "الترجمة الطبية", say: "Reports, consent forms, leaflets &mdash; where the reader may be a doctor or a frightened patient." },
+      { en: "Technical translation", ar: "الترجمة التقنية", say: "Manuals, specifications, safety text. Clarity over elegance." },
+      { en: "Business and financial texts", ar: "النصوص التجارية والمالية", say: "Reports, statements, correspondence, and the figures inside them." },
+      { en: "Research and the parallel text", ar: "البحث والنصوص الموازية", say: "Reading what specialists in the target language actually write before you write it." },
+      { en: "Risk and responsibility", ar: "المخاطر والمسؤولية", say: "When an error is a style problem and when it is a lawsuit &mdash; and what to do when you are not sure." }
+    ],
+    cases: [
+      { k: "Medicine", yr: "1980", t: "Willie Ramirez and “intoxicado”",
+        what: "An 18-year-old was brought unconscious into a Florida hospital. His family said he was <i>intoxicado</i> &mdash; in their Cuban Spanish, ill from something he ate or drank. A bilingual staff member, not a trained interpreter, passed it on as <i>intoxicated</i>. He was treated for an overdose. He had a brain haemorrhage, and was left quadriplegic; the settlement was about $71 million.",
+        pair: ["intoxicado · poisoned, sick from food", "intoxicated · drunk or drugged"],
+        point: "A false friend, in a setting where nobody had time to check. Medical translation is not general translation with harder words; it is translation where the error has a body.",
+        src: [["The Language Doctors", "https://thelanguagedoctors.org/blog/intoxicado-case-translation-mishap"]] },
+      { k: "Medicine", yr: "2006–07", t: "Forty-seven knees in Berlin",
+        what: "A Berlin hospital implanted 47 knee prostheses without cement. The packaging, in English, said <i>non-modular cemented</i>; it had been understood as <i>non-cemented</i>. Most of the patients needed revision surgery.",
+        point: "Two words of technical English, read by people who were not translators. The case is published in a patient-safety journal for a reason.",
+        src: [["Patient Safety in Surgery (PMC)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC2241776/"]] },
+      { k: "Law", yr: "1889", t: "The Treaty of Wuchale",
+        what: "Article 17 of the treaty between Italy and Ethiopia said, in Amharic, that the emperor <i>could</i> use Italy for his foreign affairs. The Italian said he <i>must</i>. Italy treated Ethiopia as a protectorate; the dispute ended at the Battle of Adwa in 1896.",
+        point: "One modal verb. In a contract, <i>may</i> and <i>shall</i> are not style.",
+        src: [["Treaty of Wuchale — Wikipedia", "https://en.wikipedia.org/wiki/Treaty_of_Wuchale"]] }
+    ],
+    videos: [
+      { id: "x8dqTZ4Hsac", t: "The Willie Ramirez case: failed communication and tragic results (preview)", by: "Gail Price-Wise", why: "The medical case above, from the researcher who documented it." },
+      { id: "_RCtvRyABEA", t: "Legal translation: translating legal concepts or legal terms?", why: "Why a legal term can only be translated after the concept behind it is understood." }
+    ]
+  },
+
+  "386": {
+    topics: [
+      { en: "What makes a text literary", ar: "ما الذي يجعل النص أدبياً", say: "When how it is said is part of what is said." },
+      { en: "Voice and style", ar: "الصوت والأسلوب", say: "Hearing the author, and not replacing them with yourself." },
+      { en: "Prose fiction", ar: "ترجمة السرد", say: "Dialogue, narration, free indirect speech, dialect." },
+      { en: "Poetry", ar: "ترجمة الشعر", say: "Metre, rhyme, image: what to keep when you cannot keep everything." },
+      { en: "Drama", ar: "ترجمة المسرح", say: "Lines that must be speakable, by an actor, tonight." },
+      { en: "Culture in the novel", ar: "الثقافة في الرواية", say: "Food, kinship, religion, place names &mdash; explain, keep, or replace." },
+      { en: "Retranslation and criticism", ar: "إعادة الترجمة ونقدها", say: "Why classics get translated again, and how to read two translations against each other." },
+      { en: "The translator's place", ar: "موقع المترجم", say: "Prefaces, notes, the name on the cover &mdash; and prizes that now share the money." }
+    ],
+    cases: [
+      { k: "Novel", yr: "1970", t: "One Hundred Years of Solitude",
+        what: "Gregory Rabassa's English translation of García Márquez's <i>Cien años de soledad</i> became a world bestseller &mdash; and García Márquez said he preferred it to his own Spanish.",
+        point: "A literary translation can be judged as writing in its own right. That is the standard this course holds you to.",
+        src: [["Dartmouth — Rabassa", "https://spanport.dartmouth.edu/news/2014/04/alumnus-was-garcia-marquezs-renowned-translator"]] },
+      { k: "Novel", yr: "2016", t: "The Vegetarian: praised and criticised",
+        what: "Deborah Smith's translation of Han Kang's <i>The Vegetarian</i> won the Man Booker International Prize with the author. Korean readers and critics, notably Charse Yun, then documented mistranslations, added emphasis and a louder voice than Han Kang's spare Korean.",
+        point: "Both things are true at once: the translation made the book a success in English, and it is not the same voice. The course asks you to hold that tension, not settle it.",
+        src: [["Korea Exposé — Charse Yun", "https://koreaexpose.com/deborah-smith-translation-han-kang-novel-vegetarian"],
+              ["Deborah Smith — Wikipedia", "https://en.wikipedia.org/wiki/Deborah_Smith_(translator)"]] },
+      { k: "Arabic novel", yr: "2019", t: "Celestial Bodies — سيدات القمر",
+        what: "Marilyn Booth's translation of the Omani novelist Jokha Alharthi's <i>سيدات القمر</i> won the International Booker Prize, the first novel translated from Arabic to do so. Author and translator shared the £50,000 equally.",
+        point: "The nearest case to you: Gulf Arabic culture, kinship and place carried into English for readers who have never been to Oman.",
+        src: [["The Booker Prizes", "https://thebookerprizes.com/the-booker-library/books/celestial-bodies"]] }
+    ],
+    videos: [
+      { id: "aPvy-KFlkcY", t: "In conversation with Jokha Alharthi, winner of the International Booker Prize", why: "The author of the Arabic case above." },
+      { id: "DZTvSfZaYh4", t: "Warts and all: sustaining a career in literary translation", why: "Nariman Youssef, Alice Guthrie, Anton Hur and Ruth Martin on what the work is actually like." },
+      { id: "mY5RvWnrL8c", t: "Getting started in literary translation", by: "Jen Calleja", why: "How translators get their first book." }
+    ]
+  },
+
+  "387": {
+    topics: [
+      { en: "What audiovisual translation is", ar: "ما الترجمة السمعية البصرية", say: "Image, sound and words at once &mdash; and only the words are yours to change." },
+      { en: "Subtitling: space and time", ar: "السترجة: المكان والزمن", say: "Two lines, about 42 characters each, a reading speed of around 17&ndash;20 characters a second." },
+      { en: "Segmentation and line breaks", ar: "التقطيع وكسر الأسطر", say: "Where a subtitle splits, so the eye reads it as one thought." },
+      { en: "Reduction and condensation", ar: "الاختزال والتكثيف", say: "What to cut when everything cannot fit &mdash; and what must never be cut." },
+      { en: "Dubbing and lip-sync", ar: "الدبلجة ومزامنة الشفاه", say: "Writing lines an actor can say in the time the mouth on screen is moving." },
+      { en: "Voice-over", ar: "التعليق الصوتي", say: "Documentaries and interviews: the original audible underneath." },
+      { en: "Humour, songs, culture on screen", ar: "الفكاهة والأغاني والثقافة على الشاشة", say: "When the joke is in the picture and cannot be changed." },
+      { en: "Accessibility: SDH and audio description", ar: "الإتاحة: ترجمة الصم والوصف الصوتي", say: "Subtitles for viewers who cannot hear, narration for viewers who cannot see." }
+    ],
+    rule: { t: "The numbers a subtitler works to", lines: [
+      ["42", "characters per line, at most (Netflix, English)"],
+      ["2", "lines on screen, at most"],
+      ["20 / 17", "characters a second for adult / children's programmes"],
+      ["5/6 s · 7 s", "shortest and longest time a subtitle stays up"]
+    ], src: ["Netflix Timed Text Style Guide", "https://partnerhelp.netflixstudios.com/hc/en-us/articles/217350977-English-USA-Timed-Text-Style-Guide"] },
+    cases: [
+      { k: "Subtitles", yr: "2019", t: "Parasite: “ram-don” and “Oxford”",
+        what: "Darcy Paquet subtitled Bong Joon-ho's <i>Parasite</i>. <i>Jjapaguri</i>, a mix of two instant-noodle brands, became <i>ram-don</i> (ramen + udon), a word he invented. Seoul National University became <i>Oxford</i>. KakaoTalk became WhatsApp. The film went on to win Best Picture.",
+        pair: ["짜파구리 · jjapaguri", "ram-don"],
+        point: "Each choice trades accuracy for speed of understanding, because a subtitle is read once, in about two seconds, while the picture keeps moving. Paquet explains every one of them in the first video below.",
+        src: [["ATA Audiovisual Division", "https://ata-divisions.org/AVD/ata-61-recap-translating-into-hollywood-a-case-study-of-the-oscar-winning-film-parasite"],
+              ["The Jakarta Post", "https://newgelora.thejakartapost.com/life/2020/02/08/translation-wings-that-helped-parasite-soar-free-and-high"]] },
+      { k: "Captions", yr: "2021", t: "Squid Game: subtitles against captions",
+        what: "Korean-speaking comedian Youngmi Mayer showed that Netflix's English closed captions &mdash; transcribed from the English dub &mdash; flattened the dialogue. A character who says “I am very smart, I just never got a chance to study” reads as “I'm not a genius, but I still got it worked out.”",
+        pair: ["I am very smart, I just never got a chance to study", "I'm not a genius, but I still got it worked out"],
+        point: "The original line is about class, the subject of the whole series. A caption made from a dub is a translation of a translation, and loses what the first one already compressed.",
+        src: [["Rolling Stone", "https://www.rollingstone.com/culture/culture-news/squid-game-closed-captions-subtitles-mistranslation-1237308/"],
+              ["CBC", "https://www.cbc.ca/lite/story/1.6202592"]] },
+      { k: "Dubbing", yr: "1998", t: "Pokémon's “jelly doughnuts”",
+        what: "In the 4Kids English dub of <i>Pokémon</i>, Brock holds an onigiri &mdash; a Japanese rice ball, plainly visible on screen &mdash; and calls it a jelly-filled doughnut.",
+        point: "Dubbing can replace a word but not a picture. Domesticate the dialogue while the image stays Japanese, and the audience sees the join. It is still a running joke two decades on.",
+        src: [["Bulbapedia — Rice balls", "https://bulbapedia.bulbagarden.net/wiki/Rice_balls"]] }
+    ],
+    videos: [
+      { id: "uFJkrGYWi7Q", t: "Darcy Paquet on doing the subtitles for Parasite", why: "The translator explains the choices in the case above." },
+      { id: "r_5WAY61muE", t: "Behind Netflix's global dubbing strategy", by: "The Wall Street Journal", why: "Why more viewers watched Squid Game dubbed than subtitled, and how a dub is made." },
+      { id: "UoElgXzBIqE", t: "Complete guide to subtitling: Netflix, BBC and more", why: "The technical rules, applied in subtitling software." },
+      { id: "YuRj9ZZUwXI", t: "What is audio description, and why is it necessary?", why: "The part of AVT for viewers who cannot see the screen." }
+    ]
+  },
+
+  "388": {
+    topics: [
+      { en: "The translator's workstation", ar: "محطة عمل المترجم", say: "What a working translator actually has open: CAT tool, termbase, references, QA." },
+      { en: "CAT tools and translation memory", ar: "أدوات الترجمة بمساعدة الحاسوب وذاكرة الترجمة", say: "Segments, matches, fuzzy matches &mdash; reusing what has already been translated and approved." },
+      { en: "Terminology management", ar: "إدارة المصطلحات", say: "Termbases inside the tool, and public ones: IATE (EU), UNTERM (UN)." },
+      { en: "Machine translation", ar: "الترجمة الآلية", say: "From rules to statistics to neural networks, and what each gets wrong." },
+      { en: "Post-editing", ar: "التحرير اللاحق", say: "Correcting machine output to a standard &mdash; light or full &mdash; and knowing which was asked for." },
+      { en: "Generative AI", ar: "الذكاء الاصطناعي التوليدي", say: "What large language models do well, and what they produce when they do not know." },
+      { en: "Quality assurance", ar: "ضمان الجودة", say: "Automatic checks for numbers, terms, tags and consistency." },
+      { en: "Localisation", ar: "الأقلمة", say: "Software, websites, apps: text that lives inside code." }
+    ],
+    cases: [
+      { k: "Machine translation", yr: "2017", t: "“Good morning” read as “attack them”",
+        what: "A Palestinian construction worker posted a photo of himself by a bulldozer with the caption <i>يصبحهم</i> &mdash; good morning to them. Facebook's automatic translation gave “attack them” in Hebrew and “hurt them” in English. He was arrested and questioned by Israeli police, then released; nobody who could read Arabic had checked the post first. Facebook apologised.",
+        pair: ["يصبحهم · good morning (to them)", "“hurt them” / “attack them”"],
+        point: "Colloquial Arabic, a single word, no human in the loop. Machine output is a draft; somebody who knows the language is responsible for it.",
+        src: [["The Jewish Chronicle", "https://thejc.com/news/world/palestinian-arrested-after-posting-good-morning-on-facebook-rzbaf1fl"],
+              ["Arab News", "https://www.arabnews.pk/node/1181666"]] },
+      { k: "Bias", yr: "2018", t: "“o bir doktor”",
+        what: "Turkish <i>o</i> is “he” or “she”. Google Translate rendered <i>o bir doktor</i> as “he is a doctor” and <i>o bir hemşire</i> as “she is a nurse”, choosing gender from patterns in its training data. In 2018 Google began showing both versions.",
+        point: "Arabic marks gender almost everywhere English does not, so you meet this problem in the other direction every day: the machine must guess, and it guesses the stereotype.",
+        src: [["Google Research blog", "https://research.google/blog/providing-gender-specific-translations-in-google-translate/"]] },
+      { k: "Generative AI", yr: "2023", t: "Mata v. Avianca: six cases that never existed",
+        what: "Lawyers in New York filed a brief citing court decisions found with ChatGPT. Six were invented, with fake quotations. The judge fined the lawyers and their firm $5,000.",
+        point: "A fluent answer is not a checked one. The same tool will produce a fluent translation of a term that does not exist. The responsibility stays with the person who signs.",
+        src: [["Mata v. Avianca — Wikipedia", "https://en.wikipedia.org/wiki/Mata_v._Avianca,_Inc."]] }
+    ],
+    videos: [
+      { id: "X4BmV2t83SM", t: "How computers translate human language", by: "Ioannis Papachimonas · TED-Ed", why: "Machine translation, from rules to neural networks." },
+      { id: "5GhX1XA_vsA", t: "What is a CAT tool? — Translation 101", why: "The workstation, explained before you open one." },
+      { id: "lwQvQDs_eEY", t: "How does a translation memory work in a CAT tool?", why: "Matches, fuzzy matches, and why TM is the backbone of professional work." }
+    ]
+  }
 };
 
 /* ═══════════ REGISTRY ═══════════ */
@@ -14726,7 +15019,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1003-0900";
+const BUILD = "1003-1400";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -18041,10 +18334,111 @@ function runMinor() {
     body.innerHTML = '<h3 class="c-h">The subject</h3><p>' + c.body + '</p>';
     stage.appendChild(body);
 
-    /* One piece of the actual work. Every other chamber on this site
-       teaches by showing; a course page that only describes is the
-       weakest page in the building. */
-    if (c.ex) stage.appendChild(exampleBlock(c.ex));
+    const more = KU_COURSE_MORE[c.code] || {};
+
+    /* The course in sections. Where its units are written they are the
+       sections, and each one opens; otherwise the outline, so the page
+       still says what the course is made of. */
+    if (c.units && c.units.length) {
+      const v = el("div", "c-body");
+      v.innerHTML = '<h3 class="c-h">The course, section by section</h3>' +
+        '<p>' + c.units.length + ' sections, in the order the course runs them. Each one is a sitting and ends ' +
+        'with something to translate.</p>';
+      stage.appendChild(v);
+      const list = el("div", "m-list");
+      c.units.forEach((u, k) => {
+        const b = el("button", "m-course");
+        b.innerHTML =
+          '<span class="m-code">' + u.n + '</span>' +
+          '<span class="m-txt">' +
+            '<span class="m-en">' + u.en + '</span>' +
+            '<span class="m-arname" dir="rtl" lang="ar">' + u.ar + '</span>' +
+          '</span>';
+        b.addEventListener("click", () => {
+          pushTrail(c.code + " " + c.en, () => { open = c; course(); });
+          unit(c, k);
+        });
+        list.appendChild(b);
+      });
+      stage.appendChild(list);
+    } else if (more.topics) {
+      const v = el("div", "c-body");
+      v.innerHTML = '<h3 class="c-h">The course, section by section</h3>' +
+        '<p>The sections a course of this kind is built from. Your instructor may order them differently.</p>';
+      stage.appendChild(v);
+      const ol = el("ol", "c-topics");
+      more.topics.forEach(t => {
+        const li = el("li", "c-topic");
+        li.innerHTML = '<span class="c-tn">' + t.en +
+          ' <span class="c-tar" dir="rtl" lang="ar">' + t.ar + '</span></span>' +
+          '<span class="c-tsay">' + t.say + '</span>';
+        ol.appendChild(li);
+      });
+      stage.appendChild(ol);
+    }
+
+    if (more.rule) {
+      const r = el("div", "c-rule");
+      r.innerHTML = '<span class="c-asks-lab">' + more.rule.t + '</span>' +
+        '<div class="c-rule-grid">' + more.rule.lines.map(l =>
+          '<div class="c-rule-row"><b>' + l[0] + '</b><span>' + l[1] + '</span></div>').join("") + '</div>' +
+        '<a class="c-src" href="' + more.rule.src[1] + '" target="_blank" rel="noopener">Source: ' + more.rule.src[0] + ' ↗</a>';
+      stage.appendChild(r);
+    }
+
+    /* Real cases. Each one happened, and each says where it is reported. */
+    if (more.cases && more.cases.length) {
+      const h = el("div", "c-body");
+      h.innerHTML = '<h3 class="c-h">Real cases</h3><p>Things that actually happened, and what each one teaches. ' +
+        'Every case links to where it was reported.</p>';
+      stage.appendChild(h);
+      more.cases.forEach(x => {
+        const card = el("article", "c-case");
+        card.innerHTML =
+          '<div class="c-case-top"><span class="c-case-k">' + x.k + '</span><span class="c-case-yr">' + x.yr + '</span></div>' +
+          '<h4 class="c-case-t">' + x.t + '</h4>' +
+          '<p class="c-case-what">' + x.what + '</p>' +
+          (x.pair ? '<div class="c-pair"><span dir="auto">' + x.pair[0] + '</span><span class="c-pair-arr" aria-hidden="true">→</span><span dir="auto">' + x.pair[1] + '</span></div>' : '') +
+          '<div class="c-case-point"><span class="c-asks-lab">Why it matters</span><p>' + x.point + '</p></div>' +
+          '<div class="c-case-src">' + x.src.map(sr =>
+            '<a class="c-src" href="' + sr[1] + '" target="_blank" rel="noopener">' + sr[0] + ' ↗</a>').join("") + '</div>';
+        stage.appendChild(card);
+      });
+    }
+
+    /* Videos load only when tapped: no player, and nothing sent to
+       YouTube, until someone asks for it. */
+    if (more.videos && more.videos.length) {
+      const h = el("div", "c-body");
+      h.innerHTML = '<h3 class="c-h">Watch</h3>';
+      stage.appendChild(h);
+      more.videos.forEach(vd => {
+        const card = el("div", "c-vid");
+        const play = el("button", "c-vid-play");
+        play.type = "button";
+        play.setAttribute("aria-label", "Play: " + vd.t.replace(/<[^>]+>/g, ""));
+        play.innerHTML = '<span class="c-vid-icon" aria-hidden="true"></span>' +
+          '<span class="c-vid-txt"><span class="c-vid-t" dir="auto">' + vd.t + '</span>' +
+          (vd.by ? '<span class="c-vid-by" dir="auto">' + vd.by + '</span>' : '') + '</span>';
+        play.addEventListener("click", () => {
+          const fr = document.createElement("iframe");
+          fr.src = "https://www.youtube-nocookie.com/embed/" + vd.id + "?autoplay=1&rel=0&playsinline=1";
+          fr.title = vd.t.replace(/<[^>]+>/g, "");
+          fr.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+          fr.allowFullscreen = true;
+          fr.loading = "lazy";
+          const box = el("div", "c-vid-frame");
+          box.appendChild(fr);
+          play.replaceWith(box);
+        });
+        card.appendChild(play);
+        const foot = el("div", "c-vid-foot");
+        foot.innerHTML = '<p>' + vd.why + '</p>' +
+          '<a class="c-src" href="https://www.youtube.com/watch?v=' + vd.id + '" target="_blank" rel="noopener">Open on YouTube ↗</a>';
+        card.appendChild(foot);
+        stage.appendChild(card);
+      });
+    }
 
     /* Where you meet it — a list of places, so it reads as a list. */
     const wraps = el("div", "c-body");
@@ -18074,41 +18468,6 @@ function runMinor() {
       });
       v.appendChild(row);
       stage.appendChild(v);
-    }
-
-    /* The course's own material, where it has any. */
-    if (c.units && c.units.length) {
-      const v = el("div", "verdict");
-      v.appendChild(el("span", "vh", "The course, unit by unit"));
-      v.appendChild(el("p", "vb",
-        "The material in the order the course runs it. Each unit is one sitting and ends with something " +
-        "to translate &mdash; do that part, or none of this stays."));
-      stage.appendChild(v);
-
-      const list = el("div", "m-list");
-      c.units.forEach((u, k) => {
-        const b = el("button", "m-course");
-        b.innerHTML =
-          '<span class="m-code">' + u.n + '</span>' +
-          '<span class="m-txt">' +
-            '<span class="m-en">' + u.en + '</span>' +
-            '<span class="m-arname" dir="rtl" lang="ar">' + u.ar + '</span>' +
-          '</span>';
-        b.addEventListener("click", () => {
-          pushTrail(c.code + " " + c.en, () => { open = c; course(); });
-          unit(c, k);
-        });
-        list.appendChild(b);
-      });
-      stage.appendChild(list);
-    } else {
-      const slot = el("div", "m-slot");
-      slot.innerHTML =
-        '<span class="b-lab">Practice material</span>' +
-        '<p>The material written for <b>' + c.code + ' ' + c.en + '</b> is still being prepared, and it ' +
-        'will appear here rather than being scattered through the rest of the site. Until it does, the ' +
-        'chambers above are the nearest thing the Guild has to this course.</p>';
-      stage.appendChild(slot);
     }
 
     stage.appendChild(footNav({
