@@ -10871,7 +10871,19 @@ function markCount() {
   const scored = new Set(publishedTrials().map(t => t.id));
   return Object.keys(state.marks).filter(k => state.marks[k] && scored.has(k)).length;
 }
-function currentRank() { let r = RANKS[0]; const n = markCount(); for (const c of RANKS) if (n >= rankAt(c)) r = c; return r; }
+/* A rank, once reached, is kept. The ladder is worked out from however
+   many trials are published, so adding a trial raises every threshold; on
+   4 October the eleventh trial would have taken Competent off members with
+   five marks, and the level-up screen would have played for the drop.
+   seenRank is the highest rank this member has been shown, so it is the
+   floor. */
+function currentRank() {
+  let r = RANKS[0]; const n = markCount();
+  for (const c of RANKS) if (n >= rankAt(c)) r = c;
+  const kept = RANKS.find(x => x.en === state.seenRank);
+  if (kept && RANKS.indexOf(kept) > RANKS.indexOf(r)) r = kept;
+  return r;
+}
 function grant(id) {
   if (!state.marks[id]) { state.marks[id] = true; save(); pushBackend(); return true; }
   return false;
@@ -15072,7 +15084,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1004-1400";
+const BUILD = "1004-1500";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
