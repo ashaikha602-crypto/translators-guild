@@ -2063,6 +2063,9 @@ a.ks-s-en:hover { color: var(--white); }
 .c-src { font-size: .78rem; font-weight: 600; color: var(--mag-ink); text-decoration: none;
   overflow-wrap: anywhere; }
 .c-src:hover { text-decoration: underline; }
+.carry-note { position: fixed; left: 16px; right: 16px; top: calc(env(safe-area-inset-top, 0px) + 12px);
+  z-index: 9999; padding: .8rem 1rem; border-radius: 14px; background: var(--grad); color: #fff;
+  font-weight: 600; font-size: .92rem; text-align: center; box-shadow: 0 12px 30px -10px rgba(0,0,0,.5); }
 .c-watch { display: grid; gap: .55rem; min-width: 0; }
 .c-watch-head { display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; }
 .c-watch-n { font-size: .72rem; font-weight: 600; color: var(--lilac-dim); white-space: nowrap; }
@@ -10862,6 +10865,47 @@ function load() {
   try { const raw = localStorage.getItem(STORE_KEY); if (raw) state = Object.assign(state, JSON.parse(raw)); }
   catch (e) {}
 }
+/* The old address (translators-guild.vercel.app) now forwards here. Its
+   forwarding page reads whatever progress that browser kept under the old
+   address and hands it over in the link: #carry=<base64 JSON>. It is
+   merged the same way two devices are, by union, so nothing anybody has
+   here is lost and nothing they had there is either. */
+function carryFromOldSite() {
+  const m = /^#carry=([A-Za-z0-9+/=_-]+)$/.exec(location.hash || "");
+  if (!m) return;
+  try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+  let d;
+  try {
+    const b64 = m[1].replace(/-/g, "+").replace(/_/g, "/");
+    d = JSON.parse(decodeURIComponent(escape(atob(b64))));
+  } catch (e) { return; }
+  if (!d || typeof d !== "object") return;
+  let added = 0;
+  if (d.marks && typeof d.marks === "object") {
+    Object.keys(d.marks).forEach(k => { if (d.marks[k] && !state.marks[k]) { state.marks[k] = true; added++; } });
+  }
+  const at = n => RANKS.findIndex(r => r.en === n);
+  if (typeof d.seenRank === "string" && at(d.seenRank) > at(state.seenRank || "")) state.seenRank = d.seenRank;
+  if (d.finale) state.finale = true;
+  if (d.terms && typeof d.terms === "object") {
+    const mine = savedTerms();
+    Object.keys(d.terms).forEach(k => { if (d.terms[k]) mine[k] = true; });
+  }
+  if (d.work && typeof d.work === "object") {
+    const mine = workBook();
+    Object.keys(d.work).forEach(k => { if (!(k in mine)) mine[k] = d.work[k]; });
+  }
+  save();
+  const note = document.createElement("div");
+  note.className = "carry-note";
+  note.setAttribute("role", "status");
+  note.textContent = added
+    ? "The Guild has moved here, and your progress came with you."
+    : "The Guild has moved to this address. Bookmark this one.";
+  document.body.appendChild(note);
+  setTimeout(() => note.remove(), 6000);
+}
+
 function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) {} }
 /* Only Trials count. Marks recorded against a Chamber by an earlier version
    of the site are left in place rather than deleted — nobody's history is
@@ -15084,7 +15128,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1004-1500";
+const BUILD = "1004-1600";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -20643,6 +20687,7 @@ ADM_TABS.forEach(([tabId, paneId, open]) => {
 
 /* ═══════════ BOOT ═══════════ */
 load();
+carryFromOldSite();
 setAuthMode("in");
 setAct(1);
 loadPortraits();
