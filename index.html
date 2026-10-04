@@ -15072,7 +15072,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1004-1100";
+const BUILD = "1004-1400";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -20194,6 +20194,7 @@ const ADM_LABEL = {
 const admWord = v => ADM_LABEL[v] || (v || "").replace(/_/g, " ").replace(/^./, c => c.toUpperCase());
 
 let admIsAdmin = false, admItems = [], admFilter = "all";
+let admMemSort = "joined";
 
 function admSay(text, good) {
   const m = document.getElementById("adm-msg");
@@ -20535,6 +20536,20 @@ async function admMembers() {
     box.appendChild(el("p", "adm-empty", "Nobody has registered yet."));
     return;
   }
+
+  /* Newest signups first by default; a switch flips to who was on most
+     recently. Both sorts are done here, on the rows already loaded. */
+  const sw = el("div", "chips");
+  [["joined", "Newest signups"], ["seen", "Last seen"]].forEach(([k, label]) => {
+    const b = el("button", "chip" + (admMemSort === k ? " on" : ""), label);
+    b.addEventListener("click", () => { admMemSort = k; admMembers(); });
+    sw.appendChild(b);
+  });
+  box.appendChild(sw);
+  const t = v => { const n = v ? Date.parse(v) : NaN; return isNaN(n) ? -Infinity : n; };
+  rows.sort((a, b) => admMemSort === "seen"
+    ? t(b.last_seen_at) - t(a.last_seen_at)
+    : t(b.joined_at) - t(a.joined_at));
 
   const list = el("div", "mr-list");
   rows.forEach(m => {
