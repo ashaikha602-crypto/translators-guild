@@ -12428,7 +12428,7 @@ function memberRow(m, onOpen) {
       verifiedMark(m.verified) + '</span>' +
     (m.username ? '<span class="mm-at">@' + esc(m.username) + '</span>' : '') +
     '<span class="mm-meta">' +
-      (m.rank_slug ? esc(rankName(m.rank_slug)) : "") +
+      esc(memberRank(m)) +
       (m.main_interest ? ' · ' + esc(m.main_interest) : '') +
     '</span>';
   txt.addEventListener("click", () => onOpen && onOpen(m));
@@ -12678,6 +12678,31 @@ function rankName(slug) {
   return r ? r.en : "";
 }
 
+/* The rank to show on somebody else's profile. The server keeps its own
+   copy of the ladder, typed when there were ten trials; the site works the
+   ladder out from however many trials are published, so the two drift
+   apart whenever a trial is added (the eleventh, Kuwaiti Proverbs, made
+   members' own screens and their public profiles disagree). Where the row
+   carries the member's marks, the rank is worked out here, the same way
+   their own screen does it. It never shows less than the server awarded:
+   a profile should not demote anybody. */
+function memberRank(p) {
+  if (!p) return "";
+  const server = p.rank_slug ? RANKS.find(x => (x.slug || x.en.toLowerCase()) === p.rank_slug) : null;
+  let n = null;
+  if (p.marks && typeof p.marks === "object") {
+    const scored = new Set(publishedTrials().map(t => t.id));
+    n = Object.keys(p.marks).filter(k => p.marks[k] && scored.has(k)).length;
+  } else if (typeof p.marks === "number") n = p.marks;
+  let mine = null;
+  if (n !== null) { mine = RANKS[0]; for (const c of RANKS) if (n >= rankAt(c)) mine = c; }
+  /* nothing earned and no rank on the server: show nothing, as before */
+  if (!server && (!mine || n === 0)) return "";
+  if (!mine) return server.en;
+  if (!server) return mine.en;
+  return RANKS.indexOf(mine) >= RANKS.indexOf(server) ? mine.en : server.en;
+}
+
 /* ─── Find Translators ─── */
 const FIND_ITEM = { id: "find", en: "Find Translators",
                     subject: "Members of the Guild", section: "profile", run: runFind };
@@ -12775,7 +12800,10 @@ async function runPublic(id) {
      view's job rather than this screen's. */
   try { posts = await sbGet("feed?select=id&author_id=eq." + id); } catch (e) {}
 
-  const dir = (await sbGet("member_directory?select=i_follow,follows_me,allow_follows&id=eq." + id))[0] || {};
+  const dir = (await sbGet("member_directory?select=i_follow,follows_me,allow_follows,marks,rank_slug&id=eq." + id))[0] || {};
+  /* the profile view may not carry the marks; the directory does */
+  if (p.marks == null && dir.marks != null) p.marks = dir.marks;
+  if (!p.rank_slug && dir.rank_slug) p.rank_slug = dir.rank_slug;
 
   /* Opening somebody's profile is the event. Not awaited, and it
      cannot throw into this function: reading a profile must not fail
@@ -12798,7 +12826,7 @@ async function runPublic(id) {
   /* The rank badge only when they have left their progress visible; the
      view returns null for it otherwise. */
   who.appendChild(el("p", "chips-row",
-    (p.rank_slug ? '<span class="chip-tag">' + esc(rankName(p.rank_slug)) + '</span>' : '') +
+    (memberRank(p) ? '<span class="chip-tag">' + esc(memberRank(p)) + '</span>' : '') +
     interpretingChips(p) +
     '<span class="chip-tag solid">Translation Team</span>'));
   const c = counts || {};
@@ -15044,7 +15072,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1003-2000";
+const BUILD = "1004-1100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -20461,11 +20489,38 @@ async function admMembers() {
   }
   if (!Array.isArray(rows)) rows = [];
 
+  /* Game progress lives on the member's own row, which only they can
+     read. The directory carries each member's marks and rank as they
+     share them, so the roll borrows it. A member who keeps progress
+     private simply shows none here. */
+  const prog = {};
+  try {
+    const ids = rows.map(m => m.id).filter(Boolean);
+    for (let i = 0; i < ids.length; i += 80) {
+      const r = await fetch(SUPABASE.url + "/rest/v1/member_directory?select=id,marks,rank_slug" +
+                            "&id=in.(" + ids.slice(i, i + 80).join(",") + ")",
+                            { headers: await sbHeaders() });
+      if (!r.ok) break;
+      (await r.json()).forEach(d => { prog[d.id] = d; });
+    }
+  } catch (e) { /* the roll still works without it */ }
+  const marksOf = m => {
+    const d = prog[m.id]; if (!d) return 0;
+    if (typeof d.marks === "number") return d.marks;
+    if (d.marks && typeof d.marks === "object") {
+      const scored = new Set(publishedTrials().map(t => t.id));
+      return Object.keys(d.marks).filter(k => d.marks[k] && scored.has(k)).length;
+    }
+    return 0;
+  };
+  const rankOf = m => memberRank(prog[m.id]);
+
   box.innerHTML = "";
   const head = el("div", "mr-sum");
   [[rows.length, "Accounts registered"],
    [rows.filter(m => m.last_login_at).length, "Have signed in"],
-   [rows.filter(m => m.actions > 0).length, "Have done something"],
+   [rows.filter(m => m.actions > 0 || marksOf(m) > 0).length, "Have done something"],
+   [rows.filter(m => marksOf(m) > 0).length, "Have earned marks"],
    [rows.filter(m => m.display_name).length, "Filled in a name"],
    [rows.filter(m => admOnToday(m.last_seen_at)).length, "On the site today"]]
     .forEach(([n, label]) => {
@@ -20483,7 +20538,7 @@ async function admMembers() {
 
   const list = el("div", "mr-list");
   rows.forEach(m => {
-    const busy = m.actions > 0;
+    const busy = m.actions > 0 || marksOf(m) > 0;
     const card = el("div", "mr-card" + (busy ? " on" : ""));
 
     const top = el("div", "mr-top");
@@ -20502,6 +20557,9 @@ async function admMembers() {
     card.appendChild(when);
 
     const tags = el("div", "mr-tags");
+    const mk = marksOf(m), rk = rankOf(m);
+    if (mk || rk) tags.appendChild(el("span", "mr-tag lit",
+      admEsc((rk ? rk : "") + (rk && mk ? " · " : "") + (mk ? mk + (mk === 1 ? " mark" : " marks") : ""))));
     [["posts", "post", "posts"], ["comments", "comment", "comments"],
      ["likes", "like", "likes"], ["follows", "follow", "follows"],
      ["messages", "message", "messages"], ["profiles_opened", "profile opened", "profiles opened"],
