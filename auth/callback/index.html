@@ -3,377 +3,50 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Same policy as the Guild itself: this page may talk to its own database
-     and nowhere else, so a confirmation link cannot be turned into a way of
-     carrying a member's fresh session off to somebody else's server. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://bldqausimrsusdzfbubk.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="robots" content="noindex">
-<title>Confirming your email &mdash; The Translators' Guild</title>
+<title>The Translators' Guild has moved</title>
+<script>
+/* The Guild has moved to translators-guild-web.vercel.app. This page is
+   all that is left at the old address: it reads the progress this browser
+   kept here and hands it over in the link as #carry=<base64 JSON>, which
+   the new site merges in. Email sign-in links go straight through. */
+(function () {
+  var NEW = "https://translators-guild-web.vercel.app";
+  // Never forward to ourselves, should this page ever be served there.
+  if (location.hostname === "translators-guild-web.vercel.app") return;
+  var path = location.pathname.replace(/\/+$/, "");
+  if (path === "/auth/callback" || path === "/auth/callback/index.html") {
+    location.replace(NEW + "/auth/callback" + location.search + location.hash);
+    return;
+  }
+  var carry = "";
+  try {
+    var raw = localStorage.getItem("nafithat-al-mutarjim-v1");
+    var s = raw ? JSON.parse(raw) : null;
+    if (s && typeof s === "object") {
+      var d = {}, any = false;
+      if (s.marks && typeof s.marks === "object" && Object.keys(s.marks).length) { d.marks = s.marks; any = true; }
+      if (typeof s.seenRank === "string" && s.seenRank) { d.seenRank = s.seenRank; any = true; }
+      if (s.finale) { d.finale = true; any = true; }
+      if (s.terms && typeof s.terms === "object" && Object.keys(s.terms).length) { d.terms = s.terms; any = true; }
+      if (s.work && typeof s.work === "object" && Object.keys(s.work).length &&
+          JSON.stringify(s.work).length < 20000) { d.work = s.work; any = true; }
+      if (any) carry = btoa(unescape(encodeURIComponent(JSON.stringify(d))));
+    }
+  } catch (e) { carry = ""; }
+  location.replace(NEW + "/" + (carry ? "#carry=" + carry : ""));
+})();
+</script>
 <style>
-  :root { color-scheme: dark; }
-  html, body { margin: 0; padding: 0; }
-  body { background: #110620; min-height: 100vh; }
+  html, body { margin: 0; height: 100%; }
+  body { background: #110620; color: #fff; display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 0 16px; box-sizing: border-box;
+    font: 18px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: #fff; }
 </style>
 </head>
 <body>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap">
-<style>
-:root {
-  --void: #110620; --void-2: #1a0a2f;
-  --violet: #650fd0; --magenta: #a726d0; --lilac: #d6bfea; --lilac-dim: #9a86b4; --white: #fff;
-  --mint: #2ed9a0; --coral: #ff5c7a; --amber: #ffc46b;
-  --grad: linear-gradient(180deg, #a726d0 0%, #8218c7 48%, #650fd0 100%);
-  --f-serif: "Playfair Display", Georgia, serif;
-  --f-sans: "Outfit", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --hair: 1px solid rgba(214,191,234,.14);
-  --ease: cubic-bezier(.16,.84,.28,1);
-}
-* { box-sizing: border-box; }
-body {
-  font-family: var(--f-sans); color: var(--lilac); -webkit-font-smoothing: antialiased;
-  display: grid; place-items: center; padding: max(1.25rem, env(safe-area-inset-top)) 1rem;
-  background:
-    radial-gradient(70rem 48rem at 78% -14%, rgba(167,38,208,.30), transparent 62%),
-    radial-gradient(52rem 40rem at 6% 104%, rgba(101,15,208,.24), transparent 60%),
-    var(--void);
-}
-main {
-  width: min(34rem, 100%); text-align: center;
-  padding: clamp(1.6rem, 5vw, 2.75rem);
-  border-radius: 34px; border: var(--hair);
-  background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.018));
-  box-shadow: 0 24px 60px -20px rgba(0,0,0,.7);
-  animation: rise .6s var(--ease) both;
-}
-@keyframes rise { from { opacity: 0; transform: translateY(14px); } }
-.mark {
-  width: 3.5rem; height: 3.5rem; margin: 0 auto 1.35rem; border-radius: 16px;
-  background: var(--grad); box-shadow: 0 0 40px -8px rgba(167,38,208,.75);
-  display: grid; place-items: center;
-  font-family: var(--f-serif); font-weight: 700; color: #fff; font-size: 1.4rem;
-}
-.eyebrow { margin: 0 0 .5rem; font-size: .66rem; font-weight: 600; letter-spacing: .26em;
-  text-transform: uppercase; color: var(--lilac-dim); }
-h1 { font-family: var(--f-serif); font-size: clamp(1.55rem, 5.5vw, 2.15rem); font-weight: 600;
-  color: var(--white); margin: 0 0 .7rem; line-height: 1.12; }
-p { margin: 0 0 .75rem; font-weight: 300; line-height: 1.6; font-size: 1rem; }
-p.small { font-size: .85rem; color: var(--lilac-dim); }
-b { color: var(--white); font-weight: 500; }
-.state { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: 1rem;
-  font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--lilac-dim); }
-.state i { width: .5rem; height: .5rem; border-radius: 50%; background: var(--amber);
-  box-shadow: 0 0 10px currentColor; }
-.state.ok i { background: var(--mint); }
-.state.bad i { background: var(--coral); }
-.spin { width: 2rem; height: 2rem; margin: .4rem auto 1.1rem; border-radius: 50%;
-  border: 2px solid rgba(214,191,234,.2); border-top-color: var(--magenta);
-  animation: spin .8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.acts { display: grid; gap: .6rem; margin-top: 1.4rem; }
-a.btn, button.btn {
-  font-family: inherit; font-size: .95rem; font-weight: 500; cursor: pointer;
-  display: block; width: 100%; padding: .95rem 1.2rem; border-radius: 999px;
-  border: 0; background: var(--grad); color: #fff; text-decoration: none;
-  box-shadow: 0 0 28px -8px rgba(167,38,208,.8);
-  transition: transform .18s var(--ease), box-shadow .18s var(--ease);
-  min-height: 48px;
-}
-a.btn:hover, button.btn:hover { transform: translateY(-1px); box-shadow: 0 0 40px -6px rgba(167,38,208,.95); }
-a.ghost, button.ghost {
-  font-family: inherit; font-size: .9rem; cursor: pointer; display: block; width: 100%;
-  padding: .85rem 1.2rem; border-radius: 999px; border: var(--hair);
-  background: transparent; color: var(--lilac); text-decoration: none; min-height: 48px;
-}
-a.btn:focus-visible, a.ghost:focus-visible, button:focus-visible {
-  outline: 2px solid var(--magenta); outline-offset: 3px; }
-.detail { margin-top: 1.2rem; padding-top: 1rem; border-top: var(--hair);
-  font-size: .78rem; color: var(--lilac-dim); text-align: left; }
-.detail ul { margin: .4rem 0 0; padding-inline-start: 1.1rem; display: grid; gap: .3rem; }
-[hidden] { display: none !important; }
-@media (prefers-reduced-motion: reduce) {
-  main { animation: none; } .spin { animation-duration: 2.4s; }
-  a.btn, button.btn { transition: none; }
-}
-</style>
-
-<main role="main" aria-live="polite">
-  <div class="mark" aria-hidden="true">G</div>
-  <p class="eyebrow">The Translators&rsquo; Guild</p>
-
-  <!-- working -->
-  <section id="v-busy">
-    <div class="spin" role="img" aria-label="Checking"></div>
-    <h1>Checking your link</h1>
-    <p class="small">One moment &mdash; we are asking the Guild&rsquo;s records whether this
-      confirmation is genuine. Nothing is assumed from the link alone.</p>
-  </section>
-
-  <!-- verified -->
-  <section id="v-ok" hidden>
-    <p class="state ok"><i aria-hidden="true"></i>Verified</p>
-    <h1>Email verified</h1>
-    <p>Your email has been successfully verified.</p>
-    <p>Welcome to the Translators&rsquo; Guild, <b id="ok-name">member</b>.</p>
-    <p>Your journey begins now.</p>
-    <div class="acts"><a class="btn" href="/" id="enter">Enter the Guild</a></div>
-  </section>
-
-  <!-- failed -->
-  <section id="v-bad" hidden>
-    <p class="state bad"><i aria-hidden="true"></i><span id="bad-tag">Not verified</span></p>
-    <h1 id="bad-head">This link did not work</h1>
-    <p id="bad-body">We could not confirm your email from this link.</p>
-    <div class="acts">
-      <a class="btn" href="/" id="bad-go">Go to the Guild and sign in</a>
-    </div>
-    <div class="detail">
-      <b>What usually causes this</b>
-      <ul>
-        <li>The link was already used &mdash; your email may already be confirmed. Try signing in.</li>
-        <li>The link expired. Confirmation links are short-lived; sign up again to get a fresh one.</li>
-        <li>The link was opened in a different browser from the one that started this. On an
-          iPhone, opening it from Mail should work; copying part of it will not.</li>
-      </ul>
-    </div>
-  </section>
-</main>
-
-<script>
-/* ═══════════════════════════════════════════════════════════
-   /auth/callback — the email confirmation landing.
-
-   The rule this page exists to keep: it must never say "verified"
-   because the URL opened. Success is shown only after the Guild's
-   own authentication service has been asked, in this page load,
-   and has answered with a live session belonging to a real user
-   whose email it confirms. A refresh cannot manufacture that
-   answer, because a refresh asks again.
-
-   Supabase sends people here in one of several shapes depending
-   on the project's settings, so all of them are handled:
-
-     ?token_hash=…&type=signup   the current one-time-token form
-     #access_token=…&type=signup the older implicit form
-     ?code=…                     the PKCE form, which can only be
-                                 completed in the browser that
-                                 began the sign-up
-     ?error=…&error_code=…       the service refusing the link
-   ═══════════════════════════════════════════════════════════ */
-const SUPABASE = {
-  url: "https://bldqausimrsusdzfbubk.supabase.co",
-  key: "sb_publishable_kyHEHTc00jWi5wN2nyiD0w_NtLbVHy_"
-};
-const SESSION_KEY = "guild.session.v1";
-
-const el = id => document.getElementById(id);
-
-function showBusy() { el("v-busy").hidden = false; el("v-ok").hidden = true; el("v-bad").hidden = true; }
-function showOk(name) {
-  el("ok-name").textContent = name || "member";
-  el("v-busy").hidden = true; el("v-bad").hidden = true; el("v-ok").hidden = false;
-  document.title = "Email verified — The Translators' Guild";
-}
-function showBad(head, body, tag) {
-  el("bad-head").textContent = head;
-  el("bad-body").textContent = body;
-  if (tag) el("bad-tag").textContent = tag;
-  el("v-busy").hidden = true; el("v-ok").hidden = true; el("v-bad").hidden = false;
-  document.title = "Could not confirm — The Translators' Guild";
-}
-
-async function post(path, body, token) {
-  const h = { apikey: SUPABASE.key, "Content-Type": "application/json", Accept: "application/json" };
-  if (token) h.Authorization = "Bearer " + token;
-  const r = await fetch(SUPABASE.url + "/auth/v1" + path, {
-    method: "POST", headers: h, body: JSON.stringify(body || {})
-  });
-  let j = null;
-  try { j = await r.json(); } catch (e) {}
-  if (!r.ok) {
-    const err = new Error((j && (j.error_description || j.msg || j.message || j.error)) ||
-                          ("the service answered " + r.status));
-    err.status = r.status;
-    throw err;
-  }
-  return j;
-}
-
-/* The one question that actually decides this page: does this token
-   belong to a live user, and is that user's email confirmed? Asked of
-   the service, never inferred from the URL. */
-async function liveUser(token) {
-  const r = await fetch(SUPABASE.url + "/auth/v1/user", {
-    headers: { apikey: SUPABASE.key, Authorization: "Bearer " + token, Accept: "application/json" }
-  });
-  if (!r.ok) return null;
-  const u = await r.json();
-  if (!u || !u.id) return null;
-  if (!u.email_confirmed_at && !u.confirmed_at) return null;
-  return u;
-}
-
-/* Hand the session to the Guild in the same shape the site stores, so
-   the member lands signed in rather than at the door again. */
-function keepSession(j, user) {
-  const meta = (user && user.user_metadata) || {};
-  const sess = {
-    access_token: j.access_token,
-    refresh_token: j.refresh_token || "",
-    expires_at: Date.now() + ((j.expires_in || 3600) * 1000),
-    user: {
-      id: user.id,
-      email: (user.email || "").toLowerCase(),
-      firstName: meta.first_name || "",
-      lastName: meta.last_name || ""
-    }
-  };
-  try { localStorage.setItem(SESSION_KEY, JSON.stringify(sess)); } catch (e) {}
-  return sess;
-}
-
-function greeting(user) {
-  const meta = (user && user.user_metadata) || {};
-  const name = [(meta.first_name || "").trim(), (meta.last_name || "").trim()]
-    .filter(Boolean).join(" ");
-  if (name) return name;
-  const addr = (user && user.email) || "";
-  return addr ? addr.split("@")[0] : "member";
-}
-
-/* The profile row is created by a trigger on the account. If it is not
-   there yet the account is still real and confirmed, so this is not a
-   failure — it is reported, not hidden, and does not block entry. */
-async function profileExists(token, id) {
-  try {
-    const r = await fetch(SUPABASE.url + "/rest/v1/profiles?select=id&id=eq." + encodeURIComponent(id),
-      { headers: { apikey: SUPABASE.key, Authorization: "Bearer " + token, Accept: "application/json" } });
-    if (!r.ok) return false;
-    const rows = await r.json();
-    return Array.isArray(rows) && rows.length > 0;
-  } catch (e) { return false; }
-}
-
-async function succeed(tokens, user) {
-  keepSession(tokens, user);
-  const ok = await profileExists(tokens.access_token, user.id);
-  showOk(greeting(user));
-  if (!ok) {
-    const p = document.createElement("p");
-    p.className = "small";
-    p.textContent = "Your member record is still being set up. Everything works; " +
-                    "your name and marks will appear once it finishes.";
-    el("v-ok").insertBefore(p, el("v-ok").querySelector(".acts"));
-  }
-}
-
-/* A session sitting in this browser proves nothing by itself — anyone can
-   write one. It is handed to the service, and only the service's answer
-   that the token is live and the email confirmed counts as verification. */
-async function storedSessionVerifies() {
-  let stored = null;
-  try { stored = JSON.parse(localStorage.getItem(SESSION_KEY) || "null"); } catch (e) {}
-  if (!stored || !stored.access_token) return false;
-  const user = await liveUser(stored.access_token);
-  if (!user) return false;
-  showOk(greeting(user));
-  return true;
-}
-
-function params() {
-  const q = new URLSearchParams(location.search);
-  const h = new URLSearchParams((location.hash || "").replace(/^#/, ""));
-  const get = k => q.get(k) || h.get(k) || "";
-  return {
-    token_hash: get("token_hash"), type: get("type") || "signup", code: get("code"),
-    access_token: get("access_token"), refresh_token: get("refresh_token"),
-    error: get("error"), error_code: get("error_code"),
-    error_description: get("error_description")
-  };
-}
-
-/* Anything the service put in the URL is somebody else's text. It is
-   read as data and shown as text, never as markup. */
-function serviceSaid(p) {
-  return (p.error_description || p.error_code || p.error || "").replace(/\+/g, " ");
-}
-
-async function run() {
-  showBusy();
-  const p = params();
-
-  /* 1 — the service already said no */
-  if (p.error || p.error_code) {
-    const expired = /expired/i.test(p.error_code + " " + p.error_description);
-    showBad(
-      expired ? "That link has expired" : "This link was refused",
-      expired
-        ? "Confirmation links do not last long. Sign up again with the same email and a fresh one will be sent."
-        : ("The Guild's sign-in service would not accept this link. It said: " + serviceSaid(p)),
-      expired ? "Expired" : "Refused");
-    return;
-  }
-
-  /* 2 — the current one-time-token form */
-  if (p.token_hash) {
-    try {
-      const j = await post("/verify", { type: p.type, token_hash: p.token_hash });
-      if (!j || !j.access_token) { showBad("This link did not work", "The service confirmed the link but returned no session. Please sign in instead."); return; }
-      const user = await liveUser(j.access_token);
-      if (!user) { showBad("This link did not work", "The link was accepted but no confirmed account stands behind it. Please sign in instead."); return; }
-      await succeed(j, user);
-    } catch (e) {
-      /* A one-time token is spent the moment it works, so the commonest
-         way to land here is somebody refreshing the page that just
-         succeeded. That is not a failure — but it is not proof either.
-         The session this browser holds is put to the service again, and
-         success is shown only if the service says it is live and
-         confirmed. A refresh therefore re-verifies; it cannot assume. */
-      if (await storedSessionVerifies()) return;
-      const expired = /expire|invalid|already/i.test(e.message || "");
-      showBad(expired ? "That link is no longer valid" : "This link did not work",
-              expired
-                ? "It has either expired or been used already. If you have confirmed before, just sign in."
-                : ("The service could not confirm it: " + e.message),
-              expired ? "Expired or used" : "Not verified");
-    }
-    return;
-  }
-
-  /* 3 — the older implicit form, tokens delivered in the fragment */
-  if (p.access_token) {
-    const user = await liveUser(p.access_token);
-    if (!user) {
-      showBad("This link did not work",
-              "The address in this link no longer opens a confirmed account. Please sign in instead.");
-      return;
-    }
-    await succeed({ access_token: p.access_token, refresh_token: p.refresh_token, expires_in: 3600 }, user);
-    /* the tokens do not stay in the address bar or the history */
-    history.replaceState(null, "", location.pathname);
-    return;
-  }
-
-  /* 4 — PKCE: only completable where the sign-up began */
-  if (p.code) {
-    showBad("Open this link in the browser you signed up with",
-            "This confirmation has to be finished in the same browser that started the sign-up, " +
-            "on the same device. If that is not possible, sign in at the Guild — your email may " +
-            "already be confirmed.",
-            "Wrong browser");
-    return;
-  }
-
-  /* 5 — no link at all. */
-  if (await storedSessionVerifies()) return;
-  showBad("There is nothing to confirm here",
-          "This page confirms an email address when you arrive from a confirmation link. " +
-          "You have arrived without one.",
-          "No link");
-}
-
-run().catch(e => showBad("Something went wrong",
-  "The Guild could not reach its sign-in service. Check your connection and open the link again. " +
-  "(" + (e && e.message ? e.message : "unknown error") + ")"));
-</script>
+<p>The Guild has moved to <a href="https://translators-guild-web.vercel.app/">translators-guild-web.vercel.app</a></p>
+<noscript><p>Follow the link above to continue.</p></noscript>
 </body>
 </html>
