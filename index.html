@@ -15929,7 +15929,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1005-2400";
+const BUILD = "1005-2500";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -17162,8 +17162,16 @@ function photoPost() {
    with an invisible marker and the post's id, so no new table is needed:
    "⁣p:<uuid>⁣" followed by anything the sharer wrote. */
 const STORY_POST_RE = /^\u2063p:([0-9A-Za-z-]{1,40})\u2063/;
-const storyPostId = s => { const m = s && s.kind === "text" && STORY_POST_RE.exec(s.body || ""); return m ? m[1] : null; };
-const storyText = s => (s && s.body || "").replace(STORY_POST_RE, "");
+/* A shared post is any text story with the "post" background; the id is
+   read from "p:<id>" at its start, with or without the invisible marks
+   around it, which a phone keyboard or the database may drop. */
+const STORY_POST_LOOSE = /^[\u2063\u200b\ufeff\s]*p:([0-9A-Za-z-]{1,40})[\u2063\u200b\ufeff]?/;
+const storyPostId = s => {
+  if (!s || s.kind !== "text") return null;
+  const m = STORY_POST_LOOSE.exec(s.body || "");
+  return m && (s.bg === "post" || STORY_POST_RE.test(s.body || "")) ? m[1] : null;
+};
+const storyText = s => storyPostId(s) ? (s.body || "").replace(STORY_POST_LOOSE, "").trim() : (s && s.body || "");
 
 /* The post itself, drawn inside a story: who posted it, the picture,
    the words, and a way through to it. */
