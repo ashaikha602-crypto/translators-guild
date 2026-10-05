@@ -2272,6 +2272,8 @@ a.ks-s-en:hover { color: var(--white); }
 .st-text .sp-card p.sp-load { text-align: center; color: #555; }
 .sp-prev { display: grid; justify-items: center; margin-bottom: .3rem; }
 .sp-prev .sp-card { width: min(100%, 15rem); }
+.mr-verify { justify-self: start; margin-top: .4rem; }
+.mr-verify.on { color: var(--mag-ink); border-color: var(--magenta); }
 /* ═══ Stories ═══ */
 .avatar-wrap.story-new::before { content: ""; position: absolute; inset: -5px; border-radius: 50%;
   background: conic-gradient(from 210deg, #ffc46b, #ff5c7a, #a726d0, #650fd0, #ffc46b); }
@@ -15929,7 +15931,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1005-2500";
+const BUILD = "1006-1400";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -22552,6 +22554,31 @@ async function admMembers() {
         m.last_login_at ? "signed in, nothing done yet" : "never signed in"));
     }
     card.appendChild(tags);
+
+    /* The tick, given or taken here; the database checks that the person
+       pressing this is an administrator. */
+    const vb = el("button", "ghost small mr-verify" + (m.verified ? " on" : ""), m.verified ? "\u2713 Verified" : "Verify");
+    vb.type = "button";
+    vb.addEventListener("click", async () => {
+      vb.disabled = true;
+      const want = !m.verified;
+      try {
+        const r = await fetch(SUPABASE.url + "/rest/v1/rpc/set_member_verified", {
+          method: "POST", headers: await sbHeaders(),
+          body: JSON.stringify({ target: m.id, on_off: want })
+        });
+        if (!r.ok) throw new Error(await r.text());
+        m.verified = want;
+        vb.textContent = want ? "\u2713 Verified" : "Verify";
+        vb.classList.toggle("on", want);
+        name.innerHTML = admEsc(m.display_name || "no name set yet") + (want ? " " + VERIFIED_ICO : "");
+      } catch (e) {
+        vb.textContent = "Not set up yet";
+        setTimeout(() => { vb.textContent = m.verified ? "\u2713 Verified" : "Verify"; }, 2500);
+      }
+      vb.disabled = false;
+    });
+    card.appendChild(vb);
     list.appendChild(card);
   });
   box.appendChild(list);
