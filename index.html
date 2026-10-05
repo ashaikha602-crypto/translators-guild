@@ -2158,6 +2158,58 @@ a.ks-s-en:hover { color: var(--white); }
 :root[data-theme="light"] .dm-search { background: #efefef; color: #111; }
 :root[data-theme="light"] .dm-row:active { background: #f5f5f5; }
 :root[data-theme="light"] .dm-ring.new .avatar, :root[data-theme="light"] .dm-ring.seen .avatar { border-color: #fff; }
+
+/* ═══ Profile, Instagram-sized ═══ */
+.ig-actions { display: grid; grid-template-columns: 1fr 1fr auto; gap: 6px; margin: .9rem 0 0; }
+.ig-btn { all: unset; cursor: pointer; box-sizing: border-box; height: 34px; border-radius: 8px; display: grid; place-items: center;
+  font-family: var(--f-sans); font-size: .875rem; font-weight: 600; color: var(--white); background: rgba(255,255,255,.1); }
+.ig-btn:active { background: rgba(255,255,255,.16); }
+.ig-btn:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; }
+.ig-sq { width: 34px; }
+.ig-sq svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ig-sq.on { background: rgba(167,38,208,.35); }
+.dp-box { display: grid; gap: .55rem; margin-top: 1.1rem; }
+.dp-head { display: flex; justify-content: space-between; align-items: baseline; }
+.dp-head h3 { margin: 0; font-family: var(--f-sans); font-size: .95rem; font-weight: 600; color: var(--white); letter-spacing: 0; text-transform: none; }
+.dp-all { all: unset; cursor: pointer; font-size: .875rem; font-weight: 600; color: #8ab4ff; }
+.dp-row { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x mandatory; margin: 0 -2px; padding: 0 2px .2rem; }
+.dp-row::-webkit-scrollbar { display: none; }
+.dp-card { position: relative; flex: 0 0 156px; scroll-snap-align: start; display: grid; justify-items: center; gap: .55rem;
+  padding: .9rem .7rem .75rem; border-radius: 8px; border: 1px solid rgba(214,191,234,.16); background: rgba(255,255,255,.03); box-sizing: border-box; }
+.dp-x { all: unset; cursor: pointer; position: absolute; top: .25rem; right: .45rem; font-size: 1.25rem; line-height: 1; color: var(--ink-soft); padding: .2rem; }
+.dp-open { all: unset; cursor: pointer; display: grid; justify-items: center; gap: .15rem; width: 100%; min-width: 0; }
+.dp-open .avatar { width: 88px; height: 88px; font-size: 1.6rem; margin-bottom: .35rem; }
+.dp-name { font-size: .875rem; font-weight: 600; color: var(--white); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; }
+.dp-why { font-size: .75rem; color: var(--ink-faint); }
+.dp-follow { all: unset; cursor: pointer; box-sizing: border-box; width: 100%; height: 32px; border-radius: 8px; display: grid; place-items: center;
+  font-size: .875rem; font-weight: 600; color: #fff; background: #4a5df9; }
+.dp-follow.done { background: rgba(255,255,255,.12); color: var(--white); }
+/* settings and activity */
+.set-view { position: fixed; top: 0; left: 0; right: 0; height: 100%; z-index: 110; display: grid; grid-template-rows: auto 1fr;
+  background: var(--void); color: var(--white); }
+.set-title { margin: 0; flex: 1; text-align: center; font-family: var(--f-sans); font-size: 1rem; font-weight: 700; padding-right: 2.4rem; letter-spacing: 0; }
+.set-body { overflow-y: auto; padding: .6rem 0 calc(env(safe-area-inset-bottom, 0px) + 1.5rem); }
+.set-search { margin: 0 1rem .4rem; width: calc(100% - 2rem); }
+.set-sec { padding: .6rem 0; border-bottom: 6px solid rgba(214,191,234,.06); }
+.set-h { margin: .3rem 1rem .4rem; font-family: var(--f-sans); font-size: .8rem; font-weight: 600; color: var(--ink-faint); letter-spacing: 0; text-transform: none; }
+.set-row { all: unset; cursor: pointer; box-sizing: border-box; width: 100%; display: grid; grid-template-columns: 24px 1fr auto auto; align-items: center;
+  gap: .9rem; padding: .78rem 1rem; font-size: .95rem; }
+.set-row[hidden] { display: none; }
+.set-row:active { background: rgba(255,255,255,.05); }
+.set-row > svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.set-r { font-size: .875rem; color: var(--ink-faint); }
+.set-chev { width: 18px; height: 18px; fill: none; stroke: var(--ink-faint); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.set-row.danger { color: #ff5c7a; }
+.set-row.warn .set-l { color: var(--ink-soft); }
+:root[data-theme="light"] .ig-btn { background: #efefef; color: #111; }
+:root[data-theme="light"] .chip-tag.solid { background: linear-gradient(135deg, #8a2be2, #650fd0); color: #fff; border-color: transparent; }
+:root[data-theme="light"] .ig-sq.on { background: #e0d2f5; }
+:root[data-theme="light"] .dp-card { background: #fff; border-color: #dbdbdb; }
+:root[data-theme="light"] .dp-follow.done { background: #efefef; color: #111; }
+:root[data-theme="light"] .dp-all { color: #3b5bdb; }
+:root[data-theme="light"] .set-view { background: #fff; color: #111; }
+:root[data-theme="light"] .set-sec { border-bottom-color: #f2f2f2; }
+:root[data-theme="light"] .set-row:active { background: #f5f5f5; }
 /* ═══ Stories ═══ */
 .avatar-wrap.story-new::before { content: ""; position: absolute; inset: -5px; border-radius: 50%;
   background: conic-gradient(from 210deg, #ffc46b, #ff5c7a, #a726d0, #650fd0, #ffc46b); }
@@ -3084,11 +3136,15 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
     <div class="fact-row" id="seal-facts" hidden></div>
     <div class="ig-ints" id="seal-about" hidden></div>
 
-    <p class="seal-actions wide">
-      <button type="button" class="ghost" id="edit-profile-btn">Edit Profile</button>
-      <button type="button" class="ghost" id="share-profile-btn">Share Profile</button>
-      <button type="button" class="ghost" id="privacy-btn">Privacy</button>
+    <p class="ig-actions">
+      <button type="button" class="ig-btn" id="edit-profile-btn">Edit profile</button>
+      <button type="button" class="ig-btn" id="share-profile-btn">Share profile</button>
+      <button type="button" class="ig-btn ig-sq" id="discover-btn" aria-label="Discover people">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.6"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M19 8v6M16 11h6"/></svg>
+      </button>
+      <button type="button" id="privacy-btn" hidden></button>
     </p>
+    <div class="dp-box" id="seal-discover" hidden></div>
 
     <!-- Circles, after the reference, but every one of them opens a real
          part of the Guild. Nothing here is decoration. -->
@@ -14653,36 +14709,188 @@ async function renderAbout() {
 /* The settings the drawing has no room for, behind the menu button. The
    controls are not rebuilt here — the nodes themselves are lifted in and
    put back when the sheet closes, so every handler survives. */
+/* ═══════════ SETTINGS AND ACTIVITY ═══════════
+   Everything that is not the profile itself lives behind the menu button,
+   in one list, the way a phone app keeps it: privacy, saved things,
+   appearance, logging out. The profile keeps only Edit and Share. */
+const SET_ICO = {
+  edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/>',
+  lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  saved: '<path d="M6 4h12v16l-6-4-6 4z"/>',
+  mine: '<path d="M5 4h10l4 4v12H5z"/><path d="M8 12h8M8 16h6"/>',
+  progress: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+  eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  moon: '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/>',
+  people: '<circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M19 8v6M16 11h6"/>',
+  admin: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',
+  reset: '<path d="M4 12a8 8 0 1 0 3-6.3"/><path d="M4 4v5h5"/>',
+  out: '<path d="M14 4h5v16h-5"/><path d="M10 8l-4 4 4 4M6 12h10"/>'
+};
 function settingsMenu() {
-  const host = document.getElementById("seal-settings");
-  const seal = document.getElementById("seal");
-  if (!host || !seal) return;
-  const wrap = el("div", "sheet-back");
-  const card = el("div", "sheet");
-  card.appendChild(el("h3", null, "Settings"));
+  const ov = el("div", "set-view");
+  ov.setAttribute("role", "dialog");
+  ov.setAttribute("aria-label", "Settings and activity");
+  document.body.appendChild(ov);
+  document.body.classList.add("st-open");
+  const close = () => { ov.remove(); document.body.classList.remove("st-open"); document.removeEventListener("keydown", onKey); };
+  const onKey = e => { if (e.key === "Escape") close(); };
+  document.addEventListener("keydown", onKey);
 
-  const prog = el("button", "sheet-act", "Your progress");
-  prog.addEventListener("click", () => {
-    const p = document.getElementById("seal-progress");
-    close();
-    if (!p) return;
-    p.hidden = false;
-    p.scrollIntoView({ block: "start", behavior: "smooth" });
+  const head = el("header", "dm-head set-head");
+  const back = el("button", "dm-back", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>');
+  back.type = "button"; back.setAttribute("aria-label", "Back");
+  back.addEventListener("click", close);
+  head.appendChild(back);
+  head.appendChild(el("h2", "set-title", "Settings and activity"));
+  ov.appendChild(head);
+
+  const scroll = el("div", "set-body");
+  ov.appendChild(scroll);
+  const search = document.createElement("input");
+  search.type = "search"; search.className = "dm-search set-search"; search.placeholder = "Search";
+  scroll.appendChild(search);
+
+  const p = state.profile || {};
+  const vis = { public: "Public", members: "Members only", followers: "Followers", private: "Private" }[p.profile_visibility] || "";
+  const dark = !document.documentElement.matches('[data-theme="light"]');
+  const go = fn => () => { close(); fn(); };
+  const tap = id => () => { close(); const b = document.getElementById(id); if (b) b.click(); };
+  const sections = [
+    ["Your account", [
+      ["edit", "Edit profile", "", go(() => openItem(EDIT_ITEM))],
+      ["lock", "Account privacy", vis, go(() => openItem(PRIVACY_ITEM))]
+    ]],
+    ["How you use the Guild", [
+      ["saved", "Saved", "", go(() => openItem(SAVED_ITEM))],
+      ["mine", "Your translations", "", go(() => openItem(MINE_ITEM))],
+      ["progress", "Your progress", "", go(() => {
+        const pr = document.getElementById("seal-progress");
+        if (pr) { pr.hidden = false; pr.scrollIntoView({ block: "start", behavior: "smooth" }); }
+      })],
+      ["bell", "Notifications", "", go(() => openItem(NOTIFS_ITEM))],
+      ["mail", "Messages", "", go(() => openItem(INBOX_ITEM))],
+      p.sees_profile_views ? ["eye", "Profile views", "", tap("seal-views")] : null,
+      ["people", "Discover people", "", go(() => openItem(FIND_ITEM))]
+    ]],
+    ["Display", [
+      ["moon", "Appearance", dark ? "Dark" : "Light", () => {
+        setThemeChoice(dark ? "light" : "dark"); close(); settingsMenu();
+      }]
+    ]],
+    ["Login", [
+      (typeof admIsAdmin !== "undefined" && admIsAdmin) ? ["admin", "Content Admin", "", tap("admin-btn")] : null,
+      ["reset", "Reset my marks", "", tap("reset-btn"), "warn"],
+      ["out", "Log out", "", tap("signout-btn"), "danger"]
+    ]]
+  ];
+  const rows = [];
+  sections.forEach(([title, items]) => {
+    const sec = el("section", "set-sec");
+    sec.appendChild(el("h3", "set-h", esc(title)));
+    items.filter(Boolean).forEach(([ico, label, right, fn, cls]) => {
+      const r = el("button", "set-row" + (cls ? " " + cls : ""));
+      r.type = "button";
+      r.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + SET_ICO[ico] + '</svg>' +
+        '<span class="set-l">' + esc(label) + '</span>' +
+        (right ? '<span class="set-r">' + esc(right) + '</span>' : '<span></span>') +
+        (cls === "danger" ? '' : '<svg class="set-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>');
+      r.addEventListener("click", fn);
+      sec.appendChild(r);
+      rows.push([r, label.toLowerCase(), sec]);
+    });
+    scroll.appendChild(sec);
   });
-  card.appendChild(prog);
-  card.appendChild(host);
+  search.addEventListener("input", () => {
+    const q = search.value.trim().toLowerCase();
+    rows.forEach(([r, l]) => { r.hidden = !!q && !l.includes(q); });
+    scroll.querySelectorAll(".set-sec").forEach(sec => {
+      sec.hidden = ![...sec.querySelectorAll(".set-row")].some(r => !r.hidden);
+    });
+  });
+}
 
-  function close() {
-    /* Back where it came from, before the sheet goes. */
-    seal.appendChild(host);
-    wrap.remove();
+/* ═══════════ DISCOVER PEOPLE ═══════════
+   Suggestions under the profile buttons: people you do not follow yet,
+   the ones your follows follow first, then the ones who follow you. */
+const DP_HIDE_KEY = "guild-dp-hidden";
+function dpHidden() { try { return JSON.parse(localStorage.getItem(DP_HIDE_KEY) || "[]"); } catch (e) { return []; } }
+function dpHide(id) { try { const h = dpHidden(); h.push(id); localStorage.setItem(DP_HIDE_KEY, JSON.stringify(h.slice(-300))); } catch (e) {} }
+
+async function paintDiscover(force) {
+  const box = document.getElementById("seal-discover");
+  if (!box) return;
+  if (backend !== "supabase" || !myId()) { box.hidden = true; return; }
+  let off = false;
+  try { off = localStorage.getItem("guild-dp-off") === "1"; } catch (e) {}
+  const toggle = document.getElementById("discover-btn");
+  if (toggle) toggle.classList.toggle("on", !off);
+  if (off) { box.hidden = true; return; }
+  if (box.dataset.loaded && !force) { box.hidden = !box.querySelector(".dp-card"); return; }
+  box.dataset.loaded = "1";
+  let people = [];
+  try {
+    people = await sbGet("member_directory?select=id,username,title,display_name,avatar_path,i_follow,follows_me,allow_follows,verified&limit=200");
+  } catch (e) { box.hidden = true; return; }
+  const hidden = new Set(dpHidden());
+  const following = [];
+  try { (await sbGet("follows?select=following_id&follower_id=eq." + myId())).forEach(f => following.push(f.following_id)); } catch (e) {}
+  const mutual = {};
+  if (following.length) {
+    try {
+      (await sbGet("follows?select=following_id&follower_id=in.(" + following.slice(0, 80).join(",") + ")"))
+        .forEach(f => { mutual[f.following_id] = (mutual[f.following_id] || 0) + 1; });
+    } catch (e) {}
   }
-  const done = el("button", "sheet-act quiet", "Close");
-  done.addEventListener("click", close);
-  card.appendChild(done);
-  wrap.addEventListener("click", e => { if (e.target === wrap) close(); });
-  wrap.appendChild(card);
-  document.body.appendChild(wrap);
+  const cands = people.filter(m => m.id !== myId() && !m.i_follow && m.allow_follows !== false && !hidden.has(m.id) &&
+                                     !following.includes(m.id))
+    .map(m => Object.assign({ mutual: mutual[m.id] || 0 }, m))
+    .sort((a, b) => (b.mutual - a.mutual) || ((b.follows_me ? 1 : 0) - (a.follows_me ? 1 : 0)) ||
+                    ((b.avatar_path ? 1 : 0) - (a.avatar_path ? 1 : 0)))
+    .slice(0, 20);
+  box.innerHTML = "";
+  if (!cands.length) { box.hidden = true; return; }
+  box.hidden = false;
+  const head = el("div", "dp-head");
+  head.appendChild(el("h3", null, "Discover people"));
+  const all = el("button", "dp-all", "See all");
+  all.type = "button"; all.addEventListener("click", () => openItem(FIND_ITEM));
+  head.appendChild(all);
+  box.appendChild(head);
+  const row = el("div", "dp-row");
+  cands.forEach(m => {
+    const c = el("div", "dp-card");
+    const x = el("button", "dp-x", "×");
+    x.type = "button"; x.setAttribute("aria-label", "Remove suggestion");
+    x.addEventListener("click", () => { dpHide(m.id); c.remove(); if (!row.children.length) box.hidden = true; });
+    c.appendChild(x);
+    const open = el("button", "dp-open");
+    open.type = "button";
+    const av = el("span", "avatar");
+    paintFace(av, m.avatar_path, m.display_name);
+    open.appendChild(av);
+    const nm = el("span", "dp-name", esc(m.display_name || (m.username ? "@" + m.username : "Member")) + verifiedMark(m.verified));
+    nm.dir = "auto";
+    open.appendChild(nm);
+    open.appendChild(el("span", "dp-why", m.mutual ? m.mutual + (m.mutual === 1 ? " mutual" : " mutuals")
+                                         : m.follows_me ? "Follows you" : "Suggested for you"));
+    open.addEventListener("click", () => openPublic(m));
+    c.appendChild(open);
+    const f = el("button", "dp-follow", m.follows_me ? "Follow back" : "Follow");
+    f.type = "button";
+    f.addEventListener("click", async () => {
+      f.disabled = true;
+      try {
+        if (f.classList.contains("done")) { await unfollow(m.id); f.classList.remove("done"); f.textContent = "Follow"; }
+        else { await follow(m.id); f.classList.add("done"); f.textContent = "Following"; }
+      } catch (e) { f.textContent = "Not accepting follows"; }
+      f.disabled = false;
+    });
+    c.appendChild(f);
+    row.appendChild(c);
+  });
+  box.appendChild(row);
 }
 
 
@@ -15627,6 +15835,16 @@ function wireProfileButtons() {
     sh.dataset.wired = "1";
     sh.addEventListener("click", () => shareProfile(sh));
   }
+  const db = document.getElementById("discover-btn");
+  if (db && !db.dataset.wired) {
+    db.dataset.wired = "1";
+    db.addEventListener("click", () => {
+      let off = false;
+      try { off = localStorage.getItem("guild-dp-off") === "1"; localStorage.setItem("guild-dp-off", off ? "0" : "1"); } catch (e) {}
+      paintDiscover();
+    });
+  }
+  paintDiscover();
   const pv = document.getElementById("privacy-btn");
   if (pv && !pv.dataset.wired) {
     pv.dataset.wired = "1";
@@ -15637,7 +15855,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1005-1800";
+const BUILD = "1005-1900";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
