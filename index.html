@@ -2159,6 +2159,33 @@ a.ks-s-en:hover { color: var(--white); }
 :root[data-theme="light"] .dm-row:active { background: #f5f5f5; }
 :root[data-theme="light"] .dm-ring.new .avatar, :root[data-theme="light"] .dm-ring.seen .avatar { border-color: #fff; }
 /* ═══ Stories ═══ */
+.avatar-wrap.story-new::before { content: ""; position: absolute; inset: -5px; border-radius: 50%;
+  background: conic-gradient(from 210deg, #ffc46b, #ff5c7a, #a726d0, #650fd0, #ffc46b); }
+.avatar-wrap.story-new > .avatar { position: relative; box-shadow: 0 0 0 3px var(--void); }
+#seal-initials { cursor: pointer; }
+.avatar-edit svg path { stroke-width: 2.6; }
+.st-first { font-weight: 700; color: #fff !important; background: var(--grad) !important; border-color: transparent !important; }
+.st-hl-new .st-hl-c { background: transparent; border: 1.5px solid rgba(214,191,234,.5); box-shadow: none;
+  font-family: var(--f-sans); font-weight: 300; font-size: 2rem; color: var(--white); }
+.st-pickhl { grid-template-rows: auto 1fr auto; }
+.st-pickhl > .st-hl-pick { grid-row: 2; grid-column: 1; overflow-y: auto; padding: 0 .8rem; }
+.st-pickhl > .st-foot { grid-row: 3; }
+.st-hl-msg { margin: .2rem 0 .8rem; color: rgba(255,255,255,.75); font-size: .9rem; text-align: center; }
+.st-hl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+.st-hl-tile { all: unset; cursor: pointer; position: relative; aspect-ratio: 9/16; background-size: cover; background-position: center;
+  display: grid; place-items: center; overflow: hidden; color: #fff; font-family: var(--f-serif); font-weight: 700;
+  font-size: .78rem; text-align: center; padding: .4rem; box-sizing: border-box; }
+.st-hl-date { position: absolute; top: .35rem; left: .35rem; font-style: normal; font-family: var(--f-sans); font-size: .7rem;
+  font-weight: 700; background: rgba(255,255,255,.92); color: #111; padding: .1rem .35rem; border-radius: 6px; }
+.st-hl-tick { position: absolute; bottom: .4rem; right: .4rem; width: 1.3rem; height: 1.3rem; border-radius: 50%;
+  border: 2px solid #fff; background: rgba(0,0,0,.25); }
+.st-hl-tile.on::after { content: ""; position: absolute; inset: 0; background: rgba(255,255,255,.25); }
+.st-hl-tile.on .st-hl-tick { background: #3897f0; }
+.st-hl-tile.on .st-hl-tick::after { content: "\2713"; color: #fff; font-family: var(--f-sans); font-size: .8rem;
+  display: grid; place-items: center; height: 100%; }
+:root[data-theme="light"] .avatar-wrap.story-new > .avatar { box-shadow: 0 0 0 3px #fff; }
+:root[data-theme="light"] .st-hl-new .st-hl-c { color: #111; border-color: #cfcfcf; }
+
 .story-bar { display: flex; gap: .85rem; overflow-x: auto; scrollbar-width: none; padding: .2rem 0 .4rem;
   margin: 0 -2px; overscroll-behavior-x: contain; }
 .story-bar::-webkit-scrollbar { display: none; }
@@ -3031,8 +3058,8 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
     <div class="ig-head">
       <span class="avatar-wrap">
         <span class="avatar" id="seal-initials" aria-hidden="true"></span>
-        <button type="button" class="avatar-edit" id="avatar-edit" aria-label="Change profile photo">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l1.6-2h6.8L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.4"/></svg>
+        <button type="button" class="avatar-edit" id="avatar-edit" aria-label="Add to your story or change your photo">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg>
         </button>
       </span>
       <div class="ig-id">
@@ -13165,6 +13192,11 @@ function photoMenu() {
   const has = !!(state.profile && state.profile.avatar_path);
   const wrap = el("div", "sheet-back");
   const card = el("div", "sheet");
+  if (storyReady !== false && backend === "supabase") {
+    const st = el("button", "sheet-act st-first", "\uFF0B  Add to your story");
+    st.addEventListener("click", () => { wrap.remove(); openStoryComposer(); });
+    card.appendChild(st);
+  }
   card.appendChild(el("h3", null, "Profile photo"));
   const note = el("p", "sheet-note", "JPG, PNG or WebP, up to 2 MB. It is cropped to a square.");
   card.appendChild(note);
@@ -13176,7 +13208,7 @@ function photoMenu() {
   const close = () => wrap.remove();
   const say = (m, bad) => { note.textContent = m; note.classList.toggle("bad", !!bad); };
 
-  const pick = el("button", "sheet-act", "Upload a photo");
+  const pick = el("button", "sheet-act", has ? "Change profile photo" : "Upload a photo");
   pick.addEventListener("click", () => file.click());
   card.appendChild(pick);
 
@@ -15537,6 +15569,23 @@ function wireProfileButtons() {
   }
   const a = document.getElementById("avatar-edit");
   if (a && !a.dataset.wired) { a.dataset.wired = "1"; a.addEventListener("click", photoMenu); }
+  const sa = document.getElementById("seal-initials");
+  if (sa && !sa.dataset.wired) {
+    sa.dataset.wired = "1";
+    sa.setAttribute("role", "button"); sa.setAttribute("tabindex", "0");
+    sa.setAttribute("aria-label", "Your story");
+    const go = async () => {
+      if (backend !== "supabase" || !myId()) return;
+      const gs = await loadStoryGroups();
+      if (storyReady === false) return photoMenu();
+      const mine = gs.find(g => g.mine);
+      if (mine) openStoryViewer(gs, gs.indexOf(mine), { onClose: paintMyStoryRing });
+      else openStoryComposer();
+    };
+    sa.addEventListener("click", go);
+    sa.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+  }
+  paintMyStoryRing();
   const e = document.getElementById("edit-profile-btn");
   if (e && !e.dataset.wired) {
     e.dataset.wired = "1";
@@ -15588,7 +15637,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1005-1700";
+const BUILD = "1005-1800";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -16311,17 +16360,22 @@ async function addToHighlight(s, onClose) {
 /* highlights on a profile: one circle per title */
 async function paintStoryHighlights(box, ownerId) {
   if (!box) return;
-  box.hidden = true; box.innerHTML = "";
-  if (backend !== "supabase" || !myId() || !ownerId) return;
+  /* only the latest call draws: a profile can ask twice while loading */
+  const gen = String((+box.dataset.gen || 0) + 1);
+  box.dataset.gen = gen;
+  if (backend !== "supabase" || !myId() || !ownerId) { box.hidden = true; return; }
   let rows = [];
   try {
     rows = await sbGet("story_highlights?select=title,story_id,created_at&owner_id=eq." + ownerId + "&order=created_at.asc");
   } catch (e) { return; }
-  if (!rows.length) return;
+  const own = ownerId === myId();
+  if (!rows.length && !own) return;
   const ids = [...new Set(rows.map(r => r.story_id))];
   let stories = [];
-  try { stories = await sbGet("stories?select=" + STORY_COLS + "&deleted_at=is.null&id=in.(" + ids.join(",") + ")"); }
-  catch (e) { return; }
+  if (ids.length) {
+    try { stories = await sbGet("stories?select=" + STORY_COLS + "&deleted_at=is.null&id=in.(" + ids.join(",") + ")"); }
+    catch (e) { return; }
+  }
   const byId = {}; stories.forEach(s => { byId[s.id] = s; });
   const titles = [];
   const reel = {};
@@ -16330,12 +16384,22 @@ async function paintStoryHighlights(box, ownerId) {
     if (!reel[r.title]) { reel[r.title] = []; titles.push(r.title); }
     reel[r.title].push(Object.assign({ seen: true }, byId[r.story_id]));
   });
-  if (!titles.length) return;
+  if (!titles.length && !own) return;
   const author = (await storyProfiles([ownerId]))[ownerId] || { id: ownerId, display_name: "Member" };
   const covers = await storySign(titles.map(t => (reel[t].find(s => s.kind === "photo") || {}).media_path));
+  if (box.dataset.gen !== gen) return;
+  box.innerHTML = "";
   box.hidden = false;
-  box.appendChild(el("span", "st-hl-lab", "Story highlights"));
+  box.appendChild(el("span", "st-hl-lab", "Highlights"));
   const row = el("div", "st-hl-row");
+  if (own) {
+    const nb = el("button", "st-hl st-hl-new");
+    nb.type = "button";
+    nb.appendChild(el("span", "st-hl-c", "+"));
+    nb.appendChild(el("span", "st-name", "New"));
+    nb.addEventListener("click", () => newHighlight(() => paintStoryHighlights(box, ownerId)));
+    row.appendChild(nb);
+  }
   titles.forEach(t => {
     const b = el("button", "st-hl");
     b.type = "button";
@@ -16569,6 +16633,85 @@ async function admStoryReports(box) {
     act.appendChild(ok);
     c.appendChild(act);
     sec.appendChild(c);
+  });
+}
+
+/* your own profile picture carries the ring when you have a story up */
+async function paintMyStoryRing() {
+  const wrap = document.querySelector("#seal-initials") && document.querySelector("#seal-initials").parentElement;
+  if (!wrap) return;
+  wrap.classList.remove("story-new", "story-seen");
+  if (backend !== "supabase" || !myId()) return;
+  const gs = await loadStoryGroups();
+  const mine = gs.find(g => g.mine);
+  if (mine) wrap.classList.add("story-new");
+}
+
+/* New highlight: pick from every story you have posted, then name it */
+async function newHighlight(onDone) {
+  const ov = el("div", "st-view st-compose st-pickhl");
+  ov.setAttribute("role", "dialog"); ov.setAttribute("aria-label", "New highlight");
+  document.body.appendChild(ov); document.body.classList.add("st-open");
+  const unfit = fitToKeyboard(ov);
+  const close = () => { unfit(); ov.remove(); document.body.classList.remove("st-open"); };
+  const head = el("div", "st-head");
+  head.appendChild(el("span", "st-c-title", "New highlight"));
+  const x = el("button", "st-icon", "\u00D7"); x.type = "button"; x.setAttribute("aria-label", "Close");
+  x.addEventListener("click", close); head.appendChild(x);
+  ov.appendChild(head);
+  const area = el("div", "st-hl-pick");
+  ov.appendChild(area);
+  const foot = el("div", "st-foot st-c-foot");
+  const name = document.createElement("input");
+  name.className = "st-cap-in"; name.maxLength = 30; name.dir = "auto"; name.placeholder = "Highlight name, e.g. Proverbs";
+  const say = el("p", "st-say");
+  const done = el("button", "st-post", "Done");
+  done.type = "button";
+  foot.appendChild(name); foot.appendChild(say); foot.appendChild(done);
+  ov.appendChild(foot);
+  area.appendChild(el("p", "st-hl-msg", "Loading your stories\u2026"));
+  let mine = [];
+  try { mine = await sbGet("stories?select=" + STORY_COLS + "&author_id=eq." + myId() + "&deleted_at=is.null&order=created_at.desc&limit=200"); }
+  catch (e) { area.innerHTML = ""; area.appendChild(el("p", "st-hl-msg", "Your stories could not be loaded.")); return; }
+  area.innerHTML = "";
+  if (!mine.length) {
+    area.appendChild(el("p", "st-hl-msg", "You have not posted a story yet. Post one first, then keep it here."));
+    done.textContent = "Post a story"; done.addEventListener("click", () => { close(); openStoryComposer(); });
+    name.hidden = true;
+    return;
+  }
+  area.appendChild(el("p", "st-hl-msg", "Choose the stories to keep"));
+  const urls = await storySign(mine.map(s => s.media_path));
+  const grid = el("div", "st-hl-grid");
+  const picked = new Set();
+  mine.forEach(s => {
+    const t = el("button", "st-hl-tile");
+    t.type = "button";
+    if (s.kind === "photo" && urls[s.media_path]) t.style.backgroundImage = "url(\"" + urls[s.media_path] + "\")";
+    else if (s.kind === "text") { t.style.background = storyBg(s.bg); const w = el("span", null, esc((s.body || "").slice(0, 60))); w.dir = "auto"; t.appendChild(w); }
+    else { t.style.background = "#222"; t.appendChild(el("span", null, "\u25B6")); }
+    t.appendChild(el("i", "st-hl-date", esc(new Date(s.created_at).toLocaleDateString(undefined, { day: "numeric", month: "short" }))));
+    const tick = el("b", "st-hl-tick", "");
+    t.appendChild(tick);
+    t.addEventListener("click", () => {
+      if (picked.has(s.id)) picked.delete(s.id); else picked.add(s.id);
+      t.classList.toggle("on", picked.has(s.id));
+    });
+    grid.appendChild(t);
+  });
+  area.appendChild(grid);
+  done.addEventListener("click", async () => {
+    say.textContent = "";
+    const title = name.value.trim();
+    if (!picked.size) { say.textContent = "Choose at least one story."; return; }
+    if (!title) { say.textContent = "Give the highlight a name."; name.focus(); return; }
+    done.disabled = true; done.textContent = "Saving\u2026";
+    try {
+      for (const id of picked) {
+        try { await sbPost("story_highlights", { owner_id: myId(), story_id: id, title: title }); } catch (e) {}
+      }
+      close(); if (onDone) onDone();
+    } catch (e) { done.disabled = false; done.textContent = "Done"; say.textContent = "It could not be saved."; }
   });
 }
 
