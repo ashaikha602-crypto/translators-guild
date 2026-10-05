@@ -6,7 +6,7 @@
 <!-- The browser enforces this list. Scripts may come from this page and nowhere
      else, and the page may only talk to its own database, so a widget or
      tracker added later cannot run here or carry a member's session away. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://bldqausimrsusdzfbubk.supabase.co; connect-src 'self' https://bldqausimrsusdzfbubk.supabase.co; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://bldqausimrsusdzfbubk.supabase.co; connect-src 'self' https://bldqausimrsusdzfbubk.supabase.co; media-src 'self' blob: https://bldqausimrsusdzfbubk.supabase.co; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>The Translators' Guild — Learn Arabic–English Translation</title>
 <!-- What a search engine and a shared link will show. It describes what the
      site actually contains now, and names its companion book, because the two
@@ -2066,6 +2066,110 @@ a.ks-s-en:hover { color: var(--white); }
 .carry-note { position: fixed; left: 16px; right: 16px; top: calc(env(safe-area-inset-top, 0px) + 12px);
   z-index: 9999; padding: .8rem 1rem; border-radius: 14px; background: var(--grad); color: #fff;
   font-weight: 600; font-size: .92rem; text-align: center; box-shadow: 0 12px 30px -10px rgba(0,0,0,.5); }
+
+/* ═══ Stories ═══ */
+.story-bar { display: flex; gap: .85rem; overflow-x: auto; scrollbar-width: none; padding: .2rem 0 .4rem;
+  margin: 0 -2px; overscroll-behavior-x: contain; }
+.story-bar::-webkit-scrollbar { display: none; }
+.st-cell { position: relative; flex: 0 0 auto; width: 4.7rem; display: grid; justify-items: center; gap: .3rem; }
+.st-btn { all: unset; cursor: pointer; border-radius: 50%; }
+.st-btn:focus-visible { outline: 3px solid var(--magenta); outline-offset: 2px; }
+.st-ring { display: grid; place-items: center; width: 4.3rem; height: 4.3rem; border-radius: 50%; padding: 3px;
+  box-sizing: border-box; background: rgba(214,191,234,.25); }
+.st-ring.new { background: conic-gradient(from 210deg, #ffc46b, #ff5c7a, #a726d0, #650fd0, #ffc46b); }
+.st-ring.none { background: transparent; border: 1px dashed rgba(214,191,234,.35); }
+.st-ring .avatar { width: 100%; height: 100%; border: 3px solid var(--void); box-sizing: border-box; font-size: 1.05rem; }
+.st-plus { all: unset; cursor: pointer; position: absolute; top: 3rem; right: .35rem; width: 1.35rem; height: 1.35rem;
+  border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 1rem; line-height: 1;
+  color: #fff; background: var(--grad); border: 2px solid var(--void); }
+.st-name { font-size: .7rem; color: var(--ink-soft); max-width: 4.7rem; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; text-align: center; }
+body.st-open { overflow: hidden; }
+.st-view { position: fixed; inset: 0; z-index: 120; background: #000; color: #fff; display: grid;
+  grid-template-rows: auto auto 1fr auto; touch-action: none; user-select: none; -webkit-user-select: none; }
+.st-view > .st-stage { grid-row: 1 / -1; grid-column: 1; }
+.st-view > .st-bars, .st-view > .st-head, .st-view > .st-tabs { grid-column: 1; z-index: 2; }
+.st-view > .st-foot { grid-row: 4; grid-column: 1; z-index: 2; }
+.st-bars { grid-row: 1; display: flex; gap: 3px; padding: calc(env(safe-area-inset-top, 0px) + 10px) 10px 0; }
+.st-bar { flex: 1; height: 3px; border-radius: 2px; background: rgba(255,255,255,.35); overflow: hidden; }
+.st-bar i { display: block; height: 100%; width: 0; background: #fff; }
+.st-bar.done i { width: 100%; }
+.st-head { grid-row: 2; display: flex; align-items: center; gap: .4rem; padding: .55rem .7rem; }
+.st-who { all: unset; cursor: pointer; display: flex; align-items: center; gap: .55rem; flex: 1; min-width: 0; }
+.st-who .avatar { width: 2.1rem; height: 2.1rem; }
+.st-who-t { display: grid; min-width: 0; line-height: 1.2; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+.st-who-t b { font-size: .92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.st-who-t span { font-size: .74rem; opacity: .8; }
+.st-icon { all: unset; cursor: pointer; width: 2.3rem; height: 2.3rem; display: grid; place-items: center;
+  font-size: 1.35rem; font-weight: 700; border-radius: 50%; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+.st-icon:focus-visible, .st-pill:focus-visible, .st-react:focus-visible { outline: 2px solid #fff; }
+.st-stage { position: relative; display: grid; place-items: center; overflow: hidden; background: #000; }
+.st-media { max-width: 100%; max-height: 100%; width: 100%; height: 100%; object-fit: contain; }
+.st-text { width: 100%; height: 100%; display: grid; place-items: center; padding: 2rem 1.6rem; box-sizing: border-box; }
+.st-text p { margin: 0; font-family: var(--f-serif); font-size: clamp(1.5rem, 6.5vw, 2.3rem); line-height: 1.35;
+  text-align: center; font-weight: 700; white-space: pre-wrap; overflow-wrap: anywhere; color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.25); }
+.st-cap { position: absolute; left: 1rem; right: 1rem; bottom: 6.5rem; margin: 0; text-align: center;
+  font-size: 1rem; line-height: 1.45; padding: .5rem .8rem; border-radius: 12px; background: rgba(0,0,0,.45);
+  overflow-wrap: anywhere; }
+.st-sound { all: unset; cursor: pointer; position: absolute; top: 6.4rem; right: .8rem; width: 2.3rem; height: 2.3rem;
+  display: grid; place-items: center; border-radius: 50%; background: rgba(0,0,0,.4); font-size: 1.05rem; z-index: 3; }
+.st-foot { display: grid; gap: .55rem; padding: .7rem .8rem calc(env(safe-area-inset-bottom, 0px) + .8rem);
+  background: linear-gradient(0deg, rgba(0,0,0,.65), rgba(0,0,0,0)); }
+.st-foot:has(.st-pill) { display: flex; flex-wrap: wrap; gap: .5rem; }
+.st-pill { all: unset; cursor: pointer; padding: .55rem .95rem; border-radius: 999px; font-size: .88rem; font-weight: 600;
+  background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28); color: #fff; }
+.st-reacts { display: flex; justify-content: space-around; }
+.st-react { all: unset; cursor: pointer; font-size: 1.6rem; padding: .15rem .35rem; border-radius: 10px; line-height: 1.2; }
+.st-reply { display: flex; gap: .5rem; }
+.st-reply input { flex: 1; min-width: 0; font: inherit; font-size: 1rem; color: #fff; background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.45); border-radius: 999px; padding: .65rem 1rem; outline: none; }
+.st-reply input::placeholder { color: rgba(255,255,255,.7); }
+.st-send { all: unset; cursor: pointer; font-weight: 700; padding: 0 .4rem; }
+.st-sheet { z-index: 130; }
+.st-sheet .member-row, .st-sheet .m-member { color: inherit; }
+/* composer */
+.st-compose { grid-template-rows: auto auto 1fr auto; background: #0b0416; }
+.st-compose > .st-head { grid-row: 1; }
+.st-compose > .st-tabs { grid-row: 2; }
+.st-compose > .st-c-area { grid-row: 3; grid-column: 1; }
+.st-c-title { flex: 1; font-weight: 700; font-size: 1.05rem; padding-left: .3rem; }
+.st-tabs { display: flex; justify-content: center; gap: .4rem; padding: 0 .8rem .6rem; }
+.st-tab { all: unset; cursor: pointer; padding: .45rem 1.1rem; border-radius: 999px; font-weight: 600; font-size: .9rem;
+  color: rgba(255,255,255,.8); border: 1px solid rgba(255,255,255,.25); }
+.st-tab.on { background: var(--grad); color: #fff; border-color: transparent; }
+.st-c-area { margin: 0 .8rem; border-radius: 20px; background: #160a28; }
+.st-pickbig { all: unset; cursor: pointer; display: grid; justify-items: center; gap: .4rem; padding: 2rem; text-align: center; color: #fff; }
+.st-pickbig b { font-size: 1.15rem; }
+.st-pickbig span { font-size: .85rem; opacity: .75; }
+.st-pick-i { font-size: 2.8rem; }
+.st-again { position: absolute; top: .7rem; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,.55); white-space: nowrap; }
+.st-ta { width: 100%; min-height: 40%; resize: none; border: 0; outline: none; background: transparent; color: #fff;
+  font-family: var(--f-serif); font-weight: 700; font-size: clamp(1.4rem, 6vw, 2.1rem); line-height: 1.35; text-align: center; }
+.st-ta::placeholder { color: rgba(255,255,255,.65); }
+.st-c-foot { background: none; }
+.st-cap-in { font: inherit; font-size: 1rem; color: #fff; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.3);
+  border-radius: 12px; padding: .7rem .9rem; outline: none; }
+.st-swatches { display: flex; justify-content: center; gap: .7rem; }
+.st-sw { all: unset; cursor: pointer; width: 2rem; height: 2rem; border-radius: 50%; border: 2px solid rgba(255,255,255,.35); }
+.st-sw.on { border-color: #fff; box-shadow: 0 0 0 2px var(--magenta); }
+.st-say { margin: 0; font-size: .85rem; color: #ffb3c1; min-height: 0; }
+.st-say:empty { display: none; }
+.st-post { all: unset; cursor: pointer; text-align: center; padding: .85rem 1rem; border-radius: 999px; font-weight: 700;
+  background: var(--grad); color: #fff; }
+.st-post:disabled { opacity: .6; }
+/* highlights on a profile */
+.st-hl-box { display: grid; gap: .45rem; }
+.st-hl-lab { font-size: .66rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--lilac-dim); }
+.st-hl-row { display: flex; gap: .9rem; overflow-x: auto; scrollbar-width: none; padding-bottom: .2rem; }
+.st-hl { all: unset; cursor: pointer; display: grid; justify-items: center; gap: .3rem; flex: 0 0 auto; width: 4.4rem; }
+.st-hl-c { width: 3.9rem; height: 3.9rem; border-radius: 50%; display: grid; place-items: center; background-size: cover;
+  background-position: center; color: #fff; font-weight: 700; font-family: var(--f-serif); font-size: 1.1rem;
+  box-shadow: 0 0 0 2px var(--void), 0 0 0 3.5px rgba(214,191,234,.45); }
+.st-adm { display: grid; gap: .6rem; margin-top: 1rem; }
+:root[data-theme="light"] .st-ring .avatar { border-color: #fff; }
+:root[data-theme="light"] .st-plus { border-color: #fff; }
+:root[data-theme="light"] .st-hl-c { box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px rgba(101,15,208,.35); }
 .c-watch { display: grid; gap: .55rem; min-width: 0; }
 .c-watch-head { display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; }
 .c-watch-n { font-size: .72rem; font-weight: 600; color: var(--lilac-dim); white-space: nowrap; }
@@ -2728,6 +2832,9 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
       </figure>
     </header>
 
+    <!-- Stories: a row of circles, as everywhere else people post them. -->
+    <div class="story-bar" id="story-bar" hidden></div>
+
     <div class="panel seal-journey" id="seal-journey"></div>
 
     <div>
@@ -2868,6 +2975,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
     <!-- Circles, after the reference, but every one of them opens a real
          part of the Guild. Nothing here is decoration. -->
     <div class="hilite-row" id="seal-hilites" hidden></div>
+    <div class="st-hl-box" id="seal-story-hl" hidden></div>
 
     <!-- The member's own work, as a grid, which is the part of the
          reference a translator's profile actually needs. -->
@@ -12914,6 +13022,11 @@ async function runPublic(id) {
   if (p.bio)   { const n2 = el("p", "seal-bio", esc(p.bio));     n2.dir = "auto"; bioBlock.appendChild(n2); }
   if (p.motto) { const n3 = el("p", "seal-motto", esc(p.motto)); n3.dir = "auto"; bioBlock.appendChild(n3); }
 
+  const pubHl = el("div", "st-hl-box");
+  pubHl.hidden = true;
+  stage.appendChild(pubHl);
+  paintStoryHighlights(pubHl, id);
+
   if (langs.length) {
     const facts = el("div", "fact-row");
     facts.innerHTML = langs.map(l => '<div class="fact">' +
@@ -14833,6 +14946,7 @@ const HILITES = [
 ];
 
 function renderHilites() {
+  paintStoryHighlights(document.getElementById("seal-story-hl"), myId());
   const row = document.getElementById("seal-hilites");
   if (!row) return;
   if (backend !== "supabase") { row.hidden = true; return; }
@@ -15128,7 +15242,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1004-1600";
+const BUILD = "1005-1200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -15337,6 +15451,779 @@ function renderSeal() {
 
 /* Home: who you are, what to do next, and the Lineage. Nothing that
    belongs to another tab is drawn here. */
+
+/* ═══════════ STORIES ═══════════
+   A photo, a short video or a text card that disappears after 24 hours.
+   The rules live in the database (supabase/stories.sql): a member can only
+   post, delete or highlight their own; files sit in a private bucket and
+   can be read only while their story can. This is the screen side:
+   the bar of circles on the hall, the viewer, the composer, highlights on
+   a profile, and story reports for administrators. */
+const STORY_BG = [
+  ["violet", "linear-gradient(160deg,#a726d0,#650fd0)"],
+  ["night",  "linear-gradient(160deg,#251040,#0b0416)"],
+  ["rose",   "linear-gradient(160deg,#ff5c7a,#a726d0)"],
+  ["teal",   "linear-gradient(160deg,#16a085,#1b4f72)"],
+  ["sand",   "linear-gradient(160deg,#f4d58d,#c97b2d)"]
+];
+const STORY_PHOTO_MS = 5000, STORY_TEXT_MS = 6000, STORY_VIDEO_MAX_S = 15.5;
+const STORY_VIDEO_BYTES = 30 * 1024 * 1024;
+const STORY_REACTS = ["❤️", "😂", "😮", "👏", "🔥"];
+const STORY_COLS = "id,author_id,kind,media_path,body,bg,duration_ms,created_at,expires_at";
+const storyBg = k => (STORY_BG.find(b => b[0] === k) || STORY_BG[0])[1];
+
+let storyGroups = [];          /* [{ author, stories:[...], unseen }] for the bar */
+let storyReady = null;         /* false when the tables are not there yet */
+
+async function storySign(paths) {
+  const out = {};
+  const want = [...new Set(paths.filter(Boolean))];
+  if (!want.length) return out;
+  try {
+    const t = await freshToken();
+    const r = await fetch(SUPABASE.url + "/storage/v1/object/sign/stories", {
+      method: "POST",
+      headers: { apikey: SUPABASE.key, Authorization: "Bearer " + t, "Content-Type": "application/json" },
+      body: JSON.stringify({ expiresIn: 900, paths: want })
+    });
+    if (!r.ok) return out;
+    (await r.json()).forEach(x => {
+      if (x && x.signedURL && !x.error) out[x.path] = SUPABASE.url + "/storage/v1" + x.signedURL;
+    });
+  } catch (e) {}
+  return out;
+}
+
+async function storyProfiles(ids) {
+  const want = [...new Set(ids.filter(Boolean))];
+  if (!want.length) return {};
+  const rows = await sbGet("profiles_public?select=id,username,title,display_name,avatar_path,verified" +
+                           "&id=in.(" + want.join(",") + ")").catch(() => []);
+  const out = {};
+  rows.forEach(p => { out[p.id] = p; });
+  return out;
+}
+
+/* Everything live, grouped by person: you first, then people you follow,
+   then everyone else; inside each, unseen before seen. */
+async function loadStoryGroups() {
+  const now = new Date().toISOString();
+  let rows;
+  try {
+    rows = await sbGet("stories?select=" + STORY_COLS + "&deleted_at=is.null&expires_at=gt." +
+                       encodeURIComponent(now) + "&order=created_at.asc&limit=400");
+    storyReady = true;
+  } catch (e) { storyReady = false; return []; }
+  const ids = rows.map(r => r.id);
+  let seen = new Set(), follows = new Set();
+  if (ids.length) {
+    try {
+      (await sbGet("story_views?select=story_id&viewer_id=eq." + myId() +
+                   "&story_id=in.(" + ids.join(",") + ")")).forEach(v => seen.add(v.story_id));
+    } catch (e) {}
+  }
+  try {
+    (await sbGet("follows?select=following_id&follower_id=eq." + myId())).forEach(f => follows.add(f.following_id));
+  } catch (e) {}
+  const people = await storyProfiles(rows.map(r => r.author_id));
+  const byAuthor = {};
+  rows.forEach(r => {
+    r.seen = seen.has(r.id);
+    (byAuthor[r.author_id] = byAuthor[r.author_id] || []).push(r);
+  });
+  const groups = Object.keys(byAuthor).map(a => ({
+    author: people[a] || { id: a, display_name: "Member" },
+    stories: byAuthor[a],
+    unseen: byAuthor[a].some(s => !s.seen),
+    mine: a === myId(),
+    follow: follows.has(a),
+    last: byAuthor[a][byAuthor[a].length - 1].created_at
+  }));
+  const rank = g => (g.mine ? 0 : (g.follow ? 1 : 3) + (g.unseen ? 0 : 1));
+  groups.sort((x, y) => rank(x) - rank(y) || (y.last > x.last ? 1 : -1));
+  return groups;
+}
+
+function storyRing(author, state) {
+  const ring = el("span", "st-ring " + state);
+  const av = el("span", "avatar");
+  paintFace(av, author.avatar_path, author.display_name);
+  ring.appendChild(av);
+  return ring;
+}
+
+/* the row of circles at the top of the hall */
+async function renderStoryBar() {
+  const bar = document.getElementById("story-bar");
+  if (!bar) return;
+  if (backend !== "supabase" || !myId()) { bar.hidden = true; return; }
+  storyGroups = await loadStoryGroups();
+  if (storyReady === false) { bar.hidden = true; return; }
+  bar.hidden = false;
+  bar.innerHTML = "";
+
+  const mine = storyGroups.find(g => g.mine);
+  const me = el("div", "st-cell");
+  const meBtn = el("button", "st-btn");
+  meBtn.type = "button";
+  const meAuthor = mine ? mine.author : { id: myId(), display_name: (state.profile && state.profile.display_name) || "You",
+                                         avatar_path: state.profile && state.profile.avatar_path };
+  meBtn.appendChild(storyRing(meAuthor, mine ? (mine.unseen ? "new" : "seen") : "none"));
+  meBtn.setAttribute("aria-label", mine ? "Your story" : "Add to your story");
+  meBtn.addEventListener("click", () => mine ? openStoryViewer(storyGroups, storyGroups.indexOf(mine)) : openStoryComposer());
+  me.appendChild(meBtn);
+  const plus = el("button", "st-plus", "+");
+  plus.type = "button";
+  plus.setAttribute("aria-label", "Add to your story");
+  plus.addEventListener("click", e => { e.stopPropagation(); openStoryComposer(); });
+  me.appendChild(plus);
+  me.appendChild(el("span", "st-name", "Your story"));
+  bar.appendChild(me);
+
+  storyGroups.filter(g => !g.mine).forEach(g => {
+    const cell = el("div", "st-cell");
+    const b = el("button", "st-btn");
+    b.type = "button";
+    b.appendChild(storyRing(g.author, g.unseen ? "new" : "seen"));
+    b.setAttribute("aria-label", "Story by " + (g.author.display_name || "Member"));
+    b.addEventListener("click", () => openStoryViewer(storyGroups, storyGroups.indexOf(g)));
+    cell.appendChild(b);
+    const nm = el("span", "st-name", esc(g.author.username ? "@" + g.author.username : (g.author.display_name || "Member")));
+    nm.dir = "auto";
+    cell.appendChild(nm);
+    bar.appendChild(cell);
+  });
+}
+
+/* ── the viewer ──
+   groups: [{author, stories}], starting at group gi. opts.highlight marks
+   a highlight reel (no view counting needed, owner may remove items). */
+async function openStoryViewer(groups, gi, opts) {
+  opts = opts || {};
+  groups = groups.filter(g => g.stories && g.stories.length);
+  if (!groups.length) return;
+  gi = Math.max(0, Math.min(gi, groups.length - 1));
+  let si = opts.highlight ? 0 : Math.max(0, groups[gi].stories.findIndex(s => !s.seen));
+  let timer = null, startAt = 0, remain = 0, paused = false, closed = false;
+  const urls = await storySign([].concat(...groups.map(g => g.stories.map(s => s.media_path))));
+
+  const ov = el("div", "st-view");
+  ov.setAttribute("role", "dialog");
+  ov.setAttribute("aria-label", "Story");
+  const bars = el("div", "st-bars");
+  const head = el("div", "st-head");
+  const stage2 = el("div", "st-stage");
+  const foot = el("div", "st-foot");
+  ov.appendChild(stage2); ov.appendChild(bars); ov.appendChild(head); ov.appendChild(foot);
+  document.body.appendChild(ov);
+  document.body.classList.add("st-open");
+
+  const close = () => {
+    if (closed) return;
+    closed = true; clearTimeout(timer);
+    ov.remove(); document.body.classList.remove("st-open");
+    document.removeEventListener("keydown", onKey);
+    if (!opts.highlight) renderStoryBar();
+    if (opts.onClose) opts.onClose();
+  };
+  const onKey = e => {
+    if (e.key === "Escape") close();
+    else if (e.key === "ArrowRight") next();
+    else if (e.key === "ArrowLeft") prev();
+  };
+  document.addEventListener("keydown", onKey);
+
+  function cur() { return groups[gi].stories[si]; }
+  function next() {
+    if (si < groups[gi].stories.length - 1) si++;
+    else if (gi < groups.length - 1) { gi++; si = 0; }
+    else return close();
+    show();
+  }
+  function prev() {
+    if (si > 0) si--;
+    else if (gi > 0) { gi--; si = groups[gi].stories.length - 1; }
+    show();
+  }
+  function pause() {
+    if (paused) return;
+    paused = true; clearTimeout(timer);
+    remain -= Date.now() - startAt;
+    const v = stage2.querySelector("video"); if (v) v.pause();
+    const f = bars.querySelector(".st-bar.on i"); if (f) { const w = getComputedStyle(f).width; f.style.transition = "none"; f.style.width = w; }
+  }
+  function resume() {
+    if (!paused || closed) return;
+    paused = false;
+    const v = stage2.querySelector("video"); if (v) v.play().catch(() => {});
+    run(remain);
+  }
+  function run(ms) {
+    remain = ms; startAt = Date.now();
+    const f = bars.querySelector(".st-bar.on i");
+    if (f) { void f.offsetWidth; f.style.transition = "width " + ms + "ms linear"; f.style.width = "100%"; }
+    clearTimeout(timer);
+    timer = setTimeout(next, ms);
+  }
+
+  function show() {
+    clearTimeout(timer); paused = false;
+    const g = groups[gi], s = cur();
+    bars.innerHTML = "";
+    g.stories.forEach((x, k) => {
+      const b = el("span", "st-bar" + (k < si ? " done" : k === si ? " on" : ""));
+      b.appendChild(el("i"));
+      bars.appendChild(b);
+    });
+    head.innerHTML = "";
+    const who = el("button", "st-who");
+    who.type = "button";
+    const av = el("span", "avatar sm");
+    paintFace(av, g.author.avatar_path, g.author.display_name);
+    who.appendChild(av);
+    who.appendChild(el("span", "st-who-t",
+      '<b dir="auto">' + esc(withTitle(g.author.title, g.author.display_name || "Member")) + '</b>' +
+      '<span>' + (opts.highlight ? esc(opts.highlight) : when(s.created_at)) + '</span>'));
+    who.addEventListener("click", () => {
+      if (g.author.id === myId()) return;
+      close(); openPublic(g.author);
+    });
+    head.appendChild(who);
+    const more = el("button", "st-icon", "•••");
+    more.type = "button"; more.setAttribute("aria-label", "More");
+    more.addEventListener("click", e => { e.stopPropagation(); storyMenu(g, s); });
+    head.appendChild(more);
+    const x = el("button", "st-icon", "×");
+    x.type = "button"; x.setAttribute("aria-label", "Close");
+    x.addEventListener("click", e => { e.stopPropagation(); close(); });
+    head.appendChild(x);
+
+    stage2.innerHTML = "";
+    let ms = s.kind === "text" ? STORY_TEXT_MS : STORY_PHOTO_MS;
+    if (s.kind === "text") {
+      const card = el("div", "st-text");
+      card.style.background = storyBg(s.bg);
+      const p = el("p", null, esc(s.body || ""));
+      p.dir = "auto";
+      card.appendChild(p);
+      stage2.appendChild(card);
+      run(ms);
+    } else if (s.kind === "photo") {
+      const img = new Image();
+      img.className = "st-media";
+      img.alt = s.body ? s.body.slice(0, 120) : "Story photo";
+      img.onload = () => { if (cur() === s) run(ms); };
+      img.onerror = () => { if (cur() === s) run(1500); };
+      img.src = urls[s.media_path] || "";
+      if (!img.src) run(1500);
+      stage2.appendChild(img);
+    } else {
+      const v = document.createElement("video");
+      v.className = "st-media";
+      v.playsInline = true; v.setAttribute("playsinline", ""); v.autoplay = true;
+      v.src = urls[s.media_path] || "";
+      v.onloadedmetadata = () => {
+        if (cur() !== s) return;
+        const d = Math.min(STORY_VIDEO_MAX_S, v.duration || 10) * 1000;
+        v.play().then(() => run(d)).catch(() => { v.muted = true; v.play().catch(() => {}); run(d); });
+      };
+      v.onerror = () => { if (cur() === s) run(1500); };
+      stage2.appendChild(v);
+      const snd = el("button", "st-sound", "🔊");
+      snd.type = "button"; snd.setAttribute("aria-label", "Sound on or off");
+      snd.addEventListener("click", e => { e.stopPropagation(); v.muted = !v.muted; snd.textContent = v.muted ? "🔇" : "🔊"; });
+      stage2.appendChild(snd);
+    }
+    if (s.kind !== "text" && s.body) {
+      const cap = el("p", "st-cap", esc(s.body));
+      cap.dir = "auto";
+      stage2.appendChild(cap);
+    }
+
+    /* counted once per member per story */
+    if (g.author.id !== myId() && !s.seen) {
+      s.seen = true;
+      sbHeaders().then(h => fetch(SUPABASE.url + "/rest/v1/story_views", {
+        method: "POST",
+        headers: Object.assign(h, { Prefer: "resolution=ignore-duplicates,return=minimal" }),
+        body: JSON.stringify({ story_id: s.id, viewer_id: myId() })
+      })).catch(() => {});
+    }
+    g.unseen = g.stories.some(x => !x.seen);
+
+    foot.innerHTML = "";
+    if (g.author.id === myId()) {
+      if (!opts.highlight) {
+        const seenBy = el("button", "st-pill", "👁 Seen by…");
+        seenBy.type = "button";
+        seenBy.addEventListener("click", e => { e.stopPropagation(); storyViewers(s); });
+        foot.appendChild(seenBy);
+        countViews(s, seenBy);
+      }
+      const add = el("button", "st-pill", "+ Add to story");
+      add.type = "button";
+      add.addEventListener("click", e => { e.stopPropagation(); close(); openStoryComposer(); });
+      foot.appendChild(add);
+    } else {
+      const reacts = el("div", "st-reacts");
+      STORY_REACTS.forEach(em => {
+        const b = el("button", "st-react", em);
+        b.type = "button";
+        b.addEventListener("click", e => { e.stopPropagation(); storyReply(g, s, em, b); });
+        reacts.appendChild(b);
+      });
+      foot.appendChild(reacts);
+      const form = el("form", "st-reply");
+      const inp = document.createElement("input");
+      inp.type = "text"; inp.maxLength = 500; inp.dir = "auto";
+      inp.placeholder = "Reply to " + (g.author.display_name || "this member") + "…";
+      inp.addEventListener("focus", pause);
+      inp.addEventListener("blur", () => { if (!inp.value) resume(); });
+      form.appendChild(inp);
+      const send = el("button", "st-send", "Send");
+      send.type = "submit";
+      form.appendChild(send);
+      form.addEventListener("submit", async e => {
+        e.preventDefault();
+        const t = inp.value.trim(); if (!t) return;
+        send.disabled = true;
+        const ok = await storyReply(g, s, t, send);
+        send.disabled = false;
+        if (ok) { inp.value = ""; inp.blur(); resume(); }
+      });
+      foot.appendChild(form);
+    }
+  }
+
+  /* tap left/right, hold to pause, swipe down to close */
+  let downAt = 0, downY = 0, downX = 0, held = false, holdT = null;
+  stage2.addEventListener("pointerdown", e => {
+    downAt = Date.now(); downY = e.clientY; downX = e.clientX; held = false;
+    holdT = setTimeout(() => { held = true; pause(); }, 220);
+  });
+  stage2.addEventListener("pointerup", e => {
+    clearTimeout(holdT);
+    if (e.clientY - downY > 90) return close();
+    if (held) { held = false; return resume(); }
+    if (Date.now() - downAt > 600) return;
+    const r = stage2.getBoundingClientRect();
+    if (e.clientX - r.left < r.width * 0.33) prev(); else next();
+  });
+  stage2.addEventListener("pointercancel", () => { clearTimeout(holdT); if (held) resume(); });
+
+  async function countViews(s, btn) {
+    try {
+      const rows = await sbGet("story_views?select=viewer_id&story_id=eq." + s.id);
+      if (!closed) btn.textContent = "👁 Seen by " + rows.length;
+    } catch (e) { btn.textContent = "👁 Seen by"; }
+  }
+
+  async function storyViewers(s) {
+    pause();
+    const { wrap, sheet, done } = storySheet("Seen by", () => resume());
+    const msg = el("p", "sheet-note", "Loading…");
+    sheet.appendChild(msg);
+    try {
+      const rows = await sbGet("story_views?select=viewer_id,viewed_at&story_id=eq." + s.id + "&order=viewed_at.desc");
+      const people = await storyProfiles(rows.map(r => r.viewer_id));
+      msg.textContent = rows.length ? rows.length + (rows.length === 1 ? " member" : " members") : "Nobody has seen this yet.";
+      rows.forEach(r => {
+        const p = people[r.viewer_id] || { id: r.viewer_id, display_name: "Member" };
+        const row = memberRow(p, x => { done(); close(); openPublic(x); });
+        row.appendChild(el("span", "v-when", esc(when(r.viewed_at))));
+        sheet.appendChild(row);
+      });
+    } catch (e) { msg.textContent = "That could not be loaded."; }
+  }
+
+  function storyMenu(g, s) {
+    pause();
+    const { sheet, done } = storySheet(null, () => { if (!closed) resume(); });
+    const act = (label, fn, cls) => {
+      const b = el("button", "sheet-act" + (cls ? " " + cls : ""), label);
+      b.addEventListener("click", () => fn(b));
+      sheet.appendChild(b);
+    };
+    if (g.author.id === myId()) {
+      if (opts.highlight) {
+        act("Remove from “" + opts.highlight + "”", async b => {
+          b.disabled = true;
+          try {
+            await sbDel("story_highlights?story_id=eq." + s.id + "&title=eq." + encodeURIComponent(opts.highlight));
+            done(); close();
+          } catch (e) { b.disabled = false; b.textContent = "That could not be removed."; }
+        });
+      } else {
+        act("Add to highlights", () => { done(); addToHighlight(s, () => { if (!closed) resume(); }); pause(); });
+      }
+      act("Delete story", async b => {
+        b.disabled = true; b.textContent = "Deleting…";
+        try {
+          await sbPatch("stories?id=eq." + s.id, { deleted_at: new Date().toISOString() });
+          g.stories.splice(si, 1);
+          done();
+          if (!g.stories.length) { groups.splice(gi, 1); if (!groups.length) return close(); if (gi >= groups.length) gi = groups.length - 1; si = 0; }
+          else if (si >= g.stories.length) si = g.stories.length - 1;
+          show();
+        } catch (e) { b.disabled = false; b.textContent = "That could not be deleted."; }
+      }, "danger");
+    } else {
+      act("Report this story", () => { done(); reportStory(s, () => { if (!closed) resume(); }); pause(); });
+    }
+    act("Cancel", () => done(), "quiet");
+  }
+
+  show();
+}
+
+/* a bottom sheet over the viewer */
+function storySheet(title, onClose) {
+  const wrap = el("div", "sheet-back st-sheet");
+  const sheet = el("div", "sheet");
+  if (title) sheet.appendChild(el("h3", null, esc(title)));
+  const done = () => { wrap.remove(); if (onClose) onClose(); };
+  wrap.addEventListener("click", e => { if (e.target === wrap) done(); });
+  wrap.appendChild(sheet);
+  document.body.appendChild(wrap);
+  return { wrap, sheet, done };
+}
+
+/* replies and reactions go into the member's messages */
+async function storyReply(g, s, text, btn) {
+  const what = s.kind === "text" ? "“" + (s.body || "").slice(0, 60) + "”" : (s.kind === "video" ? "video" : "photo");
+  const body = (STORY_REACTS.includes(text) ? text + " Reacted to your story (" : "↩ Replied to your story (") +
+               what + ")" + (STORY_REACTS.includes(text) ? "" : ": " + text);
+  try {
+    const cid = await findOrOpenConversation(g.author.id);
+    await sbPost("messages", { conversation_id: cid, sender_id: myId(), body: body });
+    const t = btn.textContent; btn.textContent = "✓";
+    setTimeout(() => { btn.textContent = t; }, 1200);
+    return true;
+  } catch (e) {
+    const t = btn.textContent; btn.textContent = "✕";
+    btn.title = "This member does not take messages from you.";
+    setTimeout(() => { btn.textContent = t; }, 1500);
+    return false;
+  }
+}
+
+function reportStory(s, onClose) {
+  const { sheet, done } = storySheet("Report this story", onClose);
+  sheet.appendChild(el("p", "sheet-note", "An administrator will look at it. The member is not told who reported it."));
+  const ta = document.createElement("textarea");
+  ta.className = "f-in"; ta.rows = 3; ta.maxLength = 500; ta.dir = "auto";
+  ta.placeholder = "What is wrong with it? (optional)";
+  sheet.appendChild(ta);
+  const go = el("button", "sheet-act danger", "Send report");
+  go.addEventListener("click", async () => {
+    go.disabled = true;
+    try {
+      await sbPost("story_reports", { story_id: s.id, reporter_id: myId(), reason: ta.value.trim() || null });
+      sheet.innerHTML = ""; sheet.appendChild(el("p", "sheet-note", "Thank you. It has been reported."));
+      setTimeout(done, 1200);
+    } catch (e) { go.disabled = false; go.textContent = "That could not be sent. Try again."; }
+  });
+  sheet.appendChild(go);
+  const no = el("button", "sheet-act quiet", "Cancel");
+  no.addEventListener("click", done);
+  sheet.appendChild(no);
+}
+
+async function addToHighlight(s, onClose) {
+  const { sheet, done } = storySheet("Add to highlights", onClose);
+  sheet.appendChild(el("p", "sheet-note", "Highlights stay on your profile after the 24 hours."));
+  let titles = [];
+  try {
+    titles = [...new Set((await sbGet("story_highlights?select=title&owner_id=eq." + myId())).map(h => h.title))];
+  } catch (e) {}
+  const save = async (title, b) => {
+    b.disabled = true;
+    try {
+      await sbPost("story_highlights", { owner_id: myId(), story_id: s.id, title: title });
+      sheet.innerHTML = ""; sheet.appendChild(el("p", "sheet-note", "Added to “" + esc(title) + "”."));
+      setTimeout(done, 1000);
+    } catch (e) { b.disabled = false; b.textContent = "Already there, or it could not be added."; }
+  };
+  titles.forEach(t => {
+    const b = el("button", "sheet-act", esc(t));
+    b.addEventListener("click", () => save(t, b));
+    sheet.appendChild(b);
+  });
+  const inp = document.createElement("input");
+  inp.className = "f-in"; inp.maxLength = 30; inp.dir = "auto";
+  inp.placeholder = titles.length ? "Or a new highlight…" : "Name the highlight, e.g. Proverbs";
+  sheet.appendChild(inp);
+  const go = el("button", "sheet-act", "Add");
+  go.addEventListener("click", () => { const t = inp.value.trim(); if (t) save(t, go); else inp.focus(); });
+  sheet.appendChild(go);
+  const no = el("button", "sheet-act quiet", "Cancel");
+  no.addEventListener("click", done);
+  sheet.appendChild(no);
+}
+
+/* highlights on a profile: one circle per title */
+async function paintStoryHighlights(box, ownerId) {
+  if (!box) return;
+  box.hidden = true; box.innerHTML = "";
+  if (backend !== "supabase" || !myId() || !ownerId) return;
+  let rows = [];
+  try {
+    rows = await sbGet("story_highlights?select=title,story_id,created_at&owner_id=eq." + ownerId + "&order=created_at.asc");
+  } catch (e) { return; }
+  if (!rows.length) return;
+  const ids = [...new Set(rows.map(r => r.story_id))];
+  let stories = [];
+  try { stories = await sbGet("stories?select=" + STORY_COLS + "&deleted_at=is.null&id=in.(" + ids.join(",") + ")"); }
+  catch (e) { return; }
+  const byId = {}; stories.forEach(s => { byId[s.id] = s; });
+  const titles = [];
+  const reel = {};
+  rows.forEach(r => {
+    if (!byId[r.story_id]) return;
+    if (!reel[r.title]) { reel[r.title] = []; titles.push(r.title); }
+    reel[r.title].push(Object.assign({ seen: true }, byId[r.story_id]));
+  });
+  if (!titles.length) return;
+  const author = (await storyProfiles([ownerId]))[ownerId] || { id: ownerId, display_name: "Member" };
+  const covers = await storySign(titles.map(t => (reel[t].find(s => s.kind === "photo") || {}).media_path));
+  box.hidden = false;
+  box.appendChild(el("span", "st-hl-lab", "Story highlights"));
+  const row = el("div", "st-hl-row");
+  titles.forEach(t => {
+    const b = el("button", "st-hl");
+    b.type = "button";
+    const c = el("span", "st-hl-c");
+    const first = reel[t].find(s => s.kind === "photo");
+    if (first && covers[first.media_path]) c.style.backgroundImage = "url(\"" + covers[first.media_path] + "\")";
+    else {
+      const tx = reel[t].find(s => s.kind === "text");
+      c.style.background = storyBg(tx ? tx.bg : "violet");
+      c.textContent = reel[t][0].kind === "video" ? "▶" : "Aa";
+    }
+    b.appendChild(c);
+    const n = el("span", "st-name", esc(t)); n.dir = "auto";
+    b.appendChild(n);
+    b.addEventListener("click", () => openStoryViewer([{ author, stories: reel[t] }], 0,
+      { highlight: t, onClose: () => paintStoryHighlights(box, ownerId) }));
+    row.appendChild(b);
+  });
+  box.appendChild(row);
+}
+
+/* ── the composer ── */
+function openStoryComposer() {
+  if (backend !== "supabase" || !myId()) return;
+  let mode = "photo", file = null, bg = "violet", busy = false;
+  const ov = el("div", "st-view st-compose");
+  ov.setAttribute("role", "dialog");
+  ov.setAttribute("aria-label", "New story");
+  document.body.appendChild(ov);
+  document.body.classList.add("st-open");
+  const close = () => { ov.remove(); document.body.classList.remove("st-open"); };
+
+  const head = el("div", "st-head");
+  head.appendChild(el("span", "st-c-title", "New story"));
+  const x = el("button", "st-icon", "×");
+  x.type = "button"; x.setAttribute("aria-label", "Close");
+  x.addEventListener("click", close);
+  head.appendChild(x);
+
+  const tabs = el("div", "st-tabs");
+  const area = el("div", "st-stage st-c-area");
+  const foot = el("div", "st-foot st-c-foot");
+  ov.appendChild(area); ov.appendChild(head); ov.appendChild(tabs); ov.appendChild(foot);
+
+  const cap = document.createElement("input");
+  cap.type = "text"; cap.className = "st-cap-in"; cap.maxLength = 300; cap.dir = "auto";
+  cap.placeholder = "Add a caption (optional)";
+  const ta = document.createElement("textarea");
+  ta.className = "st-ta"; ta.maxLength = 300; ta.dir = "auto";
+  ta.placeholder = "Type your story… a word, a proverb, a translation tip";
+  const pick = document.createElement("input");
+  pick.type = "file"; pick.hidden = true;
+  ov.appendChild(pick);
+  const say = el("p", "st-say");
+  const post = el("button", "st-post", "Share to your story");
+  post.type = "button";
+
+  function draw() {
+    tabs.innerHTML = "";
+    [["photo", "Photo"], ["video", "Video"], ["text", "Text"]].forEach(([k, l]) => {
+      const b = el("button", "st-tab" + (mode === k ? " on" : ""), l);
+      b.type = "button";
+      b.addEventListener("click", () => { if (busy) return; mode = k; file = null; say.textContent = ""; draw(); });
+      tabs.appendChild(b);
+    });
+    area.innerHTML = "";
+    foot.innerHTML = "";
+    if (mode === "text") {
+      const card = el("div", "st-text");
+      card.style.background = storyBg(bg);
+      card.appendChild(ta);
+      area.appendChild(card);
+      const sw = el("div", "st-swatches");
+      STORY_BG.forEach(([k, g]) => {
+        const s = el("button", "st-sw" + (bg === k ? " on" : ""));
+        s.type = "button"; s.style.background = g; s.setAttribute("aria-label", k);
+        s.addEventListener("click", () => { bg = k; card.style.background = g; sw.querySelectorAll(".st-sw").forEach(n => n.classList.toggle("on", n === s)); });
+        sw.appendChild(s);
+      });
+      foot.appendChild(sw);
+      setTimeout(() => ta.focus(), 50);
+    } else {
+      pick.accept = mode === "photo" ? "image/*" : "video/mp4,video/quicktime,video/webm,video/*";
+      if (file) {
+        const url = URL.createObjectURL(file);
+        if (mode === "photo") { const i = new Image(); i.className = "st-media"; i.src = url; area.appendChild(i); }
+        else { const v = document.createElement("video"); v.className = "st-media"; v.src = url; v.controls = true; v.playsInline = true; v.setAttribute("playsinline", ""); area.appendChild(v); }
+        const again = el("button", "st-pill st-again", mode === "photo" ? "Choose another photo" : "Choose another video");
+        again.type = "button"; again.addEventListener("click", () => pick.click());
+        area.appendChild(again);
+        foot.appendChild(cap);
+      } else {
+        const big = el("button", "st-pickbig",
+          '<span class="st-pick-i">' + (mode === "photo" ? "🖼" : "🎥") + '</span>' +
+          '<b>' + (mode === "photo" ? "Choose a photo" : "Choose a video") + '</b>' +
+          '<span>' + (mode === "photo" ? "From your camera or gallery" : "Up to 15 seconds, 30 MB") + '</span>');
+        big.type = "button"; big.addEventListener("click", () => pick.click());
+        area.appendChild(big);
+      }
+    }
+    foot.appendChild(say);
+    foot.appendChild(post);
+  }
+
+  pick.addEventListener("change", async () => {
+    const f = pick.files && pick.files[0];
+    pick.value = "";
+    if (!f) return;
+    say.textContent = "";
+    if (mode === "video") {
+      if (f.size > STORY_VIDEO_BYTES) { say.textContent = "That video is over 30 MB. Trim it, or choose a shorter one."; return; }
+      const d = await new Promise(res => {
+        const v = document.createElement("video");
+        v.preload = "metadata";
+        v.onloadedmetadata = () => res(v.duration);
+        v.onerror = () => res(0);
+        v.src = URL.createObjectURL(f);
+      });
+      if (d > STORY_VIDEO_MAX_S) { say.textContent = "Stories take up to 15 seconds. That one is " + Math.round(d) + " seconds."; return; }
+    }
+    file = f; draw();
+  });
+
+  post.addEventListener("click", async () => {
+    if (busy) return;
+    say.textContent = "";
+    const row = { author_id: myId(), kind: mode };
+    if (mode === "text") {
+      const t = ta.value.trim();
+      if (!t) { say.textContent = "Write something first."; ta.focus(); return; }
+      row.body = t; row.bg = bg; row.duration_ms = STORY_TEXT_MS;
+    } else {
+      if (!file) { pick.click(); return; }
+      if (cap.value.trim()) row.body = cap.value.trim();
+    }
+    busy = true; post.disabled = true; post.textContent = "Sharing…";
+    try {
+      if (mode !== "text") {
+        let blob = file, type = file.type || (mode === "photo" ? "image/jpeg" : "video/mp4");
+        if (mode === "photo") { const small = await shrinkPhoto(file); if (small) { blob = small; type = "image/jpeg"; } }
+        const ext = (type.split("/")[1] || "bin").replace("quicktime", "mov").replace("jpeg", "jpg");
+        const path = myId() + "/" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + "." + ext;
+        const t = await freshToken();
+        const r = await fetch(SUPABASE.url + "/storage/v1/object/stories/" + encodeURI(path), {
+          method: "POST",
+          headers: { apikey: SUPABASE.key, Authorization: "Bearer " + t, "Content-Type": type },
+          body: blob
+        });
+        if (!r.ok) throw new Error("upload " + r.status);
+        row.media_path = path;
+        row.duration_ms = mode === "video" ? 15000 : STORY_PHOTO_MS;
+      }
+      await sbPost("stories", row);
+      close();
+      await renderStoryBar();
+      const mine = storyGroups.find(g => g.mine);
+      if (mine) openStoryViewer(storyGroups, storyGroups.indexOf(mine));
+    } catch (e) {
+      busy = false; post.disabled = false; post.textContent = "Share to your story";
+      say.textContent = "It could not be shared. Check your connection and try again.";
+    }
+  });
+
+  draw();
+}
+
+/* Photos are made smaller before upload: a story is seen on a phone for
+   five seconds, and the free storage is one gigabyte. */
+function shrinkPhoto(f) {
+  return new Promise(res => {
+    if (!/^image\/(jpeg|png|webp)$/.test(f.type || "")) return res(null);
+    const img = new Image();
+    img.onload = () => {
+      const max = 1440, k = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      c.toBlob(b => res(b && b.size < f.size ? b : null), "image/jpeg", 0.85);
+    };
+    img.onerror = () => res(null);
+    img.src = URL.createObjectURL(f);
+  });
+}
+
+/* ── story reports, for administrators ── */
+async function admStoryReports(box) {
+  const sec = el("div", "st-adm");
+  sec.appendChild(el("h3", "pub-h", "Reported stories"));
+  box.appendChild(sec);
+  let rows = [];
+  try { rows = await sbGet("story_reports?select=*&order=id.desc&limit=100"); }
+  catch (e) { sec.appendChild(el("p", "adm-empty", "Story reports are not set up yet.")); return; }
+  if (!rows.length) { sec.appendChild(el("p", "adm-empty", "No stories have been reported.")); return; }
+  const ids = [...new Set(rows.map(r => r.story_id))];
+  let stories = [];
+  try { stories = await sbGet("stories?select=" + STORY_COLS + "&id=in.(" + ids.join(",") + ")"); } catch (e) {}
+  const byId = {}; stories.forEach(s => { byId[s.id] = s; });
+  const people = await storyProfiles(stories.map(s => s.author_id));
+  rows.forEach(rep => {
+    const s = byId[rep.story_id];
+    const a = s && people[s.author_id];
+    const c = el("div", "rep-card");
+    c.innerHTML =
+      '<span class="what">Story by ' + admEsc(a ? (a.display_name || "Member") : "a member") +
+        (s ? ' — ' + admEsc(s.kind) : ' — already gone') + '</span>' +
+      (s && s.body ? '<span class="meta" dir="auto">' + admEsc(s.body.slice(0, 140)) + '</span>' : '') +
+      '<span class="meta">' + admEsc(rep.reason || "no reason given") + '</span>' +
+      '<span class="meta"><span class="chip ' + (rep.status === "open" ? "needs_review" : "archived") + '">' +
+        admWord(rep.status) + '</span></span>';
+    const act = el("div", "adm-actions");
+    if (s) {
+      const view = el("button", "ghost", "View");
+      view.addEventListener("click", () => openStoryViewer([{ author: a || { id: s.author_id }, stories: [Object.assign({ seen: true }, s)] }], 0, { highlight: "Reported" }));
+      act.appendChild(view);
+    }
+    const rm = el("button", "ghost", "Remove story");
+    rm.addEventListener("click", async () => {
+      rm.disabled = true;
+      try {
+        if (s) await sbPatch("stories?id=eq." + s.id, { deleted_at: new Date().toISOString() });
+        await sbPatch("story_reports?id=eq." + rep.id, { status: "removed" });
+        admReports();
+      } catch (e) { rm.disabled = false; rm.textContent = "Could not remove"; }
+    });
+    act.appendChild(rm);
+    const ok = el("button", "ghost", "Dismiss");
+    ok.addEventListener("click", async () => {
+      try { await sbPatch("story_reports?id=eq." + rep.id, { status: "dismissed" }); admReports(); } catch (e) {}
+    });
+    act.appendChild(ok);
+    c.appendChild(act);
+    sec.appendChild(c);
+  });
+}
+
 function renderHall() {
   paintSeal();
 
@@ -15360,6 +16247,7 @@ function renderHall() {
   });
   paintPortraits(strip);
 
+  renderStoryBar();
   renderLately();
   paintStore();
   checkLevelUp();
@@ -20458,6 +21346,7 @@ async function admReports() {
     box.innerHTML = "";
     if (!rows.length) {
       box.appendChild(el("p", "adm-empty", "No one has reported a problem with any item."));
+      admStoryReports(box);
       return;
     }
     rows.forEach(rep => {
@@ -20477,6 +21366,7 @@ async function admReports() {
       c.appendChild(row);
       box.appendChild(c);
     });
+    admStoryReports(box);
   } catch (e) {
     box.innerHTML = '<p class="adm-empty">The reports could not be read.</p>';
   }
