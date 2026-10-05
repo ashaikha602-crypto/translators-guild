@@ -2096,7 +2096,7 @@ a.ks-s-en:hover { color: var(--white); }
 .dm-unread { width: 9px; height: 9px; border-radius: 50%; background: #3897f0; margin-right: .3rem; }
 .dm-empty { margin: 1.5rem 0; text-align: center; color: var(--ink-soft); display: grid; gap: .3rem; font-size: .95rem; }
 .dm-empty-sub { font-size: .85rem; color: var(--ink-faint); }
-.dm-view { position: fixed; inset: 0; z-index: 110; display: grid; grid-template-rows: auto 1fr auto auto;
+.dm-view { position: fixed; top: 0; left: 0; right: 0; height: 100%; z-index: 110; display: grid; grid-template-rows: auto 1fr auto auto;
   background: var(--void); color: var(--white); }
 .dm-head { display: flex; align-items: center; gap: .3rem; padding: calc(env(safe-area-inset-top, 0px) + .5rem) .6rem .5rem;
   border-bottom: 1px solid rgba(214,191,234,.1); background: var(--void); }
@@ -2175,8 +2175,8 @@ a.ks-s-en:hover { color: var(--white); }
   color: #fff; background: var(--grad); border: 2px solid var(--void); }
 .st-name { font-size: .7rem; color: var(--ink-soft); max-width: 4.7rem; overflow: hidden; text-overflow: ellipsis;
   white-space: nowrap; text-align: center; }
-body.st-open { overflow: hidden; }
-.st-view { position: fixed; inset: 0; z-index: 120; background: #000; color: #fff; display: grid;
+html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: none; }
+.st-view { position: fixed; top: 0; left: 0; right: 0; height: 100%; z-index: 120; background: #000; color: #fff; display: grid;
   grid-template-rows: auto auto 1fr auto; touch-action: none; user-select: none; -webkit-user-select: none; }
 .st-view > .st-stage { grid-row: 1 / -1; grid-column: 1; }
 .st-view > .st-bars, .st-view > .st-head, .st-view > .st-tabs { grid-column: 1; z-index: 2; }
@@ -14791,6 +14791,24 @@ function openThread(otherId, name, title, avatarPath) {
   runThread(otherId, { name, title, avatar_path: avatarPath });
 }
 
+/* On a phone the keyboard does not shrink the page; Safari slides the
+   whole page up instead, which pushes a full-screen chat out of sight.
+   Sizing the overlay to the visible part of the screen keeps the
+   conversation above the keyboard, the way a messaging app behaves. */
+function fitToKeyboard(ov, onFit) {
+  const vv = window.visualViewport;
+  if (!vv) return () => {};
+  const fit = () => {
+    ov.style.height = vv.height + "px";
+    ov.style.top = vv.offsetTop + "px";
+    if (onFit) onFit();
+  };
+  vv.addEventListener("resize", fit);
+  vv.addEventListener("scroll", fit);
+  fit();
+  return () => { vv.removeEventListener("resize", fit); vv.removeEventListener("scroll", fit); };
+}
+
 async function runThread(otherId, hint) {
   hint = hint || {};
   const ov = el("div", "dm-view");
@@ -14834,10 +14852,11 @@ async function runThread(otherId, hint) {
   ov.appendChild(bar);
   const note = el("p", "dm-note");
   ov.appendChild(note);
+  const unfit = fitToKeyboard(ov, () => { if (document.activeElement === box) body.scrollTop = body.scrollHeight; });
 
   const close = () => {
     if (closed) return;
-    closed = true; clearInterval(poll);
+    closed = true; clearInterval(poll); unfit();
     ov.remove(); document.body.classList.remove("st-open");
     document.removeEventListener("keydown", onKey);
     if (active && active.id === "inbox") runInbox();
@@ -14979,6 +14998,7 @@ async function runThread(otherId, hint) {
   poll = setInterval(() => { if (!document.hidden) draw(false); }, 4000);
 
   const grow = () => { box.style.height = "auto"; box.style.height = Math.min(box.scrollHeight, 120) + "px"; };
+  box.addEventListener("focus", () => setTimeout(() => { body.scrollTop = body.scrollHeight; }, 300));
   box.addEventListener("input", () => {
     grow();
     const has = !!box.value.trim();
@@ -15568,7 +15588,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1005-1500";
+const BUILD = "1005-1700";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -15943,10 +15963,11 @@ async function openStoryViewer(groups, gi, opts) {
   ov.appendChild(stage2); ov.appendChild(bars); ov.appendChild(head); ov.appendChild(foot);
   document.body.appendChild(ov);
   document.body.classList.add("st-open");
+  const unfit = fitToKeyboard(ov);
 
   const close = () => {
     if (closed) return;
-    closed = true; clearTimeout(timer);
+    closed = true; clearTimeout(timer); unfit();
     ov.remove(); document.body.classList.remove("st-open");
     document.removeEventListener("keydown", onKey);
     if (!opts.highlight) renderStoryBar();
@@ -16345,7 +16366,8 @@ function openStoryComposer() {
   ov.setAttribute("aria-label", "New story");
   document.body.appendChild(ov);
   document.body.classList.add("st-open");
-  const close = () => { ov.remove(); document.body.classList.remove("st-open"); };
+  const unfit = fitToKeyboard(ov);
+  const close = () => { unfit(); ov.remove(); document.body.classList.remove("st-open"); };
 
   const head = el("div", "st-head");
   head.appendChild(el("span", "st-c-title", "New story"));
