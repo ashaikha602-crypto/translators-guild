@@ -15929,7 +15929,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1005-2300";
+const BUILD = "1005-2400";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -17161,7 +17161,7 @@ function photoPost() {
 /* A post shared to a story is stored as a text story whose body starts
    with an invisible marker and the post's id, so no new table is needed:
    "⁣p:<uuid>⁣" followed by anything the sharer wrote. */
-const STORY_POST_RE = /^⁣p:([0-9a-f-]{36})⁣/;
+const STORY_POST_RE = /^\u2063p:([0-9A-Za-z-]{1,40})\u2063/;
 const storyPostId = s => { const m = s && s.kind === "text" && STORY_POST_RE.exec(s.body || ""); return m ? m[1] : null; };
 const storyText = s => (s && s.body || "").replace(STORY_POST_RE, "");
 
@@ -17171,7 +17171,7 @@ async function storyPostCard(postId, note, onOpen) {
   const card = el("div", "sp-card");
   card.appendChild(el("p", "sp-load", "Loading the post…"));
   let r = null;
-  try { r = (await sbGet("feed?select=" + FEED_COLS + "&id=eq." + postId))[0]; } catch (e) {}
+  try { r = (await sbGet("feed?select=" + FEED_COLS + "&id=eq." + encodeURIComponent(postId)))[0]; } catch (e) {}
   card.innerHTML = "";
   if (!r) { card.appendChild(el("p", "sp-load", "This post is no longer available.")); return card; }
   const head = el("div", "sp-head");
