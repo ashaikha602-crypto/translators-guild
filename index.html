@@ -2067,6 +2067,97 @@ a.ks-s-en:hover { color: var(--white); }
   z-index: 9999; padding: .8rem 1rem; border-radius: 14px; background: var(--grad); color: #fff;
   font-weight: 600; font-size: .92rem; text-align: center; box-shadow: 0 12px 30px -10px rgba(0,0,0,.5); }
 
+/* ═══ Direct messages ═══ */
+.dm-inbox { display: grid; gap: .2rem; margin: 0 -.2rem; }
+.dm-search { font: inherit; font-size: 1rem; width: 100%; box-sizing: border-box; padding: .62rem 1rem; border-radius: 12px;
+  border: 0; outline: none; background: rgba(255,255,255,.07); color: var(--white); }
+.dm-search::placeholder { color: var(--ink-faint); }
+.dm-ihead { display: flex; justify-content: space-between; align-items: baseline; padding: .9rem .2rem .3rem; }
+.dm-ihead h2 { margin: 0; font-family: var(--f-sans); font-size: 1rem; font-weight: 700; color: var(--white); letter-spacing: 0; }
+.dm-new { all: unset; cursor: pointer; font-size: .9rem; font-weight: 600; color: var(--mag-ink); }
+.dm-list { display: grid; }
+.dm-row { all: unset; cursor: pointer; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .8rem;
+  padding: .5rem .2rem; border-radius: 12px; min-width: 0; }
+.dm-row:active { background: rgba(255,255,255,.05); }
+.dm-ring { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; box-sizing: border-box; flex: none; }
+.dm-ring .avatar { width: 56px; height: 56px; font-size: 1.1rem; }
+.dm-ring.new, .dm-ring.seen { padding: 2.5px; }
+.dm-ring.new { background: conic-gradient(from 210deg, #ffc46b, #ff5c7a, #a726d0, #650fd0, #ffc46b); }
+.dm-ring.seen { background: rgba(214,191,234,.3); }
+.dm-ring.new .avatar, .dm-ring.seen .avatar { width: 100%; height: 100%; border: 2.5px solid var(--void); box-sizing: border-box; }
+.dm-ring.sm { width: 36px; height: 36px; }
+.dm-ring.sm .avatar { width: 36px; height: 36px; font-size: .8rem; }
+.dm-txt { display: grid; gap: .1rem; min-width: 0; }
+.dm-name { font-size: .95rem; font-weight: 500; color: var(--white); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dm-prev { display: flex; gap: .3rem; font-size: .875rem; color: var(--ink-faint); min-width: 0; }
+.dm-prev-t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.dm-row.unread .dm-name { font-weight: 700; }
+.dm-row.unread .dm-prev { color: var(--white); font-weight: 600; }
+.dm-unread { width: 9px; height: 9px; border-radius: 50%; background: #3897f0; margin-right: .3rem; }
+.dm-empty { margin: 1.5rem 0; text-align: center; color: var(--ink-soft); display: grid; gap: .3rem; font-size: .95rem; }
+.dm-empty-sub { font-size: .85rem; color: var(--ink-faint); }
+.dm-view { position: fixed; inset: 0; z-index: 110; display: grid; grid-template-rows: auto 1fr auto auto;
+  background: var(--void); color: var(--white); }
+.dm-head { display: flex; align-items: center; gap: .3rem; padding: calc(env(safe-area-inset-top, 0px) + .5rem) .6rem .5rem;
+  border-bottom: 1px solid rgba(214,191,234,.1); background: var(--void); }
+.dm-back { all: unset; cursor: pointer; width: 2.4rem; height: 2.4rem; display: grid; place-items: center; border-radius: 50%; }
+.dm-back svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.dm-who { all: unset; cursor: pointer; display: flex; align-items: center; gap: .6rem; min-width: 0; flex: 1; }
+.dm-who-t { display: grid; line-height: 1.2; min-width: 0; }
+.dm-who-t b { font-size: 1rem; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dm-who-t span { font-size: .8rem; color: var(--ink-faint); }
+.dm-body { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding: .6rem .75rem 1rem; }
+.dm-thread { display: flex; flex-direction: column; gap: 2px; max-width: 46rem; margin: 0 auto; }
+.dm-stamp { align-self: center; margin: 1rem 0 .55rem; font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--ink-faint); }
+.dm-line { display: flex; align-items: flex-end; gap: .45rem; }
+.dm-line.me { justify-content: flex-end; }
+.dm-line.last { margin-bottom: .45rem; }
+.dm-line .avatar.xs { width: 28px; height: 28px; font-size: .62rem; flex: none; }
+.dm-line .avatar.blank { visibility: hidden; }
+.dm-col { display: flex; flex-direction: column; max-width: 74%; min-width: 0; }
+.dm-line.me .dm-col { align-items: flex-end; }
+.dm-bubble { padding: .55rem .85rem; border-radius: 22px; font-size: .95rem; line-height: 1.38; white-space: pre-wrap; overflow-wrap: anywhere; }
+.dm-line.them .dm-bubble { background: #2a1d3d; color: var(--white); }
+.dm-line.me .dm-bubble { background: linear-gradient(135deg, #8a2be2, #650fd0); color: #fff; }
+.dm-line.me:not(.first) .dm-bubble { border-top-right-radius: 6px; }
+.dm-line.me:not(.last) .dm-bubble { border-bottom-right-radius: 6px; }
+.dm-line.them:not(.first) .dm-bubble { border-top-left-radius: 6px; }
+.dm-line.them:not(.last) .dm-bubble { border-bottom-left-radius: 6px; }
+.dm-emoji { font-size: 2.4rem; line-height: 1.15; padding: .1rem .2rem; }
+.dm-ctx { font-size: .75rem; color: var(--ink-faint); margin: .3rem .3rem .25rem; }
+.dm-quote { display: flex; margin-bottom: .2rem; }
+.dm-line.them .dm-quote { border-left: 3px solid rgba(214,191,234,.25); padding-left: .45rem; }
+.dm-line.me .dm-quote { border-right: 3px solid rgba(214,191,234,.25); padding-right: .45rem; }
+.dm-story { all: unset; cursor: pointer; width: 112px; height: 196px; border-radius: 16px; background-size: cover;
+  background-position: center; display: grid; place-items: center; overflow: hidden; color: #fff; box-sizing: border-box; padding: .5rem; }
+.dm-story.gone { cursor: default; width: auto; height: auto; padding: .5rem .8rem; border: 1px dashed rgba(214,191,234,.3);
+  font-size: .8rem; color: var(--ink-faint); border-radius: 14px; }
+.dm-story-t { font-family: var(--f-serif); font-weight: 700; font-size: .85rem; text-align: center; line-height: 1.3; overflow-wrap: anywhere; }
+.dm-seen { align-self: flex-end; font-size: .75rem; color: var(--ink-faint); margin: -.2rem .3rem .4rem; }
+.dm-hello { display: grid; justify-items: center; gap: .35rem; margin: 2.5rem 0; color: var(--ink-soft); }
+.dm-hello .avatar { width: 88px; height: 88px; font-size: 1.6rem; }
+.dm-hello b { color: var(--white); font-size: 1.1rem; }
+.dm-sys { text-align: center; color: var(--ink-soft); margin: 2rem 1rem; }
+.dm-bar { display: flex; align-items: flex-end; gap: .4rem; margin: .45rem .75rem calc(env(safe-area-inset-bottom, 0px) + .6rem);
+  padding: .35rem .4rem .35rem 1rem; border-radius: 26px; background: rgba(255,255,255,.07); border: 1px solid rgba(214,191,234,.14); }
+.dm-bar textarea { flex: 1; min-width: 0; border: 0; outline: none; resize: none; background: transparent; color: var(--white);
+  font: inherit; font-size: 1rem; line-height: 1.35; padding: .5rem 0; max-height: 120px; }
+.dm-bar textarea::placeholder { color: var(--ink-faint); }
+.dm-heart { all: unset; cursor: pointer; font-size: 1.3rem; width: 2.4rem; height: 2.4rem; display: grid; place-items: center; }
+.dm-send { all: unset; cursor: pointer; font-weight: 700; font-size: .95rem; color: #8ab4ff; padding: 0 .8rem; height: 2.4rem; }
+.dm-send[hidden], .dm-heart[hidden] { display: none; }
+.dm-note { margin: 0 1rem .4rem; font-size: .8rem; color: #ffb3c1; text-align: center; }
+.dm-note:empty { display: none; }
+:root[data-theme="light"] .dm-view, :root[data-theme="light"] .dm-head { background: #fff; color: #111; }
+:root[data-theme="light"] .dm-head { border-bottom-color: #efefef; }
+:root[data-theme="light"] .dm-line.them .dm-bubble { background: #efefef; color: #111; }
+:root[data-theme="light"] .dm-bar { background: #f2f2f2; border-color: #e6e6e6; }
+:root[data-theme="light"] .dm-bar textarea { color: #111; background: transparent; border: 0; box-shadow: none; }
+:root[data-theme="light"] .dm-send { color: #3897f0; }
+:root[data-theme="light"] .dm-search { background: #efefef; color: #111; }
+:root[data-theme="light"] .dm-row:active { background: #f5f5f5; }
+:root[data-theme="light"] .dm-ring.new .avatar, :root[data-theme="light"] .dm-ring.seen .avatar { border-color: #fff; }
 /* ═══ Stories ═══ */
 .story-bar { display: flex; gap: .85rem; overflow-x: auto; scrollbar-width: none; padding: .2rem 0 .4rem;
   margin: 0 -2px; overscroll-behavior-x: contain; }
@@ -14569,53 +14660,10 @@ function settingsMenu() {
    and the insert is refused if it says no. This screen only has to ask
    politely and say so when the answer is no. */
 
-const INBOX_ITEM = { id: "inbox", en: "Messages", subject: "Your conversations",
+const INBOX_ITEM = { id: "inbox", en: "Messages", subject: "",
                      section: "profile", run: runInbox };
 const NOTIFS_ITEM = { id: "notifs", en: "Notifications", subject: "",
                       section: "profile", run: runNotifications };
-
-async function runInbox() {
-  setCount(""); stage.innerHTML = "";
-  const list = el("div", "m-members");
-  const msg = el("p", "f-msg", "Loading\u2026");
-  stage.appendChild(list); stage.appendChild(msg);
-  let rows = [];
-  try { rows = await sbGet("inbox?select=*&order=last_at.desc&limit=50"); }
-  catch (e) { msg.textContent = "Your messages could not be loaded."; }
-  if (!rows.length) {
-    msg.innerHTML = "";
-    msg.appendChild(el("span", null,
-      "No conversations yet. Open a member\u2019s profile and tap Message. "));
-    const go = el("button", "ghost small", "Find Translators");
-    go.addEventListener("click", () => openItem(FIND_ITEM));
-    msg.appendChild(go);
-  } else msg.textContent = "";
-
-  rows.forEach(r => {
-    const row = el("div", "m-member");
-    const av = el("span", "avatar sm");
-    paintFace(av, r.avatar_path, r.display_name);
-    row.appendChild(av);
-    const txt = el("div", "mm-txt");
-    const mine = r.last_sender === myId();
-    txt.innerHTML =
-      '<span class="mm-name">' + esc(withTitle(r.title, r.display_name || "Member")) + '</span>' +
-      '<span class="mm-meta" dir="auto">' +
-        (r.last_body ? (mine ? "You: " : "") + esc(r.last_body.slice(0, 60)) : "No messages yet") +
-      '</span>';
-    txt.addEventListener("click", () => openThread(r.other_id, r.display_name, r.title));
-    row.appendChild(txt);
-    if (r.unread > 0) row.appendChild(el("span", "chip-tag solid", String(r.unread)));
-    list.appendChild(row);
-  });
-  stage.appendChild(footNav({ backLabel: "Profile" }));
-}
-
-function openThread(otherId, name, title) {
-  openItem({ id: "thread:" + otherId,
-             en: withTitle(title, name || "Member"), subject: "",
-             section: "profile", run: () => runThread(otherId) });
-}
 
 /* The pair is ordered, so two members can never end up with two
    conversations about each other. */
@@ -14628,62 +14676,340 @@ async function findOrOpenConversation(otherId) {
   return made && made.id;
 }
 
-async function runThread(otherId) {
+/* ═══════════ MESSAGES ═══════════
+   Built the way people already know direct messages: an inbox of
+   conversations with the newest first, and a conversation that opens over
+   everything, with bubbles, a header with who you are talking to, and a
+   message bar at the bottom. Story replies carry the story they answer. */
+
+/* A story reply is stored as text with a marker, so a message stays a
+   plain message for every other screen:  "↩ Replied to your story [s:ID]: text"
+   or "<emoji> Reacted to your story [s:ID]". Older replies have no id. */
+function dmParse(body) {
+  const b = body || "";
+  let m = /^↩ Replied to your story(?: \[s:([0-9a-f-]{36})\])?(?: \([^)]*\))?:? ?([\s\S]*)$/.exec(b);
+  if (m) return { kind: "reply", story: m[1] || null, text: m[2] || "" };
+  m = /^(\S+) Reacted to your story(?: \[s:([0-9a-f-]{36})\])?(?: \([^)]*\))?$/.exec(b);
+  if (m) return { kind: "react", story: m[2] || null, text: m[1] };
+  return { kind: "text", text: b };
+}
+function dmPreview(body, mine) {
+  const p = dmParse(body);
+  if (p.kind === "reply") return mine ? "You replied to their story" : "Replied to your story";
+  if (p.kind === "react") return (mine ? "You reacted " : "Reacted ") + p.text + " to " + (mine ? "their" : "your") + " story";
+  return (mine ? "You: " : "") + p.text.replace(/\s+/g, " ").slice(0, 70);
+}
+const dmEmojiOnly = t => !!t && t.length <= 12 && /^(\p{Extended_Pictographic}|\p{Emoji_Component}|‍|️|\s)+$/u.test(t) && !/^[0-9#*\s]+$/.test(t);
+
+function dmStamp(iso) {
+  const d = new Date(iso), now = new Date();
+  const time = d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+  const day0 = x => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const diff = Math.round((day0(now) - day0(d)) / 86400000);
+  if (diff === 0) return time;
+  if (diff === 1) return "Yesterday " + time;
+  if (diff < 7) return d.toLocaleDateString(undefined, { weekday: "long" }) + " " + time;
+  return d.toLocaleDateString(undefined, { day: "numeric", month: "short", year: d.getFullYear() === now.getFullYear() ? undefined : "numeric" }) + ", " + time;
+}
+
+async function runInbox() {
   setCount(""); stage.innerHTML = "";
-  const thread = el("div", "thread");
-  const msg = el("p", "f-msg", "Loading\u2026");
-  stage.appendChild(thread); stage.appendChild(msg);
+  const wrap = el("div", "dm-inbox");
+  stage.appendChild(wrap);
+
+  const search = document.createElement("input");
+  search.type = "search"; search.className = "dm-search"; search.placeholder = "Search";
+  search.setAttribute("aria-label", "Search conversations");
+  wrap.appendChild(search);
+
+  const head = el("div", "dm-ihead");
+  head.appendChild(el("h2", null, "Chats"));
+  const newBtn = el("button", "dm-new", "New message");
+  newBtn.type = "button";
+  newBtn.addEventListener("click", () => openItem(FIND_ITEM));
+  head.appendChild(newBtn);
+  wrap.appendChild(head);
+
+  const list = el("div", "dm-list");
+  wrap.appendChild(list);
+  const msg = el("p", "dm-empty", "Loading…");
+  wrap.appendChild(msg);
+
+  let rows = [];
+  try { rows = await sbGet("inbox?select=*&order=last_at.desc&limit=80"); msg.textContent = ""; }
+  catch (e) { msg.textContent = "Your messages could not be loaded."; return; }
+  if (!rows.length) {
+    msg.innerHTML = "";
+    msg.appendChild(el("span", null, "No messages yet."));
+    msg.appendChild(el("span", "dm-empty-sub", "Open a member’s profile and tap Message to start a conversation."));
+    return;
+  }
+
+  /* who has a story up, for the ring around their picture */
+  let live = {};
+  try {
+    const groups = (typeof storyGroups !== "undefined" && storyGroups.length) ? storyGroups : await loadStoryGroups();
+    groups.forEach(g => { live[g.author.id] = g; });
+  } catch (e) {}
+
+  const draw = () => {
+    const q = search.value.trim().toLowerCase();
+    list.innerHTML = "";
+    rows.filter(r => !q || (r.display_name || "").toLowerCase().includes(q)).forEach(r => {
+      const unread = r.unread > 0;
+      const row = el("button", "dm-row" + (unread ? " unread" : ""));
+      row.type = "button";
+      const g = live[r.other_id];
+      const ring = el("span", "dm-ring" + (g ? (g.unseen ? " new" : " seen") : ""));
+      const av = el("span", "avatar");
+      paintFace(av, r.avatar_path, r.display_name);
+      ring.appendChild(av);
+      if (g) ring.addEventListener("click", e => { e.stopPropagation(); openStoryViewer([g], 0); });
+      row.appendChild(ring);
+      const mine = r.last_sender === myId();
+      const txt = el("span", "dm-txt");
+      txt.innerHTML =
+        '<span class="dm-name" dir="auto">' + esc(withTitle(r.title, r.display_name || "Member")) + '</span>' +
+        '<span class="dm-prev"><span class="dm-prev-t" dir="auto">' +
+          esc(r.last_body ? (unread && r.unread > 1 ? r.unread + " new messages" : dmPreview(r.last_body, mine)) : "Say hello") +
+          '</span>' + (r.last_at ? '<span class="dm-dot-sep">·</span><span>' + esc(when(r.last_at)) + '</span>' : '') +
+        '</span>';
+      row.appendChild(txt);
+      if (unread) row.appendChild(el("span", "dm-unread", ""));
+      row.addEventListener("click", () => openThread(r.other_id, r.display_name, r.title, r.avatar_path));
+      list.appendChild(row);
+    });
+    if (!list.children.length) list.appendChild(el("p", "dm-empty", "No one by that name."));
+  };
+  search.addEventListener("input", draw);
+  draw();
+}
+
+/* A conversation opens over the whole screen, as it does in any
+   messaging app, and closing it returns to wherever you were. */
+function openThread(otherId, name, title, avatarPath) {
+  runThread(otherId, { name, title, avatar_path: avatarPath });
+}
+
+async function runThread(otherId, hint) {
+  hint = hint || {};
+  const ov = el("div", "dm-view");
+  ov.setAttribute("role", "dialog");
+  ov.setAttribute("aria-label", "Conversation");
+  document.body.appendChild(ov);
+  document.body.classList.add("st-open");
+  let poll = null, closed = false, lastSig = "";
+
+  const head = el("header", "dm-head");
+  const back = el("button", "dm-back", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>');
+  back.type = "button"; back.setAttribute("aria-label", "Back");
+  head.appendChild(back);
+  const who = el("button", "dm-who");
+  who.type = "button";
+  const ring = el("span", "dm-ring sm");
+  const av = el("span", "avatar");
+  paintFace(av, hint.avatar_path, hint.name);
+  ring.appendChild(av);
+  who.appendChild(ring);
+  const names = el("span", "dm-who-t",
+    '<b dir="auto">' + esc(withTitle(hint.title, hint.name || "Member")) + '</b><span></span>');
+  who.appendChild(names);
+  head.appendChild(who);
+  ov.appendChild(head);
+
+  const body = el("div", "dm-body");
+  const thread = el("div", "dm-thread");
+  body.appendChild(thread);
+  ov.appendChild(body);
+
+  const bar = el("form", "dm-bar");
+  const box = document.createElement("textarea");
+  box.rows = 1; box.maxLength = 4000; box.dir = "auto";
+  box.placeholder = "Message…"; box.setAttribute("aria-label", "Message");
+  const heart = el("button", "dm-heart", "❤️");
+  heart.type = "button"; heart.setAttribute("aria-label", "Send a heart");
+  const send = el("button", "dm-send", "Send");
+  send.type = "submit"; send.hidden = true;
+  bar.appendChild(box); bar.appendChild(heart); bar.appendChild(send);
+  ov.appendChild(bar);
+  const note = el("p", "dm-note");
+  ov.appendChild(note);
+
+  const close = () => {
+    if (closed) return;
+    closed = true; clearInterval(poll);
+    ov.remove(); document.body.classList.remove("st-open");
+    document.removeEventListener("keydown", onKey);
+    if (active && active.id === "inbox") runInbox();
+    paintBadges();
+  };
+  const onKey = e => { if (e.key === "Escape") close(); };
+  document.addEventListener("keydown", onKey);
+  back.addEventListener("click", close);
+
+  /* who this is, properly, once it arrives */
+  let other = { id: otherId, display_name: hint.name, title: hint.title, avatar_path: hint.avatar_path };
+  storyProfiles([otherId]).then(p => {
+    if (!p[otherId]) return;
+    other = p[otherId];
+    paintFace(av, other.avatar_path, other.display_name);
+    names.innerHTML = '<b dir="auto">' + esc(withTitle(other.title, other.display_name || "Member")) + verifiedMark(other.verified) + '</b>' +
+      (other.username ? '<span>@' + esc(other.username) + '</span>' : '<span></span>');
+  }).catch(() => {});
+  who.addEventListener("click", () => { close(); openPublic(other); });
+  loadStoryGroups().then(gs => {
+    const g = gs.find(x => x.author.id === otherId);
+    if (!g || closed) return;
+    ring.classList.add(g.unseen ? "new" : "seen");
+    ring.addEventListener("click", e => { e.stopPropagation(); openStoryViewer([g], 0); });
+  }).catch(() => {});
 
   let cid = null;
   try { cid = await findOrOpenConversation(otherId); }
   catch (e) {
-    msg.textContent = "This member does not take messages, or not from you yet.";
-    stage.appendChild(footNav({ backLabel: "Messages" }));
+    thread.appendChild(el("p", "dm-sys", "This member does not take messages, or not from you yet."));
+    bar.hidden = true;
     return;
   }
 
-  async function draw() {
-    let rows = [];
-    try { rows = await sbGet("messages?select=*&conversation_id=eq." + cid + "&order=created_at.asc&limit=200"); }
-    catch (e) { msg.textContent = "Those messages could not be loaded."; return; }
-    thread.innerHTML = "";
-    msg.textContent = rows.length ? "" : "Say something.";
-    rows.forEach(m => {
-      const b = el("div", "bubble " + (m.sender_id === myId() ? "me" : "them"));
-      b.dir = "auto";
-      b.appendChild(document.createTextNode(m.body));
-      b.appendChild(el("time", null, when(m.created_at)));
-      thread.appendChild(b);
+  const storyCache = {};
+  async function storyThumbs(ids) {
+    const want = ids.filter(id => id && !(id in storyCache));
+    if (!want.length) return;
+    want.forEach(id => { storyCache[id] = null; });
+    try {
+      const rows = await sbGet("stories?select=" + STORY_COLS + "&id=in.(" + want.join(",") + ")");
+      const urls = await storySign(rows.map(s => s.media_path));
+      rows.forEach(s => { storyCache[s.id] = Object.assign({ url: urls[s.media_path] || "" }, s); });
+    } catch (e) {}
+  }
+
+  function storyCard(id) {
+    const s = id && storyCache[id];
+    const c = el("button", "dm-story");
+    c.type = "button";
+    if (!s) { c.classList.add("gone"); c.textContent = "Story unavailable"; c.disabled = true; return c; }
+    if (s.kind === "text") {
+      c.style.background = storyBg(s.bg);
+      const t = el("span", "dm-story-t", esc((s.body || "").slice(0, 80))); t.dir = "auto";
+      c.appendChild(t);
+    } else if (s.kind === "photo" && s.url) {
+      c.style.backgroundImage = "url(\"" + s.url + "\")";
+    } else {
+      c.style.background = "#222"; c.appendChild(el("span", "dm-story-t", "▶"));
+    }
+    c.addEventListener("click", () => {
+      const author = s.author_id === myId() ? { id: myId(), display_name: "You" } : other;
+      openStoryViewer([{ author, stories: [Object.assign({ seen: true }, s)] }], 0, { highlight: when(s.created_at) });
     });
-    /* Anything of theirs that is now on screen has been read. */
-    const unread = rows.filter(m => m.sender_id !== myId() && !m.read_at);
-    if (unread.length) {
+    return c;
+  }
+
+  async function draw(force) {
+    let rows = [];
+    try { rows = await sbGet("messages?select=*&conversation_id=eq." + cid + "&order=created_at.asc&limit=300"); }
+    catch (e) { if (!thread.children.length) thread.appendChild(el("p", "dm-sys", "Those messages could not be loaded.")); return; }
+    const sig = rows.length + ":" + (rows.length ? rows[rows.length - 1].id + rows[rows.length - 1].read_at : "");
+    if (!force && sig === lastSig) return;
+    lastSig = sig;
+    const parsed = rows.map(m => Object.assign({ p: dmParse(m.body), mine: m.sender_id === myId() }, m));
+    await storyThumbs(parsed.map(m => m.p.story));
+    if (closed) return;
+
+    const atBottom = body.scrollHeight - body.scrollTop - body.clientHeight < 80;
+    thread.innerHTML = "";
+    if (!parsed.length) {
+      const hello = el("div", "dm-hello");
+      const big = el("span", "avatar");
+      paintFace(big, other.avatar_path, other.display_name);
+      hello.appendChild(big);
+      hello.appendChild(el("b", null, esc(withTitle(other.title, other.display_name || "Member"))));
+      hello.appendChild(el("span", null, "Say hello 👋"));
+      thread.appendChild(hello);
+    }
+    let prevAt = 0;
+    const lastMine = [...parsed].reverse().find(m => m.mine);
+    parsed.forEach((m, i) => {
+      const t = new Date(m.created_at).getTime();
+      if (!prevAt || t - prevAt > 3600000) thread.appendChild(el("div", "dm-stamp", esc(dmStamp(m.created_at))));
+      const nxt = parsed[i + 1];
+      const lastOfRun = !nxt || nxt.mine !== m.mine || new Date(nxt.created_at).getTime() - t > 3600000;
+      const firstOfRun = !prevAt || parsed[i - 1].mine !== m.mine || t - prevAt > 3600000;
+      prevAt = t;
+
+      const line = el("div", "dm-line " + (m.mine ? "me" : "them") + (lastOfRun ? " last" : "") + (firstOfRun ? " first" : ""));
+      if (!m.mine) {
+        const a = el("span", "avatar xs");
+        if (lastOfRun) paintFace(a, other.avatar_path, other.display_name); else a.classList.add("blank");
+        line.appendChild(a);
+      }
+      const col = el("div", "dm-col");
+      if (m.p.kind !== "text") {
+        col.appendChild(el("span", "dm-ctx", m.p.kind === "react"
+          ? (m.mine ? "You reacted to their story" : "Reacted to your story")
+          : (m.mine ? "You replied to their story" : "Replied to your story")));
+        const quote = el("div", "dm-quote");
+        quote.appendChild(storyCard(m.p.story));
+        col.appendChild(quote);
+      }
+      const text = m.p.text;
+      if (text) {
+        const big = dmEmojiOnly(text);
+        const b = el("div", big ? "dm-emoji" : "dm-bubble");
+        b.dir = "auto";
+        b.textContent = text;
+        b.title = dmStamp(m.created_at);
+        col.appendChild(b);
+      }
+      line.appendChild(col);
+      thread.appendChild(line);
+      if (m === lastMine && lastMine === parsed[parsed.length - 1] && m.read_at) {
+        thread.appendChild(el("div", "dm-seen", "Seen"));
+      }
+    });
+
+    /* anything of theirs now on screen has been read */
+    if (parsed.some(m => !m.mine && !m.read_at)) {
       sbPatch("messages?conversation_id=eq." + cid + "&sender_id=neq." + myId() + "&read_at=is.null",
               { read_at: new Date().toISOString() }).then(paintBadges).catch(() => {});
     }
-    thread.scrollIntoView({ block: "end" });
+    if (force || atBottom) body.scrollTop = body.scrollHeight;
   }
-  await draw();
+  await draw(true);
+  poll = setInterval(() => { if (!document.hidden) draw(false); }, 4000);
 
-  const row = el("div", "send-row");
-  const box = document.createElement("textarea");
-  box.className = "f-in f-area"; box.rows = 2; box.maxLength = 4000; box.dir = "auto";
-  box.placeholder = "Write a message";
-  const send = el("button", "primary", "Send");
-  send.addEventListener("click", async () => {
-    const body = box.value.trim();
-    if (!body) return;
-    send.disabled = true;
-    try {
-      await sbPost("messages", { conversation_id: cid, sender_id: myId(), body: body });
-      box.value = ""; await draw();
-    } catch (e) {
-      msg.textContent = "That could not be sent. They may not take messages from you.";
-    } finally { send.disabled = false; }
+  const grow = () => { box.style.height = "auto"; box.style.height = Math.min(box.scrollHeight, 120) + "px"; };
+  box.addEventListener("input", () => {
+    grow();
+    const has = !!box.value.trim();
+    send.hidden = !has; heart.hidden = has;
   });
-  row.appendChild(box); row.appendChild(send);
-  stage.appendChild(row);
-  stage.appendChild(footNav({ backLabel: "Messages" }));
+  box.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey && !e.isComposing && window.matchMedia("(pointer: fine)").matches) {
+      e.preventDefault(); bar.requestSubmit();
+    }
+  });
+  async function post(text) {
+    note.textContent = "";
+    try {
+      await sbPost("messages", { conversation_id: cid, sender_id: myId(), body: text });
+      await draw(true);
+      return true;
+    } catch (e) {
+      note.textContent = "That could not be sent. They may not take messages from you.";
+      return false;
+    }
+  }
+  bar.addEventListener("submit", async e => {
+    e.preventDefault();
+    const text = box.value.trim();
+    if (!text) return;
+    send.disabled = true;
+    if (await post(text)) { box.value = ""; grow(); send.hidden = true; heart.hidden = false; }
+    send.disabled = false;
+    box.focus();
+  });
+  heart.addEventListener("click", () => post("❤️"));
 }
 
 const N_SAYS = {
@@ -15242,7 +15568,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1005-1200";
+const BUILD = "1005-1500";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -15890,9 +16216,9 @@ function storySheet(title, onClose) {
 
 /* replies and reactions go into the member's messages */
 async function storyReply(g, s, text, btn) {
-  const what = s.kind === "text" ? "“" + (s.body || "").slice(0, 60) + "”" : (s.kind === "video" ? "video" : "photo");
-  const body = (STORY_REACTS.includes(text) ? text + " Reacted to your story (" : "↩ Replied to your story (") +
-               what + ")" + (STORY_REACTS.includes(text) ? "" : ": " + text);
+  const body = STORY_REACTS.includes(text)
+    ? text + " Reacted to your story [s:" + s.id + "]"
+    : "\u21A9 Replied to your story [s:" + s.id + "]: " + text;
   try {
     const cid = await findOrOpenConversation(g.author.id);
     await sbPost("messages", { conversation_id: cid, sender_id: myId(), body: body });
