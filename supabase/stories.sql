@@ -67,11 +67,15 @@ alter table public.story_reports    enable row level security;
 drop policy if exists stories_read   on public.stories;
 drop policy if exists stories_insert on public.stories;
 drop policy if exists stories_update on public.stories;
+-- The author (and an administrator) can always read the row, even once
+-- deleted: Postgres checks an updated row against this policy, so hiding
+-- deleted rows from their own author made deleting impossible. The page
+-- itself only ever asks for rows that are not deleted.
 create policy stories_read on public.stories for select to authenticated
-  using (deleted_at is null and (
-           expires_at > now()
-        or author_id = auth.uid()
-        or exists (select 1 from public.story_highlights h where h.story_id = stories.id)));
+  using (author_id = auth.uid() or public.is_guild_admin()
+         or (deleted_at is null and (
+               expires_at > now()
+            or exists (select 1 from public.story_highlights h where h.story_id = stories.id))));
 create policy stories_insert on public.stories for insert to authenticated
   with check (author_id = auth.uid());
 create policy stories_update on public.stories for update to authenticated
