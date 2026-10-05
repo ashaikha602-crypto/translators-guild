@@ -2251,6 +2251,27 @@ a.ks-s-en:hover { color: var(--white); }
 .home-search:active { background: rgba(255,255,255,.12); }
 .home-search[hidden] { display: none; }
 :root[data-theme="light"] .home-search { background: #efefef; color: #737373; }
+
+.sp-wrap { display: grid; align-content: center; justify-items: center; gap: 1rem; padding: 1.4rem; }
+.sp-note { margin: 0; font-family: var(--f-serif); font-weight: 700; font-size: 1.3rem; color: #fff; text-align: center; overflow-wrap: anywhere; }
+.sp-card { width: min(100%, 22rem); border-radius: 18px; overflow: hidden; background: #fff; color: #111; display: grid; text-align: start;
+  box-shadow: 0 20px 50px -20px rgba(0,0,0,.7); }
+.sp-head { display: flex; align-items: center; gap: .55rem; padding: .7rem .8rem; }
+.sp-head .avatar { width: 32px; height: 32px; font-size: .7rem; }
+.sp-who { display: grid; line-height: 1.2; min-width: 0; }
+.sp-who b { font-size: .9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sp-who i { font-style: normal; font-size: .75rem; color: #737373; }
+.sp-media { aspect-ratio: 1/1; background: #000; }
+.sp-media img, .sp-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sp-words { margin: 0; padding: .7rem .8rem 0; font-size: .9rem; line-height: 1.4; overflow-wrap: anywhere; }
+.sp-go { all: unset; cursor: pointer; margin: .7rem .8rem .8rem; padding: .55rem; text-align: center; border-radius: 10px;
+  font-weight: 700; font-size: .9rem; background: #efefef; }
+.sp-load { margin: 0; padding: 1.2rem; text-align: center; font-size: .9rem; color: #555; }
+.st-text .sp-card p { font-family: var(--f-sans); font-weight: 400; font-size: .9rem; line-height: 1.4; color: #111;
+  text-shadow: none; text-align: start; white-space: normal; }
+.st-text .sp-card p.sp-load { text-align: center; color: #555; }
+.sp-prev { display: grid; justify-items: center; margin-bottom: .3rem; }
+.sp-prev .sp-card { width: min(100%, 15rem); }
 /* ═══ Stories ═══ */
 .avatar-wrap.story-new::before { content: ""; position: absolute; inset: -5px; border-radius: 50%;
   background: conic-gradient(from 210deg, #ffc46b, #ff5c7a, #a726d0, #650fd0, #ffc46b); }
@@ -13629,6 +13650,14 @@ function postCard(r, opts) {
   });
   acts.appendChild(sv);
 
+  if (storyReady !== false && r.visibility !== "private") {
+    const st = el("button", "act-btn", "\u2295 Story");
+    st.title = "Share to your story";
+    st.setAttribute("aria-label", "Share to your story");
+    st.addEventListener("click", () => sharePostToStory(r));
+    acts.appendChild(st);
+  }
+
   if (r.author_id === myId()) {
     const del = el("button", "act-btn quiet", "Delete");
     /* This used to be "Delete" then "Tap again", inline, next to the
@@ -15201,7 +15230,7 @@ async function runThread(otherId, hint) {
     if (!s) { c.classList.add("gone"); c.textContent = "Story unavailable"; c.disabled = true; return c; }
     if (s.kind === "text") {
       c.style.background = storyBg(s.bg);
-      const t = el("span", "dm-story-t", esc((s.body || "").slice(0, 80))); t.dir = "auto";
+      const t = el("span", "dm-story-t", esc(storyPostId(s) ? "\u25A3 Post" : storyText(s).slice(0, 80))); t.dir = "auto";
       c.appendChild(t);
     } else if (s.kind === "photo" && s.url) {
       c.style.backgroundImage = "url(\"" + s.url + "\")";
@@ -15900,7 +15929,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1005-2200";
+const BUILD = "1005-2300";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -16128,7 +16157,7 @@ const STORY_PHOTO_MS = 5000, STORY_TEXT_MS = 6000, STORY_VIDEO_MAX_S = 15.5;
 const STORY_VIDEO_BYTES = 30 * 1024 * 1024;
 const STORY_REACTS = ["❤️", "😂", "😮", "👏", "🔥"];
 const STORY_COLS = "id,author_id,kind,media_path,body,bg,duration_ms,created_at,expires_at";
-const storyBg = k => (STORY_BG.find(b => b[0] === k) || STORY_BG[0])[1];
+const storyBg = k => (STORY_BG.find(b => b[0] === (k === "post" ? "night" : k)) || STORY_BG[0])[1];
 
 let storyGroups = [];          /* [{ author, stories:[...], unseen }] for the bar */
 let storyReady = null;         /* false when the tables are not there yet */
@@ -16359,7 +16388,15 @@ async function openStoryViewer(groups, gi, opts) {
 
     stage2.innerHTML = "";
     let ms = s.kind === "text" ? STORY_TEXT_MS : STORY_PHOTO_MS;
-    if (s.kind === "text") {
+    if (storyPostId(s)) {
+      const wrapP = el("div", "st-text sp-wrap");
+      wrapP.style.background = storyBg("night");
+      const note = storyText(s);
+      if (note) { const n = el("p", "sp-note", esc(note)); n.dir = "auto"; wrapP.appendChild(n); }
+      stage2.appendChild(wrapP);
+      storyPostCard(storyPostId(s), note, r => { close(); openPost(r); }).then(c => { if (cur() === s) wrapP.appendChild(c); });
+      run(8000);
+    } else if (s.kind === "text") {
       const card = el("div", "st-text");
       card.style.background = storyBg(s.bg);
       const p = el("p", null, esc(s.body || ""));
@@ -16869,7 +16906,7 @@ async function admStoryReports(box) {
     c.innerHTML =
       '<span class="what">Story by ' + admEsc(a ? (a.display_name || "Member") : "a member") +
         (s ? ' — ' + admEsc(s.kind) : ' — already gone') + '</span>' +
-      (s && s.body ? '<span class="meta" dir="auto">' + admEsc(s.body.slice(0, 140)) + '</span>' : '') +
+      (s && s.body ? '<span class="meta" dir="auto">' + admEsc((storyPostId(s) ? "[shared post] " : "") + storyText(s).slice(0, 140)) + '</span>' : '') +
       '<span class="meta">' + admEsc(rep.reason || "no reason given") + '</span>' +
       '<span class="meta"><span class="chip ' + (rep.status === "open" ? "needs_review" : "archived") + '">' +
         admWord(rep.status) + '</span></span>';
@@ -16951,7 +16988,7 @@ async function newHighlight(onDone) {
     const t = el("button", "st-hl-tile");
     t.type = "button";
     if (s.kind === "photo" && urls[s.media_path]) t.style.backgroundImage = "url(\"" + urls[s.media_path] + "\")";
-    else if (s.kind === "text") { t.style.background = storyBg(s.bg); const w = el("span", null, esc((s.body || "").slice(0, 60))); w.dir = "auto"; t.appendChild(w); }
+    else if (s.kind === "text") { t.style.background = storyBg(s.bg); const w = el("span", null, esc(storyPostId(s) ? "\u25A3 Post" : storyText(s).slice(0, 60))); w.dir = "auto"; t.appendChild(w); }
     else { t.style.background = "#222"; t.appendChild(el("span", null, "\u25B6")); }
     t.appendChild(el("i", "st-hl-date", esc(new Date(s.created_at).toLocaleDateString(undefined, { day: "numeric", month: "short" }))));
     const tick = el("b", "st-hl-tick", "");
@@ -17119,6 +17156,76 @@ function photoPost() {
   });
   stepOne();
   pick.click();
+}
+
+/* A post shared to a story is stored as a text story whose body starts
+   with an invisible marker and the post's id, so no new table is needed:
+   "⁣p:<uuid>⁣" followed by anything the sharer wrote. */
+const STORY_POST_RE = /^⁣p:([0-9a-f-]{36})⁣/;
+const storyPostId = s => { const m = s && s.kind === "text" && STORY_POST_RE.exec(s.body || ""); return m ? m[1] : null; };
+const storyText = s => (s && s.body || "").replace(STORY_POST_RE, "");
+
+/* The post itself, drawn inside a story: who posted it, the picture,
+   the words, and a way through to it. */
+async function storyPostCard(postId, note, onOpen) {
+  const card = el("div", "sp-card");
+  card.appendChild(el("p", "sp-load", "Loading the post…"));
+  let r = null;
+  try { r = (await sbGet("feed?select=" + FEED_COLS + "&id=eq." + postId))[0]; } catch (e) {}
+  card.innerHTML = "";
+  if (!r) { card.appendChild(el("p", "sp-load", "This post is no longer available.")); return card; }
+  const head = el("div", "sp-head");
+  const av = el("span", "avatar sm");
+  paintFace(av, r.avatar_path, r.display_name);
+  head.appendChild(av);
+  head.appendChild(el("span", "sp-who", '<b dir="auto">' + esc(withTitle(r.author_title, r.display_name || "Member")) + '</b>' +
+    (r.username ? '<i>@' + esc(r.username) + '</i>' : '')));
+  card.appendChild(head);
+  if (r.thumb_path) {
+    const m = el("div", "sp-media");
+    card.appendChild(m);
+    signedLinks([r.thumb_path]).then(l => {
+      const u = l[r.thumb_path]; if (!u) { m.remove(); return; }
+      if (/^video\//.test(r.thumb_type || "")) { const v = document.createElement("video"); v.src = u; v.muted = true; v.autoplay = true; v.loop = true; v.playsInline = true; v.setAttribute("playsinline", ""); m.appendChild(v); }
+      else { const i = new Image(); i.src = u; i.alt = ""; m.appendChild(i); }
+    });
+  }
+  const words = r.title || r.content || r.source_text || r.translated_text || "";
+  if (words) { const w = el("p", "sp-words", esc(words.slice(0, 220))); w.dir = "auto"; card.appendChild(w); }
+  const go = el("button", "sp-go", "View post");
+  go.type = "button";
+  go.addEventListener("click", e => { e.stopPropagation(); onOpen(r); });
+  card.appendChild(go);
+  card.addEventListener("pointerup", e => e.stopPropagation());
+  card.addEventListener("pointerdown", e => e.stopPropagation());
+  return card;
+}
+
+/* Share a post to your story: see it, add a line if you like, share. */
+function sharePostToStory(r) {
+  const { sheet, done } = storySheet("Share to your story");
+  const prev = el("div", "sp-prev");
+  sheet.appendChild(prev);
+  storyPostCard(r.repost_of || r.id, "", () => {}).then(c => { const g = c.querySelector(".sp-go"); if (g) g.remove(); prev.appendChild(c); });
+  const inp = document.createElement("input");
+  inp.className = "f-in"; inp.maxLength = 200; inp.dir = "auto"; inp.placeholder = "Add a line (optional)";
+  sheet.appendChild(inp);
+  const go = el("button", "sheet-act st-first", "Share to your story");
+  go.addEventListener("click", async () => {
+    go.disabled = true; go.textContent = "Sharing…";
+    try {
+      await sbPost("stories", { author_id: myId(), kind: "text", bg: "post", duration_ms: 8000,
+        body: "⁣p:" + (r.repost_of || r.id) + "⁣" + inp.value.trim() });
+      sheet.innerHTML = "";
+      sheet.appendChild(el("p", "sheet-note", "Added to your story."));
+      setTimeout(done, 900);
+      renderStoryBar();
+    } catch (e) { go.disabled = false; go.textContent = "That could not be shared. Try again."; }
+  });
+  sheet.appendChild(go);
+  const no = el("button", "sheet-act quiet", "Cancel");
+  no.addEventListener("click", done);
+  sheet.appendChild(no);
 }
 
 function renderHall() {
