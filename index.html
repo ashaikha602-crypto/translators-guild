@@ -2244,6 +2244,13 @@ a.ks-s-en:hover { color: var(--white); }
 :root[data-theme="light"] .pp-next { color: #0095f6; }
 :root[data-theme="light"] .pp-cap { color: #111; }
 :root[data-theme="light"] .pp-caprow { border-bottom-color: #efefef; }
+
+.home-search { all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: .6rem; width: 100%;
+  height: 40px; padding: 0 .9rem; border-radius: 12px; background: rgba(255,255,255,.08); color: var(--ink-faint); font-size: 1rem; }
+.home-search svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.home-search:active { background: rgba(255,255,255,.12); }
+.home-search[hidden] { display: none; }
+:root[data-theme="light"] .home-search { background: #efefef; color: #737373; }
 /* ═══ Stories ═══ */
 .avatar-wrap.story-new::before { content: ""; position: absolute; inset: -5px; border-radius: 50%;
   background: conic-gradient(from 210deg, #ffc46b, #ff5c7a, #a726d0, #650fd0, #ffc46b); }
@@ -3036,6 +3043,12 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
       </figure>
     </header>
 
+    <!-- Finding people starts here, at the top of home, as it does in
+         every social app. Tapping it opens the member search. -->
+    <button type="button" class="home-search" id="home-search" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <span>Search members</span>
+    </button>
     <!-- Stories: a row of circles, as everywhere else people post them. -->
     <div class="story-bar" id="story-bar" hidden></div>
 
@@ -13079,10 +13092,10 @@ function memberRank(p) {
 }
 
 /* ─── Find Translators ─── */
-const FIND_ITEM = { id: "find", en: "Find Translators",
+const FIND_ITEM = { id: "find", en: "Search",
                     subject: "Members of the Guild", section: "profile", run: runFind };
 
-function runFind() {
+function runFind(arg) {
   setCount("");
   stage.innerHTML = "";
 
@@ -13092,6 +13105,7 @@ function runFind() {
   search.autocapitalize = "none"; search.spellcheck = false;
   search.setAttribute("aria-label", "Search members");
   stage.appendChild(search);
+  if (arg === "focus") setTimeout(() => search.focus(), 80);
 
   const list = el("div", "m-members");
   stage.appendChild(list);
@@ -13146,7 +13160,7 @@ function runFind() {
   search.addEventListener("input", () => { clearTimeout(t); t = setTimeout(() => run(search.value.trim()), 250); });
   run("");
 
-  stage.appendChild(footNav({ backLabel: "Profile" }));
+  stage.appendChild(footNav({ backLabel: "Back" }));
 }
 
 /* ─── another member's public profile ─── */
@@ -15556,20 +15570,16 @@ async function showLikers(postId) {
 /* The circles under the buttons. The reference keeps souvenirs there;
    a translator's profile is better served by the five places they
    actually go, so each circle is a door rather than a memory. */
-const HILITES = [
-  { ico: '<path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z"/><path d="M14.5 6.5l3 3"/>',
-    lab: "Translations", go: () => openItem(MINE_ITEM) },
-  { ico: '<circle cx="9" cy="9" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/>' +
-         '<circle cx="17" cy="10" r="2.4"/><path d="M15 19a4.4 4.4 0 0 1 5.6-3.3"/>',
-    lab: "Members",      go: () => openItem(FIND_ITEM) }
-];
+const HILITES = [];
 
 function renderHilites() {
   paintStoryHighlights(document.getElementById("seal-story-hl"), myId());
   const row = document.getElementById("seal-hilites");
   if (!row) return;
-  if (backend !== "supabase") { row.hidden = true; return; }
-  row.hidden = false;
+  /* Posting moved to the + in the top bar and searching to the home
+     page, so the profile no longer needs these shortcuts. */
+  row.hidden = true;
+  if (!HILITES.length) return;
   row.innerHTML = "";
   HILITES.forEach(h => {
     const b = el("button", "hilite",
@@ -15890,7 +15900,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1005-2100";
+const BUILD = "1005-2200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -17134,6 +17144,11 @@ function renderHall() {
   });
   paintPortraits(strip);
 
+  const hs = document.getElementById("home-search");
+  if (hs) {
+    hs.hidden = !(backend === "supabase" && myId());
+    if (!hs.dataset.wired) { hs.dataset.wired = "1"; hs.addEventListener("click", () => openItem(FIND_ITEM, "focus")); }
+  }
   renderStoryBar();
   renderLately();
   paintStore();
