@@ -1600,11 +1600,25 @@ a.ks-s-en:hover { color: var(--white); }
 .bubble time { display: block; margin-top: .25rem; font-size: .66rem; color: var(--ink-faint); }
 .send-row { display: grid; grid-template-columns: 1fr auto; gap: .45rem; align-items: end;
   margin: .6rem 0 1rem; }
-.n-item { display: grid; grid-template-columns: auto 1fr; gap: .7rem; align-items: start;
-  padding: .7rem .2rem; border-bottom: var(--hair); cursor: pointer; text-align: start; }
+/* A notification is a row in a list, not a call to action. It is a
+   button for the keyboard's sake, so every part of the button look is
+   taken back off: no pill, no gradient, no glow, no lift on hover. */
+.n-list { display: grid; margin: .3rem 0 1rem; }
+.n-head { margin: 1.1rem 0 .3rem; padding: 0 .5rem; font-size: .68rem; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+.n-head:first-child { margin-top: .2rem; }
+.n-item { width: 100%; display: grid; grid-template-columns: auto 1fr auto; gap: .75rem;
+  align-items: center; margin: 0; padding: .75rem .5rem; border: 0; border-bottom: var(--hair);
+  border-radius: 0; background: none; box-shadow: none; color: inherit; cursor: pointer;
+  font: inherit; font-weight: 400; letter-spacing: normal; text-align: start;
+  transition: background-color 160ms var(--ease); }
+.n-item:hover { transform: none; box-shadow: none; background: rgba(214,191,234,.06); }
+.n-item:active { transform: none; }
 .n-item.unread { background: rgba(167,38,208,.08); }
+.n-item.unread:hover { background: rgba(167,38,208,.13); }
+.n-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--magenta); }
 .n-txt { display: grid; gap: .15rem; min-width: 0; }
-.n-line { font-size: .9rem; color: var(--white); }
+.n-line { font-size: .9rem; line-height: 1.4; color: var(--white); }
 .n-line b { font-weight: 600; }
 .n-about { font-size: .78rem; color: var(--ink-soft); overflow: hidden; text-overflow: ellipsis;
   white-space: nowrap; }
@@ -15363,17 +15377,53 @@ const N_SAYS = {
   message: "sent you a message"
 };
 
+/* Several of the same thing from the same person are one line, not a
+   column of identical rows: four messages from one member read as "sent
+   you 4 messages", and a follow that was undone and redone is one follow.
+   Comments and replies stay separate, because each one says something
+   different. */
+const N_MERGE = { message: 1, follow: 1, like: 1, repost: 1 };
+
+function groupNotifications(rows) {
+  const out = [], seen = {};
+  rows.forEach(n => {
+    const key = N_MERGE[n.kind] ? n.kind + "|" + n.actor_id + "|" + (n.post_id || "") : null;
+    if (key && seen[key]) {
+      const g = seen[key];
+      g.count++; g.ids.push(n.id);
+      if (!n.read_at) g.read_at = null;
+      return;
+    }
+    const g = Object.assign({}, n, { count: 1, ids: [n.id] });
+    if (key) seen[key] = g;
+    out.push(g);
+  });
+  return out;
+}
+
+function noteWhen(iso) {
+  const d = new Date(iso), now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  if (d >= start) return "Today";
+  if (now - d < 7 * 86400000) return "This week";
+  return "Earlier";
+}
+
 async function runNotifications() {
   setCount(""); stage.innerHTML = "";
-  const list = el("div", null);
+  const list = el("div", "n-list");
   const msg = el("p", "f-msg", "Loading\u2026");
   stage.appendChild(list); stage.appendChild(msg);
   let rows = [];
   try { rows = await sbGet("my_notifications?select=*&order=created_at.desc&limit=60"); }
-  catch (e) { msg.textContent = "Those could not be loaded."; }
-  msg.textContent = rows.length ? "" : "Nothing yet.";
+  catch (e) { msg.textContent = "Your notifications could not be loaded."; }
+  msg.textContent = rows.length ? "" : "You have no notifications yet.";
 
-  rows.forEach(n => {
+  let lastHead = "";
+  groupNotifications(rows).forEach(n => {
+    const head = noteWhen(n.created_at);
+    if (head !== lastHead) { list.appendChild(el("div", "n-head", head)); lastHead = head; }
+
     const b = el("button", "n-item" + (n.read_at ? "" : " unread"));
     b.type = "button";
     const av = el("span", "avatar sm");
@@ -15381,15 +15431,23 @@ async function runNotifications() {
     b.appendChild(av);
     const txt = el("div", "n-txt");
     const about = n.comment_text || n.about || "";
+    const says = n.kind === "message" && n.count > 1
+      ? "sent you " + n.count + " messages"
+      : (N_SAYS[n.kind] || "interacted with you");
     txt.innerHTML =
-      '<span class="n-line"><b>' + esc(withTitle(n.title, n.display_name || "Someone")) + '</b> ' +
-        esc(N_SAYS[n.kind] || "did something") + '</span>' +
+      '<span class="n-line"><b>' + esc(withTitle(n.title, n.display_name || "A member")) + '</b> ' +
+        esc(says) + '</span>' +
       (about ? '<span class="n-about" dir="auto">' + esc(about) + '</span>' : '') +
       '<span class="n-when">' + when(n.created_at) + '</span>';
     b.appendChild(txt);
+    if (!n.read_at) {
+      const dot = el("span", "n-dot");
+      dot.setAttribute("aria-label", "Unread");
+      b.appendChild(dot);
+    }
     b.addEventListener("click", async () => {
       if (!n.read_at) {
-        sbPatch("notifications?id=eq." + n.id, { read_at: new Date().toISOString() })
+        sbPatch("notifications?id=in.(" + n.ids.join(",") + ")", { read_at: new Date().toISOString() })
           .then(paintBadges).catch(() => {});
       }
       if (n.kind === "message") { openItem(INBOX_ITEM); return; }
