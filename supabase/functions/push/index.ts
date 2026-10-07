@@ -154,7 +154,7 @@ async function send(sub: { endpoint: string; p256dh: string; auth: string }, msg
   return r.status;
 }
 
-if (import.meta.main) Deno.serve(async (req) => {
+Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
   try {
     const cfg = await config();
