@@ -16083,7 +16083,7 @@ function pushCard(where, onDone) {
       '<span>Apple only lets a website send notifications once it is on your Home Screen.</span>' +
       '<ol class="push-steps"><li>Tap <svg class="push-share" viewBox="0 0 24 24" aria-label="Share"><path d="M12 15V3M7.5 7.5 12 3l4.5 4.5"/><path d="M6 11H5v10h14V11h-1"/></svg> <b>Share</b> in Safari</li>' +
       '<li>Choose <b>Add to Home Screen</b></li><li>Open <b>Guild</b> from your Home Screen and turn notifications on</li></ol></div>';
-  } else if (st === "default") {
+  } else if (st === "default" || st === "granted") {
     card.innerHTML = '<div class="push-ico">' + bell + '</div><div class="push-txt">' +
       '<b>Turn on notifications</b>' +
       '<span>Know straight away when someone messages you, follows you, or likes, comments on or reposts your post.</span></div>';
@@ -16095,7 +16095,14 @@ function pushCard(where, onDone) {
       let ok = false;
       try { ok = await pushTurnOn(true); } catch (e) {}
       if (ok) { card.classList.add("done"); card.innerHTML = '<div class="push-txt"><b>Notifications are on</b><span>You can choose which ones in Settings › Phone notifications.</span></div>'; setTimeout(() => card.remove(), 3500); }
-      else { card.replaceWith(pushCard(where, onDone)); }
+      else {
+        const again = pushCard(where, onDone);
+        if (again) {
+          if (pushState() === "granted") again.querySelector(".push-txt > span").textContent =
+            "That did not finish. Check your connection and tap Turn on again.";
+          card.replaceWith(again);
+        } else card.remove();
+      }
       onDone && onDone();
     });
     row.appendChild(on);
@@ -16308,7 +16315,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1008-0930";
+const BUILD = "1008-0945";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
