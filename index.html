@@ -1604,6 +1604,18 @@ a.ks-s-en:hover { color: var(--white); }
    button for the keyboard's sake, so every part of the button look is
    taken back off: no pill, no gradient, no glow, no lift on hover. */
 /* phone notifications */
+.push-toast { all: unset; cursor: pointer; box-sizing: border-box; position: fixed; z-index: 300; left: 10px; right: 10px;
+  top: calc(env(safe-area-inset-top, 0px) + 8px); display: grid; grid-template-columns: 38px 1fr; gap: .7rem; align-items: center;
+  padding: .7rem .85rem; border-radius: 20px; background: rgba(40,22,58,.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35); color: #fff; transform: translateY(-140%); transition: transform .35s cubic-bezier(.2,.9,.3,1.1);
+  max-width: 520px; margin: 0 auto; }
+.push-toast.in { transform: none; }
+.push-toast img { width: 38px; height: 38px; border-radius: 9px; }
+.push-toast > span { display: grid; gap: .1rem; min-width: 0; }
+.push-toast b { font-size: .88rem; font-weight: 600; }
+.push-toast span span { font-size: .84rem; line-height: 1.35; color: rgba(255,255,255,.85); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+:root[data-theme="light"] .push-toast { background: rgba(255,255,255,.95); color: #111; }
+:root[data-theme="light"] .push-toast span span { color: #444; }
 #push-nudge { margin: .2rem 0 .9rem; }
 #push-nudge[hidden] { display: none; }
 .push-card { position: relative; display: grid; grid-template-columns: auto 1fr; gap: .8rem; align-items: start;
@@ -16014,7 +16026,25 @@ if ("serviceWorker" in navigator) {
   /* a tapped notification, while the site is already open */
   navigator.serviceWorker.addEventListener("message", e => {
     if (e.data && e.data.go) { location.hash = e.data.go; openFromLink(); }
+    if (e.data && e.data.toast) pushToast(e.data.toast);
   });
+}
+
+/* A notification that arrives while Guild is open slides down from the
+   top, as it does in other apps, and opens the same place when tapped. */
+function pushToast(d) {
+  const old = document.querySelector(".push-toast");
+  if (old) old.remove();
+  const t = el("button", "push-toast");
+  t.type = "button";
+  t.innerHTML = '<img src="icons/icon-192.png?v=4" alt="">' +
+    '<span><b>' + esc(d.title || "Guild") + '</b><span>' + esc(d.body || "") + '</span></span>';
+  const go = () => { t.remove(); if (d.url) { location.hash = new URL(d.url, location.href).hash; openFromLink(); } };
+  t.addEventListener("click", go);
+  document.body.appendChild(t);
+  requestAnimationFrame(() => t.classList.add("in"));
+  setTimeout(() => { t.classList.remove("in"); setTimeout(() => t.remove(), 400); }, 5000);
+  try { paintBadges(); } catch (e) {}
 }
 
 function pushKey(s) {
@@ -16315,7 +16345,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1008-0945";
+const BUILD = "1008-1000";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
