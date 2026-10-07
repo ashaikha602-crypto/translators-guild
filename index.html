@@ -14618,7 +14618,15 @@ async function runEditProfile() {
       renderSeal();
       setTimeout(() => { clearTrail(); navTo("profile"); }, 450);
     } catch (e) {
-      save.disabled = false; msg.textContent = e.message; msg.classList.add("bad");
+      save.disabled = false; msg.classList.add("bad");
+      /* say what went wrong in words, not the database's message */
+      const said = (e && e.message) || "";
+      msg.textContent =
+        /title/i.test(said) ? "That title could not be saved. Choose another, or type a shorter one (up to 30 letters)." :
+        /username|duplicate|unique/i.test(said) ? "That username is taken. Try another." :
+        /check constraint|violates/i.test(said) ? "Something on this page could not be saved. Check your answers and try again." :
+        /fetch|network/i.test(said) ? "No connection. Check your internet and try again." :
+        "Your changes could not be saved. Try again.";
     }
   });
   stage.appendChild(save);
@@ -16345,7 +16353,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1008-1000";
+const BUILD = "1008-1030";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
