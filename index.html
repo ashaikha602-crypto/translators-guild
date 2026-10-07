@@ -1603,6 +1603,48 @@ a.ks-s-en:hover { color: var(--white); }
 /* A notification is a row in a list, not a call to action. It is a
    button for the keyboard's sake, so every part of the button look is
    taken back off: no pill, no gradient, no glow, no lift on hover. */
+/* phone notifications */
+#push-nudge { margin: .2rem 0 .9rem; }
+#push-nudge[hidden] { display: none; }
+.push-card { position: relative; display: grid; grid-template-columns: auto 1fr; gap: .8rem; align-items: start;
+  padding: .95rem 1rem; margin: 0 0 1rem; border-radius: 16px; background: rgba(214,191,234,.07);
+  border: 1px solid rgba(214,191,234,.14); }
+.push-card.done { grid-template-columns: 1fr; }
+.push-ico { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  background: linear-gradient(160deg, #981dbc, #6410d3); color: #fff; }
+.push-ico svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
+.push-txt { display: grid; gap: .25rem; min-width: 0; padding-right: 1rem; }
+.push-txt > b { font-size: .95rem; font-weight: 600; color: var(--white); }
+.push-txt > span { font-size: .82rem; line-height: 1.45; color: var(--ink-soft); }
+.push-steps { margin: .45rem 0 0; padding-left: 1.15rem; display: grid; gap: .3rem; font-size: .84rem; color: var(--white); }
+.push-steps b { font-weight: 600; }
+.push-share { width: 16px; height: 16px; vertical-align: -3px; fill: none; stroke: #0a84ff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.push-btns { display: flex; gap: .5rem; margin-top: .55rem; }
+.push-on, .push-no { all: unset; cursor: pointer; padding: .5rem 1.05rem; border-radius: 10px; font-size: .85rem; font-weight: 600; }
+.push-on { background: #8a2be2; color: #fff; }
+.push-on:disabled { opacity: .6; }
+.push-no { color: var(--ink-soft); }
+.push-x { all: unset; cursor: pointer; position: absolute; top: .4rem; right: .65rem; font-size: 1.3rem; line-height: 1; color: var(--ink-faint); padding: .2rem; }
+.push-set { margin: .3rem 0 1rem; }
+.push-h { margin: 1.3rem 0 .3rem; font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+.push-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .85rem .1rem;
+  border-bottom: 1px solid rgba(214,191,234,.1); font-size: .95rem; color: var(--white); }
+.push-row.main span { display: grid; gap: .15rem; }
+.push-row small { font-size: .78rem; color: var(--ink-soft); }
+.push-foot { font-size: .78rem; color: var(--ink-faint); margin: .9rem 0 0; }
+.push-sw { all: unset; cursor: pointer; flex: none; position: relative; width: 50px; height: 30px; border-radius: 15px;
+  background: rgba(214,191,234,.25); transition: background .2s; }
+.push-sw.on { background: #8a2be2; }
+.push-knob { position: absolute; top: 2px; left: 2px; width: 26px; height: 26px; border-radius: 50%; background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: transform .2s; }
+.push-sw.on .push-knob { transform: translateX(20px); }
+.n-set { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: .35rem; font-size: .82rem; color: var(--ink-soft); margin: 0 0 .6rem; }
+.n-set svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+:root[data-theme="light"] .push-card { background: #f6f0fb; border-color: #eadff5; }
+:root[data-theme="light"] .push-txt > b, :root[data-theme="light"] .push-steps, :root[data-theme="light"] .push-row { color: #111; }
+:root[data-theme="light"] .push-row { border-bottom-color: #efefef; }
+:root[data-theme="light"] .push-sw { background: #e2e2e2; }
+:root[data-theme="light"] .push-sw.on { background: #8a2be2; }
 .n-list { display: grid; margin: .3rem 0 1rem; }
 .n-head { margin: 1.1rem 0 .3rem; padding: 0 .5rem; font-size: .68rem; font-weight: 600;
   letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
@@ -3086,6 +3128,8 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
       <span>Search members</span>
     </button>
+    <!-- Asks once a week to turn on phone notifications, until it is on. -->
+    <div id="push-nudge" hidden></div>
     <!-- Stories: a row of circles, as everywhere else people post them. -->
     <div class="story-bar" id="story-bar" hidden></div>
 
@@ -12633,7 +12677,7 @@ function unlock() {
   document.body.appendChild(ov);
   /* If they arrived on somebody's shared link, that profile is where
      they were going; the hall was only the gate's other side. */
-  connectBackend(state.member).then(openSharedProfile).catch(() => {});
+  connectBackend(state.member).then(() => { openSharedProfile(); openFromLink(); pushOnConnect(); paintPushNudge(); }).catch(() => {});
   setTimeout(() => {
     paintBuild(); renderHall(); show("hall"); setAct(markCount() ? 3 : 2);
     ov.style.transition = "opacity 420ms ease"; ov.style.opacity = "0";
@@ -14893,6 +14937,7 @@ function settingsMenu() {
         if (pr) { pr.hidden = false; pr.scrollIntoView({ block: "start", behavior: "smooth" }); }
       })],
       ["bell", "Notifications", "", go(() => openItem(NOTIFS_ITEM))],
+      ["bell", "Phone notifications", pushState() === "granted" ? "On" : "Off", go(() => openItem(PUSH_ITEM))],
       ["mail", "Messages", "", go(() => openItem(INBOX_ITEM))],
       p.sees_profile_views ? ["eye", "Profile views", "", tap("seal-views")] : null,
       ["people", "Discover people", "", go(() => openItem(FIND_ITEM))]
@@ -15440,6 +15485,14 @@ async function runNotifications() {
   setCount(""); stage.innerHTML = "";
   const list = el("div", "n-list");
   const msg = el("p", "f-msg", "Loading\u2026");
+  pushIsOn().catch(() => false).then(on => {
+    const top = el("div", "n-top");
+    if (!on) { const c = pushCard("notifs", () => {}); if (c) top.appendChild(c); }
+    const gear = el("button", "n-set", '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>Phone notification settings');
+    gear.type = "button"; gear.addEventListener("click", () => openItem(PUSH_ITEM));
+    top.appendChild(gear);
+    if (list.parentNode === stage) stage.insertBefore(top, list);
+  });
   stage.appendChild(list); stage.appendChild(msg);
   let rows = [];
   try { rows = await sbGet("my_notifications?select=*&order=created_at.desc&limit=60"); }
@@ -15925,6 +15978,245 @@ async function openSharedProfile() {
 }
 window.addEventListener("hashchange", openSharedProfile);
 
+/* ═══════════ PHONE NOTIFICATIONS ═══════════
+   A like, comment, reply, follow, repost or message also reaches the
+   member's phone or computer, once they say yes on that device. The
+   database hands each new notification to the "push" Edge Function
+   (supabase/push.sql), which sends it; sw.js shows it and opens the
+   right screen when it is tapped.
+   On an iPhone a website can only notify once it has been added to the
+   Home Screen and opened from there; that is Apple's rule, so in Safari
+   the card explains how instead of offering a button that cannot work. */
+const PUSH_FN = SUPABASE.url + "/functions/v1/push";
+const PUSH_KINDS = [["message", "Messages"], ["comment", "Comments"], ["reply", "Replies"],
+                    ["like", "Likes"], ["follow", "New followers"], ["repost", "Reposts"]];
+const PUSH_IOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
+                 (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const pushInstalled = () => (window.matchMedia && matchMedia("(display-mode: standalone)").matches) ||
+                            navigator.standalone === true;
+
+function pushState() {
+  if (PUSH_IOS && !pushInstalled()) return "ios-browser";
+  if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) return "unsupported";
+  return Notification.permission;            /* default | granted | denied */
+}
+
+let pushReg = null;
+async function pushWorker() {
+  if (!("serviceWorker" in navigator)) return null;
+  if (!pushReg) {
+    try { pushReg = await navigator.serviceWorker.register("/sw.js", { scope: "/" }); }
+    catch (e) { return null; }
+  }
+  return navigator.serviceWorker.ready;
+}
+if ("serviceWorker" in navigator) {
+  /* a tapped notification, while the site is already open */
+  navigator.serviceWorker.addEventListener("message", e => {
+    if (e.data && e.data.go) { location.hash = e.data.go; openFromLink(); }
+  });
+}
+
+function pushKey(s) {
+  const t = s.replace(/-/g, "+").replace(/_/g, "/");
+  return Uint8Array.from(atob(t + "===".slice((t.length + 3) % 4)), c => c.charCodeAt(0));
+}
+
+/* ask = true only from a tap: the browser asks the member there and then */
+async function pushTurnOn(ask) {
+  if (backend !== "supabase" || !myId()) return false;
+  const st = pushState();
+  if (st === "default") {
+    if (!ask) return false;
+    if (await Notification.requestPermission() !== "granted") return false;
+  } else if (st !== "granted") return false;
+  const reg = await pushWorker();
+  if (!reg) return false;
+  let sub = await reg.pushManager.getSubscription();
+  if (!sub) {
+    const r = await fetch(PUSH_FN);
+    const { publicKey } = await r.json();
+    if (!publicKey) return false;
+    sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: pushKey(publicKey) });
+  }
+  const j = sub.toJSON();
+  await sbPost("rpc/push_subscribe", { p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh,
+                                       p_auth: j.keys.auth, p_device: navigator.userAgent });
+  return true;
+}
+
+async function pushTurnOff() {
+  const reg = await pushWorker();
+  const sub = reg && await reg.pushManager.getSubscription();
+  if (!sub) return;
+  try { await sbDel("push_subscriptions?endpoint=eq." + encodeURIComponent(sub.endpoint)); } catch (e) {}
+  try { await sub.unsubscribe(); } catch (e) {}
+}
+
+async function pushIsOn() {
+  if (pushState() !== "granted") return false;
+  const reg = await pushWorker();
+  return !!(reg && await reg.pushManager.getSubscription());
+}
+
+/* After signing in: keep this device's subscription with whoever is
+   signed in now, and clear the number on the app icon. */
+async function pushOnConnect() {
+  if (backend !== "supabase" || !myId()) return;
+  if (pushState() === "granted") { try { await pushTurnOn(false); } catch (e) {} }
+  if (navigator.clearAppBadge) { try { navigator.clearAppBadge(); } catch (e) {} }
+}
+
+/* The card that asks. "where" is home or notifs; Not now on home rests
+   for a week. */
+function pushCard(where, onDone) {
+  const st = pushState();
+  const card = el("div", "push-card");
+  const later = () => {
+    try { localStorage.setItem("pushLater", String(Date.now())); } catch (e) {}
+    card.remove();
+  };
+  const bell = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>';
+  if (st === "ios-browser") {
+    card.innerHTML = '<div class="push-ico">' + bell + '</div><div class="push-txt">' +
+      '<b>Get notifications on your iPhone</b>' +
+      '<span>Apple only lets a website send notifications once it is on your Home Screen.</span>' +
+      '<ol class="push-steps"><li>Tap <svg class="push-share" viewBox="0 0 24 24" aria-label="Share"><path d="M12 15V3M7.5 7.5 12 3l4.5 4.5"/><path d="M6 11H5v10h14V11h-1"/></svg> <b>Share</b> in Safari</li>' +
+      '<li>Choose <b>Add to Home Screen</b></li><li>Open <b>Guild</b> from your Home Screen and turn notifications on</li></ol></div>';
+  } else if (st === "default") {
+    card.innerHTML = '<div class="push-ico">' + bell + '</div><div class="push-txt">' +
+      '<b>Turn on notifications</b>' +
+      '<span>Know straight away when someone messages you, follows you, or likes, comments on or reposts your post.</span></div>';
+    const row = el("div", "push-btns");
+    const on = el("button", "push-on", "Turn on");
+    on.type = "button";
+    on.addEventListener("click", async () => {
+      on.disabled = true; on.textContent = "Turning on…";
+      let ok = false;
+      try { ok = await pushTurnOn(true); } catch (e) {}
+      if (ok) { card.classList.add("done"); card.innerHTML = '<div class="push-txt"><b>Notifications are on</b><span>You can choose which ones in Settings › Phone notifications.</span></div>'; setTimeout(() => card.remove(), 3500); }
+      else { card.replaceWith(pushCard(where, onDone)); }
+      onDone && onDone();
+    });
+    row.appendChild(on);
+    if (where === "home") {
+      const no = el("button", "push-no", "Not now");
+      no.type = "button"; no.addEventListener("click", later);
+      row.appendChild(no);
+    }
+    card.querySelector(".push-txt").appendChild(row);
+  } else if (st === "denied") {
+    card.innerHTML = '<div class="push-ico">' + bell + '</div><div class="push-txt">' +
+      '<b>Notifications are blocked</b>' +
+      '<span>' + (PUSH_IOS ? "Turn them on in your iPhone’s Settings › Notifications › Guild."
+                           : "Turn them on from the lock or settings icon next to the address bar, under Notifications.") + '</span></div>';
+  } else if (st === "unsupported") {
+    card.innerHTML = '<div class="push-ico">' + bell + '</div><div class="push-txt">' +
+      '<b>Notifications are not available here</b><span>This browser cannot show notifications. Try Chrome, Edge, Firefox or Safari.</span></div>';
+  } else return null;
+  if (where === "home" && st === "ios-browser") {
+    const x = el("button", "push-x", "×"); x.type = "button"; x.setAttribute("aria-label", "Not now");
+    x.addEventListener("click", later); card.appendChild(x);
+  }
+  return card;
+}
+
+/* On home, under the search bar: only while it is worth asking. */
+async function paintPushNudge() {
+  const slot = document.getElementById("push-nudge");
+  if (!slot) return;
+  slot.innerHTML = ""; slot.hidden = true;
+  if (backend !== "supabase" || !myId()) return;
+  const st = pushState();
+  if (st !== "default" && st !== "ios-browser") return;
+  let last = 0;
+  try { last = Number(localStorage.getItem("pushLater") || 0); } catch (e) {}
+  if (Date.now() - last < 7 * 86400000) return;
+  const c = pushCard("home", () => {});
+  if (c) { slot.appendChild(c); slot.hidden = false; }
+}
+
+/* Settings › Phone notifications */
+const PUSH_ITEM = { id: "push", en: "Phone notifications", subject: "", section: "profile", run: runPushSettings };
+
+async function runPushSettings() {
+  setCount(""); stage.innerHTML = "";
+  const wrap = el("div", "push-set");
+  stage.appendChild(wrap);
+  const on = await pushIsOn().catch(() => false);
+  if (!on) {
+    const c = pushCard("settings", () => runPushSettings());
+    if (c) wrap.appendChild(c);
+  } else {
+    const row = el("div", "push-row main");
+    row.innerHTML = '<span><b>On for this device</b><small>Notifications come to this ' +
+      (PUSH_IOS ? "iPhone" : "device") + '.</small></span>';
+    const sw = pushSwitch(true, async v => {
+      if (!v) { await pushTurnOff(); runPushSettings(); }
+    });
+    row.appendChild(sw);
+    wrap.appendChild(row);
+  }
+
+  wrap.appendChild(el("h3", "push-h", "Notify me about"));
+  let muted = [];
+  try {
+    const r = await sbGet("push_prefs?select=muted&user_id=eq." + myId());
+    muted = (r[0] && r[0].muted) || [];
+  } catch (e) {}
+  const msg = el("p", "f-msg", "");
+  PUSH_KINDS.forEach(([k, label]) => {
+    const row = el("div", "push-row");
+    row.appendChild(el("span", null, esc(label)));
+    row.appendChild(pushSwitch(muted.indexOf(k) < 0, async v => {
+      muted = v ? muted.filter(x => x !== k) : muted.concat(k);
+      try { await sbPost("rpc/push_set_muted", { p_muted: muted }); msg.textContent = ""; }
+      catch (e) { msg.textContent = "That could not be saved. Try again."; }
+    }));
+    wrap.appendChild(row);
+  });
+  wrap.appendChild(msg);
+  wrap.appendChild(el("p", "push-foot", "These choices are for your account, on every device where notifications are on."));
+  stage.appendChild(footNav({ backLabel: "Profile" }));
+}
+
+function pushSwitch(value, onChange) {
+  const b = el("button", "push-sw" + (value ? " on" : ""));
+  b.type = "button"; b.setAttribute("role", "switch"); b.setAttribute("aria-checked", String(value));
+  b.appendChild(el("span", "push-knob"));
+  b.addEventListener("click", async () => {
+    value = !value;
+    b.classList.toggle("on", value); b.setAttribute("aria-checked", String(value));
+    b.disabled = true;
+    try { await onChange(value); } finally { b.disabled = false; }
+  });
+  return b;
+}
+
+/* Where a tapped notification leads: #go=post:55, #go=member:<id>,
+   #go=chat:<id> or #go=notifs. */
+async function openFromLink() {
+  const m = /^#go=([a-z]+)(?::(.+))?$/.exec(location.hash || "");
+  if (!m || backend !== "supabase" || !myId()) return;
+  try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+  const [, what, id] = m;
+  try {
+    if (what === "chat" && id) {
+      const p = (await sbGet("profiles_public?select=display_name,title,avatar_path&id=eq." + encodeURIComponent(id)))[0] || {};
+      runThread(id, { name: p.display_name, title: p.title, avatar_path: p.avatar_path });
+    } else if (what === "post" && id) {
+      const r = await sbGet("feed?select=" + FEED_COLS + "&id=eq." + encodeURIComponent(id));
+      if (r[0]) openPost(r[0]); else openItem(NOTIFS_ITEM);
+    } else if (what === "member" && id) {
+      const p = (await sbGet("profiles_public?select=id,username,display_name&id=eq." + encodeURIComponent(id)))[0];
+      if (p) openPublic(p); else openItem(NOTIFS_ITEM);
+    } else {
+      openItem(NOTIFS_ITEM);
+    }
+  } catch (e) { openItem(NOTIFS_ITEM); }
+}
+window.addEventListener("hashchange", openFromLink);
+
 function wireProfileButtons() {
   const tt = document.getElementById("theme-toggle");
   if (tt && !tt.dataset.wired) {
@@ -16016,7 +16308,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1007-2100";
+const BUILD = "1008-0010";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -17351,6 +17643,7 @@ function renderHall() {
     hs.hidden = !(backend === "supabase" && myId());
     if (!hs.dataset.wired) { hs.dataset.wired = "1"; hs.addEventListener("click", () => openItem(FIND_ITEM, "focus")); }
   }
+  paintPushNudge();
   renderStoryBar();
   renderLately();
   paintStore();
@@ -22726,7 +23019,7 @@ loadPortraits();
   setAct(markCount() ? 3 : 2);
   show("hall");
   /* A shared profile link resolves once the backend is up. */
-  connectBackend(state.member).then(openSharedProfile).catch(() => {});
+  connectBackend(state.member).then(() => { openSharedProfile(); openFromLink(); pushOnConnect(); paintPushNudge(); }).catch(() => {});
 })();
 </script>
 
