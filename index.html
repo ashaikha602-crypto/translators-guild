@@ -12667,12 +12667,14 @@ const INTERPRETING_INTERESTS = ["Consecutive","Simultaneous","Whispered (chuchot
   "Sign Language Interpreting","Sight Translation"];
 const PROFICIENCIES = ["native","advanced","intermediate","beginner"];
 /* A title sits before the name. It is not a level of study. */
-/* Her list, in the order a career runs: an undergraduate, a graduate, a
-   postgraduate, a researcher, then a doctorate and the three professor
-   grades, with Other at the end. Alphabetical would put Assoc. Prof.
-   above Student, which tells a reader nothing. */
-const TITLES = ["Student","Graduate","Postgraduate Student","Researcher",
-                "Dr.","Asst. Prof.","Assoc. Prof.","Prof.","Prof. Dr.","Other"];
+/* Her list, in the order a degree runs: Student for anyone who would
+   rather not give a year, the four undergraduate years,
+   then graduate study, research and the doctorate. Anything else is
+   typed, not picked: "Other" opens a box, and what is written there is
+   the title. A title that was saved from an older list (Prof., Graduate
+   and so on) is kept and arrives in that box rather than being lost. */
+const TITLES = ["Student","Freshman","Sophomore","Junior","Senior",
+                "Grad. Student","Researcher","Dr."];
 
 /* The old list had room only for students, so anyone who teaches had to
    choose Other. It now covers the people who actually use this site. */
@@ -12685,7 +12687,9 @@ const ACADEMIC_LEVELS = ["First Year","Second Year","Third Year","Fourth Year",
 /* Dr. Shaikha Al-Khaldi, or just Shaikha Al-Khaldi. */
 function withTitle(title, name) {
   const n = name || "Member";
-  return title ? title + " " + n : n;
+  /* "Other" on its own was a choice from the old list, never a title. */
+  const t = (title || "").trim();
+  return t && t !== "Other" ? t + " " + n : n;
 }
 /* Majors and minors.
    ────────────────────
@@ -14280,7 +14284,26 @@ async function runEditProfile() {
     o.value = t2; o.textContent = t2; if (p.title === t2) o.selected = true;
     titleSel.appendChild(o);
   });
-  rT.appendChild(titleSel); stage.appendChild(rT);
+  const tOther = document.createElement("option");
+  tOther.value = OTHER_OPT; tOther.textContent = "Other";
+  titleSel.appendChild(tOther);
+  rT.appendChild(titleSel);
+  const titleFree = document.createElement("input");
+  titleFree.type = "text"; titleFree.className = "f-in"; titleFree.maxLength = 30; titleFree.dir = "auto";
+  titleFree.placeholder = "Type your title, for example Prof. or Eng.";
+  const savedTitle = (p.title || "").trim();
+  const titleKnown = !savedTitle || TITLES.indexOf(savedTitle) > -1;
+  if (!titleKnown) {
+    tOther.selected = true;
+    titleFree.value = savedTitle === "Other" ? "" : savedTitle;
+  }
+  titleFree.hidden = titleKnown;
+  titleSel.addEventListener("change", () => {
+    titleFree.hidden = titleSel.value !== OTHER_OPT;
+    if (!titleFree.hidden) titleFree.focus();
+  });
+  const titleValue = () => titleSel.value === OTHER_OPT ? titleFree.value.trim() : titleSel.value;
+  rT.appendChild(titleFree); stage.appendChild(rT);
 
   /* Display name */
   const r1 = row("Display name", "What other members see.");
@@ -14516,10 +14539,14 @@ async function runEditProfile() {
     if (!name.value.trim()) {
       msg.textContent = "A display name cannot be empty."; msg.classList.add("bad"); return;
     }
+    if (titleSel.value === OTHER_OPT && !titleValue()) {
+      msg.textContent = "Type your title, or choose No title."; msg.classList.add("bad");
+      titleFree.focus(); return;
+    }
     save.disabled = true; msg.textContent = "Saving…";
     try {
       await patchMyProfile({
-        title: titleSel.value || null,
+        title: titleValue() || null,
         display_name: name.value.trim(),
         username: u || null,
         bio: bio.value.trim() || null,
