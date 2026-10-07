@@ -15987,7 +15987,7 @@ window.addEventListener("hashchange", openSharedProfile);
    On an iPhone a website can only notify once it has been added to the
    Home Screen and opened from there; that is Apple's rule, so in Safari
    the card explains how instead of offering a button that cannot work. */
-const PUSH_FN = SUPABASE.url + "/functions/v1/push";
+const PUSH_FN = "/api/push";
 const PUSH_KINDS = [["message", "Messages"], ["comment", "Comments"], ["reply", "Replies"],
                     ["like", "Likes"], ["follow", "New followers"], ["repost", "Reposts"]];
 const PUSH_IOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
@@ -16308,7 +16308,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1008-0010";
+const BUILD = "1008-0930";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
