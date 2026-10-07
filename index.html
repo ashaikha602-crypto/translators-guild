@@ -3266,6 +3266,12 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
       </div>
     </details>
 
+    <details class="panel appearance-more" id="push-panel">
+      <summary><span>Notifications</span><span class="j-next" id="push-now">Off</span></summary>
+      <p class="note" id="push-note">Get a notification on this device for messages, likes, comments, reposts and new followers, even when the app is closed.</p>
+      <button type="button" class="ghost" id="push-btn">Turn on</button>
+    </details>
+
     <div class="hall-foot">
       <button class="ghost" id="admin-btn" hidden>Content Admin</button>
       <button class="ghost" id="reset-btn">Reset my marks</button>
@@ -15508,6 +15514,134 @@ async function runNotifications() {
   paintBadges();
 }
 
+/* ═══════════ PUSH NOTIFICATIONS ═══════════
+   Each device that turns notifications on is stored once, against the
+   member who is signed in on it. When a row is added to notifications,
+   the database calls the send-push function, which sends it to every
+   device that member has. The public key below is safe to publish; its
+   private half lives only in the function's secrets.
+   On iPhone and iPad, Apple only allows this for an app that has been
+   added to the Home Screen and opened from there. */
+const VAPID_PUBLIC = "BO3vcEgUzJ4_2puuuxmKE8SRKk0bjl7QkHiG74nqx52aKrpn06gfOnciEhFJxJYA4K5t-vJJ5IvRhHAlzI55n-0";
+
+const isIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const isInstalled = () => window.matchMedia("(display-mode: standalone)").matches ||
+  navigator.standalone === true;
+const pushSupported = () => "serviceWorker" in navigator && "PushManager" in window &&
+  "Notification" in window;
+
+function vapidBytes(b64) {
+  const pad = "=".repeat((4 - b64.length % 4) % 4);
+  const raw = atob((b64 + pad).replace(/-/g, "+").replace(/_/g, "/"));
+  return Uint8Array.from(raw, c => c.charCodeAt(0));
+}
+
+let swReady = null;
+function registerWorker() {
+  if (!("serviceWorker" in navigator)) return null;
+  if (!swReady) swReady = navigator.serviceWorker.register("/sw.js").then(() => navigator.serviceWorker.ready);
+  return swReady;
+}
+
+async function rpc(name, args) {
+  const r = await fetch(SUPABASE.url + "/rest/v1/rpc/" + name,
+    { method: "POST", headers: await sbHeaders(), body: JSON.stringify(args) });
+  if (!r.ok) throw new Error((await r.text()) || name + " failed");
+}
+
+async function currentPushSub() {
+  if (!pushSupported()) return null;
+  const reg = await registerWorker();
+  return reg ? reg.pushManager.getSubscription() : null;
+}
+
+async function pushTurnOn() {
+  const perm = await Notification.requestPermission();
+  if (perm !== "granted") throw new Error("denied");
+  const reg = await registerWorker();
+  let sub = await reg.pushManager.getSubscription();
+  if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true,
+                                                    applicationServerKey: vapidBytes(VAPID_PUBLIC) });
+  const j = sub.toJSON();
+  await rpc("save_push_subscription", { p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh,
+                                        p_auth: j.keys.auth, p_ua: navigator.userAgent.slice(0, 200) });
+}
+
+async function pushTurnOff() {
+  const sub = await currentPushSub();
+  if (!sub) return;
+  try { await rpc("forget_push_subscription", { p_endpoint: sub.endpoint }); } catch (e) {}
+  await sub.unsubscribe();
+}
+
+/* Called before signing out, so the next person to use this phone does
+   not receive the last person's notifications. */
+async function pushForgetDevice() {
+  try {
+    if (backend !== "supabase" || !myId()) return;
+    await Promise.race([pushTurnOff(), new Promise(r => setTimeout(r, 2500))]);
+  } catch (e) {}
+}
+
+async function paintPush() {
+  const now = document.getElementById("push-now");
+  const note = document.getElementById("push-note");
+  const btn = document.getElementById("push-btn");
+  if (!now || !btn) return;
+  const say = (state, text, label) => {
+    now.textContent = state; note.textContent = text;
+    btn.hidden = !label; if (label) btn.textContent = label;
+  };
+  if (isIOS() && !isInstalled()) {
+    return say("Off", "On iPhone, add the app to your Home Screen first: tap Share, then Add to Home Screen, and open it from there. Then turn notifications on here.", null);
+  }
+  if (!pushSupported()) return say("Off", "This browser cannot receive notifications.", null);
+  if (backend !== "supabase" || !myId()) return say("Off", "Log in to turn on notifications.", null);
+  if (Notification.permission === "denied") {
+    return say("Blocked", "Notifications are blocked for this app. Allow them in your device settings, then come back here.", null);
+  }
+  const sub = await currentPushSub().catch(() => null);
+  if (sub && Notification.permission === "granted") {
+    say("On", "You will get a notification on this device for messages, likes, comments, reposts and new followers.", "Turn off");
+  } else {
+    say("Off", "Get a notification on this device for messages, likes, comments, reposts and new followers, even when the app is closed.", "Turn on");
+  }
+}
+
+(function initPush() {
+  const btn = document.getElementById("push-btn");
+  if (btn) btn.addEventListener("click", async () => {
+    const note = document.getElementById("push-note");
+    btn.disabled = true;
+    try {
+      if (btn.textContent === "Turn off") await pushTurnOff();
+      else await pushTurnOn();
+    } catch (e) {
+      if (e.message !== "denied") note.textContent = "That did not work. Please try again in a moment.";
+    } finally { btn.disabled = false; }
+    paintPush();
+  });
+  const panel = document.getElementById("push-panel");
+  if (panel) panel.addEventListener("toggle", () => { if (panel.open) paintPush(); });
+  if (pushSupported()) registerWorker().catch(() => {});
+
+  /* A tap on a notification opens this screen. */
+  const goNotes = () => { if (myId()) openItem(NOTIFS_ITEM); };
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.addEventListener("message", e => {
+      if (e.data && e.data.open === "notifications") goNotes();
+    });
+  }
+  if (new URLSearchParams(location.search).get("open") === "notifications") {
+    try { history.replaceState(null, "", location.pathname + location.hash); } catch (e) {}
+    let tries = 0;
+    const wait = setInterval(() => {
+      if (myId() || ++tries > 30) { clearInterval(wait); goNotes(); }
+    }, 500);
+  }
+})();
+
 /* The two numbers on the top bar. Quiet when there is nothing. */
 /* ── who viewed your profile ──
    A screen for one account. It is not in anybody else's menu, and it
@@ -17459,6 +17593,7 @@ function renderPractice() { fillLedger("sec-trials", "trials"); fillLedger("sec-
 document.getElementById("signout-btn").addEventListener("click", async () => {
   const b = document.getElementById("signout-btn");
   b.disabled = true;
+  await pushForgetDevice();
   if (dbUnsub) { try { dbUnsub(); } catch (e) {} dbUnsub = null; }
   dbDoc = null;
   await signOut();
