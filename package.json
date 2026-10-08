@@ -1,0 +1,8 @@
+{
+  "name": "translators-guild",
+  "private": true,
+  "description": "Static site; the only dependency is for the api/send-push function.",
+  "dependencies": {
+    "web-push": "3.6.7"
+  }
+}
