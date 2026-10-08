@@ -30,9 +30,9 @@
      in the Add to Home Screen sheet — this only sets the default. -->
 <meta name="apple-mobile-web-app-title" content="Compass">
 <meta name="application-name" content="Compass">
-<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png?v=4">
-<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=4">
-<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=4">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png?v=5">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=5">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=5">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -109,7 +109,7 @@
   --hair: 1px solid rgba(214,191,234,.14);
   --hair-lit: 1px solid rgba(214,191,234,.28);
   --grad-h: linear-gradient(90deg, #a726d0 0%, #8218c7 55%, #650fd0 100%);
-  --logo: url("icons/logo-1024.png");
+  --logo: url("icons/logo-1024.png?v=5");
   --ease: cubic-bezier(.16,.84,.28,1);
   --measure: 64ch;
 }
@@ -124,6 +124,12 @@ body {
 
 /* ---------- ambient ---------- */
 .aura { position: fixed; inset: -20vmax; z-index: 0; pointer-events: none; overflow: hidden; }
+/* The compass from the handbook's cover, very faint, behind every page. */
+.aura .rose { position: absolute; top: calc(20vmax - 14vmax); right: calc(20vmax - 22vmax); width: 64vmax; height: 64vmax;
+  background: url("icons/rose.svg") center / contain no-repeat; opacity: .075; transform: rotate(-8deg); }
+:root[data-theme="light"] .aura .rose { opacity: .09; filter: brightness(.35) saturate(1.6); }
+@media (prefers-reduced-motion: no-preference) { .aura .rose { animation: roseDrift 90s ease-in-out infinite alternate; } }
+@keyframes roseDrift { from { transform: rotate(-8deg); } to { transform: rotate(8deg); } }
 .aura i { position: absolute; display: block; border-radius: 50%; filter: blur(90px); opacity: .55; }
 .aura .b1 { width: 60vmax; height: 60vmax; top: -6vmax; right: 2vmax;
   background: radial-gradient(circle, #a726d0 0%, rgba(167,38,208,0) 68%);
@@ -457,6 +463,11 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .j-head { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; flex-wrap: wrap; }
 .j-head h2 { font-family: var(--f-serif); font-size: 1.15rem; font-weight: 600; color: var(--white); margin: 0; }
 .j-next { font-size: .78rem; color: var(--lilac-dim); }
+.j-track { position: relative; }
+/* the needle: a small compass star riding the end of the bar */
+.j-needle { position: absolute; top: 50%; width: 22px; height: 22px; transform: translate(-50%, -50%);
+  background: url("icons/star.svg") center / contain no-repeat; filter: drop-shadow(0 0 6px rgba(214,140,255,.8)); pointer-events: none; }
+:root[data-theme="light"] .j-needle { filter: drop-shadow(0 0 4px rgba(120,30,200,.5)) brightness(.3) saturate(3); }
 .j-bar { height: 8px; border-radius: var(--r-pill); background: rgba(214,191,234,.14); overflow: hidden; }
 .j-bar i { display: block; height: 100%; border-radius: inherit; background: var(--grad-h);
   transition: width 700ms var(--ease); }
@@ -2995,7 +3006,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
   color: var(--lilac); margin: 0; }
 </style>
 
-<div class="aura" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+<div class="aura" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i><b class="rose"></b></div>
 <div class="dotfield" aria-hidden="true"></div>
 
 <nav id="spine" aria-label="Where you are">
@@ -14956,7 +14967,8 @@ function paintSeal() {
 
   box.innerHTML =
     '<div class="j-head"><h2>Where you are</h2><span class="j-next">' + nextTxt + '</span></div>' +
-    '<div class="j-bar"><i style="width:' + Math.round(n / Math.max(totalMarks(), 1) * 100) + '%"></i></div>' +
+    '<div class="j-track"><div class="j-bar"><i style="width:' + Math.round(n / Math.max(totalMarks(), 1) * 100) + '%"></i></div>' +
+      '<span class="j-needle" style="left:' + Math.min(100, Math.max(1.5, Math.round(n / Math.max(totalMarks(), 1) * 100))) + '%"></span></div>' +
     '<div class="j-stats">' +
       '<div class="j-tile"><b>' + n + '</b><span>Marks</span></div>' +
       '<div class="j-tile"><b>' + done + ' / ' + trials.length + '</b><span>Trials</span></div>' +
@@ -16232,7 +16244,7 @@ function pushToast(d) {
   if (old) old.remove();
   const t = el("button", "push-toast");
   t.type = "button";
-  t.innerHTML = '<img src="icons/icon-192.png?v=4" alt="">' +
+  t.innerHTML = '<img src="icons/icon-192.png?v=5" alt="">' +
     '<span><b>' + esc(d.title || "Compass") + '</b><span>' + esc(d.body || "") + '</span></span>';
   const go = () => { t.remove(); if (d.url) { location.hash = new URL(d.url, location.href).hash; openFromLink(); } };
   t.addEventListener("click", go);
@@ -16540,7 +16552,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1008-2030";
+const BUILD = "1008-2100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */

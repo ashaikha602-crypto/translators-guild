@@ -20,7 +20,7 @@ self.addEventListener("push", e => {
     } catch (_) {}
     await self.registration.showNotification(d.title || "Compass", {
       body: d.body || "You have a new notification",
-      icon: "/icons/icon-192.png?v=4",
+      icon: "/icons/icon-192.png?v=5",
       badge: "/icons/badge-96.png",
       tag: d.tag || undefined,
       renotify: !!d.tag,
