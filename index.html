@@ -1362,7 +1362,11 @@ a.ks-s-en:hover { color: var(--white); }
 /* The photograph is the element's background, so the phone offers no
    "Save to Photos" on it, and no long-press callout anywhere near it. */
 .avatar.has-photo { padding: 0; overflow: hidden; background: var(--grad-soft);
-  background-size: cover; background-position: center; background-repeat: no-repeat; }
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+  /* the photo fills the whole circle, under the border too, so no flat
+     edge or second ring shows round it */
+  background-origin: border-box; border-color: transparent;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
 .avatar, .avatar.has-photo {
   -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
 .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
@@ -16504,7 +16508,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1008-1800";
+const BUILD = "1008-1810";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
