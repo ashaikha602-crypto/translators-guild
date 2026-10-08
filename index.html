@@ -16335,7 +16335,32 @@ async function pushIsOn() {
 async function pushOnConnect() {
   if (backend !== "supabase" || !myId()) return;
   if (pushState() === "granted") { try { await pushTurnOn(false); } catch (e) {} }
+  else pushAskOnFirstTap();
   if (navigator.clearAppBadge) { try { navigator.clearAppBadge(); } catch (e) {} }
+}
+
+/* Notifications are on by default: every kind starts switched on, and
+   the browser's own Allow question comes up on the member's first tap
+   after signing in (browsers only allow it from a tap). Anyone who does
+   not want them can say Don't Allow, or switch kinds off in Settings ›
+   Phone notifications. If the question is closed without an answer it
+   comes back at most once a day; after Don't Allow it never does. */
+let pushAskArmed = false;
+function pushAskOnFirstTap() {
+  if (pushAskArmed || pushState() !== "default") return;
+  let last = 0;
+  try { last = Number(localStorage.getItem("pushAsked") || 0); } catch (e) {}
+  if (Date.now() - last < 86400000) return;
+  pushAskArmed = true;
+  document.addEventListener("click", async function ask(e) {
+    /* the card's own buttons ask (or say Not now) themselves */
+    if (e.target.closest && e.target.closest(".push-card")) return;
+    document.removeEventListener("click", ask, true);
+    try { localStorage.setItem("pushAsked", String(Date.now())); } catch (e) {}
+    let ok = false;
+    try { ok = await pushTurnOn(true); } catch (e) {}
+    if (ok) { try { paintPushNudge(); } catch (e) {} }
+  }, true);
 }
 
 /* The card that asks. "where" is home or notifs; Not now on home rests
@@ -16586,7 +16611,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1009-1330";
+const BUILD = "1009-1500";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
