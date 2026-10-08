@@ -1660,6 +1660,15 @@ a.ks-s-en:hover { color: var(--white); }
 :root[data-theme="light"] .push-row { border-bottom-color: #efefef; }
 :root[data-theme="light"] .push-sw { background: #e2e2e2; }
 :root[data-theme="light"] .push-sw.on { background: #8a2be2; }
+/* resuming a trial */
+.resume-card { text-align: center; }
+.resume-big { font-family: var(--f-serif); font-size: 1.7rem; margin: .4rem 0 .2rem; color: var(--white); }
+.resume-sub { font-size: .88rem; color: var(--ink-soft); margin: 0 0 1rem; }
+.resume-bar { width: 100%; max-width: 320px; justify-self: center; margin: 0 auto; height: 6px; border-radius: 3px; background: rgba(214,191,234,.15); overflow: hidden; }
+.resume-bar i { display: block; height: 100%; background: var(--grad, #8a2be2); border-radius: 3px; }
+.resume-foot { display: grid; gap: .6rem; }
+.resume-foot button { width: 100%; }
+.resume-tag { color: var(--mag-ink) !important; border-color: var(--magenta) !important; }
 /* adjusting a profile photo */
 .crop-view { position: fixed; inset: 0; z-index: 130; background: #000; color: #fff; display: grid;
   grid-template-rows: auto 1fr auto; touch-action: none; }
@@ -16531,7 +16540,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1008-1830";
+const BUILD = "1008-1900";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -17954,10 +17963,12 @@ function fillLedger(sectionId, section) {
     const pip = (t.kind !== "trial" || t.published === false) ? "" :
       '<span class="seal-pip' + (state.marks[t.id] ? " earned" : "") + '">✦</span>';
     const soon = t.published === false ? '<span class="soon">soon</span>' : '';
+    const part = t.kind === "trial" ? trialLoad(t.id) : null;
+    const resume = part ? '<span class="soon resume-tag">' + part.i + '/' + part.deck.length + ' \u00b7 resume</span>' : '';
     b.innerHTML =
       '<span class="c-top">' +
         '<span class="cnum">' + String(i + 1).padStart(2, "0") + '</span>' +
-        '<span class="c-meta"><span class="kind ' + t.kind + '">' + t.kind + '</span>' + soon + pip + '</span>' +
+        '<span class="c-meta"><span class="kind ' + t.kind + '">' + t.kind + '</span>' + soon + resume + pip + '</span>' +
       '</span>' +
       '<span class="ctitles">' +
         '<span class="c-en">' + t.en + '</span>' +
@@ -20161,10 +20172,54 @@ function runCommentary() {
    longer information. Anything in a `why` that used to point at "the
    first option" now names the option instead, because after this the
    positions mean nothing. */
+/* ── Picking a trial up where you left it ──
+   Every answer is kept on this device, for this member, until the trial
+   is finished or ended. Opening it again part-way asks whether to carry
+   on or start over, instead of quietly starting from question one. */
+const trialSaveKey = id => "trialSave:" + ((typeof myId === "function" && myId()) || state.member || "guest") + ":" + id;
+function trialSave(id, data) {
+  if (!id) return;
+  try { localStorage.setItem(trialSaveKey(id), JSON.stringify(Object.assign({ at: Date.now() }, data))); } catch (e) {}
+}
+function trialLoad(id) {
+  if (!id) return null;
+  try {
+    const d = JSON.parse(localStorage.getItem(trialSaveKey(id)) || "null");
+    if (d && d.deck && d.log && d.i > 0 && d.i < d.deck.length && Date.now() - d.at < 30 * 86400000) return d;
+  } catch (e) {}
+  return null;
+}
+function trialClear(id) { if (id) { try { localStorage.removeItem(trialSaveKey(id)); } catch (e) {} } }
+
+function resumeOrRestart(saved, unit, onResume, onRestart) {
+  stage.innerHTML = "";
+  const total = saved.deck.length, done = saved.i;
+  const right = saved.log.filter(r => r.hit).length;
+  setCount(unit + " " + (done + 1) + " of " + total);
+  setDots(total, done, -1);
+  const card = el("div", "prompt resume-card");
+  card.appendChild(el("p", "ask", "You were part-way through"));
+  card.appendChild(el("p", "resume-big", done + " of " + total + " answered"));
+  card.appendChild(el("p", "resume-sub", right + " right so far \u00b7 " + (total - done) + " to go"));
+  const bar = el("div", "resume-bar", "<i></i>");
+  bar.querySelector("i").style.width = Math.round(done / total * 100) + "%";
+  card.appendChild(bar);
+  stage.appendChild(card);
+  const foot = el("div", "foot resume-foot");
+  const go = el("button", null, "Resume trial");
+  go.addEventListener("click", onResume);
+  const again = el("button", "ghost", "Start over");
+  again.addEventListener("click", onRestart);
+  foot.appendChild(go); foot.appendChild(again);
+  stage.appendChild(foot);
+  go.focus();
+}
+
 function runChoice(items, ask) {
+  const tid = active && active.id;
   let i = 0;
-  const log = [];
-  const deck = items.map(q => Object.assign({}, q, { opts: shuffled(q.opts) }));
+  let log = [];
+  let deck = items.map(q => Object.assign({}, q, { opts: shuffled(q.opts) }));
 
   function question() {
     stage.innerHTML = "";
@@ -20197,6 +20252,7 @@ function runChoice(items, ask) {
   function answer(k, wrap, q) {
     const hit = !!q.opts[k].ok;
     log.push({ src: q.src, srcEn: !AR_RE.test(q.src), hit: hit, best: q.opts.find(o => o.ok).t });
+    trialSave(tid, { kind: "choice", deck: deck, log: log, i: log.length });
     setDots(deck.length, i + 1, -1);
 
     Array.from(wrap.children).forEach((b, idx) => {
@@ -20240,6 +20296,13 @@ function runChoice(items, ask) {
     if (stale) stale.remove();
     stage.appendChild(quitTrial(log, i + 1, deck.length));
     next.focus();
+  }
+  const saved = trialLoad(tid);
+  if (saved && saved.kind === "choice") {
+    resumeOrRestart(saved, "Question",
+      () => { deck = saved.deck; log = saved.log; i = saved.i; question(); },
+      () => { trialClear(tid); question(); });
+    return;
   }
   question();
 }
@@ -20334,6 +20397,7 @@ function runKuwaiti() {
 
 /* ═══════════ SCORECARD ═══════════ */
 function finish(log, total, stoppedEarly) {
+  trialClear(active && active.id);
   const hits = log.filter(r => r.hit).length;
   const need = Math.ceil(total * 0.6);
   /* Leaving part-way is allowed and is not a failure — but a Mark is for
@@ -20473,9 +20537,10 @@ function subRound() {
 }
 
 function runSubtitle() {
+  const tid = active && active.id;
   let i = 0;
-  const log = [];
-  const deck = subRound();
+  let log = [];
+  let deck = subRound();
 
   function question() {
     stage.innerHTML = "";
@@ -20554,6 +20619,7 @@ function runSubtitle() {
     const carries = subCarries(q, val);
     const hit = fits && carries;
     log.push({ src: q.src, srcEn: !!q.srcEn, hit: hit, best: q.model });
+    trialSave(tid, { kind: "subtitle", deck: deck, log: log, i: log.length });
     setDots(deck.length, i + 1, -1);
 
     stage.innerHTML = "";
@@ -20601,6 +20667,13 @@ function runSubtitle() {
     stage.appendChild(foot);
     stage.appendChild(quitTrial(log, i + 1, deck.length));
     next.focus();
+  }
+  const saved = trialLoad(tid);
+  if (saved && saved.kind === "subtitle") {
+    resumeOrRestart(saved, "Line",
+      () => { deck = saved.deck; log = saved.log; i = saved.i; question(); },
+      () => { trialClear(tid); question(); });
+    return;
   }
   question();
 }
