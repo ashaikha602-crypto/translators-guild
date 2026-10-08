@@ -18,7 +18,7 @@ self.addEventListener("push", e => {
       const wins = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
       wins.forEach(w => { if (w.visibilityState === "visible") w.postMessage({ toast: d }); });
     } catch (_) {}
-    await self.registration.showNotification(d.title || "Guild", {
+    await self.registration.showNotification(d.title || "Compass", {
       body: d.body || "You have a new notification",
       icon: "/icons/icon-192.png?v=4",
       badge: "/icons/badge-96.png",

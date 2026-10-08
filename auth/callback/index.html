@@ -8,7 +8,7 @@
      carrying a member's fresh session off to somebody else's server. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://bldqausimrsusdzfbubk.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="robots" content="noindex">
-<title>Confirming your email &mdash; The Translators' Guild</title>
+<title>Confirming your email &mdash; The Translator's Compass</title>
 <style>
   :root { color-scheme: dark; }
   html, body { margin: 0; padding: 0; }
@@ -98,13 +98,13 @@ a.btn:focus-visible, a.ghost:focus-visible, button:focus-visible {
 
 <main role="main" aria-live="polite">
   <div class="mark" aria-hidden="true">G</div>
-  <p class="eyebrow">The Translators&rsquo; Guild</p>
+  <p class="eyebrow">The Translator&rsquo;s Compass</p>
 
   <!-- working -->
   <section id="v-busy">
     <div class="spin" role="img" aria-label="Checking"></div>
     <h1>Checking your link</h1>
-    <p class="small">One moment &mdash; we are asking the Guild&rsquo;s records whether this
+    <p class="small">One moment &mdash; we are asking the Compass&rsquo;s records whether this
       confirmation is genuine. Nothing is assumed from the link alone.</p>
   </section>
 
@@ -113,9 +113,9 @@ a.btn:focus-visible, a.ghost:focus-visible, button:focus-visible {
     <p class="state ok"><i aria-hidden="true"></i>Verified</p>
     <h1>Email verified</h1>
     <p>Your email has been successfully verified.</p>
-    <p>Welcome to the Translators&rsquo; Guild, <b id="ok-name">member</b>.</p>
+    <p>Welcome to The Translator&rsquo;s Compass, <b id="ok-name">member</b>.</p>
     <p>Your journey begins now.</p>
-    <div class="acts"><a class="btn" href="/" id="enter">Enter the Guild</a></div>
+    <div class="acts"><a class="btn" href="/" id="enter">Enter the Compass</a></div>
   </section>
 
   <!-- failed -->
@@ -124,7 +124,7 @@ a.btn:focus-visible, a.ghost:focus-visible, button:focus-visible {
     <h1 id="bad-head">This link did not work</h1>
     <p id="bad-body">We could not confirm your email from this link.</p>
     <div class="acts">
-      <a class="btn" href="/" id="bad-go">Go to the Guild and sign in</a>
+      <a class="btn" href="/" id="bad-go">Go to the Compass and sign in</a>
     </div>
     <div class="detail">
       <b>What usually causes this</b>
@@ -171,14 +171,14 @@ function showBusy() { el("v-busy").hidden = false; el("v-ok").hidden = true; el(
 function showOk(name) {
   el("ok-name").textContent = name || "member";
   el("v-busy").hidden = true; el("v-bad").hidden = true; el("v-ok").hidden = false;
-  document.title = "Email verified — The Translators' Guild";
+  document.title = "Email verified — The Translator's Compass";
 }
 function showBad(head, body, tag) {
   el("bad-head").textContent = head;
   el("bad-body").textContent = body;
   if (tag) el("bad-tag").textContent = tag;
   el("v-busy").hidden = true; el("v-ok").hidden = true; el("v-bad").hidden = false;
-  document.title = "Could not confirm — The Translators' Guild";
+  document.title = "Could not confirm — The Translator's Compass";
 }
 
 async function post(path, body, token) {
@@ -308,7 +308,7 @@ async function run() {
       expired ? "That link has expired" : "This link was refused",
       expired
         ? "Confirmation links do not last long. Sign up again with the same email and a fresh one will be sent."
-        : ("The Guild's sign-in service would not accept this link. It said: " + serviceSaid(p)),
+        : ("The Compass sign-in service would not accept this link. It said: " + serviceSaid(p)),
       expired ? "Expired" : "Refused");
     return;
   }
@@ -357,7 +357,7 @@ async function run() {
   if (p.code) {
     showBad("Open this link in the browser you signed up with",
             "This confirmation has to be finished in the same browser that started the sign-up, " +
-            "on the same device. If that is not possible, sign in at the Guild — your email may " +
+            "on the same device. If that is not possible, sign in at the Compass — your email may " +
             "already be confirmed.",
             "Wrong browser");
     return;
@@ -372,7 +372,7 @@ async function run() {
 }
 
 run().catch(e => showBad("Something went wrong",
-  "The Guild could not reach its sign-in service. Check your connection and open the link again. " +
+  "The Compass could not reach its sign-in service. Check your connection and open the link again. " +
   "(" + (e && e.message ? e.message : "unknown error") + ")"));
 </script>
 </body>
