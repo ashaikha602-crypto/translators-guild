@@ -124,24 +124,23 @@ body {
 
 /* ---------- ambient ---------- */
 .aura { position: fixed; inset: -20vmax; z-index: 0; pointer-events: none; overflow: hidden; }
-/* The compass from the handbook's cover, very faint, behind every page.
-   It turns slowly in three dimensions, like a compass card floating in
-   its bowl, and fades out towards its edges so it never competes with
-   the text in front of it. */
-.aura { perspective: 120vmax; }
-.aura .rose { position: absolute; top: calc(20vmax - 10vmax); right: calc(20vmax - 18vmax); width: 58vmax; height: 58vmax;
-  background: url("icons/rose.svg") center / contain no-repeat; opacity: .032;
-  -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 100%); mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
-  transform-style: preserve-3d; transform: rotateX(18deg) rotateY(-14deg) rotateZ(-8deg); will-change: transform; }
-:root[data-theme="light"] .aura .rose { background-image: url("icons/rose-light.svg"); opacity: .12; }
-@media (prefers-reduced-motion: no-preference) { .aura .rose { animation: roseFloat 38s ease-in-out infinite; } }
-@keyframes roseFloat {
-  0%   { transform: rotateX(18deg)  rotateY(-14deg) rotateZ(-8deg); }
-  25%  { transform: rotateX(6deg)   rotateY(16deg)  rotateZ(10deg); }
-  50%  { transform: rotateX(-14deg) rotateY(8deg)   rotateZ(24deg); }
-  75%  { transform: rotateX(-4deg)  rotateY(-18deg) rotateZ(6deg); }
-  100% { transform: rotateX(18deg)  rotateY(-14deg) rotateZ(-8deg); }
+/* The compass from the handbook's cover, faint, behind every page, on
+   its own layer so the light theme's dimmed backdrop does not swallow it.
+   The card tilts in three dimensions like a compass floating in its bowl
+   while the rose itself turns slowly. */
+.compass-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; perspective: 900px; }
+.cb-tilt { position: absolute; top: -14vmax; right: -22vmax; width: 66vmax; height: 66vmax;
+  transform-style: preserve-3d; animation: cbTilt 14s ease-in-out infinite alternate; }
+.cb-spin { position: absolute; inset: 0; background: url("icons/rose.svg") center / contain no-repeat;
+  opacity: .055; animation: cbSpin 160s linear infinite; }
+:root[data-theme="light"] .cb-spin { background-image: url("icons/rose-light.svg"); opacity: .1; }
+@keyframes cbTilt {
+  0%   { transform: rotateX(28deg)  rotateY(-26deg); }
+  50%  { transform: rotateX(-6deg)  rotateY(14deg); }
+  100% { transform: rotateX(-26deg) rotateY(30deg); }
 }
+@keyframes cbSpin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .cb-tilt { animation-duration: 40s; } .cb-spin { animation-duration: 400s; } }
 .aura i { position: absolute; display: block; border-radius: 50%; filter: blur(90px); opacity: .55; }
 .aura .b1 { width: 60vmax; height: 60vmax; top: -6vmax; right: 2vmax;
   background: radial-gradient(circle, #a726d0 0%, rgba(167,38,208,0) 68%);
@@ -3018,7 +3017,8 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
   color: var(--lilac); margin: 0; }
 </style>
 
-<div class="aura" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i><b class="rose"></b></div>
+<div class="aura" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+<div class="compass-bg" aria-hidden="true"><div class="cb-tilt"><div class="cb-spin"></div></div></div>
 <div class="dotfield" aria-hidden="true"></div>
 
 <nav id="spine" aria-label="Where you are">
@@ -16564,7 +16564,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1008-2200";
+const BUILD = "1008-2245";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
