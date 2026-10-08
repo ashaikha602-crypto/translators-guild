@@ -1657,6 +1657,25 @@ a.ks-s-en:hover { color: var(--white); }
 :root[data-theme="light"] .push-row { border-bottom-color: #efefef; }
 :root[data-theme="light"] .push-sw { background: #e2e2e2; }
 :root[data-theme="light"] .push-sw.on { background: #8a2be2; }
+/* adjusting a profile photo */
+.crop-view { position: fixed; inset: 0; z-index: 130; background: #000; color: #fff; display: grid;
+  grid-template-rows: auto 1fr auto; touch-action: none; }
+.crop-head { display: grid; grid-template-columns: 48px 1fr 48px; align-items: center; gap: .5rem;
+  padding: calc(env(safe-area-inset-top, 0px) + .6rem) .8rem .6rem; }
+.crop-head h2 { margin: 0; text-align: center; font-size: 1.02rem; font-weight: 600; font-family: inherit; color: #fff; }
+.crop-x, .crop-ok { all: unset; cursor: pointer; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; }
+.crop-x { background: rgba(255,255,255,.12); }
+.crop-ok { background: #4c5bff; justify-self: end; }
+.crop-x svg, .crop-ok svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.crop-area { position: relative; align-self: center; justify-self: center; width: min(100vw, calc(100vh - 230px), 560px);
+  aspect-ratio: 1; overflow: hidden; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
+.crop-area img { position: absolute; top: 0; left: 0; max-width: none; transform-origin: 0 0; pointer-events: none;
+  -webkit-user-drag: none; }
+.crop-ring { position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+  box-shadow: 0 0 0 2000px rgba(0,0,0,.6); outline: 1px solid rgba(255,255,255,.55); outline-offset: -1px; }
+.crop-foot { display: grid; gap: .8rem; justify-items: center; padding: 1rem 1.5rem calc(env(safe-area-inset-bottom, 0px) + 1.4rem); }
+.crop-hint { font-size: .82rem; color: rgba(255,255,255,.65); }
+.crop-zoom { width: min(320px, 80vw); accent-color: #8a2be2; }
 .n-list { display: grid; margin: .3rem 0 1rem; }
 .n-head { margin: 1.1rem 0 .3rem; padding: 0 .5rem; font-size: .68rem; font-weight: 600;
   letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
@@ -11795,19 +11814,147 @@ function readSquare(file, side) {
   });
 }
 
-async function uploadAvatar(file) {
-  if (AVATAR_TYPES.indexOf(file.type) < 0) throw new Error("Use a JPG, PNG or WebP image.");
-  if (file.size > AVATAR_MAX) throw new Error("That image is over 2 MB. Try a smaller one.");
-  const canvas = await readSquare(file, 512);
-  const blob = await new Promise(res => canvas.toBlob(res, "image/webp", 0.9));
+/* ── Adjusting the picture before it is saved ──
+   The way every app does it: the photo fills a square, a circle shows
+   what will be kept, and the member drags it into place and pinches (or
+   uses the slider) to zoom. The photo can never be moved so far that the
+   circle shows an empty edge. Resolves with a 1024px square canvas, or
+   null if they cancel. */
+function cropAvatar(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("That file is not an image.")); };
+    img.onload = () => {
+      const W = img.naturalWidth, H = img.naturalHeight;
+      const ov = el("div", "crop-view");
+      ov.setAttribute("role", "dialog"); ov.setAttribute("aria-label", "Adjust your photo");
+      const head = el("header", "crop-head");
+      const x = el("button", "crop-x", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>');
+      x.type = "button"; x.setAttribute("aria-label", "Cancel");
+      const ok = el("button", "crop-ok", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>');
+      ok.type = "button"; ok.setAttribute("aria-label", "Use this photo");
+      head.appendChild(x); head.appendChild(el("h2", null, "Adjust photo")); head.appendChild(ok);
+      const area = el("div", "crop-area");
+      const pic = document.createElement("img");
+      pic.src = url; pic.alt = ""; pic.draggable = false;
+      area.appendChild(pic);
+      area.appendChild(el("div", "crop-ring"));
+      const foot = el("div", "crop-foot");
+      const zoom = document.createElement("input");
+      zoom.type = "range"; zoom.min = "1"; zoom.max = "5"; zoom.step = "0.01"; zoom.value = "1";
+      zoom.className = "crop-zoom"; zoom.setAttribute("aria-label", "Zoom");
+      foot.appendChild(el("span", "crop-hint", "Drag to move \u00b7 pinch or slide to zoom"));
+      foot.appendChild(zoom);
+      ov.appendChild(head); ov.appendChild(area); ov.appendChild(foot);
+      document.body.appendChild(ov);
+      document.body.classList.add("st-open");
+
+      let V = area.clientWidth, minS = V / Math.min(W, H), s = minS;
+      let tx = (V - W * s) / 2, ty = (V - H * s) / 2;
+      const clamp = () => {
+        s = Math.min(Math.max(s, minS), minS * 5);
+        tx = Math.min(0, Math.max(V - W * s, tx));
+        ty = Math.min(0, Math.max(V - H * s, ty));
+      };
+      const draw = () => {
+        clamp();
+        pic.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + s + ")";
+        zoom.value = String(s / minS);
+      };
+      /* zoom about a point in the square, so what is under the fingers stays there */
+      const zoomAt = (ns, cx, cy) => {
+        const px = (cx - tx) / s, py = (cy - ty) / s;
+        s = Math.min(Math.max(ns, minS), minS * 5);
+        tx = cx - px * s; ty = cy - py * s;
+        draw();
+      };
+      draw();
+
+      const pts = new Map();
+      let g = null;
+      const local = e => { const r = area.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+      const begin = () => {
+        const a = [...pts.values()];
+        if (a.length === 1) g = { kind: "pan", x: a[0][0], y: a[0][1], tx, ty };
+        else if (a.length >= 2) {
+          const d = Math.hypot(a[0][0] - a[1][0], a[0][1] - a[1][1]) || 1;
+          g = { kind: "pinch", d, s, mx: (a[0][0] + a[1][0]) / 2, my: (a[0][1] + a[1][1]) / 2, tx, ty };
+        } else g = null;
+      };
+      area.addEventListener("pointerdown", e => {
+        area.setPointerCapture(e.pointerId); pts.set(e.pointerId, local(e)); begin(); e.preventDefault();
+      });
+      area.addEventListener("pointermove", e => {
+        if (!pts.has(e.pointerId) || !g) return;
+        pts.set(e.pointerId, local(e));
+        const a = [...pts.values()];
+        if (g.kind === "pan" && a.length === 1) {
+          tx = g.tx + a[0][0] - g.x; ty = g.ty + a[0][1] - g.y; draw();
+        } else if (g.kind === "pinch" && a.length >= 2) {
+          const d = Math.hypot(a[0][0] - a[1][0], a[0][1] - a[1][1]) || 1;
+          const mx = (a[0][0] + a[1][0]) / 2, my = (a[0][1] + a[1][1]) / 2;
+          const px = (g.mx - g.tx) / g.s, py = (g.my - g.ty) / g.s;
+          s = Math.min(Math.max(g.s * d / g.d, minS), minS * 5);
+          tx = mx - px * s; ty = my - py * s; draw();
+        }
+      });
+      const end = e => { pts.delete(e.pointerId); begin(); };
+      area.addEventListener("pointerup", end);
+      area.addEventListener("pointercancel", end);
+      area.addEventListener("wheel", e => {
+        e.preventDefault();
+        const [cx, cy] = local(e);
+        zoomAt(s * Math.exp(-e.deltaY / 300), cx, cy);
+      }, { passive: false });
+      /* iOS Safari pinch: keep the page itself from zooming */
+      ["gesturestart", "gesturechange"].forEach(t => area.addEventListener(t, e => e.preventDefault()));
+      zoom.addEventListener("input", () => zoomAt(minS * Number(zoom.value), V / 2, V / 2));
+      const onResize = () => {
+        const nV = area.clientWidth; if (!nV || nV === V) return;
+        const k = nV / V; V = nV; minS = V / Math.min(W, H); s *= k; tx *= k; ty *= k; draw();
+      };
+      window.addEventListener("resize", onResize);
+
+      const finish = val => {
+        window.removeEventListener("resize", onResize);
+        ov.remove(); document.body.classList.remove("st-open");
+        URL.revokeObjectURL(url);
+        resolve(val);
+      };
+      x.addEventListener("click", () => finish(null));
+      ok.addEventListener("click", () => {
+        const side = Math.min(1024, Math.round(V / s));     /* never upscale past the photo */
+        const out = document.createElement("canvas");
+        out.width = out.height = Math.max(side, 320);
+        const cx = out.getContext("2d");
+        cx.imageSmoothingQuality = "high";
+        cx.drawImage(img, -tx / s, -ty / s, V / s, V / s, 0, 0, out.width, out.height);
+        finish(out);
+      });
+    };
+    img.src = url;
+  });
+}
+
+async function uploadAvatar(file, canvas) {
+  if (!canvas) {
+    if (file.type && file.type.indexOf("image/") !== 0) throw new Error("Choose a photo.");
+    canvas = await readSquare(file, 1024);
+  }
+  /* Safari cannot write WebP and quietly hands back a large PNG instead,
+     so anything that is not WebP is saved as a JPEG */
+  let blob = await new Promise(res => canvas.toBlob(res, "image/webp", 0.92));
+  if (!blob || blob.type !== "image/webp") blob = await new Promise(res => canvas.toBlob(res, "image/jpeg", 0.92));
   if (!blob) throw new Error("The image could not be processed.");
   /* A new filename each time, so a changed picture is never served from
      a cache under the old one. */
-  const path = session.user.id + "/a" + Date.now() + ".webp";
+  const ext = blob.type === "image/jpeg" ? ".jpg" : ".webp";
+  const path = session.user.id + "/a" + Date.now() + ext;
   const t = await freshToken();
   const r = await fetch(SUPABASE.url + "/storage/v1/object/avatars/" + path, {
     method: "POST",
-    headers: { "apikey": SUPABASE.key, "Authorization": "Bearer " + t, "Content-Type": "image/webp" },
+    headers: { "apikey": SUPABASE.key, "Authorization": "Bearer " + t, "Content-Type": blob.type },
     body: blob
   });
   if (!r.ok) throw new Error("The upload failed (" + r.status + ").");
@@ -13402,11 +13549,11 @@ function photoMenu() {
     card.appendChild(st);
   }
   card.appendChild(el("h3", null, "Profile photo"));
-  const note = el("p", "sheet-note", "JPG, PNG or WebP, up to 2 MB. It is cropped to a square.");
+  const note = el("p", "sheet-note", "Pick a photo, then drag and zoom it to fit the circle.");
   card.appendChild(note);
 
   const file = document.createElement("input");
-  file.type = "file"; file.accept = AVATAR_TYPES.join(","); file.hidden = true;
+  file.type = "file"; file.accept = "image/*"; file.hidden = true;
   card.appendChild(file);
 
   const close = () => wrap.remove();
@@ -13433,8 +13580,12 @@ function photoMenu() {
   file.addEventListener("change", async () => {
     const f = file.files && file.files[0];
     if (!f) return;
+    let shaped = null;
+    try { shaped = await cropAvatar(f); }
+    catch (e) { say(e.message, true); file.value = ""; return; }
+    if (!shaped) { file.value = ""; return; }
     pick.disabled = true; say("Uploading…");
-    try { await uploadAvatar(f); renderSeal(); close(); }
+    try { await uploadAvatar(f, shaped); renderSeal(); close(); }
     catch (e) { pick.disabled = false; say(e.message, true); file.value = ""; }
   });
 
@@ -16353,7 +16504,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1008-1030";
+const BUILD = "1008-1745";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
