@@ -91,6 +91,8 @@ function word(p) {
     case "reply":   return { title: "New reply", body: "↩️ " + name + (text ? " replied: “" + text + "”" : " replied to you"), url: to("post:" + p.post_id) };
     case "follow":  return { title: "New follower", body: "👤 " + name + " started following you", url: to("member:" + p.actor_id), tag: "follow-" + p.actor_id };
     case "repost":  return { title: "New repost", body: "🔁 " + name + " reposted your post" + post, url: to("post:" + p.post_id) };
+    case "story":   return { title: "New story", body: "✨ " + name + " posted a new story", url: to("member:" + p.actor_id), tag: "story-" + p.actor_id };
+    case "post":    return { title: "New post", body: "📝 " + name + " shared a new post" + post, url: to("post:" + p.post_id) };
     default:        return { title: "Compass", body: name + " interacted with you", url: to("notifs") };
   }
 }

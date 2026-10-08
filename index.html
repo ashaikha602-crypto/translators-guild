@@ -15687,7 +15687,9 @@ const N_SAYS = {
   reply:   "replied to you",
   follow:  "followed you",
   repost:  "reposted your post",
-  message: "sent you a message"
+  message: "sent you a message",
+  story:   "posted a new story",
+  post:    "shared a new post"
 };
 
 /* Several of the same thing from the same person are one line, not a
@@ -15772,6 +15774,15 @@ async function runNotifications() {
           .then(paintBadges).catch(() => {});
       }
       if (n.kind === "message") { openItem(INBOX_ITEM); return; }
+      if (n.kind === "story") {
+        try {
+          const gs = await loadStoryGroups();
+          const i = gs.findIndex(g => g.author && g.author.id === n.actor_id);
+          if (i > -1) { openStoryViewer(gs, i); return; }
+        } catch (e) {}
+        openPublic({ id: n.actor_id, display_name: n.display_name, username: n.username });
+        return;
+      }
       if (n.kind === "follow") {
         openPublic({ id: n.actor_id, display_name: n.display_name, username: n.username });
         return;
@@ -16230,7 +16241,8 @@ window.addEventListener("hashchange", openSharedProfile);
    the card explains how instead of offering a button that cannot work. */
 const PUSH_FN = "/api/push";
 const PUSH_KINDS = [["message", "Messages"], ["comment", "Comments"], ["reply", "Replies"],
-                    ["like", "Likes"], ["follow", "New followers"], ["repost", "Reposts"]];
+                    ["like", "Likes"], ["follow", "New followers"], ["repost", "Reposts"],
+                    ["story", "Stories from people you follow"], ["post", "New posts from people you follow"]];
 const PUSH_IOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
                  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 const pushInstalled = () => (window.matchMedia && matchMedia("(display-mode: standalone)").matches) ||
@@ -16574,7 +16586,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1009-1200";
+const BUILD = "1009-1330";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
