@@ -140,6 +140,9 @@ body {
   100% { transform: rotateX(-26deg) rotateY(30deg); }
 }
 @keyframes cbSpin { to { transform: rotate(360deg); } }
+/* While the page is scrolling the moving compass rests, so the phone
+   spends its effort on the scroll and the fixed bar never lags behind. */
+body.is-scrolling .cb-tilt, body.is-scrolling .cb-spin { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .cb-tilt { animation-duration: 40s; } .cb-spin { animation-duration: 400s; } }
 .aura i { position: absolute; display: block; border-radius: 50%; filter: blur(90px); opacity: .55; }
 .aura .b1 { width: 60vmax; height: 60vmax; top: -6vmax; right: 2vmax;
@@ -585,6 +588,9 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
    ══════════════════════════════════════════════════════════════ */
 #bottom-nav {
   position: fixed; inset-inline: 0; z-index: 60;
+  /* its own layer, so iPhone keeps it pinned while the page scrolls */
+  -webkit-transform: translate3d(0,0,0); transform: translate3d(0,0,0);
+  will-change: transform; contain: layout paint;
   background: var(--scrim);
   -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
 }
@@ -16615,7 +16621,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1009-2250";
+const BUILD = "1010-1100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -18175,6 +18181,28 @@ function showNav(on) {
   if (!navBar) return;
   navBar.hidden = !on;
   document.body.classList.toggle("has-nav", !!on);
+}
+
+/* iPhone sometimes leaves a fixed bar where it was when the keyboard
+   closes or a long scroll ends; a one-frame relayout puts it back. */
+function repinNav() {
+  if (!navBar || navBar.hidden) return;
+  navBar.style.display = "none"; void navBar.offsetHeight; navBar.style.display = "";
+}
+{
+  let st = null;
+  window.addEventListener("scroll", () => {
+    document.body.classList.add("is-scrolling");
+    clearTimeout(st);
+    st = setTimeout(() => { document.body.classList.remove("is-scrolling"); repinNav(); }, 180);
+  }, { passive: true });
+  if (window.visualViewport) {
+    let rt = null;
+    window.visualViewport.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(repinNav, 120); });
+  }
+  document.addEventListener("focusout", e => {
+    if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) setTimeout(repinNav, 300);
+  });
 }
 
 if (navBar) {
