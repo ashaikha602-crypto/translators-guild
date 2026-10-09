@@ -13100,10 +13100,14 @@ function followButton(m) {
   paint();
   b.addEventListener("click", async (e) => {
     e.stopPropagation();
-    b.disabled = true;
-    try { on ? await unfollow(m.id) : await follow(m.id); on = !on; paint(); }
-    catch (err) { b.textContent = "Not allowed"; }
-    finally { b.disabled = false; }
+    /* Change the word straight away; the server catches up behind it.
+       Waiting for the round trip made the button feel stuck. */
+    if (b.dataset.busy) return;
+    b.dataset.busy = "1";
+    const was = on; on = !on; paint();
+    try { was ? await unfollow(m.id) : await follow(m.id); }
+    catch (err) { on = was; paint(); b.textContent = "Not allowed"; setTimeout(paint, 2500); }
+    finally { delete b.dataset.busy; }
   });
   return b;
 }
@@ -16611,7 +16615,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1009-1500";
+const BUILD = "1009-2250";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
