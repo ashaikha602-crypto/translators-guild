@@ -11613,7 +11613,9 @@ function callbackURL() {
    own confirmation is switched back on, the six-digit flow below takes
    over again and the proof returns. Nothing here has to be rewritten for
    that: this path simply stops being used. */
-const ENROL_URL = SUPABASE.url + "/functions/v1/guild-enrol";
+/* Through the site's own /api/enrol: the Supabase function only accepts
+   browser calls from a different domain, so it is reached server to server. */
+const ENROL_URL = "/api/enrol";
 
 async function enrol(email, pass, profile) {
   const r = await fetch(ENROL_URL, {
@@ -11636,10 +11638,11 @@ async function enrol(email, pass, profile) {
 }
 
 async function signUp(email, pass, profile) {
-  /* The Guild's own door first. */
+  /* Sign-up is name, email and password, nothing more: no code and no
+     email to wait for. The Guild's enrolment function creates the account
+     already confirmed, and an ordinary password log-in completes it. */
   try {
     await enrol(email, pass, profile);
-    /* The account exists and is settled, so an ordinary log-in completes it. */
     const sess = await signIn(email, pass);
     return { session: sess, alreadyRegistered: false };
   } catch (e) {
@@ -11649,20 +11652,21 @@ async function signUp(email, pass, profile) {
     if (e.code === "weak_password" || e.code === "bad_email" || e.status === 429) {
       throw e;                       /* a real answer about the member's input */
     }
-    /* The function is unreachable or broken. Rather than leave somebody
-       unable to join, fall back to Supabase's own sign-up, which still
-       works whenever the mail quota has not been spent. */
     console.warn("enrolment unavailable, falling back to Supabase sign-up:", e.message);
   }
-
+  /* Only if enrolment itself is down. Even then no code screen is shown:
+     the member is sent to Log In, and an account still marked unconfirmed
+     is settled with supabase/no-email-confirmation.sql. */
   const j = await authPost(
     "/signup?redirect_to=" + encodeURIComponent(callbackURL()),
     { email: email, password: pass, data: profile || {} }
   );
-  const sess = asSession(j);
+  let sess = asSession(j);
   if (sess) return { session: sess, alreadyRegistered: false };
   const ids = j && j.user && j.user.identities;
-  return { session: null, alreadyRegistered: Array.isArray(ids) && ids.length === 0 };
+  if (Array.isArray(ids) && ids.length === 0) return { session: null, alreadyRegistered: true };
+  try { sess = await signIn(email, pass); } catch (e) { sess = null; }
+  return { session: sess, alreadyRegistered: false };
 }
 
 async function signIn(email, pass) {
@@ -12779,10 +12783,13 @@ async function pressSeal() {
         return;
       }
 
+      /* No code screen any more: the account exists, so send the member
+         to Log In with their address filled in. */
       gateBusy(false);
-      gateQuiet();
+      setAuthMode("in");
+      gateEl.email.value = email;
       gateEl.pass.value = ""; gateEl.pass2.value = "";
-      askForCode(email, pass, true);
+      gateSay("Your account has been created. Log in with your email and password.", true);
     } catch (e) {
       gateBusy(false);
       if (/already/i.test(e.message)) {
@@ -12840,10 +12847,11 @@ async function pressSeal() {
   } catch (e) {
     gateBusy(false);
     if (/not confirmed/i.test(e.message)) {
-      /* Nothing to go and find in an inbox: a fresh code is sent and the
-         six boxes open right here. */
-      try { await resendCode(email); } catch (err) { /* a code may already be in flight */ }
-      askForCode(email, pass, false);
+      /* No codes and no emails: an account still marked unconfirmed is
+         settled on our side (supabase/no-email-confirmation.sql), so the
+         member is told plainly instead of being sent to an inbox. */
+      gateSay("Your account is being activated. Please try logging in again in a little while. " +
+              "There is no need to check your email.");
     } else if (e.status === 400) {
       /* The service answers the same way for an unknown address and a wrong
          password, and so does this message. The advice matters more than the
@@ -16621,7 +16629,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1010-1100";
+const BUILD = "1012-1200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
