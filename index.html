@@ -53,6 +53,31 @@
   body { background: #110620; min-height: 100vh; }
   img { max-width: 100%; }
   [hidden] { display: none !important; }
+
+/* ═══════════ COMMUNITY RULES ═══════════ */
+.rules-ov { position: fixed; inset: 0; z-index: 9000; display: grid; place-items: center;
+  padding: 18px; background: var(--scrim); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.rules-card { width: min(420px, 100%); max-height: min(86vh, 720px); overflow: auto;
+  background: var(--void-2); color: var(--ink); border: 1px solid rgba(167,38,208,.35);
+  border-radius: 22px; padding: 22px 20px 18px; box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+.rules-card h2 { margin: 0 0 .5rem; font-size: 1.2rem; color: var(--white); }
+.rules-card p { margin: 0 0 .9rem; line-height: 1.5; color: var(--ink-soft); font-size: .95rem; }
+.rules-full { display: none; margin: 0 0 1rem; font-size: .9rem; }
+.rules-full.open { display: block; }
+.rules-full h3 { font-size: .95rem; margin: .9rem 0 .3rem; color: var(--white); }
+.rules-full ul { margin: 0; padding-left: 1.1rem; }
+.rules-full li { margin: .2rem 0; line-height: 1.45; color: var(--ink-soft); }
+.rules-btns { display: grid; gap: 10px; }
+.rules-btns button { width: 100%; min-height: 46px; border-radius: 999px; font: inherit; font-weight: 600;
+  border: 1px solid rgba(167,38,208,.35); background: var(--void-3); color: var(--white); cursor: pointer; }
+.rules-btns .rules-accept { background: var(--grad); color: var(--on-grad); border: 0; }
+.rules-btns .rules-decline { background: transparent; color: var(--ink-soft); }
+/* the rank switch beside the badge on your own profile */
+.rank-eye { display: inline-flex; align-items: center; gap: .3rem; font: inherit; font-size: .64rem;
+  padding: .22rem .58rem; border-radius: 999px; cursor: pointer; vertical-align: middle;
+  border: 1px dashed rgba(167,38,208,.5); background: transparent; color: var(--ink-soft); }
+.rank-eye svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+#chip-rank.rank-off { opacity: .45; text-decoration: line-through; }
 </style>
 </head>
 <body>
@@ -3113,7 +3138,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
 
           <label class="check" id="row-terms" hidden>
             <input type="checkbox" id="terms">
-            <span>I agree to the Terms &amp; Conditions and Privacy Policy.</span>
+            <span>I agree to the Terms &amp; Conditions, Privacy Policy and <a href="#" id="rules-link">Community Rules</a>.</span>
           </label>
           <p class="field-error" id="err-terms" hidden></p>
 
@@ -3323,6 +3348,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
         <h1 class="ig-name" id="seal-name" dir="auto">Member</h1>
         <p class="chips-row">
           <span class="chip-tag" id="chip-rank">Novice</span>
+          <button type="button" class="rank-eye" id="rank-eye" hidden></button>
           <span id="chip-booth"></span>
           <span class="chip-tag solid">Translation Team</span>
         </p>
@@ -12887,6 +12913,7 @@ function paintWho() {
 
 /* The seal is the whole threshold: signing in or joining opens the hall. */
 function enterHall(user) {
+  loadRankHidden(true);
   const email = typeof user === "string" ? user : (user && user.email) || "";
   gateBusy(false);
   clearErrs();
@@ -13383,6 +13410,36 @@ function attachMentions(box) {
   }, 250));
 }
 
+/* Your own profile: a small switch beside your rank. Tap to hide it
+   from other members, tap again to show it. */
+function paintRankEye() {
+  const b = document.getElementById("rank-eye");
+  const chip = document.getElementById("chip-rank");
+  if (!b || !chip) return;
+  if (backend !== "supabase" || !myId()) { b.hidden = true; return; }
+  const p = state.profile || {};
+  const shown = p.show_progress !== false;
+  b.hidden = false;
+  chip.classList.toggle("rank-off", !shown);
+  b.setAttribute("aria-pressed", shown ? "true" : "false");
+  b.title = shown ? "Your rank is visible to other members. Tap to hide it."
+                  : "Your rank is hidden from other members. Tap to show it.";
+  b.innerHTML = shown
+    ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Shown'
+    : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 5.1A9.7 9.7 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2M6.2 6.2C3.6 8 2 12 2 12s3.5 7 10 7c1.6 0 3-.4 4.3-1"/></svg>Hidden';
+  if (!b.dataset.wired) {
+    b.dataset.wired = "1";
+    b.addEventListener("click", async () => {
+      const now = (state.profile || {}).show_progress !== false;
+      b.disabled = true;
+      try { await patchMyProfile({ show_progress: !now }); }
+      catch (e) { alert("Your rank setting could not be saved. Please try again."); }
+      b.disabled = false;
+      paintRankEye();
+    });
+  }
+}
+
 function rankName(slug) {
   const r = RANKS.find(x => (x.slug || x.en.toLowerCase()) === slug);
   return r ? r.en : "";
@@ -13398,6 +13455,7 @@ function rankName(slug) {
    a profile should not demote anybody. */
 function memberRank(p) {
   if (!p) return "";
+  if (rankIsHidden(p.id)) return "";
   const server = p.rank_slug ? RANKS.find(x => (x.slug || x.en.toLowerCase()) === p.rank_slug) : null;
   let n = null;
   if (p.marks && typeof p.marks === "object") {
@@ -13511,6 +13569,7 @@ async function runPublic(id) {
      view's job rather than this screen's. */
   try { posts = await sbGet("feed?select=id&author_id=eq." + id); } catch (e) {}
 
+  await loadRankHidden();
   const dir = (await sbGet("member_directory?select=i_follow,follows_me,allow_follows,marks,rank_slug&id=eq." + id))[0] || {};
   /* the profile view may not carry the marks; the directory does */
   if (p.marks == null && dir.marks != null) p.marks = dir.marks;
@@ -13796,7 +13855,8 @@ function postCard(r, opts) {
       '<span class="mm-name">' + esc(withTitle(r.author_title, r.display_name)) +
         verifiedMark(r.author_verified) + '</span>' +
       '<span class="mm-meta">' + (r.username ? "@" + esc(r.username) + " · " : "") +
-        esc(rankName(r.rank_slug)) + " · " + when(r.created_at) + '</span>' +
+        (rankIsHidden(r.author_id) || !rankName(r.rank_slug) ? "" : esc(rankName(r.rank_slug)) + " · ") +
+        when(r.created_at) + '</span>' +
     '</div>';
   card.appendChild(head);
 
@@ -13987,6 +14047,10 @@ function postCard(r, opts) {
 }
 
 async function sbPost(path, body) {
+  /* a post or comment never goes out before the rules are accepted */
+  if ((path === "posts" || path === "comments") && !(await rulesGate())) {
+    throw new Error("Please accept the Community Rules to post or comment.");
+  }
   const r = await fetch(SUPABASE.url + "/rest/v1/" + path,
     { method: "POST", headers: Object.assign(await sbHeaders(), { Prefer: "return=representation" }),
       body: JSON.stringify(body) });
@@ -13994,6 +14058,147 @@ async function sbPost(path, body) {
   const j = await r.json().catch(() => null);
   return j && j[0];
 }
+/* ═══════════ COMMUNITY RULES ═══════════
+   Shown the first time a member starts a post, a story or a comment, and
+   again whenever RULES_VERSION changes. Acceptance is kept on this device
+   and, once supabase/community-rules.sql has added the column, on the
+   member's profile too, so it follows them to another phone. */
+const RULES_VERSION = "2026-10";
+const RULES_SUMMARY =
+  "Posts and comments in the Compass must not include harassment or bullying, hate speech, " +
+  "sexual content, threats or violent content, impersonation, spam or scams, illegal material, " +
+  "or anything that breaks another person’s rights or privacy. The Compass administrators " +
+  "may remove content, and warn, suspend or close accounts that break these rules.";
+const RULES_FULL = [
+  ["Respect every member", [
+    "No harassment, bullying, insults, intimidation or repeated unwanted contact.",
+    "No threats of any kind, including “jokes” about harming someone.",
+    "Disagree with ideas, not with people: criticise a translation, never the translator."]],
+  ["No hate", [
+    "No content that attacks or demeans people for their race, ethnicity, nationality, religion, sect, gender, disability, illness or any similar characteristic.",
+    "No slurs, and no mocking of religions, sacred figures or beliefs."]],
+  ["No sexual content", [
+    "No sexual or sexually suggestive content, nudity, or sexual harassment, including unwanted comments or advances.",
+    "Anything that sexualises a minor is removed at once, the account is closed, and it may be reported to the authorities."]],
+  ["No violence or harm", [
+    "No content that glorifies or encourages violence, terrorism, self-harm or suicide.",
+    "No graphic or disturbing images."]],
+  ["Be who you are", [
+    "No impersonation of another person, member, teacher or organisation, and no fake accounts.",
+    "Do not present someone else’s translation or writing as your own. Name your sources."]],
+  ["No spam or scams", [
+    "No advertising, repeated posts, chain messages, phishing, or links to harmful sites."]],
+  ["Respect privacy and the law", [
+    "Do not share anyone’s personal information, photos or private messages without their consent.",
+    "Post short extracts for translation practice only, with their source; do not upload whole copyrighted works.",
+    "Nothing illegal, including the sale of drugs or weapons. Content must also respect the laws that apply to you, including those of the State of Kuwait."]],
+  ["What happens if the rules are broken", [
+    "The Compass administrators may remove content without notice.",
+    "Depending on how serious it is: a warning, a temporary suspension, or the account being closed.",
+    "Serious cases, such as threats or content involving minors, may be passed to the authorities.",
+    "If you see something that breaks these rules, or think a decision was wrong, tell the Compass administrators through the Translation Team."]]
+];
+
+function rulesKey() { return "compass-rules-" + RULES_VERSION + ":" + (myId() || "guest"); }
+function rulesAccepted() {
+  const p = state.profile || {};
+  if (p.rules_version === RULES_VERSION) return true;
+  try { return localStorage.getItem(rulesKey()) === "yes"; } catch (e) { return false; }
+}
+
+/* Resolves true once accepted, false if declined. Only one card at a time. */
+let rulesOpen = null;
+function rulesGate() {
+  if (rulesAccepted()) return Promise.resolve(true);
+  if (rulesOpen) return rulesOpen;
+  rulesOpen = new Promise(resolve => {
+    const ov = el("div", "rules-ov");
+    ov.setAttribute("role", "dialog");
+    ov.setAttribute("aria-modal", "true");
+    ov.setAttribute("aria-labelledby", "rules-h");
+    const card = el("div", "rules-card");
+    card.appendChild(el("h2", null, "Community Rules")).id = "rules-h";
+    card.appendChild(el("p", null, "Before you post or comment, please read and accept the Compass Community Rules. " + RULES_SUMMARY));
+    const full = el("div", "rules-full");
+    RULES_FULL.forEach(([h, items]) => {
+      full.appendChild(el("h3", null, h));
+      const ul = el("ul");
+      items.forEach(t => ul.appendChild(el("li", null, esc(t))));
+      full.appendChild(ul);
+    });
+    card.appendChild(full);
+    const btns = el("div", "rules-btns");
+    const view = el("button", "rules-view", "Read the full rules");
+    const ok = el("button", "rules-accept", "I accept");
+    const no = el("button", "rules-decline", "Not now");
+    [view, ok, no].forEach(b => { b.type = "button"; btns.appendChild(b); });
+    card.appendChild(btns);
+    ov.appendChild(card);
+    document.body.appendChild(ov);
+    ok.focus();
+    const finish = v => { ov.remove(); rulesOpen = null; resolve(v); };
+    view.addEventListener("click", () => {
+      const open = full.classList.toggle("open");
+      view.textContent = open ? "Hide the full rules" : "Read the full rules";
+    });
+    ok.addEventListener("click", () => {
+      try { localStorage.setItem(rulesKey(), "yes"); } catch (e) {}
+      /* kept on the profile too; ignored quietly until the column exists */
+      if (backend === "supabase" && myId()) {
+        patchMyProfile({ rules_version: RULES_VERSION, rules_accepted_at: new Date().toISOString() }).catch(() => {});
+      }
+      finish(true);
+    });
+    no.addEventListener("click", () => finish(false));
+  });
+  return rulesOpen;
+}
+
+/* The rules on their own, for the sign-up form's link. */
+function showRules() {
+  const ov = el("div", "rules-ov");
+  ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true");
+  const card = el("div", "rules-card");
+  card.appendChild(el("h2", null, "Community Rules"));
+  card.appendChild(el("p", null, RULES_SUMMARY));
+  const full = el("div", "rules-full open");
+  RULES_FULL.forEach(([h, items]) => {
+    full.appendChild(el("h3", null, h));
+    const ul = el("ul"); items.forEach(t => ul.appendChild(el("li", null, esc(t)))); full.appendChild(ul);
+  });
+  card.appendChild(full);
+  const btns = el("div", "rules-btns");
+  const close = el("button", "rules-accept", "Close"); close.type = "button";
+  close.addEventListener("click", () => ov.remove());
+  btns.appendChild(close); card.appendChild(btns);
+  ov.appendChild(card); document.body.appendChild(ov);
+}
+
+document.addEventListener("click", e => {
+  if (e.target && e.target.id === "rules-link") { e.preventDefault(); e.stopPropagation(); showRules(); }
+}, true);
+
+/* ═══════════ RANK VISIBILITY ═══════════
+   "Show my rank" is the show_progress switch. Other members' screens read
+   ranks from views that do not carry that switch, so the members who have
+   hidden theirs are fetched once (supabase/rank-visibility.sql) and their
+   rank is left out everywhere: profile, posts and member lists. */
+let rankHidden = new Set(), rankHiddenAt = 0;
+async function loadRankHidden(force) {
+  if (backend !== "supabase") return;
+  if (!force && Date.now() - rankHiddenAt < 120000) return;
+  try {
+    const r = await fetch(SUPABASE.url + "/rest/v1/rpc/rank_hidden_ids",
+      { method: "POST", headers: await sbHeaders(), body: "{}" });
+    if (r.ok) {
+      const rows = await r.json();
+      rankHidden = new Set((rows || []).map(x => (x && typeof x === "object") ? (x.rank_hidden_ids || x.id) : x));
+      rankHiddenAt = Date.now();
+    }
+  } catch (e) { /* until the function exists, nobody is hidden */ }
+}
+const rankIsHidden = id => !!id && rankHidden.has(id);
+
 async function sbPatch(path, body) {
   const r = await fetch(SUPABASE.url + "/rest/v1/" + path,
     { method: "PATCH", headers: await sbHeaders(), body: JSON.stringify(body) });
@@ -14074,8 +14279,17 @@ async function runList(get, empty) {
 const NEWPOST_ITEM = { id: "newpost", en: "Create a post",
                        subject: "What are you posting?", section: "profile", run: runNewPost };
 
-function runNewPost() {
+async function runNewPost() {
   setCount(""); stage.innerHTML = "";
+  /* the rules appear as soon as someone starts a post */
+  if (!(await rulesGate())) {
+    stage.appendChild(el("p", "note", "Posting needs the Community Rules to be accepted first."));
+    const again = el("button", "ghost small", "Read the rules");
+    again.addEventListener("click", () => runNewPost());
+    stage.appendChild(again);
+    stage.appendChild(footNav({ backLabel: "Feed" }));
+    return;
+  }
   stage.appendChild(el("p", "note", "What are you posting?"));
   const list = el("div", "kind-list");
   POST_KINDS.forEach(k => {
@@ -14412,6 +14626,12 @@ function writeComment(postId, parentId, done, quoteOpts) {
   t.className="f-in f-area"; t.rows=3; t.maxLength=3000; t.dir="auto";
   t.placeholder = parentId ? "Your reply" : "What would you change, and why?";
   attachMentions(t);
+  /* the rules appear as soon as someone starts to comment */
+  t.addEventListener("focus", async () => {
+    if (rulesAccepted()) return;
+    t.blur();
+    if (await rulesGate()) t.focus();
+  });
   const b = el("button","ghost small", parentId ? "Post reply" : "Post comment");
   const m = el("span","f-hint","");
   b.addEventListener("click", async () => {
@@ -14515,7 +14735,7 @@ async function runPrivacy() {
      member's profile opens for every other member. What is left below
      still decides what that profile says about them, and a post of
      their own can still be kept to themselves. */
-  toggle("Show my progress", "show_progress", "Marks and rank on your public profile.");
+  toggle("Show my rank", "show_progress", "Your rank (Novice to Expert) and marks on your profile and next to your posts. You can also tap Shown / Hidden beside your rank on your profile.");
   toggle("Show my interests", "show_interests");
   toggle("Show my institution", "show_institution");
   toggle("Show my academic level", "show_academic_level");
@@ -16629,7 +16849,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1012-1200";
+const BUILD = "1012-1900";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -16702,6 +16922,7 @@ function renderSeal() {
 
   const chip = document.getElementById("chip-rank");
   if (chip) chip.textContent = rank.en;
+  paintRankEye();
   /* The booth's awards sit beside the translation rank, not inside it:
      two ladders, climbed separately, shown together. */
   const bchip = document.getElementById("chip-booth");
@@ -17422,8 +17643,9 @@ async function paintStoryHighlights(box, ownerId) {
 }
 
 /* ── the composer ── */
-function openStoryComposer() {
+async function openStoryComposer() {
   if (backend !== "supabase" || !myId()) return;
+  if (!(await rulesGate())) return;
   let mode = "photo", file = null, bg = "violet", busy = false;
   const ov = el("div", "st-view st-compose");
   ov.setAttribute("role", "dialog");
