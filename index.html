@@ -743,6 +743,73 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 :root[data-theme="light"] .lesson-row { background: rgba(91,63,181,.04); color: #22163f; }
 :root[data-theme="light"] .lm-head h2 { color: #22163f; }
 
+/* ── the poetry room ── */
+.pr-lead { color: var(--ink); line-height: 1.6; margin: 0 0 .9rem; }
+.pr-langs .chip { white-space: nowrap; }
+.pr-dir { opacity: .7; font-size: .85em; margin-left: .25rem; }
+.pr-tools { display: flex; gap: .6rem; align-items: center; margin: .3rem 0 1rem; flex-wrap: wrap; }
+.pr-search { flex: 1 1 14rem; min-width: 0; padding: .65rem .85rem; border-radius: 12px; border: 1px solid var(--ink-ghost);
+  background: rgba(214,191,234,.06); color: var(--white); font: inherit; }
+.pr-list { display: grid; gap: .45rem; }
+.pr-era { font-family: var(--f-serif); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--lilac-dim);
+  margin: 1rem 0 .2rem; font-weight: 600; }
+.pr-poet .lr-en { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .6rem; }
+.pr-ar-name { font-family: "Amiri", serif; font-size: 1.22rem; font-weight: 700; direction: rtl; unicode-bidi: isolate; }
+.pr-en-name { font-family: var(--f-serif); font-size: .9rem; font-weight: 500; color: var(--lilac); }
+.pr-count { font-size: .78rem; }
+.pr-credit { font-size: .75rem; color: var(--lilac-dim); margin: 1.2rem 0 0; }
+.pr-poet-head { margin: 0 0 1rem; }
+.pr-poet-name { font-family: var(--f-serif); font-size: 1.5rem; font-weight: 700; color: var(--white); margin: 0; }
+.pr-poet-name.ar, .pr-title.ar, .pr-pt.ar, .pr-first.ar { font-family: "Amiri", serif; direction: rtl; text-align: right; }
+.pr-poet-name.ar { font-size: 1.75rem; }
+.pr-poet-en { font-family: var(--f-serif); color: var(--lilac); margin: .1rem 0 .3rem; }
+.pr-poem-row { display: grid; gap: .25rem; width: 100%; text-align: left; padding: .85rem 1rem; border-radius: 14px;
+  border: 1px solid var(--ink-ghost); background: rgba(214,191,234,.05); color: var(--white); cursor: pointer; }
+.pr-poem-row:hover { background: rgba(214,191,234,.11); }
+.pr-poem-row.done { border-color: rgba(167,38,208,.55); }
+.pr-pt { font-weight: 700; font-size: 1.05rem; }
+.pr-first { color: var(--ink); font-size: .95rem; line-height: 1.7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pr-first.ar { font-size: 1.1rem; }
+.pr-mine { font-size: .72rem; color: var(--lilac); letter-spacing: .04em; }
+.pr-desk { border: 1px solid var(--ink-ghost); border-radius: 18px; padding: 1.1rem 1rem 1rem;
+  background: linear-gradient(160deg, rgba(101,15,208,.16), rgba(214,191,234,.03)); }
+.pr-desk-head { text-align: center; margin-bottom: .6rem; }
+.pr-desk-head .pr-poet-name { text-align: center; }
+.pr-title { color: var(--lilac); margin: .2rem 0 0; font-size: 1.05rem; }
+.pr-title.ar { text-align: center; font-size: 1.2rem; }
+.pr-hint { font-size: .78rem; color: var(--lilac-dim); text-align: center; margin: 0 0 .7rem; }
+.pr-verses { display: grid; gap: .35rem; }
+.pr-verse { display: grid; grid-template-columns: 1.2rem minmax(0,1fr); gap: .6rem; align-items: center; padding: .45rem .55rem;
+  border-radius: 10px; cursor: pointer; opacity: .62; transition: opacity .15s, background .15s; }
+.pr-verse.on { opacity: 1; background: rgba(214,191,234,.08); }
+.pr-tick { accent-color: #a726d0; width: 1.05rem; height: 1.05rem; }
+.pr-vt { display: grid; gap: .1rem; color: var(--white); }
+.pr-verses.ar .pr-verse { direction: rtl; }
+.pr-verses.ar .pr-vt { font-family: "Amiri", serif; font-size: 1.28rem; line-height: 1.85; text-align: center; }
+.pr-verses:not(.ar) .pr-vt { font-family: var(--f-serif); font-size: 1.05rem; line-height: 1.6; font-style: italic; }
+@media (min-width: 720px) {
+  .pr-verses.ar .pr-vt { grid-template-columns: 1fr 1fr; column-gap: 2.2rem; }
+  .pr-verses.ar .pr-half:first-child { text-align: right; }
+  .pr-verses.ar .pr-half:last-child { text-align: left; }
+}
+.pr-src { display: inline-block; margin-top: .8rem; font-size: .78rem; color: var(--lilac); }
+.pr-write { margin: 1.1rem 0 0; }
+.pr-label { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--lilac); margin: 0 0 .4rem; font-weight: 600; display: block; }
+.pr-ta { width: 100%; min-height: 9rem; padding: .85rem .95rem; border-radius: 14px; border: 1px solid var(--ink-ghost);
+  background: rgba(214,191,234,.06); color: var(--white); font: 1.02rem/1.65 var(--f-serif); resize: vertical; }
+.pr-ta.ar { font-family: "Amiri", serif; font-size: 1.2rem; line-height: 1.8; }
+.pr-saved { font-size: .72rem; color: var(--lilac-dim); min-height: 1em; margin: .3rem 0 0; }
+.pr-preview { margin: 1rem 0 0; }
+.pr-card-img { display: block; width: min(100%, 300px); aspect-ratio: 9 / 16; border-radius: 16px; margin: 0 auto;
+  box-shadow: 0 12px 34px rgba(0,0,0,.45); background: #1a0838; }
+.pr-acts { display: grid; gap: .55rem; margin: 1rem 0 0; }
+@media (min-width: 600px) { .pr-acts { grid-template-columns: 1.4fr 1fr 1fr; } }
+.pr-say { font-size: .85rem; color: var(--lilac); min-height: 1.2em; margin: .5rem 0 0; text-align: center; }
+:root[data-theme="light"] .pr-poem-row, :root[data-theme="light"] .pr-search,
+:root[data-theme="light"] .pr-ta { background: rgba(91,63,181,.04); color: #22163f; }
+:root[data-theme="light"] .pr-poet-name, :root[data-theme="light"] .pr-vt { color: #22163f; }
+:root[data-theme="light"] .pr-desk { background: linear-gradient(160deg, rgba(101,15,208,.08), rgba(91,63,181,.02)); }
+
 /* ═══════════ BOOK GUIDES ═══════════ */
 .chips.bg-chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: .35rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .bg-chips::-webkit-scrollbar { display: none; }
@@ -3344,6 +3411,14 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
         <span class="note">Unassessed, unlimited</span>
       </div>
       <div class="ledger" id="sec-chambers"></div>
+    </div>
+
+    <div id="block-poetry">
+      <div class="sec-head">
+        <h2>Poetry</h2>
+        <span class="note">Translate a poem, share your version</span>
+      </div>
+      <div class="ledger" id="sec-poetry"></div>
     </div>
   </section>
 
@@ -11656,7 +11731,13 @@ const ITEMS = [
   { id: "roots", ar: "حُجرة الجَذر", en: "Roots and Patterns", kind: "exhibit", section: "chambers",
     subject: "الجذر والوزن · Section 5.1",
     blurb: "Three consonants hold a whole family of words. Starting with &#1578; &#1585; &#1580; &#1605; itself.",
-    run: runRoots }
+    run: runRoots },
+
+  { id: "poetry", ar: "الدَّواوين", en: "The Diwans", kind: "workshop", section: "poetry", published: false,
+    subject: "الدواوين · Translate a poem",
+    direction: "both",
+    blurb: "Open a diwan, choose any poem, write your own translation under it, and share it as a story.",
+    run: runPoetry }
 ];
 
 /* ═══════════ STATE ═══════════ */
@@ -17612,7 +17693,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1013-1200";
+const BUILD = "1013-1900";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19088,7 +19169,7 @@ function renderLearn() {
     box.appendChild(sec);
   });
 }
-function renderPractice() { fillLedger("sec-trials", "trials"); fillLedger("sec-chambers", "chambers"); }
+function renderPractice() { fillLedger("sec-trials", "trials"); fillLedger("sec-chambers", "chambers"); fillLedger("sec-poetry", "poetry"); }
 
 
 document.getElementById("signout-btn").addEventListener("click", async () => {
@@ -19341,6 +19422,450 @@ function footNav(opts) {
 }
 /* Kept so every chamber that already called it gains the new footer. */
 function backFoot(opts) { return footNav(opts); }
+
+/* ═══════════════════════════════════════════════════════════
+   THE POETRY ROOM
+   Real poems by real poets, each with a link to where its text was
+   taken from. Nothing here is written by the site: the poem is the
+   poet's, and the translation under it is the member's own. The poems
+   live in poetry/poems.json, loaded only when the room is opened, so
+   the rest of the site stays as quick as it was.
+   ═══════════════════════════════════════════════════════════ */
+let POETRY = null;
+async function loadPoetry() {
+  if (POETRY) return POETRY;
+  const r = await fetch("poetry/poems.json?v=" + BUILD);
+  if (r.status === 404) return null;   /* the diwans are not uploaded yet */
+  if (!r.ok) throw new Error("poems " + r.status);
+  const d = await r.json();
+  d.poetById = {};
+  d.poets.forEach(p => { d.poetById[p.id] = p; p.poems = []; });
+  d.poems.forEach(p => { const who = d.poetById[p.poet]; if (who) who.poems.push(p); });
+  d.poets = d.poets.filter(p => p.poems.length);
+  POETRY = d;
+  return d;
+}
+const poemKey = id => "cmp.poem." + id;
+function poemDraft(id) {
+  try { return JSON.parse(localStorage.getItem(poemKey(id)) || "null"); } catch (e) { return null; }
+}
+function poemSave(id, v) {
+  try { localStorage.setItem(poemKey(id), JSON.stringify(v)); } catch (e) {}
+}
+/* An Arabic verse is two halves; an English line is one. Both are kept
+   as arrays so the same code lays out either. */
+const verseHalves = v => Array.isArray(v) ? v : [v];
+const verseText = v => verseHalves(v).join("   ");
+const poemTarget = poet => poet.lang === "ar" ? "en" : "ar";
+/* each poet is a diwan, named in both languages:
+   ديوان المتنبي · Diwan of al-Mutanabbi */
+const diwanAr = poet => "ديوان " + poet.ar;
+const diwanEn = poet => "Diwan of " + poet.en;
+const diwanName = poet => poet.lang === "ar" ? diwanAr(poet) : diwanEn(poet);
+
+let poetryLang = "ar";
+async function runPoetry(arg) {
+  setCount("Translate a poem · no score");
+  stage.innerHTML = "";
+  stage.appendChild(el("p", "note", "Loading the poems…"));
+  let d;
+  try { d = await loadPoetry(); }
+  catch (e) {
+    stage.innerHTML = "";
+    stage.appendChild(el("p", "note", "The poems could not be loaded. Check your connection and try again."));
+    stage.appendChild(footNav());
+    return;
+  }
+  if (!d) {
+    stage.innerHTML = "";
+    stage.appendChild(el("p", "pr-lead",
+      "The diwans are on their way. Soon you will open a diwan, choose any poem in it, " +
+      "write your own translation under it, and share it as a story."));
+    stage.appendChild(footNav());
+    return;
+  }
+  if (arg && arg.poem) {
+    const p = d.poems.find(x => x.id === arg.poem);
+    if (p) return poemDesk(p);
+  }
+  poetryHall(d);
+}
+
+function poetryHall(d) {
+  stage.innerHTML = "";
+  const intro = el("div", "pr-intro");
+  intro.appendChild(el("p", "pr-lead",
+    "Open a diwan, choose any poem in it, and write your own translation under it. " +
+    "Then share it as a story: the poem, your version, and your name."));
+  stage.appendChild(intro);
+
+  const langs = el("div", "chips pr-langs");
+  [["ar", "الدواوين العربية · Arabic diwans", "into English"], ["en", "الدواوين الإنجليزية · English diwans", "into Arabic"]].forEach(([k, l, s]) => {
+    const n = d.poets.filter(p => p.lang === k).length;
+    if (!n) return;
+    const b = el("button", "chip" + (poetryLang === k ? " on" : ""), l + ' <span class="pr-dir">' + s + "</span>");
+    b.type = "button";
+    b.addEventListener("click", () => { poetryLang = k; poetryHall(d); });
+    langs.appendChild(b);
+  });
+  stage.appendChild(langs);
+
+  const tools = el("div", "pr-tools");
+  const q = el("input", "pr-search");
+  q.type = "search"; q.placeholder = "Search a diwan, a poet or a line"; q.setAttribute("aria-label", "Search a diwan, a poet or a line");
+  const lucky = el("button", "ghost small", "A poem at random");
+  lucky.type = "button";
+  lucky.addEventListener("click", () => {
+    const pool = d.poems.filter(p => (d.poetById[p.poet] || {}).lang === poetryLang);
+    if (pool.length) openPoem(pool[Math.floor(Math.random() * pool.length)]);
+  });
+  tools.appendChild(q); tools.appendChild(lucky);
+  stage.appendChild(tools);
+
+  const list = el("div", "pr-list");
+  stage.appendChild(list);
+
+  function draw() {
+    const term = q.value.trim().toLowerCase();
+    list.innerHTML = "";
+    const poets = d.poets.filter(p => p.lang === poetryLang);
+    const eras = [];
+    poets.forEach(p => { if (!eras.includes(p.era)) eras.push(p.era); });
+    let shown = 0;
+    eras.forEach(era => {
+      const rows = poets.filter(p => p.era === era).filter(p => !term ||
+        (p.en + " " + p.ar).toLowerCase().includes(term) ||
+        p.poems.some(x => (x.title || "").toLowerCase().includes(term) || x.lines.some(v => verseText(v).includes(term))));
+      if (!rows.length) return;
+      list.appendChild(el("h3", "pr-era", esc(era)));
+      rows.forEach(p => {
+        const b = el("button", "lesson-row pr-poet");
+        b.type = "button";
+        b.innerHTML =
+          '<span class="lr-num pr-count">' + p.poems.length + "</span>" +
+          '<span class="lr-txt"><span class="lr-en"><span class="pr-ar-name">' + esc(diwanAr(p)) + '</span>' +
+          '<span class="pr-en-name">' + esc(diwanEn(p)) + "</span></span>" +
+          '<span class="lr-sub">' + esc(p.years || "") + "</span></span>" +
+          '<span class="lr-go" aria-hidden="true">›</span>';
+        b.addEventListener("click", () => {
+          pushTrail("Diwans", () => { stage.innerHTML = ""; poetryHall(d); });
+          poetShelf(d, p);
+        });
+        list.appendChild(b);
+        shown++;
+      });
+    });
+    if (!shown) list.appendChild(el("p", "note", "Nothing matches that search."));
+  }
+  q.addEventListener("input", draw);
+  draw();
+  stage.appendChild(el("p", "pr-credit", "Poem texts: " + esc(d.credit || "") ));
+  stage.appendChild(footNav());
+}
+
+function poetShelf(d, poet) {
+  stage.innerHTML = "";
+  window.scrollTo(0, 0);
+  const head = el("div", "pr-poet-head");
+  head.appendChild(el("p", "pr-poet-name ar", esc(diwanAr(poet))));
+  head.appendChild(el("p", "pr-poet-en", esc(diwanEn(poet))));
+  head.appendChild(el("p", "note", esc((poet.years || "") + " · " + poet.era + " · " + poet.poems.length + (poet.poems.length === 1 ? " poem" : " poems"))));
+  stage.appendChild(head);
+  const list = el("div", "pr-list");
+  poet.poems.forEach(p => {
+    const b = el("button", "pr-poem-row" + (poemDraft(p.id) ? " done" : ""));
+    b.type = "button";
+    const first = verseHalves(p.lines[0]);
+    b.innerHTML =
+      (p.title ? '<span class="pr-pt' + (poet.lang === "ar" ? " ar" : "") + '">' + esc(p.title) + "</span>" : "") +
+      '<span class="pr-first' + (poet.lang === "ar" ? " ar" : "") + '">' + esc(first.join(" … ")) + "</span>" +
+      (poemDraft(p.id) ? '<span class="pr-mine">Your translation saved</span>' : "");
+    b.addEventListener("click", () => openPoem(p));
+    list.appendChild(b);
+  });
+  stage.appendChild(list);
+  stage.appendChild(footNav());
+}
+
+function openPoem(p) {
+  const d = POETRY, poet = d.poetById[p.poet];
+  pushTrail(diwanName(poet), () => { stage.innerHTML = ""; poetShelf(d, poet); });
+  poemDesk(p);
+}
+
+/* The desk: the poem on top, the member's translation right under it,
+   and the story card it makes. Verses can be ticked so a long ode can
+   be shared a few lines at a time. */
+function poemDesk(p) {
+  const d = POETRY, poet = d.poetById[p.poet];
+  const to = poemTarget(poet);
+  const saved = poemDraft(p.id) || {};
+  let picked = Array.isArray(saved.picked) && saved.picked.length ? saved.picked.filter(i => i < p.lines.length)
+             : p.lines.map((_, i) => i).slice(0, Math.min(2, p.lines.length));
+  stage.innerHTML = "";
+  window.scrollTo(0, 0);
+  setCount("Translate a poem · no score");
+
+  const card = el("div", "pr-desk");
+  const head = el("div", "pr-desk-head");
+  head.appendChild(el("p", "pr-poet-name" + (poet.lang === "ar" ? " ar" : ""), esc(poet.lang === "ar" ? poet.ar : poet.en)));
+  if (p.title) head.appendChild(el("p", "pr-title" + (poet.lang === "ar" ? " ar" : ""), esc(p.title)));
+  card.appendChild(head);
+
+  card.appendChild(el("p", "pr-hint", p.lines.length > 2
+    ? "Tick the lines you are translating. Those go on your story card."
+    : "Translate the lines below."));
+  const verses = el("div", "pr-verses" + (poet.lang === "ar" ? " ar" : ""));
+  p.lines.forEach((v, i) => {
+    const row = el("label", "pr-verse" + (picked.includes(i) ? " on" : ""));
+    const box = document.createElement("input");
+    box.type = "checkbox"; box.checked = picked.includes(i); box.className = "pr-tick";
+    box.setAttribute("aria-label", "Line " + (i + 1));
+    box.addEventListener("change", () => {
+      picked = box.checked ? picked.concat(i).sort((a, b) => a - b) : picked.filter(x => x !== i);
+      row.classList.toggle("on", box.checked);
+      keep();
+    });
+    row.appendChild(box);
+    const txt = el("span", "pr-vt");
+    verseHalves(v).forEach(h => txt.appendChild(el("span", "pr-half", esc(h))));
+    row.appendChild(txt);
+    verses.appendChild(row);
+  });
+  card.appendChild(verses);
+  if (p.src) {
+    const s = el("a", "pr-src", "Source of the text ↗");
+    s.href = p.src; s.target = "_blank"; s.rel = "noopener";
+    card.appendChild(s);
+  }
+  stage.appendChild(card);
+
+  const desk = el("div", "pr-write");
+  desk.appendChild(el("label", "pr-label", to === "en" ? "Your translation into English" : "ترجمتك إلى العربية"));
+  const ta = el("textarea", "pr-ta" + (to === "ar" ? " ar" : ""));
+  ta.dir = to === "ar" ? "rtl" : "ltr";
+  ta.lang = to;
+  ta.rows = 6;
+  ta.placeholder = to === "en" ? "Write your version here, line by line." : "اكتب ترجمتك هنا، سطرًا سطرًا.";
+  ta.value = saved.text || "";
+  desk.appendChild(ta);
+  const saidSaved = el("p", "pr-saved", saved.text ? "Saved on this device." : "");
+  desk.appendChild(saidSaved);
+  stage.appendChild(desk);
+
+  let t0 = 0;
+  function keep() {
+    poemSave(p.id, { text: ta.value, picked: picked, at: Date.now() });
+    saidSaved.textContent = ta.value.trim() ? "Saved on this device." : "";
+    clearTimeout(t0);
+    t0 = setTimeout(paint, 250);
+  }
+  ta.addEventListener("input", keep);
+
+  const prevWrap = el("div", "pr-preview");
+  prevWrap.appendChild(el("p", "pr-label", "Your story card"));
+  const img = el("img", "pr-card-img");
+  img.alt = "Story card with the poem and your translation";
+  prevWrap.appendChild(img);
+  stage.appendChild(prevWrap);
+
+  const acts = el("div", "pr-acts");
+  const toStory = el("button", "primary", "Share to my Compass story");
+  const outside = el("button", "ghost", "Share the image");
+  const copy = el("button", "ghost", "Copy the text");
+  [toStory, outside, copy].forEach(b => { b.type = "button"; acts.appendChild(b); });
+  const say = el("p", "pr-say");
+  stage.appendChild(acts);
+  stage.appendChild(say);
+
+  let lastBlob = null;
+  async function paint() {
+    try {
+      const c = await drawPoemCard(p, poet, picked, ta.value);
+      lastBlob = await new Promise(res => c.toBlob(res, "image/png"));
+      if (img.dataset.url) URL.revokeObjectURL(img.dataset.url);
+      const u = URL.createObjectURL(lastBlob);
+      img.dataset.url = u; img.src = u;
+    } catch (e) { say.textContent = "The card could not be drawn on this browser."; }
+  }
+  function ready() {
+    if (!ta.value.trim()) { say.textContent = "Write your translation first."; ta.focus(); return false; }
+    if (!picked.length) { say.textContent = "Tick at least one line of the poem."; return false; }
+    say.textContent = "";
+    return true;
+  }
+  const fileName = () => "translation-" + p.id + ".png";
+
+  toStory.addEventListener("click", async () => {
+    if (!ready()) return;
+    if (!myId()) { say.textContent = "Sign in to share to your Compass story. You can still share the image."; return; }
+    toStory.disabled = true; toStory.textContent = "Sharing…";
+    try {
+      await paint();
+      await poemToStory(lastBlob, p, poet);
+      flash("Shared to your story");
+      toStory.textContent = "Shared ✓";
+    } catch (e) {
+      toStory.disabled = false; toStory.textContent = "Share to my Compass story";
+      say.textContent = "It could not be shared. Check your connection and try again.";
+    }
+  });
+  outside.addEventListener("click", async () => {
+    if (!ready()) return;
+    await paint();
+    const file = new File([lastBlob], fileName(), { type: "image/png" });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: "My translation", text: "Check out my translation" }); return; }
+      catch (e) { if (e && e.name === "AbortError") return; }
+    }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(lastBlob); a.download = fileName();
+    document.body.appendChild(a); a.click(); a.remove();
+    say.textContent = "The image is saved. Add it to your story from your photos.";
+  });
+  copy.addEventListener("click", async () => {
+    if (!ready()) return;
+    const src = picked.map(i => verseHalves(p.lines[i]).join(poet.lang === "ar" ? " ... " : "")).join("\n");
+    const who = poet.lang === "ar" ? poet.ar : poet.en;
+    const txt = src + "\n— " + who + "\n\n" + ta.value.trim() + "\n\n" + location.host;
+    try { await navigator.clipboard.writeText(txt); flash("Copied"); }
+    catch (e) { say.textContent = "Copying is blocked here. Select the text and copy it yourself."; }
+  });
+
+  /* the next poem by the same poet, so a member can keep going */
+  const i = poet.poems.indexOf(p);
+  const next = poet.poems[i + 1];
+  stage.appendChild(footNav(next ? {
+    next: () => poemDesk(next), nextLabel: "Next poem"
+  } : {}));
+  paint();
+}
+
+/* The card: 1080 × 1920, the size a phone story uses. */
+async function drawPoemCard(p, poet, picked, mine) {
+  const W = 1080, H = 1920, PAD = 96;
+  try { await Promise.all(["700 60px Amiri", "400 60px Amiri", "600 40px Outfit", "500 40px 'Playfair Display'", "italic 500 40px 'Playfair Display'"].map(f => document.fonts.load(f))); } catch (e) {}
+  const c = document.createElement("canvas");
+  c.width = W; c.height = H;
+  const g = c.getContext("2d");
+  const bg = g.createLinearGradient(0, 0, W * .4, H);
+  bg.addColorStop(0, "#2a0f52"); bg.addColorStop(.55, "#1a0838"); bg.addColorStop(1, "#0e0420");
+  g.fillStyle = bg; g.fillRect(0, 0, W, H);
+  const glow = g.createRadialGradient(W * .85, H * .1, 10, W * .85, H * .1, 700);
+  glow.addColorStop(0, "rgba(167,38,208,.35)"); glow.addColorStop(1, "rgba(167,38,208,0)");
+  g.fillStyle = glow; g.fillRect(0, 0, W, H);
+  drawCompassMark(g, W - 170, H - 300, 300, "rgba(214,191,234,.07)");
+
+  const isAr = s => /[؀-ۿ]/.test(s);
+  function lines(text, font, maxW) {
+    g.font = font;
+    const out = [];
+    String(text).split("\n").forEach(par => {
+      const words = par.split(/\s+/).filter(Boolean);
+      if (!words.length) { out.push(""); return; }
+      let cur = words[0];
+      for (let k = 1; k < words.length; k++) {
+        const t = cur + " " + words[k];
+        if (g.measureText(t).width <= maxW) cur = t; else { out.push(cur); cur = words[k]; }
+      }
+      out.push(cur);
+    });
+    return out;
+  }
+  function write(arr, font, color, y, lh, align) {
+    g.font = font; g.fillStyle = color;
+    arr.forEach(s => {
+      const ar = isAr(s);
+      g.direction = ar ? "rtl" : "ltr";
+      g.textAlign = align || "center";
+      const x = align === "left" ? (ar ? W - PAD : PAD) : W / 2;
+      if (align === "left" && ar) g.textAlign = "right";
+      g.fillText(s, x, y);
+      y += lh;
+    });
+    return y;
+  }
+
+  /* top: the site, small */
+  g.textBaseline = "alphabetic";
+  write(["THE TRANSLATOR’S COMPASS"], "600 30px Outfit", "rgba(214,191,234,.75)", 150, 40);
+
+  const srcAr = poet.lang === "ar";
+  const maxW = W - PAD * 2;
+  /* the poem: Arabic halves on their own lines, centred, as a verse is set */
+  const srcLines = [];
+  picked.forEach((i, k) => {
+    verseHalves(p.lines[i]).forEach(h => srcLines.push(h));
+    if (k < picked.length - 1) srcLines.push("");
+  });
+  const mineText = (mine || "").trim();
+
+  /* fit: shrink both blocks together until the card holds them */
+  let sSize = srcAr ? 58 : 50, mSize = 48, fit = null;
+  for (let tries = 0; tries < 24; tries++) {
+    const sFont = srcAr ? "700 " + sSize + "px Amiri" : "italic 500 " + sSize + "px 'Playfair Display'";
+    const mFont = isAr(mineText) ? "400 " + mSize + "px Amiri" : "500 " + mSize + "px 'Playfair Display'";
+    const sL = [].concat(...srcLines.map(x => x === "" ? [""] : lines(x, sFont, maxW)));
+    const mL = mineText ? lines(mineText, mFont, maxW) : [];
+    const h = sL.length * sSize * 1.55 + 260 + mL.length * mSize * 1.5;
+    fit = { sFont, mFont, sL, mL, sLH: sSize * 1.55, mLH: mSize * 1.5, h };
+    if (h <= H - 520) break;
+    sSize = Math.max(30, sSize - 3); mSize = Math.max(28, mSize - 3);
+  }
+  let y = Math.max(300, (H - fit.h) / 2 - 40);
+  y = write(fit.sL, fit.sFont, "#ffffff", y, fit.sLH);
+  /* who wrote it */
+  y += 10;
+  const who = srcAr ? poet.ar + "  ·  " + poet.en : poet.en;
+  write(["— " + who], (srcAr ? "400 34px Amiri" : "500 30px Outfit"), "rgba(214,191,234,.85)", y, 40);
+  y += 70;
+  g.strokeStyle = "rgba(214,191,234,.35)"; g.lineWidth = 2;
+  g.beginPath(); g.moveTo(W / 2 - 90, y); g.lineTo(W / 2 + 90, y); g.stroke();
+  y += 70;
+  write([srcAr ? "MY TRANSLATION" : "ترجمتي"], srcAr ? "600 28px Outfit" : "700 34px Amiri", "#d6bfea", y, 40);
+  y += 70;
+  if (fit.mL.length) write(fit.mL, fit.mFont, "#f3eaff", y, fit.mLH);
+  else write([srcAr ? "Your translation will appear here" : "ستظهر ترجمتك هنا"], srcAr ? "italic 500 40px 'Playfair Display'" : "400 44px Amiri", "rgba(214,191,234,.4)", y, 50);
+
+  /* bottom: who translated it, and where */
+  const h = state.profile && state.profile.username;
+  const by = h ? "Translated by @" + h : "";
+  if (by) write([by], "500 32px Outfit", "rgba(214,191,234,.9)", H - 190, 40);
+  write([location.host], "500 28px Outfit", "rgba(214,191,234,.6)", H - 130, 40);
+  return c;
+}
+
+/* The compass rose, drawn rather than loaded, so the card needs no image. */
+function drawCompassMark(g, cx, cy, r, color) {
+  g.save(); g.translate(cx, cy); g.fillStyle = color; g.strokeStyle = color; g.lineWidth = 3;
+  g.beginPath(); g.arc(0, 0, r, 0, Math.PI * 2); g.stroke();
+  for (let k = 0; k < 8; k++) {
+    const len = k % 2 ? r * .55 : r * .9, w = k % 2 ? r * .07 : r * .11;
+    g.save(); g.rotate(k * Math.PI / 4);
+    g.beginPath(); g.moveTo(0, -len); g.lineTo(w, 0); g.lineTo(0, w * .3); g.lineTo(-w, 0); g.closePath(); g.fill();
+    g.restore();
+  }
+  g.restore();
+}
+
+/* Into the member's Compass story, the same way the story composer posts
+   a photo: upload to the stories bucket, then add the story row. */
+async function poemToStory(blob, p, poet) {
+  const path = myId() + "/" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + ".png";
+  const t = await freshToken();
+  const r = await fetch(SUPABASE.url + "/storage/v1/object/stories/" + encodeURI(path), {
+    method: "POST",
+    headers: { apikey: SUPABASE.key, Authorization: "Bearer " + t, "Content-Type": "image/png" },
+    body: blob
+  });
+  if (!r.ok) throw new Error("upload " + r.status);
+  await sbPost("stories", {
+    author_id: myId(), kind: "photo", media_path: path, duration_ms: STORY_PHOTO_MS,
+    body: "My translation of " + (poet.lang === "ar" ? poet.en : poet.en) + (p.title ? ", “" + p.title + "”" : "")
+  });
+  try { await renderStoryBar(); } catch (e) {}
+}
+
 
 /* ═══════════════════════════════════════════════════════════
    GUIDE 1 · THE SEVEN PROCEDURES
