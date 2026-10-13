@@ -824,6 +824,12 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .pr-del { justify-self: end; font-size: .78rem; color: var(--lilac-dim); }
 .pr-left { text-align: left; }
 :root[data-theme="light"] .pr-sel { background: rgba(91,63,181,.05); color: #22163f; }
+.pr-face { width: 2.6rem; height: 2.6rem; border-radius: 50%; object-fit: cover; border: 1px solid rgba(214,191,234,.35); }
+.pr-poet:has(.pr-face) { grid-template-columns: 2.6rem minmax(0,1fr) 1rem; }
+.pr-poet-head.has-photo { display: grid; grid-template-columns: minmax(0, 9rem) minmax(0,1fr); gap: 1rem; align-items: end; }
+.pr-portrait { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 25%; border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+@media (min-width: 720px) { .pr-poet-head.has-photo { grid-template-columns: 12rem minmax(0,1fr); } }
 .pr-mine-acts { display: flex; justify-content: flex-end; align-items: center; gap: .8rem; }
 /* story viewer: a long press pauses; stop the phone's own image menu taking the press */
 .st-stage, .st-stage * { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
@@ -17751,7 +17757,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1013-2045";
+const BUILD = "1013-2110";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19639,10 +19645,11 @@ function poetryHall(d) {
         const b = el("button", "lesson-row pr-poet");
         b.type = "button";
         b.innerHTML =
-          '<span class="lr-num pr-count">' + p.count + "</span>" +
+          (p.photo ? '<img class="pr-face" src="' + esc(p.photo) + '" alt="" loading="lazy">'
+                   : '<span class="lr-num pr-count">' + p.count + "</span>") +
           '<span class="lr-txt"><span class="lr-en"><span class="pr-ar-name">' + esc(diwanAr(p)) + '</span>' +
           '<span class="pr-en-name">' + esc(diwanEn(p)) + "</span></span>" +
-          '<span class="lr-sub">' + esc((p.years || "") + " · " + p.count + (p.count === 1 ? " poem" : " poems") +
+          '<span class="lr-sub">' + esc((p.years || "") + " · " + (p.count ? p.count + (p.count === 1 ? " poem" : " poems") : "poems coming soon") +
             (hits ? " · " + hits + " match" + (hits === 1 ? "" : "es") : "")) + "</span></span>" +
           '<span class="lr-go" aria-hidden="true">›</span>';
         b.addEventListener("click", () => {
@@ -19664,11 +19671,19 @@ function poetryHall(d) {
 async function poetShelf(d, poet, term) {
   stage.innerHTML = "";
   window.scrollTo(0, 0);
-  const head = el("div", "pr-poet-head");
-  head.appendChild(el("p", "pr-poet-name ar", esc(diwanAr(poet))));
-  head.appendChild(el("p", "pr-poet-en", esc(diwanEn(poet))));
-  head.appendChild(el("p", "note", esc((poet.years || "") + " · " + poet.era + " · " + poet.count + (poet.count === 1 ? " poem" : " poems"))));
+  const head = el("div", "pr-poet-head" + (poet.portrait ? " has-photo" : ""));
+  if (poet.portrait) { const ph = el("img", "pr-portrait"); ph.src = poet.portrait; ph.alt = poet.en; head.appendChild(ph); }
+  const hw = el("div", "pr-poet-words");
+  hw.appendChild(el("p", "pr-poet-name ar", esc(diwanAr(poet))));
+  hw.appendChild(el("p", "pr-poet-en", esc(diwanEn(poet))));
+  hw.appendChild(el("p", "note", esc((poet.years || "") + " · " + poet.era + (poet.count ? " · " + poet.count + (poet.count === 1 ? " poem" : " poems") : ""))));
+  head.appendChild(hw);
   stage.appendChild(head);
+  if (!poet.count) {
+    stage.appendChild(el("p", "pr-lead", "The poems of this diwan are on their way."));
+    stage.appendChild(footNav());
+    return;
+  }
   const wait = el("p", "note", "Opening the diwan…");
   stage.appendChild(wait);
   let dw;
