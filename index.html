@@ -17771,7 +17771,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1014-0030";
+const BUILD = "1014-0100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19873,6 +19873,8 @@ function poemDesk(p, opts) {
     card.appendChild(s);
   }
   stage.appendChild(card);
+  /* the poem read or sung, when the owner added a video of it */
+  if (p.video) stage.appendChild(videoStrip([p.video], "شاهد القصيدة · Watch the poem"));
 
   function sync() {
     rows.forEach(([row, box], i) => { const on = picked.includes(i); box.checked = on; row.classList.toggle("on", on); });
