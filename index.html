@@ -3554,7 +3554,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
   <section id="practice" class="view" hidden>
     <header class="screen-head">
       <h1>Practice</h1>
-      <p class="note">Ten trials earn marks. The chambers never run out.</p>
+      <p class="note">The trials earn marks. The chambers never run out.</p>
     </header>
 
     <div id="block-poetry">
@@ -8773,6 +8773,326 @@ const CONTEXT_Q = [
 /* ═══════════ REVISION · Chapter 23 ═══════════
    The handbook's own list of the mistakes that actually recur. Every
    source sentence here is one it corrects. */
+/* ═══════════ LIBRARY TRIALS ═══════════
+   Three trials drawn from the Library pages, and only from them. Every
+   right answer is the book's own; every wrong option is either an error
+   the book names or a real form that belongs somewhere else. */
+const BAS14 = "Bassnett (2014)";
+const AZ_Q = [
+  { src: "سَنَذْهَبُ إِلَى هُناكَ بَعْدَ ساعَتَيْنِ",
+    opts: [
+      { t: "We will go there in two hours’ time.", tag: "the book’s rendering", ok: true },
+      { t: "We will go there after two hours.", tag: "بعد carried over word for word" },
+      { t: "We will go there since two hours.", tag: "since marks a starting point" }
+    ],
+    why: "بعد with a stretch of time is English <i>in</i>, not <i>after</i>. " + HN13 + ", entry “After/afterwards”.", ch: "A to Z" },
+  { src: "عِشْتُ هُنا مُنْذُ ثَلاثَةِ أَعْوامٍ",
+    opts: [
+      { t: "I live here since three years.", tag: "the Arabic tense and منذ carried over" },
+      { t: "I have lived here for three years.", tag: "present perfect + for a period", ok: true },
+      { t: "I lived here during three years.", tag: "during does not give a length of time" }
+    ],
+    why: "منذ is <i>since</i> for a starting point and <i>for</i> for a period, and both need the present perfect. " + HN13 + ", entry “During/for/in/since”.", ch: "A to Z" },
+  { src: "وَجَّهَ لي خَمْسَ نَصائِحَ قَبْلَ مُغادَرَتي",
+    opts: [
+      { t: "He gave me five advices before I left.", tag: "advice has no plural" },
+      { t: "He gave me five pieces of advice before I left.", tag: "the book’s rendering", ok: true },
+      { t: "He advised me five advices before I left.", tag: "verb and noun confused, and pluralized" }
+    ],
+    why: "<i>Advice</i> is uncountable, so a number needs <i>pieces of</i>. " + HN13 + ", entry “Advise/advice”.", ch: "A to Z" },
+  { src: "قالَتْ إِنَّهُ كانَ ذاهِباً لِلْبَيْتِ",
+    opts: [
+      { t: "She told that he was going home.", tag: "tell needs a personal object" },
+      { t: "She said that he was going home.", tag: "only say takes a that-clause directly", ok: true },
+      { t: "She said him that he was going home.", tag: "say takes no personal object" }
+    ],
+    why: HN13 + ", entry “Say/tell”.", ch: "A to Z" },
+  { src: "زَحَفَ الجَيْشُ إِلَى جَنُوبِ شَرْقِ البِلادِ",
+    opts: [
+      { t: "The troops moved towards the eastsouth of the country.", tag: "Arabic order carried over" },
+      { t: "The troops moved towards the southeast of the country.", tag: "north/south always comes first", ok: true },
+      { t: "The troops moved towards the south and east of the country.", tag: "two regions, not one" }
+    ],
+    why: "English always puts north or south before east or west. " + HN13 + ", entry “Northeast/southeast/…”.", ch: "A to Z" },
+  { src: "وافَقَتِ الدُّكْتُورَةُ سارَة عَلَى هذا الأَمْرِ",
+    opts: [
+      { t: "Dr Sarah agreed on this matter.", tag: "Arabic puts the title before the first name" },
+      { t: "Dr Johnson agreed on this matter.", tag: "English puts the title before the surname", ok: true },
+      { t: "Doctor Sarah Johnson she agreed on this matter.", tag: "a resumptive pronoun English does not use" }
+    ],
+    why: "The example in the book is a woman called Dr Sarah Johnson. " + HN13 + ", entry “Terms of address”.", ch: "A to Z" },
+  { src: "هذِهِ المُهِمَّةُ أَصْعَبُ مِنْ أَنْ نَقُومَ بِها",
+    opts: [
+      { t: "This is too difficult task for us to do.", tag: "too cannot go before adjective + noun" },
+      { t: "This is a very difficult task to do it.", tag: "the sense of too is lost, and a resumptive it" },
+      { t: "This is too difficult a task for us to do.", tag: "too + adjective + a + noun", ok: true }
+    ],
+    why: "The elative + من + أن is the usual Arabic for <i>too … to</i>. " + HN13 + ", entry “Too”.", ch: "A to Z" },
+  { src: "نَسِيتُ الحَقِيبَةَ في الفُنْدُقِ الَّذِي نُقِيمُ فِيهِ",
+    opts: [
+      { t: "I forgot the suitcase in the hotel that we are staying at it.", tag: "the Arabic resumptive pronoun carried over" },
+      { t: "I forgot the suitcase in the hotel (that) we are staying at.", tag: "the book’s rendering", ok: true },
+      { t: "I forgot the suitcase in the hotel which we are staying.", tag: "the preposition is lost" }
+    ],
+    why: "Arabic needs a resumptive pronoun (عائد); English does not, and adding one is a typical error. " + HN13 + ", entry “Relative pronouns”.", ch: "A to Z" },
+  { src: "لَمْ يَعُدْ شَلَلُ الأَطْفالِ مَرَضاً قاتِلاً",
+    opts: [
+      { t: "Polio is no longer a deadly disease.", tag: "لم يعد, ‘has stopped being’", ok: true },
+      { t: "Polio did not return a deadly disease.", tag: "عاد read as ‘return’" },
+      { t: "Polio is not yet a deadly disease.", tag: "not yet is لم … بعد" }
+    ],
+    why: HN13 + ", entry “Anymore/no more/no longer/any longer”.", ch: "A to Z" },
+  { src: "“The number of cars on the road has increased dramatically.”", srcEn: true,
+    opts: [
+      { t: "ازْدادَتْ كَمِّيَّةُ السَّيّاراتِ كَثِيراً", tag: "كمية is for what cannot be counted" },
+      { t: "ازْدادَ عَدَدُ السَّيّاراتِ كَثِيراً", tag: "عدد for countables", ok: true },
+      { t: "ازْدادَ رَقْمُ السَّيّاراتِ كَثِيراً", tag: "رقم is a figure or digit" }
+    ],
+    why: HN13 + ", entries “Amount/number” and “Number/figure/digit/numeral”.", ch: "A to Z" },
+  { src: "“Can you see that tall building over there?”", srcEn: true,
+    opts: [
+      { t: "هَلْ تُشاهِدُ ذلِكَ المَبْنَى الطَّوِيلَ؟", tag: "طويل is tall for people, and long" },
+      { t: "هَلْ تُشاهِدُ ذلِكَ المَبْنَى العالِيَ؟", tag: "the book’s rendering", ok: true },
+      { t: "هَلْ تُشاهِدُ ذلِكَ المَبْنَى الكَبِيرَ؟", tag: "size, not height" }
+    ],
+    why: HN13 + ", entry “High/tall”.", ch: "A to Z" },
+  { src: "“The court recess runs every year from the first of July until the end of September.”", srcEn: true,
+    opts: [
+      { t: "تَبْدَأُ العُطْلَةُ القَضائِيَّةُ كُلَّ عامٍ مِنْ أَوَّلِ يُولْيُو", tag: "the book’s rendering", ok: true },
+      { t: "تَبْدَأُ الاسْتِراحَةُ القَضائِيَّةُ كُلَّ عامٍ مِنْ أَوَّلِ يُولْيُو", tag: "recess read as a short break" },
+      { t: "تَبْدَأُ الإِجازَةُ المَرَضِيَّةُ كُلَّ عامٍ مِنْ أَوَّلِ يُولْيُو", tag: "that is sick leave" }
+    ],
+    why: "Courts and parliaments have a <i>recess</i>; Arabic uses عطلة. " + HN13 + ", entry “Holiday/holidays/vacation/leave”.", ch: "A to Z" },
+  { src: "“Helium is non-flammable.”", srcEn: true,
+    opts: [
+      { t: "غازُ الهِيلْيُوم قابِلٌ لِلِاشْتِعالِ", tag: "the opposite meaning" },
+      { t: "غازُ الهِيلْيُوم غَيْرُ قابِلٍ لِلِاشْتِعالِ", tag: "non-flammable", ok: true },
+      { t: "غازُ الهِيلْيُوم الْتِهابِيٌّ", tag: "التهاب is medical inflammation" }
+    ],
+    why: "Technical English uses only <i>flammable</i>, because <i>inflammable</i> is misread as ‘not flammable’. " + HN13 + ", entry “Flammable, inflammable”.", ch: "A to Z" },
+  { src: "“He drinks too much.”", srcEn: true,
+    opts: [
+      { t: "يَشْرَبُ جِدّاً", tag: "جداً cannot modify the verb like this" },
+      { t: "يُفْرِطُ في الشَّرابِ", tag: "أفرط في, ‘to be excessive in’", ok: true },
+      { t: "يَشْرَبُ أَيْضاً", tag: "too read as ‘also’" }
+    ],
+    why: HN13 + ", entry “Too”.", ch: "A to Z" }
+];
+const LEGAL_Q = [
+  { src: "مَجْلِس الأُمَّة", ask: "Kuwait: what is the official English name?",
+    opts: [
+      { t: "National Assembly", tag: "Kuwait’s official translation", ok: true },
+      { t: "People’s Assembly", tag: "Egypt and Syria (مجلس الشعب)" },
+      { t: "Federal National Council", tag: "the UAE" }
+    ],
+    why: "Each Arab legislature has its own official English name. " + HN15 + ", pp. 110–111.", ch: "Legal Translation" },
+  { src: "مَحْكَمة التَّمْيِيز", ask: "Kuwait: what is the official English name?",
+    opts: [
+      { t: "Supreme Court", tag: "Oman’s المحكمة العليا" },
+      { t: "Court of Cassation", tag: "Kuwait’s official translation", ok: true },
+      { t: "Court of Appeal", tag: "محكمة الاستئناف" }
+    ],
+    why: "A French calque from the Civil Law tradition, used in Kuwait, Jordan and the UAE. " + HN15 + ", Table 3.2.", ch: "Legal Translation" },
+  { src: "null and void", srcEn: true, ask: "How does Arabic render this doublet?",
+    opts: [
+      { t: "باطِل", tag: "one word for the pair", ok: true },
+      { t: "لاغٍ وفارِغ", tag: "a word-for-word pair Arabic does not use" },
+      { t: "عَدِيمُ القِيمة", tag: "‘worthless’, not the legal term" }
+    ],
+    why: "Arabic usually renders English legal doublets with a single word. " + HN15 + ", pp. 124–125.", ch: "Legal Translation" },
+  { src: "in compliance with", srcEn: true, ask: "What is the customary Arabic?",
+    opts: [
+      { t: "اسْتِكانةً لِـ", tag: "استكان is ‘to surrender’, never legal" },
+      { t: "عَمَلاً بِـ", tag: "the customary rendering", ok: true },
+      { t: "طاعةً لِـ", tag: "a dictionary ‘comply’, not the legal phrase" }
+    ],
+    why: "None of the nine dictionary verbs for <i>comply</i> fits this phrase. " + HN15 + ", p. 123.", ch: "Legal Translation" },
+  { src: "“Each State Party shall adopt such measures as may be necessary.”", srcEn: true, ask: "How did the UN Arabic text render <i>shall</i>?",
+    opts: [
+      { t: "سَوْفَ تَتَّخِذُ كُلُّ دَوْلةٍ طَرَفٍ التَّدابِيرَ اللّازِمة", tag: "shall read as a future" },
+      { t: "تَتَّخِذُ كُلُّ دَوْلةٍ طَرَفٍ التَّدابِيرَ اللّازِمة", tag: "a plain imperfect", ok: true },
+      { t: "رُبَّما تَتَّخِذُ كُلُّ دَوْلةٍ طَرَفٍ التَّدابِيرَ اللّازِمة", tag: "shall read as a possibility" }
+    ],
+    why: "Legal <i>shall</i> is never a future; Arabic often renders it with the imperfect. " + HN15 + ", pp. 138–140.", ch: "Legal Translation" },
+  { src: "“The Distributor does agree that he is responsible for the cost of reassembly.”", srcEn: true, ask: "What happens to the declarative <i>do</i>?",
+    opts: [
+      { t: "يَفْعَلُ المُوَزِّعُ المُوافَقةَ عَلَى أَنْ يَكُونَ مَسْؤُولاً", tag: "do translated as a verb" },
+      { t: "يُوافِقُ المُوَزِّعُ بِالتَّأْكِيدِ عَلَى أَنْ يَكُونَ مَسْؤُولاً", tag: "read as emphasis; it is not" },
+      { t: "يُوافِقُ المُوَزِّعُ عَلَى أَنْ يَكُونَ مَسْؤُولاً", tag: "do is never rendered", ok: true }
+    ],
+    why: "The performative <i>do</i> works like <i>hereby</i> and is not translated. " + HN15 + ", p. 141.", ch: "Legal Translation" },
+  { src: "consideration", srcEn: true, ask: "In a contract, what does this mean?",
+    opts: [
+      { t: "اعْتِبار", tag: "the everyday meaning" },
+      { t: "مَبْلَغ", tag: "the legal meaning: an amount of money", ok: true },
+      { t: "مُراعاة", tag: "the everyday meaning" }
+    ],
+    why: "A legal homonym: same form, unrelated technical meaning. " + HN15 + ", p. 128.", ch: "Legal Translation" },
+  { src: "motion", srcEn: true, ask: "In court, what does this mean?",
+    opts: [
+      { t: "حَرَكة", tag: "the everyday meaning" },
+      { t: "اقْتِراح بِقانون", tag: "a bill, a different thing" },
+      { t: "طَلَب", tag: "the legal meaning: an official request", ok: true }
+    ],
+    why: HN15 + ", p. 129.", ch: "Legal Translation" },
+  { src: "“[The Council] decides to remain seized of the matter.”", srcEn: true, ask: "What does <i>seized</i> mean here?",
+    opts: [
+      { t: "يُقَرِّرُ أَنْ يُبْقِيَ المَسْأَلةَ قَيْدَ نَظَرِهِ الفِعْلِيّ", tag: "it keeps the matter under its consideration", ok: true },
+      { t: "يُقَرِّرُ أَنْ يَحْجِزَ المَسْأَلةَ", tag: "seize as ‘impound’" },
+      { t: "يُقَرِّرُ أَنْ يَقْبِضَ عَلَى المَسْأَلةِ", tag: "seize as ‘arrest’" }
+    ],
+    why: "One of three legal senses of <i>seize</i>. " + HN15 + ", pp. 125–126.", ch: "Legal Translation" },
+  { src: "وزارة الخارجية", ask: "For the United Kingdom, which recognized translation must be used?",
+    opts: [
+      { t: "State Department", tag: "the USA" },
+      { t: "Ministry of Foreign Affairs", tag: "most other countries" },
+      { t: "Foreign Office", tag: "the UK’s own name", ok: true }
+    ],
+    why: "Recognized translations depend on the country, not on the words. " + HN15 + ", p. 132.", ch: "Legal Translation" },
+  { src: "فَصْل", ask: "In a Moroccan law, what does it correspond to?",
+    opts: [
+      { t: "Article", tag: "in Morocco, فصل is the article", ok: true },
+      { t: "Section/Chapter", tag: "what فصل means in Egypt, Syria and Tunisia" },
+      { t: "Clause", tag: "that is بند" }
+    ],
+    why: HN15 + ", Table 3.3.", ch: "Legal Translation" },
+  { src: "attorney (British usage)", srcEn: true, ask: "What is the right Arabic?",
+    opts: [
+      { t: "مُحامٍ", tag: "true for the US attorney (at law), not the British" },
+      { t: "وَكِيل", tag: "someone acting for another, as in power of attorney", ok: true },
+      { t: "قاضٍ", tag: "a judge" }
+    ],
+    why: "In the UK <i>attorney</i> is short for <i>attorney-in-fact</i>; <i>power of attorney</i> is سند التوكيل. " + HN15 + ", p. 109.", ch: "Legal Translation" },
+  { src: "lawful (in a secular law)", srcEn: true, ask: "Which Arabic word fits?",
+    opts: [
+      { t: "حَلال", tag: "religious; never for secular law" },
+      { t: "قانُونِيّ", tag: "secular", ok: true },
+      { t: "دُسْتُورِيّ", tag: "‘constitutional’, a narrower notion" }
+    ],
+    why: "Only قانوني and شرعي are used in the secular sense. " + HN15 + ", p. 121.", ch: "Legal Translation" },
+  { src: "mens rea", srcEn: true, ask: "What is the Arabic?",
+    opts: [
+      { t: "نِيّة جُرْمِيّة", tag: "criminal intent", ok: true },
+      { t: "أَمامَ القاضي", tag: "that is sub iudice" },
+      { t: "شَفَوِيّاً", tag: "that is viva voce" }
+    ],
+    why: "Latin terms in English law come from the Roman occupation, the Church and Norman law. " + HN15 + ", pp. 123–124.", ch: "Legal Translation" },
+  { src: "عِدّة", ask: "Which strategy does the book give for this term?",
+    opts: [
+      { t: "Paraphrase: ‘legally prescribed waiting period before marrying’", tag: "an exegetic translation", ok: true },
+      { t: "‘Dowry’", tag: "that is مهر" },
+      { t: "‘Irrevocable divorce’", tag: "that is طلاق بائن" }
+    ],
+    why: "Islamic terms are rendered by an equivalent, a paraphrase or a borrowing, depending on readership. " + HN15 + ", p. 126.", ch: "Legal Translation" }
+];
+const BAS_Q = [
+  { src: "Not word for word, but sense for sense.", ask: "Whose principle is this?",
+    opts: [
+      { t: "Cicero and Horace", tag: "non verbum de verbo, sed sensum exprimere de sensu", ok: true },
+      { t: "Longfellow", tag: "the opposite: report what the author says" },
+      { t: "F. W. Newman", tag: "keep every peculiarity of the original" }
+    ],
+    why: "St Jerome followed Cicero in this. " + BAS14 + ", pp. 54–56.", ch: "Bassnett" },
+  { src: "Metaphrase, paraphrase and imitation.", ask: "Whose three types are these?",
+    opts: [
+      { t: "Dolet", tag: "five principles of translation, 1540" },
+      { t: "Dryden", tag: "Preface to Ovid’s Epistles, 1680", ok: true },
+      { t: "Tytler", tag: "three principles, 1791" }
+    ],
+    why: "Dryden chose paraphrase, the middle way. " + BAS14 + ", p. 69.", ch: "Bassnett" },
+  { src: "Intralingual, interlingual, intersemiotic.", ask: "Whose three types of translation?",
+    opts: [
+      { t: "Goethe", tag: "three phases a literature passes through" },
+      { t: "Lefevere", tag: "seven strategies for poetry" },
+      { t: "Jakobson", tag: "rewording, translation proper, transmutation", ok: true }
+    ],
+    why: BAS14 + ", p. 25.", ch: "Bassnett" },
+  { src: "“Give one another a hearty handshake all round” for “greet one another with a holy kiss”.", ask: "Which kind of equivalence does Bassnett use this to criticize?",
+    opts: [
+      { t: "Dynamic equivalence", tag: "Nida’s equivalent effect", ok: true },
+      { t: "Formal equivalence", tag: "Nida’s gloss translation keeps the kiss" },
+      { t: "Linguistic equivalence", tag: "Popovič’s word-for-word type" }
+    ],
+    why: "J. B. Phillips’s rendering of Romans 16:16. " + BAS14 + ", p. 36.", ch: "Bassnett" },
+  { src: "What exists in common between all existing translations of a single work.", ask: "Whose term is this, and what is it?",
+    opts: [
+      { t: "Popovič’s invariant core", tag: "the stable semantic elements", ok: true },
+      { t: "Benjamin’s pure language", tag: "a language that echoes the original" },
+      { t: "Lotman’s secondary modelling system", tag: "art and literature built on language" }
+    ],
+    why: BAS14 + ", pp. 36–37.", ch: "Bassnett" },
+  { src: "A Finnish or Japanese ‘bathroom’ is not an English one.", ask: "Which category did Catford use this for?",
+    opts: [
+      { t: "Linguistic untranslatability", tag: "no TL structure, as in Danish Jeg fandt brevet" },
+      { t: "Cultural untranslatability", tag: "no matching situational feature", ok: true },
+      { t: "Loss and gain", tag: "a broader idea" }
+    ],
+    why: "Bassnett argues that ‘home’ and ‘democracy’ are just as culture-bound. " + BAS14 + ", pp. 40–42.", ch: "Bassnett" },
+  { src: "The translator should be visible; foreignization over domestication.", ask: "Whose argument?",
+    opts: [
+      { t: "Lawrence Venuti", tag: "The Translator’s Invisibility, 1995", ok: true },
+      { t: "Eugene Nida", tag: "formal and dynamic equivalence" },
+      { t: "Hans Vermeer", tag: "skopos, which leans to domestication" }
+    ],
+    why: "Venuti builds on Schleiermacher’s 1813 distinction. " + BAS14 + ", pp. 46–47.", ch: "Bassnett" },
+  { src: "Translate so the text functions in the situation in which it is used, for the people who use it.", ask: "Which theory?",
+    opts: [
+      { t: "Polysystem theory", tag: "cultures translate according to need" },
+      { t: "The cultural turn", tag: "context, history and convention" },
+      { t: "Skopos theory", tag: "Reiss & Vermeer, 1984", ok: true }
+    ],
+    why: "Skopos is Greek for ‘purpose’. " + BAS14 + ", pp. 83–84.", ch: "Bassnett" },
+  { src: "Established literatures translate less; young or unsettled ones translate more.", ask: "Whose idea?",
+    opts: [
+      { t: "Itamar Even-Zohar", tag: "polysystem theory, 1978", ok: true },
+      { t: "André Lefevere", tag: "translation as rewriting" },
+      { t: "George Steiner", tag: "four periods of translation history" }
+    ],
+    why: BAS14 + ", p. 85.", ch: "Bassnett" },
+  { src: "Better a live sparrow than a stuffed eagle.", ask: "Who said it?",
+    opts: [
+      { t: "Matthew Arnold", tag: "trust those who know Greek" },
+      { t: "Edward FitzGerald", tag: "translator of the Rubáiyát", ok: true },
+      { t: "Henry Wadsworth Longfellow", tag: "fidelity over rhyme" }
+    ],
+    why: BAS14 + ", p. 78.", ch: "Bassnett" },
+  { src: "The first systematic study of translation in English, 1791.", ask: "Whose was it?",
+    opts: [
+      { t: "John Dryden", tag: "a preface, 1680" },
+      { t: "Hilaire Belloc", tag: "a lecture, 1931" },
+      { t: "Alexander Fraser Tytler", tag: "Essay on the Principles of Translation", ok: true }
+    ],
+    why: BAS14 + ", p. 72.", ch: "Bassnett" },
+  { src: "Executed in 1546 after a ‘mistranslation’ of Plato; wrote five principles of translation.", ask: "Who was he?",
+    opts: [
+      { t: "Étienne Dolet", tag: "La manière de bien traduire, 1540", ok: true },
+      { t: "William Tyndale", tag: "burned in 1536 for his New Testament" },
+      { t: "John Wycliffe", tag: "the first complete English Bible, 1380s" }
+    ],
+    why: BAS14 + ", pp. 63–64.", ch: "Bassnett" },
+  { src: "Phonemic, literal, metrical, poetry into prose, rhymed, blank verse, interpretation.", ask: "Whose list of strategies?",
+    opts: [
+      { t: "Popovič", tag: "four types of equivalence" },
+      { t: "Lefevere", tag: "seven strategies, from Catullus 64", ok: true },
+      { t: "Belloc", tag: "six rules for prose" }
+    ],
+    why: BAS14 + ", p. 93.", ch: "Bassnett" },
+  { src: "“Block out” the work; render idiom by idiom; beware faux amis; never embellish.", ask: "Whose rules?",
+    opts: [
+      { t: "Hilaire Belloc", tag: "six rules for prose, 1931", ok: true },
+      { t: "George Chapman", tag: "translator of Homer" },
+      { t: "Alexander Tytler", tag: "three principles" }
+    ],
+    why: BAS14 + ", pp. 125–126.", ch: "Bassnett" },
+  { src: "anuvad", srcEn: true, ask: "What does the Sanskrit word for translation mean?",
+    opts: [
+      { t: "‘carrying across’", tag: "the Latin translatio" },
+      { t: "‘saying after’", tag: "a temporal image (Harish Trivedi)", ok: true },
+      { t: "‘rewriting’", tag: "Lefevere’s term" }
+    ],
+    why: BAS14 + ", p. 146.", ch: "Bassnett" }
+];
+
 const REVISE = [
   { src: "قام المدير بتوقيع العقد.",
     opts: [
@@ -11999,6 +12319,21 @@ const ITEMS = [
     direction: "both",
     blurb: "Padding, borrowed passives, legal shall, punctuation: what a reviser changes, and why.",
     run: () => runChoice(REVISE, "Which version would a reviser keep?") },
+
+  { id: "atozq", ar: "من الألف إلى الياء", en: "A to Z", kind: "trial", section: "trials",
+    subject: "Husni & Newman (2013) · The Library",
+    direction: "both",
+    blurb: "After two hours, since three years, five advices: the errors the A to Z names, and the book’s own renderings.",
+    run: () => runChoice(AZ_Q, "Which rendering does the A to Z give?") },
+  { id: "legalq", ar: "الترجمة القانونية", en: "Legal Translation", kind: "trial", section: "trials",
+    subject: "Husni & Newman (2015), ch. 3 · The Library",
+    direction: "both",
+    blurb: "Official names of Arab courts and parliaments, doublets, shall, and the legal meaning of everyday words.",
+    run: () => runChoice(LEGAL_Q, "Which is right?") },
+  { id: "bassq", ar: "دراسات الترجمة", en: "Translation Studies", kind: "trial", section: "trials",
+    subject: "Bassnett (2014) · The Library",
+    blurb: "Who said it, whose model, which theory: from Cicero to skopos.",
+    run: () => runChoice(BAS_Q, "Which is right?") },
 
   { id: "phraseology", ar: "اللُّغة والتَّعبير", en: "Phraseology", kind: "exhibit", section: "chambers",
     subject: "المتلازمات والتعابير · Sections 3.1–3.2",
@@ -17975,7 +18310,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1015-1310";
+const BUILD = "1015-1500";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -23152,6 +23487,15 @@ function chapterOf(s) {
 function chapterLine(own) {
   const ch = own || chapterOf(active && active.subject);
   if (!ch) return document.createDocumentFragment();
+  const LIB_PAGE = { "A to Z": "lib-atoz", "Legal Translation": "lib-legal", "Bassnett": "lib-bassnett" };
+  if (LIB_PAGE[own]) {
+    const t = ITEMS.find(x => x.id === LIB_PAGE[own]);
+    const p = el("p", "vmore", "Want it in more depth? Open <b>" + t.en + "</b> in the Library ");
+    const go = el("button", "ghost", "→"); go.type = "button";
+    go.addEventListener("click", () => openItem(t));
+    p.appendChild(go);
+    return p;
+  }
   return el("p", "vmore", "Want it in more depth? <b>" + ch + "</b> of <i>The Translator’s Compass</i>.");
 }
 
