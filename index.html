@@ -2900,6 +2900,46 @@ html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: no
 .genre.last .g-n::after { content: " · last used"; }
 
 /* ---------- the glossary ---------- */
+
+/* the Library */
+.lib-ar { font-family: var(--f-ar); font-size: 1.02rem; color: var(--lilac); }
+.lib-az { display: flex; flex-wrap: wrap; gap: .3rem; margin: .2rem 0 .4rem; }
+.lib-letter { all: unset; cursor: pointer; min-width: 1.9rem; height: 1.9rem; display: grid; place-items: center;
+  border-radius: 8px; font-size: .82rem; font-weight: 600; color: var(--lilac); border: var(--hair); }
+.lib-letter:hover { background: rgba(214,191,234,.12); color: var(--white); }
+.lib-entries { display: grid; gap: .5rem; }
+.lib-entry { border: var(--hair); border-radius: var(--r-lg); background: rgba(214,191,234,.04); scroll-margin-top: 90px; }
+.lib-entry > summary { cursor: pointer; list-style: none; display: flex; flex-wrap: wrap; justify-content: space-between;
+  align-items: baseline; gap: .3rem .8rem; padding: .8rem 1rem; }
+.lib-entry > summary::-webkit-details-marker { display: none; }
+.lib-entry > summary::after { content: "+"; color: var(--lilac-dim); font-size: 1.1rem; margin-inline-start: auto; }
+.lib-entry[open] > summary::after { content: "–"; }
+.lib-h { font-family: var(--f-serif); font-size: 1.08rem; font-weight: 600; color: var(--white); }
+.lib-body { padding: 0 1rem 1rem; display: grid; gap: .7rem; }
+.lib-p { font-size: .95rem; line-height: 1.7; margin: 0; color: var(--ink); }
+.lib-list { margin: 0; padding-inline-start: 1.1rem; display: grid; gap: .35rem; }
+.lib-list li { font-size: .9rem; line-height: 1.6; color: var(--ink); }
+.lib-ex { display: grid; gap: .45rem; }
+.lib-ex-row { display: grid; gap: .15rem; padding: .55rem .75rem; border-radius: 10px; background: rgba(214,191,234,.07);
+  border-inline-start: 3px solid var(--violet, #a726d0); }
+.lib-ex-en { margin: 0; font-size: .9rem; line-height: 1.55; color: var(--white); }
+.lib-ex-ar { margin: 0; font-family: var(--f-ar-text, var(--f-ar)); font-size: 1.08rem; line-height: 1.9; color: var(--lilac); text-align: right; }
+.lib-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.lib-table table { border-collapse: collapse; width: 100%; min-width: 22rem; font-size: .84rem; }
+.lib-table th, .lib-table td { border: var(--hair); padding: .45rem .55rem; text-align: start; vertical-align: top; line-height: 1.5; }
+.lib-table th { color: var(--lilac); font-weight: 600; background: rgba(214,191,234,.08); }
+.lib-cell { display: block; unicode-bidi: plaintext; text-align: start; }
+.lib-cell + .lib-cell { margin-top: .3rem; }
+.lib-cap { margin: 0 0 .35rem; font-size: .78rem; letter-spacing: .04em; color: var(--lilac-dim); }
+.lib-cite { margin: 0; font-size: .74rem; color: var(--lilac-dim); }
+.lib-src { font-size: .78rem; line-height: 1.6; color: var(--lilac-dim); margin: 1.2rem 0 0; }
+.lib-chips { margin: .3rem 0 .2rem; }
+.lib-toc { display: flex; flex-wrap: wrap; gap: .35rem; margin: .4rem 0 .2rem; }
+.lib-toc-a { all: unset; cursor: pointer; font-size: .78rem; padding: .3rem .65rem; border-radius: 999px; border: var(--hair); color: var(--lilac); }
+.lib-toc-a:hover { color: var(--white); background: rgba(214,191,234,.1); }
+.lib-card { scroll-margin-top: 90px; display: grid; gap: .8rem; }
+.lib-next { margin-top: .6rem; }
+.gl-from { margin-top: .4rem; }
 .gl-search { margin: .2rem 0 .1rem; }
 .gl-search input {
   font-family: var(--f-sans); font-size: 1rem; color: var(--white);
@@ -8928,6 +8968,114 @@ const GLOSSARY = [
   { en: "Neutral term", ar: "المصطلح المحايد", def: "A word that is not marked as belonging to one region, used when translating for readers across the Arab world.", ch: "5.2" },
   { en: "Transcription", ar: "النقل الصوتي", def: "Writing the sounds of a word in another script, rather than its letters.", ch: "6.2" }
 ];
+/* Terms from the three course books, in our own words: the glossary of
+   Issues and Strategies (pp. 180–186), its legal chapter, and Bassnett.
+   Each names its book instead of a handbook section. */
+const GLOSSARY_BOOKS = [
+  { en: "Action verb", ar: "فعل حركي", def: "A verb that names an activity, such as walk, read or look. Opposite: stative verb.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Adjunct", ar: "مُلحَق ظرفي", def: "An optional adverbial that adds information, such as always or carefully.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Adverbial phrase", ar: "شبه جملة ظرفية", def: "A group of words doing the work of an adverb, such as with a knife or tomorrow morning.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Affective meaning", ar: "المعنى الانفعالي", def: "The feelings or attitude a speaker shows (affection, disapproval), or the effect an utterance has on the listener.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Agent", ar: "الفاعل الحقيقي", def: "In a passive sentence, who or what made the action happen (John in ‘The dinner was prepared by John’). Classical Arabic does not state it.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Alliteration", ar: "الجناس الاستهلالي", def: "Repeating the same sound at the start of several words in a row.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Allusive meaning", ar: "المعنى الإلماحي", def: "Meaning a word calls up by echoing another text or tradition, such as المُخَضْرَمون.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Anaphora", ar: "التكرار الاستهلالي / الإحالة", def: "Repeating a word or phrase at the start of successive clauses or lines for effect (rhetorical anaphora); also pronouns referring back to earlier words (grammatical anaphora).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Antithesis", ar: "الطباق والمقابلة", def: "A contrast of ideas or words set in a balanced, parallel construction.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Antonym", ar: "الضدّ", def: "A word with the opposite meaning, such as night and day.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Apposition", ar: "البدل", def: "A noun phrase placed after another to describe it, with no linking word: ‘This jacket, a hand-me-down, …’", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Archaism", ar: "اللفظ المهجور", def: "An old or obsolete word or form; in legal English, aforesaid, heretofore, witnesseth.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Associative meaning", ar: "المعنى الترابطي", def: "Expectations attached to a referent, as when people assume a nurse is a woman.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Assonance", ar: "السجع الصوتي", def: "Repeating the same vowel sounds in words close together: ‘Thy kingdom come, thy will be done.’", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Asyndeton", ar: "حذف أدوات العطف", def: "Leaving out conjunctions between coordinated words, phrases or clauses.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Attitudinal meaning", ar: "المعنى الموقفي", def: "The speaker’s attitude to the referent, shown through word choice (for example derogatory terms).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Causative verb", ar: "فعل سببي", def: "A transitive verb that makes something happen, such as raise or persuade; Arabic often uses جَعَلَ.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Code-switching", ar: "التناوب اللغوي", def: "Moving between two or more languages within the same stretch of speech or text.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Coherence", ar: "الاتساق الدلالي", def: "The thematic consistency that makes a text a connected whole rather than a string of unrelated sentences.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Cohesion", ar: "الترابط النصي", def: "The links between parts of a text made by devices such as conjunctions, pronouns and repetition.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Collocative meaning", ar: "المعنى التلازمي", def: "Meaning a word takes from the words it regularly appears with.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Communicative translation", ar: "الترجمة التواصلية", def: "Translation close to free translation, rendering source expressions with the culturally appropriate equivalents for the situation.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Concord", ar: "المطابقة", def: "Agreement between the subject and the form of the verb, in number (and in Arabic in gender).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Copula", ar: "الفعل الرابط", def: "A linking verb such as be, seem, become or remain, followed by an adjective, not an adverb (‘This is nice’, not ‘nicely’).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Cultural transposition", ar: "النقل الثقافي", def: "Replacing source culture-specific items with target ones: أَثْلَجَ قُلُوبَنا, ‘our hearts have been warmed’; Romeo and Juliet, قيس وليلى.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Ellipsis", ar: "الحذف", def: "Leaving out a word the reader can supply, such as a repeated subject: ‘He bought the ice-cream and (he) gave it to us.’", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Euphemism", ar: "التلطيف", def: "Replacing a harsh or offensive expression with a milder one, as when ‘Piss off!’ becomes إمشي (‘Go!’).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Exegetic translation", ar: "الترجمة التفسيرية", def: "Translation that adds information not in the source to explain concepts to the target reader.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Explicitation", ar: "التصريح", def: "Making explicit in the translation what is only implied in the source; the opposite is implicitation.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Generalization", ar: "التعميم", def: "Translating a term with a more general one, such as chair and seat both as كُرْسِيّ. The opposite is particularization.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Gisting", ar: "الترجمة الإجمالية", def: "A rough outline translation that shows what a text is about, often to decide whether a full translation is worth commissioning.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Hyperbole", ar: "المبالغة", def: "Exaggeration for emphasis or rhetorical effect.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Superordinate (hyperonym)", ar: "اللفظ العامّ", def: "A word whose meaning is broader and includes another’s: flower is the superordinate of rose.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Interlinear translation", ar: "الترجمة بين السطور", def: "An almost morpheme-for-morpheme rendering printed with the source; with grammatical notes it is called a gloss.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Intertextuality", ar: "التناص", def: "The way texts link to other texts, through allusion, imitation or a shared genre.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Intralingual translation", ar: "الترجمة داخل اللغة", def: "Translation within one language, often paraphrase (Jakobson’s ‘rewording’).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Interlingual translation", ar: "الترجمة بين اللغات", def: "Translation between two languages or varieties (Jakobson’s ‘translation proper’).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Intersemiotic translation", ar: "الترجمة بين أنظمة العلامات", def: "Translation between sign systems, such as words into film or music, or a red light ‘meaning’ stop.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Inversion", ar: "التقديم والتأخير", def: "Moving a word or phrase to a new position in the sentence, usually for target-language style.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Jargon", ar: "لغة الاختصاص", def: "The specialized vocabulary of a profession, differing from the standard language only in its terms.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Lexicalized metaphor", ar: "الاستعارة المعجمية", def: "A metaphor so settled that dictionaries list it, such as the grim reaper.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Litotes", ar: "التلطيف بالنفي", def: "Understatement that denies the opposite for emphasis: ‘She’s not the cleverest person I ever met.’", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Metonymy", ar: "المجاز المرسل / الكناية", def: "Using one word for another it suggests: ‘a man of the cloth’ for a priest; أَهْل البَيْت for the Prophet’s family.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Modal verb", ar: "الفعل الناقص للجهة", def: "A verb expressing possibility, necessity or obligation: will, must, shall, should, can, may, might.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Mood", ar: "صيغة الفعل", def: "A category of the verb: indicative (statements), imperative (commands), subjunctive (doubt, supposition).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Onomatopoeia", ar: "المحاكاة الصوتية", def: "Words that imitate natural sounds.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Oxymoron", ar: "الجمع بين المتناقضين", def: "A seeming paradox made by joining contradictory words, such as ‘the honest thief’.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Pattern repetition", ar: "تكرار الأوزان", def: "Repeating Arabic word patterns for rhetorical effect: التَّطْبِيل والتَّزْمِير.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Pleonasm", ar: "الحشو", def: "Using superfluous or redundant words.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Reflected meaning", ar: "المعنى المنعكس", def: "When one sense of a polysemous word colours how its other senses are understood.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Reinforcement", ar: "التعزيز", def: "Adding a target-language item that strengthens a source item: ‘among the group’, مِنْ ضِمْنِ الفِرْقة. The opposite is condensation.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Theme and rheme", ar: "المبتدأ والخبر (الموضوع والمحمول)", def: "The theme is what a clause is about, usually placed first; the rheme is what is said about it (also topic and comment).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Root repetition", ar: "الجناس الاشتقاقي", def: "Arabic device of placing words from the same root close together: تخليص الإبريز في تلخيص باريز.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Semantic repetition", ar: "الترادف التوكيدي", def: "Using near-synonyms together, common in Arabic (المَحْل والمَجاعة والمَسْغَبة), but in English mostly kept to fixed pairs like ‘last will and testament’.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Slang", ar: "اللغة العامية الدارجة", def: "A variety differing from the standard in grammar and vocabulary, used by one section of a speech community.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Social meaning", ar: "المعنى الاجتماعي", def: "What words show about relationships and roles, such as the Arabic plural ‘you’ used as a mark of respect.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Sociolect", ar: "اللهجة الاجتماعية", def: "The variety shared by a social group, such as ‘the Queen’s English’.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Stative verb", ar: "فعل الحالة", def: "A verb that names a state, such as know or remain, and is not normally used in progressive forms.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Tautology", ar: "تحصيل الحاصل", def: "Repeating the same idea in different words.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Text function", ar: "وظيفة النص", def: "What a text is for (to sell, instruct, inform); it should be specified when a translation is commissioned.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Thematic meaning", ar: "المعنى الموضوعاتي", def: "Meaning that comes from the order in which information is presented.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Translation loss", ar: "الفقد في الترجمة", def: "Anything of the source that does not survive in the translation, at grammatical, semantic, cultural or intertextual level.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Translation by omission", ar: "الترجمة بالحذف", def: "Leaving source elements out of the translation; also called concentration or economy.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Translation by addition", ar: "الترجمة بالإضافة", def: "Including elements not in the source; also called dissolution or amplification.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Anuvad", ar: "أنوفاد", def: "The Sanskrit word for translation, still used in modern Indian languages: ‘saying after’, a temporal image rather than the spatial ‘carrying across’ (Trivedi).", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Invariant core", ar: "النواة الثابتة", def: "What all translations of a work have in common: its stable semantic elements, as opposed to the variants of expression (Popovič).", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Semiotic transformation", ar: "التحويل السيميائي", def: "Replacing the signs of a message with signs of another code while keeping its invariant information (Ludskanov).", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Linguistic untranslatability", ar: "استحالة الترجمة اللغوية", def: "When the target language has no lexical or syntactic substitute for a source item; usually solved by restructuring (Catford).", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Cultural untranslatability", ar: "استحالة الترجمة الثقافية", def: "When the target culture lacks a feature of the source situation, such as a Finnish or Japanese ‘bathroom’ (Catford). Bassnett argues it is present in every translation.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Loss and gain", ar: "الفقد والكسب", def: "Some meaning is always lost in translation, but a translator can also enrich or clarify a text.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Metaphrase", ar: "الترجمة الحرفية (درايدن)", def: "Dryden’s term for turning an author word by word and line by line.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Paraphrase (Dryden)", ar: "الترجمة بتصرف", def: "Dryden’s ‘translation with latitude’, sense for sense: his preferred middle way.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Imitation (Dryden)", ar: "المحاكاة", def: "Dryden’s term for a translation that departs from the original as the translator sees fit.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Sense-for-sense translation", ar: "الترجمة بالمعنى", def: "Rendering meaning rather than words: Cicero and Horace’s non verbum de verbo, followed by St Jerome.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Vertical and horizontal translation", ar: "الترجمة الرأسية والأفقية", def: "Translation from a prestige language such as Latin into the vernacular (vertical) versus between languages of equal standing (horizontal) (Folena).", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Visibility", ar: "ظهور المترجم", def: "Venuti’s term: fluent translation hides the translator, while foreignizing translation makes their work visible.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Rewriting", ar: "إعادة الكتابة", def: "Lefevere’s view of translation, alongside criticism, anthologies and adaptation, as one of the ways most readers meet literature.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Cultural turn", ar: "المنعطف الثقافي", def: "Bassnett and Lefevere’s 1990 shift of attention to the context, history and conventions surrounding translation.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Polysystem theory", ar: "نظرية الأنظمة المتعددة", def: "Even-Zohar’s idea that cultures translate according to need: young or unsettled literatures translate more, established ones less.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Ostranenie (making strange)", ar: "التغريب الأسلوبي", def: "The Russian Formalist device of deliberately ‘thickening’ language to sharpen perception.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Translation unit", ar: "وحدة الترجمة", def: "The stretch of text a translator works with at one time; the whole text is the prime unit.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Performability", ar: "قابلية الأداء", def: "In theatre translation, keeping the rhythms and ‘gestural text’ an actor needs, not just the words.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Minimax", ar: "مبدأ الحد الأدنى والأقصى", def: "Levý’s principle that translators choose the solution giving the most effect for the least effort.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Pure language", ar: "اللغة الخالصة", def: "Benjamin’s idea that translation brings out a hidden language that echoes the original.", src: "Bassnett (2014)", lib: "bs" },
+  { en: "Common Law", ar: "القانون العام (الأنجلوسكسوني)", def: "A legal system built from judges’ decisions and precedent (England, the USA, Canada, Australia; Oman’s system has roots in it).", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Civil Law", ar: "القانون المدني (اللاتيني)", def: "A legal system based on codified statutes, rooted in Roman law (continental Europe; Algeria, Morocco, Syria and Tunisia alongside Islamic law).", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Court of Cassation", ar: "محكمة التمييز / النقض / التعقيب", def: "The highest court in several Arab states (a French calque): Kuwait, Jordan and the UAE say التمييز, Egypt and Syria النقض, Tunisia التعقيب.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Court of First Instance", ar: "المحكمة الابتدائية", def: "The court that first hears a case; Jordan says محكمة البداية, Lebanon محكمة الدرجة الأولى.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Power of attorney", ar: "سَنَد التوكيل", def: "A document authorizing someone (an attorney-in-fact, وكيل) to act for another.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Notary public", ar: "كاتب العدل", def: "An official who certifies documents; in the Maghreb a عَدْل does similar work.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Affidavit", ar: "إقرار مشفوع باليمين", def: "A written statement sworn to be true; a declarative legal text.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Prescriptive legal text", ar: "النص القانوني المُلزِم", def: "A text that imposes obligations with sanctions: constitutions, treaties, laws, contracts.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Metalegal text", ar: "النص الواصف للقانون", def: "A text about the law (textbooks, articles) that is not itself a legal instrument.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Doublet (legal)", ar: "الثنائيات القانونية", def: "A fixed legal pair of near-synonyms (null and void; terms and conditions), usually one word in Arabic (باطل; شروط).", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Shall (legal)", ar: "صيغة الإلزام", def: "In legal English, an obligation (like must), never a future; Arabic often uses a plain imperfect.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Performative do", ar: "فعل الأداء", def: "The non-emphatic ‘do’ of legal English (‘We the People … do ordain’); not translated into Arabic.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Recognized translation", ar: "الترجمة المعتمدة", def: "An official translation that later texts must follow, such as Oman’s ‘Ministry of Legal Affairs’ for وزارة الشؤون القانونية.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Whereas clause", ar: "«لمّا كان»", def: "A preamble clause giving the grounds for a legal act; Arabic opens each with لمّا كان / ولمّا كان.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "In compliance with", ar: "عملاً بـ", def: "The usual Arabic rendering of this legal phrase, not any of the dictionary verbs for ‘comply’.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Waqf / habs", ar: "وقف / حبس", def: "A religious endowment: وقف in the Mashriq, حبس in North Africa; often borrowed as waqf.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Idda", ar: "العِدّة", def: "The legally prescribed waiting period before a woman may remarry; paraphrased or borrowed in translation.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+  { en: "Mahr", ar: "المَهْر", def: "The dowry paid to the bride in an Islamic marriage contract.", src: "Husni & Newman (2015), ch. 3", lib: "lg" },
+];
+GLOSSARY.push(...GLOSSARY_BOOKS);
 
 /* ═══════════ COMMON ERRORS · Chapter 23 ═══════════
    The handbook's own reference list of what goes wrong in a draft, in
@@ -11773,6 +11921,18 @@ const ITEMS = [
     subject: "مَسرَد المُصطلَحات · every key term, both languages",
     blurb: "Every term the handbook defines, searchable in either language. Star the ones you want.",
     run: runGlossary },
+  { id: "lib-atoz", ar: "من الألف إلى الياء", en: "A to Z of Arabic–English Translation", kind: "guide", section: "method", group: "library",
+    subject: "Husni & Newman · every entry",
+    blurb: "All 148 entries, from Abbreviations to Wish, with the book’s Arabic and English pairs. Searchable.",
+    run: runLibAtoz },
+  { id: "lib-legal", ar: "الترجمة القانونية", en: "Legal Translation", kind: "guide", section: "method", group: "library",
+    subject: "Husni & Newman · Issues and Strategies, ch. 3",
+    blurb: "Legal systems, Arab courts and parliaments, doublets, shall and may, the passive, sample texts.",
+    run: runLibLegal },
+  { id: "lib-bassnett", ar: "دراسات الترجمة", en: "Translation Studies (Bassnett)", kind: "guide", section: "method", group: "library",
+    subject: "Bassnett · chapter by chapter",
+    blurb: "Equivalence and untranslatability, two thousand years of theory, poetry, prose and drama.",
+    run: runLibBassnett },
   { id: "errors", ar: "المُراجَعة والأخطاء الشّائعة", en: "Revision and Common Errors", kind: "guide", section: "method", group: "core",
     subject: "المراجعة · Section 9.1",
     blurb: "The three readings a draft needs, and what actually goes wrong in each direction.",
@@ -17806,7 +17966,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1014-1100";
+const BUILD = "1015-1200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19395,6 +19555,7 @@ const LEARN_GROUPS = [
     order: ["meaning", "phrase", "procedures", "toolkit", "variety", "texttypes", "fields", "errors", "commentary"] },
   { id: "theory", en: "Theory and history", note: "Dip in any time", order: ["theories", "lineage"] },
   { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
+  { id: "library", en: "The Library", note: "The three course books", order: ["lib-atoz", "lib-legal", "lib-bassnett"] },
   { id: "ref",    en: "Reference", note: "Look things up", order: ["glossary", "minor"] }
 ];
 function renderLearn() {
@@ -22330,13 +22491,15 @@ function toggleTerm(en) {
 
 function runGlossary() {
   let q = "";
-  let mine = false;
+  let mine = false, from = "";
   setCount("A reference · not a test");
 
   function matches(g) {
     if (mine && !termSaved(g.en)) return false;
+    if (from === "hb" && g.src) return false;
+    if (from && from !== "hb" && g.lib !== from) return false;
     if (!q) return true;
-    const hay = (g.en + " " + g.ar + " " + g.def + " section " + g.ch).toLowerCase();
+    const hay = (g.en + " " + g.ar + " " + g.def + " " + (g.ch ? "section " + g.ch : g.src)).toLowerCase();
     return hay.indexOf(q.toLowerCase()) >= 0;
   }
 
@@ -22362,6 +22525,13 @@ function runGlossary() {
       chips.appendChild(b);
     });
     stage.appendChild(chips);
+    const srcs = el("div", "chips gl-from");
+    [["Every source", ""], ["The handbook", "hb"], ["Husni & Newman", "hn"], ["Legal", "lg"], ["Bassnett", "bs"]].forEach(([l, k]) => {
+      const b = el("button", "chip" + (from === k ? " on" : ""), l);
+      b.addEventListener("click", () => { from = k; render(); });
+      srcs.appendChild(b);
+    });
+    stage.appendChild(srcs);
 
     /* The array is grouped by where each term was added; the page is
        alphabetical because that is how a glossary is used. */
@@ -22380,7 +22550,7 @@ function runGlossary() {
           '<span class="gl-ar" dir="rtl" lang="ar">' + g.ar + '</span>' +
         '</div>' +
         '<p class="gl-def">' + g.def + '</p>' +
-        '<span class="gl-ch">Section ' + g.ch + '</span>';
+        '<span class="gl-ch">' + (g.ch ? 'Section ' + g.ch : esc(g.src)) + '</span>';
       const star = el("button", "gl-star" + (termSaved(g.en) ? " on" : ""), "★");
       star.setAttribute("aria-label", (termSaved(g.en) ? "Stop keeping " : "Keep ") + g.en);
       star.setAttribute("aria-pressed", termSaved(g.en) ? "true" : "false");
@@ -22398,6 +22568,198 @@ function runGlossary() {
     if (keepFocus) { const i = stage.querySelector(".gl-search input"); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }
   }
   render();
+}
+
+/* ═══════════ THE LIBRARY ═══════════
+   The three course books, chapter by chapter, in our own words with the
+   books' examples and page references: the A to Z by entry, the legal
+   chapter of Issues and Strategies by section, and Bassnett by chapter.
+   The text lives in library/*.json, fetched when a page is opened. */
+const LIB_CACHE = {};
+async function loadLib(name) {
+  if (LIB_CACHE[name]) return LIB_CACHE[name];
+  const r = await fetch("library/" + name + ".json?v=" + BUILD, { cache: "no-cache" });
+  if (!r.ok) throw new Error("library " + r.status);
+  return (LIB_CACHE[name] = await r.json());
+}
+const LIB_SRC = {
+  atoz: "Husni, R. & Newman, D. L. (2013). <i>A to Z of Arabic–English–Arabic Translation</i>. Saqi.",
+  legal: "Husni, R. & Newman, D. L. (2015). <i>Arabic–English–Arabic Translation: Issues and Strategies</i>, ch. 3 “Legal translation”, pp. 94–164. Routledge.",
+  bassnett: "Bassnett, S. (2014). <i>Translation Studies</i> (4th ed.). Routledge."
+};
+const libAr = s => '<span class="lib-ar" dir="rtl" lang="ar">' + s + '</span>';
+function libLoading() { stage.innerHTML = ""; stage.appendChild(el("p", "note", "Opening the book…")); }
+function libFailed() {
+  stage.innerHTML = "";
+  stage.appendChild(el("p", "note", "This page could not be loaded. Check your connection and try again."));
+  stage.appendChild(backFoot());
+}
+function libSource(key) {
+  const s = el("p", "lib-src");
+  s.innerHTML = "Source: " + LIB_SRC[key] + " Summarized in our own words; examples are the book’s.";
+  return s;
+}
+function libExamples(ex) {
+  const box = el("div", "lib-ex");
+  ex.forEach(([en, ar]) => {
+    const row = el("div", "lib-ex-row");
+    row.appendChild(el("p", "lib-ex-en", esc(en)));
+    const a = el("p", "lib-ex-ar", esc(ar)); a.dir = "rtl"; a.lang = "ar";
+    row.appendChild(a);
+    box.appendChild(row);
+  });
+  return box;
+}
+function libTable(t) {
+  const wrap = el("div", "lib-table");
+  if (t.cap) wrap.appendChild(el("p", "lib-cap", esc(t.cap)));
+  const tb = document.createElement("table");
+  tb.style.minWidth = Math.max(20, t.cols.length * 7.5) + "rem";
+  tb.innerHTML = "<thead><tr>" + t.cols.map(c => "<th>" + esc(c) + "</th>").join("") + "</tr></thead><tbody>" +
+    t.rows.map(r => "<tr>" + r.map(c => "<td>" + String(c).split("; ").map(x => '<span class="lib-cell" dir="auto">' + esc(x) + "</span>").join("") + "</td>").join("") + "</tr>").join("") + "</tbody>";
+  wrap.appendChild(tb);
+  return wrap;
+}
+function libList(items) {
+  const ul = document.createElement("ul"); ul.className = "lib-list";
+  items.forEach(x => { const li = document.createElement("li"); li.dir = "auto"; li.textContent = x; ul.appendChild(li); });
+  return ul;
+}
+
+/* the A to Z, one entry per row, opened in place */
+async function runLibAtoz() {
+  setCount("A to Z · " + "entry by entry");
+  libLoading();
+  let data;
+  try { data = await loadLib("atoz"); } catch (e) { libFailed(); return; }
+  let q = "", open = null;
+  const fold = s => (s || "").toLowerCase().replace(/[ً-ْـ]/g, "");
+  const hay = e => fold(e.h + " " + e.ar + " " + e.sum + " " + (e.pts || []).join(" ") +
+    " " + (e.ex || []).map(x => x.join(" ")).join(" "));
+  function render(keepFocus) {
+    stage.innerHTML = "";
+    setDots(0, 0, 0);
+    const v = el("div", "verdict");
+    v.appendChild(el("span", "vh", "How to use it"));
+    v.appendChild(el("p", "vb", "Every entry of the A to Z, from <i>Abbreviations</i> to <i>Wish</i>: the words and structures that " +
+      "trip translators between Arabic and English. Search in either language, open an entry, compare the pairs."));
+    stage.appendChild(v);
+    const search = el("div", "gl-search");
+    const input = document.createElement("input");
+    input.type = "search"; input.value = q; input.placeholder = "Search the A to Z (e.g. since, لم يعد, passive)";
+    input.setAttribute("aria-label", "Search the A to Z");
+    input.addEventListener("input", () => { q = input.value; open = null; render(true); });
+    search.appendChild(input);
+    stage.appendChild(search);
+    const hits = q ? data.filter(e => hay(e).indexOf(fold(q)) >= 0) : data;
+    stage.appendChild(el("p", "note", hits.length ? hits.length + " of " + data.length + " entries" : "No entry matches that."));
+    if (!q) {
+      const az = el("div", "lib-az");
+      [...new Set(data.map(e => e.h.replace(/^(The |To )/, "")[0].toUpperCase()))].forEach(L => {
+        const b = el("button", "lib-letter", L); b.type = "button";
+        b.addEventListener("click", () => { const t = stage.querySelector('[data-letter="' + L + '"]'); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); });
+        az.appendChild(b);
+      });
+      stage.appendChild(az);
+    }
+    const list = el("div", "lib-entries");
+    let lastL = "";
+    hits.forEach(e => {
+      const L = e.h.replace(/^(The |To )/, "")[0].toUpperCase();
+      const d = document.createElement("details");
+      d.className = "lib-entry";
+      if (L !== lastL) { d.dataset.letter = L; lastL = L; }
+      d.open = open === e.id || (q && hits.length <= 3);
+      const s = document.createElement("summary");
+      s.innerHTML = '<span class="lib-h">' + esc(e.h) + '</span>' + libAr(esc(e.ar));
+      d.appendChild(s);
+      const body = el("div", "lib-body");
+      body.appendChild(el("p", "lib-p", esc(e.sum)));
+      if (e.pts && e.pts.length) body.appendChild(libList(e.pts));
+      if (e.table) body.appendChild(libTable(e.table));
+      if (e.ex && e.ex.length) body.appendChild(libExamples(e.ex));
+      body.appendChild(el("p", "lib-cite", "Husni &amp; Newman (2013), entry “" + esc(e.h) + "”"));
+      d.appendChild(body);
+      d.addEventListener("toggle", () => { if (d.open) open = e.id; });
+      list.appendChild(d);
+    });
+    stage.appendChild(list);
+    stage.appendChild(libSource("atoz"));
+    stage.appendChild(backFoot());
+    if (keepFocus) { const i = stage.querySelector(".gl-search input"); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }
+  }
+  render();
+}
+
+/* a chaptered guide: legal translation, or Bassnett */
+async function runLibGuide(key, intro) {
+  libLoading();
+  let data;
+  try { data = await loadLib(key); } catch (e) { libFailed(); return; }
+  const chs = [...new Set(data.sections.map(s => s.ch).filter(Boolean))];
+  let ch = chs.length ? chs[0] : null;
+  setCount(data.title + " · " + data.sections.length + " sections");
+  function render() {
+    stage.innerHTML = "";
+    setDots(0, 0, 0);
+    const v = el("div", "verdict");
+    v.appendChild(el("span", "vh", data.ar ? data.ar : (data.author || "")));
+    v.appendChild(el("p", "vb", intro));
+    stage.appendChild(v);
+    if (chs.length) {
+      const chips = el("div", "chips lib-chips");
+      chs.forEach(c => {
+        const b = el("button", "chip" + (c === ch ? " on" : ""), esc(c)); b.type = "button";
+        b.addEventListener("click", () => { ch = c; render(); window.scrollTo(0, stage.getBoundingClientRect().top + scrollY - 80); });
+        chips.appendChild(b);
+      });
+      stage.appendChild(chips);
+    }
+    const secs = data.sections.filter(s => !ch || s.ch === ch);
+    if (secs.length > 2) {
+      const toc = el("nav", "lib-toc");
+      toc.setAttribute("aria-label", "On this page");
+      secs.forEach(s => {
+        const a = el("button", "lib-toc-a", esc(s.h)); a.type = "button";
+        a.addEventListener("click", () => { const t = document.getElementById("lib-" + s.id); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); });
+        toc.appendChild(a);
+      });
+      stage.appendChild(toc);
+    }
+    secs.forEach(s => {
+      const card = el("section", "card lib-card");
+      card.id = "lib-" + s.id;
+      card.appendChild(el("div", "card-top",
+        '<span class="num-badge">pp. ' + esc(s.pg) + '</span><h3>' + esc(s.h) + '</h3>' +
+        (s.ar ? '<span class="ct-ar" dir="rtl" lang="ar">' + esc(s.ar) + '</span>' : '')));
+      (s.p || []).forEach(t => { const p = el("p", "lib-p", esc(t)); p.dir = "auto"; card.appendChild(p); });
+      if (s.list) card.appendChild(libList(s.list));
+      if (s.table) card.appendChild(libTable(s.table));
+      if (s.ex) card.appendChild(libExamples(s.ex));
+      if (s.note) card.appendChild(el("div", "block", '<span class="b-lab">Keep in mind</span><p>' + esc(s.note) + '</p>'));
+      stage.appendChild(card);
+    });
+    if (chs.length > 1) {
+      const k = chs.indexOf(ch);
+      if (k < chs.length - 1) {
+        const nx = el("button", "ghost lib-next", "Next: " + esc(chs[k + 1]) + " →"); nx.type = "button";
+        nx.addEventListener("click", () => { ch = chs[k + 1]; render(); window.scrollTo(0, 0); });
+        stage.appendChild(nx);
+      }
+    }
+    stage.appendChild(libSource(key));
+    stage.appendChild(backFoot());
+  }
+  render();
+}
+function runLibLegal() {
+  runLibGuide("legal", "The whole legal chapter of <i>Issues and Strategies</i>: what legal language is, translating between " +
+    "Common Law, Civil Law and Shariah, Arab courts and parliaments by their official names, layout, terminology, " +
+    "doublets, the passive, <b>shall</b> and <b>may</b>, and where to look things up.");
+}
+function runLibBassnett() {
+  runLibGuide("bassnett", "Susan Bassnett’s <i>Translation Studies</i>, chapter by chapter: the central issues of meaning and " +
+    "equivalence, two thousand years of translation theory, the problems of poetry, prose and drama, and where the field is going.");
 }
 
 /* ═══════════ REVISION AND COMMON ERRORS ═══════════
