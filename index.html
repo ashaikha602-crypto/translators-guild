@@ -2907,7 +2907,14 @@ html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: no
 .lib-letter { all: unset; cursor: pointer; min-width: 1.9rem; height: 1.9rem; display: grid; place-items: center;
   border-radius: 8px; font-size: .82rem; font-weight: 600; color: var(--lilac); border: var(--hair); }
 .lib-letter:hover { background: rgba(214,191,234,.12); color: var(--white); }
-.lib-entries { display: grid; gap: .5rem; }
+.lib-entries { display: block; width: 100%; min-width: 0; }
+.lib-entries > .lib-entry { display: block; margin: 0 0 .5rem; }
+.lib-entry, .lib-body, .lib-ex, .lib-ex-row, .lib-card, .lib-table { min-width: 0; max-width: 100%; box-sizing: border-box; }
+.lib-entry { width: 100%; overflow: hidden; }
+.lib-body { grid-template-columns: minmax(0, 1fr); }
+.lib-ex { grid-template-columns: minmax(0, 1fr); }
+.lib-p, .lib-list li, .lib-ex-en, .lib-ex-ar, .lib-h, .lib-ar { overflow-wrap: anywhere; word-break: normal; white-space: normal; }
+.lib-ex-ar { unicode-bidi: plaintext; }
 .lib-entry { border: var(--hair); border-radius: var(--r-lg); background: rgba(214,191,234,.04); scroll-margin-top: 90px; }
 .lib-entry > summary { cursor: pointer; list-style: none; display: flex; flex-wrap: wrap; justify-content: space-between;
   align-items: baseline; gap: .3rem .8rem; padding: .8rem 1rem; }
@@ -2915,15 +2922,17 @@ html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: no
 .lib-entry > summary::after { content: "+"; color: var(--lilac-dim); font-size: 1.1rem; margin-inline-start: auto; }
 .lib-entry[open] > summary::after { content: "–"; }
 .lib-h { font-family: var(--f-serif); font-size: 1.08rem; font-weight: 600; color: var(--white); }
-.lib-body { padding: 0 1rem 1rem; display: grid; gap: .7rem; }
+.lib-body { padding: 0 1rem 1rem; display: block; }
+.lib-body > * + * { margin-top: .7rem; }
 .lib-p { font-size: .95rem; line-height: 1.7; margin: 0; color: var(--ink); }
 .lib-list { margin: 0; padding-inline-start: 1.1rem; display: grid; gap: .35rem; }
 .lib-list li { font-size: .9rem; line-height: 1.6; color: var(--ink); }
-.lib-ex { display: grid; gap: .45rem; }
-.lib-ex-row { display: grid; gap: .15rem; padding: .55rem .75rem; border-radius: 10px; background: rgba(214,191,234,.07);
+.lib-ex { display: block; }
+.lib-ex > .lib-ex-row + .lib-ex-row { margin-top: .45rem; }
+.lib-ex-row { display: block; padding: .55rem .75rem; border-radius: 10px; background: rgba(214,191,234,.07);
   border-inline-start: 3px solid var(--violet, #a726d0); }
 .lib-ex-en { margin: 0; font-size: .9rem; line-height: 1.55; color: var(--white); }
-.lib-ex-ar { margin: 0; font-family: var(--f-ar-text, var(--f-ar)); font-size: 1.08rem; line-height: 1.9; color: var(--lilac); text-align: right; }
+.lib-ex-ar { margin: .2rem 0 0; display: block; width: 100%; font-family: var(--f-ar-text, var(--f-ar)); font-size: 1.08rem; line-height: 1.9; color: var(--lilac); text-align: right; }
 .lib-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .lib-table table { border-collapse: collapse; width: 100%; min-width: 22rem; font-size: .84rem; }
 .lib-table th, .lib-table td { border: var(--hair); padding: .45rem .55rem; text-align: start; vertical-align: top; line-height: 1.5; }
@@ -17966,7 +17975,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1015-1200";
+const BUILD = "1015-1310";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19551,11 +19560,11 @@ function fillLedger(sectionId, section) {
    the material to dip into. Compact rows, so a phone shows the whole map
    without scrolling through eleven large cards. */
 const LEARN_GROUPS = [
+  { id: "library", en: "The Library", note: "The three course books", order: ["lib-atoz", "lib-legal", "lib-bassnett"] },
   { id: "core",   en: "The core course", note: "Follow in order",
     order: ["meaning", "phrase", "procedures", "toolkit", "variety", "texttypes", "fields", "errors", "commentary"] },
   { id: "theory", en: "Theory and history", note: "Dip in any time", order: ["theories", "lineage"] },
   { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
-  { id: "library", en: "The Library", note: "The three course books", order: ["lib-atoz", "lib-legal", "lib-bassnett"] },
   { id: "ref",    en: "Reference", note: "Look things up", order: ["glossary", "minor"] }
 ];
 function renderLearn() {
@@ -19573,7 +19582,7 @@ function renderLearn() {
       const b = el("button", "lesson-row");
       b.style.animationDelay = (n * 30) + "ms";
       b.innerHTML =
-        '<span class="lr-num">' + (g.id === "core" ? n : "•") + '</span>' +
+        '<span class="lr-num">' + (g.id === "core" ? g.order.indexOf(t.id) + 1 : "•") + '</span>' +
         '<span class="lr-txt"><span class="lr-en">' + t.en + '</span>' +
         '<span class="lr-sub">' + (t.blurb || t.subject || "") + '</span></span>' +
         '<span class="lr-go" aria-hidden="true">›</span>';
