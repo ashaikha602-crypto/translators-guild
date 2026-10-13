@@ -837,6 +837,10 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .pr-ref a { color: var(--lilac); }
 /* a line of free verse is one line, not two halves: centre it */
 .pr-verses.ar .pr-half:only-child { grid-column: 1 / -1; text-align: center; }
+.pr-video { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: #000;
+  box-shadow: 0 10px 30px rgba(0,0,0,.45); margin: 0 0 .4rem; }
+.pr-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.pr-video-note { font-size: .72rem; color: var(--lilac-dim); text-align: center; margin: 0 0 1rem; }
 .pr-photo-cap { font-size: .7rem; color: var(--lilac-dim); margin: -.5rem 0 .6rem; }
 .pr-about { border-left: 2px solid rgba(167,38,208,.5); padding: .2rem 0 .2rem .9rem; margin: 0 0 1rem; display: grid; gap: .45rem; }
 .pr-about-ar { font-family: "Amiri", serif; font-size: 1.08rem; line-height: 1.8; margin: 0; color: var(--white); text-align: right; }
@@ -17771,7 +17775,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1014-0100";
+const BUILD = "1014-0130";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19824,6 +19828,23 @@ function poemDesk(p, opts) {
   window.scrollTo(0, 0);
   setCount("Translate a poem · no score");
 
+  /* the poem read or sung, when the owner added a video of it: at the top,
+     playing as soon as the poem opens. Phones only let a video start by
+     itself without sound, so it starts muted; the player's own controls
+     pause it, move through it, replay it and turn the sound on. */
+  if (p.video) {
+    const vb = el("div", "pr-video");
+    const fr = document.createElement("iframe");
+    fr.src = "https://www.youtube-nocookie.com/embed/" + p.video.id +
+      "?autoplay=1&mute=1&playsinline=1&rel=0&controls=1&modestbranding=1";
+    fr.title = p.video.t || p.title;
+    fr.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    fr.allowFullscreen = true;
+    vb.appendChild(fr);
+    stage.appendChild(vb);
+    stage.appendChild(el("p", "pr-video-note", "اضغط 🔊 لسماع الصوت · Tap 🔊 for sound"));
+  }
+
   const card = el("div", "pr-desk");
   const head = el("div", "pr-desk-head");
   head.appendChild(el("p", "pr-poet-name ar", esc(poet.ar)));
@@ -19873,8 +19894,6 @@ function poemDesk(p, opts) {
     card.appendChild(s);
   }
   stage.appendChild(card);
-  /* the poem read or sung, when the owner added a video of it */
-  if (p.video) stage.appendChild(videoStrip([p.video], "شاهد القصيدة · Watch the poem"));
 
   function sync() {
     rows.forEach(([row, box], i) => { const on = picked.includes(i); box.checked = on; row.classList.toggle("on", on); });
