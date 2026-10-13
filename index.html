@@ -824,6 +824,43 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .pr-del { justify-self: end; font-size: .78rem; color: var(--lilac-dim); }
 .pr-left { text-align: left; }
 :root[data-theme="light"] .pr-sel { background: rgba(91,63,181,.05); color: #22163f; }
+.pr-mine-acts { display: flex; justify-content: flex-end; align-items: center; gap: .8rem; }
+/* story viewer: a long press pauses; stop the phone's own image menu taking the press */
+.st-stage, .st-stage * { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+.st-stage { touch-action: none; }
+.st-stage img, .st-stage video { pointer-events: none; -webkit-user-drag: none; }
+/* the story editor */
+.ed-view { position: fixed; inset: 0; z-index: 9000; background: #07020f; display: grid;
+  grid-template-rows: auto minmax(0,1fr) auto auto auto; color: #fff; padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom); }
+.ed-top { display: flex; align-items: center; justify-content: space-between; padding: .6rem .9rem; gap: .5rem; }
+.ed-title { font-weight: 600; font-size: .95rem; }
+.ed-btn { all: unset; cursor: pointer; padding: .45rem .9rem; border-radius: 999px; font-weight: 600; font-size: .9rem; color: #d6bfea; }
+.ed-done { background: linear-gradient(135deg,#a726d0,#650fd0); color: #fff; }
+.ed-btn[disabled] { opacity: .5; }
+.ed-wrap { display: grid; place-items: center; min-height: 0; padding: .3rem; }
+.ed-stage { position: relative; height: 100%; max-height: 100%; aspect-ratio: 9 / 16; max-width: 100%; overflow: hidden;
+  border-radius: 14px; touch-action: none; -webkit-user-select: none; user-select: none; }
+.ed-stage > * { position: absolute; touch-action: none; cursor: grab; -webkit-touch-callout: none; }
+.ed-card { width: 100%; height: auto; border-radius: 10px; -webkit-user-drag: none; }
+.ed-text { font: 700 1.6rem/1.25 "Readex Pro", system-ui, sans-serif; white-space: pre; text-align: center;
+  text-shadow: 0 2px 8px rgba(0,0,0,.35); padding: .2rem .4rem; }
+.ed-emoji { font-size: 3rem; line-height: 1; }
+.ed-sel { outline: 2px dashed rgba(255,255,255,.75); outline-offset: 4px; }
+.ed-hint { margin: .3rem 0 0; text-align: center; font-size: .72rem; color: #9a86b4; }
+.ed-tools { display: flex; justify-content: center; gap: .45rem; padding: .6rem .6rem .8rem; flex-wrap: wrap; }
+.ed-tool { all: unset; cursor: pointer; width: 2.7rem; height: 2.7rem; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(214,191,234,.12); font-weight: 700; font-size: 1.05rem; }
+.ed-tool[disabled] { opacity: .35; }
+.ed-tray { display: grid; grid-template-columns: repeat(auto-fill, minmax(2.6rem, 1fr)); gap: .2rem; padding: .4rem .8rem;
+  max-height: 9.5rem; overflow-y: auto; }
+.ed-em { all: unset; cursor: pointer; font-size: 1.7rem; text-align: center; padding: .2rem; }
+.ed-input { position: fixed; inset: 0; z-index: 9100; background: rgba(7,2,15,.82); display: grid; align-content: center;
+  justify-items: center; gap: .8rem; padding: 1.2rem; }
+.ed-ta { width: min(92vw, 30rem); background: transparent; border: none; outline: none; font: 700 1.6rem/1.3 "Readex Pro", system-ui, sans-serif;
+  text-align: center; resize: none; }
+.ed-inks { display: flex; gap: .55rem; }
+.ed-ink { all: unset; cursor: pointer; width: 1.7rem; height: 1.7rem; border-radius: 50%; border: 2px solid rgba(255,255,255,.35); }
+.ed-ink.on { border-color: #fff; transform: scale(1.15); }
 .pr-say { font-size: .85rem; color: var(--lilac); min-height: 1.2em; margin: .5rem 0 0; text-align: center; }
 :root[data-theme="light"] .pr-poem-row, :root[data-theme="light"] .pr-search,
 :root[data-theme="light"] .pr-ta { background: rgba(91,63,181,.04); color: #22163f; }
@@ -17714,7 +17751,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1013-2000";
+const BUILD = "1013-2045";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -17939,6 +17976,7 @@ const STORY_BG = [
   ["sand",   "linear-gradient(160deg,#f4d58d,#c97b2d)"]
 ];
 const STORY_PHOTO_MS = 5000, STORY_TEXT_MS = 6000, STORY_VIDEO_MAX_S = 15.5;
+const POEM_STORY_MS = 15000;   /* a poem and its translation take longer to read */
 const STORY_VIDEO_BYTES = 30 * 1024 * 1024;
 const STORY_REACTS = ["❤️", "😂", "😮", "👏", "🔥"];
 const STORY_COLS = "id,author_id,kind,media_path,body,bg,duration_ms,created_at,expires_at";
@@ -18173,6 +18211,7 @@ async function openStoryViewer(groups, gi, opts) {
 
     stage2.innerHTML = "";
     let ms = s.kind === "text" ? STORY_TEXT_MS : STORY_PHOTO_MS;
+    if (s.duration_ms >= 2000 && s.duration_ms <= 30000 && s.kind !== "video") ms = s.duration_ms;
     if (storyPostId(s)) {
       const wrapP = el("div", "st-text sp-wrap");
       wrapP.style.background = storyBg("night");
@@ -19768,12 +19807,20 @@ function poemDesk(p, opts) {
   ta.placeholder = to === "en" ? "Write your version here, line by line." : "اكتب ترجمتك هنا، سطرًا سطرًا.";
   ta.value = saved.text || "";
   desk.appendChild(ta);
-  const saidSaved = el("p", "pr-saved", editing ? "Editing a translation you kept." : (saved.text ? "Your draft is saved on this device." : ""));
+  const saidSaved = el("p", "pr-saved", editing ? "Editing your saved translation · changes are kept as you type." : (saved.text ? "Your draft is saved on this device." : ""));
   desk.appendChild(saidSaved);
   stage.appendChild(desk);
 
   let t0 = 0;
   function keep() {
+    if (editing) {
+      const list = myPoemTranslations(), k = list.findIndex(x => x.id === editing);
+      if (k >= 0 && ta.value.trim()) {
+        Object.assign(list[k], { text: ta.value.trim(), picked: picked.slice(), lines: picked.map(i => p.lines[i]), range: rangeLabel(), at: Date.now() });
+        storeMyPoemTranslations(list);
+        saidSaved.textContent = "Editing your saved translation · changes are kept as you type.";
+      }
+    }
     if (!editing) poemSave(p.id, { text: ta.value, picked: picked, at: Date.now() });
     if (!editing) saidSaved.textContent = ta.value.trim() ? "Your draft is saved on this device." : "";
     clearTimeout(t0);
@@ -19827,7 +19874,7 @@ function poemDesk(p, opts) {
     return contiguous ? (picked.length === 1 ? "verse " + (picked[0] + 1) : "verses " + (picked[0] + 1) + "–" + (picked[picked.length - 1] + 1))
                       : picked.length + " verses";
   };
-  const fileName = () => "translation-" + p.id + ".png";
+  const fileName = () => "translation-" + p.id + ".jpg";
 
   keepB.addEventListener("click", () => {
     if (!ready()) return;
@@ -19841,7 +19888,7 @@ function poemDesk(p, opts) {
     if (!storeMyPoemTranslations(list)) { say.textContent = "This browser would not save it. Copy the text instead."; return; }
     editing = entry.id;
     keepB.textContent = "Update my saved translation";
-    saidSaved.textContent = "Kept in My translations.";
+    saidSaved.textContent = "Kept in My translations. Keep working: changes are saved as you type.";
     flash("Saved to My translations");
   });
 
@@ -19864,8 +19911,16 @@ function poemDesk(p, opts) {
     const note = el("textarea", "pr-ta pr-note"); note.rows = 2; note.placeholder = "A note for readers (optional): a choice you made, a word you struggled with.";
     postBox.appendChild(note);
     const withImg = document.createElement("input"); withImg.type = "checkbox"; withImg.checked = true; withImg.id = "pr-withimg";
-    const wl = el("label", "pr-check"); wl.appendChild(withImg); wl.appendChild(document.createTextNode(" Attach the story card image"));
+    const wl = el("label", "pr-check"); wl.appendChild(withImg); wl.appendChild(document.createTextNode(" Attach the card image"));
     postBox.appendChild(wl);
+    let postImg = null;
+    const editImg = el("button", "ghost small", "Edit the card"); editImg.type = "button";
+    editImg.addEventListener("click", async () => {
+      await paint();
+      const ed = await openStoryEditor(postImg || lastBlob, { title: "The card for your post", doneLabel: "Use this" });
+      if (ed) { postImg = ed; withImg.checked = true; editImg.textContent = "Card edited ✓ · edit again"; }
+    });
+    postBox.appendChild(editImg);
     const go = el("button", "primary", "Publish"); go.type = "button";
     postBox.appendChild(go);
     go.addEventListener("click", async () => {
@@ -19885,8 +19940,9 @@ function poemDesk(p, opts) {
           visibility: vis.value
         });
         if (row && withImg.checked) {
-          await paint();
-          await uploadAttachment(row.id, new File([lastBlob], fileName(), { type: "image/png" }));
+          if (!postImg) await paint();
+          const blob = postImg || lastBlob;
+          await uploadAttachment(row.id, new File([blob], fileName().replace(".jpg", blob.type === "image/png" ? ".png" : ".jpg"), { type: blob.type || "image/png" }));
         }
         postBox.hidden = true;
         flash("Posted on the Compass feed");
@@ -19901,10 +19957,12 @@ function poemDesk(p, opts) {
   storyB.addEventListener("click", async () => {
     if (!ready()) return;
     if (!myId()) { say.textContent = "Sign in to share to your Compass story. You can still share the image."; return; }
+    await paint();
+    const edited = await openStoryEditor(lastBlob, { title: "Your story", doneLabel: "Share" });
+    if (!edited) return;
     storyB.disabled = true; storyB.textContent = "Sharing…";
     try {
-      await paint();
-      await poemToStory(lastBlob, p, poet);
+      await poemToStory(edited, p, poet);
       flash("Shared to your story");
       storyB.textContent = "Shared to your story ✓";
     } catch (e) {
@@ -19915,13 +19973,15 @@ function poemDesk(p, opts) {
   outB.addEventListener("click", async () => {
     if (!ready()) return;
     await paint();
-    const file = new File([lastBlob], fileName(), { type: "image/png" });
+    const edited = await openStoryEditor(lastBlob, { title: "Your image", doneLabel: "Share" });
+    if (!edited) return;
+    const file = new File([edited], fileName(), { type: "image/jpeg" });
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       try { await navigator.share({ files: [file], title: "My translation", text: "Check out my translation" }); return; }
       catch (e) { if (e && e.name === "AbortError") return; }
     }
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(lastBlob); a.download = fileName();
+    a.href = URL.createObjectURL(edited); a.download = fileName();
     document.body.appendChild(a); a.click(); a.remove();
     say.textContent = "The image is saved. Add it to your story from your photos.";
   });
@@ -19969,6 +20029,10 @@ function poemMine(d) {
         poemDesk(p, { entry: e });
       } catch (err) { flash("That diwan could not be loaded.", true); }
     });
+    const acts2 = el("div", "pr-mine-acts");
+    const ed = el("button", "ghost small", "Edit");
+    ed.type = "button";
+    ed.addEventListener("click", () => open.click());
     const del = el("button", "link pr-del", "Delete");
     del.type = "button";
     del.addEventListener("click", () => {
@@ -19976,7 +20040,8 @@ function poemMine(d) {
       storeMyPoemTranslations(myPoemTranslations().filter(x => x.id !== e.id));
       poemMine(d);
     });
-    row.appendChild(open); row.appendChild(del);
+    acts2.appendChild(ed); acts2.appendChild(del);
+    row.appendChild(open); row.appendChild(acts2);
     box.appendChild(row);
   });
   stage.appendChild(box);
@@ -19984,6 +20049,199 @@ function poemMine(d) {
 }
 const POEM_MINE_ITEM = { id: "poetry-mine", en: "My Poem Translations", kind: "workshop", section: "poetry-hidden",
   subject: "ترجماتي · Saved on this device", run: () => runPoetry({ mine: true }) };
+
+/* ═══════════ THE STORY EDITOR ═══════════
+   Before a card goes anywhere, the member can arrange it the way a
+   story app lets them: move it, pinch it bigger or smaller, turn it,
+   write on it, add emoji, change the background. Everything is drawn
+   again at full size when they are done, so nothing goes out blurred. */
+const ED_BG = [["#1a0838", "#2a0f52"], ["#0e0420", "#0e0420"], ["#3b1a6e", "#a726d0"], ["#f6f1fb", "#e9dcf7"], ["#000000", "#1f1b2e"]];
+const ED_INK = ["#ffffff", "#d6bfea", "#ffd84d", "#ff7eb6", "#1f1b2e"];
+const ED_EMOJI = ["❤️","✨","🔥","😍","🥹","😭","🌙","⭐","🌹","🕊️","📜","✍️","🖋️","📖","💜","🤍","👏","🙌","💭","🌿","🏜️","🐎","⚔️","☕","🌊","🎶","💫","🌸","🕯️","🫶"];
+
+function openStoryEditor(baseBlob, opts) {
+  opts = opts || {};
+  return new Promise(resolve => {
+    const ov = el("div", "ed-view");
+    ov.setAttribute("role", "dialog");
+    ov.setAttribute("aria-label", "Edit your card");
+    const top = el("div", "ed-top");
+    const cancel = el("button", "ed-btn", "Cancel"); cancel.type = "button";
+    const title = el("span", "ed-title", opts.title || "Edit your card");
+    const done = el("button", "ed-btn ed-done", opts.doneLabel || "Done"); done.type = "button";
+    top.appendChild(cancel); top.appendChild(title); top.appendChild(done);
+    const stageWrap = el("div", "ed-wrap");
+    const stg = el("div", "ed-stage");
+    stageWrap.appendChild(stg);
+    const tools = el("div", "ed-tools");
+    const tb = (txt, lab) => { const b = el("button", "ed-tool", txt); b.type = "button"; b.setAttribute("aria-label", lab); tools.appendChild(b); return b; };
+    const textB = tb("Aa", "Add text"), emojiB = tb("☺︎", "Add emoji"), bgB = tb("◐", "Change background"),
+          smallB = tb("−", "Make the card smaller"), bigB = tb("+", "Make the card bigger"), resetB = tb("↺", "Put the card back"),
+          delB = tb("🗑", "Remove what is selected");
+    const tray = el("div", "ed-tray"); tray.hidden = true;
+    const hint = el("p", "ed-hint", "Drag to move · pinch to zoom or turn · tap something to select it");
+    ov.appendChild(top); ov.appendChild(stageWrap); ov.appendChild(hint); ov.appendChild(tray); ov.appendChild(tools);
+    document.body.appendChild(ov);
+    document.body.classList.add("st-open");
+
+    let bg = 0;
+    const layers = [];   /* {kind, node, x, y, s, r, ...} in fractions of the stage */
+    let sel = null;
+    function paintBg() { const [a, b] = ED_BG[bg]; stg.style.background = "linear-gradient(160deg," + a + "," + b + ")"; }
+    paintBg();
+
+    function place(L) {
+      L.node.style.left = (L.x * 100) + "%";
+      L.node.style.top = (L.y * 100) + "%";
+      L.node.style.transform = "translate(-50%,-50%) rotate(" + L.r + "rad) scale(" + L.s + ")";
+    }
+    function select(L) {
+      sel = L;
+      layers.forEach(k => k.node.classList.toggle("ed-sel", k === L));
+      delB.disabled = !L || L.kind === "card";
+    }
+    function add(L) { layers.push(L); stg.appendChild(L.node); place(L); wire(L); select(L); return L; }
+
+    const url = URL.createObjectURL(baseBlob);
+    const img = new Image(); img.src = url; img.className = "ed-card"; img.draggable = false;
+    const card = add({ kind: "card", node: img, x: .5, y: .5, s: 1, r: 0 });
+
+    function addText(initial) {
+      const t = initial || {};
+      const box = el("div", "ed-input");
+      const ta = el("textarea", "ed-ta"); ta.rows = 3; ta.dir = "auto"; ta.value = t.text || "";
+      ta.placeholder = "Write something";
+      const inks = el("div", "ed-inks"); let ink = t.ink || ED_INK[0];
+      ED_INK.forEach(c => { const b = el("button", "ed-ink" + (c === ink ? " on" : "")); b.type = "button"; b.style.background = c;
+        b.setAttribute("aria-label", "Colour " + c);
+        b.addEventListener("click", () => { ink = c; ta.style.color = c; inks.querySelectorAll(".ed-ink").forEach(x => x.classList.toggle("on", x === b)); });
+        inks.appendChild(b); });
+      ta.style.color = ink;
+      const ok = el("button", "ed-btn ed-done", "Add"); ok.type = "button";
+      box.appendChild(ta); box.appendChild(inks); box.appendChild(ok);
+      ov.appendChild(box);
+      setTimeout(() => ta.focus(), 30);
+      ok.addEventListener("click", () => {
+        const v = ta.value.trim();
+        box.remove();
+        if (!v) { if (t.layer) { t.layer.node.remove(); layers.splice(layers.indexOf(t.layer), 1); select(card); } return; }
+        if (t.layer) { t.layer.text = v; t.layer.ink = ink; t.layer.node.textContent = v; t.layer.node.style.color = ink; select(t.layer); return; }
+        const n = el("div", "ed-text"); n.textContent = v; n.dir = "auto"; n.style.color = ink;
+        add({ kind: "text", node: n, x: .5, y: .2, s: 1, r: 0, text: v, ink: ink });
+      });
+    }
+    function addEmoji(e) {
+      const n = el("div", "ed-emoji"); n.textContent = e;
+      add({ kind: "emoji", node: n, x: .5 + (Math.random() - .5) * .3, y: .3 + Math.random() * .2, s: 1, r: 0, text: e });
+    }
+
+    /* one finger moves, two fingers zoom and turn */
+    function wire(L) {
+      const pts = new Map();
+      let start = null, lastTap = 0;
+      L.node.addEventListener("pointerdown", e => {
+        e.preventDefault(); e.stopPropagation();
+        L.node.setPointerCapture(e.pointerId);
+        pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        select(L);
+        start = snap();
+        if (L.kind === "text" && pts.size === 1) {
+          const now = Date.now();
+          if (now - lastTap < 320) addText({ layer: L, text: L.text, ink: L.ink });
+          lastTap = now;
+        }
+      });
+      function snap() {
+        const a = [...pts.values()];
+        const s = { x: L.x, y: L.y, s: L.s, r: L.r, p: a.map(p => ({ ...p })) };
+        if (a.length > 1) { s.d = Math.hypot(a[1].x - a[0].x, a[1].y - a[0].y); s.a = Math.atan2(a[1].y - a[0].y, a[1].x - a[0].x); }
+        return s;
+      }
+      L.node.addEventListener("pointermove", e => {
+        if (!pts.has(e.pointerId)) return;
+        pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        const R = stg.getBoundingClientRect();
+        const a = [...pts.values()];
+        if (a.length === 1 && start.p.length === 1) {
+          L.x = start.x + (a[0].x - start.p[0].x) / R.width;
+          L.y = start.y + (a[0].y - start.p[0].y) / R.height;
+        } else if (a.length > 1 && start.d) {
+          const d = Math.hypot(a[1].x - a[0].x, a[1].y - a[0].y);
+          const ang = Math.atan2(a[1].y - a[0].y, a[1].x - a[0].x);
+          L.s = Math.max(.2, Math.min(5, start.s * d / start.d));
+          L.r = start.r + (ang - start.a);
+          const mx = (a[0].x + a[1].x) / 2, my = (a[0].y + a[1].y) / 2;
+          const sx = (start.p[0].x + start.p[1].x) / 2, sy = (start.p[0].y + start.p[1].y) / 2;
+          L.x = start.x + (mx - sx) / R.width; L.y = start.y + (my - sy) / R.height;
+        }
+        place(L);
+      });
+      const up = e => { pts.delete(e.pointerId); start = snap(); };
+      L.node.addEventListener("pointerup", up);
+      L.node.addEventListener("pointercancel", up);
+      /* a mouse wheel or trackpad zooms too, on a computer */
+      L.node.addEventListener("wheel", e => { e.preventDefault(); L.s = Math.max(.2, Math.min(5, L.s * (e.deltaY < 0 ? 1.06 : .94))); place(L); }, { passive: false });
+    }
+    stg.addEventListener("pointerdown", e => { if (e.target === stg) select(null); });
+
+    textB.addEventListener("click", () => addText());
+    emojiB.addEventListener("click", () => {
+      tray.hidden = !tray.hidden;
+      if (tray.hidden) return;
+      tray.innerHTML = "";
+      ED_EMOJI.forEach(x => { const b = el("button", "ed-em", x); b.type = "button"; b.addEventListener("click", () => { addEmoji(x); tray.hidden = true; }); tray.appendChild(b); });
+    });
+    bgB.addEventListener("click", () => { bg = (bg + 1) % ED_BG.length; paintBg(); });
+    const scaleSel = k => { const L = sel || card; L.s = Math.max(.2, Math.min(5, L.s * k)); place(L); };
+    smallB.addEventListener("click", () => scaleSel(.9));
+    bigB.addEventListener("click", () => scaleSel(1.1));
+    resetB.addEventListener("click", () => { Object.assign(card, { x: .5, y: .5, s: 1, r: 0 }); place(card); select(card); });
+    delB.addEventListener("click", () => {
+      if (!sel || sel.kind === "card") return;
+      sel.node.remove(); layers.splice(layers.indexOf(sel), 1); select(card);
+    });
+
+    function finish(v) {
+      URL.revokeObjectURL(url);
+      ov.remove(); document.body.classList.remove("st-open");
+      resolve(v);
+    }
+    cancel.addEventListener("click", () => finish(null));
+    done.addEventListener("click", async () => {
+      done.disabled = true;
+      try { finish(await renderEdited()); } catch (e) { done.disabled = false; flash("The card could not be made.", true); }
+    });
+
+    /* draw it all again at 1080 × 1920 */
+    async function renderEdited() {
+      const W = 1080, H = 1920;
+      const c = document.createElement("canvas"); c.width = W; c.height = H;
+      const g = c.getContext("2d");
+      const [a, b] = ED_BG[bg];
+      const gr = g.createLinearGradient(0, 0, W * .5, H); gr.addColorStop(0, a); gr.addColorStop(1, b);
+      g.fillStyle = gr; g.fillRect(0, 0, W, H);
+      const R = stg.getBoundingClientRect(), k = W / R.width;
+      for (const L of layers) {
+        g.save();
+        g.translate(L.x * W, L.y * H); g.rotate(L.r); g.scale(L.s, L.s);
+        if (L.kind === "card") {
+          const w = img.getBoundingClientRect().width / L.s * k, h = w * img.naturalHeight / img.naturalWidth;
+          g.drawImage(img, -w / 2, -h / 2, w, h);
+        } else {
+          const cs = getComputedStyle(L.node);
+          const fs = parseFloat(cs.fontSize) * k;
+          g.font = cs.fontWeight + " " + fs + "px " + cs.fontFamily;
+          g.textAlign = "center"; g.textBaseline = "middle"; g.fillStyle = L.kind === "text" ? L.ink : "#000";
+          if (L.kind === "text") { g.shadowColor = "rgba(0,0,0,.35)"; g.shadowBlur = 12; }
+          const lines = L.text.split("\n"), lh = fs * 1.25;
+          lines.forEach((s, i) => { g.direction = /[؀-ۿ]/.test(s) ? "rtl" : "ltr"; g.fillText(s, 0, (i - (lines.length - 1) / 2) * lh); });
+        }
+        g.restore();
+      }
+      return await new Promise(res => c.toBlob(res, "image/jpeg", 0.92));
+    }
+  });
+}
 
 /* The card: 1080 × 1920, the size a phone story uses. */
 async function drawPoemCard(p, poet, picked, mine, more) {
@@ -20091,16 +20349,19 @@ function drawCompassMark(g, cx, cy, r, color) {
 /* Into the member's Compass story, the same way the story composer
    posts a photo: upload to the stories bucket, then add the story row. */
 async function poemToStory(blob, p, poet) {
-  const path = myId() + "/" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + ".png";
+  const type = blob.type || "image/jpeg";
+  const path = myId() + "/" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + (type === "image/png" ? ".png" : ".jpg");
   const t = await freshToken();
+  const ctl = new AbortController(); const stop = setTimeout(() => ctl.abort(), 45000);
   const r = await fetch(SUPABASE.url + "/storage/v1/object/stories/" + encodeURI(path), {
-    method: "POST",
-    headers: { apikey: SUPABASE.key, Authorization: "Bearer " + t, "Content-Type": "image/png" },
+    method: "POST", signal: ctl.signal,
+    headers: { apikey: SUPABASE.key, Authorization: "Bearer " + t, "Content-Type": type },
     body: blob
   });
+  clearTimeout(stop);
   if (!r.ok) throw new Error("upload " + r.status);
   await sbPost("stories", {
-    author_id: myId(), kind: "photo", media_path: path, duration_ms: STORY_PHOTO_MS,
+    author_id: myId(), kind: "photo", media_path: path, duration_ms: POEM_STORY_MS,
     body: "My translation · " + diwanName(poet) + (p.title ? " · " + p.title : "")
   });
   try { await renderStoryBar(); } catch (e) {}
