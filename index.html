@@ -788,10 +788,12 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .pr-verses.ar .pr-vt { font-family: "Amiri", serif; font-size: 1.28rem; line-height: 1.85; text-align: center; }
 .pr-verses:not(.ar) .pr-vt { font-family: var(--f-serif); font-size: 1.05rem; line-height: 1.6; font-style: italic; }
 @media (min-width: 720px) {
-  .pr-verses.ar .pr-vt { grid-template-columns: 1fr 1fr; column-gap: 2.2rem; }
-  .pr-verses.ar .pr-half:first-child { text-align: right; }
-  .pr-verses.ar .pr-half:last-child { text-align: left; }
+  /* the two halves face each other across the gap, as a diwan prints them */
+  .pr-verses.ar .pr-vt { grid-template-columns: 1fr 1fr; column-gap: 2.6rem; max-width: 46rem; margin: 0 auto; width: 100%; }
+  .pr-verses.ar .pr-half:first-child { text-align: left; }
+  .pr-verses.ar .pr-half:last-child { text-align: right; }
 }
+@media (max-width: 600px) { .pr-verses.ar .pr-vt { font-size: 1.12rem; line-height: 1.75; } .pr-desk { padding: 1rem .7rem; } }
 .pr-src { display: inline-block; margin-top: .8rem; font-size: .78rem; color: var(--lilac); }
 .pr-write { margin: 1.1rem 0 0; }
 .pr-label { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--lilac); margin: 0 0 .4rem; font-weight: 600; display: block; }
@@ -804,6 +806,24 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
   box-shadow: 0 12px 34px rgba(0,0,0,.45); background: #1a0838; }
 .pr-acts { display: grid; gap: .55rem; margin: 1rem 0 0; }
 @media (min-width: 600px) { .pr-acts { grid-template-columns: 1.4fr 1fr 1fr; } }
+.pr-range { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .5rem; justify-content: center; margin: .2rem 0 .3rem; }
+.pr-range-lab { font-size: .8rem; color: var(--lilac); display: block; margin: .3rem 0 .25rem; }
+.pr-range .pr-range-lab { display: inline; margin: 0; }
+.pr-sel { padding: .4rem .5rem; border-radius: 10px; border: 1px solid var(--ink-ghost); background: rgba(214,191,234,.08); color: var(--white); font: inherit; }
+.pr-sel option { color: #22163f; }
+.pr-vn { font-size: .7rem; color: var(--lilac-dim); min-width: 1.4rem; text-align: center; }
+.pr-verse { grid-template-columns: 1.2rem 1.4rem minmax(0,1fr); }
+.pr-meta { font-size: .74rem; color: var(--lilac-dim); }
+.pr-poems { margin-top: .7rem; }
+.pr-done-lab { margin-top: 1.2rem; }
+.pr-postbox { border: 1px solid var(--ink-ghost); border-radius: 16px; padding: .9rem; margin-top: .8rem; display: grid; gap: .5rem; }
+.pr-note { min-height: 4rem; }
+.pr-check { font-size: .85rem; color: var(--ink); display: flex; align-items: center; gap: .4rem; }
+.pr-mine-row { margin: 0 0 .9rem; }
+.pr-mine-item { display: grid; gap: .2rem; }
+.pr-del { justify-self: end; font-size: .78rem; color: var(--lilac-dim); }
+.pr-left { text-align: left; }
+:root[data-theme="light"] .pr-sel { background: rgba(91,63,181,.05); color: #22163f; }
 .pr-say { font-size: .85rem; color: var(--lilac); min-height: 1.2em; margin: .5rem 0 0; text-align: center; }
 :root[data-theme="light"] .pr-poem-row, :root[data-theme="light"] .pr-search,
 :root[data-theme="light"] .pr-ta { background: rgba(91,63,181,.04); color: #22163f; }
@@ -11733,7 +11753,7 @@ const ITEMS = [
     blurb: "Three consonants hold a whole family of words. Starting with &#1578; &#1585; &#1580; &#1605; itself.",
     run: runRoots },
 
-  { id: "poetry", ar: "الدَّواوين", en: "The Diwans", kind: "workshop", section: "poetry", published: false,
+  { id: "poetry", ar: "الدَّواوين", en: "The Diwans", kind: "workshop", section: "poetry",
     subject: "الدواوين · Translate a poem",
     direction: "both",
     blurb: "Open a diwan, choose any poem, write your own translation under it, and share it as a story.",
@@ -16255,6 +16275,7 @@ function settingsMenu() {
     ["How you use the Compass", [
       ["saved", "Saved", "", go(() => openItem(SAVED_ITEM))],
       ["mine", "Your translations", "", go(() => openItem(MINE_ITEM))],
+      ["mine", "Your poem translations", "", go(() => openItem(POEM_MINE_ITEM))],
       ["progress", "Your progress", "", go(() => {
         const pr = document.getElementById("seal-progress");
         if (pr) { pr.hidden = false; pr.scrollIntoView({ block: "start", behavior: "smooth" }); }
@@ -17693,7 +17714,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1013-1900";
+const BUILD = "1013-2000";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19425,33 +19446,36 @@ function backFoot(opts) { return footNav(opts); }
 
 /* ═══════════════════════════════════════════════════════════
    THE POETRY ROOM
-   Real poems by real poets, each with a link to where its text was
+   Real poems by real poets, each with a link to the page its text was
    taken from. Nothing here is written by the site: the poem is the
-   poet's, and the translation under it is the member's own. The poems
-   live in poetry/poems.json, loaded only when the room is opened, so
-   the rest of the site stays as quick as it was.
+   poet's, and the translation under it is the member's own. The list
+   of diwans is small (poetry/index.json); a diwan's poems load only
+   when it is opened (poetry/<id>.json), so a phone never downloads
+   the whole library.
    ═══════════════════════════════════════════════════════════ */
 let POETRY = null;
+const POET_CACHE = {};
 async function loadPoetry() {
   if (POETRY) return POETRY;
-  const r = await fetch("poetry/poems.json?v=" + BUILD);
+  const r = await fetch("poetry/index.json?v=" + BUILD);
   if (r.status === 404) return null;   /* the diwans are not uploaded yet */
   if (!r.ok) throw new Error("poems " + r.status);
   const d = await r.json();
   d.poetById = {};
-  d.poets.forEach(p => { d.poetById[p.id] = p; p.poems = []; });
-  d.poems.forEach(p => { const who = d.poetById[p.poet]; if (who) who.poems.push(p); });
-  d.poets = d.poets.filter(p => p.poems.length);
+  d.poets.forEach(p => { d.poetById[p.id] = p; });
   POETRY = d;
   return d;
 }
-const poemKey = id => "cmp.poem." + id;
-function poemDraft(id) {
-  try { return JSON.parse(localStorage.getItem(poemKey(id)) || "null"); } catch (e) { return null; }
+async function loadDiwan(poet) {
+  if (POET_CACHE[poet.id]) return POET_CACHE[poet.id];
+  const r = await fetch("poetry/" + poet.id + ".json?v=" + BUILD);
+  if (!r.ok) throw new Error("diwan " + r.status);
+  const d = await r.json();
+  d.poems.forEach(p => { p.poet = poet.id; });
+  POET_CACHE[poet.id] = d;
+  return d;
 }
-function poemSave(id, v) {
-  try { localStorage.setItem(poemKey(id), JSON.stringify(v)); } catch (e) {}
-}
+
 /* An Arabic verse is two halves; an English line is one. Both are kept
    as arrays so the same code lays out either. */
 const verseHalves = v => Array.isArray(v) ? v : [v];
@@ -19459,20 +19483,38 @@ const verseText = v => verseHalves(v).join("   ");
 const poemTarget = poet => poet.lang === "ar" ? "en" : "ar";
 /* each poet is a diwan, named in both languages:
    ديوان المتنبي · Diwan of al-Mutanabbi */
-const diwanAr = poet => "ديوان " + poet.ar;
+const diwanAr = poet => poet.diwanAr || "ديوان " + poet.ar;
 const diwanEn = poet => "Diwan of " + poet.en;
 const diwanName = poet => poet.lang === "ar" ? diwanAr(poet) : diwanEn(poet);
+
+/* The draft of the poem on the desk, kept as the member types. */
+const poemKey = id => "cmp.poem." + id;
+function poemDraft(id) {
+  try { return JSON.parse(localStorage.getItem(poemKey(id)) || "null"); } catch (e) { return null; }
+}
+function poemSave(id, v) {
+  try { localStorage.setItem(poemKey(id), JSON.stringify(v)); } catch (e) {}
+}
+/* "My translations": the ones a member chose to keep. Each holds its
+   own copy of the verses, so it still reads correctly on its own. */
+const MYTR_KEY = "cmp.mytr";
+function myPoemTranslations() {
+  try { return JSON.parse(localStorage.getItem(MYTR_KEY) || "[]"); } catch (e) { return []; }
+}
+function storeMyPoemTranslations(list) {
+  try { localStorage.setItem(MYTR_KEY, JSON.stringify(list)); return true; } catch (e) { return false; }
+}
 
 let poetryLang = "ar";
 async function runPoetry(arg) {
   setCount("Translate a poem · no score");
   stage.innerHTML = "";
-  stage.appendChild(el("p", "note", "Loading the poems…"));
+  stage.appendChild(el("p", "note", "Loading the diwans…"));
   let d;
   try { d = await loadPoetry(); }
   catch (e) {
     stage.innerHTML = "";
-    stage.appendChild(el("p", "note", "The poems could not be loaded. Check your connection and try again."));
+    stage.appendChild(el("p", "note", "The diwans could not be loaded. Check your connection and try again."));
     stage.appendChild(footNav());
     return;
   }
@@ -19484,10 +19526,7 @@ async function runPoetry(arg) {
     stage.appendChild(footNav());
     return;
   }
-  if (arg && arg.poem) {
-    const p = d.poems.find(x => x.id === arg.poem);
-    if (p) return poemDesk(p);
-  }
+  if (arg && arg.mine) return poemMine(d);
   poetryHall(d);
 }
 
@@ -19495,14 +19534,25 @@ function poetryHall(d) {
   stage.innerHTML = "";
   const intro = el("div", "pr-intro");
   intro.appendChild(el("p", "pr-lead",
-    "Open a diwan, choose any poem in it, and write your own translation under it. " +
-    "Then share it as a story: the poem, your version, and your name."));
+    "Open a diwan, choose any poem in it, translate as much or as little of it as you like, " +
+    "then keep it, post it, or share it as a story."));
   stage.appendChild(intro);
+
+  const n = myPoemTranslations().length;
+  const mineBtn = el("button", "lesson-row pr-mine-row");
+  mineBtn.type = "button";
+  mineBtn.innerHTML = '<span class="lr-num">✎</span><span class="lr-txt"><span class="lr-en">My translations</span>' +
+    '<span class="lr-sub">' + (n ? n + (n === 1 ? " translation kept" : " translations kept") : "Nothing kept yet") +
+    ' · on this device</span></span><span class="lr-go" aria-hidden="true">›</span>';
+  mineBtn.addEventListener("click", () => {
+    pushTrail("Diwans", () => { stage.innerHTML = ""; poetryHall(d); });
+    poemMine(d);
+  });
+  stage.appendChild(mineBtn);
 
   const langs = el("div", "chips pr-langs");
   [["ar", "الدواوين العربية · Arabic diwans", "into English"], ["en", "الدواوين الإنجليزية · English diwans", "into Arabic"]].forEach(([k, l, s]) => {
-    const n = d.poets.filter(p => p.lang === k).length;
-    if (!n) return;
+    if (!d.poets.some(p => p.lang === k)) return;
     const b = el("button", "chip" + (poetryLang === k ? " on" : ""), l + ' <span class="pr-dir">' + s + "</span>");
     b.type = "button";
     b.addEventListener("click", () => { poetryLang = k; poetryHall(d); });
@@ -19512,21 +19562,28 @@ function poetryHall(d) {
 
   const tools = el("div", "pr-tools");
   const q = el("input", "pr-search");
-  q.type = "search"; q.placeholder = "Search a diwan, a poet or a line"; q.setAttribute("aria-label", "Search a diwan, a poet or a line");
+  q.type = "search"; q.placeholder = "Search a diwan, a poet or a poem title"; q.setAttribute("aria-label", "Search a diwan, a poet or a poem title");
   const lucky = el("button", "ghost small", "A poem at random");
   lucky.type = "button";
-  lucky.addEventListener("click", () => {
-    const pool = d.poems.filter(p => (d.poetById[p.poet] || {}).lang === poetryLang);
-    if (pool.length) openPoem(pool[Math.floor(Math.random() * pool.length)]);
+  lucky.addEventListener("click", async () => {
+    const pool = d.poets.filter(p => p.lang === poetryLang);
+    if (!pool.length) return;
+    const poet = pool[Math.floor(Math.random() * pool.length)];
+    try {
+      const dw = await loadDiwan(poet);
+      pushTrail("Diwans", () => { stage.innerHTML = ""; poetryHall(d); });
+      poemDesk(dw.poems[Math.floor(Math.random() * dw.poems.length)]);
+    } catch (e) { flash("That diwan could not be loaded.", true); }
   });
   tools.appendChild(q); tools.appendChild(lucky);
   stage.appendChild(tools);
 
   const list = el("div", "pr-list");
   stage.appendChild(list);
+  const norm = s => (s || "").toLowerCase().replace(/[ً-ْـ]/g, "");
 
   function draw() {
-    const term = q.value.trim().toLowerCase();
+    const term = norm(q.value.trim());
     list.innerHTML = "";
     const poets = d.poets.filter(p => p.lang === poetryLang);
     const eras = [];
@@ -19534,22 +19591,24 @@ function poetryHall(d) {
     let shown = 0;
     eras.forEach(era => {
       const rows = poets.filter(p => p.era === era).filter(p => !term ||
-        (p.en + " " + p.ar).toLowerCase().includes(term) ||
-        p.poems.some(x => (x.title || "").toLowerCase().includes(term) || x.lines.some(v => verseText(v).includes(term))));
+        norm(p.en + " " + p.ar + " ديوان diwan").includes(term) ||
+        (p.titles || []).some(t => norm(t).includes(term)));
       if (!rows.length) return;
       list.appendChild(el("h3", "pr-era", esc(era)));
       rows.forEach(p => {
+        const hits = term ? (p.titles || []).filter(t => norm(t).includes(term)).length : 0;
         const b = el("button", "lesson-row pr-poet");
         b.type = "button";
         b.innerHTML =
-          '<span class="lr-num pr-count">' + p.poems.length + "</span>" +
+          '<span class="lr-num pr-count">' + p.count + "</span>" +
           '<span class="lr-txt"><span class="lr-en"><span class="pr-ar-name">' + esc(diwanAr(p)) + '</span>' +
           '<span class="pr-en-name">' + esc(diwanEn(p)) + "</span></span>" +
-          '<span class="lr-sub">' + esc(p.years || "") + "</span></span>" +
+          '<span class="lr-sub">' + esc((p.years || "") + " · " + p.count + (p.count === 1 ? " poem" : " poems") +
+            (hits ? " · " + hits + " match" + (hits === 1 ? "" : "es") : "")) + "</span></span>" +
           '<span class="lr-go" aria-hidden="true">›</span>';
         b.addEventListener("click", () => {
           pushTrail("Diwans", () => { stage.innerHTML = ""; poetryHall(d); });
-          poetShelf(d, p);
+          poetShelf(d, p, q.value.trim());
         });
         list.appendChild(b);
         shown++;
@@ -19559,78 +19618,120 @@ function poetryHall(d) {
   }
   q.addEventListener("input", draw);
   draw();
-  stage.appendChild(el("p", "pr-credit", "Poem texts: " + esc(d.credit || "") ));
+  if (d.credit) stage.appendChild(el("p", "pr-credit", esc(d.credit)));
   stage.appendChild(footNav());
 }
 
-function poetShelf(d, poet) {
+async function poetShelf(d, poet, term) {
   stage.innerHTML = "";
   window.scrollTo(0, 0);
   const head = el("div", "pr-poet-head");
   head.appendChild(el("p", "pr-poet-name ar", esc(diwanAr(poet))));
   head.appendChild(el("p", "pr-poet-en", esc(diwanEn(poet))));
-  head.appendChild(el("p", "note", esc((poet.years || "") + " · " + poet.era + " · " + poet.poems.length + (poet.poems.length === 1 ? " poem" : " poems"))));
+  head.appendChild(el("p", "note", esc((poet.years || "") + " · " + poet.era + " · " + poet.count + (poet.count === 1 ? " poem" : " poems"))));
   stage.appendChild(head);
-  const list = el("div", "pr-list");
-  poet.poems.forEach(p => {
-    const b = el("button", "pr-poem-row" + (poemDraft(p.id) ? " done" : ""));
-    b.type = "button";
-    const first = verseHalves(p.lines[0]);
-    b.innerHTML =
-      (p.title ? '<span class="pr-pt' + (poet.lang === "ar" ? " ar" : "") + '">' + esc(p.title) + "</span>" : "") +
-      '<span class="pr-first' + (poet.lang === "ar" ? " ar" : "") + '">' + esc(first.join(" … ")) + "</span>" +
-      (poemDraft(p.id) ? '<span class="pr-mine">Your translation saved</span>' : "");
-    b.addEventListener("click", () => openPoem(p));
-    list.appendChild(b);
-  });
+  const wait = el("p", "note", "Opening the diwan…");
+  stage.appendChild(wait);
+  let dw;
+  try { dw = await loadDiwan(poet); }
+  catch (e) { wait.textContent = "This diwan could not be loaded. Check your connection and try again."; stage.appendChild(footNav()); return; }
+  wait.remove();
+
+  const q = el("input", "pr-search");
+  q.type = "search"; q.placeholder = "Search this diwan: a poem title or any line"; q.setAttribute("aria-label", "Search this diwan by poem title or line"); q.value = term || "";
+  stage.appendChild(q);
+  const list = el("div", "pr-list pr-poems");
   stage.appendChild(list);
+  const norm = s => (s || "").toLowerCase().replace(/[ً-ْـ]/g, "");
+  const isAr = poet.lang === "ar";
+  function draw() {
+    const t = norm(q.value.trim());
+    list.innerHTML = "";
+    /* title matches first, then poems where the words appear in a verse */
+    const byTitle = t ? dw.poems.filter(p => norm(p.title).includes(t)) : dw.poems;
+    const byLine = t ? dw.poems.filter(p => !norm(p.title).includes(t) && p.lines.some(v => norm(verseText(v)).includes(t))) : [];
+    const rows = byTitle.concat(byLine);
+    rows.slice(0, 400).forEach(p => {
+      const b = el("button", "pr-poem-row" + (poemDraft(p.id) ? " done" : ""));
+      b.type = "button";
+      const first = verseHalves(p.lines[0]);
+      b.innerHTML =
+        '<span class="pr-pt' + (isAr ? " ar" : "") + '">' + esc(p.title) + "</span>" +
+        '<span class="pr-first' + (isAr ? " ar" : "") + '">' + esc(first.join(" … ")) + "</span>" +
+        '<span class="pr-meta">' + p.lines.length + (p.lines.length === 1 ? " line" : (isAr ? " verses" : " lines")) +
+        (poemDraft(p.id) ? " · your draft is saved" : "") + "</span>";
+      b.addEventListener("click", () => {
+        pushTrail(diwanName(poet), () => { poetShelf(d, poet, q.value.trim()); });
+        poemDesk(p);
+      });
+      list.appendChild(b);
+    });
+    if (!rows.length) list.appendChild(el("p", "note", "No poem in this diwan matches that search."));
+  }
+  q.addEventListener("input", draw);
+  draw();
   stage.appendChild(footNav());
 }
 
-function openPoem(p) {
-  const d = POETRY, poet = d.poetById[p.poet];
-  pushTrail(diwanName(poet), () => { stage.innerHTML = ""; poetShelf(d, poet); });
-  poemDesk(p);
-}
-
-/* The desk: the poem on top, the member's translation right under it,
-   and the story card it makes. Verses can be ticked so a long ode can
-   be shared a few lines at a time. */
-function poemDesk(p) {
+/* The desk: the whole poem on top, the member's translation right
+   under it. They choose how much to translate: any lines ticked, or a
+   run from one verse to another, or the whole poem. */
+const CARD_MAX = 6;   /* a phone story is tall but not endless */
+function poemDesk(p, opts) {
+  opts = opts || {};
   const d = POETRY, poet = d.poetById[p.poet];
   const to = poemTarget(poet);
-  const saved = poemDraft(p.id) || {};
-  let picked = Array.isArray(saved.picked) && saved.picked.length ? saved.picked.filter(i => i < p.lines.length)
-             : p.lines.map((_, i) => i).slice(0, Math.min(2, p.lines.length));
+  const isAr = poet.lang === "ar";
+  const saved = opts.entry || poemDraft(p.id) || {};
+  const N = p.lines.length;
+  let picked = Array.isArray(saved.picked) && saved.picked.length ? saved.picked.filter(i => i < N)
+             : [...Array(Math.min(2, N)).keys()];
+  let editing = opts.entry ? opts.entry.id : null;
   stage.innerHTML = "";
   window.scrollTo(0, 0);
   setCount("Translate a poem · no score");
 
   const card = el("div", "pr-desk");
   const head = el("div", "pr-desk-head");
-  head.appendChild(el("p", "pr-poet-name" + (poet.lang === "ar" ? " ar" : ""), esc(poet.lang === "ar" ? poet.ar : poet.en)));
-  if (p.title) head.appendChild(el("p", "pr-title" + (poet.lang === "ar" ? " ar" : ""), esc(p.title)));
+  head.appendChild(el("p", "pr-poet-name ar", esc(poet.ar)));
+  head.appendChild(el("p", "pr-poet-en", esc(poet.en)));
+  head.appendChild(el("p", "pr-title" + (isAr ? " ar" : ""), esc(p.title)));
   card.appendChild(head);
 
-  card.appendChild(el("p", "pr-hint", p.lines.length > 2
-    ? "Tick the lines you are translating. Those go on your story card."
-    : "Translate the lines below."));
-  const verses = el("div", "pr-verses" + (poet.lang === "ar" ? " ar" : ""));
+  /* how much: from verse … to verse …, all, or none, then fine-tune by ticking */
+  const range = el("div", "pr-range");
+  const lab = (t) => el("span", "pr-range-lab", t);
+  const sel = () => { const s = document.createElement("select"); s.className = "pr-sel";
+    for (let i = 1; i <= N; i++) { const o = document.createElement("option"); o.value = i; o.textContent = i; s.appendChild(o); }
+    return s; };
+  const from = sel(), till = sel();
+  range.appendChild(lab(isAr ? "From verse" : "From line")); range.appendChild(from);
+  range.appendChild(lab("to")); range.appendChild(till);
+  const allB = el("button", "chip", "Whole poem"), noneB = el("button", "chip", "Clear");
+  allB.type = noneB.type = "button";
+  range.appendChild(allB); range.appendChild(noneB);
+  card.appendChild(range);
+  const count = el("p", "pr-hint");
+  card.appendChild(count);
+
+  const verses = el("div", "pr-verses" + (isAr ? " ar" : ""));
+  const rows = [];
   p.lines.forEach((v, i) => {
-    const row = el("label", "pr-verse" + (picked.includes(i) ? " on" : ""));
+    const row = el("label", "pr-verse");
     const box = document.createElement("input");
-    box.type = "checkbox"; box.checked = picked.includes(i); box.className = "pr-tick";
-    box.setAttribute("aria-label", "Line " + (i + 1));
+    box.type = "checkbox"; box.className = "pr-tick";
+    box.setAttribute("aria-label", (isAr ? "Verse " : "Line ") + (i + 1));
     box.addEventListener("change", () => {
       picked = box.checked ? picked.concat(i).sort((a, b) => a - b) : picked.filter(x => x !== i);
-      row.classList.toggle("on", box.checked);
-      keep();
+      sync(); keep();
     });
     row.appendChild(box);
+    row.appendChild(el("span", "pr-vn", String(i + 1)));
     const txt = el("span", "pr-vt");
     verseHalves(v).forEach(h => txt.appendChild(el("span", "pr-half", esc(h))));
     row.appendChild(txt);
     verses.appendChild(row);
+    rows.push([row, box]);
   });
   card.appendChild(verses);
   if (p.src) {
@@ -19640,25 +19741,43 @@ function poemDesk(p) {
   }
   stage.appendChild(card);
 
+  function sync() {
+    rows.forEach(([row, box], i) => { const on = picked.includes(i); box.checked = on; row.classList.toggle("on", on); });
+    if (picked.length) { from.value = picked[0] + 1; till.value = picked[picked.length - 1] + 1; }
+    const k = picked.length;
+    count.textContent = !k ? "Nothing chosen yet: pick a range, the whole poem, or tick the lines." :
+      (k === N ? "The whole poem: " : "") + k + (k === 1 ? (isAr ? " verse" : " line") : (isAr ? " verses" : " lines")) + " chosen" +
+      (k > CARD_MAX ? ". A story card shows the first " + CARD_MAX + "; saving and posting keep all of them." : ".");
+  }
+  function setRange(a, b) {
+    if (a > b) [a, b] = [b, a];
+    picked = []; for (let i = a; i <= b; i++) picked.push(i);
+    sync(); keep();
+  }
+  from.addEventListener("change", () => setRange(from.value - 1, Math.max(from.value, till.value) - 1));
+  till.addEventListener("change", () => setRange(Math.min(from.value, till.value) - 1, till.value - 1));
+  allB.addEventListener("click", () => setRange(0, N - 1));
+  noneB.addEventListener("click", () => { picked = []; sync(); keep(); });
+
   const desk = el("div", "pr-write");
   desk.appendChild(el("label", "pr-label", to === "en" ? "Your translation into English" : "ترجمتك إلى العربية"));
   const ta = el("textarea", "pr-ta" + (to === "ar" ? " ar" : ""));
   ta.dir = to === "ar" ? "rtl" : "ltr";
   ta.lang = to;
-  ta.rows = 6;
+  ta.rows = 7;
   ta.placeholder = to === "en" ? "Write your version here, line by line." : "اكتب ترجمتك هنا، سطرًا سطرًا.";
   ta.value = saved.text || "";
   desk.appendChild(ta);
-  const saidSaved = el("p", "pr-saved", saved.text ? "Saved on this device." : "");
+  const saidSaved = el("p", "pr-saved", editing ? "Editing a translation you kept." : (saved.text ? "Your draft is saved on this device." : ""));
   desk.appendChild(saidSaved);
   stage.appendChild(desk);
 
   let t0 = 0;
   function keep() {
-    poemSave(p.id, { text: ta.value, picked: picked, at: Date.now() });
-    saidSaved.textContent = ta.value.trim() ? "Saved on this device." : "";
+    if (!editing) poemSave(p.id, { text: ta.value, picked: picked, at: Date.now() });
+    if (!editing) saidSaved.textContent = ta.value.trim() ? "Your draft is saved on this device." : "";
     clearTimeout(t0);
-    t0 = setTimeout(paint, 250);
+    t0 = setTimeout(paint, 300);
   }
   ta.addEventListener("input", keep);
 
@@ -19669,19 +19788,26 @@ function poemDesk(p) {
   prevWrap.appendChild(img);
   stage.appendChild(prevWrap);
 
+  /* what to do with it: every choice, none forced */
+  stage.appendChild(el("p", "pr-label pr-done-lab", "When you are done"));
   const acts = el("div", "pr-acts");
-  const toStory = el("button", "primary", "Share to my Compass story");
-  const outside = el("button", "ghost", "Share the image");
-  const copy = el("button", "ghost", "Copy the text");
-  [toStory, outside, copy].forEach(b => { b.type = "button"; acts.appendChild(b); });
-  const say = el("p", "pr-say");
+  const mk = (cls, txt) => { const b = el("button", cls, txt); b.type = "button"; acts.appendChild(b); return b; };
+  const keepB  = mk("primary", editing ? "Update my saved translation" : "Save to My translations");
+  const postB  = mk("ghost", "Post it on the Compass feed");
+  const storyB = mk("ghost", "Share to my Compass story");
+  const outB   = mk("ghost", "Share the image");
+  const copyB  = mk("ghost", "Copy the text");
   stage.appendChild(acts);
+  const say = el("p", "pr-say");
   stage.appendChild(say);
+  const postBox = el("div", "pr-postbox");
+  postBox.hidden = true;
+  stage.appendChild(postBox);
 
   let lastBlob = null;
   async function paint() {
     try {
-      const c = await drawPoemCard(p, poet, picked, ta.value);
+      const c = await drawPoemCard(p, poet, picked.slice(0, CARD_MAX), ta.value, picked.length > CARD_MAX);
       lastBlob = await new Promise(res => c.toBlob(res, "image/png"));
       if (img.dataset.url) URL.revokeObjectURL(img.dataset.url);
       const u = URL.createObjectURL(lastBlob);
@@ -19689,28 +19815,104 @@ function poemDesk(p) {
     } catch (e) { say.textContent = "The card could not be drawn on this browser."; }
   }
   function ready() {
+    if (!picked.length) { say.textContent = "Choose at least one line of the poem."; return false; }
     if (!ta.value.trim()) { say.textContent = "Write your translation first."; ta.focus(); return false; }
-    if (!picked.length) { say.textContent = "Tick at least one line of the poem."; return false; }
     say.textContent = "";
     return true;
   }
+  const chosenText = () => picked.map(i => verseHalves(p.lines[i]).join(isAr ? "   " : "")).join("\n");
+  const rangeLabel = () => {
+    if (picked.length === N) return "whole poem";
+    const contiguous = picked.every((v, k) => !k || v === picked[k - 1] + 1);
+    return contiguous ? (picked.length === 1 ? "verse " + (picked[0] + 1) : "verses " + (picked[0] + 1) + "–" + (picked[picked.length - 1] + 1))
+                      : picked.length + " verses";
+  };
   const fileName = () => "translation-" + p.id + ".png";
 
-  toStory.addEventListener("click", async () => {
+  keepB.addEventListener("click", () => {
+    if (!ready()) return;
+    const list = myPoemTranslations();
+    const entry = { id: editing || ("t" + Date.now().toString(36)), poemId: p.id, poet: poet.id,
+      poetAr: poet.ar, poetEn: poet.en, diwanAr: diwanAr(poet), title: p.title, src: p.src || "", lang: poet.lang,
+      picked: picked.slice(), lines: picked.map(i => p.lines[i]), range: rangeLabel(),
+      text: ta.value.trim(), at: Date.now() };
+    const k = list.findIndex(x => x.id === entry.id);
+    if (k >= 0) list[k] = entry; else list.unshift(entry);
+    if (!storeMyPoemTranslations(list)) { say.textContent = "This browser would not save it. Copy the text instead."; return; }
+    editing = entry.id;
+    keepB.textContent = "Update my saved translation";
+    saidSaved.textContent = "Kept in My translations.";
+    flash("Saved to My translations");
+  });
+
+  postB.addEventListener("click", () => {
+    if (!ready()) return;
+    if (!myId()) { say.textContent = "Sign in to post on the Compass feed. You can still save or share the image."; return; }
+    postBox.hidden = !postBox.hidden;
+    if (postBox.hidden) return;
+    postBox.innerHTML = "";
+    postBox.appendChild(el("p", "pr-label", "Post on the Compass feed"));
+    const vis = document.createElement("select"); vis.className = "pr-sel pr-vis";
+    VISIBILITIES.forEach(([v, t]) => { const o = document.createElement("option"); o.value = v; o.textContent = t; vis.appendChild(o); });
+    const vl = el("label", "pr-range-lab", "Who can see it"); postBox.appendChild(vl); postBox.appendChild(vis);
+    postBox.appendChild(el("p", "pr-range-lab", "Ask for feedback on (optional)"));
+    const fb = el("div", "chips"); const want = [];
+    FEEDBACK_ON.forEach(f => { const c = el("button", "chip", esc(f)); c.type = "button";
+      c.addEventListener("click", () => { const i = want.indexOf(f); if (i >= 0) want.splice(i, 1); else want.push(f); c.classList.toggle("on", i < 0); });
+      fb.appendChild(c); });
+    postBox.appendChild(fb);
+    const note = el("textarea", "pr-ta pr-note"); note.rows = 2; note.placeholder = "A note for readers (optional): a choice you made, a word you struggled with.";
+    postBox.appendChild(note);
+    const withImg = document.createElement("input"); withImg.type = "checkbox"; withImg.checked = true; withImg.id = "pr-withimg";
+    const wl = el("label", "pr-check"); wl.appendChild(withImg); wl.appendChild(document.createTextNode(" Attach the story card image"));
+    postBox.appendChild(wl);
+    const go = el("button", "primary", "Publish"); go.type = "button";
+    postBox.appendChild(go);
+    go.addEventListener("click", async () => {
+      go.disabled = true; go.textContent = "Publishing…";
+      try {
+        const row = await sbPost("posts", {
+          author_id: myId(), post_type: "translation",
+          title: diwanAr(poet) + " · " + p.title,
+          content: null,
+          source_language: isAr ? "Arabic" : "English",
+          target_language: isAr ? "English" : "Arabic",
+          genre: "Literary",
+          source_text: chosenText() + "\n— " + (isAr ? poet.ar : poet.en),
+          translated_text: ta.value.trim(),
+          translation_note: note.value.trim() || null,
+          feedback_on: want.length ? want : null,
+          visibility: vis.value
+        });
+        if (row && withImg.checked) {
+          await paint();
+          await uploadAttachment(row.id, new File([lastBlob], fileName(), { type: "image/png" }));
+        }
+        postBox.hidden = true;
+        flash("Posted on the Compass feed");
+        postB.textContent = "Posted ✓";
+      } catch (e) {
+        go.disabled = false; go.textContent = "Publish";
+        say.textContent = "It could not be posted. Check your connection and try again.";
+      }
+    });
+  });
+
+  storyB.addEventListener("click", async () => {
     if (!ready()) return;
     if (!myId()) { say.textContent = "Sign in to share to your Compass story. You can still share the image."; return; }
-    toStory.disabled = true; toStory.textContent = "Sharing…";
+    storyB.disabled = true; storyB.textContent = "Sharing…";
     try {
       await paint();
       await poemToStory(lastBlob, p, poet);
       flash("Shared to your story");
-      toStory.textContent = "Shared ✓";
+      storyB.textContent = "Shared to your story ✓";
     } catch (e) {
-      toStory.disabled = false; toStory.textContent = "Share to my Compass story";
+      storyB.disabled = false; storyB.textContent = "Share to my Compass story";
       say.textContent = "It could not be shared. Check your connection and try again.";
     }
   });
-  outside.addEventListener("click", async () => {
+  outB.addEventListener("click", async () => {
     if (!ready()) return;
     await paint();
     const file = new File([lastBlob], fileName(), { type: "image/png" });
@@ -19723,26 +19925,68 @@ function poemDesk(p) {
     document.body.appendChild(a); a.click(); a.remove();
     say.textContent = "The image is saved. Add it to your story from your photos.";
   });
-  copy.addEventListener("click", async () => {
+  copyB.addEventListener("click", async () => {
     if (!ready()) return;
-    const src = picked.map(i => verseHalves(p.lines[i]).join(poet.lang === "ar" ? " ... " : "")).join("\n");
-    const who = poet.lang === "ar" ? poet.ar : poet.en;
-    const txt = src + "\n— " + who + "\n\n" + ta.value.trim() + "\n\n" + location.host;
+    const txt = chosenText() + "\n— " + (isAr ? poet.ar : poet.en) + "\n\n" + ta.value.trim() + "\n\n" + location.host;
     try { await navigator.clipboard.writeText(txt); flash("Copied"); }
     catch (e) { say.textContent = "Copying is blocked here. Select the text and copy it yourself."; }
   });
 
-  /* the next poem by the same poet, so a member can keep going */
-  const i = poet.poems.indexOf(p);
-  const next = poet.poems[i + 1];
-  stage.appendChild(footNav(next ? {
-    next: () => poemDesk(next), nextLabel: "Next poem"
-  } : {}));
+  sync();
+  stage.appendChild(footNav());
   paint();
 }
 
+/* My translations: the ones a member kept, newest first. */
+function poemMine(d) {
+  stage.innerHTML = "";
+  window.scrollTo(0, 0);
+  setCount("My poem translations");
+  const list = myPoemTranslations();
+  stage.appendChild(el("p", "pr-lead", list.length
+    ? "The translations you kept. Open one to read it, change it, or share it again."
+    : "Nothing kept yet. When you finish a translation, choose “Save to My translations”."));
+  stage.appendChild(el("p", "pr-hint pr-left", "Kept on this device, in this browser."));
+  const box = el("div", "pr-list");
+  list.forEach(e => {
+    const row = el("div", "pr-mine-item");
+    const open = el("button", "pr-poem-row");
+    open.type = "button";
+    const isAr = e.lang === "ar";
+    open.innerHTML =
+      '<span class="pr-pt' + (isAr ? " ar" : "") + '">' + esc(e.title) + "</span>" +
+      '<span class="pr-meta">' + esc((isAr ? (e.diwanAr || "ديوان " + e.poetAr) : e.poetEn) + " · " + e.range + " · " +
+        new Date(e.at).toLocaleDateString()) + "</span>" +
+      '<span class="pr-first' + (isAr ? "" : " ar") + '">' + esc(e.text.split("\n")[0]) + "</span>";
+    open.addEventListener("click", async () => {
+      const poet = d.poetById[e.poet];
+      if (!poet) { flash("That diwan is no longer here.", true); return; }
+      try {
+        const dw = await loadDiwan(poet);
+        const p = dw.poems.find(x => x.id === e.poemId);
+        if (!p) { flash("That poem is no longer in the diwan.", true); return; }
+        pushTrail("My translations", () => poemMine(d));
+        poemDesk(p, { entry: e });
+      } catch (err) { flash("That diwan could not be loaded.", true); }
+    });
+    const del = el("button", "link pr-del", "Delete");
+    del.type = "button";
+    del.addEventListener("click", () => {
+      if (!confirm("Delete this translation? This cannot be undone.")) return;
+      storeMyPoemTranslations(myPoemTranslations().filter(x => x.id !== e.id));
+      poemMine(d);
+    });
+    row.appendChild(open); row.appendChild(del);
+    box.appendChild(row);
+  });
+  stage.appendChild(box);
+  stage.appendChild(footNav());
+}
+const POEM_MINE_ITEM = { id: "poetry-mine", en: "My Poem Translations", kind: "workshop", section: "poetry-hidden",
+  subject: "ترجماتي · Saved on this device", run: () => runPoetry({ mine: true }) };
+
 /* The card: 1080 × 1920, the size a phone story uses. */
-async function drawPoemCard(p, poet, picked, mine) {
+async function drawPoemCard(p, poet, picked, mine, more) {
   const W = 1080, H = 1920, PAD = 96;
   try { await Promise.all(["700 60px Amiri", "400 60px Amiri", "600 40px Outfit", "500 40px 'Playfair Display'", "italic 500 40px 'Playfair Display'"].map(f => document.fonts.load(f))); } catch (e) {}
   const c = document.createElement("canvas");
@@ -19772,52 +20016,50 @@ async function drawPoemCard(p, poet, picked, mine) {
     });
     return out;
   }
-  function write(arr, font, color, y, lh, align) {
-    g.font = font; g.fillStyle = color;
-    arr.forEach(s => {
-      const ar = isAr(s);
-      g.direction = ar ? "rtl" : "ltr";
-      g.textAlign = align || "center";
-      const x = align === "left" ? (ar ? W - PAD : PAD) : W / 2;
-      if (align === "left" && ar) g.textAlign = "right";
-      g.fillText(s, x, y);
-      y += lh;
-    });
+  function write(arr, font, color, y, lh) {
+    g.font = font; g.fillStyle = color; g.textAlign = "center";
+    arr.forEach(s => { g.direction = isAr(s) ? "rtl" : "ltr"; g.fillText(s, W / 2, y); y += lh; });
     return y;
   }
 
-  /* top: the site, small */
   g.textBaseline = "alphabetic";
   write(["THE TRANSLATOR’S COMPASS"], "600 30px Outfit", "rgba(214,191,234,.75)", 150, 40);
 
   const srcAr = poet.lang === "ar";
   const maxW = W - PAD * 2;
-  /* the poem: Arabic halves on their own lines, centred, as a verse is set */
   const srcLines = [];
   picked.forEach((i, k) => {
     verseHalves(p.lines[i]).forEach(h => srcLines.push(h));
-    if (k < picked.length - 1) srcLines.push("");
+    if (srcAr && picked.length <= 4 && k < picked.length - 1) srcLines.push("");
   });
+  if (more) srcLines.push("…");
   const mineText = (mine || "").trim();
 
-  /* fit: shrink both blocks together until the card holds them */
   let sSize = srcAr ? 58 : 50, mSize = 48, fit = null;
-  for (let tries = 0; tries < 24; tries++) {
+  for (let tries = 0; tries < 30; tries++) {
     const sFont = srcAr ? "700 " + sSize + "px Amiri" : "italic 500 " + sSize + "px 'Playfair Display'";
     const mFont = isAr(mineText) ? "400 " + mSize + "px Amiri" : "500 " + mSize + "px 'Playfair Display'";
     const sL = [].concat(...srcLines.map(x => x === "" ? [""] : lines(x, sFont, maxW)));
     const mL = mineText ? lines(mineText, mFont, maxW) : [];
-    const h = sL.length * sSize * 1.55 + 260 + mL.length * mSize * 1.5;
-    fit = { sFont, mFont, sL, mL, sLH: sSize * 1.55, mLH: mSize * 1.5, h };
-    if (h <= H - 520) break;
-    sSize = Math.max(30, sSize - 3); mSize = Math.max(28, mSize - 3);
+    const sLH = sSize * (srcAr ? 1.8 : 1.5);   /* vowel marks need the room */
+    const h = sL.length * sLH + 260 + mL.length * mSize * 1.45;
+    fit = { sFont, mFont, sL, mL, sLH: sLH, mLH: mSize * 1.45, h };
+    if (h <= H - 560) break;
+    /* the poem gives way first, so the member's own words stay readable */
+    if (sSize > 34) sSize -= 3; else if (mSize > 30) mSize -= 3; else { sSize = Math.max(24, sSize - 2); mSize = Math.max(24, mSize - 2); }
   }
-  let y = Math.max(300, (H - fit.h) / 2 - 40);
+  let y = Math.max(280, (H - fit.h) / 2 - 40);
   y = write(fit.sL, fit.sFont, "#ffffff", y, fit.sLH);
-  /* who wrote it */
   y += 10;
-  const who = srcAr ? poet.ar + "  ·  " + poet.en : poet.en;
-  write(["— " + who], (srcAr ? "400 34px Amiri" : "500 30px Outfit"), "rgba(214,191,234,.85)", y, 40);
+  /* one language per line, so neither runs backwards */
+  const t = p.title && p.title.length < 42 ? p.title : "";
+  if (srcAr) {
+    write(["— " + poet.ar + (t ? "، " + t : "")], "400 36px Amiri", "rgba(214,191,234,.9)", y, 44);
+    y += 46;
+    write([poet.en], "500 26px Outfit", "rgba(214,191,234,.65)", y, 34);
+  } else {
+    write(["— " + poet.en + (t ? ", " + t : "")], "italic 500 30px 'Playfair Display'", "rgba(214,191,234,.9)", y, 40);
+  }
   y += 70;
   g.strokeStyle = "rgba(214,191,234,.35)"; g.lineWidth = 2;
   g.beginPath(); g.moveTo(W / 2 - 90, y); g.lineTo(W / 2 + 90, y); g.stroke();
@@ -19827,10 +20069,8 @@ async function drawPoemCard(p, poet, picked, mine) {
   if (fit.mL.length) write(fit.mL, fit.mFont, "#f3eaff", y, fit.mLH);
   else write([srcAr ? "Your translation will appear here" : "ستظهر ترجمتك هنا"], srcAr ? "italic 500 40px 'Playfair Display'" : "400 44px Amiri", "rgba(214,191,234,.4)", y, 50);
 
-  /* bottom: who translated it, and where */
   const h = state.profile && state.profile.username;
-  const by = h ? "Translated by @" + h : "";
-  if (by) write([by], "500 32px Outfit", "rgba(214,191,234,.9)", H - 190, 40);
+  if (h) write(["Translated by @" + h], "500 32px Outfit", "rgba(214,191,234,.9)", H - 190, 40);
   write([location.host], "500 28px Outfit", "rgba(214,191,234,.6)", H - 130, 40);
   return c;
 }
@@ -19848,8 +20088,8 @@ function drawCompassMark(g, cx, cy, r, color) {
   g.restore();
 }
 
-/* Into the member's Compass story, the same way the story composer posts
-   a photo: upload to the stories bucket, then add the story row. */
+/* Into the member's Compass story, the same way the story composer
+   posts a photo: upload to the stories bucket, then add the story row. */
 async function poemToStory(blob, p, poet) {
   const path = myId() + "/" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + ".png";
   const t = await freshToken();
@@ -19861,7 +20101,7 @@ async function poemToStory(blob, p, poet) {
   if (!r.ok) throw new Error("upload " + r.status);
   await sbPost("stories", {
     author_id: myId(), kind: "photo", media_path: path, duration_ms: STORY_PHOTO_MS,
-    body: "My translation of " + (poet.lang === "ar" ? poet.en : poet.en) + (p.title ? ", “" + p.title + "”" : "")
+    body: "My translation · " + diwanName(poet) + (p.title ? " · " + p.title : "")
   });
   try { await renderStoryBar(); } catch (e) {}
 }
