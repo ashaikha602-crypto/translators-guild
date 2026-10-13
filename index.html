@@ -835,12 +835,24 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .pr-about-body { display: grid; gap: .45rem; }
 .pr-ref { margin: 1.2rem 0 0; padding-top: .7rem; border-top: 1px solid var(--ink-ghost); font-size: .78rem; color: var(--lilac-dim); display: grid; gap: .2rem; }
 .pr-ref a { color: var(--lilac); }
+.pr-ref-small { font-size: .68rem; opacity: .8; }
 /* a line of free verse is one line, not two halves: centre it */
 .pr-verses.ar .pr-half:only-child { grid-column: 1 / -1; text-align: center; }
 .pr-video { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: #000;
   box-shadow: 0 10px 30px rgba(0,0,0,.45); margin: 0 0 .4rem; }
 .pr-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .pr-video-note { font-size: .72rem; color: var(--lilac-dim); text-align: center; margin: 0 0 1rem; }
+/* a way back at the top of every page, not only at the bottom */
+.th-titles { flex: 1; min-width: 0; }
+.trial-head:has(.top-back) { flex-wrap: wrap; align-items: center !important; }
+@media (max-width: 720px) {
+  .trial-head:has(.top-back) .t-right { flex: 1 1 100%; text-align: left; align-items: flex-start; }
+}
+.top-back { all: unset; cursor: pointer; flex: none; width: 2.5rem; height: 2.5rem; border-radius: 50%; display: grid; place-items: center;
+  font-size: 1.25rem; font-weight: 700; color: var(--white); background: rgba(214,191,234,.12); border: 1px solid var(--ink-ghost); margin-right: .7rem; }
+.top-back:hover { background: rgba(214,191,234,.22); }
+.top-back:focus-visible { outline: 2px solid var(--lilac); }
+:root[data-theme="light"] .top-back { color: #22163f; background: rgba(91,63,181,.08); }
 .pr-photo-cap { font-size: .7rem; color: var(--lilac-dim); margin: -.5rem 0 .6rem; }
 .pr-about { border-left: 2px solid rgba(167,38,208,.5); padding: .2rem 0 .2rem .9rem; margin: 0 0 1rem; display: grid; gap: .45rem; }
 .pr-about-ar { font-family: "Amiri", serif; font-size: 1.08rem; line-height: 1.8; margin: 0; color: var(--white); text-align: right; }
@@ -3478,6 +3490,14 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
       <p class="note">Ten trials earn marks. The chambers never run out.</p>
     </header>
 
+    <div id="block-poetry">
+      <div class="sec-head">
+        <h2>Poetry</h2>
+        <span class="note">Translate a poem, share your version</span>
+      </div>
+      <div class="ledger" id="sec-poetry"></div>
+    </div>
+
     <div id="block-trials">
       <div class="sec-head">
         <h2>The Trials</h2>
@@ -3492,14 +3512,6 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
         <span class="note">Unassessed, unlimited</span>
       </div>
       <div class="ledger" id="sec-chambers"></div>
-    </div>
-
-    <div id="block-poetry">
-      <div class="sec-head">
-        <h2>Poetry</h2>
-        <span class="note">Translate a poem, share your version</span>
-      </div>
-      <div class="ledger" id="sec-poetry"></div>
     </div>
   </section>
 
@@ -3637,7 +3649,8 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
   <!-- ══════════════ A TRIAL OR GUIDE ══════════════ -->
   <section id="trial" class="view" hidden>
     <div class="trial-head">
-      <div>
+      <button type="button" class="top-back" id="top-back" aria-label="Back">←</button>
+      <div class="th-titles">
         <h2 id="trial-en"></h2>
         <p class="trial-subject" id="trial-subject" hidden></p>
       </div>
@@ -17775,7 +17788,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1014-0130";
+const BUILD = "1014-0245";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19461,6 +19474,10 @@ function pushTrail(label, restore) {
 }
 function trailTop() { return trail.length ? trail[trail.length - 1] : null; }
 function clearTrail() { trail.length = 0; }
+document.addEventListener("DOMContentLoaded", () => {
+  const tb = document.getElementById("top-back");
+  if (tb) tb.addEventListener("click", () => { goBack(); window.scrollTo(0, 0); });
+});
 function goBack() {
   stopBooth();
   const prev = trail.pop();
@@ -19730,13 +19747,6 @@ async function poetShelf(d, poet, term) {
         if (!has) body.appendChild(el("p", "pr-about-src", lang === "en"
           ? "There is no English Wikipedia article on this poet yet, so the Arabic one is shown."
           : "لا توجد مقالة عربية عن هذا الشاعر بعد، فهذه المقالة الإنجليزية."));
-        const src = el("p", "pr-about-src");
-        src.dir = lang === "ar" ? "rtl" : "ltr";
-        src.appendChild(document.createTextNode(lang === "ar" ? "المصدر: " : "Source: "));
-        const a = el("a", null, lang === "ar" ? "ويكيبيديا" : "Wikipedia");
-        a.href = poet.intro[use].url; a.target = "_blank"; a.rel = "noopener";
-        src.appendChild(a);
-        body.appendChild(src);
       }
       const facts = el("p", "pr-about-has");
       facts.dir = lang === "ar" ? "rtl" : "ltr";
@@ -19805,6 +19815,15 @@ async function poetShelf(d, poet, term) {
     if (src.note) ref.appendChild(el("span", null, esc(src.note)));
   } else {
     ref.appendChild(document.createTextNode("المصدر: ويكي مصدر · Source: Wikisource (public domain)"));
+  }
+  if (poet.intro) {
+    /* the introduction is Wikipedia's text, which its licence lets us use with a credit */
+    const w = el("span", "pr-ref-small");
+    const wa = el("a", null, "Wikipedia"); wa.href = (poet.intro.ar || poet.intro.en).url; wa.target = "_blank"; wa.rel = "noopener";
+    w.appendChild(document.createTextNode("نبذة الشاعر · About the poet: "));
+    w.appendChild(wa);
+    w.appendChild(document.createTextNode(" (CC BY-SA)"));
+    ref.appendChild(w);
   }
   stage.appendChild(ref);
   stage.appendChild(footNav());
