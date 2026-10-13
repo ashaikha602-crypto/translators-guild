@@ -830,6 +830,9 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .pr-portrait { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 25%; border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0,0,0,.4); }
 @media (min-width: 720px) { .pr-poet-head.has-photo { grid-template-columns: 12rem minmax(0,1fr); } }
+.pr-about-sw { display: flex; gap: .4rem; }
+.pr-about-sw .chip { padding: .3rem .8rem; font-size: .78rem; }
+.pr-about-body { display: grid; gap: .45rem; }
 .pr-photo-cap { font-size: .7rem; color: var(--lilac-dim); margin: -.5rem 0 .6rem; }
 .pr-about { border-left: 2px solid rgba(167,38,208,.5); padding: .2rem 0 .2rem .9rem; margin: 0 0 1rem; display: grid; gap: .45rem; }
 .pr-about-ar { font-family: "Amiri", serif; font-size: 1.08rem; line-height: 1.8; margin: 0; color: var(--white); text-align: right; }
@@ -17764,7 +17767,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1013-2200";
+const BUILD = "1013-2230";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19683,30 +19686,58 @@ async function poetShelf(d, poet, term) {
   const hw = el("div", "pr-poet-words");
   hw.appendChild(el("p", "pr-poet-name ar", esc(diwanAr(poet))));
   hw.appendChild(el("p", "pr-poet-en", esc(diwanEn(poet))));
-  hw.appendChild(el("p", "note", esc((poet.years || "") + " · " + poet.era + (poet.count ? " · " + poet.count + (poet.count === 1 ? " poem" : " poems") : ""))));
+  hw.appendChild(el("p", "note", esc(poet.years || "")));
   head.appendChild(hw);
   stage.appendChild(head);
   if (poet.photoCaption) stage.appendChild(el("p", "pr-photo-cap", esc(poet.photoCaption)));
-  /* who the poet was, in Wikipedia's words, and what this diwan holds */
+  /* who the poet was, in Wikipedia's words, and what this diwan holds,
+     in Arabic or English: the member chooses, and the choice is kept */
   if (poet.intro || poet.count) {
+    let lang = "ar";
+    try { lang = localStorage.getItem("cmp.poetry.about") || "ar"; } catch (e) {}
     const about = el("div", "pr-about");
-    if (poet.intro && poet.intro.ar) { const pa = el("p", "pr-about-ar", esc(poet.intro.ar.text)); pa.dir = "rtl"; about.appendChild(pa); }
-    if (poet.intro && poet.intro.en) about.appendChild(el("p", "pr-about-en", esc(poet.intro.en.text)));
-    if (poet.intro) {
-      const src = el("p", "pr-about-src");
-      src.appendChild(document.createTextNode("From Wikipedia: "));
-      [["ar", "العربية"], ["en", "English"]].forEach(([l, n], k) => {
-        if (!poet.intro[l]) return;
-        if (src.childNodes.length > 1) src.appendChild(document.createTextNode(" · "));
-        const a = el("a", null, n); a.href = poet.intro[l].url; a.target = "_blank"; a.rel = "noopener";
-        src.appendChild(a);
+    const sw = el("div", "pr-about-sw");
+    const body = el("div", "pr-about-body");
+    [["ar", "العربية"], ["en", "English"]].forEach(([l, n]) => {
+      const b = el("button", "chip" + (lang === l ? " on" : ""), n); b.type = "button";
+      b.addEventListener("click", () => {
+        lang = l; try { localStorage.setItem("cmp.poetry.about", l); } catch (e) {}
+        sw.querySelectorAll(".chip").forEach(x => x.classList.toggle("on", x === b));
+        fill();
       });
-      about.appendChild(src);
+      sw.appendChild(b);
+    });
+    function fill() {
+      body.innerHTML = "";
+      const era = (poet.era || "").split(" · ");
+      const eraTxt = lang === "ar" ? era[0] : (era[1] || era[0]);
+      const has = poet.intro && poet.intro[lang];
+      const use = has ? lang : (poet.intro && poet.intro.ar ? "ar" : (poet.intro && poet.intro.en ? "en" : null));
+      if (use) {
+        const p = el("p", use === "ar" ? "pr-about-ar" : "pr-about-en", esc(poet.intro[use].text));
+        p.dir = use === "ar" ? "rtl" : "ltr";
+        body.appendChild(p);
+        if (!has) body.appendChild(el("p", "pr-about-src", lang === "en"
+          ? "There is no English Wikipedia article on this poet yet, so the Arabic one is shown."
+          : "لا توجد مقالة عربية عن هذا الشاعر بعد، فهذه المقالة الإنجليزية."));
+        const src = el("p", "pr-about-src");
+        src.dir = lang === "ar" ? "rtl" : "ltr";
+        src.appendChild(document.createTextNode(lang === "ar" ? "المصدر: " : "Source: "));
+        const a = el("a", null, lang === "ar" ? "ويكيبيديا" : "Wikipedia");
+        a.href = poet.intro[use].url; a.target = "_blank"; a.rel = "noopener";
+        src.appendChild(a);
+        body.appendChild(src);
+      }
+      const facts = el("p", "pr-about-has");
+      facts.dir = lang === "ar" ? "rtl" : "ltr";
+      facts.textContent = lang === "ar"
+        ? eraTxt + " · " + (poet.years || "") + (poet.count ? " · في هذا الديوان: " + poet.count + " قصيدة" + (poet.verses ? "، " + poet.verses + " بيتًا" : "") : " · القصائد في الطريق")
+        : eraTxt + " · " + (poet.years || "") + (poet.count ? " · In this diwan: " + poet.count + (poet.count === 1 ? " poem" : " poems") +
+            (poet.verses ? ", " + poet.verses + (poet.lang === "ar" ? " verses" : " lines") : "") : " · poems on their way");
+      body.appendChild(facts);
     }
-    if (poet.count) about.appendChild(el("p", "pr-about-has",
-      "In this diwan: " + poet.count + (poet.count === 1 ? " poem" : " poems") +
-      (poet.verses ? ", " + poet.verses + (poet.lang === "ar" ? " verses" : " lines") : "") +
-      " · في هذا الديوان: " + poet.count + " قصيدة"));
+    about.appendChild(sw); about.appendChild(body);
+    fill();
     stage.appendChild(about);
   }
   if (!poet.count) {
