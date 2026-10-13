@@ -17767,7 +17767,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1013-2230";
+const BUILD = "1013-2330";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19508,22 +19508,24 @@ function backFoot(opts) { return footNav(opts); }
    when it is opened (poetry/<id>.json), so a phone never downloads
    the whole library.
    ═══════════════════════════════════════════════════════════ */
-let POETRY = null;
+let POETRY = null, POETRY_AT = 0;
 const POET_CACHE = {};
 async function loadPoetry() {
-  if (POETRY) return POETRY;
-  const r = await fetch("poetry/index.json?v=" + BUILD);
+  /* the shelf grows while the site is open, so look again after a few minutes */
+  if (POETRY && Date.now() - POETRY_AT < 5 * 60 * 1000) return POETRY;
+  const r = await fetch("poetry/index.json?v=" + BUILD + "-" + Math.floor(Date.now() / 300000), { cache: "no-cache" });
   if (r.status === 404) return null;   /* the diwans are not uploaded yet */
   if (!r.ok) throw new Error("poems " + r.status);
   const d = await r.json();
   d.poetById = {};
   d.poets.forEach(p => { d.poetById[p.id] = p; });
-  POETRY = d;
+  POETRY = d; POETRY_AT = Date.now();
+  for (const k in POET_CACHE) delete POET_CACHE[k];
   return d;
 }
 async function loadDiwan(poet) {
   if (POET_CACHE[poet.id]) return POET_CACHE[poet.id];
-  const r = await fetch("poetry/" + poet.id + ".json?v=" + BUILD);
+  const r = await fetch("poetry/" + poet.id + ".json?v=" + BUILD + "-" + poet.count, { cache: "no-cache" });
   if (!r.ok) throw new Error("diwan " + r.status);
   const d = await r.json();
   d.poems.forEach(p => { p.poet = poet.id; });
