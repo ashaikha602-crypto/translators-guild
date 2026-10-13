@@ -830,6 +830,13 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .pr-portrait { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 25%; border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0,0,0,.4); }
 @media (min-width: 720px) { .pr-poet-head.has-photo { grid-template-columns: 12rem minmax(0,1fr); } }
+.pr-photo-cap { font-size: .7rem; color: var(--lilac-dim); margin: -.5rem 0 .6rem; }
+.pr-about { border-left: 2px solid rgba(167,38,208,.5); padding: .2rem 0 .2rem .9rem; margin: 0 0 1rem; display: grid; gap: .45rem; }
+.pr-about-ar { font-family: "Amiri", serif; font-size: 1.08rem; line-height: 1.8; margin: 0; color: var(--white); text-align: right; }
+.pr-about-en { font-size: .9rem; line-height: 1.6; margin: 0; color: var(--ink); }
+.pr-about-src, .pr-about-has { font-size: .74rem; color: var(--lilac-dim); margin: 0; }
+.pr-about-src a { color: var(--lilac); }
+:root[data-theme="light"] .pr-about-ar { color: #22163f; }
 .pr-mine-acts { display: flex; justify-content: flex-end; align-items: center; gap: .8rem; }
 /* story viewer: a long press pauses; stop the phone's own image menu taking the press */
 .st-stage, .st-stage * { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
@@ -17757,7 +17764,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1013-2110";
+const BUILD = "1013-2200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19679,6 +19686,29 @@ async function poetShelf(d, poet, term) {
   hw.appendChild(el("p", "note", esc((poet.years || "") + " · " + poet.era + (poet.count ? " · " + poet.count + (poet.count === 1 ? " poem" : " poems") : ""))));
   head.appendChild(hw);
   stage.appendChild(head);
+  if (poet.photoCaption) stage.appendChild(el("p", "pr-photo-cap", esc(poet.photoCaption)));
+  /* who the poet was, in Wikipedia's words, and what this diwan holds */
+  if (poet.intro || poet.count) {
+    const about = el("div", "pr-about");
+    if (poet.intro && poet.intro.ar) { const pa = el("p", "pr-about-ar", esc(poet.intro.ar.text)); pa.dir = "rtl"; about.appendChild(pa); }
+    if (poet.intro && poet.intro.en) about.appendChild(el("p", "pr-about-en", esc(poet.intro.en.text)));
+    if (poet.intro) {
+      const src = el("p", "pr-about-src");
+      src.appendChild(document.createTextNode("From Wikipedia: "));
+      [["ar", "العربية"], ["en", "English"]].forEach(([l, n], k) => {
+        if (!poet.intro[l]) return;
+        if (src.childNodes.length > 1) src.appendChild(document.createTextNode(" · "));
+        const a = el("a", null, n); a.href = poet.intro[l].url; a.target = "_blank"; a.rel = "noopener";
+        src.appendChild(a);
+      });
+      about.appendChild(src);
+    }
+    if (poet.count) about.appendChild(el("p", "pr-about-has",
+      "In this diwan: " + poet.count + (poet.count === 1 ? " poem" : " poems") +
+      (poet.verses ? ", " + poet.verses + (poet.lang === "ar" ? " verses" : " lines") : "") +
+      " · في هذا الديوان: " + poet.count + " قصيدة"));
+    stage.appendChild(about);
+  }
   if (!poet.count) {
     stage.appendChild(el("p", "pr-lead", "The poems of this diwan are on their way."));
     stage.appendChild(footNav());
