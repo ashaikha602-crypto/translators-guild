@@ -2601,6 +2601,24 @@ a.ks-s-en:hover { color: var(--white); }
 .pp-empty { display: grid; justify-items: center; gap: .4rem; color: #fff; text-align: center; padding: 1rem; }
 .pp-empty svg { width: 64px; height: 64px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
 .pp-empty b { font-size: 1.1rem; } .pp-empty i { font-style: normal; font-size: .85rem; opacity: .7; }
+.pp-stage { display: grid; place-items: center; background: #000; padding: 0; }
+.pp-crop { position: relative; overflow: hidden; max-width: 100%; touch-action: none; cursor: grab; user-select: none;
+  -webkit-user-select: none; -webkit-touch-callout: none; background: #000; }
+.pp-crop.moving { cursor: grabbing; }
+.pp-crop img { position: absolute; top: 0; left: 0; max-width: none; transform-origin: 0 0; pointer-events: none; -webkit-user-drag: none; }
+.pp-grid { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .2s;
+  background: linear-gradient(90deg, transparent calc(33.33% - .5px), rgba(255,255,255,.55) calc(33.33% - .5px) calc(33.33% + .5px), transparent calc(33.33% + .5px) calc(66.66% - .5px), rgba(255,255,255,.55) calc(66.66% - .5px) calc(66.66% + .5px), transparent calc(66.66% + .5px)),
+              linear-gradient(180deg, transparent calc(33.33% - .5px), rgba(255,255,255,.55) calc(33.33% - .5px) calc(33.33% + .5px), transparent calc(33.33% + .5px) calc(66.66% - .5px), rgba(255,255,255,.55) calc(66.66% - .5px) calc(66.66% + .5px), transparent calc(66.66% + .5px)); }
+.pp-crop.moving .pp-grid { opacity: 1; }
+.pp-bar.pp-tools { flex-wrap: wrap; gap: .7rem; }
+.pp-ratios { display: flex; gap: .4rem; flex-wrap: wrap; width: 100%; }
+.pp-ratio { all: unset; cursor: pointer; padding: .35rem .8rem; border-radius: 999px; font-size: .85rem; font-weight: 600;
+  background: rgba(255,255,255,.1); }
+.pp-ratio.on { background: #a726d0; color: #fff; }
+.pp-zrow { display: flex; align-items: center; gap: .5rem; flex: 1 1 100%; }
+.pp-zl { opacity: .7; font-weight: 700; width: 1rem; text-align: center; }
+.pp-zoom { flex: 1; accent-color: #a726d0; }
+.pp-hint { margin: 0; font-size: .8rem; font-weight: 400; opacity: .65; flex: 1; }
 .pp-bar { display: flex; justify-content: space-between; align-items: center; padding: .8rem 1rem; font-weight: 600; font-size: .95rem; }
 .pp-gal { all: unset; cursor: pointer; font-size: .85rem; font-weight: 600; padding: .45rem .9rem; border-radius: 999px; background: rgba(255,255,255,.12); }
 .pp-caprow { display: grid; grid-template-columns: 72px 1fr; gap: .8rem; padding: 1rem; border-bottom: 1px solid rgba(214,191,234,.1); }
@@ -17788,7 +17806,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1014-0245";
+const BUILD = "1014-1100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -18916,7 +18934,8 @@ function photoPost() {
   ov.setAttribute("role", "dialog"); ov.setAttribute("aria-label", "New post");
   document.body.appendChild(ov); document.body.classList.add("st-open");
   const unfit = fitToKeyboard(ov);
-  const close = () => { unfit(); ov.remove(); document.body.classList.remove("st-open"); if (url) URL.revokeObjectURL(url); };
+  const close = () => { unfit(); ov.remove(); document.body.classList.remove("st-open"); if (url) URL.revokeObjectURL(url); if (cropUrl) URL.revokeObjectURL(cropUrl); };
+  let cropped = null;
   const pick = document.createElement("input");
   pick.type = "file"; pick.accept = "image/*,video/*"; pick.hidden = true;
   ov.appendChild(pick);
@@ -18933,15 +18952,21 @@ function photoPost() {
   ov.appendChild(body);
   let step = 1;
 
+  /* The photo is framed the way the member decides: pick a shape, drag it
+     about, pinch or scroll to zoom. Only what is inside the frame is posted. */
+  const RATIOS = [["1:1", 1], ["4:5", 4 / 5], ["16:9", 16 / 9], ["Original", 0]];
+  let crop = null;   /* {ratio, s, cx, cy, w, h} — the centre is a fraction of the photo */
+  const ratioOf = () => crop.ratio || Math.max(4 / 5, Math.min(1.91, crop.w / crop.h));
+
   function stepOne() {
     step = 1; title.textContent = "New post"; next.textContent = "Next"; next.disabled = !file;
     back.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
     body.innerHTML = "";
+    if (file && !isVid) { cropper(); return; }
     const frame = el("button", "pp-frame");
     frame.type = "button";
     if (file) {
-      if (isVid) { const v = document.createElement("video"); v.src = url; v.muted = true; v.autoplay = true; v.loop = true; v.playsInline = true; v.setAttribute("playsinline", ""); frame.appendChild(v); }
-      else { const i = new Image(); i.src = url; i.alt = ""; frame.appendChild(i); }
+      const v = document.createElement("video"); v.src = url; v.muted = true; v.autoplay = true; v.loop = true; v.playsInline = true; v.setAttribute("playsinline", ""); v.style.objectFit = "contain"; frame.appendChild(v);
     } else {
       frame.innerHTML = '<span class="pp-empty"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg>' +
         '<b>Choose a photo or video</b><i>From your gallery or camera</i></span>';
@@ -18955,6 +18980,125 @@ function photoPost() {
     bar.appendChild(g);
     body.appendChild(bar);
   }
+
+  function cropper() {
+    const stage = el("div", "pp-stage");
+    const frame = el("div", "pp-crop");
+    frame.setAttribute("aria-label", "Drag to move the photo, pinch or scroll to zoom");
+    const img = new Image(); img.src = url; img.alt = ""; img.draggable = false;
+    const grid = el("div", "pp-grid");
+    frame.appendChild(img); frame.appendChild(grid);
+    stage.appendChild(frame);
+    body.appendChild(stage);
+    const bar = el("div", "pp-bar pp-tools");
+    const shapes = el("div", "pp-ratios");
+    RATIOS.forEach(([lab, r]) => {
+      const b = el("button", "pp-ratio", lab); b.type = "button";
+      b.addEventListener("click", () => { crop.ratio = r; crop.s = 1; crop.cx = crop.cy = .5; shape(); });
+      b.dataset.r = r; shapes.appendChild(b);
+    });
+    bar.appendChild(shapes);
+    const zoom = document.createElement("input");
+    zoom.type = "range"; zoom.min = "1"; zoom.max = "5"; zoom.step = "0.01"; zoom.className = "pp-zoom";
+    zoom.setAttribute("aria-label", "Zoom");
+    zoom.addEventListener("input", () => { crop.s = +zoom.value; paint(); });
+    const g = el("button", "pp-gal", "Change photo");
+    g.type = "button"; g.addEventListener("click", () => pick.click());
+    const row = el("div", "pp-zrow");
+    row.appendChild(el("span", "pp-zl", "−")); row.appendChild(zoom); row.appendChild(el("span", "pp-zl", "+"));
+    bar.appendChild(row);
+    bar.appendChild(el("p", "pp-hint", "Drag to move · pinch or use the slider to zoom"));
+    bar.appendChild(g);
+    body.appendChild(bar);
+
+    let W = 0, H = 0;
+    function shape() {
+      const r = ratioOf();
+      shapes.querySelectorAll(".pp-ratio").forEach(b => b.classList.toggle("on", +b.dataset.r === crop.ratio));
+      frame.style.aspectRatio = String(r);
+      frame.style.width = "min(100%, calc(58vh * " + r.toFixed(4) + "))";
+      requestAnimationFrame(paint);
+    }
+    function clamp() {
+      const sc = Math.max(W / crop.w, H / crop.h) * crop.s;
+      const hx = W / (2 * crop.w * sc), hy = H / (2 * crop.h * sc);
+      crop.cx = Math.max(hx, Math.min(1 - hx, crop.cx));
+      crop.cy = Math.max(hy, Math.min(1 - hy, crop.cy));
+      return sc;
+    }
+    function paint() {
+      const R = frame.getBoundingClientRect(); W = R.width; H = R.height;
+      if (!W || !crop.w) return;
+      crop.s = Math.max(1, Math.min(5, crop.s));
+      const sc = clamp();
+      const dw = crop.w * sc, dh = crop.h * sc;
+      img.style.width = dw + "px"; img.style.height = dh + "px";
+      img.style.transform = "translate(" + (W / 2 - crop.cx * dw) + "px," + (H / 2 - crop.cy * dh) + "px)";
+      zoom.value = String(crop.s);
+    }
+    const start = () => {
+      if (!crop || crop.src !== url) {
+        crop = { src: url, ratio: 4 / 5, s: 1, cx: .5, cy: .5, w: img.naturalWidth, h: img.naturalHeight };
+        if (crop.w >= crop.h * 1.3) crop.ratio = 0;   /* a wide photo opens whole */
+      }
+      shape();
+    };
+    if (img.complete && img.naturalWidth) start(); else img.onload = start;
+    const ro = new ResizeObserver(() => crop && paint()); ro.observe(frame);
+
+    /* one finger moves, two fingers zoom */
+    const pts = new Map(); let st = null;
+    const snap = () => { const a = [...pts.values()]; st = { s: crop.s, cx: crop.cx, cy: crop.cy, p: a.map(q => ({ ...q })),
+      d: a.length > 1 ? Math.hypot(a[1].x - a[0].x, a[1].y - a[0].y) : 0 }; };
+    frame.addEventListener("pointerdown", e => {
+      e.preventDefault(); frame.setPointerCapture(e.pointerId);
+      pts.set(e.pointerId, { x: e.clientX, y: e.clientY }); snap(); frame.classList.add("moving");
+    });
+    frame.addEventListener("pointermove", e => {
+      if (!pts.has(e.pointerId) || !crop) return;
+      pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      const a = [...pts.values()];
+      const sc = Math.max(W / crop.w, H / crop.h);
+      if (a.length > 1 && st.d) {
+        crop.s = Math.max(1, Math.min(5, st.s * Math.hypot(a[1].x - a[0].x, a[1].y - a[0].y) / st.d));
+        const mx = (a[0].x + a[1].x) / 2 - (st.p[0].x + st.p[1].x) / 2, my = (a[0].y + a[1].y) / 2 - (st.p[0].y + st.p[1].y) / 2;
+        crop.cx = st.cx - mx / (crop.w * sc * crop.s); crop.cy = st.cy - my / (crop.h * sc * crop.s);
+      } else if (a.length === 1 && st.p.length === 1) {
+        crop.cx = st.cx - (a[0].x - st.p[0].x) / (crop.w * sc * crop.s);
+        crop.cy = st.cy - (a[0].y - st.p[0].y) / (crop.h * sc * crop.s);
+      }
+      paint();
+    });
+    const up = e => { pts.delete(e.pointerId); snap(); if (!pts.size) frame.classList.remove("moving"); };
+    frame.addEventListener("pointerup", up); frame.addEventListener("pointercancel", up);
+    frame.addEventListener("wheel", e => { e.preventDefault(); crop.s *= e.deltaY < 0 ? 1.06 : .94; paint(); }, { passive: false });
+    frame.addEventListener("dblclick", () => { crop.s = 1; crop.cx = crop.cy = .5; paint(); });
+  }
+
+  /* what is inside the frame, as a JPEG no more than 1440 px on its long side */
+  function croppedPhoto() {
+    return new Promise(res => {
+      if (!crop || !crop.w) return res(null);
+      const img = new Image();
+      img.onload = () => {
+        const r = ratioOf();
+        const vw0 = Math.min(crop.w, crop.h * r), vh0 = vw0 / r;    /* the view at zoom 1 */
+        const vw = vw0 / crop.s, vh = vh0 / crop.s;
+        const sx = Math.max(0, Math.min(crop.w - vw, crop.cx * crop.w - vw / 2));
+        const sy = Math.max(0, Math.min(crop.h - vh, crop.cy * crop.h - vh / 2));
+        const k = Math.min(1, 1440 / Math.max(vw, vh));
+        const c = document.createElement("canvas");
+        c.width = Math.max(1, Math.round(vw * k)); c.height = Math.max(1, Math.round(vh * k));
+        const g = c.getContext("2d");
+        g.fillStyle = "#000"; g.fillRect(0, 0, c.width, c.height);
+        g.drawImage(img, sx, sy, vw, vh, 0, 0, c.width, c.height);
+        c.toBlob(b => res(b), "image/jpeg", 0.9);
+      };
+      img.onerror = () => res(null);
+      img.src = url;
+    });
+  }
+  let cropUrl = "";
   let cap, vis;
   function stepTwo() {
     step = 2; title.textContent = "New post"; next.textContent = "Share"; next.disabled = false;
@@ -18963,7 +19107,7 @@ function photoPost() {
     const row = el("div", "pp-caprow");
     const th = el("div", "pp-thumb");
     if (isVid) { const v = document.createElement("video"); v.src = url; v.muted = true; th.appendChild(v); }
-    else { const i = new Image(); i.src = url; i.alt = ""; th.appendChild(i); }
+    else { const i = new Image(); i.src = cropUrl || url; i.alt = ""; th.appendChild(i); }
     row.appendChild(th);
     cap = document.createElement("textarea");
     cap.className = "pp-cap"; cap.maxLength = 2200; cap.dir = "auto"; cap.rows = 4;
@@ -18991,17 +19135,30 @@ function photoPost() {
       return;
     }
     if (url) URL.revokeObjectURL(url);
-    file = f; url = URL.createObjectURL(f);
+    file = f; url = URL.createObjectURL(f); cropped = null;
     stepOne();
   });
   back.addEventListener("click", () => step === 2 ? stepOne() : close());
   next.addEventListener("click", async () => {
-    if (step === 1) { if (file) stepTwo(); else pick.click(); return; }
+    if (step === 1) {
+      if (!file) { pick.click(); return; }
+      if (!isVid) {
+        next.disabled = true;
+        cropped = await croppedPhoto();
+        next.disabled = false;
+        if (cropUrl) URL.revokeObjectURL(cropUrl);
+        cropUrl = cropped ? URL.createObjectURL(cropped) : "";
+      }
+      stepTwo(); return;
+    }
     const msg = body.querySelector(".pp-msg");
     next.disabled = true; next.textContent = "Sharing…";
     try {
       let up = file;
-      if (!isVid) { const small = await shrinkPhoto(file); if (small) up = new File([small], (file.name || "photo").replace(/\.\w+$/, "") + ".jpg", { type: "image/jpeg" }); }
+      if (!isVid) {
+        const small = cropped || await shrinkPhoto(file);
+        if (small) up = new File([small], (file.name || "photo").replace(/\.\w+$/, "") + ".jpg", { type: "image/jpeg" });
+      }
       const row = await sbPost("posts", {
         author_id: myId(), post_type: isVid ? "reel" : "image",
         content: cap.value.trim() || null, visibility: vis.value
