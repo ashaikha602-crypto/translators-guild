@@ -723,6 +723,64 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .sec-head h2 { font-family: var(--f-serif); font-size: 1.35rem; font-weight: 600; color: var(--white); margin: 0; }
 .sec-head .s-ar { font-family: var(--f-ar); direction: rtl; font-size: 1rem; color: var(--lilac); }
 .ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(18.5rem, 1fr)); gap: .6rem; }
+/* ═══════════ LEARN · a course map, not a shelf ═══════════ */
+.learn-map { display: grid; gap: 1.4rem; }
+.lm-head { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin: 0 0 .55rem; }
+.lm-head h2 { font-family: var(--f-serif); font-size: 1.15rem; font-weight: 600; color: var(--white); margin: 0; }
+.lm-head .note { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--lilac-dim); }
+.lm-list { display: grid; gap: .45rem; }
+.lesson-row { display: grid; grid-template-columns: 2.1rem minmax(0,1fr) 1rem; align-items: center; gap: .75rem;
+  width: 100%; text-align: left; padding: .8rem .9rem; border-radius: 14px; border: 1px solid var(--ink-ghost);
+  background: rgba(214,191,234,.05); color: var(--white); cursor: pointer; animation: rise .4s both; }
+.lesson-row:hover { background: rgba(214,191,234,.11); }
+.lr-num { width: 2.1rem; height: 2.1rem; border-radius: 50%; display: grid; place-items: center; font-size: .85rem;
+  font-weight: 600; background: rgba(214,191,234,.12); color: var(--lilac); }
+.lr-txt { display: grid; gap: .15rem; min-width: 0; }
+.lr-en { font-family: var(--f-serif); font-size: 1.02rem; font-weight: 600; line-height: 1.25; }
+.lr-sub { font-size: .8rem; line-height: 1.4; color: var(--lilac-dim); display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden; }
+.lr-go { font-size: 1.4rem; color: var(--lilac-dim); }
+:root[data-theme="light"] .lesson-row { background: rgba(91,63,181,.04); color: #22163f; }
+:root[data-theme="light"] .lm-head h2 { color: #22163f; }
+
+/* ═══════════ BOOK GUIDES ═══════════ */
+.chips.bg-chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: .35rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.bg-chips::-webkit-scrollbar { display: none; }
+.bg-chips .chip { flex: 0 0 auto; white-space: nowrap; }
+.bg-card .bg-ar { display: block; font-family: var(--f-ar); direction: rtl; color: var(--lilac); font-size: .95rem; margin-top: .2rem; }
+.bg-body p, .bg-body li { line-height: 1.65; }
+.bg-body ul, .bg-body ol { padding-left: 1.2rem; margin: .4rem 0 .6rem; }
+.bg-body li { margin: .25rem 0; }
+.src { font-size: .78em; color: var(--lilac-dim); white-space: nowrap; }
+.bg-tablewrap { overflow-x: auto; margin: .6rem 0 .8rem; }
+.bg-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.bg-table th { text-align: left; font-weight: 600; color: var(--lilac); padding: .45rem .5rem; border-bottom: 1px solid var(--ink-ghost); }
+.bg-table td { padding: .45rem .5rem; border-bottom: 1px solid rgba(214,191,234,.12); vertical-align: top; }
+.bg-table .is-ar { font-family: var(--f-ar); direction: rtl; text-align: right; font-size: 1rem; }
+.bg-quote { margin: .9rem 0 0; padding: .7rem .9rem; border-left: 3px solid var(--lilac); background: rgba(214,191,234,.06);
+  border-radius: 0 10px 10px 0; font-style: italic; line-height: 1.6; }
+.bg-sources { font-size: .78rem; color: var(--lilac-dim); line-height: 1.5; }
+.bg-sources p { margin: .3rem 0 0; }
+
+/* ═══════════ TIDY · long guides fold on a phone ═══════════ */
+details.tg { border: 1px solid var(--ink-ghost); border-radius: 12px; margin: .6rem 0; background: rgba(214,191,234,.04); }
+details.tg > summary { list-style: none; cursor: pointer; padding: .75rem .9rem; font-weight: 600; font-size: .92rem;
+  display: flex; justify-content: space-between; align-items: center; color: var(--white); }
+details.tg > summary::-webkit-details-marker { display: none; }
+details.tg > summary::after { content: "+"; font-size: 1.2rem; color: var(--lilac); }
+details.tg[open] > summary::after { content: "\2212"; }
+details.tg > .tg-in { padding: 0 .9rem .8rem; }
+:root[data-theme="light"] details.tg > summary { color: #22163f; }
+.tg-more { margin: .5rem 0 0; width: 100%; }
+.xfer.tg-hidden { display: none; }
+
+@media (max-width: 600px) {
+  .th-face.ig { width: 46px; height: 46px; }
+  .th-igq { display: none; }
+  .th-learn { padding: .35rem .8rem; font-size: .75rem; }
+  .th-ig { padding: .5rem .1rem; }
+}
+
 
 .commission {
   display: grid; gap: .55rem; align-content: start;
@@ -4481,165 +4539,227 @@ const TEXT_WORLDS = [
    TRIAL CONTENT
    ═══════════════════════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════════════════════
+   THE ONE RULE OF EVERY TRIAL
+
+   One rule for every question below: exactly ONE option is a correct
+   translation. Every other option is wrong in meaning — a false friend,
+   a different idiom, the opposite sense, a wrong partner word — never a
+   correct-but-plainer version. Members complained, rightly, that a
+   correct paraphrase marked wrong is a trick, not a test.
+
+   Sources, cited in each explanation:
+     Husni, R. & Newman, D. L. (2015). Arabic–English–Arabic Translation:
+       Issues and Strategies. Routledge.  (page numbers given)
+     Husni, R. & Newman, D. L. (2013). A to Z of Arabic–English–Arabic
+       Translation. Saqi.  (cited by entry: the e-book has no pages)
+     Bassnett, S. (2014). Translation Studies (4th ed.). Routledge.
+   The wrong options are written to be wrong; only the right answers and
+   the explanations carry a source.
+   ═══════════════════════════════════════════════════════════ */
+
+const HN15 = "Husni &amp; Newman (2015)";
+const HN13 = "Husni &amp; Newman (2013)";
+
 const HUMAN = [
-  { src: "تسلم إيدك على هذا الشغل.",
+  { src: "للّه دَرُّه!",
     opts: [
-      { t: "May your hand be safe upon this work.", tag: "machine · literal" },
-      { t: "You did an amazing job — thank you.", tag: "natural", ok: true },
-      { t: "I hereby express appreciation for the labour you have performed.", tag: "over-formal" }
+      { t: "How wonderful he is!", tag: "the meaning: an exclamation of praise", ok: true },
+      { t: "His milk is due to God.", tag: "word for word — the book calls this a “mock-exoticism”" },
+      { t: "God has taken his milk away.", tag: "wrong meaning entirely" }
     ],
-    why: "The literal hands the reader an image English never uses. <b>تسلم إيدك</b> is praise and thanks in one breath, so the natural rendering delivers praise and thanks." },
-  { src: "الحمد للّه على السلامة.",
+    why: "An inexperienced translator may render <b>للّه درّه</b> “by a mock-exoticism like ‘his milk is due to God/Allah’, rather than as ‘how wonderful so-and-so is!’” — " + HN15 + ", p. 1. Recognise the fixed expression first; then translate what it does.", ch: "Start Here" },
+
+  { src: "فقدَ اللاعبُ أعصابَه بعد الهدف الثاني.",
     opts: [
-      { t: "I am gratified by your safe arrival.", tag: "over-formal" },
-      { t: "Praise be to God for the safety.", tag: "machine · literal" },
-      { t: "Welcome back — glad you made it.", tag: "natural", ok: true }
+      { t: "The player lost his temper after the second goal.", tag: "the Arabic meaning", ok: true },
+      { t: "The player lost his nerve after the second goal.", tag: "false friend — “lose one’s nerve” means to lose courage" },
+      { t: "The player lost his voice after the second goal.", tag: "wrong meaning" }
     ],
-    why: "This is a greeting, not a prayer. Its <b>function</b> is to welcome someone home, so the equivalent is the English greeting that does the same job." },
-  { src: "ما تقصّر.",
+    why: "A classic false friend: <b>فقد أعصابه</b> means to become angry, while English <i>to lose one’s nerve</i> means to lose one’s courage. " + HN15 + ", p. 29.", ch: "Section 3.2" },
+
+  { src: "فعلتُ ذلك من أجل عينيك.",
     opts: [
-      { t: "You're the best, really.", tag: "natural", ok: true },
-      { t: "You do not fall short.", tag: "machine · literal" },
-      { t: "Your contribution has been entirely sufficient.", tag: "over-formal" }
+      { t: "I did it for your eyes only.", tag: "false friend — in English this means “secret”" },
+      { t: "I did it for your sake.", tag: "the Arabic meaning", ok: true },
+      { t: "I did it in front of your eyes.", tag: "wrong meaning" }
     ],
-    why: "Litotes — praise by denying a fault. English praises directly, so flipping it to a positive keeps the warmth the literal drains out." },
-  { src: "خلّها على اللّه.",
+    why: "English <i>for your eyes only</i> marks a confidential document; Arabic <b>من أجل عينيك</b> means “for your sake”. " + HN15 + ", p. 29.", ch: "Section 3.2" },
+
+  { src: "دخل القاعة ساحباً ذيلَه.",
     opts: [
-      { t: "Leave it upon God.", tag: "machine · literal" },
-      { t: "One must entrust the matter to divine providence.", tag: "over-formal" },
-      { t: "Let it go — it'll sort itself out.", tag: "natural", ok: true }
+      { t: "He entered the hall with his tail between his legs.", tag: "false friend — the English means “in shame”" },
+      { t: "He entered the hall dragging a long coat.", tag: "a literal guess — wrong meaning" },
+      { t: "He strutted into the hall.", tag: "the Arabic meaning", ok: true }
     ],
-    why: "Said to calm someone, not to preach. The religious surface is idiom, not content — carry the reassurance and leave the theology behind." },
-  { src: "عيني عينك.",
+    why: "<b>سحب ذيله</b> looks like the English <i>with one’s tail between one’s legs</i>, but the Arabic means “to strut” — the opposite of shame. " + HN15 + ", p. 31.", ch: "Section 3.2" },
+
+  { src: "عضَّ أناملَه حين سمع الخبر.",
     opts: [
-      { t: "Right in front of everyone, shamelessly.", tag: "natural", ok: true },
-      { t: "My eye, your eye.", tag: "machine · literal" },
-      { t: "In a wholly overt and unconcealed manner.", tag: "over-formal" }
+      { t: "He bit his nails anxiously when he heard the news.", tag: "the English habit — anxiety, not anger" },
+      { t: "He was seething with anger when he heard the news.", tag: "the Arabic meaning", ok: true },
+      { t: "He laughed when he heard the news.", tag: "wrong meaning" }
     ],
-    why: "Two words in Arabic, a whole clause in English. Equivalence is measured in effect, never in word count." },
-  { src: "يا ريت.",
+    why: "In Arabic you bite your fingertips (<b>عضّ أنامله</b>) in anger; an English speaker bites their nails out of anxiety, as in “a nail-biting wait”. " + HN15 + ", p. 31.", ch: "Section 3.2" },
+
+  { src: "أثلجَ الخبرُ صدري.",
     opts: [
-      { t: "It would be desirable were that the case.", tag: "over-formal" },
-      { t: "I wish.", tag: "natural", ok: true },
-      { t: "O would that.", tag: "machine · literal" }
+      { t: "The news warmed my heart.", tag: "the English image for the same feeling", ok: true },
+      { t: "The news chilled me to the bone.", tag: "wrong meaning — this is fear" },
+      { t: "The news froze my chest.", tag: "word for word — sounds like an illness" }
     ],
-    why: "Sometimes the natural equivalent is <b>shorter</b> than the literal one. Two syllables of resigned longing, matched exactly." }
+    why: "What is <i>heart-warming</i> in English “cools the breast” in Arabic, <b>أثلج الصدر</b>, a language rooted in desert heat. " + HN15 + ", p. 28.", ch: "Section 6.1" },
+
+  { src: "يعيش عيشةً باردة.",
+    opts: [
+      { t: "He lives a cold, lonely life.", tag: "the English association of “cold” — wrong here" },
+      { t: "He lives an easy, comfortable life.", tag: "the Arabic meaning", ok: true },
+      { t: "He lives in a cold country.", tag: "wrong meaning" }
+    ],
+    why: "Coolness means comfort in Arabic, so the easy life is a “cold life”, <b>عيش بارد</b>. " + HN15 + ", p. 28.", ch: "Section 3.2" },
+
+  { src: "لكلِّ جوادٍ كبوة.",
+    opts: [
+      { t: "Pride comes before a fall.", tag: "a real proverb — but it punishes arrogance" },
+      { t: "Nobody’s perfect.", tag: "the same advice", ok: true },
+      { t: "Every horse needs a stable.", tag: "wrong meaning" }
+    ],
+    why: "“Every steed can stumble” is said to excuse a mistake: don’t be too harsh, nobody’s perfect. " + HN15 + ", p. 37.", ch: "Section 3.2" },
+
+  { src: "ماذا تقولين يا أمّي؟ — said by an annoyed thirteen-year-old",
+    ask: "Which English line fits the speaker?",
+    opts: [
+      { t: "What’re you on about, Mum?", tag: "the speaker’s voice", ok: true },
+      { t: "Pray tell, what sayest thou, O mother?", tag: "mock-archaic — no boy speaks like this" },
+      { t: "What did you buy, Mum?", tag: "wrong meaning" }
+    ],
+    why: "Arabic novels often give dialogue in formal Arabic; the English must still sound like the character. Husni and Newman suggest <i>What’re you saying, Mum?</i>, or for an annoyed boy <i>What’re you on about, Mum?</i> (" + HN15 + ", p. 77).", ch: "Section 5.2" },
+
+  { src: "فاتَها القطار.",
+    lit: "said of a woman who did not marry",
+    opts: [
+      { t: "She missed her chance to marry.", tag: "the sense this idiom usually carries", ok: true },
+      { t: "She arrived late at the station.", tag: "the literal reading — wrong here" },
+      { t: "She lost her ticket.", tag: "wrong meaning" }
+    ],
+    why: "<b>فاته القطار</b> is the Arabic counterpart of <i>that ship has sailed</i>, but it collocates mostly with marriage. " + HN15 + ", pp. 31–32.", ch: "Section 3.2" },
+
+  { src: "شدَّ حزامَه استعداداً للرحلة.",
+    opts: [
+      { t: "He cut his spending because of the trip.", tag: "the other sense of the idiom — not this context" },
+      { t: "He got himself ready for the journey.", tag: "the sense the context gives", ok: true },
+      { t: "He bought a new belt for the trip.", tag: "the literal reading — wrong" }
+    ],
+    why: "<b>شدّ حزامه</b> can mean <i>to tighten one’s belt</i> (live frugally), but it also means “to prepare oneself” — and here the context (<b>استعداداً</b>) decides. " + HN15 + ", p. 31.", ch: "Section 3.2" },
+
+  { src: "جاء بخُفّي حُنين.",
+    opts: [
+      { t: "He came back with flying colours.", tag: "a real idiom — the opposite meaning" },
+      { t: "He came back empty-handed.", tag: "the meaning", ok: true },
+      { t: "He came back with new shoes.", tag: "the literal reading — wrong" }
+    ],
+    why: "Hunayn’s shoes stand for coming back with nothing after a failed attempt. " + HN15 + ", p. 29.", ch: "Section 3.2" }
 ];
 
 const PROVERBS = [
-  /* Every pair below is one the Translation Handbook itself gives in
-     Chapter 8, so what a member meets here is what they read in the book.
-     Two pairs that used to sit in this trial have been retired, because
-     both crossed the language and came out facing the wrong way:
-
-       القرد في عين أمّه غزال → "a face only a mother could love"
-         The Arabic is tender: a mother sees beauty in her child. The
-         English is a joke about how ugly somebody is. Same subject,
-         opposite feeling.
-
-       تحت السواهي دواهي → "still waters run deep"
-         The Arabic is a warning: the one who seems heedless is scheming.
-         The English is usually a compliment about hidden depths.
-
-     They are the exact trap this trial exists to teach, so they will
-     return as wrong answers once they can be written up properly. */
-
-  { src: "كالمُستجير من الرَّمضاء بالنَّار.",
+  /* Every option is a real proverb, so a member chooses between proverbs,
+     never between a proverb and a correct paraphrase of it. Exactly one
+     does the same work. Pairs from Husni & Newman (2015), pp. 32–40. */
+  { src: "كالمستجير من الرمضاء بالنار.",
     opts: [
-      { t: "Out of the frying pan into the fire.", tag: "the working equivalent", ok: true },
-      { t: "Like one seeking shelter from hot sand in fire.", tag: "literal — no such English proverb" },
-      { t: "Better the devil you know.", tag: "real proverb, opposite advice" }
+      { t: "Out of the frying pan into the fire.", tag: "same meaning: escaping into worse trouble", ok: true },
+      { t: "Better the devil you know.", tag: "opposite advice: stay where you are" },
+      { t: "Let sleeping dogs lie.", tag: "different meaning: don’t stir up trouble" }
     ],
-    why: "Both say the escape was worse than the danger. <b>Better the devil you know</b> advises staying put, which is the opposite counsel &mdash; a distractor worth recognising.", ch: "Chapter 8" },
+    why: "Both say the escape was worse than the danger. The book lists the Standard Arabic form and dialect versions, such as the Levantine and Gulf <b>من تحت الدلف لتحت المزراب</b>. " + HN15 + ", p. 32.", ch: "Section 3.2" },
 
-  { src: "رجع بخُفَّي حُنين.",
+  { src: "عصفورٌ في اليد خيرٌ من عشرةٍ على الشجرة.",
     opts: [
-      { t: "He returned with Hunayn's slippers.", tag: "literal — the story is lost on the reader" },
-      { t: "He came back empty-handed.", tag: "the working equivalent", ok: true },
-      { t: "He returned a broken man.", tag: "overstates it — this is loss, not ruin" }
+      { t: "The early bird catches the worm.", tag: "different meaning: act early" },
+      { t: "A bird in the hand is worth two in the bush.", tag: "same meaning", ok: true },
+      { t: "Birds of a feather flock together.", tag: "different meaning: like attracts like" }
     ],
-    why: "The Arabic carries a whole folk tale in four words. English has no proverb for it, so the handbook gives the <b>meaning in plain words</b> &mdash; which is the rule when no equivalent exists.", ch: "Chapter 8" },
+    why: "An equivalent proverb with similar form and meaning — only the numbers differ (ten on the tree, two in the bush). " + HN15 + ", p. 38.", ch: "Section 3.2" },
 
-  { src: "عُصفورٌ في اليد خيرٌ من عشرةٍ على الشَّجرة.",
+  { src: "إذا كثُرَ الربابنةُ غرقت السفينة.",
     opts: [
-      { t: "A sparrow in the hand is better than ten on the tree.", tag: "literal — and the English already exists" },
-      { t: "A bird in the hand is worth two in the bush.", tag: "the working equivalent", ok: true },
-      { t: "Don't count your chickens before they hatch.", tag: "close — but about hoping too early" }
+      { t: "Many hands make light work.", tag: "the opposite: more people help" },
+      { t: "Don’t rock the boat.", tag: "different meaning: don’t cause trouble" },
+      { t: "Too many cooks spoil the broth.", tag: "same meaning", ok: true }
     ],
-    why: "Notice the numbers change: Arabic counts <b>ten on the tree</b>, English <b>two in the bush</b>. You take the target language's proverb whole, arithmetic and all &mdash; you do not correct it.", ch: "Chapter 8" },
+    why: "“If there are too many captains, the ship will sink” — a proverb with the same meaning in a different image. " + HN15 + ", p. 39.", ch: "Section 3.2" },
 
-  { src: "Boys will be boys.",
-    srcEn: true,
+  { src: "غابت السباعُ ولعبت الضباع.",
     opts: [
-      { t: "الأولاد سيكونون أولاداً.", tag: "literal — says nothing in Arabic" },
-      { t: "الوَلَد وَلَد ولو صار قاضي بلد.", tag: "the working equivalent", ok: true },
-      { t: "هكذا هم الشباب.", tag: "correct meaning, but the proverb is gone" }
+      { t: "When the cat’s away, the mice will play.", tag: "same meaning", ok: true },
+      { t: "Curiosity killed the cat.", tag: "different meaning: don’t pry" },
+      { t: "Let sleeping dogs lie.", tag: "different meaning: don’t stir up trouble" }
     ],
-    why: "English into Arabic this time. The Arabic proverb says the same thing and rhymes while doing it &mdash; <b>وَلَد / بلد</b>. When the target language has the proverb made, use it.", ch: "Chapter 8" },
+    why: "“When the lions were absent, the hyenas played.” Same situation, different animals. " + HN15 + ", p. 39.", ch: "Section 3.2" },
 
-  { src: "Business is business.",
-    srcEn: true,
+  { src: "مَن حفرَ حفرةً لأخيه وقعَ فيها.",
     opts: [
-      { t: "العَمَل عَمَل.", tag: "the working equivalent", ok: true },
-      { t: "التِّجارة تِجارة.", tag: "plausible, but not the fixed expression" },
-      { t: "لا مجال للعواطف في العمل.", tag: "explains it — and loses the bluntness" }
+      { t: "Look before you leap.", tag: "different meaning: be careful first" },
+      { t: "He was hoist with his own petard.", tag: "same meaning: caught by one’s own trap", ok: true },
+      { t: "Two wrongs don’t make a right.", tag: "different meaning: revenge is no excuse" }
     ],
-    why: "Some proverbs cross almost untouched. <b>التِّجارة تِجارة</b> follows the same pattern and is simply not the expression Arabic has fixed &mdash; an idiom is the words people actually say, not the ones the pattern allows. <b>لا مجال للعواطف في العمل</b> is a correct <b>explanation</b>, and explanation is the last resort, not the first.", ch: "Chapters 8 and 13" },
+    why: "The book gives the English idiom as an equivalent that conveys the result of the Arabic proverb. " + HN15 + ", p. 39.", ch: "Section 3.2" },
 
-  { src: "على قَدِّ لِحافك مُدَّ رِجليك.",
+  { src: "بيضةُ اليوم خيرٌ من دجاجةِ الغد.",
     opts: [
-      { t: "Cut your coat according to your cloth.", tag: "the working equivalent", ok: true },
-      { t: "Extend your legs as far as your blanket.", tag: "literal" },
-      { t: "Don't bite off more than you can chew.", tag: "close — but about ambition, not means" }
+      { t: "Don’t put all your eggs in one basket.", tag: "different meaning: spread the risk" },
+      { t: "Better late than never.", tag: "different meaning" },
+      { t: "A bird in the hand is worth two in the bush.", tag: "same meaning", ok: true }
     ],
-    why: "Both are about living inside your means, and both reach for cloth to say it &mdash; a rare gift. Take it when the target language offers one.", ch: "Chapter 8" },
+    why: "“An egg today is better than a chicken tomorrow”: take the sure thing now. " + HN15 + ", p. 39.", ch: "Section 3.2" },
 
-  /* ── Five more, all from the handbook's own list of English idioms in
-     Chapter 8. Nothing here is invented: the Arabic in the middle option
-     is the equivalent the book gives. The first option is the sentence
-     word for word, which is what the chapter warns against, and the
-     third is the plain meaning — correct, and the last resort the
-     chapter puts after looking for an equivalent. ── */
-
-  { src: "to spill the beans", srcEn: true,
+  { src: "Patience is a virtue.", srcEn: true,
     opts: [
-      { t: "أراق الفاصولياء", tag: "word for word — and it says nothing" },
-      { t: "أفشى السرّ", tag: "the equivalent the handbook gives", ok: true },
-      { t: "كشف المعلومات السرّية", tag: "the meaning, with the idiom gone" }
+      { t: "العجلةُ من الشيطان والتأنّي من الرحمن", tag: "same meaning, as Arabic usually says it", ok: true },
+      { t: "الوقتُ كالسيف إن لم تقطعه قطعك", tag: "different meaning: use your time" },
+      { t: "مَن جدَّ وجد", tag: "different meaning: hard work pays" }
     ],
-    why: "An idiom's meaning is not the sum of its words, so the beans cannot come with it &mdash; <b>أراق الفاصولياء</b> is a sentence about pulses. Arabic has an expression that does the same job, <b>أفشى السرّ</b>, so that is what goes in. <b>كشف المعلومات السرّية</b> is not wrong; it is the fallback, and it is deliberately close, because telling an idiom apart from a plain paraphrase of it is the whole skill this question is testing. The order the chapter sets is: look for an equivalent first, and give the plain meaning only when there is none.", ch: "Chapter 8" },
+    why: "Religious language is more common in Arabic proverbs, so an English non-religious proverb often comes back with a religious flavour; this one is often preferred to the secular الصبر مرّ وثمره حلو. " + HN15 + ", p. 38.", ch: "Section 3.2" },
 
-  { src: "over the moon", srcEn: true,
+  { src: "إذا كان الكلامُ من فضّةٍ فالسكوتُ من ذهب.",
     opts: [
-      { t: "فوق القمر", tag: "word for word — a location, not a feeling" },
-      { t: "في قمّة السعادة", tag: "the equivalent the handbook gives", ok: true },
-      { t: "سعيد جداً", tag: "true, and flatter than the original" }
+      { t: "All that glitters is not gold.", tag: "different meaning: appearances deceive" },
+      { t: "Speech is silver, silence is golden.", tag: "same meaning", ok: true },
+      { t: "Every cloud has a silver lining.", tag: "different meaning: good in bad" }
     ],
-    why: "English puts joy above the moon; Arabic puts it at a summit &mdash; <b>قمّة</b>. Neither image is the meaning; both carry it. <b>فوق القمر</b> keeps the picture and drops the sense, which is the classic idiom failure. <b>سعيد جداً</b> keeps the sense and drops the intensity: it is what you write when no equivalent exists, and here one does.", ch: "Chapter 8" },
+    why: "An equivalent with the same form and meaning — the usual case with these “newer” proverbs. " + HN15 + ", p. 38.", ch: "Section 3.2" },
 
-  { src: "Break a leg!", srcEn: true,
+  { src: "الكلابُ تنبح والقافلةُ تسير.",
     opts: [
-      { t: "اكسر ساقاً!", tag: "word for word — and it now means the opposite" },
-      { t: "بالتوفيق!", tag: "the equivalent the handbook gives", ok: true },
-      { t: "أتمنّى لك أداءً جيداً", tag: "correct, and not something anyone says before a stage" }
+      { t: "Barking dogs seldom bite.", tag: "different meaning: threats are empty" },
+      { t: "Let sleeping dogs lie.", tag: "different meaning" },
+      { t: "The dogs bark, but the caravan moves on.", tag: "borrowed whole — and understood", ok: true }
     ],
-    why: "The most dangerous kind of idiom: rendered literally it does not merely fail, it <b>reverses</b>. <b>اكسر ساقاً</b> is a curse in Arabic; the English is a blessing. Always check what the literal version does to the reader before you decide it is harmless. <b>بالتوفيق</b> is what an Arabic speaker actually says at that moment, which is the test.", ch: "Chapter 8" },
+    why: "When English has no proverb, the book borrows the Arabic one with a clear rendering: carry on despite the critics. " + HN15 + ", p. 39.", ch: "Section 3.2" },
 
-  { src: "I'm all ears.", srcEn: true,
+  { src: "When in Rome, do as the Romans do.", srcEn: true,
     opts: [
-      { t: "أنا كلّي آذان", tag: "word for word — half an expression" },
-      { t: "كلّي آذانٌ صاغية", tag: "the equivalent the handbook gives", ok: true },
-      { t: "أنا أستمع إليك باهتمام", tag: "the meaning, in plain words" }
+      { t: "القناعةُ كنزٌ لا يفنى", tag: "different meaning: contentment" },
+      { t: "إذا كنتَ في روما فافعل ما يفعله الرومان", tag: "the proverb, completed in Arabic", ok: true },
+      { t: "الكلابُ تنبح والقافلةُ تسير", tag: "different meaning" }
     ],
-    why: "A near miss is still a miss. Arabic has almost the same image &mdash; a person who is all ears &mdash; but the expression is fixed as <b>كلّي آذانٌ صاغية</b>, and <b>صاغية</b> is the part that makes it an expression rather than a description of a body. An idiom is fixed: you take the whole of it or you do not have it.", ch: "Chapter 8" },
+    why: "English often shortens it to “When in Rome …”; the book advises completing it in the translation. " + HN15 + ", p. 39.", ch: "Section 3.2" },
 
-  { src: "to pull one's socks up", srcEn: true,
+  { src: "القردُ في عينِ أمِّه غزال.",
     opts: [
-      { t: "رفع جواربه", tag: "word for word — an act of dressing" },
-      { t: "شمّر عن ساعديه", tag: "the equivalent the handbook gives", ok: true },
-      { t: "بذل جهداً أكبر", tag: "the meaning, with the picture gone" }
+      { t: "A face only a mother could love.", tag: "opposite feeling: a joke about ugliness" },
+      { t: "In its mother’s eyes, the monkey is a gazelle.", tag: "the tender meaning, kept", ok: true },
+      { t: "Monkey see, monkey do.", tag: "different meaning: copying" }
     ],
-    why: "The best outcome there is: an idiom for an idiom. English pulls up its socks, Arabic rolls up its sleeves &mdash; <b>شمّر عن ساعديه</b> &mdash; and both mean <i>make a proper effort now</i>. The clothing changes and the figure survives, which is what you are hunting for every time. Settle for <b>بذل جهداً أكبر</b> only when no such match exists.", ch: "Chapter 8" }
+    why: "The Arabic is tender: love sees beauty. The book renders it by borrowing, with the image kept. " + HN15 + ", p. 40.", ch: "Section 3.2" },
+
+  { src: "رجع بخُفّي حُنين.",
+    opts: [
+      { t: "He got cold feet.", tag: "different meaning: lost his nerve" },
+      { t: "He came back with flying colours.", tag: "the opposite" },
+      { t: "He came back empty-handed.", tag: "same meaning", ok: true }
+    ],
+    why: "The folk tale of Hunayn’s shoes: returning with nothing. " + HN15 + ", p. 29.", ch: "Section 3.2" }
 ];
 
 /* ═══════════ أمثال كويتية · KUWAITI PROVERBS ═══════════
@@ -6666,136 +6786,198 @@ const KUWAITI = [
 
 
 const COURTESY = [
-  /* This one used to read "بالعافية = Enjoy your meal" as though that were
-     settled, which is exactly the single stored equivalence the Language &
-     Phraseology chamber warns against. The situation is now part of the
-     question, because without it the expression has no translation at all. */
   { src: "بالعافية &mdash; said to someone who is eating", lit: '"with health"',
     opts: [
-      { t: "With strength.", tag: "literal" },
-      { t: "Enjoy your meal.", tag: "natural — for this situation", ok: true },
-      { t: "Get well soon.", tag: "a different situation for the same words" }
+      { t: "Enjoy your meal.", tag: "what English says at the table", ok: true },
+      { t: "Good morning.", tag: "a different greeting" },
+      { t: "I’m sorry.", tag: "an apology — wrong function" }
     ],
-    why: "Read <b>Enjoy your meal</b> and <b>Get well soon</b> together: both are real translations of <b>بالعافية</b>, and the one that is right is decided entirely by <b>who is saying it and when</b>. Said over food it is a table courtesy; said to someone who has been ill it is a wish for recovery; said to someone working hard it is encouragement; and said to someone who has just bathed, English has <b>nothing at all</b>. The chamber on Language &amp; Phraseology walks all four." },
-  { src: "اللّه يعطيك العافية", lit: '"may God give you health"',
+    why: "The situation chooses the equivalent. Over food it is a table courtesy; to someone recovering from illness the same words wish them health." },
+  { src: "اللّه يعطيك العافية &mdash; said to someone working", lit: '"may God give you health"',
     opts: [
-      { t: "Thanks for your hard work.", tag: "natural", ok: true },
-      { t: "God grant you health.", tag: "literal" },
-      { t: "Bless you.", tag: "wrong situation entirely" }
+      { t: "Bless you.", tag: "said after a sneeze — wrong situation" },
+      { t: "Thanks for your hard work.", tag: "the same function", ok: true },
+      { t: "Get out of my way.", tag: "the opposite tone" }
     ],
-    why: "Said to someone <b>working</b>. The same words at a sickbed mean something else — situation and register choose the equivalent, not the dictionary." },
-  { src: "سلامتك", lit: '"your safety"',
+    why: "Said to someone working, it thanks and encourages. Function, not words, crosses over." },
+  { src: "سلامتك &mdash; said to someone who is ill", lit: '"your safety"',
     opts: [
-      { t: "Peace upon you.", tag: "literal-ish" },
-      { t: "Safe travels.", tag: "wrong situation entirely" },
-      { t: "Get well soon.", tag: "natural", ok: true }
+      { t: "Safe travels.", tag: "a farewell — wrong situation" },
+      { t: "Get well soon.", tag: "the same function", ok: true },
+      { t: "Congratulations.", tag: "wrong function" }
     ],
-    why: "This one is said to someone ill. It looks like a farewell and functions as a get-well card." },
-  { src: "عن إذنك", lit: '"by your permission"',
+    why: "It looks like a farewell and works as a get-well wish." },
+  { src: "عن إذنك &mdash; to pass someone or leave", lit: '"by your leave"',
     opts: [
-      { t: "Excuse me.", tag: "natural", ok: true },
-      { t: "With your permission.", tag: "literal — far too formal" },
-      { t: "Please allow me to pass.", tag: "over-formal" }
+      { t: "Excuse me.", tag: "the same function", ok: true },
+      { t: "Forgive me for what I did.", tag: "an apology for a wrong — different function" },
+      { t: "Welcome.", tag: "wrong function" }
     ],
-    why: "Everyday politeness has to land as everyday politeness. A literal rendering makes a casual speaker sound like a courtier." },
-  { src: "نَعيماً", lit: '"blissfully"',
+    why: "Everyday politeness lands as everyday politeness." },
+  { src: "نَعيماً &mdash; said to someone freshly showered or barbered", lit: '"blissfully"',
     opts: [
-      { t: "Blessings upon you.", tag: "literal" },
-      { t: "Nothing — English has no equivalent here.", tag: "natural", ok: true },
-      { t: "You smell nice.", tag: "true, and unsayable" }
+      { t: "Nothing: English has no equivalent here.", tag: "omission is the honest answer", ok: true },
+      { t: "Get well soon.", tag: "wrong situation" },
+      { t: "Good night.", tag: "wrong function" }
     ],
-    why: "Said to someone freshly showered or barbered. English has no slot for it at all, and the honest answer is sometimes <b>omission</b>. Knowing when to say nothing is part of the craft." },
-  { src: "كلّ عام وأنتم بخير", lit: '"every year and you are well"',
+    why: "English has no slot for it at all. Knowing when to say nothing is part of the craft." },
+  { src: "كلّ عام وأنتم بخير &mdash; said on a feast day", lit: '"every year and you are well"',
     opts: [
-      { t: "Every year and you are well.", tag: "literal" },
-      { t: "Happy holidays.", tag: "natural", ok: true },
-      { t: "Happy new year.", tag: "too narrow — this greets any feast" }
+      { t: "Happy holidays! / Have a happy Eid!", tag: "a festive greeting", ok: true },
+      { t: "Rest in peace.", tag: "a condolence — wrong function" },
+      { t: "Good luck in your exam.", tag: "wrong situation" }
     ],
-    why: "A general festive greeting needs a general festive greeting. <b>Happy new year</b> pins it to one occasion the Arabic never named." }
+    why: "A festive greeting needs a festive greeting." }
 ];
 
 const CULTURAL = [
-  { src: "It's raining cats and dogs.", srcEn: true,
+  /* Every option is a real expression, so the choice is between idioms,
+     never between an idiom and a correct paraphrase of it. Pairs from
+     Husni & Newman (2015). */
+  { src: "It’s raining cats and dogs.", srcEn: true,
     opts: [
-      { t: "تُمطِر قِططاً وكِلاباً", tag: "literal — comic in Arabic" },
-      { t: "تُمطِر كأفواه القِرَب", tag: "natural — a real Arabic image", ok: true },
-      { t: "الجوّ سيّئ جدّاً", tag: "safe, but the colour is gone" }
+      { t: "إنّ الدنيا تمطر كأفواه القِرَب", tag: "same meaning: a downpour", ok: true },
+      { t: "زوبعةٌ في فنجان", tag: "a storm in a teacup: a fuss about nothing" },
+      { t: "على قدِّ لحافك مدّ رجليك", tag: "different meaning: live within your means" }
     ],
-    why: "Arabic already has a downpour idiom — the mouths of waterskins. Reach for the target language's own image before inventing one or flattening it." },
-  { src: "Break a leg!", srcEn: true,
+    why: "Arabic has its own downpour image, “as if from the mouths of waterskins”. " + HN15 + ", pp. 34–35.", ch: "Section 3.2" },
+  { src: "an iron fist in a velvet glove", srcEn: true,
     opts: [
-      { t: "اِكسِر ساقك!", tag: "literal — reads as a curse" },
-      { t: "بالتوفيق!", tag: "natural", ok: true },
-      { t: "حظّاً سعيداً في المسرح!", tag: "explains the joke away" }
+      { t: "يدٌ واحدةٌ لا تصفّق", tag: "different meaning: teamwork" },
+      { t: "قبضةٌ حديديةٌ في قفّازٍ مخملي", tag: "same image, same meaning", ok: true },
+      { t: "حبرٌ على ورق", tag: "different meaning: never applied" }
     ],
-    why: "The English is superstition dressed as an insult. Arabic has no such theatre superstition, so the function — wishing luck — is what crosses over." },
-  { src: "To kill two birds with one stone.", srcEn: true,
+    why: "The best case: a target-language idiom with similar form and meaning. " + HN15 + ", p. 33.", ch: "Section 3.2" },
+  { src: "a drop in the ocean", srcEn: true,
     opts: [
-      { t: "ضرب عصفورين بحجر واحد", tag: "identical image — keep it", ok: true },
-      { t: "أنجز مهمّتين في وقت واحد", tag: "correct but needlessly drab" },
-      { t: "قتل طائرين بصخرة", tag: "re-inventing an idiom that already exists" }
+      { t: "القشّة التي قصمت ظهر البعير", tag: "the last straw: a different meaning" },
+      { t: "حبرٌ على ورق", tag: "a dead letter: a different meaning" },
+      { t: "غيضٌ من فيض", tag: "same meaning, different image", ok: true }
     ],
-    why: "Sometimes the two languages already agree. Recognising when <b>not</b> to intervene is as much a skill as substitution." },
-  { src: "The elephant in the room.", srcEn: true,
+    why: "An idiom with similar meaning but a different form. " + HN15 + ", p. 33.", ch: "Section 3.2" },
+  { src: "to run with the hare and hunt with the hounds", srcEn: true,
     opts: [
-      { t: "الفيل في الغرفة", tag: "literal — no such idiom in Arabic" },
-      { t: "الأمر الذي يتجنّبه الجميع", tag: "natural — explain, don't transplant", ok: true },
-      { t: "الجَمَل في الخيمة", tag: "invented 'local' idiom — a false friend" }
+      { t: "لعبَ على الحبلين", tag: "same meaning: playing both sides", ok: true },
+      { t: "ضربَ عصفورين بحجر", tag: "two birds with one stone: a different meaning" },
+      { t: "صبَّ الزيتَ على النار", tag: "to add fuel to the fire: a different meaning" }
     ],
-    why: "When the target language has no idiom, plain description beats fabrication. An invented proverb reads as a mistranslation to any native ear." },
-  { src: "as American as apple pie", srcEn: true,
+    why: "Same meaning, completely different image. " + HN15 + ", p. 33.", ch: "Section 3.2" },
+  { src: "to back the wrong horse", srcEn: true,
     opts: [
-      { t: "أمريكي كفطيرة التفّاح", tag: "literal — means nothing to the reader" },
-      { t: "أصيل كالقهوة العربية", tag: "natural — swaps the culture-bound item", ok: true },
-      { t: "شيء أمريكي جدّاً", tag: "accurate, flavourless" }
+      { t: "لكلّ جوادٍ كبوة", tag: "a horse proverb, but it means “nobody’s perfect”" },
+      { t: "وضعَ العربةَ أمامَ الحصان", tag: "cart before the horse: wrong order of steps" },
+      { t: "راهنَ على الجواد الخاسر", tag: "same meaning, image kept", ok: true }
     ],
-    why: "Keep the <b>structure</b> of the comparison and replace the object with one the reader actually loves. Baker calls this <b>cultural substitution</b>; Vinay and Darbelnet call the same move <b>adaptation</b> &mdash; two frameworks, one procedure." }
+    why: "A paraphrase that keeps some of the source culture. Notice how many expressions share the horse and mean something else. " + HN15 + ", p. 33.", ch: "Section 3.2" },
+  { src: "to have green fingers", srcEn: true,
+    opts: [
+      { t: "يدُه خضراء", tag: "borrowed whole — good with plants", ok: true },
+      { t: "يدُه طويلة", tag: "a “long hand” is a thief in Arabic" },
+      { t: "له يدٌ بيضاء", tag: "a “white hand” is a favour done to someone" }
+    ],
+    why: "Borrowing works for some culture-bound idioms. Watch the other “hand” idioms: يد بيضاء means a favour or benefit (" + HN15 + ", p. 46). " + HN15 + ", p. 33.", ch: "Section 3.2" },
+  { src: "as patient as an owl — for Arab readers", srcEn: true,
+    opts: [
+      { t: "أصبرُ من الجمل", tag: "same quality, an image Arab readers trust", ok: true },
+      { t: "صبورٌ كالبومة", tag: "the owl is a bad omen in Arab culture" },
+      { t: "أمكرُ من الثعلب", tag: "a different quality: cunning" }
+    ],
+    why: "In the West the owl stands for wisdom; in Arab culture it is “the night crow”, a harbinger of bad luck. Drop it, or use an Arabic animal with the same meaning. " + HN15 + ", p. 19.", ch: "Section 2.1" },
+  { src: "as patient as Job", srcEn: true,
+    opts: [
+      { t: "كرمُ حاتم", tag: "Hatim stands for generosity" },
+      { t: "صبرُ أيّوب", tag: "same meaning", ok: true },
+      { t: "دهاءُ عمرو", tag: "Amr stands for cunning" }
+    ],
+    why: "A target-language simile with similar meaning. " + HN15 + ", p. 36.", ch: "Section 3.3" },
+  { src: "as strong as a horse", srcEn: true,
+    opts: [
+      { t: "قويٌّ مثل فرس", tag: "the book: “would provoke ridicule”" },
+      { t: "سريعٌ كالحصان", tag: "a different quality: speed" },
+      { t: "قويٌّ كالأسد", tag: "the Arabic simile for strength", ok: true }
+    ],
+    why: "Translating <i>as strong as a horse</i> as قوي مثل فرس “would provoke ridicule from most Arabic speakers”; Arabic says قوي كالأسد. " + HN15 + ", pp. 35–36.", ch: "Section 3.3" },
+  { src: "heart-warming news", srcEn: true,
+    opts: [
+      { t: "خبرٌ يُقِضُّ المضجع", tag: "news that keeps you awake with worry" },
+      { t: "خبرٌ يُثلِج الصدر", tag: "same feeling: coolness is comfort", ok: true },
+      { t: "خبرٌ يثير الحفيظة", tag: "news that provokes anger" }
+    ],
+    why: "English warms the heart; Arabic cools the breast. " + HN15 + ", p. 28.", ch: "Section 6.1" }
 ];
 
 /* NEW TRIAL · name the procedure — the practice half of Guide 1 */
 const NAME_PROC = [
-  { src: "skyscraper → ناطِحة سَحاب", srcEn: true,
+  { src: "computer → كمبيوتر", srcEn: true,
     opts: [
-      { t: "Calque · النَّسْخ", tag: "the structure was translated piece by piece to coin a new term", ok: true },
-      { t: "Borrowing · الاِقتِراض", tag: "that would have given سكاي سكريبر" },
-      { t: "Adaptation · التَّكييف", tag: "no cultural reference was replaced" }
+      { t: "Borrowing · الاقتراض", tag: "the word crossed over whole", ok: true },
+      { t: "Calque · النسخ", tag: "nothing was translated piece by piece" },
+      { t: "Modulation · التطويع", tag: "no change of viewpoint" }
     ],
-    why: "Sky + scraper became سحاب + ناطحة. The pieces were translated and reassembled — a calque, and one of the successful ones." },
+    why: "The foreign word enters the language as it is. Formal Arabic also has حاسوب.", ch: "Section 4.2" },
+  { src: "skyscraper → ناطحة سحاب", srcEn: true,
+    opts: [
+      { t: "Borrowing · الاقتراض", tag: "that would be سكاي سكريبر" },
+      { t: "Calque · النسخ", tag: "each part translated: sky + scraper", ok: true },
+      { t: "Adaptation · التكييف", tag: "no cultural situation was replaced" }
+    ],
+    why: "The parts were translated and reassembled — a calque.", ch: "Section 4.2" },
+  { src: "the White House → البيت الأبيض", srcEn: true,
+    opts: [
+      { t: "Equivalence · التكافؤ", tag: "no fixed expression was swapped" },
+      { t: "Transposition · الإبدال", tag: "no change of word class" },
+      { t: "Calque · النسخ", tag: "translated part by part, and now established", ok: true }
+    ],
+    why: "Each part translated literally; the result is the established name.", ch: "Section 4.2" },
   { src: "after his return → بعد أن عاد", srcEn: true,
     opts: [
-      { t: "Modulation · التَّطويع", tag: "the point of view did not change" },
       { t: "Transposition · الإبدال", tag: "a noun became a verb", ok: true },
-      { t: "Literal translation · الحَرفيّة", tag: "that would have given بعد عودته" }
+      { t: "Modulation · التطويع", tag: "the viewpoint did not change" },
+      { t: "Borrowing · الاقتراض", tag: "nothing was borrowed" }
     ],
-    why: "The English noun <i>return</i> becomes an Arabic verb عاد. Same viewpoint, different part of speech — transposition, and the commonest of all AR↔EN moves." },
-  { src: "It is not difficult. → إنّه سَهل.", srcEn: true,
+    why: "The noun <i>return</i> becomes the verb عاد: same idea, different part of speech.", ch: "Section 4.2" },
+  { src: "It is not difficult. → إنّه سهل.", srcEn: true,
     opts: [
-      { t: "Modulation · التَّطويع", tag: "negative became affirmative — the viewpoint flipped", ok: true },
-      { t: "Equivalence · التَّكافُؤ", tag: "no fixed expression was swapped" },
-      { t: "Borrowing · الاِقتِراض", tag: "nothing was borrowed" }
+      { t: "Calque · النسخ", tag: "no part-by-part copy" },
+      { t: "Modulation · التطويع", tag: "negative turned positive: a new viewpoint", ok: true },
+      { t: "Adaptation · التكييف", tag: "no cultural reference" }
     ],
-    why: "Saying the same thing from the other side: <i>not difficult</i> becomes <i>easy</i>. That flip in point of view is modulation." },
+    why: "Saying the same thing from the other side — modulation.", ch: "Section 4.2" },
+  { src: "You can’t miss it. → ستجده بسهولة.", srcEn: true,
+    opts: [
+      { t: "Borrowing · الاقتراض", tag: "nothing was borrowed" },
+      { t: "Literal translation · الترجمة الحرفية", tag: "that would be لا يمكن أن يفوتك" },
+      { t: "Modulation · التطويع", tag: "the same fact from another angle", ok: true }
+    ],
+    why: "The literal version sounds foreign, so the viewpoint changes: “you will find it easily”.", ch: "Section 4.2" },
   { src: "Once upon a time → كان يا ما كان", srcEn: true,
     opts: [
-      { t: "Literal translation · الحَرفيّة", tag: "not one word corresponds" },
-      { t: "Equivalence · التَّكافُؤ", tag: "one whole fixed formula replaced by the other's", ok: true },
-      { t: "Transposition · الإبدال", tag: "this is not about parts of speech" }
+      { t: "Equivalence · التكافؤ", tag: "one fixed formula replaces another", ok: true },
+      { t: "Literal translation · الترجمة الحرفية", tag: "not one word corresponds" },
+      { t: "Transposition · الإبدال", tag: "not about word classes" }
     ],
-    why: "Both are set story-openers. Neither translates the other's words, and both do exactly the same job — that is equivalence." },
-  { src: "as American as apple pie → أصيل كالقهوة العربية", srcEn: true,
+    why: "Both are set story openers doing the same job — equivalence.", ch: "Section 4.2" },
+  { src: "a drop in the ocean → غيضٌ من فيض", srcEn: true,
     opts: [
-      { t: "Adaptation · التَّكييف", tag: "the culture-bound object itself was replaced", ok: true },
-      { t: "Equivalence · التَّكافُؤ", tag: "close — but no ready-made Arabic formula was waiting" },
-      { t: "Calque · النَّسْخ", tag: "that would have given كفطيرة التفّاح" }
+      { t: "Calque · النسخ", tag: "that would be قطرة في المحيط" },
+      { t: "Equivalence · التكافؤ", tag: "a different fixed expression, same function", ok: true },
+      { t: "Borrowing · الاقتراض", tag: "nothing was borrowed" }
     ],
-    why: "The comparison's shape survives; the object inside it is swapped for one the target reader loves. Changing the cultural reference is adaptation." },
-  { src: "الجَبْر → algebra", srcEn: false,
+    why: "An idiom with the same meaning but a different image (Husni &amp; Newman, 2015, p. 33).", ch: "Section 4.2" },
+  { src: "They are like Romeo and Juliet. → هما كقيس وليلى.", srcEn: true,
     opts: [
-      { t: "Calque · النَّسْخ", tag: "nothing was translated piece by piece" },
-      { t: "Borrowing · الاِقتِراض", tag: "the word crossed over intact", ok: true },
-      { t: "Modulation · التَّطويع", tag: "no viewpoint changed" }
+      { t: "Modulation · التطويع", tag: "the viewpoint is the same" },
+      { t: "Calque · النسخ", tag: "nothing was copied part by part" },
+      { t: "Adaptation · التكييف", tag: "the cultural reference was replaced", ok: true }
     ],
-    why: "English took the Arabic word whole and let it naturalise. Borrowing runs in both directions, and English is full of Arabic loans." }
+    why: "A famous pair of lovers from one culture replaced by one from the other — adaptation.", ch: "Section 4.2" },
+  { src: "الجبر → algebra",
+    opts: [
+      { t: "Borrowing · الاقتراض", tag: "the Arabic word crossed into English", ok: true },
+      { t: "Modulation · التطويع", tag: "no viewpoint changed" },
+      { t: "Adaptation · التكييف", tag: "no cultural situation replaced" }
+    ],
+    why: "Borrowing runs both ways; English is full of Arabic loans.", ch: "Section 4.2" }
 ];
 
 /* ═══════════ SUBTITLING · Chapter 27 ═══════════
@@ -8195,53 +8377,92 @@ const LINEAGE = [
    Every pair below is one the handbook gives. "The company a word keeps"
    is the course materials' own definition, after Firth. */
 const COLLOC = [
-  { src: "pay attention", srcEn: true, lit: '"pay" is not always يدفع',
-    opts: [
-      { t: "يدفع الانتباه", tag: "word for word — and not Arabic" },
-      { t: "يَنتبِه", tag: "the natural partner", ok: true },
-      { t: "يشتري الانتباه", tag: "worse: a second guess at the wrong verb" }
-    ],
-    why: "The basic sense of <b>pay</b> is to give money, and its partners change it completely: <i>pay a visit</i> is <b>يقوم بزيارة</b>, not يدفع زيارة. Learn the word with its company.", ch: "Chapter 7" },
-
+  /* Partners from Husni & Newman (2015), pp. 1–18. Every wrong option is
+     a partner the noun does NOT take in that language. */
   { src: "heavy rain", srcEn: true,
     opts: [
-      { t: "مطر ثقيل", tag: "the English adjective, carried over" },
-      { t: "مطر غزير", tag: "the natural partner", ok: true },
-      { t: "مطر قوي", tag: "plausible, still not what Arabic says" }
+      { t: "مطرٌ ثقيل", tag: "the English adjective carried over" },
+      { t: "مطرٌ غزير", tag: "the Arabic partner", ok: true },
+      { t: "مطرٌ دسِم", tag: "دسم is for heavy food" }
     ],
-    why: "English weighs its rain; Arabic makes it <b>abundant</b>. Neither language is being logical &mdash; each simply has a partner already chosen.", ch: "Chapter 7" },
-
+    why: "English <i>heavy</i> has about thirty Arabic partners depending on the noun: مطر غزير, ضباب كثيف, وجبة دسمة … " + HN15 + ", pp. 16–17.", ch: "Section 3.1" },
+  { src: "heavy fog", srcEn: true,
+    opts: [
+      { t: "ضبابٌ كثيف", tag: "the Arabic partner", ok: true },
+      { t: "ضبابٌ غزير", tag: "غزير is for rain" },
+      { t: "ضبابٌ ثقيل", tag: "the English adjective carried over" }
+    ],
+    why: "Same English adjective, a different Arabic partner. " + HN15 + ", p. 16.", ch: "Section 3.1" },
+  { src: "a heavy smoker", srcEn: true,
+    opts: [
+      { t: "مدخّنٌ كثيف", tag: "كثيف is for fog" },
+      { t: "مدخّنٌ ثقيل", tag: "the English adjective carried over" },
+      { t: "مدخّنٌ مُفرِط", tag: "the Arabic partner", ok: true }
+    ],
+    why: "" + HN15 + ", p. 16.", ch: "Section 3.1" },
+  { src: "heavy losses", srcEn: true,
+    opts: [
+      { t: "خسائرُ هائلة", tag: "the Arabic partner", ok: true },
+      { t: "خسائرُ سميكة", tag: "سميك is for a thick line" },
+      { t: "خسائرُ دسِمة", tag: "دسم is for food" }
+    ],
+    why: "" + HN15 + ", p. 17.", ch: "Section 3.1" },
+  { src: "a warm reception", srcEn: true,
+    opts: [
+      { t: "استقبالٌ فاتر", tag: "a lukewarm reception — the opposite" },
+      { t: "استقبالٌ حارّ", tag: "the Arabic partner", ok: true },
+      { t: "استقبالٌ ساخن", tag: "the dictionary word, not the collocation" }
+    ],
+    why: "Looking only at dictionary meaning gives استقبال ساخن; native speakers say استقبال حارّ. And a <i>tepid</i> reception, استقبال فاتر, is the opposite. " + HN15 + ", pp. 1, 16.", ch: "Section 3.1" },
+  { src: "imminent danger", srcEn: true,
+    opts: [
+      { t: "خطرٌ مُحدِق", tag: "the Arabic partner", ok: true },
+      { t: "خطرٌ زائل", tag: "a danger that has passed — the opposite" },
+      { t: "خطرٌ غزير", tag: "غزير is for rain" }
+    ],
+    why: "Native speakers “plump for” خطر مُحدِق, literally “encircling danger”. " + HN15 + ", pp. 15–16.", ch: "Section 3.1" },
+  { src: "ارتكبَ جريمة",
+    opts: [
+      { t: "to commit a crime", tag: "the English partner", ok: true },
+      { t: "to ride a crime", tag: "the other sense of ركب — nonsense" },
+      { t: "to solve a crime", tag: "a different action: the detective’s" }
+    ],
+    why: "A restricted collocation: <i>perpetrate</i> and ارتكب both join only with crime and other wrongdoing. " + HN15 + ", p. 3.", ch: "Section 3.1" },
+  { src: "ضربَ خيمة",
+    opts: [
+      { t: "to hit a tent", tag: "the basic sense of ضرب — wrong here" },
+      { t: "to pitch a tent", tag: "the English partner", ok: true },
+      { t: "to fold a tent", tag: "the opposite action" }
+    ],
+    why: "One Arabic verb, many English partners: ضرب ضريبة <i>impose a tax</i>, ضرب رقماً قياسياً <i>break a record</i>, ضرب مثلاً <i>give an example</i>. " + HN15 + ", p. 18.", ch: "Section 3.1" },
+  { src: "ضربَ رقماً قياسياً",
+    opts: [
+      { t: "to set a trap", tag: "a different action" },
+      { t: "to hit a number", tag: "word for word — nonsense" },
+      { t: "to break a record", tag: "the English partner", ok: true }
+    ],
+    why: "" + HN15 + ", p. 18.", ch: "Section 3.1" },
+  { src: "أدّى يميناً",
+    opts: [
+      { t: "to swear an oath", tag: "the English partner", ok: true },
+      { t: "to break an oath", tag: "the opposite" },
+      { t: "to pay an oath", tag: "the “pay” sense of أدّى — nonsense" }
+    ],
+    why: "أدّى also needs a new English verb each time: <i>do</i> one’s duty, <i>provide</i> a service, <i>bear</i> witness. " + HN15 + ", pp. 17–18.", ch: "Section 3.1" },
+  { src: "pay attention", srcEn: true,
+    opts: [
+      { t: "يدفعُ الانتباه", tag: "word for word — not Arabic" },
+      { t: "يَنتبِه", tag: "the Arabic verb", ok: true },
+      { t: "يُشتّت الانتباه", tag: "to distract — the opposite" }
+    ],
+    why: "The basic sense of <i>pay</i> is to give money; its partners change it. Learn words with their partners.", ch: "Section 3.1" },
   { src: "strong tea", srcEn: true,
     opts: [
-      { t: "شاي ثقيل", tag: "the natural partner", ok: true },
-      { t: "شاي قوي", tag: "the English adjective, carried over" },
-      { t: "شاي مركّز", tag: "correct meaning, wrong register for a kitchen" }
+      { t: "شايٌ ثقيل", tag: "the Arabic partner", ok: true },
+      { t: "شايٌ خفيف", tag: "weak tea — the opposite" },
+      { t: "شايٌ غزير", tag: "غزير is for rain" }
     ],
-    why: "Now it runs the other way: English calls tea <b>strong</b>, Arabic calls it <b>heavy</b> &mdash; the very adjective it refused for rain. There is no rule to derive, only the company each word keeps.", ch: "Chapter 7" },
-
-  { src: "break the law", srcEn: true,
-    opts: [
-      { t: "يكسر القانون", tag: "understood, but not how Arabic says it" },
-      { t: "يخالف القانون", tag: "the natural partner", ok: true },
-      { t: "يهدم القانون", tag: "a different claim: destroying it, not breaking it" }
-    ],
-    why: "English breaks a law as it breaks a plate. Arabic <b>contravenes</b> it. <b>يكسر القانون</b> would be understood and would still mark the text as translated.", ch: "Chapter 7" },
-
-  { src: "عقد اجتماعاً",
-    opts: [
-      { t: "He knotted a meeting.", tag: "the verb's other sense — nonsense here" },
-      { t: "He held a meeting.", tag: "the natural partner", ok: true },
-      { t: "He made a meeting.", tag: "the wrong English partner" }
-    ],
-    why: "<b>عقد</b> ties knots and holds meetings. English <i>holds</i> them and does not <i>make</i> them. Both languages chose a partner; neither chose the same one.", ch: "Chapter 7" },
-
-  { src: "قدّم استقالته",
-    opts: [
-      { t: "He submitted his resignation.", tag: "close, and sometimes right", },
-      { t: "He resigned.", tag: "what an English speaker says", ok: true },
-      { t: "He presented his resignation.", tag: "word for word — stiff" }
-    ],
-    why: "Arabic needs two words where English has one. <i>Submitted his resignation</i> is not wrong and belongs in a formal report; in ordinary prose English simply says <b>he resigned</b>.", ch: "Chapter 7" }
+    why: "English calls tea strong; Arabic calls it heavy — the very adjective it refused for rain.", ch: "Section 3.1" }
 ];
 
 /* ═══════════ CONTEXT · Chapter 6 ═══════════
@@ -8250,52 +8471,67 @@ const COLLOC = [
 const CONTEXT_Q = [
   { src: "The doctor examined the case.", srcEn: true,
     opts: [
-      { t: "فحص الطبيب القضية.", tag: "the court sense — wrong room" },
-      { t: "فحص الطبيب الحالة.", tag: "context decides", ok: true },
-      { t: "فحص الطبيب العلبة.", tag: "the container sense" }
+      { t: "فحص الطبيبُ القضية.", tag: "the court sense — wrong room" },
+      { t: "فحص الطبيبُ الحالة.", tag: "context decides", ok: true },
+      { t: "فحص الطبيبُ العلبة.", tag: "the container sense" }
     ],
-    why: "<b>case</b> is three unrelated words wearing one spelling: <b>حالة</b>, <b>قضية</b>, <b>علبة</b>. One word in the sentence &mdash; <i>doctor</i> &mdash; settles it. That is micro context doing its work.", ch: "Chapter 6" },
-
-  { src: "شربنا من عين ماء باردة.",
+    why: "<i>doctor</i> settles which <i>case</i> this is.", ch: "Section 2.3" },
+  { src: "شربنا من عينِ ماءٍ باردة.",
     opts: [
-      { t: "We drank from a cold eye of water.", tag: "the first dictionary sense" },
+      { t: "We drank from a cold spy.", tag: "the “spy” sense — wrong" },
       { t: "We drank from a cold water spring.", tag: "context decides", ok: true },
-      { t: "We drank from a cold spy.", tag: "the third sense — and a reminder to read" }
+      { t: "We drank from a cold eye.", tag: "the first dictionary sense — wrong" }
     ],
-    why: "<b>عين</b> is an eye, a spring, and a spy. <i>ماء</i> standing beside it decides which. A translator who reaches for the first dictionary sense produces <b>a cold eye of water</b>.", ch: "Chapter 6" },
-
+    why: "عين is an eye, a spring and a spy; <b>ماء</b> beside it decides.", ch: "Section 2.3" },
   { src: "He sat on the bank and watched the water.", srcEn: true,
     opts: [
-      { t: "جلس على المصرف وراقب الماء.", tag: "the money sense" },
       { t: "جلس على ضفّة النهر وراقب الماء.", tag: "context decides", ok: true },
-      { t: "جلس على البنك وراقب الماء.", tag: "the borrowed word — same error, newer clothes" }
+      { t: "جلس في المصرف وراقب الماء.", tag: "the money sense" },
+      { t: "جلس على المقعد وراقب الماء.", tag: "a bench is not a bank" }
     ],
-    why: "Two unrelated meanings under one spelling: <b>homonymy</b> (المشترك اللفظي). <i>Water</i> settles it. Note that borrowing the English word does not escape the problem &mdash; it only hides it.", ch: "Chapter 6" },
-
+    why: "Two unrelated meanings under one spelling (homonymy); <i>water</i> settles it.", ch: "Section 2.3" },
+  { src: "The company fired three employees.", srcEn: true,
+    opts: [
+      { t: "أطلقت الشركة النار على ثلاثة موظفين.", tag: "the “shoot” sense — alarming and wrong" },
+      { t: "أحرقت الشركة ثلاثة موظفين.", tag: "the “bake/burn” sense — wrong" },
+      { t: "فصلت الشركة ثلاثة موظفين.", tag: "context decides", ok: true }
+    ],
+    why: "<i>fire</i> means “shoot” with a gun, “dismiss” with an employee, “bake” with ceramic and “cauterise” with a wound. " + HN15 + ", p. 3.", ch: "Section 2.3" },
+  { src: "The plane took off at noon.", srcEn: true,
+    opts: [
+      { t: "أقلعت الطائرة ظهراً.", tag: "context decides", ok: true },
+      { t: "خلعت الطائرة ظهراً.", tag: "the “remove clothes” sense" },
+      { t: "نجحت الطائرة ظهراً.", tag: "the “succeed” sense" }
+    ],
+    why: "<i>take off</i> needs a different Arabic verb each time: خلع، أقلع، قلّد، نجح، بتر، خفّض. " + HN15 + ", p. 10.", ch: "Section 2.3" },
+  { src: "She took off her coat.", srcEn: true,
+    opts: [
+      { t: "قلّدت معطفها.", tag: "the “imitate” sense" },
+      { t: "خلعت معطفها.", tag: "context decides", ok: true },
+      { t: "أقلعت بمعطفها.", tag: "the plane sense" }
+    ],
+    why: "Same phrasal verb, a different object, a different Arabic verb. " + HN15 + ", p. 10.", ch: "Section 2.3" },
+  { src: "Little John found his toybox. The box was in the pen.", srcEn: true,
+    opts: [
+      { t: "كان الصندوق في القلم.", tag: "the writing pen — impossible here" },
+      { t: "كان الصندوق في الحبر.", tag: "wrong meaning" },
+      { t: "كان الصندوق في حظيرة اللعب (سياج الطفل).", tag: "context decides: a playpen", ok: true }
+    ],
+    why: "Bar-Hillel’s famous example of why a machine struggles: only knowledge of the world tells you which <i>pen</i>. " + HN15 + ", p. 170.", ch: "Section 8.4" },
   { src: "تطهير الجرح",
     opts: [
-      { t: "purifying the wound from sin", tag: "the religious sense" },
       { t: "cleaning the wound", tag: "context decides", ok: true },
-      { t: "cleansing the wound of impurity", tag: "reads the religious sense into a clinic" }
+      { t: "purifying the wound from sin", tag: "the religious sense — wrong place" },
+      { t: "closing the wound", tag: "a different procedure" }
     ],
-    why: "Here the senses are <b>related</b>, not unrelated &mdash; cleaning and purifying share a root idea. That is <b>polysemy</b> (تعدّد المعنى), and it is more dangerous than homonymy, because the wrong reading still almost makes sense.", ch: "Chapter 6" },
-
+    why: "Related senses (polysemy) are dangerous because the wrong reading almost makes sense.", ch: "Section 2.3" },
   { src: "احتجاز الرهائن",
     opts: [
+      { t: "storing the hostages", tag: "the water sense, applied to people" },
       { t: "holding hostages", tag: "context decides", ok: true },
-      { t: "detaining the hostages", tag: "close, but detention is lawful custody" },
-      { t: "storing the hostages", tag: "the water sense, applied to people" }
+      { t: "releasing the hostages", tag: "the opposite" }
     ],
-    why: "The same verb holds back water (<b>احتجاز المياه</b>) and holds people. The object decides, and the English verb changes with it.", ch: "Chapter 6" },
-
-  { src: "a report on the situation in the region, written in 1975",
-    srcEn: true,
-    opts: [
-      { t: "Translate the words; the date is not your business.", tag: "ignores the macro context" },
-      { t: "Find out what was happening in 1975 before choosing terms.", tag: "the whole situation, not just the words", ok: true },
-      { t: "Update the terms to today's usage so the reader understands.", tag: "rewrites history" }
-    ],
-    why: "This one is not about a word at all. <b>Macro context</b> (السياق الخارجي) is the author, the audience, the time and the place. Names of parties, borders and offices all moved between 1975 and now, and a translator who does not know which year they are in will pick the wrong ones.", ch: "Chapter 6" }
+    why: "The same noun holds back water (احتجاز المياه) and holds people; the object decides.", ch: "Section 2.3" }
 ];
 
 /* ═══════════ REVISION · Chapter 23 ═══════════
@@ -8305,50 +8541,75 @@ const REVISE = [
   { src: "قام المدير بتوقيع العقد.",
     opts: [
       { t: "وقّع المديرُ العقد.", tag: "the verb does its own work", ok: true },
-      { t: "المدير قام بتوقيع العقد.", tag: "same padding, now with the subject first too" },
-      { t: "تمّ توقيع العقد من قِبَل المدير.", tag: "swaps one borrowed structure for another" }
+      { t: "قام العقد بتوقيع المدير.", tag: "the roles are reversed" },
+      { t: "قام المدير بتوقيع على العقد بالتوقيع.", tag: "more padding, and ungrammatical" }
     ],
-    why: "<b>قام بـ</b> before a verb that can simply be used is the commonest padding in translated Arabic. The handbook lists it among the mistakes to look for on the second reading.", ch: "Chapter 23" },
-
+    why: "<b>قام بـ</b> before a verb that can simply be used is the commonest padding in translated Arabic.", ch: "Section 9.1" },
+  { src: "تمّ اختراق الهدنة من جانب الحكومة.",
+    opts: [
+      { t: "اخترقت الهدنةُ الحكومةَ.", tag: "the roles are reversed" },
+      { t: "اخترقت الحكومةُ الهدنة.", tag: "an actor, doing something", ok: true },
+      { t: "تمّ اختراق الحكومة من جانب الهدنة.", tag: "reversed, and still padded" }
+    ],
+    why: "A passive with the doer named (من قبل، من طرف، من جانب) is common in media Arabic but “not considered normative usage” and is “frowned upon by careful users of Arabic” — " + HN13 + ", entry “The passive”.", ch: "Section 9.1" },
+  { src: "مَن المسؤول: الشرطة أم المتظاهرون؟!",
+    ask: "Which English punctuation would a reviser keep?",
+    opts: [
+      { t: "Who is responsible: the police or the demonstrators?!", tag: "keeps the stacked ?! — English reduces it" },
+      { t: "Who is responsible, the police or the demonstrators?", tag: "English punctuation", ok: true },
+      { t: "Who is responsible the police or the demonstrators", tag: "no punctuation at all" }
+    ],
+    why: "Arabic writers may stack marks to show intensity; “in translation, these must be reduced”. " + HN13 + ", entry “Punctuation”.", ch: "Section 5.1" },
+  { src: "Each State Party shall adopt such measures as may be necessary.", srcEn: true,
+    opts: [
+      { t: "سوف تتخذ كل دولة طرف التدابير اللازمة.", tag: "سوف turns an obligation into a prediction" },
+      { t: "قد تتخذ كل دولة طرف التدابير اللازمة.", tag: "قد makes it optional" },
+      { t: "تتخذ كل دولة طرف التدابير اللازمة.", tag: "the present tense: an obligation", ok: true }
+    ],
+    why: "In legal English <i>shall</i> expresses obligation, not the future, and Arabic legal texts often render it with the present tense (المضارع). " + HN15 + ", pp. 138–140.", ch: "Section 7.2" },
+  { src: "The employee shall be deemed to have been appointed under probation for three months.", srcEn: true,
+    opts: [
+      { t: "يُعتبَر الموظف معيَّناً تحت الاختبار لمدة ثلاثة شهور.", tag: "the binding rule", ok: true },
+      { t: "سوف يتم اعتبار الموظف معيّناً تحت الاختبار لمدة ثلاثة شهور.", tag: "a prediction, plus padding" },
+      { t: "يرغب الموظف في التعيين تحت الاختبار لمدة ثلاثة شهور.", tag: "wrong meaning: a wish" }
+    ],
+    why: "Legal <i>shall</i> with the third person expresses obligation. " + HN13 + ", entry “Will/shall”.", ch: "Section 7.2" },
   { src: "الحكومة أعلنت عن إجراءات جديدة.",
     opts: [
-      { t: "الحكومة قامت بإعلان إجراءات جديدة.", tag: "adds the padding as well" },
-      { t: "أعلنت الحكومة عن إجراءات جديدة.", tag: "the verbal sentence Arabic prefers", ok: true },
-      { t: "تمّ إعلان إجراءات جديدة.", tag: "correct Arabic, but the government has vanished" }
+      { t: "أعلنت الحكومة عن إجراءات جديدة.", tag: "the verbal sentence Arabic news prefers", ok: true },
+      { t: "أُعلِنَت الحكومة عن إجراءات جديدة.", tag: "a passive that makes the government the thing announced" },
+      { t: "الحكومة أعلنت إجراءات جديدة عنها.", tag: "ungrammatical" }
     ],
-    why: "English puts the subject first and Arabic news prose does not. Starting with <b>الحكومة</b> is not ungrammatical &mdash; it is the shape of the English showing through.", ch: "Chapters 3 and 23" },
-
-  { src: "تمّ افتتاح المعرض من قِبَل الوزير.",
+    why: "Starting news prose with the subject is the shape of the English showing through.", ch: "Section 9.1" },
+  { src: "مطار القاهرة",
     opts: [
-      { t: "افتتح الوزيرُ المعرض.", tag: "an actor, doing something", ok: true },
-      { t: "المعرض تمّ افتتاحه من قِبَل الوزير.", tag: "the same passive, reordered" },
-      { t: "قام الوزير بافتتاح المعرض.", tag: "trades the passive for the padding" }
+      { t: "airport Cairo", tag: "wrong English word order" },
+      { t: "Cairo airport", tag: "an English compound", ok: true },
+      { t: "the Cairo of the airport", tag: "the relationship reversed" }
     ],
-    why: "<b>من قِبَل</b> is the English passive wearing Arabic clothes. Arabic has an active sentence ready and an actor to put in it.", ch: "Chapter 23" },
-
+    why: "The single biggest mistake with إضافة is to render every one with English <i>of</i>; English prefers a compound or ’s-genitive: <i>Cairo airport</i>, <i>Salwa’s mother</i>. " + HN15 + ", p. 50.", ch: "Section 3.4" },
   { src: "He is a brave and daring officer.", srcEn: true,
+    ask: "This English came from شجاع مِغوار. Which version would a reviser keep?",
     opts: [
-      { t: "ضابط شجاع ومِغوار", tag: "natural in Arabic — but this is going the other way" },
-      { t: "a very brave officer", tag: "one word for the pair", ok: true },
-      { t: "a brave and daring officer", tag: "keeps a doubling English does not use" }
+      { t: "He is a very brave officer.", tag: "one strong phrase for the Arabic pair", ok: true },
+      { t: "He is a brave and cowardly officer.", tag: "contradicts itself" },
+      { t: "He is a daring and brave and bold officer.", tag: "more doubling, not less" }
     ],
-    why: "Arabic pairs near-synonyms for weight and it reads as eloquence. English repeats them and it reads as padding. <b>Omission</b> (الحذف) is the strategy, and it is commonest in this direction.", ch: "Chapters 13 and 23" },
-
+    why: "Arabic pairs near-synonyms for emphasis; English usually turns the pair into one expression (omission, Section 4.3). Husni and Newman list the same move for binomials such as بلا قيد أو شرط → <i>unconditionally</i> (2015, p. 22).", ch: "Section 3.4" },
   { src: "The life is beautiful in this city.", srcEn: true,
     opts: [
-      { t: "The life is beautiful in this city.", tag: "the Arabic article, carried across" },
-      { t: "Life is beautiful in this city.", tag: "English drops it", ok: true },
-      { t: "A life is beautiful in this city.", tag: "a different error" }
+      { t: "Life is beautiful in this city.", tag: "English drops the article", ok: true },
+      { t: "The lives are beautiful in this city.", tag: "a different meaning" },
+      { t: "Is life beautiful in this city.", tag: "a question without a question mark" }
     ],
-    why: "<b>الحياة</b> carries its article; English <i>life</i> in the general sense takes none. A small word, and one of the surest signs of a translated text.", ch: "Chapter 23" },
-
+    why: "الحياة carries its article; English <i>life</i> in the general sense takes none.", ch: "Section 9.1" },
   { src: "He married from her last year.", srcEn: true,
     opts: [
-      { t: "He married with her last year.", tag: "a different wrong preposition" },
-      { t: "He married her last year.", tag: "English takes no preposition here", ok: true },
-      { t: "He got married from her last year.", tag: "keeps the borrowed preposition" }
+      { t: "He divorced her last year.", tag: "the opposite" },
+      { t: "He married her last year.", tag: "no preposition in English", ok: true },
+      { t: "He married to her last year.", tag: "a different wrong preposition" }
     ],
-    why: "<b>تزوّج من</b> has a preposition and English <i>marry</i> does not. Prepositions almost never map between the two languages; they have to be learned verb by verb.", ch: "Chapter 23" }
+    why: "تزوّج من has a preposition; English <i>marry</i> does not.", ch: "Section 9.1" }
 ];
 
 /* ═══════════ THE GLOSSARY · Translation Handbook ═══════════
@@ -8356,116 +8617,129 @@ const REVISE = [
    Arabic equivalent, the handbook's own definition and the chapter that
    explains it. Transcribed from the glossary, not written here. */
 const GLOSSARY = [
-  { en: "Adaptation (method)", ar: "التكييف", def: "A very free rewriting; some specialists see it as a new text, not a translation.", ch: "10" },
-  { en: "Adaptation (procedure)", ar: "التكييف", def: "Replacing a cultural situation with a familiar one.", ch: "12" },
-  { en: "Addition", ar: "الإضافة", def: "Adding words or information that the reader needs.", ch: "13" },
-  { en: "Approximation", ar: "التقريب", def: "Rendering the meaning of the source text as closely as possible in the target language, knowing that an exact match is impossible.", ch: "1" },
-  { en: "Audio description", ar: "الوصف الصوتي", def: "A spoken description of what happens on screen, for blind and partially sighted viewers.", ch: "26" },
-  { en: "Audiovisual translation (AVT)", ar: "الترجمة السمعية البصرية", def: "Translating texts that combine words, images and sound, such as films and video games.", ch: "26" },
-  { en: "Bilingual dictionary", ar: "معجم ثنائي اللغة", def: "A dictionary that gives equivalents in another language.", ch: "20" },
-  { en: "Borrowing", ar: "الاقتراض", def: "Taking a word from the source language as it is.", ch: "12" },
-  { en: "Calque", ar: "النسخ", def: "Translating each part of an expression literally; also called loan translation (Chapter 16).", ch: "12" },
-  { en: "Censorship", ar: "الرقابة", def: "Removing or changing content that is considered unacceptable.", ch: "27" },
-  { en: "Client", ar: "العميل", def: "The person or organisation that asks for a translation.", ch: "2" },
-  { en: "Collocation", ar: "التلازم اللفظي", def: "Words that naturally go together; the company a word keeps.", ch: "7" },
-  { en: "Collocations dictionary", ar: "معجم المتلازمات", def: "A dictionary of the natural word partners of a language.", ch: "20" },
-  { en: "Commissioned translator", ar: "مترجم بتكليف", def: "A translator who translates a text at someone else’s request.", ch: "1" },
-  { en: "Communicative purpose", ar: "الغرض التواصلي", def: "What the translation is for: to inform, persuade, instruct or entertain.", ch: "2" },
-  { en: "Compensation", ar: "التعويض", def: "Making up for an effect lost in one place by creating a similar effect elsewhere.", ch: "13" },
-  { en: "Concept", ar: "المفهوم", def: "An idea that a word or term stands for.", ch: "15" },
-  { en: "Connotation", ar: "المعنى الإيحائي", def: "The extra feeling or association a word carries.", ch: "5" },
-  { en: "Context", ar: "السياق", def: "Everything around a word or text that helps us understand it: the surrounding words and the wider situation.", ch: "6" },
-  { en: "Cultural approximation", ar: "التقريب الثقافي", def: "Bringing the source text’s cultural meaning as close as possible to the target reader.", ch: "14" },
-  { en: "Cultural substitution", ar: "الاستبدال الثقافي", def: "Replacing a cultural reference with one that is familiar to the target reader.", ch: "13" },
-  { en: "Culture-bound term", ar: "مصطلح ذو خصوصية ثقافية", def: "A reference to something from one culture, such as a food or a holiday. Also called a culture-specific item (Chapter 14).", ch: "27" },
-  { en: "Culture-specific item", ar: "عنصر ذو خصوصية ثقافية", def: "A word, custom or reference that belongs to one culture.", ch: "14" },
-  { en: "Denotation", ar: "المعنى المعجمي", def: "The basic, dictionary meaning of a word.", ch: "5" },
-  { en: "Descriptive translation", ar: "الترجمة الوصفية", def: "Paraphrasing a source expression by describing its meaning. Also called explanatory translation (الترجمة الشرحية, Chapter 13).", ch: "15" },
-  { en: "Dialect", ar: "اللهجة العامية", def: "The everyday spoken Arabic of a country or region.", ch: "3" },
-  { en: "Dialogue list", ar: "قائمة الحوار", def: "A written script of everything said in a film, given to the translator.", ch: "27" },
-  { en: "Domestication", ar: "التوطين", def: "Making a translation feel local to the target reader. Venuti's term, against foreignisation.", ch: "13" },
-  { en: "Localisation", ar: "الأقلمة", def: "Adapting a product to a market — language, format, law, culture. Often called التوطين too, which is why this entry exists: that word is already Venuti's domestication.", ch: "18" },
-  { en: "Draft", ar: "المسوّدة", def: "The first version of a translation.", ch: "23" },
-  { en: "Dubbing", ar: "الدبلجة", def: "Replacing the original dialogue with recorded dialogue in the target language.", ch: "26" },
-  { en: "Equivalence", ar: "التكافؤ", def: "A match between a source-language expression and a target-language expression.", ch: "9" },
-  { en: "Equivalence (procedure)", ar: "التكافؤ", def: "Describing the same situation with a completely different expression, often an idiom or a proverb.", ch: "12" },
-  { en: "Explanatory translation", ar: "الترجمة الشرحية", def: "Explaining a word or expression that has no equivalent.", ch: "13" },
-  { en: "Field", ar: "المجال", def: "The subject area of a text, such as politics, health or law.", ch: "17" },
-  { en: "Figurative language", ar: "اللغة المجازية", def: "Language used in a non-literal way to create an image or effect.", ch: "11" },
-  { en: "Foreignisation", ar: "التغريب", def: "Keeping the foreign flavour of the source text.", ch: "13" },
-  { en: "Form", ar: "الشكل", def: "The structure of language: a word, phrase, clause, sentence or text.", ch: "4" },
-  { en: "Formal equivalence", ar: "التكافؤ الشكلي", def: "Keeping the form of the original: passive for passive, verb for verb.", ch: "9" },
-  { en: "Free translation", ar: "الترجمة الحرّة", def: "Keeping the message but not the form; also called loose translation.", ch: "10" },
-  { en: "Functional equivalence", ar: "التكافؤ الوظيفي", def: "Using a target-language expression that serves the same function, whatever its form.", ch: "9" },
-  { en: "Functional translation", ar: "الترجمة الوظيفية", def: "Translating with a target-language expression that has the same function.", ch: "13" },
-  { en: "Genre", ar: "الجنس النصّي", def: "A kind of text with its own rules, such as a news report, a contract or a poem.", ch: "17" },
-  { en: "Hallucination", ar: "الهلوسة", def: "Invented or false content produced by an AI tool, such as facts that are not in the source text.", ch: "22" },
-  { en: "Homonymy", ar: "المشترك اللفظي", def: "One word with several meanings that are not related.", ch: "6" },
-  { en: "Ideational equivalence", ar: "التكافؤ الفكري", def: "Giving only the basic idea, in plain words.", ch: "9" },
-  { en: "Ideology", ar: "الأيديولوجيا", def: "A set of beliefs that shapes how people describe events.", ch: "19" },
-  { en: "Idiom", ar: "التعبير الاصطلاحي", def: "A fixed expression whose meaning is not the sum of the meanings of its words.", ch: "8" },
-  { en: "Simultaneous interpreting", ar: "الترجمة الفورية", def: "Rendered while the speaker is still speaking, from a booth. One mode of الترجمة الشفوية, not another name for it. The lag behind the speaker is called the décalage.", ch: "1" },
-  { en: "Consecutive interpreting", ar: "الترجمة التتابعية", def: "Rendered after the speaker pauses, from notes and memory. Also written التتبعية and التعاقبية. The notes carry structure, numbers, names and links &mdash; not words.", ch: "1" },
-  { en: "Sight translation", ar: "الترجمة المنظورة", def: "A written text read out in the other language on the spot. Also الترجمة بالنظر. Written input, spoken output, which is why it belongs to interpreting rather than translation.", ch: "1" },
-  { en: "Whispered interpreting", ar: "الترجمة الهمسية", def: "Simultaneous interpreting delivered in a low voice beside one or two listeners, with no booth and no equipment. Known in the profession by its French name, chuchotage.", ch: "1" },
-  { en: "Relay interpreting", ar: "الترجمة المرحلية", def: "Interpreting through a third language, when no interpreter has both of the ones needed. The middle booth is the pivot, and every error in it is inherited by everyone downstream.", ch: "1" },
-  { en: "Remote interpreting", ar: "الترجمة الفورية عن بُعد", def: "Interpreting delivered over a platform, by video or telephone, with the interpreter not in the room. A working arrangement rather than a mode, and it shortens the handover intervals.", ch: "1" },
-  { en: "Interpreting", ar: "الترجمة الشفوية", def: "Transferring spoken language into another language &mdash; the term that covers the whole activity, as against الترجمة التحريرية, written translation. Its modes are <b>الترجمة الفورية</b>, rendered while the speaker is still speaking; <b>الترجمة التتابعية</b>, rendered from notes once the speaker pauses; <b>الترجمة المنظورة</b>, a written text read out in the other language; and <b>الترجمة الهمسية</b>, whispered to one or two listeners. The spelling الشفوية is also current &mdash; both restore a different dropped letter from شفة &mdash; and you will meet it in UN usage.", ch: "1" },
-  { en: "Justification", ar: "التبرير", def: "The reason why a translation choice is right.", ch: "25" },
-  { en: "Lexical creation", ar: "التوليد المعجمي", def: "Coining new target-language words for items with no direct equivalent.", ch: "16" },
-  { en: "Literal translation", ar: "الترجمة الحرفية", def: "Keeping the original words, changing only what grammar requires; also called modified literal translation (الترجمة الحرفية المعدّلة).", ch: "10" },
-  { en: "Loaded word", ar: "كلمة مشحونة", def: "A word that carries a judgement, positive or negative.", ch: "19" },
-  { en: "Loan translation (calque)", ar: "النسخ", def: "Translating the parts of a compound word one by one.", ch: "16" },
-  { en: "Machine translation (MT)", ar: "الترجمة الآلية", def: "Translation done by software, such as online translation tools or AI chat tools.", ch: "22" },
-  { en: "Macro context", ar: "سياق الموقف (الخارجي)", def: "The wider situation: the author, audience, time, place and circumstances of a text.", ch: "6" },
-  { en: "Meaning", ar: "المعنى", def: "The idea that a form expresses.", ch: "4" },
-  { en: "Mental draft", ar: "المسوّدة الذهنية", def: "A first idea of the translation that you form while reading the text.", ch: "2" },
-  { en: "Metaphor", ar: "الاستعارة", def: "A comparison without “as” or “like”; using a word in a non-basic meaning.", ch: "11" },
-  { en: "Micro context (co-text)", ar: "السياق اللغوي (الداخلي)", def: "The words and sentences immediately around a word.", ch: "6" },
-  { en: "Modern Standard Arabic (MSA)", ar: "الفصحى المعاصرة", def: "The Arabic of newspapers, laws and education.", ch: "3" },
-  { en: "Modulation", ar: "التطويع", def: "Expressing the same idea from another point of view.", ch: "12" },
-  { en: "Monolingual dictionary", ar: "معجم أحادي اللغة", def: "A dictionary that explains words in the same language.", ch: "20" },
-  { en: "Neologism", ar: "اللفظ المستحدث", def: "A new word, or an existing word given a new meaning.", ch: "16" },
-  { en: "Omission", ar: "الحذف", def: "Leaving out words that are unnecessary in the target language.", ch: "13" },
-  { en: "Polysemy", ar: "تعدّد المعنى", def: "One word with several meanings that are related.", ch: "6" },
-  { en: "Post-editing", ar: "التحرير اللاحق", def: "A human correcting and improving machine translation output, lightly or fully.", ch: "22" },
-  { en: "Proverb", ar: "المثل", def: "A traditional saying that gives advice or states a truth.", ch: "8" },
-  { en: "Register", ar: "المستوى اللغوي", def: "How formal or informal the language is.", ch: "3" },
-  { en: "Revision", ar: "المراجعة", def: "Checking a translation against the source and correcting it.", ch: "23" },
-  { en: "Risk", ar: "الخطر", def: "The chance that a choice causes a problem, and how serious it would be.", ch: "24" },
-  { en: "Risk management", ar: "إدارة المخاطر", def: "Spending more effort where a mistake could cause more harm.", ch: "24" },
-  { en: "Risk matrix", ar: "مصفوفة تقييم المخاطر", def: "A table of possible risks, how serious they are, and what to do.", ch: "24" },
-  { en: "Self-initiated translator", ar: "مترجم بمبادرة ذاتية", def: "A translator who chooses a text to translate on their own initiative.", ch: "1" },
-  { en: "Sentence meaning", ar: "معنى الجملة", def: "What the words of a sentence say.", ch: "5" },
-  { en: "Simile", ar: "التشبيه", def: "A comparison that uses “as” or “like”.", ch: "11" },
-  { en: "Skopos theory", ar: "نظرية الغاية", def: "The idea that the purpose of a translation decides how it is translated.", ch: "26" },
-  { en: "Source text (ST)", ar: "النص المصدر", def: "The original text that you translate.", ch: "1" },
-  { en: "Speaker meaning", ar: "مقصد المتكلم", def: "What the speaker really means by saying it.", ch: "5" },
-  { en: "Specialised dictionary", ar: "معجم متخصص", def: "A dictionary for one field, such as law or medicine.", ch: "20" },
-  { en: "Subtitling", ar: "السترجة / الترجمة المرئية", def: "Showing a written version of the dialogue, usually at the bottom of the screen, together with important on-screen text and song lyrics.", ch: "27" },
-  { en: "Taboo language", ar: "اللغة المحظورة", def: "Words that a society or religion forbids or restricts, such as swear words.", ch: "27" },
-  { en: "Target audience", ar: "الجمهور المستهدف", def: "The people who will read the translation.", ch: "2" },
-  { en: "Target text (TT)", ar: "النص الهدف", def: "Your translation.", ch: "1" },
-  { en: "Term", ar: "المصطلح", def: "A word or expression that names a concept in a special field.", ch: "21" },
-  { en: "Term list", ar: "قائمة المصطلحات", def: "A list of the approved terms for a project, with their translations.", ch: "21" },
-  { en: "Termbase", ar: "قاعدة بيانات المصطلحات (بنك المصطلحات)", def: "A database of terms and information about them.", ch: "21" },
-  { en: "Terminologist", ar: "المصطلحي (خبير المصطلحات)", def: "A specialist who collects, describes and records the terms of a field, and sometimes standardises them, in one or more languages.", ch: "21" },
-  { en: "Terminology", ar: "علم المصطلح (المصطلحية)", def: "The study, collection and management of specialised terms; also the set of terms used in one field.", ch: "21" },
-  { en: "Terminology guide", ar: "دليل المصطلحات", def: "A document that tells translators which terms to use for a client.", ch: "21" },
-  { en: "Text", ar: "النص", def: "Any piece of language, written or spoken, that forms a complete message: from a one-word sign to a whole book.", ch: "17" },
-  { en: "Text analysis", ar: "تحليل النص", def: "Breaking down and studying a text before translating it.", ch: "17" },
-  { en: "Text type", ar: "نمط النص", def: "A group of texts that share one main function: to inform, to express or to persuade.", ch: "18" },
-  { en: "Tone", ar: "النبرة", def: "The writer’s attitude: neutral, critical, friendly, straightforward.", ch: "17" },
-  { en: "Translation", ar: "الترجمة", def: "Transferring meaning from one language into another. In a narrow sense, written translation (الترجمة التحريرية), as opposed to interpreting.", ch: "1" },
-  { en: "Translation brief", ar: "موجز الترجمة", def: "The client’s instructions for a translation: who it is for, what it is for and any other requirements.", ch: "2" },
-  { en: "Translation commentary", ar: "التعليق على الترجمة", def: "A text that explains the problems in a translation and justifies the solutions.", ch: "25" },
-  { en: "Translation procedure", ar: "إجراء الترجمة", def: "A technique for translating a word, phrase or sentence.", ch: "12" },
-  { en: "Translation strategy", ar: "استراتيجية الترجمة", def: "A planned solution to a translation problem.", ch: "13" },
-  { en: "Transliteration", ar: "النقل الصوتي", def: "Writing the sounds of a word in the letters of another language.", ch: "15" },
-  { en: "Transposition", ar: "الإبدال", def: "Changing the word class, for example a noun into a verb.", ch: "12" },
-  { en: "Verbal sentence", ar: "الجملة الفعلية", def: "A sentence that starts with a verb.", ch: "3" },
-  { en: "Voice-over", ar: "التعليق الصوتي", def: "Recording a translation over the original voice, which can still be heard quietly.", ch: "26" },
-  { en: "Word order", ar: "ترتيب الكلمات", def: "The order of the subject, verb and object in a sentence.", ch: "3" }
+  { en: "Adaptation (method)", ar: "التكييف", def: "A very free rewriting; some specialists see it as a new text, not a translation.", ch: "4.1" },
+  { en: "Adaptation (procedure)", ar: "التكييف", def: "Replacing a cultural situation with a familiar one.", ch: "4.2" },
+  { en: "Addition", ar: "الإضافة", def: "Adding words or information that the reader needs.", ch: "4.3" },
+  { en: "Approximation", ar: "التقريب", def: "Rendering the meaning of the source text as closely as possible in the target language, knowing that an exact match is impossible.", ch: "1.1" },
+  { en: "Audio description", ar: "الوصف الصوتي", def: "A spoken description of what happens on screen, for blind and partially sighted viewers.", ch: "10.1" },
+  { en: "Audiovisual translation (AVT)", ar: "الترجمة السمعية البصرية", def: "Translating texts that combine words, images and sound, such as films and video games.", ch: "10.1" },
+  { en: "Bilingual dictionary", ar: "معجم ثنائي اللغة", def: "A dictionary that gives equivalents in another language.", ch: "8.1" },
+  { en: "Borrowing", ar: "الاقتراض", def: "Taking a word from the source language as it is.", ch: "4.2" },
+  { en: "Calque", ar: "النسخ", def: "Translating each part of an expression literally; also called loan translation (Section 8.3).", ch: "4.2" },
+  { en: "Censorship", ar: "الرقابة", def: "Removing or changing content that is considered unacceptable.", ch: "10.2" },
+  { en: "Client", ar: "العميل", def: "The person or organisation that asks for a translation.", ch: "1.2" },
+  { en: "Collocation", ar: "التلازم اللفظي", def: "Words that naturally go together; the company a word keeps.", ch: "3.1" },
+  { en: "Collocations dictionary", ar: "معجم المتلازمات", def: "A dictionary of the natural word partners of a language.", ch: "8.1" },
+  { en: "Commissioned translator", ar: "مترجم بتكليف", def: "A translator who translates a text at someone else’s request.", ch: "1.1" },
+  { en: "Communicative purpose", ar: "الغرض التواصلي", def: "What the translation is for: to inform, persuade, instruct or entertain.", ch: "1.2" },
+  { en: "Compensation", ar: "التعويض", def: "Making up for an effect lost in one place by creating a similar effect elsewhere.", ch: "4.3" },
+  { en: "Concept", ar: "المفهوم", def: "An idea that a word or term stands for.", ch: "6.2" },
+  { en: "Connotation", ar: "المعنى الإيحائي", def: "The extra feeling or association a word carries.", ch: "2.2" },
+  { en: "Context", ar: "السياق", def: "Everything around a word or text that helps us understand it: the surrounding words and the wider situation.", ch: "2.3" },
+  { en: "Cultural approximation", ar: "التقريب الثقافي", def: "Bringing the source text’s cultural meaning as close as possible to the target reader.", ch: "6.1" },
+  { en: "Cultural substitution", ar: "الاستبدال الثقافي", def: "Replacing a cultural reference with one that is familiar to the target reader.", ch: "4.3" },
+  { en: "Culture-bound term", ar: "مصطلح ذو خصوصية ثقافية", def: "A reference to something from one culture, such as a food or a holiday. Also called a culture-specific item (Section 6.1).", ch: "10.2" },
+  { en: "Culture-specific item", ar: "عنصر ذو خصوصية ثقافية", def: "A word, custom or reference that belongs to one culture.", ch: "6.1" },
+  { en: "Denotation", ar: "المعنى المعجمي", def: "The basic, dictionary meaning of a word.", ch: "2.2" },
+  { en: "Descriptive translation", ar: "الترجمة الوصفية", def: "Paraphrasing a source expression by describing its meaning. Also called explanatory translation (الترجمة الشرحية, Chapter 13).", ch: "6.2" },
+  { en: "Dialect", ar: "اللهجة العامية", def: "The everyday spoken Arabic of a country or region.", ch: "5.1" },
+  { en: "Dialogue list", ar: "قائمة الحوار", def: "A written script of everything said in a film, given to the translator.", ch: "10.2" },
+  { en: "Domestication", ar: "التوطين", def: "Making a translation feel local to the target reader. Venuti's term, against foreignisation.", ch: "4.3" },
+  { en: "Localisation", ar: "الأقلمة", def: "Adapting a product to a market — language, format, law, culture. Often called التوطين too, which is why this entry exists: that word is already Venuti's domestication.", ch: "7.2" },
+  { en: "Draft", ar: "المسوّدة", def: "The first version of a translation.", ch: "9.1" },
+  { en: "Dubbing", ar: "الدبلجة", def: "Replacing the original dialogue with recorded dialogue in the target language.", ch: "10.1" },
+  { en: "Equivalence", ar: "التكافؤ", def: "A match between a source-language expression and a target-language expression.", ch: "2.4" },
+  { en: "Equivalence (procedure)", ar: "التكافؤ", def: "Describing the same situation with a completely different expression, often an idiom or a proverb.", ch: "4.2" },
+  { en: "Explanatory translation", ar: "الترجمة الشرحية", def: "Explaining a word or expression that has no equivalent.", ch: "4.3" },
+  { en: "Field", ar: "المجال", def: "The subject area of a text, such as politics, health or law.", ch: "7.1" },
+  { en: "Figurative language", ar: "اللغة المجازية", def: "Language used in a non-literal way to create an image or effect.", ch: "3.3" },
+  { en: "Foreignisation", ar: "التغريب", def: "Keeping the foreign flavour of the source text.", ch: "4.3" },
+  { en: "Form", ar: "الشكل", def: "The structure of language: a word, phrase, clause, sentence or text.", ch: "2.1" },
+  { en: "Formal equivalence", ar: "التكافؤ الشكلي", def: "Keeping the form of the original: passive for passive, verb for verb.", ch: "2.4" },
+  { en: "Free translation", ar: "الترجمة الحرّة", def: "Keeping the message but not the form; also called loose translation.", ch: "4.1" },
+  { en: "Functional equivalence", ar: "التكافؤ الوظيفي", def: "Using a target-language expression that serves the same function, whatever its form.", ch: "2.4" },
+  { en: "Functional translation", ar: "الترجمة الوظيفية", def: "Translating with a target-language expression that has the same function.", ch: "4.3" },
+  { en: "Genre", ar: "الجنس النصّي", def: "A kind of text with its own rules, such as a news report, a contract or a poem.", ch: "7.1" },
+  { en: "Hallucination", ar: "الهلوسة", def: "Invented or false content produced by an AI tool, such as facts that are not in the source text.", ch: "8.4" },
+  { en: "Homonymy", ar: "المشترك اللفظي", def: "One word with several meanings that are not related.", ch: "2.3" },
+  { en: "Ideational equivalence", ar: "التكافؤ الفكري", def: "Giving only the basic idea, in plain words.", ch: "2.4" },
+  { en: "Ideology", ar: "الأيديولوجيا", def: "A set of beliefs that shapes how people describe events.", ch: "7.3" },
+  { en: "Idiom", ar: "التعبير الاصطلاحي", def: "A fixed expression whose meaning is not the sum of the meanings of its words.", ch: "3.2" },
+  { en: "Simultaneous interpreting", ar: "الترجمة الفورية", def: "Rendered while the speaker is still speaking, from a booth. One mode of الترجمة الشفوية, not another name for it. The lag behind the speaker is called the décalage.", ch: "1.1" },
+  { en: "Consecutive interpreting", ar: "الترجمة التتابعية", def: "Rendered after the speaker pauses, from notes and memory. Also written التتبعية and التعاقبية. The notes carry structure, numbers, names and links &mdash; not words.", ch: "1.1" },
+  { en: "Sight translation", ar: "الترجمة المنظورة", def: "A written text read out in the other language on the spot. Also الترجمة بالنظر. Written input, spoken output, which is why it belongs to interpreting rather than translation.", ch: "1.1" },
+  { en: "Whispered interpreting", ar: "الترجمة الهمسية", def: "Simultaneous interpreting delivered in a low voice beside one or two listeners, with no booth and no equipment. Known in the profession by its French name, chuchotage.", ch: "1.1" },
+  { en: "Relay interpreting", ar: "الترجمة المرحلية", def: "Interpreting through a third language, when no interpreter has both of the ones needed. The middle booth is the pivot, and every error in it is inherited by everyone downstream.", ch: "1.1" },
+  { en: "Remote interpreting", ar: "الترجمة الفورية عن بُعد", def: "Interpreting delivered over a platform, by video or telephone, with the interpreter not in the room. A working arrangement rather than a mode, and it shortens the handover intervals.", ch: "1.1" },
+  { en: "Interpreting", ar: "الترجمة الشفوية", def: "Transferring spoken language into another language &mdash; the term that covers the whole activity, as against الترجمة التحريرية, written translation. Its modes are <b>الترجمة الفورية</b>, rendered while the speaker is still speaking; <b>الترجمة التتابعية</b>, rendered from notes once the speaker pauses; <b>الترجمة المنظورة</b>, a written text read out in the other language; and <b>الترجمة الهمسية</b>, whispered to one or two listeners. The spelling الشفوية is also current &mdash; both restore a different dropped letter from شفة &mdash; and you will meet it in UN usage.", ch: "1.1" },
+  { en: "Justification", ar: "التبرير", def: "The reason why a translation choice is right.", ch: "9.3" },
+  { en: "Lexical creation", ar: "التوليد المعجمي", def: "Coining new target-language words for items with no direct equivalent.", ch: "8.3" },
+  { en: "Literal translation", ar: "الترجمة الحرفية", def: "Keeping the original words, changing only what grammar requires; also called modified literal translation (الترجمة الحرفية المعدّلة).", ch: "4.1" },
+  { en: "Loaded word", ar: "كلمة مشحونة", def: "A word that carries a judgement, positive or negative.", ch: "7.3" },
+  { en: "Loan translation (calque)", ar: "النسخ", def: "Translating the parts of a compound word one by one.", ch: "8.3" },
+  { en: "Machine translation (MT)", ar: "الترجمة الآلية", def: "Translation done by software, such as online translation tools or AI chat tools.", ch: "8.4" },
+  { en: "Macro context", ar: "سياق الموقف (الخارجي)", def: "The wider situation: the author, audience, time, place and circumstances of a text.", ch: "2.3" },
+  { en: "Meaning", ar: "المعنى", def: "The idea that a form expresses.", ch: "2.1" },
+  { en: "Mental draft", ar: "المسوّدة الذهنية", def: "A first idea of the translation that you form while reading the text.", ch: "1.2" },
+  { en: "Metaphor", ar: "الاستعارة", def: "A comparison without “as” or “like”; using a word in a non-basic meaning.", ch: "3.3" },
+  { en: "Micro context (co-text)", ar: "السياق اللغوي (الداخلي)", def: "The words and sentences immediately around a word.", ch: "2.3" },
+  { en: "Modern Standard Arabic (MSA)", ar: "الفصحى المعاصرة", def: "The Arabic of newspapers, laws and education.", ch: "5.1" },
+  { en: "Modulation", ar: "التطويع", def: "Expressing the same idea from another point of view.", ch: "4.2" },
+  { en: "Monolingual dictionary", ar: "معجم أحادي اللغة", def: "A dictionary that explains words in the same language.", ch: "8.1" },
+  { en: "Neologism", ar: "اللفظ المستحدث", def: "A new word, or an existing word given a new meaning.", ch: "8.3" },
+  { en: "Omission", ar: "الحذف", def: "Leaving out words that are unnecessary in the target language.", ch: "4.3" },
+  { en: "Polysemy", ar: "تعدّد المعنى", def: "One word with several meanings that are related.", ch: "2.3" },
+  { en: "Post-editing", ar: "التحرير اللاحق", def: "A human correcting and improving machine translation output, lightly or fully.", ch: "8.4" },
+  { en: "Proverb", ar: "المثل", def: "A traditional saying that gives advice or states a truth.", ch: "3.2" },
+  { en: "Register", ar: "المستوى اللغوي", def: "How formal or informal the language is.", ch: "5.1" },
+  { en: "Revision", ar: "المراجعة", def: "Checking a translation against the source and correcting it.", ch: "9.1" },
+  { en: "Risk", ar: "الخطر", def: "The chance that a choice causes a problem, and how serious it would be.", ch: "9.2" },
+  { en: "Risk management", ar: "إدارة المخاطر", def: "Spending more effort where a mistake could cause more harm.", ch: "9.2" },
+  { en: "Risk matrix", ar: "مصفوفة تقييم المخاطر", def: "A table of possible risks, how serious they are, and what to do.", ch: "9.2" },
+  { en: "Self-initiated translator", ar: "مترجم بمبادرة ذاتية", def: "A translator who chooses a text to translate on their own initiative.", ch: "1.1" },
+  { en: "Sentence meaning", ar: "معنى الجملة", def: "What the words of a sentence say.", ch: "2.2" },
+  { en: "Simile", ar: "التشبيه", def: "A comparison that uses “as” or “like”.", ch: "3.3" },
+  { en: "Skopos theory", ar: "نظرية الغاية", def: "The idea that the purpose of a translation decides how it is translated.", ch: "10.1" },
+  { en: "Source text (ST)", ar: "النص المصدر", def: "The original text that you translate.", ch: "1.1" },
+  { en: "Speaker meaning", ar: "مقصد المتكلم", def: "What the speaker really means by saying it.", ch: "2.2" },
+  { en: "Specialised dictionary", ar: "معجم متخصص", def: "A dictionary for one field, such as law or medicine.", ch: "8.1" },
+  { en: "Subtitling", ar: "السترجة / الترجمة المرئية", def: "Showing a written version of the dialogue, usually at the bottom of the screen, together with important on-screen text and song lyrics.", ch: "10.2" },
+  { en: "Taboo language", ar: "اللغة المحظورة", def: "Words that a society or religion forbids or restricts, such as swear words.", ch: "10.2" },
+  { en: "Target audience", ar: "الجمهور المستهدف", def: "The people who will read the translation.", ch: "1.2" },
+  { en: "Target text (TT)", ar: "النص الهدف", def: "Your translation.", ch: "1.1" },
+  { en: "Term", ar: "المصطلح", def: "A word or expression that names a concept in a special field.", ch: "8.2" },
+  { en: "Term list", ar: "قائمة المصطلحات", def: "A list of the approved terms for a project, with their translations.", ch: "8.2" },
+  { en: "Termbase", ar: "قاعدة بيانات المصطلحات (بنك المصطلحات)", def: "A database of terms and information about them.", ch: "8.2" },
+  { en: "Terminologist", ar: "المصطلحي (خبير المصطلحات)", def: "A specialist who collects, describes and records the terms of a field, and sometimes standardises them, in one or more languages.", ch: "8.2" },
+  { en: "Terminology", ar: "علم المصطلح (المصطلحية)", def: "The study, collection and management of specialised terms; also the set of terms used in one field.", ch: "8.2" },
+  { en: "Terminology guide", ar: "دليل المصطلحات", def: "A document that tells translators which terms to use for a client.", ch: "8.2" },
+  { en: "Text", ar: "النص", def: "Any piece of language, written or spoken, that forms a complete message: from a one-word sign to a whole book.", ch: "7.1" },
+  { en: "Text analysis", ar: "تحليل النص", def: "Breaking down and studying a text before translating it.", ch: "7.1" },
+  { en: "Text type", ar: "نمط النص", def: "A group of texts that share one main function: to inform, to express or to persuade.", ch: "7.2" },
+  { en: "Tone", ar: "النبرة", def: "The writer’s attitude: neutral, critical, friendly, straightforward.", ch: "7.1" },
+  { en: "Translation", ar: "الترجمة", def: "Transferring meaning from one language into another. In a narrow sense, written translation (الترجمة التحريرية), as opposed to interpreting.", ch: "1.1" },
+  { en: "Translation brief", ar: "موجز الترجمة", def: "The client’s instructions for a translation: who it is for, what it is for and any other requirements.", ch: "1.2" },
+  { en: "Translation commentary", ar: "التعليق على الترجمة", def: "A text that explains the problems in a translation and justifies the solutions.", ch: "9.3" },
+  { en: "Translation procedure", ar: "إجراء الترجمة", def: "A technique for translating a word, phrase or sentence.", ch: "4.2" },
+  { en: "Translation strategy", ar: "استراتيجية الترجمة", def: "A planned solution to a translation problem.", ch: "4.3" },
+  { en: "Transliteration", ar: "النقل الصوتي", def: "Writing the sounds of a word in the letters of another language.", ch: "6.2" },
+  { en: "Transposition", ar: "الإبدال", def: "Changing the word class, for example a noun into a verb.", ch: "4.2" },
+  { en: "Verbal sentence", ar: "الجملة الفعلية", def: "A sentence that starts with a verb.", ch: "5.1" },
+  { en: "Voice-over", ar: "التعليق الصوتي", def: "Recording a translation over the original voice, which can still be heard quietly.", ch: "10.1" },
+  { en: "Word order", ar: "ترتيب الكلمات", def: "The order of the subject, verb and object in a sentence.", ch: "5.1" },
+  { en: "Restricted collocation", ar: "التلازم المقيَّد", def: "A collocation in which one word accepts only a small set of partners, such as ارتكب جريمة (to perpetrate a crime).", ch: "3.1" },
+  { en: "Bound collocation", ar: "التلازم المغلق", def: "A collocation in which one word appears with only one partner, such as حرب ضروس (a fierce war).", ch: "3.1" },
+  { en: "Corpus", ar: "الذخيرة اللغوية", def: "A large electronic collection of real texts that can be searched to see how words are actually used.", ch: "3.1" },
+  { en: "False friend", ar: "الصديق المخادع", def: "An expression that looks like one in the other language but means something different, such as فقد أعصابه (to lose one’s temper) and to lose one’s nerve.", ch: "3.2" },
+  { en: "Binomial", ar: "المزاوجة", def: "A fixed pair of words joined by “and” or “or”, such as null and void or الصالح والطالح.", ch: "3.4" },
+  { en: "Phrasal verb", ar: "الفعل العباري", def: "An English verb with a particle whose meaning often cannot be worked out from its parts, such as take off.", ch: "3.4" },
+  { en: "Compound", ar: "الكلمة المركّبة", def: "Two or more words that work as one word, such as handbag; Arabic usually uses an إضافة instead.", ch: "3.4" },
+  { en: "Dynamic equivalence", ar: "التكافؤ الديناميكي", def: "Nida’s term for translating so that the new readers respond to the message as the original readers did (equivalent effect).", ch: "2.4" },
+  { en: "Diglossia", ar: "الازدواجية اللغوية", def: "The coexistence of a standard variety (الفصحى) and spoken dialects (العامية) of one language, used in different situations.", ch: "5.2" },
+  { en: "Idiolect", ar: "اللهجة الفردية", def: "The personal way of speaking of one individual.", ch: "5.2" },
+  { en: "Accent", ar: "اللكنة", def: "A way of pronouncing a language that is typical of a region or group.", ch: "5.2" },
+  { en: "Neutral term", ar: "المصطلح المحايد", def: "A word that is not marked as belonging to one region, used when translating for readers across the Arab world.", ch: "5.2" },
+  { en: "Transcription", ar: "النقل الصوتي", def: "Writing the sounds of a word in another script, rather than its letters.", ch: "6.2" }
 ];
 
 /* ═══════════ COMMON ERRORS · Chapter 23 ═══════════
@@ -8534,45 +8808,45 @@ const ERRORS = [
    written and kept is a portfolio piece. */
 const WORKBENCH = [
   /* Level 1 A — EN → AR */
-  { id: "w1a1", lvl: 1, dir: "en-ar", ch: "Chapter 7",
+  { id: "w1a1", lvl: 1, dir: "en-ar", ch: "Section 3.1",
     src: "She paid a visit to her grandmother.",
     model: "زارت جدّتها.",
     note: "<i>Pay a visit</i> is a collocation meaning <i>visit</i>. Translate the partnership, not the two words." },
-  { id: "w1a2", lvl: 1, dir: "en-ar", ch: "Chapter 9",
+  { id: "w1a2", lvl: 1, dir: "en-ar", ch: "Section 2.4",
     src: "The agreement has remained a dead letter.",
     model: "ظلّت الاتفاقية حبراً على ورق.",
     note: "A functional equivalent: a different image doing the same work." },
-  { id: "w1a3", lvl: 1, dir: "en-ar", ch: "Chapter 4",
+  { id: "w1a3", lvl: 1, dir: "en-ar", ch: "Section 2.1",
     src: "He is a heavy smoker.",
     model: "يدخّن بشراهة.",
     note: "The form changes &mdash; noun phrase to verb &mdash; and the meaning stays. That is transposition." },
-  { id: "w1a4", lvl: 1, dir: "en-ar", ch: "Chapter 8",
+  { id: "w1a4", lvl: 1, dir: "en-ar", ch: "Section 3.2",
     src: "It’s raining cats and dogs.",
     model: "تمطر بغزارة.",
     note: "Do not translate an idiom word by word unless the other language happens to have the same idiom." },
-  { id: "w1a5", lvl: 1, dir: "en-ar", ch: "Chapter 14",
+  { id: "w1a5", lvl: 1, dir: "en-ar", ch: "Section 6.1",
     src: "The Home Office issued a statement.",
     model: "أصدرت وزارة الداخلية البريطانية بياناً.",
     note: "The Home Office is the UK interior ministry. An institution needs its function, not its name." },
 
   /* Level 1 B — AR → EN */
-  { id: "w1b1", lvl: 1, dir: "ar-en", ch: "Chapter 8",
+  { id: "w1b1", lvl: 1, dir: "ar-en", ch: "Section 3.2",
     src: "رجع بخُفَّي حُنين.",
     model: "He came back empty-handed.",
     note: "The meaning of the proverb, in natural English. The two slippers of Hunayn do not travel." },
-  { id: "w1b2", lvl: 1, dir: "ar-en", ch: "Chapter 14",
+  { id: "w1b2", lvl: 1, dir: "ar-en", ch: "Section 6.1",
     src: "أثلجَ الخبرُ صدري.",
     model: "The news warmed my heart.",
     note: "Arabic takes relief as <i>cold</i>; English takes it as <i>warmth</i>. The image inverts and the feeling survives." },
-  { id: "w1b3", lvl: 1, dir: "ar-en", ch: "Chapter 13",
+  { id: "w1b3", lvl: 1, dir: "ar-en", ch: "Section 4.3",
     src: "هو شجاعٌ مِغوار.",
     model: "He is very brave.",
     note: "Omission: English does not want two synonyms where Arabic doubles for emphasis." },
-  { id: "w1b4", lvl: 1, dir: "ar-en", ch: "Chapter 7",
+  { id: "w1b4", lvl: 1, dir: "ar-en", ch: "Section 3.1",
     src: "يساورني القلق بشأن النتائج.",
     model: "I am worried about the results.",
     note: "A natural English collocation. The literal <i>worry visits me</i> is not one." },
-  { id: "w1b5", lvl: 1, dir: "ar-en", ch: "Chapters 3 and 7",
+  { id: "w1b5", lvl: 1, dir: "ar-en", ch: "Sections 5.1 and 3.1",
     src: "قدّم الوزير استقالته أمس.",
     model: "The minister resigned yesterday.",
     note: "Start with the subject in English, and قدّم استقالته simply means <i>resigned</i>." },
@@ -8612,10 +8886,10 @@ const WORKBENCH = [
 /* The four-step method the handbook sets for a Level 3 text, and the
    shape of a commentary (Checklist 4 · Chapter 25). */
 const COMMENTARY_STEPS = [
-  "Analyse the text with the analysis checklist (Chapter 17).",
+  "Analyse the text with the analysis checklist (Section 7.1).",
   "Translate it.",
-  "Revise it with the risk matrix and the checklists (Chapters 23 and 24).",
-  "Write a commentary of about 150 words (Chapter 25)."
+  "Revise it with the risk matrix and the checklists (Sections 9.1 and 9.2).",
+  "Write a commentary of about 150 words (Section 9.3)."
 ];
 const COMMENTARY_SHAPE = [
   "Part one reflects on the analysis; part two on the translation.",
@@ -11258,113 +11532,129 @@ const KSL_LESSONS = [
 /* Still to come. A short list, not eight large cards. */
 
 const ITEMS = [
-  { id: "minor", ar: "مساند التَّرجمة · جامعة الكويت", en: "Kuwait University · Translation Minor", kind: "guide", section: "method",
+  { id: "meaning", ar: "دور المترجم والتكافؤ", en: "The Translator and Equivalence", kind: "guide", section: "method", group: "core",
+    subject: "Bassnett (2014) · Husni & Newman (2015)",
+    blurb: "What a translator really does, three kinds of translation, equivalence, loss and gain, and purpose. Seven short pages.",
+    run: () => runBookGuide(GUIDE_MEANING) },
+  { id: "phrase", ar: "المتلازمات والتعابير والأمثال", en: "Collocations, Idioms and Proverbs", kind: "guide", section: "method", group: "core",
+    subject: "Husni & Newman (2015), Chapter 1",
+    blurb: "Word partners, false friends, idiom strategies, similes, proverbs, word pairs and compounds — all from published examples.",
+    run: () => runBookGuide(GUIDE_PHRASE) },
+  { id: "variety", ar: "المستوى اللغوي واللهجات", en: "Register, Dialect and Diglossia", kind: "guide", section: "method", group: "core",
+    subject: "Husni & Newman (2015), Chapter 2 · A to Z (2013)",
+    blurb: "Fuṣḥā and dialect, how Standard Arabic varies, translating dialogue, punctuation and names.",
+    run: () => runBookGuide(GUIDE_VARIETY) },
+  { id: "fields", ar: "النص القانوني وتقنيات الترجمة", en: "Legal Texts and Translation Technology", kind: "guide", section: "method", group: "core",
+    subject: "Husni & Newman (2015), Chapters 3–4",
+    blurb: "Legal shall, the passive, translation memory, online dictionaries and machine translation.",
+    run: () => runBookGuide(GUIDE_FIELDS) },
+  { id: "minor", ar: "مساند التَّرجمة · جامعة الكويت", en: "Kuwait University · Translation Minor", kind: "guide", section: "method", group: "ref",
     subject: "مساند التَّرجمة · جامعة الكويت",
     blurb: "Ten courses, both languages, and what the Compass already holds for each.",
     run: runMinor },
-  { id: "ksl", ar: "لغة الإشارة الكويتية", en: "Kuwaiti Sign Language", kind: "guide", section: "method",
+  { id: "ksl", ar: "لغة الإشارة الكويتية", en: "Kuwaiti Sign Language", kind: "guide", section: "method", group: "voice",
     subject: "لغة الإشارة الكويتية · KSL",
     blurb: "Kuwait's Deaf language and its forty handshapes &mdash; and why fingerspelling is not signing.",
     run: runKsl },
-  { id: "lineage", ar: "تاريخ التَّرجمة", en: "Translation in History", kind: "guide", section: "method",
+  { id: "lineage", ar: "تاريخ التَّرجمة", en: "Translation in History", kind: "guide", section: "method", group: "theory",
     subject: "The practice, the discipline, and the people",
     blurb: "Eight eras of the practice, eight moments of the discipline, and sixteen translators.",
     run: runLineage },
-  { id: "theories", ar: "نظريّات التَّرجمة", en: "Translation Theories", kind: "guide", section: "method",
+  { id: "theories", ar: "نظريّات التَّرجمة", en: "Translation Theories", kind: "guide", section: "method", group: "theory",
     subject: "Schools, theories, models and strategies",
     blurb: "From Cicero to cognition: fourteen families of thought, in order, each with an Arabic–English example.",
     run: runTheories },
-  { id: "procedures", ar: "الإجراءات السَّبعة", en: "The Seven Procedures", kind: "guide", section: "method",
-    subject: "Vinay &amp; Darbelnet · Chapter 12",
+  { id: "procedures", ar: "الإجراءات السَّبعة", en: "The Seven Procedures", kind: "guide", section: "method", group: "core",
+    subject: "Vinay &amp; Darbelnet · Section 4.2",
     blurb: "Borrowing, calque, literal, transposition, modulation, equivalence, adaptation &mdash; each worked both ways.",
     run: runProcedures },
-  { id: "toolkit", ar: "عُدّة المُترجِم", en: "Method, Procedure and Strategy", kind: "guide", section: "method",
-    subject: "Chapters 12–13",
+  { id: "toolkit", ar: "عُدّة المُترجِم", en: "Method, Procedure and Strategy", kind: "guide", section: "method", group: "core",
+    subject: "Sections 4.1–4.3",
     blurb: "Method, procedure, strategy and shift are four different things. Twelve strategies, each worked.",
     run: runToolkit },
   /* The id stays "texttypes" so nobody's stored progress is orphaned by the
      rename; only what a learner sees has changed. */
-  { id: "texttypes", ar: "عوالِم النُّصوص", en: "Text Types and Genres", kind: "guide", section: "method",
-    subject: "Text typology · Chapter 18",
+  { id: "texttypes", ar: "عوالِم النُّصوص", en: "Text Types and Genres", kind: "guide", section: "method", group: "core",
+    subject: "Text typology · Sections 7.1–7.2",
     blurb: "Ten worlds a translation can land in, and what each one will not forgive.",
     run: runTextTypes },
-  { id: "modes", ar: "أنماط التَّرجمة الشَّفهية", en: "The Modes of Interpreting", kind: "guide", section: "method",
-    subject: "الترجمة الشفوية · Chapter 1",
+  { id: "modes", ar: "أنماط التَّرجمة الشَّفهية", en: "The Modes of Interpreting", kind: "guide", section: "method", group: "voice",
+    subject: "الترجمة الشفوية · Section 1.1",
     blurb: "Simultaneous, consecutive, sight, whispered, relay, remote &mdash; and where each one goes wrong.",
     run: runModes },
-  { id: "glossary", ar: "مَسرَد المُصطلَحات", en: "Glossary of the Field", kind: "guide", section: "method",
+  { id: "glossary", ar: "مَسرَد المُصطلَحات", en: "Glossary of the Field", kind: "guide", section: "method", group: "ref",
     subject: "مَسرَد المُصطلَحات · every key term, both languages",
     blurb: "Every term the handbook defines, searchable in either language. Star the ones you want.",
     run: runGlossary },
-  { id: "errors", ar: "المُراجَعة والأخطاء الشّائعة", en: "Revision and Common Errors", kind: "guide", section: "method",
-    subject: "المراجعة · Chapter 23",
+  { id: "errors", ar: "المُراجَعة والأخطاء الشّائعة", en: "Revision and Common Errors", kind: "guide", section: "method", group: "core",
+    subject: "المراجعة · Section 9.1",
     blurb: "The three readings a draft needs, and what actually goes wrong in each direction.",
     run: runErrors },
-  { id: "commentary", ar: "التَّرجمة والتَّعليق عليها", en: "Translation and Commentary", kind: "workshop", section: "method",
-    subject: "التعليق على الترجمة · Chapter 25",
+  { id: "commentary", ar: "التَّرجمة والتَّعليق عليها", en: "Translation and Commentary", kind: "workshop", section: "method", group: "core",
+    subject: "التعليق على الترجمة · Section 9.3",
     blurb: "Fifteen passages. Write your own rendering, keep it, and only then see the handbook's.",
     run: runCommentary },
 
   { id: "nameproc", ar: "ما هذا الإجراء؟", en: "Translation Procedures", kind: "trial", section: "trials",
-    subject: "إجراء الترجمة · Chapter 12",
+    subject: "إجراء الترجمة · Section 4.2",
     blurb: "A source and its rendering. Which of the seven procedures was used to get there?",
     run: () => runChoice(NAME_PROC, "Which procedure produced this?") },
   { id: "human", ar: "أيّ من الخيارات تُطابِق المعنى؟", en: "Equivalence", kind: "trial", section: "trials",
-    subject: "التكافؤ · Chapter 9",
-    blurb: "One Arabic line, three English renderings. Only one of them sounds like English.",
-    run: () => runChoice(HUMAN, "Which option matches the meaning?") },
+    subject: "التكافؤ والصديق المخادع · Sections 2.4 and 3.2",
+    blurb: "False friends and fixed expressions. One option means what the Arabic means; the others only look as if they do.",
+    run: () => runChoice(HUMAN, "Which option means what the source means?") },
   { id: "proverb", ar: "مَثَلٌ بِمَثَل", en: "Idioms and Proverbs", kind: "trial", section: "trials",
-    subject: "التعبير الاصطلاحي · Chapter 8",
-    blurb: "Match the Arabic proverb to the English one that means the same &mdash; not says the same.",
-    run: () => runChoice(PROVERBS, "Which English proverb does the same work?") },
+    subject: "الأمثال · Section 3.2",
+    blurb: "Three real proverbs each time, and only one does the same work. Drawn from Husni &amp; Newman (2015).",
+    run: () => runChoice(PROVERBS, "Which proverb does the same work?") },
   { id: "kuwaiti", ar: "أمثالٌ كويتية", en: "Kuwaiti Proverbs", kind: "trial", section: "trials",
     subject: "الأمثال الكويتية",
     blurb: "Ours, not the ones every Arabic speaker shares. Collected from the people who say them.",
     run: runKuwaiti },
   { id: "courtesy", ar: "خِزانة المُجامَلات", en: "Speech Acts", kind: "trial", section: "trials",
-    subject: "الأفعال الكلامية · Chapter 5",
+    subject: "الأفعال الكلامية · Section 2.2",
     blurb: "Gulf politeness formulas with exact English functions and no English words.",
     run: () => runChoice(COURTESY, "What would an English speaker actually say?") },
   { id: "cultural", ar: "الاِستِبدال الثَّقافيّ", en: "Cultural Substitution", kind: "trial", section: "trials",
-    subject: "الاستبدال الثقافي · Chapter 13",
-    blurb: "Swap the object, keep the meaning &mdash; or notice when Arabic already agrees.",
+    subject: "التعابير والتشبيهات · Sections 3.2–3.3",
+    blurb: "Every option is a real Arabic idiom or simile. Only one carries the English meaning.",
     run: () => runChoice(CULTURAL, "How does this cross into Arabic?") },
   { id: "subtitle", ar: "قَيد الشّاشة", en: "Subtitling", kind: "trial", section: "trials",
-    subject: "السترجة · Chapter 27",
+    subject: "السترجة · Section 10.2",
     direction: "both",
     blurb: "Twelve lines everyone knows, six each way, against the limit the trade really works to.",
     run: runSubtitle },
   { id: "booth", ar: "المَقصورة", en: "Interpreting", kind: "trial", section: "trials",
-    subject: "الترجمة الشفوية · Chapter 1",
+    subject: "الترجمة الشفوية · Section 1.1",
     blurb: "Pick a setting, then climb from single terms to a full turn of speech, against a clock.",
     run: runBooth },
   { id: "colloc", ar: "التَّلازُم اللَّفظيّ", en: "Collocation", kind: "trial", section: "trials",
-    subject: "التلازم اللفظي · Chapter 7",
+    subject: "التلازم اللفظي · Section 3.1",
     direction: "both",
-    blurb: "English has strong tea; Arabic has heavy tea. Six pairings where the partner is fixed.",
+    blurb: "Heavy rain is مطر غزير, heavy fog ضباب كثيف. Find the partner each language has fixed.",
     run: () => runChoice(COLLOC, "Which partner does the other language use?") },
   { id: "context", ar: "السِّياق", en: "Context and Ambiguity", kind: "trial", section: "trials",
-    subject: "السياق · Chapter 6",
+    subject: "السياق · Section 2.3",
     direction: "both",
     blurb: "A bank, a case, an &#1593;&#1610;&#1606;. One word nearby decides which you are looking at.",
     run: () => runChoice(CONTEXT_Q, "Which reading does the context give you?") },
   { id: "revise", ar: "المُراجَعة", en: "Revision", kind: "trial", section: "trials",
-    subject: "المراجعة · Chapter 23",
+    subject: "المراجعة · Section 9.1",
     direction: "both",
-    blurb: "Six sentences that are grammatical and still announce themselves as translations.",
+    blurb: "Padding, borrowed passives, legal shall, punctuation: what a reviser changes, and why.",
     run: () => runChoice(REVISE, "Which version would a reviser keep?") },
 
   { id: "phraseology", ar: "اللُّغة والتَّعبير", en: "Phraseology", kind: "exhibit", section: "chambers",
-    subject: "المتلازمات والتعابير · Chapters 7–8",
+    subject: "المتلازمات والتعابير · Sections 3.1–3.2",
     direction: "both",
     blurb: "Collocations, connectors, courtesy formulas, speech acts &mdash; the chunks already assembled.",
     run: runPhraseology },
   { id: "register", ar: "مؤشِّر المُستوى اللُّغَويّ", en: "Register", kind: "exhibit", section: "chambers",
-    subject: "المستوى اللغوي · Chapter 3",
+    subject: "المستوى اللغوي · Section 5.2",
     blurb: "One meaning, four levels, Kuwaiti street to classical &mdash; and what each does to the English.",
     run: runRegister },
   { id: "roots", ar: "حُجرة الجَذر", en: "Roots and Patterns", kind: "exhibit", section: "chambers",
-    subject: "الجذر والوزن · Chapter 3",
+    subject: "الجذر والوزن · Section 5.1",
     blurb: "Three consonants hold a whole family of words. Starting with &#1578; &#1585; &#1580; &#1605; itself.",
     run: runRoots }
 ];
@@ -12268,6 +12558,419 @@ function xferBlock(x) {
   if (x.w) h += '<div class="x-row why"><span class="x-lab">Why</span><p>' + x.w + '</p></div>';
   return el("div", "xfer", h);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   GUIDES FROM THE COURSE BOOKS
+   Four short, paged guides built only from the three books the academic
+   supervisor provided. One idea per page, real published examples, and
+   the page each one comes from. Nothing here is written as an example
+   by the site: every pair below is printed in the book cited under it.
+
+     HN15  Husni, R. & Newman, D. L. (2015). Arabic–English–Arabic
+           Translation: Issues and Strategies. Routledge.
+     HN13  Husni, R. & Newman, D. L. (2013). A to Z of Arabic–English–
+           Arabic Translation. Saqi. (no page numbers: cited by entry)
+     BAS   Bassnett, S. (2014). Translation Studies (4th ed.). Routledge.
+   ═══════════════════════════════════════════════════════════ */
+const BOOK_REF = {
+  HN15: "Husni, R., &amp; Newman, D. L. (2015). <i>Arabic–English–Arabic translation: Issues and strategies</i>. Routledge.",
+  HN13: "Husni, R., &amp; Newman, D. L. (2013). <i>A to Z of Arabic–English–Arabic translation</i>. Saqi Books.",
+  BAS:  "Bassnett, S. (2014). <i>Translation studies</i> (4th ed.). Routledge."
+};
+
+const GUIDE_MEANING = {
+  id: "meaning", practise: "human", sources: ["BAS", "HN15"],
+  pages: [
+    { t: "What a translator really does", ar: "دور المترجم",
+      body: "<p>A translator reads, interprets, decides and then writes. Three published cases show the job better than any definition.</p>",
+      ex: [
+        { s: "للّه دَرُّه!", b: "His milk is due to God.", g: "How wonderful he is!",
+          w: "Every word of the literal version is in the dictionary, yet the meaning is lost. The book calls it “a mock-exoticism”. <span class='src'>Husni &amp; Newman, 2015, p. 1</span>" },
+        { s: "<i>Bon appétit</i>, said by a father to break the silence after a bitter family quarrel", g: "<i>Tuck in</i>, <i>Do start</i>, <i>I hope you like it</i> … chosen for the speaker and the moment",
+          w: "<i>Good appetite</i> means nothing in English. The translator must weigh who speaks, to whom, and what the moment means. <span class='src'>Bassnett, 2014, pp. 30–33</span>" },
+        { s: "A Lebanese wedding planner speaks Lebanese Arabic among Saudi characters (بنات الرياض)", g: "“In her singsong Lebanese Arabic, Madame Sawsan informed Sadeem …”",
+          w: "Arab readers hear the dialect; English readers cannot, so the translator adds four words. “The translator explicated what is implicit.” <span class='src'>Husni &amp; Newman, 2015, pp. 82–83</span>" }
+      ],
+      quote: "Translation is “a process of negotiation between texts and between cultures … mediated by the figure of the translator” — and the translator “has a clear moral responsibility to the TL readers”. <span class='src'>Bassnett, 2014, pp. 6, 33</span>" },
+
+    { t: "Three kinds of translation", ar: "أنواع الترجمة الثلاثة",
+      body: "<p>Roman Jakobson distinguishes three types (<span class='src'>Bassnett, 2014, pp. 25–26</span>):</p><ul>" +
+        "<li><b>Intralingual</b>: rewording in the same language.</li>" +
+        "<li><b>Interlingual</b>: translation between two languages, “translation proper”.</li>" +
+        "<li><b>Intersemiotic</b>: from words into another sign system, such as music, dance, cinema or painting.</li></ul>" +
+        "<p>Even apparent synonyms are never perfect equivalents: each word carries “non-transferable associations and connotations”.</p>" },
+
+    { t: "Language lives inside culture", ar: "اللغة والثقافة",
+      body: "<p>Bassnett compares language to the heart within the body of culture: just as a surgeon cannot neglect the body, “the translator treats the text in isolation from the culture at his or her peril” (<span class='src'>2014, p. 25</span>).</p>",
+      ex: [
+        { s: "butter (British English)", g: "burro (Italian)",
+          w: "A perfect dictionary match, but in Britain butter is spread on bread and carries high status; in Italy it is mainly for cooking. Same word, different value. <span class='src'>Bassnett, 2014, pp. 29–30</span>" },
+        { s: "patient owl", g: "شخصٌ صبور / أصبرُ من الجمل",
+          w: "In the West the owl stands for wisdom; in Arab culture it is “the night crow” (غراب الليل), a bad omen. Drop the owl or use an Arabic animal with the same quality. <span class='src'>Husni &amp; Newman, 2015, p. 19</span>" }
+      ],
+      quote: "Languages divide the world differently: Finnish has many words for snow, “in Arabic for aspects of camel behaviour”. <span class='src'>Bassnett, 2014, p. 40</span>" },
+
+    { t: "Formal and dynamic equivalence", ar: "التكافؤ الشكلي والديناميكي",
+      body: "<p>Eugene Nida separates two kinds of equivalence (<span class='src'>as cited in Bassnett, 2014, p. 36</span>):</p><ul>" +
+        "<li><b>Formal</b> equivalence “focuses attention on the message itself, in both form and content”.</li>" +
+        "<li><b>Dynamic</b> equivalence aims at <b>equivalent effect</b>: the new reader should respond as the original reader did.</li></ul>" +
+        "<p>Equivalent effect can go too far. One Bible translation turned “greeting with a holy kiss” into “give one another a hearty handshake all round” — “what seems to be a piece of inadequate translation in poor taste”.</p>" },
+
+    { t: "Loss and gain", ar: "الفقد والكسب",
+      body: "<p>Since two languages never match exactly, something is always lost. But the translator “can at times enrich or clarify the SL text as a direct result of the translation process”, and what is lost in one place can be made up elsewhere (<span class='src'>Bassnett, 2014, p. 39</span>). This making-up is called <b>compensation</b>.</p>",
+      ex: [
+        { s: "اشتغل على كتابه ليلَ نهار", b: "He worked on his book day and night.", g: "He worked on his book every single day.",
+          w: "The pair is dropped and its emphasis is carried by <i>every single</i>. <span class='src'>Husni &amp; Newman, 2015, p. 22</span>" }
+      ] },
+
+    { t: "Domestication and foreignisation", ar: "التوطين والتغريب",
+      body: "<p>Schleiermacher (1813) contrasted a translation that reads as if written in the target language with one that keeps the foreign visible. Lawrence Venuti took this up: “Domestication conforms to the expectations, values and norms of the target culture, while foreignization challenges readers by making them aware that they are encountering texts from outside their known parameters.” <span class='src'>Bassnett, 2014, pp. 46–47</span></p>" +
+        "<p>Neither is always right. The brief, the readers and the purpose decide.</p>" },
+
+    { t: "Purpose decides: Skopos", ar: "نظرية الغاية",
+      body: "<p>Reiss and Vermeer called it <b>skopos</b>, Greek for “purpose”. Vermeer’s rule: “Translate/interpret/speak/write in a way that enables your text/translation to function in the situation in which it is used and with the people who want to use it and precisely in the way they want it to function.” <span class='src'>Bassnett, 2014, p. 84</span></p>" +
+        "<p>So a professional letter, an instruction manual or a recipe may be restructured in the target language, from word-for-word to a complete rewrite, depending on what it must do.</p>" }
+  ]
+};
+
+const GUIDE_PHRASE = {
+  id: "phrase", practise: "colloc", sources: ["HN15"],
+  pages: [
+    { t: "The company a word keeps", ar: "التلازم اللفظي",
+      body: "<p>Collocation is “the company that words keep”, and it often defies logic: we <i>make</i> a mistake but <i>do</i> an exercise. Each language chooses its own partners (<span class='src'>Husni &amp; Newman, 2015, p. 1</span>).</p>",
+      ex: [
+        { s: "thundering applause", g: "عاصفةٌ من التصفيق", w: "Arabic applause is a storm. <span class='src'>p. 1</span>" },
+        { s: "an indifferent reception", g: "استقبالٌ فاتر", w: "Arabic makes it tepid. <span class='src'>p. 1</span>" }
+      ] },
+
+    { t: "Free, restricted and bound", ar: "أنواع المتلازمات",
+      body: "<ul><li><b>Free</b>: each word combines freely, as in <i>red car</i>.</li>" +
+        "<li><b>Restricted</b>: one word takes a small set of partners. <i>To perpetrate</i> and ارتكب both go with crime: ارتكب جريمة (<span class='src'>p. 3</span>). So do مصادر مطّلعة and جمهور غفير (<span class='src'>p. 4</span>).</li>" +
+        "<li><b>Bound</b>: one word appears with only one partner: حربٌ ضروس <i>fierce war</i>, أمٌّ رؤوم <i>doting mother</i>, عقبةٌ كؤود <i>insurmountable obstacle</i> (<span class='src'>p. 5</span>).</li></ul>" +
+        "<p>Arabic has many more bound collocations than English. As early as the eleventh century, al-Thaʿālibī collected them in <i>Fiqh al-Lugha</i> (<span class='src'>p. 5</span>).</p>" },
+
+    { t: "One word, many partners", ar: "كلمة واحدة وشركاء كثر",
+      body: "<p>English <i>heavy</i> has about thirty Arabic equivalents, depending on the noun (<span class='src'>Husni &amp; Newman, 2015, pp. 16–17</span>):</p>",
+      table: [["English", "Arabic"],
+        ["heavy rain", "مطر غزير"], ["heavy fog", "ضباب كثيف"], ["heavy sleep", "سبات عميق"],
+        ["heavy seas", "بحار هائجة"], ["heavy smoker", "مدخّن مفرط"], ["heavy industry", "صناعة ثقيلة"],
+        ["heavy losses", "خسائر هائلة"], ["heavy responsibility", "مسؤولية عظيمة"], ["heavy bombing", "قصف عنيف"]],
+      after: "<p>It works the other way too: أدّى واجبه <i>to do one’s duty</i>, أدّى يميناً <i>to swear an oath</i>; ضرب خيمة <i>to pitch a tent</i>, ضرب رقماً قياسياً <i>to break a record</i>, ضرب مثلاً <i>to give an example</i> (<span class='src'>pp. 17–18</span>).</p>" },
+
+    { t: "Don’t trust the dictionary alone", ar: "فخّ المعنى المعجمي",
+      body: "<p>Translating each word by its dictionary meaning gives Arabic that is understandable but not what native speakers say (<span class='src'>Husni &amp; Newman, 2015, pp. 15–16</span>):</p>",
+      table: [["English", "Word by word", "What Arabic says"],
+        ["electrically charged", "مشحون بالكهرباء", "مشبّع بالكهرباء"],
+        ["imminent danger", "خطر قريب", "خطر مُحدِق"],
+        ["unexpected danger", "خطر غير متوقّع", "خطر داهم"],
+        ["warm reception", "استقبال ساخن", "استقبال حارّ"]],
+      after: "<p>Use a collocations dictionary and a corpus. A corpus shows at once that شعواء goes only with حرب, and that حريق goes with شبّ and التهم (<span class='src'>p. 24</span>).</p>" },
+
+    { t: "Translating a collocation", ar: "ترجمة المتلازمات",
+      body: "<p>Husni and Newman list the options (<span class='src'>2015, pp. 20–21</span>):</p><ul>" +
+        "<li><b>Equivalent collocation</b>: <i>to shed tears</i> ذرف دموعاً; <i>to shed leaves</i> أسقط ورقاً.</li>" +
+        "<li><b>Paraphrase</b>: <i>to hose down</i> نظّف بالماء.</li>" +
+        "<li><b>Functional equivalent</b>: <i>to shed blood</i> قتل.</li>" +
+        "<li><b>Borrowing</b>: <i>the Cold War</i> الحرب الباردة.</li></ul>" +
+        "<p>Some calques are now ordinary Arabic: وقع في الحب, كذبة بيضاء, خط ساخن (<span class='src'>p. 20</span>). The choice depends on text type, register and audience (<span class='src'>p. 21</span>).</p>" },
+
+    { t: "Idioms grow from culture", ar: "التعابير الاصطلاحية",
+      body: "<p>An idiom’s meaning “is not the sum of the meaning of its parts” (<span class='src'>quoted in Husni &amp; Newman, 2015, p. 26</span>), and its words are frozen: بين المطرقة والسندان, never بين السندان والمطرقة (<span class='src'>p. 27</span>).</p>",
+      ex: [
+        { s: "heart-warming", g: "يُثلج الصدر", w: "A language born in desert heat finds comfort in coolness; the easy life is عيش بارد, a “cold life”. <span class='src'>p. 28</span>" },
+        { s: "apples and oranges", g: "شحمٌ ونار", w: "Opposites are “fat and fire” in Arabic. <span class='src'>p. 28</span>" }
+      ] },
+
+    { t: "False friends", ar: "الأصدقاء المخادعون",
+      body: "<p>Some idioms look alike and mean different things (<span class='src'>Husni &amp; Newman, 2015, pp. 29–31</span>):</p>",
+      table: [["Arabic", "Looks like", "Actually means"],
+        ["فقد أعصابه", "to lose one’s nerve (courage)", "to lose one’s temper"],
+        ["من أجل عينيك", "for your eyes only (secret)", "for your sake"],
+        ["سحب ذيله", "tail between one’s legs (shame)", "to strut"],
+        ["عضّ أنامله", "nail-biting (anxiety)", "anger"],
+        ["شدّ حزامه", "to tighten one’s belt", "also: to prepare oneself"]],
+      after: "<p>“The translator has to guard against imposing SL meanings on TL idioms, irrespective of formal similarities.” <span class='src'>p. 31</span></p>" },
+
+    { t: "Seven ways to translate an idiom", ar: "استراتيجيات ترجمة التعبير",
+      body: "<p>In order of preference (<span class='src'>Husni &amp; Newman, 2015, p. 33</span>):</p><ol>" +
+        "<li>Same meaning and form: <i>an iron fist in a velvet glove</i> قبضة حديدية في قفاز مخملي; <i>the lion’s share</i> نصيب الأسد.</li>" +
+        "<li>Same meaning, different form: <i>a drop in the ocean</i> غيض من فيض; <i>to run with the hare and hunt with the hounds</i> لعب على الحبلين.</li>" +
+        "<li>Paraphrase keeping some culture: <i>to back the wrong horse</i> راهن على الجواد الخاسر.</li>" +
+        "<li>Functional equivalent: <i>dark horse</i> شخص غامض.</li>" +
+        "<li>Omission: <i>it really got his hackles up</i> → استشاط غضباً.</li>" +
+        "<li>Addition: <i>to shrug one’s shoulders</i> هزّ كتفيه / هزّ كتفيه لامبالاةً.</li>" +
+        "<li>Borrowing: <i>to have green fingers</i> يده خضراء.</li></ol>" +
+        "<p>For <i>it’s raining cats and dogs</i> the book lists the borrowing تمطر الدنيا قططاً وكلاباً, idioms such as إنّ الدنيا تمطر كأفواه القرب, and the plain إنّ الدنيا تمطر بغزارة: register and audience decide (<span class='src'>pp. 34–35</span>).</p>" },
+
+    { t: "Similes", ar: "التشبيه",
+      body: "<p>Similes are bound to culture. Rendering <i>as strong as a horse</i> as قوي مثل فرس “would provoke ridicule from most Arabic speakers” (<span class='src'>Husni &amp; Newman, 2015, p. 35</span>). The options (<span class='src'>p. 36</span>):</p><ul>" +
+        "<li>Same form and meaning: <i>as strong as a lion</i> قوي كالأسد.</li>" +
+        "<li>Same meaning, different form: <i>as patient as Job</i> صبر أيوب.</li>" +
+        "<li>Omission with compensation: <i>as thin as a matchstick</i> في غاية الرقة.</li>" +
+        "<li>Literal, signposted: <i>as fast as a bullet</i> سريع كرصاصة (كما يقال بالإنكليزية).</li></ul>" },
+
+    { t: "Proverbs", ar: "الأمثال",
+      body: "<p>Proverbs carry folk wisdom, resist any change, and hold a high place in Arabic at every social level (<span class='src'>Husni &amp; Newman, 2015, pp. 36–37</span>).</p>",
+      ex: [
+        { s: "عصفورٌ في اليد خيرٌ من عشرةٍ على الشجرة", g: "A bird in the hand is worth two in the bush.", w: "Equivalent proverb, same form. <span class='src'>p. 38</span>" },
+        { s: "إذا كثُر الربابنةُ غرقت السفينة", g: "Too many cooks spoil the broth.", w: "Same meaning, different image. <span class='src'>p. 39</span>" },
+        { s: "غابت السباعُ ولعبت الضباع", g: "When the cat’s away, the mice will play.", w: "<span class='src'>p. 39</span>" },
+        { s: "مَن حفر حفرةً لأخيه وقع فيها", g: "to be hoist with his own petard", w: "An equivalent idiom conveying the result. <span class='src'>p. 39</span>" },
+        { s: "Patience is a virtue.", g: "العجلةُ من الشيطان والتأنّي من الرحمن", w: "Arabic proverbs use religious language far more often. <span class='src'>p. 38</span>" },
+        { s: "الكلابُ تنبح والقافلةُ تسير", g: "The dogs bark, but the caravan moves on.", w: "Borrowed, with a clear rendering. <span class='src'>p. 39</span>" }
+      ] },
+
+    { t: "Word pairs", ar: "المزاوجة",
+      body: "<p>Both languages join near-synonyms into fixed pairs: <i>null and void</i>, <i>first and foremost</i>; الصالح والطالح, لا يُعدّ ولا يُحصى (<span class='src'>Husni &amp; Newman, 2015, pp. 5–6</span>). Arabic still creates them freely. The book’s strategies (<span class='src'>pp. 21–22</span>):</p>",
+      ex: [
+        { s: "الجنّة والنار", g: "heaven and hell", w: "A similar pair." },
+        { s: "فتّش عن موظف جديد على السهل والوعر", g: "He looked for a new member of staff high and low.", w: "Another pair." },
+        { s: "بلا قيدٍ أو شرط", g: "unconditionally", w: "One word for the pair." },
+        { s: "قلباً وقالباً", g: "wholeheartedly", w: "Functional equivalent." }
+      ] },
+
+    { t: "Phrasal verbs and compounds", ar: "الأفعال العبارية والمركّبات",
+      body: "<p>Phrasal verbs are “one of the black spots” of learning and translation (<span class='src'>Husni &amp; Newman, 2015, p. 9</span>). <i>Take off</i> alone is خلع (clothes), أقلع (a plane), قلّد (imitate), نجح (succeed), بتر (amputate) and خفّض (deduct) (<span class='src'>p. 10</span>).</p>" +
+        "<p>English builds compounds freely; Arabic usually uses an إضافة or a phrase: <i>bedroom</i> غرفة نوم, <i>real-estate agency</i> وكالة عقارية, <i>fire drill</i> تدريب على إطفاء الحريق — keep the preposition (<span class='src'>pp. 48–49</span>).</p>" +
+        "<p>Into English, avoid turning every إضافة into <i>of</i>: مطار القاهرة is <i>Cairo airport</i>, صانع القرار is <i>decision-maker</i> (<span class='src'>pp. 50–51</span>).</p>" }
+  ]
+};
+
+const GUIDE_VARIETY = {
+  id: "variety", practise: "revise", sources: ["HN15", "HN13"],
+  pages: [
+    { t: "Dialect, register, idiolect", ar: "اللهجة والمستوى اللغوي",
+      body: "<p>A <b>dialect</b> differs in pronunciation, grammar and words; an <b>accent</b> only in pronunciation. <b>Register</b> is the level of formality, and getting it wrong causes comic or confusing effects: nobody in a fight says “I say, old fellow, will you kindly desist from hitting me?” Each person also has an <b>idiolect</b>, a personal way of speaking. <span class='src'>Husni &amp; Newman, 2015, pp. 56–57</span></p>" },
+
+    { t: "Diglossia", ar: "الازدواجية اللغوية",
+      body: "<p>Arabic has a standard variety (الفصحى) beside many spoken dialects (العامية). The dialect is the mother tongue; the standard is learned at school. Charles Ferguson (1959) described a “high” variety for sermons, lectures and news and a “low” one for family and friends; real speech moves along a continuum between them. <span class='src'>Husni &amp; Newman, 2015, pp. 58–62</span></p>" +
+        "<p>The word <i>diglossia</i> was first used by Ioannis Psicharis for Greek; William Marçais applied it to Arabic (<span class='src'>p. 58</span>).</p>" },
+
+    { t: "Standard Arabic varies too", ar: "تنوّع الفصحى",
+      body: "<p>Modern Standard Arabic is not identical across the Arab world (<span class='src'>Husni &amp; Newman, 2015, pp. 64–71</span>):</p><ul>" +
+        "<li><i>mobile phone</i>: جوّال، نقّال، محمول، خلوي، هاتف متحرّك, by country.</li>" +
+        "<li><i>January</i>: كانون الثاني (Levant), جانفي (Tunisia, Algeria), يناير (Egypt, Morocco).</li>" +
+        "<li>إجازة is a degree in Lebanon and a holiday in Egypt; تدّعي على means “to sue” in Lebanese usage and “to accuse falsely” in Egyptian usage.</li></ul>" +
+        "<p>For readers across the Arab world, choose a neutral word: قابلية الأكل rather than the regional صلاحية or صلوحية (<span class='src'>p. 71</span>).</p>" },
+
+    { t: "Dialogue into English", ar: "ترجمة الحوار إلى الإنجليزية",
+      body: "<p>Arabic novels often write dialogue in formal Arabic, so the translator must decide how the character really sounds (<span class='src'>Husni &amp; Newman, 2015, p. 77</span>):</p>",
+      ex: [
+        { s: "ماذا تقولين يا أمّي؟ — a thirteen-year-old boy", b: "What are you saying, oh mother?", g: "What’re you saying, Mum? / What’re you on about, Mum?", w: "Natural speech for the speaker. <span class='src'>p. 77</span>" }
+      ],
+      quote: "Beware the Victorian “pseudo-biblical, neo-gothic, mock-Elizabethan, bogus Oriental style”. <span class='src'>Bernard Lewis, as cited in Husni &amp; Newman, 2015, p. 73</span>" },
+
+    { t: "Dialect into Arabic", ar: "ترجمة اللهجة إلى العربية",
+      body: "<p>Which dialect would you choose? Any one may exclude readers elsewhere. The same English line (<span class='src'>Husni &amp; Newman, 2015, p. 79</span>):</p>",
+      table: [["Variety", "That should not be a problem."],
+        ["Standard Arabic", "لا ينبغي أن يكون ذلك بمشكلة"], ["Kuwaiti", "مافي أي مشكلة"],
+        ["Egyptian", "مش مشكلة، مفيش مشكلة"], ["Algerian", "ما فيها باس"]],
+      after: "<p>The book suggests a middle way (<span class='src'>pp. 81–82</span>): Standard Arabic with spoken features most readers recognise — اللي, subject–verb–object order, ـوا for ـون, ما for لم. Compare الكشافون الذين يلعبون بكرة القدم with الكشافين اللي يلعبوا بكرة القدم.</p>" +
+        "<p>Without such choices, voices flatten: one Arabic Sherlock Holmes gives a London policeman the same formal Arabic as Holmes, “a pragmatic and a cultural loss” (<span class='src'>p. 86</span>).</p>" },
+
+    { t: "A published commentary", ar: "تعليق منشور",
+      body: "<p>Husni and Newman comment on their own English translation of Yūsuf Idrīs’s story حكاية مصرية جدًا (<span class='src'>2015, pp. 87–89</span>):</p><ul>" +
+        "<li>يا أسطى → <i>guv’</i>: a British term used in similar situations; “teacher” or “sir” would sound wrong.</li>" +
+        "<li>عسكري → <i>cop</i>: “In keeping with the register, ‘cop’ is preferable here to something formal like ‘police officer’.”</li>" +
+        "<li>مترو → <i>train</i>, not <i>metro</i>: Cairo’s underground did not exist when the story was written.</li></ul>" +
+        "<p>Each note names the problem, gives the solution and justifies it — the shape of a good commentary.</p>" },
+
+    { t: "Punctuation", ar: "علامات الترقيم",
+      body: "<p>Western-style punctuation in Arabic is essentially a twentieth-century development and is often inconsistent. Writers may stack marks for intensity; in English, “these must be reduced” (<span class='src'>Husni &amp; Newman, 2013, entry “Punctuation”</span>):</p>",
+      ex: [
+        { s: "مَن المسؤول: الشرطة أم المتظاهرون؟!", g: "Who is responsible, the police or the demonstrators?", w: "Arabic suspension points (…) at the end of a list are usually omitted or replaced by a comma." }
+      ] },
+
+    { t: "Writing Arabic names in English", ar: "النقل الحرفي",
+      body: "<p><b>Transliteration</b> maps letter to letter; <b>transcription</b> renders the sound. نجيب محفوظ is <i>Najīb Maḥfūẓ</i> for scholars but <i>Naguib Mahfouz</i> in everyday English; محمد may be <i>Muhammad</i>, <i>Mohammed</i> or <i>Mohamed</i>. Don’t write <i>Saeed</i> and <i>Aziz</i> in one line: the same Arabic letter spelled two ways. Choose the system for the audience, and keep naturalised spellings such as <i>imam</i>. <span class='src'>Husni &amp; Newman, 2013, entry “Transliteration and transcription”</span></p>" }
+  ]
+};
+
+const GUIDE_FIELDS = {
+  id: "fields", practise: "revise", sources: ["HN15", "HN13"],
+  pages: [
+    { t: "Legal texts follow a legal system", ar: "الترجمة القانونية",
+      body: "<p>Legal translation is tied to a legal system, not just a language: in the US <i>to table</i> a proposal means to shelve it, in the UK to submit it for discussion (<span class='src'>Husni &amp; Newman, 2015, p. 98</span>). The translator must understand “what legal effect it is supposed to have, and how to achieve that legal effect in the other language” (<span class='src'>quoted on p. 99</span>).</p>" },
+
+    { t: "Legal shall", ar: "shall في النصوص القانونية",
+      body: "<p>In legal English <i>shall</i> expresses obligation, not the future (<span class='src'>Husni &amp; Newman, 2015, p. 138</span>). Arabic legal texts often use the present tense (المضارع), not سوف:</p>",
+      ex: [
+        { s: "Each State Party shall adopt such measures as may be necessary.", g: "تتخذ كل دولة طرف التدابير اللازمة", w: "UN convention text. <span class='src'>p. 140</span>" },
+        { s: "The employee shall be deemed to have been appointed under probation for three months.", g: "يُعتبَر الموظف معيَّناً تحت الاختبار لمدة ثلاثة شهور", w: "<span class='src'>Husni &amp; Newman, 2013, entry “Will/shall”</span>" }
+      ] },
+
+    { t: "The passive", ar: "المبني للمجهول",
+      body: "<p>Legal English uses the passive far more than Arabic does. Arabic translations often use an active verb or a verbal noun (<span class='src'>Husni &amp; Newman, 2015, p. 137</span>):</p>",
+      ex: [
+        { s: "The proposed budget shall be reviewed by the Committee.", g: "تقوم اللجنة بمراجعة الميزانية المقترحة", w: "<span class='src'>p. 137</span>" },
+        { s: "The truce was broken by the government.", b: "تمّ اختراق الهدنة من جانب الحكومة", g: "اخترقت الحكومةُ الهدنة",
+          w: "A named doer with من قبل / من طرف / من جانب is “not considered normative usage” and is “frowned upon by careful users of Arabic”. <span class='src'>Husni &amp; Newman, 2013, entry “The passive”</span>" }
+      ] },
+
+    { t: "Translation memory", ar: "ذاكرة الترجمة",
+      body: "<p>Translation memory tools store your past translations and suggest them for new segments; they save the most time for translators who work in one field. But remember “Rubbish in – Rubbish out”: a memory is only as good as what was stored, and it can repeat old errors (<span class='src'>Husni &amp; Newman, 2015, pp. 165–167</span>).</p>" },
+
+    { t: "Online dictionaries and forums", ar: "القواميس الإلكترونية",
+      body: "<p>Many free online dictionaries have fewer entries than good printed ones, are updated less often, give few collocations and examples, and often name no author, sources or method. Most translators would not accept a term from a stranger in the street, yet many accept one from a stranger on a forum. <span class='src'>Husni &amp; Newman, 2015, pp. 168–169</span></p>" },
+
+    { t: "Machine translation", ar: "الترجمة الآلية",
+      body: "<p>The Georgetown experiment (1954) translated over sixty Russian sentences automatically, and its makers expected the problem to be solved within years. Yehoshua Bar-Hillel answered with “The box was in the pen”: a machine cannot tell a playpen from a writing pen (<span class='src'>Husni &amp; Newman, 2015, pp. 169–170</span>).</p>",
+      ex: [
+        { s: "اشترت أختي سيارة جديدة الأسبوع الماضي", b: "Sisters car of the new week last bought.", g: "My sister bought a new car last week.",
+          w: "Two online systems tested in the book produced the broken version; an Arabic legal sentence defeated every system. Complex syntax was the main stumbling block. <span class='src'>pp. 171–172</span>" }
+      ],
+      quote: "Note: today’s systems are far more fluent than those tested in 2015, but a fluent sentence is not always an accurate one. Always post-edit." }
+  ]
+};
+
+function runBookGuide(G) {
+  const key = "cmp.guide." + G.id;
+  let cur = 0;
+  try { cur = Math.min(G.pages.length - 1, Math.max(0, +localStorage.getItem(key) || 0)); } catch (e) {}
+  setCount("A guide · " + G.pages.length + " short pages");
+
+  function tableHtml(rows) {
+    const cell = (c, tag) => '<' + tag + (AR_RE.test(c) && !/[a-z]/i.test(c) ? ' class="is-ar" dir="rtl"' : '') + '>' + c + '</' + tag + '>';
+    return '<div class="bg-tablewrap"><table class="bg-table"><thead><tr>' + rows[0].map(c => cell(c, "th")).join("") +
+      '</tr></thead><tbody>' + rows.slice(1).map(r => '<tr>' + r.map(c => cell(c, "td")).join("") + '</tr>').join("") + '</tbody></table></div>';
+  }
+
+  function render() {
+    try { localStorage.setItem(key, cur); } catch (e) {}
+    stage.innerHTML = "";
+    setDots(G.pages.length, cur, cur);
+
+    const chips = el("div", "chips bg-chips");
+    G.pages.forEach((p, k) => {
+      const b = el("button", "chip" + (k === cur ? " on" : ""), (k + 1) + ". " + p.t);
+      b.addEventListener("click", () => { cur = k; render(); scrollTop(); });
+      chips.appendChild(b);
+    });
+    stage.appendChild(chips);
+    setTimeout(() => { const on = chips.querySelector(".on"); if (on && on.scrollIntoView) on.scrollIntoView({ block: "nearest", inline: "center" }); }, 0);
+
+    const p = G.pages[cur];
+    const last = cur >= G.pages.length - 1;
+    const card = el("div", "card bg-card");
+    card.appendChild(el("div", "card-top",
+      '<span class="num-badge">' + (cur + 1) + ' of ' + G.pages.length + '</span>' +
+      '<h3>' + p.t + '</h3>' + (p.ar ? '<span class="bg-ar" dir="rtl" lang="ar">' + p.ar + '</span>' : '')));
+    card.appendChild(el("div", "bg-body", p.body));
+    if (p.table) card.appendChild(el("div", "bg-tbl", tableHtml(p.table)));
+    if (p.after) card.appendChild(el("div", "bg-body", p.after));
+    if (p.ex) {
+      const xf = el("div", "xfers");
+      /* Arabic layout only for lines that are wholly Arabic; a sentence in
+         English that quotes an Arabic title stays left-to-right. */
+      const dirC = t => (AR_RE.test(t) && !/[A-Za-z]{3}/.test(t.replace(/<[^>]+>/g, ""))) ? ' class="is-ar"' : "";
+      p.ex.forEach(x => {
+        let h = '<div class="x-row"><span class="x-lab">Source</span><p' + dirC(x.s) + '>' + x.s + '</p></div>';
+        if (x.b) h += '<div class="x-row bad"><span class="x-lab">Literal</span><p' + dirC(x.b) + '>' + x.b + '</p></div>';
+        h += '<div class="x-row good"><span class="x-lab">' + (x.b ? "Better" : "Rendering") + '</span><p' + dirC(x.g) + '>' + x.g + '</p></div>';
+        if (x.w) h += '<div class="x-row why"><span class="x-lab">Why</span><p>' + x.w + '</p></div>';
+        xf.appendChild(el("div", "xfer", h));
+      });
+      card.appendChild(xf);
+    }
+    if (p.quote) card.appendChild(el("p", "bg-quote", p.quote));
+    stage.appendChild(card);
+    if (last) stage.appendChild(el("div", "bg-sources", "<b>Sources</b>" + G.sources.map(k => "<p>" + BOOK_REF[k] + "</p>").join("")));
+
+    const tryIt = ITEMS.find(x => x.id === G.practise);
+    stage.appendChild(footNav({
+      back: cur > 0 ? (() => { cur--; render(); scrollTop(); }) : null,
+      backLabel: cur > 0 ? G.pages[cur - 1].t : "",
+      next: last ? (tryIt ? (() => openItem(tryIt)) : null) : (() => { cur++; render(); scrollTop(); }),
+      nextLabel: last ? (tryIt ? "Practise: " + tryIt.en : "") : G.pages[cur + 1].t,
+      note: "Page " + (cur + 1) + " of " + G.pages.length
+    }));
+  }
+  render();
+}
+
+/* ═══════════ TIDY · long guide cards fold on a phone ═══════════
+   Every guide was written as one long card. On a phone that is a wall.
+   After any guide renders, each labelled block inside a tall card becomes
+   a tap-to-open panel (the first stays open), and long example lists show
+   two at a time. Nothing is removed: everything is one tap away. */
+function tidyGuide(root) {
+  /* a theory page: each numbered section becomes a panel; the first and
+     the practice section stay open */
+  const heads = Array.from(root.querySelectorAll(":scope > h3.th-sec"));
+  if (heads.length >= 4) {
+    heads.forEach((h, k) => {
+      const d = document.createElement("details");
+      d.className = "tg";
+      const label = h.textContent.replace(/^\d+/, "").trim();
+      if (k === 0 || /practice/i.test(label)) d.open = true;
+      const sm = document.createElement("summary");
+      sm.textContent = label;
+      const inner = el("div", "tg-in");
+      const take = [];
+      let n = h.nextSibling;
+      while (n && !(n.matches && n.matches("h3.th-sec, .foot-nav"))) { take.push(n); n = n.nextSibling; }
+      h.parentNode.insertBefore(d, h);
+      d.appendChild(sm); d.appendChild(inner);
+      take.forEach(x => inner.appendChild(x));
+      h.remove();
+    });
+  }
+  /* several long cards stacked on one page (the modes): one at a time,
+     chosen from a row of chips, instead of a scroll through all of them */
+  const stack = Array.from(root.querySelectorAll(":scope > .card.mode"));
+  if (stack.length >= 3 && !root.querySelector(":scope > .tg-pick")) {
+    const pick = el("div", "chips bg-chips tg-pick");
+    const showK = k => {
+      stack.forEach((c, i) => { c.hidden = i !== k; });
+      Array.from(pick.children).forEach((b, i) => b.classList.toggle("on", i === k));
+    };
+    stack.forEach((c, k) => {
+      const h = c.querySelector("h3");
+      const b = el("button", "chip", h ? h.textContent : "Part " + (k + 1));
+      b.addEventListener("click", () => showK(k));
+      pick.appendChild(b);
+    });
+    stack[0].parentNode.insertBefore(pick, stack[0]);
+    showK(0);
+  }
+  root.querySelectorAll(".card:not([data-tidy])").forEach(card => {
+    card.dataset.tidy = "1";
+    if (card.classList.contains("bg-card") || (!card.hidden && card.offsetHeight < 620)) return;
+    /* a page of several long cards (the modes) opens only the first */
+    let first = true;
+    const fold = (node, label) => {
+      const d = document.createElement("details");
+      d.className = "tg";
+      if (first) { d.open = true; first = false; }
+      const sm = document.createElement("summary");
+      sm.textContent = label;
+      const inner = el("div", "tg-in");
+      node.parentNode.insertBefore(d, node);
+      d.appendChild(sm); d.appendChild(inner); inner.appendChild(node);
+    };
+    card.querySelectorAll(":scope > .how").forEach(h => {
+      const head = h.querySelector(".how-head");
+      const lab = head ? head.textContent.trim() : "How to translate it";
+      if (head) head.remove();
+      fold(h, lab);
+    });
+    card.querySelectorAll(":scope > .blocks > .block").forEach(b => {
+      const labEl = b.querySelector(".b-lab");
+      const lab = labEl ? labEl.textContent.trim() : "More";
+      if (labEl) labEl.remove();
+      fold(b, lab);
+    });
+    card.querySelectorAll(":scope > .xfers").forEach(xf => {
+      const items = Array.from(xf.querySelectorAll(":scope > .xfer"));
+      if (items.length <= 2) return;
+      items.slice(2).forEach(x => x.classList.add("tg-hidden"));
+      const more = el("button", "ghost tg-more", "Show all " + items.length + " examples");
+      more.addEventListener("click", () => { items.forEach(x => x.classList.remove("tg-hidden")); more.remove(); });
+      xf.appendChild(more);
+    });
+  });
+}
+
 
 /* ═══════════ THE CAMERA / ROUTER ═══════════ */
 const views = {
@@ -16909,7 +17612,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1012-2300";
+const BUILD = "1013-1200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -18349,7 +19052,42 @@ function fillLedger(sectionId, section) {
   });
 }
 
-function renderLearn()    { fillLedger("sec-method", "method"); }
+/* Learn is a course, not a shelf: a short path to follow in order, then
+   the material to dip into. Compact rows, so a phone shows the whole map
+   without scrolling through eleven large cards. */
+const LEARN_GROUPS = [
+  { id: "core",   en: "The core course", note: "Follow in order",
+    order: ["meaning", "phrase", "procedures", "toolkit", "variety", "texttypes", "fields", "errors", "commentary"] },
+  { id: "theory", en: "Theory and history", note: "Dip in any time", order: ["theories", "lineage"] },
+  { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
+  { id: "ref",    en: "Reference", note: "Look things up", order: ["glossary", "minor"] }
+];
+function renderLearn() {
+  const box = document.getElementById("sec-method");
+  if (!box) return;
+  box.innerHTML = "";
+  box.classList.add("learn-map");
+  let n = 0;
+  LEARN_GROUPS.forEach(g => {
+    const sec = el("div", "lm-group");
+    sec.appendChild(el("div", "lm-head", '<h2>' + g.en + '</h2><span class="note">' + g.note + '</span>'));
+    const list = el("div", "lm-list");
+    g.order.map(id => ITEMS.find(t => t.id === id)).filter(Boolean).forEach(t => {
+      n++;
+      const b = el("button", "lesson-row");
+      b.style.animationDelay = (n * 30) + "ms";
+      b.innerHTML =
+        '<span class="lr-num">' + (g.id === "core" ? n : "•") + '</span>' +
+        '<span class="lr-txt"><span class="lr-en">' + t.en + '</span>' +
+        '<span class="lr-sub">' + (t.blurb || t.subject || "") + '</span></span>' +
+        '<span class="lr-go" aria-hidden="true">›</span>';
+      b.addEventListener("click", () => openItem(t));
+      list.appendChild(b);
+    });
+    sec.appendChild(list);
+    box.appendChild(sec);
+  });
+}
 function renderPractice() { fillLedger("sec-trials", "trials"); fillLedger("sec-chambers", "chambers"); }
 
 
@@ -18504,6 +19242,15 @@ if (navBar) {
 /* ═══════════ SHELL HELPERS ═══════════ */
 const stage = document.getElementById("stage");
 let active = null;
+/* fold long guide cards after every render (see tidyGuide) */
+{
+  let tq = null;
+  new MutationObserver(() => {
+    if (!active || active.section !== "method") return;
+    clearTimeout(tq);
+    tq = setTimeout(() => tidyGuide(stage), 20);
+  }).observe(stage, { childList: true, subtree: true });
+}
 
 function openItem(t, arg, keepTrail) {
   /* Remember what to come back to: the chamber you were reading, or the
@@ -18744,10 +19491,10 @@ const LEVELS = [
     ex: "\u201cThis manual will be communicative: the reader must be able to work the machine without noticing the translation.\u201d" },
   { en: "Procedure", ar: "\u0625\u062c\u0631\u0627\u0621 \u0627\u0644\u062a\u0631\u062c\u0645\u0629", scope: "This word, this phrase",
     what: "A technique for translating a word, phrase or sentence. There are seven of them, named by Vinay and Darbelnet, and they are the subject of the guide next door. Procedures 1\u20133 are <b>direct</b>; 4\u20137 are <b>oblique</b>.",
-    ex: "\u201cI turned the noun phrase into a verb: transposition.\u201d (Chapter 12)" },
+    ex: "\u201cI turned the noun phrase into a verb: transposition.\u201d (Section 4.2)" },
   { en: "Strategy", ar: "\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629 \u0627\u0644\u062a\u0631\u062c\u0645\u0629", scope: "This problem",
     what: "A <b>planned solution to a translation problem</b>. Where a procedure names the move, a strategy answers the harder question: this expression has no equivalent, so what will I do about it? Choose a strategy for each problem, not one strategy for the whole text.",
-    ex: "\u201cThere is no English for \u0627\u0644\u0639\u0650\u062f\u0651\u0629, so I will explain it: explanatory translation.\u201d (Chapter 13)" },
+    ex: "\u201cThere is no English for \u0627\u0644\u0639\u0650\u062f\u0651\u0629, so I will explain it: explanatory translation.\u201d (Section 4.3)" },
   { en: "Shift", ar: "\u062a\u064e\u062d\u064e\u0648\u0651\u064f\u0644", scope: "The two texts, compared",
     what: "Not a choice but an observation: a difference between source and target that shows up when you lay them side by side. A shift is the evidence; the procedure is the act that produced it.",
     ex: "\u201cThe source has a passive, the target an active.\u201d" }
@@ -20203,7 +20950,7 @@ function runToolkit() {
       v.appendChild(el("p", "vb",
         "A reviewer who writes \"too literal\" is talking about <b>method</b>. One who writes \"wrong term\" is talking " +
         "about a <b>procedure</b>. If you cannot tell which you are being asked to change, you will fix the wrong thing. " +
-        "This is also the backbone of a commentary (Chapter 25): name the <b>problem</b>, state the <b>decision</b>, give " +
+        "This is also the backbone of a commentary (Section 9.3): name the <b>problem</b>, state the <b>decision</b>, give " +
         "the <b>reason</b>, name the <b>procedure or strategy</b>, and cite the <b>source</b>."));
       stage.appendChild(v);
     }
@@ -20272,7 +21019,7 @@ function runGlossary() {
   function matches(g) {
     if (mine && !termSaved(g.en)) return false;
     if (!q) return true;
-    const hay = (g.en + " " + g.ar + " " + g.def + " chapter " + g.ch).toLowerCase();
+    const hay = (g.en + " " + g.ar + " " + g.def + " section " + g.ch).toLowerCase();
     return hay.indexOf(q.toLowerCase()) >= 0;
   }
 
@@ -20316,7 +21063,7 @@ function runGlossary() {
           '<span class="gl-ar" dir="rtl" lang="ar">' + g.ar + '</span>' +
         '</div>' +
         '<p class="gl-def">' + g.def + '</p>' +
-        '<span class="gl-ch">Chapter ' + g.ch + '</span>';
+        '<span class="gl-ch">Section ' + g.ch + '</span>';
       const star = el("button", "gl-star" + (termSaved(g.en) ? " on" : ""), "★");
       star.setAttribute("aria-label", (termSaved(g.en) ? "Stop keeping " : "Keep ") + g.en);
       star.setAttribute("aria-pressed", termSaved(g.en) ? "true" : "false");
@@ -20498,7 +21245,7 @@ function runCommentary() {
     cm.value = held ? (held.commentary || "") : "";
     cm.placeholder = "problem · solution · procedure or strategy · resource · justification";
     cm.setAttribute("aria-label", "Your commentary");
-    typing.appendChild(el("p", "note", "<b>Your commentary</b> (Chapter 25). Optional at Level 1, expected at Level 3."));
+    typing.appendChild(el("p", "note", "<b>Your commentary</b> (Section 9.3). Optional at Level 1, expected at Level 3."));
     typing.appendChild(cm);
     stage.appendChild(typing);
 
@@ -20611,7 +21358,11 @@ function runChoice(items, ask) {
   const tid = active && active.id;
   let i = 0;
   let log = [];
-  let deck = items.map(q => Object.assign({}, q, { opts: shuffled(q.opts) }));
+  /* A pool can be larger than a run: ten questions are drawn at random,
+     so a member who retakes a trial meets new material, not the same ten. */
+  const RUN = 10;
+  let deck = (items.length > RUN ? shuffled(items).slice(0, RUN) : items)
+    .map(q => Object.assign({}, q, { opts: shuffled(q.opts) }));
 
   function question() {
     stage.innerHTML = "";
@@ -20620,7 +21371,7 @@ function runChoice(items, ask) {
     const q = deck[i];
 
     const card = el("div", "prompt");
-    card.appendChild(el("p", "ask", ask));
+    card.appendChild(el("p", "ask", q.ask || ask));
     const isArSrc = !q.srcEn && AR_RE.test(q.src);
     card.appendChild(el("p", isArSrc ? "src" : "src-en", isArSrc ? q.src : "“" + q.src + "”"));
     if (q.lit) card.appendChild(el("p", "lit", 'word for word: <b>' + q.lit + '</b>'));
@@ -20656,7 +21407,7 @@ function runChoice(items, ask) {
     });
 
     const v = el("div", "verdict");
-    v.appendChild(el("span", "vh " + (hit ? "win" : "lose"), hit ? "✦ Well rendered" : "✧ Not the natural one"));
+    v.appendChild(el("span", "vh " + (hit ? "win" : "lose"), hit ? "✦ Well rendered" : "✧ Not this one"));
     if (q.meaning) {
       const best = q.opts.find(o => o.ok);
       const KIND = { eq: "Genuine English equivalent", fn: "Functional translation — English has no fixed proverb",
@@ -20706,7 +21457,7 @@ function runChoice(items, ask) {
    above it is always complete on its own — this is where to go for more,
    never where the reasoning lives. */
 function chapterOf(s) {
-  const m = /Chapters?\s+\d+(?:\s*(?:and|,|–|-|and )\s*\d+)*/.exec(s || "");
+  const m = /(?:Chapters?|Sections?)\s+[\d.]+(?:\s*(?:and|,|–|-|and )\s*[\d.]+)*/.exec(s || "");
   return m ? m[0] : "";
 }
 function chapterLine(own) {
