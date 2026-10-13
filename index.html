@@ -19561,11 +19561,12 @@ function fillLedger(sectionId, section) {
    without scrolling through eleven large cards. */
 const LEARN_GROUPS = [
   { id: "library", en: "The Library", note: "The three course books", order: ["lib-atoz", "lib-legal", "lib-bassnett"] },
+  { id: "theory", en: "Theory and history", note: "Dip in any time", order: ["theories", "lineage"] },
+  { id: "ku",     en: "Kuwait University courses", note: "The Translation Minor", order: ["minor"] },
   { id: "core",   en: "The core course", note: "Follow in order",
     order: ["meaning", "phrase", "procedures", "toolkit", "variety", "texttypes", "fields", "errors", "commentary"] },
-  { id: "theory", en: "Theory and history", note: "Dip in any time", order: ["theories", "lineage"] },
   { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
-  { id: "ref",    en: "Reference", note: "Look things up", order: ["glossary", "minor"] }
+  { id: "ref",    en: "Reference", note: "Look things up", order: ["glossary"] }
 ];
 function renderLearn() {
   const box = document.getElementById("sec-method");
