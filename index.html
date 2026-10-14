@@ -78,6 +78,7 @@
   border: 1px solid rgba(167,38,208,.35); background: var(--void-3); color: var(--white); cursor: pointer; }
 .rules-btns .rules-accept { background: var(--grad); color: var(--on-grad); border: 0; }
 .rules-btns .rules-decline { background: transparent; color: var(--ink-soft); }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 </style>
 </head>
 <body>
@@ -3205,6 +3206,10 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
 /* ═══════════ ONE WORKED EXAMPLE PER TRANSLATOR ═══════════ */
 .ex { border-radius: var(--r-lg); border: var(--hair-lit); background: var(--well);
   padding: clamp(1.1rem,3.2vw,1.6rem); display: grid; gap: .95rem; }
+.ex, .ex > *, .ex-row, .ex-row > * { min-width: 0; max-width: 100%; }
+.ex { grid-template-columns: minmax(0, 1fr); }
+.ex .ex-lab, .ex-row p, .ex-note { overflow-wrap: anywhere; }
+.ex-row p[dir="rtl"] { unicode-bidi: plaintext; }
 .ex .ex-lab { font-size: .66rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
   color: var(--magenta); }
 .ex .ex-lab b { color: var(--white); font-weight: 700; }
@@ -18310,7 +18315,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1015-1500";
+const BUILD = "1016-0950";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
