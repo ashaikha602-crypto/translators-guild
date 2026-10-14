@@ -29,7 +29,7 @@ beside each one.
 | `theorists/basil-hatim.jpg` | Basil Hatim | awaiting the file |
 | `theorists/ian-mason.jpg` | Ian Mason | awaiting the file |
 | `theorists/ernst-august-gutt.jpg` | Ernst-August Gutt | awaiting the file |
-| `theorists/itamar-even-zohar.jpg` | Itamar Even-Zohar | awaiting the file |
+| `theorists/itamar-even-zohar.jpg` | Itamar Even-Zohar | on the site · Wikimedia Commons, File:Even-Zohar_Itamar.jpg, by Itamar Even-Zohar (CC BY-SA 3.0) |
 | `theorists/theo-hermans.jpg` | Theo Hermans | awaiting the file |
 | `theorists/andre-lefevere.jpg` | André Lefevere | awaiting the file |
 | `theorists/gideon-toury.jpg` | Gideon Toury | on the site · Wikimedia Commons, Category:Gideon Toury (CC BY-SA 3.0) |
