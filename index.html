@@ -18318,7 +18318,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-1300";
+const BUILD = "1016-1500";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -20263,6 +20263,8 @@ function storeMyPoemTranslations(list) {
 }
 
 let poetryLang = "ar";
+/* the Arabic and English shelves hold diwans of poetry; books of prose have a shelf of their own */
+const onShelf = (p, shelf) => shelf === "books" ? !!p.prose : (!p.prose && p.lang === shelf);
 async function runPoetry(arg) {
   setCount("Translate a poem · no score");
   stage.innerHTML = "";
@@ -20308,8 +20310,9 @@ function poetryHall(d) {
   stage.appendChild(mineBtn);
 
   const langs = el("div", "chips pr-langs");
-  [["ar", "الدواوين العربية · Arabic diwans", "into English"], ["en", "الدواوين الإنجليزية · English diwans", "into Arabic"]].forEach(([k, l, s]) => {
-    if (!d.poets.some(p => p.lang === k)) return;
+  [["ar", "الدواوين العربية · Arabic diwans", "into English"], ["en", "الدواوين الإنجليزية · English diwans", "into Arabic"],
+   ["books", "الكتب · Prose classics", "into English"]].forEach(([k, l, s]) => {
+    if (!d.poets.some(p => onShelf(p, k))) return;
     const b = el("button", "chip" + (poetryLang === k ? " on" : ""), l + ' <span class="pr-dir">' + s + "</span>");
     b.type = "button";
     b.addEventListener("click", () => { poetryLang = k; poetryHall(d); });
@@ -20319,11 +20322,12 @@ function poetryHall(d) {
 
   const tools = el("div", "pr-tools");
   const q = el("input", "pr-search");
-  q.type = "search"; q.placeholder = "Search a diwan, a poet or a poem title"; q.setAttribute("aria-label", "Search a diwan, a poet or a poem title");
-  const lucky = el("button", "ghost small", "A poem at random");
+  const qph = poetryLang === "books" ? "Search a book, an author or a chapter title" : "Search a diwan, a poet or a poem title";
+  q.type = "search"; q.placeholder = qph; q.setAttribute("aria-label", qph);
+  const lucky = el("button", "ghost small", poetryLang === "books" ? "A chapter at random" : "A poem at random");
   lucky.type = "button";
   lucky.addEventListener("click", async () => {
-    const pool = d.poets.filter(p => p.lang === poetryLang);
+    const pool = d.poets.filter(p => onShelf(p, poetryLang));
     if (!pool.length) return;
     const poet = pool[Math.floor(Math.random() * pool.length)];
     try {
@@ -20342,13 +20346,13 @@ function poetryHall(d) {
   function draw() {
     const term = norm(q.value.trim());
     list.innerHTML = "";
-    const poets = d.poets.filter(p => p.lang === poetryLang);
+    const poets = d.poets.filter(p => onShelf(p, poetryLang));
     const eras = [];
     poets.forEach(p => { if (!eras.includes(p.era)) eras.push(p.era); });
     let shown = 0;
     eras.forEach(era => {
       const rows = poets.filter(p => p.era === era).filter(p => !term ||
-        norm(p.en + " " + p.ar + " ديوان diwan").includes(term) ||
+        norm(p.en + " " + p.ar + " " + diwanAr(p) + " " + diwanEn(p) + (p.prose ? " كتاب book" : " ديوان diwan")).includes(term) ||
         (p.titles || []).some(t => norm(t).includes(term)));
       if (!rows.length) return;
       list.appendChild(el("h3", "pr-era", esc(era)));
@@ -20361,7 +20365,7 @@ function poetryHall(d) {
                    : '<span class="lr-num pr-count">' + p.count + "</span>") +
           '<span class="lr-txt"><span class="lr-en"><span class="pr-ar-name">' + esc(diwanAr(p)) + '</span>' +
           '<span class="pr-en-name">' + esc(diwanEn(p)) + "</span></span>" +
-          '<span class="lr-sub">' + esc((p.years || "") + " · " + (p.count ? p.count + " " + (p.count === 1 ? unitW(p).work : unitW(p).works) : "poems coming soon") +
+          '<span class="lr-sub">' + esc((p.prose ? p.en + " · " : "") + (p.years || "") + " · " + (p.count ? p.count + " " + (p.count === 1 ? unitW(p).work : unitW(p).works) : "poems coming soon") +
             (hits ? " · " + hits + " match" + (hits === 1 ? "" : "es") : "")) + "</span></span>" +
           '<span class="lr-go" aria-hidden="true">›</span>';
         b.addEventListener("click", () => {
@@ -20388,6 +20392,7 @@ async function poetShelf(d, poet, term) {
   const hw = el("div", "pr-poet-words");
   hw.appendChild(el("p", "pr-poet-name ar", esc(diwanAr(poet))));
   hw.appendChild(el("p", "pr-poet-en", esc(diwanEn(poet))));
+  if (poet.prose) hw.appendChild(el("p", "pr-poet-en", esc(poet.ar + " · " + poet.en)));
   hw.appendChild(el("p", "note", esc(poet.years || "")));
   head.appendChild(hw);
   stage.appendChild(head);
@@ -20420,8 +20425,8 @@ async function poetShelf(d, poet, term) {
         p.dir = use === "ar" ? "rtl" : "ltr";
         body.appendChild(p);
         if (!has) body.appendChild(el("p", "pr-about-src", lang === "en"
-          ? "There is no English Wikipedia article on this poet yet, so the Arabic one is shown."
-          : "لا توجد مقالة عربية عن هذا الشاعر بعد، فهذه المقالة الإنجليزية."));
+          ? "There is no English Wikipedia article on this " + (poet.prose ? "book" : "poet") + " yet, so the Arabic one is shown."
+          : (poet.prose ? "لا توجد مقالة عربية عن هذا الكتاب بعد، فهذه المقالة الإنجليزية." : "لا توجد مقالة عربية عن هذا الشاعر بعد، فهذه المقالة الإنجليزية.")));
       }
       const facts = el("p", "pr-about-has");
       facts.dir = lang === "ar" ? "rtl" : "ltr";
