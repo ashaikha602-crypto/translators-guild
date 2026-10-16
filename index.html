@@ -3052,7 +3052,8 @@ html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: no
   .pr-media.two .pr-clip { flex: 0 0 calc(86% * 9 / 16); scroll-snap-align: end; }
 }
 .st-sheet .sp-prev .sp-card { max-width: 210px; margin: 0 auto; }
-.st-sheet .sp-prev .sp-media img, .st-sheet .sp-prev .sp-media video { max-height: 150px; width: 100%; object-fit: cover; }
+.st-sheet .sp-prev .sp-media { height: auto; min-height: 0; aspect-ratio: auto; max-height: 150px; overflow: hidden; }
+.st-sheet .sp-prev .sp-media img, .st-sheet .sp-prev .sp-media video { display: block; height: 150px; max-height: 150px; width: 100%; object-fit: cover; }
 .st-sheet .sp-prev .sp-words { font-size: .82rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .sh-sub { margin: .9rem 0 .1rem; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
 .sh-people { display: grid; gap: .1rem; max-height: 38vh; overflow-y: auto; }
@@ -18564,7 +18565,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-4800";
+const BUILD = "1016-4900";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
