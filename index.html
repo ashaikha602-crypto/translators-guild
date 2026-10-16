@@ -3051,6 +3051,19 @@ html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: no
   .pr-media.two .pr-video { flex: 0 0 86%; scroll-snap-align: start; }
   .pr-media.two .pr-clip { flex: 0 0 calc(86% * 9 / 16); scroll-snap-align: end; }
 }
+.st-sheet .sp-prev .sp-card { max-width: 210px; margin: 0 auto; }
+.st-sheet .sp-prev .sp-media img, .st-sheet .sp-prev .sp-media video { max-height: 150px; width: 100%; object-fit: cover; }
+.st-sheet .sp-prev .sp-words { font-size: .82rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.sh-sub { margin: .9rem 0 .1rem; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.sh-people { display: grid; gap: .1rem; max-height: 38vh; overflow-y: auto; }
+.sh-person { display: grid; grid-template-columns: auto 1fr auto; gap: .65rem; align-items: center; padding: .45rem .1rem; }
+.sh-name { display: grid; min-width: 0; }
+.sh-name b { color: var(--white); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-name i { font-style: normal; font-size: .8rem; color: var(--ink-faint); }
+.sheet .sh-send { padding: .45rem 1.1rem; font-size: .82rem; box-shadow: none; }
+.sheet .sh-send.done { background: rgba(214,191,234,.12); color: var(--ink-soft); }
+.dm-post .sp-card { max-width: 260px; }
+:root[data-theme="light"] .sh-name b { color: #22163f; }
 .lib-az { display: flex; flex-wrap: wrap; gap: .3rem; margin: .2rem 0 .4rem; }
 .lib-letter { all: unset; cursor: pointer; min-width: 1.9rem; height: 1.9rem; display: grid; place-items: center;
   border-radius: 8px; font-size: .82rem; font-weight: 600; color: var(--lilac); border: var(--hair); }
@@ -15516,10 +15529,10 @@ function postCard(r, opts) {
     left.appendChild(n);
   }
 
-  if (storyReady !== false && r.visibility !== "private") {
+  if (r.visibility !== "private") {
     const st = el("button", "pa-btn", SHARE_ICO);
-    st.type = "button"; st.title = "Share to your story"; st.setAttribute("aria-label", "Share to your story");
-    st.addEventListener("click", () => sharePostToStory(r));
+    st.type = "button"; st.title = "Share"; st.setAttribute("aria-label", "Share: to your story or in a message");
+    st.addEventListener("click", () => sharePost(r));
     left.appendChild(st);
   }
   acts.appendChild(left);
@@ -17267,6 +17280,9 @@ async function findOrOpenConversation(otherId) {
    or "<emoji> Reacted to your story [s:ID]". Older replies have no id. */
 function dmParse(body) {
   const b = body || "";
+  /* a post sent in a message: the same mark a post shared to a story carries */
+  const pm = /^[\u2063\u200b\ufeff\s]*p:([0-9A-Za-z-]{1,40})\u2063?/.exec(b);
+  if (pm && b.indexOf("\u2063") >= 0) return { kind: "post", post: pm[1], text: b.slice(pm[0].length).trim() };
   let m = /^↩ Replied to your story(?: \[s:([0-9a-f-]{36})\])?(?: \([^)]*\))?:? ?([\s\S]*)$/.exec(b);
   if (m) return { kind: "reply", story: m[1] || null, text: m[2] || "" };
   m = /^(\S+) Reacted to your story(?: \[s:([0-9a-f-]{36})\])?(?: \([^)]*\))?$/.exec(b);
@@ -17275,6 +17291,7 @@ function dmParse(body) {
 }
 function dmPreview(body, mine) {
   const p = dmParse(body);
+  if (p.kind === "post") return mine ? "You sent a post" : "Sent you a post";
   if (p.kind === "reply") return mine ? "You replied to their story" : "Replied to your story";
   if (p.kind === "react") return (mine ? "You reacted " : "Reacted ") + p.text + " to " + (mine ? "their" : "your") + " story";
   return (mine ? "You: " : "") + p.text.replace(/\s+/g, " ").slice(0, 70);
@@ -17543,7 +17560,12 @@ async function runThread(otherId, hint) {
         line.appendChild(a);
       }
       const col = el("div", "dm-col");
-      if (m.p.kind !== "text") {
+      if (m.p.kind === "post") {
+        col.appendChild(el("span", "dm-ctx", m.mine ? "You sent a post" : "Sent you a post"));
+        const quote = el("div", "dm-quote dm-post");
+        storyPostCard(m.p.post, "", r => { close(); openPost(r); }).then(c => quote.appendChild(c));
+        col.appendChild(quote);
+      } else if (m.p.kind !== "text") {
         col.appendChild(el("span", "dm-ctx", m.p.kind === "react"
           ? (m.mine ? "You reacted to their story" : "Reacted to your story")
           : (m.mine ? "You replied to their story" : "Replied to your story")));
@@ -18542,7 +18564,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-4700";
+const BUILD = "1016-4800";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19964,29 +19986,83 @@ async function storyPostCard(postId, note, onOpen) {
   return card;
 }
 
-/* Share a post to your story: see it, add a line if you like, share. */
-function sharePostToStory(r) {
-  const { sheet, done } = storySheet("Share to your story");
+/* Share a post: to your story, or in a message to someone. See it, add a
+   line if you like, then choose. */
+function sharePostToStory(r) { return sharePost(r); }
+function sharePost(r) {
+  const pid = r.repost_of || r.id;
+  const { sheet, done } = storySheet("Share");
   const prev = el("div", "sp-prev");
   sheet.appendChild(prev);
-  storyPostCard(r.repost_of || r.id, "", () => {}).then(c => { const g = c.querySelector(".sp-go"); if (g) g.remove(); prev.appendChild(c); });
+  storyPostCard(pid, "", () => {}).then(c => { const g = c.querySelector(".sp-go"); if (g) g.remove(); prev.appendChild(c); });
   const inp = document.createElement("input");
   inp.className = "f-in"; inp.maxLength = 200; inp.dir = "auto"; inp.placeholder = "Add a line (optional)";
   sheet.appendChild(inp);
-  const go = el("button", "sheet-act st-first", "Share to your story");
-  go.addEventListener("click", async () => {
-    go.disabled = true; go.textContent = "Sharing…";
-    try {
-      await sbPost("stories", { author_id: myId(), kind: "text", bg: "post", duration_ms: 8000,
-        body: "⁣p:" + (r.repost_of || r.id) + "⁣" + inp.value.trim() });
-      sheet.innerHTML = "";
-      sheet.appendChild(el("p", "sheet-note", "Added to your story."));
-      setTimeout(done, 900);
-      renderStoryBar();
-    } catch (e) { go.disabled = false; go.textContent = "That could not be shared. Try again."; }
+  if (storyReady !== false) {
+    const go = el("button", "sheet-act st-first", "Share to your story");
+    go.addEventListener("click", async () => {
+      go.disabled = true; go.textContent = "Sharing…";
+      try {
+        await sbPost("stories", { author_id: myId(), kind: "text", bg: "post", duration_ms: 8000,
+          body: "⁣p:" + pid + "⁣" + inp.value.trim() });
+        go.textContent = "✓ Added to your story";
+        renderStoryBar();
+      } catch (e) { go.disabled = false; go.textContent = "That could not be shared. Try again."; }
+    });
+    sheet.appendChild(go);
+  }
+  /* or in a message: recent chats first, and anyone else by name */
+  sheet.appendChild(el("h4", "sh-sub", "Send in a message"));
+  const q = document.createElement("input");
+  q.type = "search"; q.className = "f-in"; q.placeholder = "Search people"; q.setAttribute("aria-label", "Search people to send to");
+  sheet.appendChild(q);
+  const list = el("div", "sh-people");
+  sheet.appendChild(list);
+  const sent = new Set();
+  const row = p => {
+    const d = el("div", "sh-person");
+    const av = el("span", "avatar xs");
+    paintFace(av, p.avatar_path, p.display_name);
+    d.appendChild(av);
+    d.appendChild(el("span", "sh-name", '<b dir="auto">' + esc(withTitle(p.title, p.display_name || "Member")) + "</b>" +
+      (p.username ? "<i>@" + esc(p.username) + "</i>" : "")));
+    const b = el("button", "sh-send" + (sent.has(p.id) ? " done" : ""), sent.has(p.id) ? "Sent" : "Send");
+    b.type = "button"; b.disabled = sent.has(p.id);
+    b.addEventListener("click", async () => {
+      b.disabled = true; b.textContent = "Sending…";
+      try {
+        const cid = await findOrOpenConversation(p.id);
+        await sbPost("messages", { conversation_id: cid, sender_id: myId(), body: "⁣p:" + pid + "⁣" + inp.value.trim() });
+        sent.add(p.id); b.textContent = "Sent"; b.classList.add("done");
+      } catch (e) { b.disabled = false; b.textContent = "Not sent"; b.title = "This member does not take messages from you."; }
+    });
+    d.appendChild(b);
+    return d;
+  };
+  let recent = [];
+  const paint = rows => {
+    list.innerHTML = "";
+    rows.filter(p => p.id && p.id !== myId()).slice(0, 12).forEach(p => list.appendChild(row(p)));
+    if (!list.children.length) list.appendChild(el("p", "sheet-note", q.value.trim() ? "No one by that name." : "Search for someone to send it to."));
+  };
+  sbGet("inbox?select=*&order=last_at.desc&limit=12").then(rows => {
+    recent = rows.map(x => ({ id: x.other_id, display_name: x.display_name, title: x.title, avatar_path: x.avatar_path, username: x.username }));
+    if (!q.value.trim()) paint(recent);
+  }).catch(() => paint([]));
+  let t = null;
+  q.addEventListener("input", () => {
+    clearTimeout(t);
+    const v = q.value.trim().replace(/[%,()*]/g, "");
+    if (!v) { paint(recent); return; }
+    t = setTimeout(async () => {
+      try {
+        const rows = await sbGet("profiles_public?select=id,username,title,display_name,avatar_path&or=(username.ilike.*" +
+          encodeURIComponent(v) + "*,display_name.ilike.*" + encodeURIComponent(v) + "*)&limit=12");
+        if (q.value.trim().replace(/[%,()*]/g, "") === v) paint(rows);
+      } catch (e) { paint([]); }
+    }, 250);
   });
-  sheet.appendChild(go);
-  const no = el("button", "sheet-act quiet", "Cancel");
+  const no = el("button", "sheet-act quiet", "Done");
   no.addEventListener("click", done);
   sheet.appendChild(no);
 }
