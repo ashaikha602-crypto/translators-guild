@@ -3573,6 +3573,14 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
       <div class="ledger" id="sec-poetry"></div>
     </div>
 
+    <div id="block-prose">
+      <div class="sec-head">
+        <h2>Prose</h2>
+        <span class="note">Translate a passage from a classic book</span>
+      </div>
+      <div class="ledger" id="sec-prose"></div>
+    </div>
+
     <div id="block-trials">
       <div class="sec-head">
         <h2>The Trials</h2>
@@ -12361,7 +12369,12 @@ const ITEMS = [
     subject: "الدواوين · Translate a poem",
     direction: "both",
     blurb: "Open a diwan, choose any poem, write your own translation under it, and share it as a story.",
-    run: runPoetry }
+    run: runPoetry },
+  { id: "books", ar: "الكتب", en: "Prose Classics", kind: "workshop", section: "prose",
+    subject: "الكتب · Translate a passage",
+    direction: "both",
+    blurb: "Open a classic book of Arabic prose, choose a chapter, translate any passage of it, and share it.",
+    run: runBooks }
 ];
 
 /* ═══════════ STATE ═══════════ */
@@ -18318,7 +18331,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-1500";
+const BUILD = "1016-1600";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19937,7 +19950,7 @@ function renderLearn() {
     box.appendChild(sec);
   });
 }
-function renderPractice() { fillLedger("sec-trials", "trials"); fillLedger("sec-chambers", "chambers"); fillLedger("sec-poetry", "poetry"); }
+function renderPractice() { fillLedger("sec-trials", "trials"); fillLedger("sec-chambers", "chambers"); fillLedger("sec-poetry", "poetry"); fillLedger("sec-prose", "prose"); }
 
 
 document.getElementById("signout-btn").addEventListener("click", async () => {
@@ -20213,6 +20226,10 @@ async function loadPoetry() {
   if (r.status === 404) return null;   /* the diwans are not uploaded yet */
   if (!r.ok) throw new Error("poems " + r.status);
   const d = await r.json();
+  try {
+    const rb = await fetch("books/index.json?v=" + BUILD + "-" + Math.floor(Date.now() / 300000), { cache: "no-cache" });
+    if (rb.ok) d.poets = d.poets.concat((await rb.json()).books.map(b => Object.assign(b, { prose: true })));
+  } catch (e) {}
   d.poetById = {};
   d.poets.forEach(p => { d.poetById[p.id] = p; });
   POETRY = d; POETRY_AT = Date.now();
@@ -20221,7 +20238,7 @@ async function loadPoetry() {
 }
 async function loadDiwan(poet) {
   if (POET_CACHE[poet.id]) return POET_CACHE[poet.id];
-  const r = await fetch("poetry/" + poet.id + ".json?v=" + BUILD + "-" + poet.count, { cache: "no-cache" });
+  const r = await fetch((poet.prose ? "books/" : "poetry/") + poet.id + ".json?v=" + BUILD + "-" + poet.count, { cache: "no-cache" });
   if (!r.ok) throw new Error("diwan " + r.status);
   const d = await r.json();
   d.poems.forEach(p => { p.poet = poet.id; });
@@ -20265,7 +20282,29 @@ function storeMyPoemTranslations(list) {
 let poetryLang = "ar";
 /* the Arabic and English shelves hold diwans of poetry; books of prose have a shelf of their own */
 const onShelf = (p, shelf) => shelf === "books" ? !!p.prose : (!p.prose && p.lang === shelf);
+/* the Diwans and the Prose Classics share one engine but are two rooms: each shows only its own shelf */
+let ROOM = "poetry";
+const hallName = () => ROOM === "books" ? "Books" : "Diwans";
+const inRoom = e => { const p = POETRY && POETRY.poetById[e.poet]; return ROOM === "books" ? !!(p && p.prose) : !(p && p.prose); };
+async function runBooks(arg) {
+  ROOM = "books"; poetryLang = "books";
+  setCount("Translate a passage · no score");
+  stage.innerHTML = "";
+  stage.appendChild(el("p", "note", "Loading the books…"));
+  let d;
+  try { d = await loadPoetry(); }
+  catch (e) { d = null; }
+  if (!d) {
+    stage.innerHTML = "";
+    stage.appendChild(el("p", "note", "The books could not be loaded. Check your connection and try again."));
+    stage.appendChild(footNav());
+    return;
+  }
+  if (arg && arg.mine) return poemMine(d);
+  poetryHall(d);
+}
 async function runPoetry(arg) {
+  ROOM = "poetry"; if (poetryLang === "books") poetryLang = "ar";
   setCount("Translate a poem · no score");
   stage.innerHTML = "";
   stage.appendChild(el("p", "note", "Loading the diwans…"));
@@ -20292,27 +20331,29 @@ async function runPoetry(arg) {
 function poetryHall(d) {
   stage.innerHTML = "";
   const intro = el("div", "pr-intro");
-  intro.appendChild(el("p", "pr-lead",
-    "Open a diwan, choose any poem in it, translate as much or as little of it as you like, " +
-    "then keep it, post it, or share it as a story."));
+  intro.appendChild(el("p", "pr-lead", ROOM === "books"
+    ? "Open a classic of Arabic prose, choose a chapter, translate as much or as little of it as you like, " +
+      "then keep it, post it, or share it as a story."
+    : "Open a diwan, choose any poem in it, translate as much or as little of it as you like, " +
+      "then keep it, post it, or share it as a story."));
   stage.appendChild(intro);
 
-  const n = myPoemTranslations().length;
+  const n = myPoemTranslations().filter(inRoom).length;
   const mineBtn = el("button", "lesson-row pr-mine-row");
   mineBtn.type = "button";
   mineBtn.innerHTML = '<span class="lr-num">✎</span><span class="lr-txt"><span class="lr-en">My translations</span>' +
     '<span class="lr-sub">' + (n ? n + (n === 1 ? " translation kept" : " translations kept") : "Nothing kept yet") +
     ' · on this device</span></span><span class="lr-go" aria-hidden="true">›</span>';
   mineBtn.addEventListener("click", () => {
-    pushTrail("Diwans", () => { stage.innerHTML = ""; poetryHall(d); });
+    pushTrail(hallName(), () => { stage.innerHTML = ""; poetryHall(d); });
     poemMine(d);
   });
   stage.appendChild(mineBtn);
 
   const langs = el("div", "chips pr-langs");
   [["ar", "الدواوين العربية · Arabic diwans", "into English"], ["en", "الدواوين الإنجليزية · English diwans", "into Arabic"],
-   ["books", "الكتب · Prose classics", "into English"]].forEach(([k, l, s]) => {
-    if (!d.poets.some(p => onShelf(p, k))) return;
+  ].forEach(([k, l, s]) => {
+    if (ROOM === "books" || !d.poets.some(p => onShelf(p, k))) return;
     const b = el("button", "chip" + (poetryLang === k ? " on" : ""), l + ' <span class="pr-dir">' + s + "</span>");
     b.type = "button";
     b.addEventListener("click", () => { poetryLang = k; poetryHall(d); });
@@ -20332,7 +20373,7 @@ function poetryHall(d) {
     const poet = pool[Math.floor(Math.random() * pool.length)];
     try {
       const dw = await loadDiwan(poet);
-      pushTrail("Diwans", () => { stage.innerHTML = ""; poetryHall(d); });
+      pushTrail(hallName(), () => { stage.innerHTML = ""; poetryHall(d); });
       poemDesk(dw.poems[Math.floor(Math.random() * dw.poems.length)]);
     } catch (e) { flash("That diwan could not be loaded.", true); }
   });
@@ -20369,7 +20410,7 @@ function poetryHall(d) {
             (hits ? " · " + hits + " match" + (hits === 1 ? "" : "es") : "")) + "</span></span>" +
           '<span class="lr-go" aria-hidden="true">›</span>';
         b.addEventListener("click", () => {
-          pushTrail("Diwans", () => { stage.innerHTML = ""; poetryHall(d); });
+          pushTrail(hallName(), () => { stage.innerHTML = ""; poetryHall(d); });
           poetShelf(d, p, q.value.trim());
         });
         list.appendChild(b);
@@ -20529,7 +20570,7 @@ function poemDesk(p, opts) {
   let editing = opts.entry ? opts.entry.id : null;
   stage.innerHTML = "";
   window.scrollTo(0, 0);
-  setCount("Translate a poem · no score");
+  setCount(poet.prose ? "Translate a passage · no score" : "Translate a poem · no score");
 
   /* the poem read or sung, when the owner added a video of it: at the top,
      playing as soon as the poem opens. Phones only let a video start by
@@ -20819,8 +20860,8 @@ function poemDesk(p, opts) {
 function poemMine(d) {
   stage.innerHTML = "";
   window.scrollTo(0, 0);
-  setCount("My poem translations");
-  const list = myPoemTranslations();
+  setCount(ROOM === "books" ? "My passage translations" : "My poem translations");
+  const list = myPoemTranslations().filter(inRoom);
   stage.appendChild(el("p", "pr-lead", list.length
     ? "The translations you kept. Open one to read it, change it, or share it again."
     : "Nothing kept yet. When you finish a translation, choose “Save to My translations”."));
