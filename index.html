@@ -2991,6 +2991,16 @@ html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: no
 .pr-clip video { display: block; width: 100%; max-height: 50vh; border-radius: 14px; background: #000; object-fit: contain; }
 @media (min-width: 760px) { .pr-clip video { max-height: 70vh; } .pr-media.two { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: center; }
   .pr-media.two .pr-clip { order: 2; } }
+/* on a phone the two sit in one row: the YouTube reading first, the clip to
+   its right, a swipe away, with its edge showing so people know it is there */
+@media (max-width: 759px) {
+  .pr-media.two { display: flex; direction: ltr; gap: .7rem; overflow-x: auto; scroll-snap-type: x mandatory; align-items: center;
+    margin-left: -16px; margin-right: -16px; padding: 0 16px; scroll-padding-inline: 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .pr-media.two::-webkit-scrollbar { display: none; }
+  .pr-media.two .pr-video { flex: 0 0 86%; scroll-snap-align: start; }
+  .pr-media.two .pr-clip { order: 2; flex: 0 0 auto; scroll-snap-align: end; }
+  .pr-media.two .pr-clip video { height: 42vh; max-height: none; width: auto; aspect-ratio: 9 / 16; }
+}
 .lib-az { display: flex; flex-wrap: wrap; gap: .3rem; margin: .2rem 0 .4rem; }
 .lib-letter { all: unset; cursor: pointer; min-width: 1.9rem; height: 1.9rem; display: grid; place-items: center;
   border-radius: 8px; font-size: .82rem; font-weight: 600; color: var(--lilac); border: var(--hair); }
@@ -18425,7 +18435,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-4000";
+const BUILD = "1016-4100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
