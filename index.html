@@ -2909,7 +2909,7 @@ html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: no
 .lib-ar { font-family: var(--f-ar); font-size: 1.02rem; color: var(--lilac); }
 .lx-head { text-align: center; margin: .2rem 0 1rem; }
 .lx-cover { margin: 0 0 1rem; }
-.lx-cover img { display: block; width: 100%; max-height: 22rem; object-fit: cover; border-radius: 16px; border: 1px solid rgba(214,191,234,.18); }
+.lx-cover img { display: block; width: 100%; height: auto; object-fit: contain; border-radius: 16px; border: 1px solid rgba(214,191,234,.18); }
 .lx-cover figcaption { font-size: .74rem; color: var(--ink-soft); margin-top: .35rem; text-align: center; }
 .lx-cover figcaption a { color: inherit; }
 .lx-vol { font-family: var(--f-serif); font-size: 1.5rem; }
@@ -12314,6 +12314,7 @@ const ITEMS = [
     blurb: "Every term the handbook defines, searchable in either language. Star the ones you want.",
     run: runGlossary },
   { id: "lisan", ar: "لسان العرب", en: "لسان العرب", kind: "guide", section: "method", group: "dict",
+    thumb: "lisan/img/lisan-sq.jpg",
     subject: "Lisan al-Arab · ابن منظور",
     blurb: "ابن منظور · المجلدات الخمسة عشر كاملة: 9,179 جذرًا بالباب والفصل والمجلد، مع البحث بالكلمة أو الجذر.",
     run: runLisan },
@@ -18386,7 +18387,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-2200";
+const BUILD = "1016-2300";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -23139,7 +23140,7 @@ async function runLisan() {
   try { d = await loadLisan(); } catch (e) { libFailed(); return; }
   lxHome(d, "");
 }
-const LISAN_COVER = null;   /* the photograph of the set, once the site owner provides it */
+const LISAN_COVER = "lisan/img/lisan.jpg";   /* the set, as the site owner chose it */
 const VOL_AR = ["الأول", "الثاني", "الثالث", "الرابع", "الخامس", "السادس", "السابع", "الثامن", "التاسع", "العاشر",
   "الحادي عشر", "الثاني عشر", "الثالث عشر", "الرابع عشر", "الخامس عشر"];
 function lxHome(d, term) {
@@ -23149,9 +23150,7 @@ function lxHome(d, term) {
   /* the set itself, on the front */
   if (LISAN_COVER) {
   const fig = el("figure", "lx-cover");
-  const im = document.createElement("img"); im.src = "lisan/img/lisan.jpg"; im.alt = "مجلدات لسان العرب"; fig.appendChild(im);
-  const cap = el("figcaption", null, 'Photograph · <a href="https://commons.wikimedia.org/wiki/File:Lisan_al_arab_by_Ibn_Manzur.jpg" target="_blank" rel="noopener">Amirsaman Zare, Wikimedia Commons</a> (CC BY-SA 4.0)');
-  fig.appendChild(cap);
+  const im = document.createElement("img"); im.src = LISAN_COVER; im.alt = "مجلدات لسان العرب"; fig.appendChild(im);
   stage.appendChild(fig);
   }
   stage.appendChild(lxHead("لسان العرب", "ابن منظور (ت 711 هـ) · 15 مجلدًا · " + d.count.toLocaleString("en") + " جذرًا"));
