@@ -1686,7 +1686,17 @@ a.ks-s-en:hover { color: var(--white); }
 .post { display: grid; gap: .55rem; padding: 1rem 1.05rem; border-radius: var(--r-lg);
   border: var(--hair); background: rgba(255,255,255,.035); }
 .post-date { display: block; margin-top: .55rem; font-size: .72rem; letter-spacing: .04em; color: var(--ink-faint); }
-.post-head { display: grid; grid-template-columns: auto 1fr; gap: .7rem; align-items: center; }
+.post-head { display: grid; grid-template-columns: auto 1fr auto; gap: .7rem; align-items: center; position: relative; }
+.post-more { all: unset; cursor: pointer; width: 2.2rem; height: 2.2rem; display: grid; place-items: center; border-radius: 50%; color: var(--ink-soft); }
+.post-more:hover, .post-more:focus-visible { background: rgba(214,191,234,.12); color: var(--white); }
+.ico-more { width: 1.3rem; height: 1.3rem; fill: currentColor; }
+.post-menu { position: absolute; z-index: 20; top: 2.6rem; right: 0; min-width: 11rem; display: grid; padding: .35rem;
+  border-radius: 14px; background: #24123b; border: 1px solid rgba(214,191,234,.22); box-shadow: 0 12px 30px rgba(0,0,0,.45); }
+.post-menu button { all: unset; cursor: pointer; padding: .65rem .9rem; border-radius: 10px; color: var(--white); font-size: .92rem; }
+.post-menu button:hover, .post-menu button:focus-visible { background: rgba(214,191,234,.1); }
+.post-menu button.bad { color: #f07a92; }
+:root[data-theme="light"] .post-menu { background: #fff; }
+:root[data-theme="light"] .post-menu button { color: #22163f; }
 .ph-txt { display: grid; gap: .05rem; min-width: 0; }
 .post-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
 .ptag { font-size: .64rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
@@ -1800,6 +1810,44 @@ a.ks-s-en:hover { color: var(--white); }
 .c-body { margin: .3rem 0 .4rem; font-size: .9rem; line-height: 1.6; white-space: pre-wrap; }
 .c-reply { padding: 0; border: 0; background: none; color: var(--mag-ink); font-size: .76rem; box-shadow: none; }
 .c-write { display: grid; gap: .45rem; margin: .8rem 0 1.2rem; }
+/* the Instagram row under a post */
+.ig-acts { display: flex; align-items: center; justify-content: space-between; gap: .4rem; margin-top: .1rem; }
+.ig-left { display: flex; align-items: center; gap: 1.05rem; }
+.pa-btn { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: .35rem; color: var(--white); font-size: .95rem;
+  font-variant-numeric: tabular-nums; padding: .2rem 0; }
+.pa-btn .ico-ac, .pa-btn .ico-re { width: 1.6rem; height: 1.6rem; }
+.pa-btn:hover .ico-ac, .pa-btn:hover .ico-re { opacity: .8; }
+.pa-btn:focus-visible { outline: 2px solid #e3c3ff; outline-offset: 3px; border-radius: 6px; }
+.pa-btn.heart.on .ico-ac { fill: #ed4a72; stroke: #ed4a72; }
+.pa-btn.save.on .ico-ac { fill: currentColor; }
+.pa-btn.on { color: var(--white); }
+.pa-btn.still { cursor: default; opacity: .85; }
+.pa-btn[disabled] { opacity: .6; }
+.ig-likes { all: unset; cursor: pointer; font-weight: 700; font-size: .92rem; color: var(--white); justify-self: start; }
+.ig-likes[hidden] { display: none; }
+.ig-cap { margin: 0; font-size: .93rem; line-height: 1.55; color: var(--white); white-space: pre-wrap; overflow-wrap: anywhere; }
+.ig-who { font-weight: 700; color: var(--white); }
+.ig-title { font-weight: 600; }
+.ig-view, .ig-add { all: unset; cursor: pointer; justify-self: start; font-size: .9rem; color: var(--ink-soft); }
+.ig-add { color: var(--ink-faint); }
+.ig-view:hover, .ig-add:hover { color: var(--white); }
+.post .post-tags { order: 0; }
+.avatar.xs { width: 32px; height: 32px; font-size: .66rem; flex: none; }
+.c-item.ig { display: grid; grid-template-columns: auto 1fr; gap: .6rem; align-items: start; padding: .55rem 0; border: 0; background: none; border-radius: 0; }
+.c-item.ig.reply { margin-inline-start: 2.6rem; border: 0; }
+.c-item.ig .c-text { margin: 0; font-size: .92rem; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--white); }
+.c-meta { display: flex; gap: .9rem; align-items: center; margin-top: .25rem; font-size: .76rem; color: var(--ink-faint); }
+.c-meta .c-reply { color: var(--ink-soft); font-weight: 600; }
+.c-write.ig { margin: .4rem 0 .8rem; gap: .3rem; }
+.c-write.ig.reply { margin-inline-start: 2.6rem; }
+.c-row { display: flex; align-items: flex-end; gap: .5rem; border: 1px solid rgba(214,191,234,.25); border-radius: 22px; padding: .25rem .35rem .25rem .9rem; }
+.c-row:focus-within { border-color: rgba(167,38,208,.7); }
+.c-in.f-in { flex: 1; border: 0; background: none; resize: none; min-height: 1.6rem; padding: .45rem 0; box-shadow: none; line-height: 1.4; }
+.c-in.f-in:focus { outline: none; box-shadow: none; }
+.c-post { all: unset; cursor: pointer; font-weight: 700; color: #d9a7ff; padding: .45rem .7rem; }
+.c-post[disabled] { opacity: .4; cursor: default; }
+.c-quote-link { all: unset; cursor: pointer; justify-self: start; font-size: .8rem; color: var(--ink-soft); padding-inline-start: .9rem; }
+:root[data-theme="light"] .pa-btn, :root[data-theme="light"] .ig-likes, :root[data-theme="light"] .ig-cap, :root[data-theme="light"] .ig-who { color: #22163f; }
 
 /* ── the profile, after the reference ── */
 .seal-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
@@ -14785,6 +14833,17 @@ const TALK_ICO =
   '<path d="M20.4 11.4a7.4 7.4 0 0 1-10.8 6.6L4.6 19.4l1.4-4.6' +
   'A7.4 7.4 0 1 1 20.4 11.4z"/></svg>';
 
+/* the share mark (to a story) and the save mark, drawn like the others */
+const SHARE_ICO =
+  '<svg class="ico-ac" viewBox="0 0 24 24" aria-hidden="true">' +
+  '<path d="M21 3.5 10.2 13.8M21 3.5l-6.6 17-4.2-6.7L3.5 9.9z"/></svg>';
+const SAVE_ICO =
+  '<svg class="ico-ac" viewBox="0 0 24 24" aria-hidden="true">' +
+  '<path d="M6.5 3.8h11v16.6L12 15.9l-5.5 4.5z"/></svg>';
+const MORE_ICO =
+  '<svg class="ico-more" viewBox="0 0 24 24" aria-hidden="true">' +
+  '<circle cx="5.5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18.5" cy="12" r="1.6"/></svg>';
+
 /* The repost mark: the same loop of two arrows that labels the Reposts
    tab, so the button, the count, the tile and the line above a repost
    are all obviously the one idea. Drawn rather than typed — "↻" is a
@@ -15366,6 +15425,138 @@ function postCard(r, opts) {
     card.appendChild(rf);
   }
 
+  /* Laid out the way Instagram lays out a post, because that is the way
+     members already read one: the picture straight under the name, one
+     row of marks under the picture, then the likes, the caption, the
+     comments. Report and Delete live behind the ⋯ by the name. */
+  const shownMedia = !!(r.thumb_path && !opts.noMedia);
+  if (shownMedia) {
+    const m = el("div", "post-media");
+    m.dataset.mpath = r.thumb_path;
+    m.dataset.mtype = r.thumb_type || "";
+    card.appendChild(m);
+  }
+
+  const more = el("button", "post-more", MORE_ICO);
+  more.type = "button"; more.setAttribute("aria-label", "More");
+  more.addEventListener("click", e => {
+    e.stopPropagation();
+    const old = card.querySelector(".post-menu");
+    if (old) { old.remove(); return; }
+    const menu = el("div", "post-menu");
+    if (r.author_id !== myId()) {
+      const rp = el("button", null, "Report"); rp.type = "button";
+      rp.addEventListener("click", () => { menu.remove(); openReport({ post_id: r.id, user_id: r.author_id }); });
+      menu.appendChild(rp);
+    } else {
+      const del = el("button", "bad", "Delete"); del.type = "button";
+      del.addEventListener("click", () => { menu.remove(); confirmDelete(r, card); });
+      menu.appendChild(del);
+    }
+    const cl = el("button", null, "Cancel"); cl.type = "button";
+    cl.addEventListener("click", () => menu.remove());
+    menu.appendChild(cl);
+    head.appendChild(menu);
+    setTimeout(() => document.addEventListener("click", function off(ev) {
+      if (!menu.contains(ev.target)) { menu.remove(); document.removeEventListener("click", off); }
+    }), 0);
+  });
+  head.appendChild(more);
+
+  /* the row of marks: like, comment, repost, share, and save at the end */
+  const acts = el("div", "ig-acts");
+  const left = el("div", "ig-left");
+  let liked = r.i_like, nLike = r.likes;
+  const like = el("button", "pa-btn heart" + (liked ? " on" : ""), HEART_ICO + '<span class="ig-n">' + nLike + "</span>");
+  like.type = "button"; like.setAttribute("aria-label", "Like this post");
+  const paintLike = () => {
+    like.classList.toggle("on", liked);
+    like.querySelector(".ig-n").textContent = String(nLike);
+    likesLine.textContent = nLike === 1 ? "1 like" : nLike + " likes";
+    likesLine.hidden = !nLike;
+  };
+  like.addEventListener("click", async () => {
+    like.disabled = true;
+    try {
+      if (liked) { await sbDel("post_likes?user_id=eq." + myId() + "&post_id=eq." + r.id); nLike--; }
+      else { await sbPost("post_likes", { user_id: myId(), post_id: r.id }); nLike++; }
+      liked = !liked; paintLike();
+    } catch (e) {} finally { like.disabled = false; }
+  });
+  left.appendChild(like);
+
+  const cm = el("button", "pa-btn", TALK_ICO + '<span class="ig-n">' + (r.comments || 0) + "</span>");
+  cm.type = "button"; cm.setAttribute("aria-label", "Comments");
+  cm.addEventListener("click", () => opts.onComment ? opts.onComment() : openPost(r, { write: true }));
+  left.appendChild(cm);
+
+  /* A private post is nobody's to pass on, and you cannot repost your
+     own: on your own posts the mark only counts how often others did. */
+  let nRe = r.reposts || 0;
+  if (r.author_id !== myId() && r.visibility !== "private") {
+    const rp = el("button", "pa-btn", REPOST_ICO + '<span class="ig-n">' + nRe + "</span>");
+    rp.type = "button"; rp.title = "Repost this"; rp.setAttribute("aria-label", "Repost this");
+    rp.addEventListener("click", async () => {
+      rp.disabled = true;
+      try {
+        await sbPost("posts", { author_id: myId(), post_type: "other",
+                                visibility: "members", repost_of: r.repost_of || r.id });
+        nRe++;
+        rp.querySelector(".ig-n").textContent = String(nRe);
+        rp.classList.add("on"); rp.title = "You reposted this";
+      } catch (e) {
+        flash("That could not be reposted.", e);
+        rp.disabled = false;
+      }
+    });
+    left.appendChild(rp);
+  } else if (r.author_id === myId()) {
+    const n = el("span", "pa-btn still", REPOST_ICO + '<span class="ig-n">' + nRe + "</span>");
+    n.title = "How many members have passed this on. You cannot repost your own work.";
+    left.appendChild(n);
+  }
+
+  if (storyReady !== false && r.visibility !== "private") {
+    const st = el("button", "pa-btn", SHARE_ICO);
+    st.type = "button"; st.title = "Share to your story"; st.setAttribute("aria-label", "Share to your story");
+    st.addEventListener("click", () => sharePostToStory(r));
+    left.appendChild(st);
+  }
+  acts.appendChild(left);
+
+  let saved = r.i_saved;
+  const sv = el("button", "pa-btn save" + (saved ? " on" : ""), SAVE_ICO);
+  sv.type = "button"; sv.setAttribute("aria-label", saved ? "Saved" : "Save");
+  sv.addEventListener("click", async () => {
+    sv.disabled = true;
+    try {
+      if (saved) await sbDel("post_saves?user_id=eq." + myId() + "&post_id=eq." + r.id);
+      else await sbPost("post_saves", { user_id: myId(), post_id: r.id });
+      saved = !saved; sv.classList.toggle("on", saved); sv.setAttribute("aria-label", saved ? "Saved" : "Save");
+    } catch (e) {} finally { sv.disabled = false; }
+  });
+  acts.appendChild(sv);
+  card.appendChild(acts);
+
+  const likesLine = el("button", "ig-likes", "");
+  likesLine.type = "button";
+  likesLine.addEventListener("click", () => showLikers(r.id));
+  card.appendChild(likesLine);
+  paintLike();
+
+  /* the caption: the name, then what they wrote */
+  const nameTxt = r.username || r.display_name || "";
+  const capText = [r.title, r.content].filter(Boolean);
+  if (capText.length || (r.repost_of && r.orig_text)) {
+    const cap = el("p", "ig-cap");
+    cap.dir = "auto";
+    cap.innerHTML = '<b class="ig-who">' + esc(nameTxt) + "</b> " +
+      (r.title ? '<span class="ig-title">' + linkMentions(r.title) + "</span> " : "") +
+      (r.content ? linkMentions(r.content) : "") +
+      (r.repost_of && r.orig_text ? (r.content ? "<br>" : "") + linkMentions(r.orig_text) : "");
+    card.appendChild(cap);
+  }
+
   const shownType = (r.repost_of && r.orig_type) ? r.orig_type : r.post_type;
   const kind = POST_KINDS.find(k => k.id === shownType);
   const tags = el("div", "post-tags");
@@ -15377,23 +15568,8 @@ function postCard(r, opts) {
     (r.visibility !== "members" ? '<span class="ptag dim">' + esc(r.visibility) + '</span>' : '');
   card.appendChild(tags);
 
-  /* A post written in Arabic should read as Arabic: the browser decides
-     the direction from the first strong character in it. */
-  if (r.title)   { const t = el("h3", "post-title", linkMentions(r.title)); t.dir = "auto"; card.appendChild(t); }
-  if (r.content) { const c = el("p", "post-body", linkMentions(r.content)); c.dir = "auto"; card.appendChild(c); }
-  if (r.repost_of && r.orig_text) {
-    const o = el("p", "post-body", linkMentions(r.orig_text)); o.dir = "auto"; card.appendChild(o);
-  }
-
-  /* She asked for the picture to be on the card, not behind a tap. The
-     slot is filled once the links for the whole screenful are signed. */
-  if (r.thumb_path && !opts.noMedia) {
-    const m = el("div", "post-media");
-    m.dataset.mpath = r.thumb_path;
-    m.dataset.mtype = r.thumb_type || "";
-    card.appendChild(m);
-  }
-
+  /* A translation post does not look like a status update: the source and
+     the rendering are two blocks, because comparing them is the point. */
   const block = (lab, text, dir) => {
     const d = el("div", "src-block");
     d.appendChild(el("span", "src-lab", lab));
@@ -15410,7 +15586,6 @@ function postCard(r, opts) {
     const nt = el("p", "post-note", linkMentions(r.translation_note));
     nt.dir = "auto"; card.appendChild(nt);
   }
-
   if (r.feedback_on && r.feedback_on.length) {
     const f = el("div", "fb-row");
     f.appendChild(el("span", "src-lab", "Feedback wanted on"));
@@ -15422,9 +15597,8 @@ function postCard(r, opts) {
 
   /* When the only attachment is the picture already on the card, saying
      "1 attachment" underneath it is just noise. */
-  const shownMedia = !!(r.thumb_path && !opts.noMedia);
   const restAtt = (r.attachments || 0) - (shownMedia ? 1 : 0);
-  if (restAtt > 0) {
+  if (restAtt > 0 && !opts.inPost) {
     const a = el("button", "attach-row", "📎 " + restAtt +
                  (shownMedia ? (restAtt === 1 ? " more attachment" : " more attachments")
                              : (restAtt === 1 ? " attachment" : " attachments")));
@@ -15432,110 +15606,18 @@ function postCard(r, opts) {
     card.appendChild(a);
   }
 
-  const acts = el("div", "post-acts");
-  /* One pill, two things to press: the heart likes it, the number
-     beside it opens the people who did. There used to be a third
-     button spelling out the word "who", which read like a caption
-     rather than a control. */
-  let liked = r.i_like, nLike = r.likes;
-  const pair = el("span", "act-pair" + (liked ? " on" : ""));
-  const like = el("button", "act-btn heart", HEART_ICO);
-  like.setAttribute("aria-label", "Like this post");
-  const nBtn = el("button", "act-btn tally", String(nLike));
-  nBtn.setAttribute("aria-label", "Who liked this post");
-  nBtn.addEventListener("click", () => showLikers(r.id));
-  like.addEventListener("click", async () => {
-    like.disabled = true;
-    try {
-      if (liked) { await sbDel("post_likes?user_id=eq." + myId() + "&post_id=eq." + r.id); nLike--; }
-      else { await sbPost("post_likes", { user_id: myId(), post_id: r.id }); nLike++; }
-      liked = !liked;
-      nBtn.textContent = String(nLike);
-      pair.classList.toggle("on", liked);
-    } catch (e) {} finally { like.disabled = false; }
-  });
-  pair.appendChild(like); pair.appendChild(nBtn);
-  acts.appendChild(pair);
-
-  const cm = el("button", "act-btn", TALK_ICO + " " + r.comments);
-  cm.setAttribute("aria-label", "Comments");
-  cm.addEventListener("click", () => openPost(r));
-  acts.appendChild(cm);
-
-  /* Reposting somebody else's work, beside the heart and the bubble
-     and drawn like them: a mark and a number, no word. A private post
-     is nobody's to pass on, and the database refuses it as well as
-     this button does. You cannot repost your own post — so on your own
-     posts the count stands in its place, which is also how you learn
-     that somebody has passed your work on. */
-  let nRe = r.reposts || 0;
-  if (r.author_id !== myId() && r.visibility !== "private") {
-    /* innerHTML rather than textContent: the label carries the drawn
-       mark, and setting text would throw it away. */
-    const rp = el("button", "act-btn", REPOST_ICO + " " + nRe);
-    rp.title = "Repost this";
-    rp.setAttribute("aria-label", "Repost this");
-    rp.addEventListener("click", async () => {
-      rp.disabled = true;
-      try {
-        await sbPost("posts", { author_id: myId(), post_type: "other",
-                                visibility: "members", repost_of: r.repost_of || r.id });
-        nRe++;
-        rp.innerHTML = REPOST_ICO + " " + nRe;
-        rp.classList.add("on");
-        rp.title = "You reposted this";
-      } catch (e) {
-        rp.classList.add("bad");
-        rp.title = "That could not be reposted.";
-        flash("That could not be reposted.", e);
-        setTimeout(() => { rp.classList.remove("bad"); rp.title = "Repost this";
-                           rp.disabled = false; }, 2500);
-      }
-    });
-    acts.appendChild(rp);
-  } else if (r.author_id === myId()) {
-    const n = el("span", "act-btn quiet still", REPOST_ICO + " " + nRe);
-    n.title = "How many members have passed this on. You cannot repost your own work.";
-    acts.appendChild(n);
+  /* in the feed: the way into the comments, and a box to start one */
+  if (!opts.inPost) {
+    if (r.comments) {
+      const vc = el("button", "ig-view", r.comments === 1 ? "View 1 comment" : "View all " + r.comments + " comments");
+      vc.type = "button"; vc.addEventListener("click", () => openPost(r));
+      card.appendChild(vc);
+    }
+    const add = el("button", "ig-add", "Add a comment…");
+    add.type = "button"; add.addEventListener("click", () => openPost(r, { write: true }));
+    card.appendChild(add);
   }
 
-  let saved = r.i_saved;
-  const sv = el("button", "act-btn" + (saved ? " on" : ""), saved ? "Saved" : "Save");
-  sv.addEventListener("click", async () => {
-    sv.disabled = true;
-    try {
-      if (saved) await sbDel("post_saves?user_id=eq." + myId() + "&post_id=eq." + r.id);
-      else await sbPost("post_saves", { user_id: myId(), post_id: r.id });
-      saved = !saved; sv.textContent = saved ? "Saved" : "Save"; sv.classList.toggle("on", saved);
-    } catch (e) {} finally { sv.disabled = false; }
-  });
-  acts.appendChild(sv);
-
-  if (storyReady !== false && r.visibility !== "private") {
-    const st = el("button", "act-btn", "\u2295 Story");
-    st.title = "Share to your story";
-    st.setAttribute("aria-label", "Share to your story");
-    st.addEventListener("click", () => sharePostToStory(r));
-    acts.appendChild(st);
-  }
-
-  if (r.author_id !== myId()) {
-    const rp = el("button", "act-btn quiet", "Report");
-    rp.setAttribute("aria-label", "Report this post");
-    rp.addEventListener("click", () => openReport({ post_id: r.id, user_id: r.author_id }));
-    acts.appendChild(rp);
-  }
-  if (r.author_id === myId()) {
-    const del = el("button", "act-btn quiet", "Delete");
-    /* This used to be "Delete" then "Tap again", inline, next to the
-       like and the save. On a phone that reads as a retry prompt rather
-       than a confirmation, and a post can be gone in two taps with
-       nothing to bring it back. It asks properly now, and the post is
-       marked rather than destroyed. */
-    del.addEventListener("click", () => confirmDelete(r, card));
-    acts.appendChild(del);
-  }
-  card.appendChild(acts);
   /* The full date, with the year and the time, under every post. */
   if (r.created_at) {
     const d = new Date(r.created_at);
@@ -16072,13 +16154,14 @@ async function signedLink(path) {
 }
 
 /* ─── one post, with its comments ─── */
-function openPost(r) {
+function openPost(r, o) {
   openItem({ id: "post:" + r.id, en: (POST_KINDS.find(k=>k.id===r.post_type)||{}).en || "Post",
              subject: r.display_name ? "by " + r.display_name : "", section: "profile",
-             run: () => runPost(r.id) });
+             run: () => runPost(r.id, o) });
 }
 
-async function runPost(id) {
+async function runPost(id, o) {
+  o = o || {};
   setCount(""); stage.innerHTML = "";
   stage.appendChild(el("p","note","Loading…"));
   let r, cs, atts;
@@ -16093,11 +16176,16 @@ async function runPost(id) {
   if (!r) { stage.innerHTML=""; stage.appendChild(el("p","note","That post is not visible to you.")); return; }
 
   stage.innerHTML = "";
-  stage.appendChild(postCard(r, { noMedia: true }));
+  let commentBox = null;
+  const card = postCard(r, { inPost: true, onComment: () => { if (commentBox) { commentBox.scrollIntoView({ block: "center" }); commentBox.focus(); } } });
+  stage.appendChild(card);
+  paintMedia(card);
 
-  if (atts.length) {
-    stage.appendChild(el("h3","pub-h","Attachments"));
-    atts.forEach(a => {
+  /* the picture is already on the card: the rest of the files follow it */
+  const more = atts.filter(a => a.file_path !== r.thumb_path);
+  if (more.length) {
+    stage.appendChild(el("h3","pub-h", more.length === 1 ? "1 more attachment" : more.length + " more attachments"));
+    more.forEach(a => {
       const kb = Math.max(1, Math.round((a.file_size || 0) / 1024));
       const size = kb > 1024 ? (kb / 1024).toFixed(1) + " MB" : kb + " KB";
       const isImage = /^image\//.test(a.file_type || "");
@@ -16164,52 +16252,56 @@ async function runPost(id) {
     } catch (e) {}
   }
 
-  stage.appendChild(el("h3","pub-h", cs.length ? cs.length + (cs.length===1?" comment":" comments") : "No comments yet"));
+  stage.appendChild(el("h3","pub-h", cs.length ? cs.length + (cs.length===1?" comment":" comments") : "Comments"));
+  /* the box to write in comes first, Instagram's way: always in reach */
+  const quoteOpts = [r.source_text, r.translated_text].filter(Boolean);
+  commentBox = writeComment(id, null, () => runPost(id), quoteOpts);
+  if (!cs.length) stage.appendChild(el("p", "note", "No comments yet. Be the first."));
   const box = el("div","c-list");
   const byParent = {};
   cs.forEach(c => { const k = c.parent_id || 0; (byParent[k] = byParent[k] || []).push(c); });
   const drawC = (c, depth) => {
     const w = who[c.author_id] || {};
-    const d = el("div","c-item" + (depth ? " reply" : ""));
-    d.innerHTML =
-      '<div class="c-head"><span class="mm-name">' + esc(withTitle(w.title, w.display_name)) + '</span>' +
-      '<span class="mm-meta">' + (w.username ? "@" + esc(w.username) + " · " : "") + when(c.created_at) + '</span></div>' +
+    const d = el("div","c-item ig" + (depth ? " reply" : ""));
+    const av = el("span", "avatar xs");
+    paintFace(av, w.avatar_path, w.display_name);
+    d.appendChild(av);
+    const tx = el("div", "c-txt");
+    tx.innerHTML =
       (c.quoted ? '<blockquote class="c-quote" dir="auto">' + esc(c.quoted) + '</blockquote>' : '') +
-      '<p class="c-body" dir="auto">' + linkMentions(c.content) + '</p>';
+      '<p class="c-text" dir="auto"><b class="ig-who">' + esc(w.username || w.display_name || "") + '</b> ' + linkMentions(c.content) + '</p>';
+    const meta = el("div", "c-meta");
+    meta.appendChild(el("span", null, when(c.created_at)));
     const re = el("button","c-reply","Reply");
-    re.addEventListener("click", () => writeComment(id, c.id, () => runPost(id)));
-    d.appendChild(re);
+    re.addEventListener("click", () => { const b = writeComment(id, c.id, () => runPost(id), null, d); b.focus(); re.remove(); });
+    meta.appendChild(re);
     if (c.author_id !== myId()) {
       const rp = el("button", "c-reply c-report", "Report");
       rp.setAttribute("aria-label", "Report this comment");
       rp.addEventListener("click", () => openReport({ post_id: id, comment_id: c.id, user_id: c.author_id }));
-      d.appendChild(rp);
+      meta.appendChild(rp);
     }
+    tx.appendChild(meta);
+    d.appendChild(tx);
     box.appendChild(d);
     (byParent[c.id] || []).forEach(k => drawC(k, depth + 1));
   };
   (byParent[0] || []).forEach(c => drawC(c, 0));
   stage.appendChild(box);
-
-  /* a comment can quote a phrase from the post, which is what peer
-     review actually looks like */
-  const quoteOpts = [r.source_text, r.translated_text].filter(Boolean);
-  writeComment(id, null, () => runPost(id), quoteOpts);
-
   stage.appendChild(footNav({ backLabel: "Feed" }));
+  if (o.write && commentBox) { commentBox.scrollIntoView({ block: "center" }); commentBox.focus(); }
 }
 
-function writeComment(postId, parentId, done, quoteOpts) {
-  const wrap = el("div","c-write");
-  if (quoteOpts && quoteOpts.length) {
-    wrap.appendChild(el("span","f-hint","Paste the phrase you are commenting on, if it helps."));
-  }
-  const q = document.createElement("input");
-  q.type="text"; q.className="f-in"; q.maxLength=400; q.dir="auto";
-  q.placeholder = parentId ? "Quote (optional)" : "The phrase you mean (optional)";
+function writeComment(postId, parentId, done, quoteOpts, after) {
+  /* one line and a Post button, like Instagram; quoting a phrase from the
+     post (what peer review looks like) is a tap away, not in the way */
+  const wrap = el("div","c-write ig" + (parentId ? " reply" : ""));
+  const row = el("div", "c-row");
   const t = document.createElement("textarea");
-  t.className="f-in f-area"; t.rows=3; t.maxLength=3000; t.dir="auto";
-  t.placeholder = parentId ? "Your reply" : "What would you change, and why?";
+  t.className = "f-in c-in"; t.rows = 1; t.maxLength = 3000; t.dir = "auto";
+  t.placeholder = parentId ? "Write a reply…" : "Add a comment…";
+  t.setAttribute("aria-label", t.placeholder);
+  t.addEventListener("input", () => { t.style.height = "auto"; t.style.height = Math.min(t.scrollHeight, 160) + "px"; b.disabled = !t.value.trim(); });
   attachMentions(t);
   /* the rules appear as soon as someone starts to comment */
   let rulesShownHere = false;
@@ -16218,10 +16310,15 @@ function writeComment(postId, parentId, done, quoteOpts) {
     t.blur();
     if (await rulesGate()) { rulesShownHere = true; t.focus(); }
   });
-  const b = el("button","ghost small", parentId ? "Post reply" : "Post comment");
+  const b = el("button", "c-post", "Post");
+  b.type = "button"; b.disabled = true;
+  row.appendChild(t); row.appendChild(b);
+  const q = document.createElement("input");
+  q.type = "text"; q.className = "f-in"; q.maxLength = 400; q.dir = "auto"; q.hidden = true;
+  q.placeholder = "The phrase you are commenting on";
   const m = el("span","f-hint","");
   b.addEventListener("click", async () => {
-    if (!t.value.trim()) { m.textContent = "Write something first."; return; }
+    if (!t.value.trim()) return;
     b.disabled = true; m.textContent = "Posting…";
     try {
       await sbPost("comments", { post_id: postId, author_id: myId(),
@@ -16230,8 +16327,16 @@ function writeComment(postId, parentId, done, quoteOpts) {
       done && done();
     } catch (e) { b.disabled = false; m.textContent = "It could not be posted."; }
   });
-  wrap.appendChild(q); wrap.appendChild(t); wrap.appendChild(b); wrap.appendChild(m);
-  stage.appendChild(wrap);
+  wrap.appendChild(row);
+  if (quoteOpts && quoteOpts.length && !parentId) {
+    const ql = el("button", "c-quote-link", "＋ Quote a phrase from the post");
+    ql.type = "button";
+    ql.addEventListener("click", () => { q.hidden = false; ql.remove(); q.focus(); });
+    wrap.appendChild(ql);
+  }
+  wrap.appendChild(q); wrap.appendChild(m);
+  if (after) after.after(wrap); else stage.appendChild(wrap);
+  return t;
 }
 
 /* ─── Privacy settings. Each switch writes a column that the views read,
@@ -18437,7 +18542,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-4600";
+const BUILD = "1016-4700";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -23519,7 +23624,9 @@ document.addEventListener("selectionchange", () => {
   if (t && t.split(/\s+/).length <= 4 && t.length <= 40) qdSel = t;
 });
 function qdWanted() {
-  return curView === "trial" && active && !QD_SKIP.has(active.id) && !!stage.querySelector(QD_BOX);
+  /* a comment box is not a translation: not on a post's page */
+  return curView === "trial" && active && !QD_SKIP.has(active.id) && !String(active.id).startsWith("post:") &&
+    [...stage.querySelectorAll(QD_BOX)].some(n => !n.closest(".c-write"));
 }
 let qdBtn = null, qdSheet = null;
 function qdEnsure() {
