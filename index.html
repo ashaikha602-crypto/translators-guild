@@ -12298,10 +12298,6 @@ const ITEMS = [
     subject: "ابن منظور · every root, as the book arranges them",
     blurb: "The whole dictionary: 9,000+ roots by باب and فصل, searchable by word or root, with volume and page.",
     run: runLisan },
-  { id: "mawrid", ar: "المورد", en: "Al-Mawrid", kind: "guide", section: "method", group: "dict",
-    subject: "منير البعلبكي · English–Arabic",
-    blurb: "The best-known English–Arabic dictionary, and its author: what it is and where to find it.",
-    run: runMawrid },
   { id: "lib-atoz", ar: "من الألف إلى الياء", en: "A to Z of Arabic–English Translation", kind: "guide", section: "method", group: "library",
     subject: "Husni & Newman · every entry",
     blurb: "All 148 entries, from Abbreviations to Wish, with the book’s Arabic and English pairs. Searchable.",
@@ -18367,7 +18363,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-1900";
+const BUILD = "1016-2000";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19958,7 +19954,7 @@ const LEARN_GROUPS = [
   { id: "core",   en: "The core course", note: "Follow in order",
     order: ["meaning", "phrase", "procedures", "toolkit", "variety", "texttypes", "fields", "errors", "commentary"] },
   { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
-  { id: "dict",   en: "Dictionaries", note: "المعاجم", order: ["lisan", "mawrid"] },
+  { id: "dict",   en: "Dictionaries", note: "المعاجم", order: ["lisan"] },
   { id: "ref",    en: "Reference", note: "Look things up", order: ["glossary"] }
 ];
 function renderLearn() {
@@ -23025,8 +23021,7 @@ const LIB_CACHE = {};
    لسان العرب, whole, arranged as Ibn Manzur arranged it: a باب for the
    last letter of the root, a فصل inside it for the first letter, then
    the roots. The index (every root, ~120 KB) loads first; a فصل's text
-   loads only when it is opened. المورد is still under copyright, so it
-   is described and linked, never reproduced.
+   loads only when it is opened.
    ═══════════════════════════════════════════════════════════ */
 let LISAN = null;
 const LISAN_FASL = {};
@@ -23253,30 +23248,6 @@ async function lxRoot(d, bi, fi, ri) {
   stage.appendChild(cite);
   stage.appendChild(footNav());
 }
-async function runMawrid() {
-  setCount("المورد · Al-Mawrid");
-  stage.innerHTML = "";
-  let m;
-  try { const r = await fetch("lisan/mawrid.json?v=" + BUILD, { cache: "no-cache" }); m = await r.json(); } catch (e) { libFailed(); return; }
-  stage.appendChild(lxHead("المورد", "منير البعلبكي (1918–1999) · قاموس إنكليزي–عربي"));
-  [["ar", m.about.ar], ["en", m.about.en]].forEach(([l, x]) => {
-    const ab = el("div", "pr-about");
-    const p = el("p", l === "ar" ? "pr-about-ar" : "pr-about-en", esc(x.text)); p.dir = l === "ar" ? "rtl" : "ltr"; ab.appendChild(p);
-    const w = el("p", "pr-about-src"); const wa = el("a", null, "Wikipedia"); wa.href = x.url; wa.target = "_blank"; wa.rel = "noopener";
-    w.appendChild(wa); w.appendChild(document.createTextNode(" (CC BY-SA)")); ab.appendChild(w);
-    stage.appendChild(ab);
-  });
-  const v = el("div", "verdict");
-  v.appendChild(el("span", "vh", "Why the entries are not here"));
-  v.appendChild(el("p", "vb", "Al-Mawrid is still in copyright, held by its publisher, so Compass describes it and points to it but does not reproduce it. " +
-    "The printed and digital editions are published by " + esc(m.publisher.en) + "."));
-  v.appendChild(el("p", "vb lx-rtl", "المورد ما يزال محميًّا بحقوق النشر لدى ناشره، فنعرّف به هنا ونحيل إليه، ولا ننشر مداخله. يصدر عن " + esc(m.publisher.ar) + "."));
-  stage.appendChild(v);
-  const a = el("a", "pr-ref", esc("دار العلم للملايين · " + m.publisher.en + " ↗")); a.href = m.publisher.url; a.target = "_blank"; a.rel = "noopener";
-  stage.appendChild(a);
-  stage.appendChild(footNav());
-}
-
 async function loadLib(name) {
   if (LIB_CACHE[name]) return LIB_CACHE[name];
   const r = await fetch("library/" + name + ".json?v=" + BUILD, { cache: "no-cache" });
