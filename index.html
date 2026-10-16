@@ -2954,6 +2954,38 @@ html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: no
 .wk-pair .wk-ar { font-size: 1.3rem; }
 .wk-g { color: var(--ink-soft); font-size: .9rem; overflow-wrap: anywhere; }
 :root[data-theme="light"] .wk-ar, :root[data-theme="light"] .wk-gl, :root[data-theme="light"] .wk-en-head { color: #22163f; }
+.qd-btn { all: unset; position: fixed; z-index: 60; right: max(16px, env(safe-area-inset-right)); bottom: calc(86px + env(safe-area-inset-bottom));
+  cursor: pointer; padding: .55rem 1rem; border-radius: 999px; font-family: "Amiri", serif; font-size: 1.1rem; color: #fff;
+  background: linear-gradient(135deg, #8d2ab8, #5b1a8c); box-shadow: 0 8px 24px rgba(40,0,70,.45); }
+.qd-btn[hidden], .qd-sheet[hidden] { display: none; }
+.qd-btn:focus-visible { outline: 3px solid #e3c3ff; outline-offset: 2px; }
+@media (min-width: 900px) { .qd-btn { bottom: 24px; } }
+.qd-sheet { position: fixed; z-index: 61; left: 0; right: 0; bottom: 0; max-height: 62vh; display: flex; flex-direction: column; gap: .5rem;
+  padding: .9rem 16px calc(.9rem + env(safe-area-inset-bottom)); background: #1b0d2e; border-top: 1px solid rgba(214,191,234,.25);
+  border-radius: 18px 18px 0 0; box-shadow: 0 -12px 36px rgba(0,0,0,.45); }
+@media (min-width: 900px) { .qd-sheet { left: auto; right: 24px; bottom: 24px; width: 380px; border-radius: 18px; border: 1px solid rgba(214,191,234,.25); } }
+.qd-top { display: flex; justify-content: space-between; align-items: center; }
+.qd-title { font-family: "Amiri", serif; font-size: 1.15rem; color: var(--white); }
+.qd-x { all: unset; cursor: pointer; width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: 50%; color: var(--ink-soft); }
+.qd-x:hover, .qd-x:focus-visible { background: rgba(214,191,234,.12); color: var(--white); }
+.qd-in { width: 100%; box-sizing: border-box; font: inherit; font-size: 1rem; padding: .6rem .8rem; border-radius: 12px; color: var(--white);
+  background: rgba(214,191,234,.06); border: 1px solid rgba(214,191,234,.25); }
+.qd-in:focus { outline: none; border-color: rgba(167,38,208,.75); }
+.qd-res { overflow-y: auto; display: grid; gap: .45rem; min-height: 0; }
+.qd-card { border: 1px solid rgba(214,191,234,.16); border-radius: 12px; padding: .5rem .7rem; }
+.qd-h { display: flex; align-items: baseline; gap: .6rem; margin: 0 0 .35rem; }
+.qd-ar { font-family: "Amiri", serif; font-size: 1.35rem; color: var(--white); }
+.qd-en { font-family: var(--f-serif); font-size: 1.1rem; color: var(--white); }
+.qd-opts { display: flex; flex-wrap: wrap; gap: .35rem; }
+.qd-opts.ar { direction: rtl; }
+.qd-word { all: unset; cursor: pointer; padding: .2rem .65rem; border-radius: 999px; border: 1px solid rgba(214,191,234,.28); color: var(--white); font-size: .92rem; }
+.qd-word.ar { font-family: "Amiri", serif; font-size: 1.15rem; }
+.qd-word:hover, .qd-word:focus-visible { border-color: rgba(167,38,208,.8); background: rgba(167,38,208,.18); }
+.qd-hint { color: var(--ink-soft); font-size: .9rem; margin: .2rem 0; }
+.qd-src { color: var(--ink-soft); font-size: .72rem; margin: 0; text-align: center; }
+:root[data-theme="light"] .qd-sheet { background: #fbf7ff; }
+:root[data-theme="light"] .qd-title, :root[data-theme="light"] .qd-ar, :root[data-theme="light"] .qd-en,
+:root[data-theme="light"] .qd-word, :root[data-theme="light"] .qd-in { color: #22163f; }
 .lib-az { display: flex; flex-wrap: wrap; gap: .3rem; margin: .2rem 0 .4rem; }
 .lib-letter { all: unset; cursor: pointer; min-width: 1.9rem; height: 1.9rem; display: grid; place-items: center;
   border-radius: 8px; font-size: .82rem; font-weight: 600; color: var(--lilac); border: var(--hair); }
@@ -13764,6 +13796,7 @@ const TABS = { hall: "home", learn: "learn", practice: "practice", seal: "profil
 let curView = null;
 
 function show(name) {
+  setTimeout(() => { if (typeof qdSync === "function") qdSync(); }, 0);
   const from = curView;
   const back = !!from && DEPTH[name] < DEPTH[from];
 
@@ -18387,7 +18420,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-2300";
+const BUILD = "1016-2400";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -23429,6 +23462,149 @@ function wiktArCard(d, x, exact) {
   box.appendChild(go);
   return box;
 }
+
+/* ═══════════ THE POCKET DICTIONARY ═══════════
+   On every screen where a member writes a translation, a small button
+   opens a dictionary over the page: an Arabic word gives its English, an
+   English word its Arabic, from Wiktionary. The work stays where it is;
+   a word tapped in the results goes into the translation at the cursor.
+   Not in the booth: interpreting is done against the clock. */
+const QD_SKIP = new Set(["booth"]);
+/* a place to write a translation: a text box, long or one line (search boxes are not) */
+const QD_BOX = 'textarea, input[type="text"], input:not([type])';
+const qdIsBox = n => n && n.matches && n.matches(QD_BOX);
+let qdLastBox = null, qdSel = "";
+document.addEventListener("focusin", e => { if (qdIsBox(e.target) && stage.contains(e.target)) qdLastBox = e.target; });
+document.addEventListener("selectionchange", () => {
+  const a = document.activeElement;
+  let t = "";
+  if (qdIsBox(a)) t = a.value.slice(a.selectionStart, a.selectionEnd);
+  else t = String(window.getSelection() || "");
+  t = t.trim();
+  if (t && t.split(/\s+/).length <= 4 && t.length <= 40) qdSel = t;
+});
+function qdWanted() {
+  return curView === "trial" && active && !QD_SKIP.has(active.id) && !!stage.querySelector(QD_BOX);
+}
+let qdBtn = null, qdSheet = null;
+function qdEnsure() {
+  if (qdBtn) return;
+  qdBtn = el("button", "qd-btn", '<span aria-hidden="true">⌕</span> قاموس');
+  qdBtn.type = "button"; qdBtn.hidden = true;
+  qdBtn.setAttribute("aria-label", "Look a word up: Arabic or English");
+  qdBtn.addEventListener("pointerdown", e => e.preventDefault());   /* keep the selection in the translation */
+  qdBtn.addEventListener("click", () => qdOpen(qdSel));
+  document.body.appendChild(qdBtn);
+  qdSheet = el("div", "qd-sheet");
+  qdSheet.hidden = true;
+  qdSheet.setAttribute("role", "dialog"); qdSheet.setAttribute("aria-label", "Pocket dictionary");
+  qdSheet.innerHTML = '<div class="qd-top"><span class="qd-title">قاموس · Dictionary</span><button type="button" class="qd-x" aria-label="Close">✕</button></div>' +
+    '<input type="search" class="qd-in" placeholder="كلمة عربية أو English word" aria-label="A word in Arabic or English">' +
+    '<div class="qd-res"></div><p class="qd-src">اضغط الكلمة لتُضاف إلى ترجمتك · Tap a word to add it · Wiktionary (CC BY-SA)</p>';
+  document.body.appendChild(qdSheet);
+  qdSheet.querySelector(".qd-x").addEventListener("click", qdClose);
+  const input = qdSheet.querySelector(".qd-in");
+  let timer = null;
+  input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(() => qdSearch(input.value), 180); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !qdSheet.hidden) qdClose(); });
+}
+function qdSync() {
+  qdEnsure();
+  const on = qdWanted();
+  qdBtn.hidden = !on || !qdSheet.hidden;
+  if (!on && !qdSheet.hidden) qdClose();
+}
+function qdOpen(term) {
+  qdSheet.hidden = false; qdBtn.hidden = true;
+  const input = qdSheet.querySelector(".qd-in");
+  if (term) input.value = term;
+  input.focus();
+  qdSearch(input.value);
+}
+function qdClose() {
+  qdSheet.hidden = true;
+  qdBtn.hidden = !qdWanted();
+  if (qdLastBox && document.body.contains(qdLastBox)) qdLastBox.focus({ preventScroll: true });
+}
+/* put a word into the translation where the cursor was */
+function qdInsert(word) {
+  const box = qdLastBox && document.body.contains(qdLastBox) ? qdLastBox : stage.querySelector(QD_BOX);
+  if (!box) return;
+  const a = box.selectionStart ?? box.value.length, b = box.selectionEnd ?? a;
+  const before = box.value.slice(0, a), after = box.value.slice(b);
+  const pad = before && !/\s$/.test(before) ? " " : "";
+  box.value = before + pad + word + after;
+  const at = (before + pad + word).length;
+  box.setSelectionRange(at, at);
+  box.dispatchEvent(new Event("input", { bubbles: true }));
+  flash("Added to your translation · أُضيفت إلى ترجمتك");
+}
+let qdTicket = 0;
+async function qdSearch(raw) {
+  const res = qdSheet.querySelector(".qd-res");
+  const t = (raw || "").trim(), my = ++qdTicket;
+  if (!t) { res.innerHTML = '<p class="qd-hint">اكتب كلمة، أو ظلّل كلمة في النص قبل فتح القاموس. · Type a word, or highlight one before opening.</p>'; return; }
+  let d;
+  try { d = await loadWikt(); } catch (e) { res.innerHTML = '<p class="qd-hint">The dictionary could not be loaded.</p>'; return; }
+  const isAr = /[؀-ۿ]/.test(t);
+  const input = qdSheet.querySelector(".qd-in"); input.dir = isAr ? "rtl" : "ltr";
+  const frag = document.createDocumentFragment();
+  const wordBtn = (w, rtl) => {
+    const b = el("button", "qd-word" + (rtl ? " ar" : ""), esc(w)); b.type = "button";
+    b.title = "Add to your translation"; b.addEventListener("click", () => qdInsert(w));
+    return b;
+  };
+  if (isAr) {
+    /* strip what a word wears outside its stem: the article and a joined و ف ب ك ل */
+    const k0 = lxKey(t);
+    const keys = [...new Set([k0, k0.replace(/^ال/, ""), k0.replace(/^(?:و|ف)?(?:ب|ك|ل)?ال/, ""), k0.replace(/^[وفبكل]/, "")])].filter(Boolean);
+    let rows = [];
+    for (const k of keys) {
+      const file = d.ar[k[0]];
+      const all = file ? await wiktFile(file) : [];
+      rows = rows.concat(all.filter(x => x.k === k));
+    }
+    if (!rows.length) {
+      const file = d.ar[keys[keys.length - 1][0]];
+      const all = file ? await wiktFile(file) : [];
+      rows = all.filter(x => x.k.startsWith(keys[keys.length - 1])).slice(0, 8);
+    }
+    if (my !== qdTicket) return;
+    const seen = new Set();
+    rows.filter(x => !seen.has(x.w + x.p) && seen.add(x.w + x.p)).slice(0, 10).forEach(x => {
+      const card = el("div", "qd-card");
+      const h = el("p", "qd-h");
+      h.innerHTML = '<span class="qd-ar" dir="rtl" lang="ar">' + esc(x.w) + '</span><span class="wk-pos">' + esc(d.pos[x.p] || x.p) + "</span>";
+      card.appendChild(h);
+      const opts = el("div", "qd-opts");
+      x.g.slice(0, 4).forEach(g => g.split(/;\s*/).forEach(seg => {
+        seg.replace(/\([^)]*\)/g, "").split(/,\s*/).map(s => s.trim()).filter(s => s && s.split(" ").length <= 5).slice(0, 3).forEach(s => opts.appendChild(wordBtn(s, false)));
+      }));
+      card.appendChild(opts);
+      frag.appendChild(card);
+    });
+    res.innerHTML = "";
+    if (!frag.childNodes.length) res.innerHTML = '<p class="qd-hint" dir="rtl">لا مدخل لهذه الكلمة. جرّب مفردها أو صيغتها المجردة.</p>';
+    else res.appendChild(frag);
+  } else {
+    const k = t.toLowerCase().replace(/^(to|a|an|the) /, "");
+    const m = await wiktFile("en-" + k[0]);
+    if (my !== qdTicket) return;
+    const keys = Object.keys(m);
+    const hit = keys.filter(x => x === k).concat(keys.filter(x => x !== k && x.startsWith(k + " ")).sort((a, b) => a.length - b.length).slice(0, 4));
+    res.innerHTML = "";
+    if (!hit.length) { res.innerHTML = '<p class="qd-hint">No Arabic entry carries that meaning. Try a simpler or singular form.</p>'; return; }
+    hit.forEach(key => {
+      const card = el("div", "qd-card");
+      card.appendChild(el("p", "qd-h qd-en", esc(key)));
+      const opts = el("div", "qd-opts ar");
+      m[key].slice(0, 10).forEach(([w]) => opts.appendChild(wordBtn(w, true)));
+      card.appendChild(opts);
+      res.appendChild(card);
+    });
+  }
+}
+new MutationObserver(() => { if (qdBtn || qdWanted()) qdSync(); }).observe(stage, { childList: true, subtree: true });
 
 async function loadLib(name) {
   if (LIB_CACHE[name]) return LIB_CACHE[name];
