@@ -839,6 +839,9 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .pr-ref-small { font-size: .68rem; opacity: .8; }
 /* a line of free verse is one line, not two halves: centre it */
 .pr-verses.ar .pr-half:only-child { grid-column: 1 / -1; text-align: center; }
+.pr-verses.prose .pr-vt { display: block; font-size: 1.12rem; line-height: 2; text-align: justify; max-width: 46rem; }
+.pr-verses.prose .pr-half, .pr-verses.prose .pr-half:only-child { text-align: justify; }
+@media (max-width: 600px) { .pr-verses.prose .pr-vt, .pr-verses.prose .pr-half:only-child { font-size: 1.02rem; line-height: 1.9; text-align: right; } }
 .pr-video { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: #000;
   box-shadow: 0 10px 30px rgba(0,0,0,.45); margin: 0 0 .4rem; }
 .pr-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -18315,7 +18318,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-0950";
+const BUILD = "1016-1300";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -20234,7 +20237,11 @@ const poemTarget = poet => poet.lang === "ar" ? "en" : "ar";
 /* each poet is a diwan, named in both languages:
    ديوان المتنبي · Diwan of al-Mutanabbi */
 const diwanAr = poet => poet.diwanAr || "ديوان " + poet.ar;
-const diwanEn = poet => "Diwan of " + poet.en;
+const diwanEn = poet => poet.diwanEn || "Diwan of " + poet.en;
+/* a diwan of prose (the Muqaddimah) is read in chapters and passages, not poems and verses */
+const unitW = poet => poet.prose
+  ? { one: "passage", many: "passages", work: "chapter", works: "chapters", Work: "Chapter", oneAr: "مقطع", manyAr: "مقطعًا", workAr: "فصل" }
+  : { one: poet.lang === "ar" ? "verse" : "line", many: poet.lang === "ar" ? "verses" : "lines", work: "poem", works: "poems", Work: "Poem", oneAr: "بيت", manyAr: "بيتًا", workAr: "قصيدة" };
 const diwanName = poet => poet.lang === "ar" ? diwanAr(poet) : diwanEn(poet);
 
 /* The draft of the poem on the desk, kept as the member types. */
@@ -20354,7 +20361,7 @@ function poetryHall(d) {
                    : '<span class="lr-num pr-count">' + p.count + "</span>") +
           '<span class="lr-txt"><span class="lr-en"><span class="pr-ar-name">' + esc(diwanAr(p)) + '</span>' +
           '<span class="pr-en-name">' + esc(diwanEn(p)) + "</span></span>" +
-          '<span class="lr-sub">' + esc((p.years || "") + " · " + (p.count ? p.count + (p.count === 1 ? " poem" : " poems") : "poems coming soon") +
+          '<span class="lr-sub">' + esc((p.years || "") + " · " + (p.count ? p.count + " " + (p.count === 1 ? unitW(p).work : unitW(p).works) : "poems coming soon") +
             (hits ? " · " + hits + " match" + (hits === 1 ? "" : "es") : "")) + "</span></span>" +
           '<span class="lr-go" aria-hidden="true">›</span>';
         b.addEventListener("click", () => {
@@ -20419,9 +20426,9 @@ async function poetShelf(d, poet, term) {
       const facts = el("p", "pr-about-has");
       facts.dir = lang === "ar" ? "rtl" : "ltr";
       facts.textContent = lang === "ar"
-        ? eraTxt + " · " + (poet.years || "") + (poet.count ? " · في هذا الديوان: " + poet.count + " قصيدة" + (poet.verses ? "، " + poet.verses + " بيتًا" : "") : " · القصائد في الطريق")
-        : eraTxt + " · " + (poet.years || "") + (poet.count ? " · In this diwan: " + poet.count + (poet.count === 1 ? " poem" : " poems") +
-            (poet.verses ? ", " + poet.verses + (poet.lang === "ar" ? " verses" : " lines") : "") : " · poems on their way");
+        ? eraTxt + " · " + (poet.years || "") + (poet.count ? " · في هذا الديوان: " + poet.count + " " + unitW(poet).workAr + (poet.verses ? "، " + poet.verses + " " + unitW(poet).manyAr : "") : " · القصائد في الطريق")
+        : eraTxt + " · " + (poet.years || "") + (poet.count ? " · In this diwan: " + poet.count + " " + (poet.count === 1 ? unitW(poet).work : unitW(poet).works) +
+            (poet.verses ? ", " + poet.verses + " " + unitW(poet).many : "") : " · poems on their way");
       body.appendChild(facts);
     }
     about.appendChild(sw); about.appendChild(body);
@@ -20442,7 +20449,8 @@ async function poetShelf(d, poet, term) {
   wait.remove();
 
   const q = el("input", "pr-search");
-  q.type = "search"; q.placeholder = "Search this diwan: a poem title or any line"; q.setAttribute("aria-label", "Search this diwan by poem title or line"); q.value = term || "";
+  const U = unitW(poet);
+  q.type = "search"; q.placeholder = "Search this diwan: a " + U.work + " title or any " + U.one; q.setAttribute("aria-label", "Search this diwan by " + U.work + " title or " + U.one); q.value = term || "";
   stage.appendChild(q);
   const list = el("div", "pr-list pr-poems");
   stage.appendChild(list);
@@ -20455,14 +20463,17 @@ async function poetShelf(d, poet, term) {
     const byTitle = t ? dw.poems.filter(p => norm(p.title).includes(t)) : dw.poems;
     const byLine = t ? dw.poems.filter(p => !norm(p.title).includes(t) && p.lines.some(v => norm(verseText(v)).includes(t))) : [];
     const rows = byTitle.concat(byLine);
+    let lastPart = null;
     rows.slice(0, 400).forEach(p => {
+      /* a book's chapters are grouped under its parts while nothing is searched */
+      if (p.part && !t && p.part !== lastPart) { list.appendChild(el("h3", "pr-era ar", esc(p.part))); lastPart = p.part; }
       const b = el("button", "pr-poem-row" + (poemDraft(p.id) ? " done" : ""));
       b.type = "button";
       const first = verseHalves(p.lines[0]);
       b.innerHTML =
         '<span class="pr-pt' + (isAr ? " ar" : "") + '">' + esc(p.title) + "</span>" +
-        '<span class="pr-first' + (isAr ? " ar" : "") + '">' + esc(first.join(" … ")) + "</span>" +
-        '<span class="pr-meta">' + p.lines.length + (p.lines.length === 1 ? " line" : (isAr ? " verses" : " lines")) +
+        '<span class="pr-first' + (isAr ? " ar" : "") + '">' + esc(poet.prose ? first[0].slice(0, 160) + (first[0].length > 160 ? "…" : "") : first.join(" … ")) + "</span>" +
+        '<span class="pr-meta">' + p.lines.length + " " + (p.lines.length === 1 ? U.one : U.many) +
         (poemDraft(p.id) ? " · your draft is saved" : "") + "</span>";
       b.addEventListener("click", () => {
         pushTrail(diwanName(poet), () => { poetShelf(d, poet, q.value.trim()); });
@@ -20470,7 +20481,7 @@ async function poetShelf(d, poet, term) {
       });
       list.appendChild(b);
     });
-    if (!rows.length) list.appendChild(el("p", "note", "No poem in this diwan matches that search."));
+    if (!rows.length) list.appendChild(el("p", "note", "No " + U.work + " in this diwan matches that search."));
   }
   q.addEventListener("input", draw);
   draw();
@@ -20488,7 +20499,7 @@ async function poetShelf(d, poet, term) {
     /* the introduction is Wikipedia's text, which its licence lets us use with a credit */
     const w = el("span", "pr-ref-small");
     const wa = el("a", null, "Wikipedia"); wa.href = (poet.intro.ar || poet.intro.en).url; wa.target = "_blank"; wa.rel = "noopener";
-    w.appendChild(document.createTextNode("نبذة الشاعر · About the poet: "));
+    w.appendChild(document.createTextNode(poet.prose ? "نبذة الكتاب · About the book: " : "نبذة الشاعر · About the poet: "));
     w.appendChild(wa);
     w.appendChild(document.createTextNode(" (CC BY-SA)"));
     ref.appendChild(w);
@@ -20507,9 +20518,9 @@ function poemDesk(p, opts) {
   const to = poemTarget(poet);
   const isAr = poet.lang === "ar";
   const saved = opts.entry || poemDraft(p.id) || {};
-  const N = p.lines.length;
+  const N = p.lines.length, U = unitW(poet);
   let picked = Array.isArray(saved.picked) && saved.picked.length ? saved.picked.filter(i => i < N)
-             : [...Array(Math.min(2, N)).keys()];
+             : [...Array(Math.min(poet.prose ? 1 : 2, N)).keys()];
   let editing = opts.entry ? opts.entry.id : null;
   stage.innerHTML = "";
   window.scrollTo(0, 0);
@@ -20546,22 +20557,22 @@ function poemDesk(p, opts) {
     for (let i = 1; i <= N; i++) { const o = document.createElement("option"); o.value = i; o.textContent = i; s.appendChild(o); }
     return s; };
   const from = sel(), till = sel();
-  range.appendChild(lab(isAr ? "From verse" : "From line")); range.appendChild(from);
+  range.appendChild(lab("From " + U.one)); range.appendChild(from);
   range.appendChild(lab("to")); range.appendChild(till);
-  const allB = el("button", "chip", "Whole poem"), noneB = el("button", "chip", "Clear");
+  const allB = el("button", "chip", "Whole " + U.work), noneB = el("button", "chip", "Clear");
   allB.type = noneB.type = "button";
   range.appendChild(allB); range.appendChild(noneB);
   card.appendChild(range);
   const count = el("p", "pr-hint");
   card.appendChild(count);
 
-  const verses = el("div", "pr-verses" + (isAr ? " ar" : ""));
+  const verses = el("div", "pr-verses" + (isAr ? " ar" : "") + (poet.prose ? " prose" : ""));
   const rows = [];
   p.lines.forEach((v, i) => {
     const row = el("label", "pr-verse");
     const box = document.createElement("input");
     box.type = "checkbox"; box.className = "pr-tick";
-    box.setAttribute("aria-label", (isAr ? "Verse " : "Line ") + (i + 1));
+    box.setAttribute("aria-label", U.one[0].toUpperCase() + U.one.slice(1) + " " + (i + 1));
     box.addEventListener("change", () => {
       picked = box.checked ? picked.concat(i).sort((a, b) => a - b) : picked.filter(x => x !== i);
       sync(); keep();
@@ -20586,8 +20597,8 @@ function poemDesk(p, opts) {
     rows.forEach(([row, box], i) => { const on = picked.includes(i); box.checked = on; row.classList.toggle("on", on); });
     if (picked.length) { from.value = picked[0] + 1; till.value = picked[picked.length - 1] + 1; }
     const k = picked.length;
-    count.textContent = !k ? "Nothing chosen yet: pick a range, the whole poem, or tick the lines." :
-      (k === N ? "The whole poem: " : "") + k + (k === 1 ? (isAr ? " verse" : " line") : (isAr ? " verses" : " lines")) + " chosen" +
+    count.textContent = !k ? "Nothing chosen yet: pick a range, the whole " + U.work + ", or tick the " + U.many + "." :
+      (k === N ? "The whole " + U.work + ": " : "") + k + " " + (k === 1 ? U.one : U.many) + " chosen" +
       (k > CARD_MAX ? ". A story card shows the first " + CARD_MAX + "; saving and posting keep all of them." : ".");
   }
   function setRange(a, b) {
@@ -20664,17 +20675,17 @@ function poemDesk(p, opts) {
     } catch (e) { say.textContent = "The card could not be drawn on this browser."; }
   }
   function ready() {
-    if (!picked.length) { say.textContent = "Choose at least one line of the poem."; return false; }
+    if (!picked.length) { say.textContent = "Choose at least one " + U.one + " of the " + U.work + "."; return false; }
     if (!ta.value.trim()) { say.textContent = "Write your translation first."; ta.focus(); return false; }
     say.textContent = "";
     return true;
   }
   const chosenText = () => picked.map(i => verseHalves(p.lines[i]).join(isAr ? "   " : "")).join("\n");
   const rangeLabel = () => {
-    if (picked.length === N) return "whole poem";
+    if (picked.length === N) return "whole " + U.work;
     const contiguous = picked.every((v, k) => !k || v === picked[k - 1] + 1);
-    return contiguous ? (picked.length === 1 ? "verse " + (picked[0] + 1) : "verses " + (picked[0] + 1) + "–" + (picked[picked.length - 1] + 1))
-                      : picked.length + " verses";
+    return contiguous ? (picked.length === 1 ? U.one + " " + (picked[0] + 1) : U.many + " " + (picked[0] + 1) + "–" + (picked[picked.length - 1] + 1))
+                      : picked.length + " " + U.many;
   };
   const fileName = () => "translation-" + p.id + ".jpg";
 
