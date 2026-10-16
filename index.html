@@ -2908,6 +2908,11 @@ html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: no
 /* the Library */
 .lib-ar { font-family: var(--f-ar); font-size: 1.02rem; color: var(--lilac); }
 .lx-head { text-align: center; margin: .2rem 0 1rem; }
+.lx-cover { margin: 0 0 1rem; }
+.lx-cover img { display: block; width: 100%; max-height: 22rem; object-fit: cover; border-radius: 16px; border: 1px solid rgba(214,191,234,.18); }
+.lx-cover figcaption { font-size: .74rem; color: var(--ink-soft); margin-top: .35rem; text-align: center; }
+.lx-cover figcaption a { color: inherit; }
+.lx-vol { font-family: var(--f-serif); font-size: 1.5rem; }
 .lx-title { font-family: "Amiri", serif; font-size: 2rem; color: var(--white); margin: 0; }
 .lx-sub { color: var(--ink-soft); font-size: .92rem; margin: .2rem 0 0; direction: rtl; }
 .lx-rtl { direction: rtl; text-align: right; }
@@ -2935,6 +2940,20 @@ html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: no
 :root[data-theme="light"] .lx-title, :root[data-theme="light"] .lx-entry, :root[data-theme="light"] .lx-cell-l,
 :root[data-theme="light"] .lx-root, :root[data-theme="light"] .lx-hit-r { color: #22163f; }
 :root[data-theme="light"] .lx-verse { color: #4a2a7a; }
+.wk-results { display: grid; gap: .6rem; margin: .5rem 0 1rem; }
+.wk-card { border: 1px solid rgba(214,191,234,.18); border-radius: 14px; padding: .8rem 1rem; background: rgba(214,191,234,.04); min-width: 0; }
+.wk-card.exact { border-color: rgba(167,38,208,.55); }
+.wk-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .8rem; margin: 0 0 .3rem; }
+.wk-ar { font-family: "Amiri", serif; font-size: 1.5rem; color: var(--white); }
+.wk-rom { font-style: italic; color: var(--ink-soft); }
+.wk-pos { font-size: .74rem; letter-spacing: .06em; color: #d9b8f5; border: 1px solid rgba(214,191,234,.25); border-radius: 999px; padding: .05rem .5rem; }
+.wk-gl { margin: .2rem 0 .5rem 1.2rem; padding: 0; color: var(--white); line-height: 1.55; }
+.wk-meta { color: var(--ink-soft); font-size: .9rem; margin: 0 0 .5rem; }
+.wk-en-head { font-family: var(--f-serif); font-size: 1.25rem; color: var(--white); margin: 0 0 .4rem; }
+.wk-pair { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .7rem; margin: 0 0 .35rem; }
+.wk-pair .wk-ar { font-size: 1.3rem; }
+.wk-g { color: var(--ink-soft); font-size: .9rem; overflow-wrap: anywhere; }
+:root[data-theme="light"] .wk-ar, :root[data-theme="light"] .wk-gl, :root[data-theme="light"] .wk-en-head { color: #22163f; }
 .lib-az { display: flex; flex-wrap: wrap; gap: .3rem; margin: .2rem 0 .4rem; }
 .lib-letter { all: unset; cursor: pointer; min-width: 1.9rem; height: 1.9rem; display: grid; place-items: center;
   border-radius: 8px; font-size: .82rem; font-weight: 600; color: var(--lilac); border: var(--hair); }
@@ -11737,17 +11756,17 @@ const KU_COURSE_MORE = {
         what: "Translating the Hebrew Bible into Latin, Jerome met <i>qaran</i> in Exodus 34, where Moses comes down from Sinai. The root can mean <i>to shine</i> or <i>horn</i>. The Vulgate reads <i>cornuta</i>, horned &mdash; and for a thousand years European art gave Moses horns, Michelangelo's statue in Rome included.",
         pair: ["קָרַן · qaran (shone / sent out rays)", "cornuta · horned"],
         point: "One word with two senses, and the translator picked one. Whether Jerome misread or meant it figuratively is still argued; what is not argued is that the choice outlived him by a millennium. Form against meaning, at its most visible.",
-        src: [["Horns of Moses — Wikipedia", "https://en.wikipedia.org/wiki/Horns_of_Moses"]] },
+        src: [["Horns of Moses", "https://en.wikipedia.org/wiki/Horns_of_Moses"]] },
       { k: "Diplomacy", yr: "1956", t: "“We will bury you”",
         what: "Khrushchev told Western ambassadors in Moscow <i>Мы вас похороним</i>. Rendered word for word, <i>We will bury you</i> ran on front pages as a threat. In context it was a Marxist commonplace: communism will outlive capitalism and be there at its funeral.",
         pair: ["Мы вас похороним", "We will bury you · meant: we will outlast you"],
         point: "Every word was correct. The meaning was not. This is the course's central distinction &mdash; between what a sentence says and what it is used to say &mdash; with a Cold War attached.",
-        src: [["We will bury you — Wikipedia", "https://en.wikipedia.org/wiki/We_will_bury_you"],
+        src: [["We will bury you", "https://en.wikipedia.org/wiki/We_will_bury_you"],
               ["Language Log", "https://languagelog.ldc.upenn.edu/nll/?p=61527"]] },
       { k: "Myth", yr: "1963", t: "Kennedy was not a jelly doughnut",
         what: "Kennedy's <i>Ich bin ein Berliner</i> is often said to mean <i>I am a doughnut</i>, because a <i>Berliner</i> is also a pastry. Germans in the crowd understood him perfectly: the article <i>ein</i> is correct for a figurative claim of belonging.",
         point: "Included as a warning. Half the famous “translation blunders” online are invented. Before you quote one, find where it was reported &mdash; which is why every case on this page links to its source.",
-        src: [["Ich bin ein Berliner — Wikipedia", "https://en.wikipedia.org/wiki/Ich_bin_ein_Berliner"]] }
+        src: [["Ich bin ein Berliner", "https://en.wikipedia.org/wiki/Ich_bin_ein_Berliner"]] }
     ],
     videos: [
       { id: "erRbzFuOiQs", t: "Mona Baker on <i>In Other Words</i>", by: "Mona Baker · interview", why: "The author of the coursebook this course follows, on equivalence and why she organised it from the word upward." },
@@ -11764,11 +11783,11 @@ const KU_COURSE_MORE = {
       { k: "Science", yr: "2006", t: "Pluto loses a definition",
         what: "Nothing about Pluto changed in 2006. The International Astronomical Union wrote, for the first time, a definition of <i>planet</i> &mdash; and Pluto no longer met it. A new term, <i>dwarf planet</i>, was created for what was left over.",
         point: "Terminology starts from the concept. Change the definition and the term's coverage changes with it. Every language's term for <i>planet</i> had to follow.",
-        src: [["IAU definition of planet — Wikipedia", "https://en.wikipedia.org/wiki/IAU_definition_of_planet"]] },
+        src: [["IAU definition of planet", "https://en.wikipedia.org/wiki/IAU_definition_of_planet"]] },
       { k: "Engineering", yr: "1999", t: "Mars Climate Orbiter",
         what: "One team's software reported thrust in pound-force seconds; NASA's navigation software expected newton-seconds. Nobody converted. The $125 million spacecraft entered Mars's atmosphere too low and was lost.",
         point: "Two teams, one word, two concepts underneath it &mdash; and no shared record saying which one. This is exactly what a termbase and an agreed standard exist to prevent.",
-        src: [["Mars Climate Orbiter — Wikipedia", "https://en.wikipedia.org/wiki/Mars_Climate_Orbiter"]] }
+        src: [["Mars Climate Orbiter", "https://en.wikipedia.org/wiki/Mars_Climate_Orbiter"]] }
     ],
     videos: [
       { id: "9PoaotqyQms", t: "IATE, the EU terminology database", by: "European Union", why: "The termbase the EU institutions share: millions of terms in 24 languages, each with its source and reliability." },
@@ -11821,11 +11840,11 @@ const KU_COURSE_MORE = {
       { k: "Publishing", yr: "1997–2007", t: "Seven books, one Hogwarts",
         what: "Harry Potter's translators named things in book one &mdash; <i>Poudlard</i> for Hogwarts in French, <i>Silente</i> for Dumbledore in Italian &mdash; and were held to those choices for six more books. Book two then hid an anagram in a name &mdash; <i>Tom Marvolo Riddle</i> = <i>I am Lord Voldemort</i> &mdash; and every language had to rebuild it around the name it had already chosen (in French, <i>Tom Elvis Jedusor</i>).",
         point: "A long text is a promise to your past self. A name chosen on page 40 binds page 4,000; that is why 281 puts the glossary inside the work.",
-        src: [["Harry Potter in translation — Wikipedia", "https://en.wikipedia.org/wiki/Harry_Potter_in_translation"]] },
+        src: [["Harry Potter in translation", "https://en.wikipedia.org/wiki/Harry_Potter_in_translation"]] },
       { k: "Scripture", yr: "1604–1611", t: "The King James Bible, by committee",
         what: "About fifty scholars in six companies translated it, and each company's draft was sent round the others for review &mdash; one of the earliest documented revision systems for a long translation.",
         point: "Revision built into the process, not added at the end, by people who had not written the draft.",
-        src: [["King James Version — Wikipedia", "https://en.wikipedia.org/wiki/King_James_Version"]] }
+        src: [["King James Version", "https://en.wikipedia.org/wiki/King_James_Version"]] }
     ],
     videos: [
       { id: "xtbmFfqFp68", t: "24 languages, one Europe — inside DG Translation", by: "European Commission · Translating for Europe", why: "How the EU translates every law into 24 languages, all of them equally authentic. This is the setting of the CILFIT case below." },
@@ -11847,7 +11866,7 @@ const KU_COURSE_MORE = {
       { k: "Diplomacy", yr: "1967", t: "Resolution 242 and a missing “the”",
         what: "The English text of UN Security Council Resolution 242 calls for withdrawal “from territories occupied”; the French, equally official, reads “des territoires occupés” &mdash; which most readers take as <i>the</i> territories. The ambiguity in English was drafted on purpose.",
         point: "Some vagueness is the point of the text. Reading for purpose means noticing when the author wanted not to be precise &mdash; and knowing that your language may not allow you to stay vague.",
-        src: [["UNSC Resolution 242 — Wikipedia", "https://en.wikipedia.org/wiki/United_Nations_Security_Council_Resolution_242"]] },
+        src: [["UNSC Resolution 242", "https://en.wikipedia.org/wiki/United_Nations_Security_Council_Resolution_242"]] },
       { k: "Treaty", yr: "1840", t: "Waitangi: sovereignty and kāwanatanga",
         what: "In the English text of the Treaty of Waitangi, Māori chiefs cede “all the rights and powers of sovereignty”. The Māori text most of them signed gives the Queen <i>kāwanatanga</i> &mdash; governorship, a word coined from <i>governor</i> &mdash; while promising the chiefs <i>tino rangatiratanga</i>, full chieftainship.",
         point: "The two texts do different things. New Zealand is still working out the consequences in its courts and its tribunal.",
@@ -11904,7 +11923,7 @@ const KU_COURSE_MORE = {
       { k: "Law", yr: "1889", t: "The Treaty of Wuchale",
         what: "Article 17 of the treaty between Italy and Ethiopia said, in Amharic, that the emperor <i>could</i> use Italy for his foreign affairs. The Italian said he <i>must</i>. Italy treated Ethiopia as a protectorate; the dispute ended at the Battle of Adwa in 1896.",
         point: "One modal verb. In a contract, <i>may</i> and <i>shall</i> are not style.",
-        src: [["Treaty of Wuchale — Wikipedia", "https://en.wikipedia.org/wiki/Treaty_of_Wuchale"]] }
+        src: [["Treaty of Wuchale", "https://en.wikipedia.org/wiki/Treaty_of_Wuchale"]] }
     ],
     videos: [
       { id: "Yd8h31qm-yA", t: "Inside EU careers: lawyer-linguist", by: "European Union careers (EPSO)", why: "The people who translate law: lawyers who are also translators, and why the job needs both." },
@@ -11932,7 +11951,7 @@ const KU_COURSE_MORE = {
         what: "Deborah Smith's translation of Han Kang's <i>The Vegetarian</i> won the Man Booker International Prize with the author. Korean readers and critics, notably Charse Yun, then documented mistranslations, added emphasis and a louder voice than Han Kang's spare Korean.",
         point: "Both things are true at once: the translation made the book a success in English, and it is not the same voice. The course asks you to hold that tension, not settle it.",
         src: [["Korea Exposé — Charse Yun", "https://koreaexpose.com/deborah-smith-translation-han-kang-novel-vegetarian"],
-              ["Deborah Smith — Wikipedia", "https://en.wikipedia.org/wiki/Deborah_Smith_(translator)"]] },
+              ["Deborah Smith", "https://en.wikipedia.org/wiki/Deborah_Smith_(translator)"]] },
       { k: "Arabic novel", yr: "2019", t: "Celestial Bodies — سيدات القمر",
         what: "Marilyn Booth's translation of the Omani novelist Jokha Alharthi's <i>سيدات القمر</i> won the International Booker Prize, the first novel translated from Arabic to do so. Author and translator shared the £50,000 equally.",
         point: "The nearest case to you: Gulf Arabic culture, kinship and place carried into English for readers who have never been to Oman.",
@@ -12014,7 +12033,7 @@ const KU_COURSE_MORE = {
       { k: "Generative AI", yr: "2023", t: "Mata v. Avianca: six cases that never existed",
         what: "Lawyers in New York filed a brief citing court decisions found with ChatGPT. Six were invented, with fake quotations. The judge fined the lawyers and their firm $5,000.",
         point: "A fluent answer is not a checked one. The same tool will produce a fluent translation of a term that does not exist. The responsibility stays with the person who signs.",
-        src: [["Mata v. Avianca — Wikipedia", "https://en.wikipedia.org/wiki/Mata_v._Avianca,_Inc."]] }
+        src: [["Mata v. Avianca", "https://en.wikipedia.org/wiki/Mata_v._Avianca,_Inc."]] }
     ],
     videos: [
       { id: "X4BmV2t83SM", t: "How computers translate human language", by: "Ioannis Papachimonas · TED-Ed", why: "Machine translation, from rules to neural networks." },
@@ -12294,10 +12313,14 @@ const ITEMS = [
     subject: "مَسرَد المُصطلَحات · every key term, both languages",
     blurb: "Every term the handbook defines, searchable in either language. Star the ones you want.",
     run: runGlossary },
-  { id: "lisan", ar: "لسان العرب", en: "Lisan al-Arab", kind: "guide", section: "method", group: "dict",
-    subject: "ابن منظور · every root, as the book arranges them",
-    blurb: "The whole dictionary: 9,000+ roots by باب and فصل, searchable by word or root, with volume and page.",
+  { id: "lisan", ar: "لسان العرب", en: "لسان العرب", kind: "guide", section: "method", group: "dict",
+    subject: "Lisan al-Arab · ابن منظور",
+    blurb: "ابن منظور · المجلدات الخمسة عشر كاملة: 9,179 جذرًا بالباب والفصل والمجلد، مع البحث بالكلمة أو الجذر.",
     run: runLisan },
+  { id: "wikt", ar: "ويكاموس", en: "ويكاموس · Wiktionary", kind: "guide", section: "method", group: "dict",
+    subject: "Arabic ⇄ English",
+    blurb: "Both directions: an Arabic word to its English meanings, an English word to its Arabic equivalents. 26,000+ entries.",
+    run: runWikt },
   { id: "lib-atoz", ar: "من الألف إلى الياء", en: "A to Z of Arabic–English Translation", kind: "guide", section: "method", group: "library",
     subject: "Husni & Newman · every entry",
     blurb: "All 148 entries, from Abbreviations to Wish, with the book’s Arabic and English pairs. Searchable.",
@@ -18363,7 +18386,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-2000";
+const BUILD = "1016-2200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -19954,7 +19977,7 @@ const LEARN_GROUPS = [
   { id: "core",   en: "The core course", note: "Follow in order",
     order: ["meaning", "phrase", "procedures", "toolkit", "variety", "texttypes", "fields", "errors", "commentary"] },
   { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
-  { id: "dict",   en: "Dictionaries", note: "المعاجم", order: ["lisan"] },
+  { id: "dict",   en: "Dictionaries", note: "المعاجم", order: ["lisan", "wikt"] },
   { id: "ref",    en: "Reference", note: "Look things up", order: ["glossary"] }
 ];
 function renderLearn() {
@@ -19972,7 +19995,8 @@ function renderLearn() {
       const b = el("button", "lesson-row");
       b.style.animationDelay = (n * 30) + "ms";
       b.innerHTML =
-        '<span class="lr-num">' + (g.id === "core" ? g.order.indexOf(t.id) + 1 : "•") + '</span>' +
+        (t.thumb ? '<img class="pr-face" src="' + t.thumb + '" alt="" loading="lazy">'
+                 : '<span class="lr-num">' + (g.id === "core" ? g.order.indexOf(t.id) + 1 : "•") + '</span>') +
         '<span class="lr-txt"><span class="lr-en">' + t.en + '</span>' +
         '<span class="lr-sub">' + (t.blurb || t.subject || "") + '</span></span>' +
         '<span class="lr-go" aria-hidden="true">›</span>';
@@ -20499,7 +20523,7 @@ async function poetShelf(d, poet, term) {
         p.dir = use === "ar" ? "rtl" : "ltr";
         body.appendChild(p);
         if (!has) body.appendChild(el("p", "pr-about-src", lang === "en"
-          ? "There is no English Wikipedia article on this " + (poet.prose ? "book" : "poet") + " yet, so the Arabic one is shown."
+          ? "There is no English introduction to this " + (poet.prose ? "book" : "poet") + " yet, so the Arabic one is shown."
           : (poet.prose ? "لا توجد مقالة عربية عن هذا الكتاب بعد، فهذه المقالة الإنجليزية." : "لا توجد مقالة عربية عن هذا الشاعر بعد، فهذه المقالة الإنجليزية.")));
       }
       const facts = el("p", "pr-about-has");
@@ -20575,12 +20599,10 @@ async function poetShelf(d, poet, term) {
     ref.appendChild(document.createTextNode("المصدر: ويكي مصدر · Source: Wikisource (public domain)"));
   }
   if (poet.intro) {
-    /* the introduction is Wikipedia's text, which its licence lets us use with a credit */
+    /* the introduction's licence asks for a link back to where it came from */
     const w = el("span", "pr-ref-small");
-    const wa = el("a", null, "Wikipedia"); wa.href = (poet.intro.ar || poet.intro.en).url; wa.target = "_blank"; wa.rel = "noopener";
-    w.appendChild(document.createTextNode(poet.prose ? "نبذة الكتاب · About the book: " : "نبذة الشاعر · About the poet: "));
+    const wa = el("a", null, "مصدر النبذة · Source of the introduction ↗"); wa.href = (poet.intro.ar || poet.intro.en).url; wa.target = "_blank"; wa.rel = "noopener";
     w.appendChild(wa);
-    w.appendChild(document.createTextNode(" (CC BY-SA)"));
     ref.appendChild(w);
   }
   stage.appendChild(ref);
@@ -23103,6 +23125,10 @@ function lxSource(d) {
   const s = el("p", "pr-ref");
   const a = el("a", null, esc(d.source.ar)); a.href = d.source.url; a.target = "_blank"; a.rel = "noopener";
   s.appendChild(a);
+  if (d.about) {
+    const w = el("a", "pr-ref-small", "مصدر النبذة ↗"); w.href = d.about.ar.url; w.target = "_blank"; w.rel = "noopener";
+    s.appendChild(document.createTextNode(" · ")); s.appendChild(w);
+  }
   return s;
 }
 async function runLisan() {
@@ -23113,17 +23139,25 @@ async function runLisan() {
   try { d = await loadLisan(); } catch (e) { libFailed(); return; }
   lxHome(d, "");
 }
+const LISAN_COVER = null;   /* the photograph of the set, once the site owner provides it */
+const VOL_AR = ["الأول", "الثاني", "الثالث", "الرابع", "الخامس", "السادس", "السابع", "الثامن", "التاسع", "العاشر",
+  "الحادي عشر", "الثاني عشر", "الثالث عشر", "الرابع عشر", "الخامس عشر"];
 function lxHome(d, term) {
   stage.innerHTML = "";
   window.scrollTo(0, 0);
   setDots(0, 0, 0);
-  stage.appendChild(lxHead("لسان العرب", "ابن منظور (ت 711 هـ) · " + d.count.toLocaleString("en") + " جذرًا"));
+  /* the set itself, on the front */
+  if (LISAN_COVER) {
+  const fig = el("figure", "lx-cover");
+  const im = document.createElement("img"); im.src = "lisan/img/lisan.jpg"; im.alt = "مجلدات لسان العرب"; fig.appendChild(im);
+  const cap = el("figcaption", null, 'Photograph · <a href="https://commons.wikimedia.org/wiki/File:Lisan_al_arab_by_Ibn_Manzur.jpg" target="_blank" rel="noopener">Amirsaman Zare, Wikimedia Commons</a> (CC BY-SA 4.0)');
+  fig.appendChild(cap);
+  stage.appendChild(fig);
+  }
+  stage.appendChild(lxHead("لسان العرب", "ابن منظور (ت 711 هـ) · 15 مجلدًا · " + d.count.toLocaleString("en") + " جذرًا"));
   if (d.about) {
     const ab = el("div", "pr-about");
     const p = el("p", "pr-about-ar", esc(d.about.ar.text)); p.dir = "rtl"; ab.appendChild(p);
-    const w = el("p", "pr-about-src"); const wa = el("a", null, "Wikipedia"); wa.href = d.about.ar.url; wa.target = "_blank"; wa.rel = "noopener";
-    w.appendChild(document.createTextNode("ويكيبيديا · ")); w.appendChild(wa); w.appendChild(document.createTextNode(" (CC BY-SA)"));
-    ab.appendChild(w);
     stage.appendChild(ab);
   }
   const how = el("div", "verdict");
@@ -23169,9 +23203,42 @@ function lxHome(d, term) {
     grid.appendChild(btn);
   });
   stage.appendChild(grid);
+  if (d.vols) {
+    stage.appendChild(el("h3", "pr-era lx-rtl", "المجلدات · Browse by volume (Dar Sader, 15 volumes)"));
+    const vg = el("div", "lx-grid");
+    d.vols.forEach((spine, vi) => {
+      const n = d.babs.reduce((s, b) => s + b.f.reduce((t, f) => t + f.v.filter(v => v === vi + 1).length, 0), 0);
+      const btn = el("button", "lx-cell");
+      btn.type = "button";
+      btn.innerHTML = '<span class="lx-cell-l lx-vol">' + (vi + 1) + '</span><span class="lx-cell-n">المجلد ' + VOL_AR[vi] + "<br>" + esc(spine) + "<br>" + n + " جذرًا</span>";
+      btn.addEventListener("click", () => { pushTrail("لسان العرب", () => lxHome(d, input.value)); lxVol(d, vi + 1); });
+      vg.appendChild(btn);
+    });
+    stage.appendChild(vg);
+  }
   stage.appendChild(lxSource(d));
   stage.appendChild(footNav());
   if (term) input.focus();
+}
+/* one volume: its roots, under the باب and فصل they sit in */
+function lxVol(d, vol) {
+  stage.innerHTML = "";
+  window.scrollTo(0, 0);
+  stage.appendChild(lxHead("المجلد " + VOL_AR[vol - 1], d.vols[vol - 1]));
+  d.babs.forEach((b, bi) => b.f.forEach((f, fi) => {
+    const idx = f.v.map((v, ri) => v === vol ? ri : -1).filter(ri => ri >= 0);
+    if (!idx.length) return;
+    stage.appendChild(el("h3", "pr-era lx-rtl", esc(b.n + " · " + f.n)));
+    const list = el("div", "lx-roots");
+    idx.forEach(ri => {
+      const btn = el("button", "lx-root", esc(f.r[ri]));
+      btn.type = "button";
+      btn.addEventListener("click", () => { pushTrail("المجلد " + VOL_AR[vol - 1], () => lxVol(d, vol)); lxRoot(d, bi, fi, ri); });
+      list.appendChild(btn);
+    });
+    stage.appendChild(list);
+  }));
+  stage.appendChild(footNav());
 }
 function lxBab(d, bi) {
   const b = d.babs[bi];
@@ -23248,6 +23315,122 @@ async function lxRoot(d, bi, fi, ri) {
   stage.appendChild(cite);
   stage.appendChild(footNav());
 }
+/* Wiktionary, both ways. Arabic -> English comes from its Arabic entries;
+   English -> Arabic from the short English meanings of those entries, so
+   every English word leads back to a real Arabic entry. Files load by
+   first letter, only when a search needs them. */
+let WIKT = null;
+const WIKT_FILE = {};
+async function loadWikt() {
+  if (WIKT) return WIKT;
+  const r = await fetch("wikt/index.json?v=" + BUILD, { cache: "no-cache" });
+  if (!r.ok) throw new Error("wikt " + r.status);
+  return (WIKT = await r.json());
+}
+async function wiktFile(name) {
+  if (WIKT_FILE[name]) return WIKT_FILE[name];
+  const r = await fetch("wikt/" + name + ".json?v=" + BUILD, { cache: "no-cache" });
+  if (!r.ok) return (WIKT_FILE[name] = name.startsWith("en-") ? {} : []);
+  return (WIKT_FILE[name] = await r.json());
+}
+async function runWikt() {
+  setCount("ويكاموس · Wiktionary");
+  stage.innerHTML = "";
+  stage.appendChild(el("p", "note", "Opening the dictionary…"));
+  let d;
+  try { d = await loadWikt(); } catch (e) { libFailed(); return; }
+  stage.innerHTML = "";
+  setDots(0, 0, 0);
+  stage.appendChild(lxHead("ويكاموس", "عربي ⇄ إنجليزي · " + d.count.toLocaleString("en") + " مدخلًا عربيًا · " + d.en.toLocaleString("en") + " كلمة إنجليزية"));
+  const how = el("div", "verdict");
+  how.appendChild(el("span", "vh", "How it works · كيف يعمل"));
+  how.appendChild(el("p", "vb", "Type in either language. An Arabic word gives its English meanings, its plural and its root; an English word gives the Arabic words that carry that meaning. " +
+    "From any Arabic word you can open its root in لسان العرب."));
+  how.appendChild(el("p", "vb lx-rtl", "اكتب بالعربية أو بالإنجليزية: الكلمة العربية تأتيك بمعانيها الإنجليزية وجمعها وجذرها، والكلمة الإنجليزية تأتيك بما يقابلها بالعربية."));
+  stage.appendChild(how);
+  const search = el("div", "gl-search");
+  const input = document.createElement("input");
+  input.type = "search"; input.placeholder = "كتاب · translate · مستشفى · freedom";
+  input.setAttribute("aria-label", "Search Wiktionary in Arabic or English");
+  search.appendChild(input);
+  stage.appendChild(search);
+  const res = el("div", "wk-results");
+  stage.appendChild(res);
+  let ticket = 0;
+  async function draw() {
+    const t = input.value.trim(), my = ++ticket;
+    if (!t) { res.innerHTML = ""; return; }
+    const isAr = /[؀-ۿ]/.test(t);
+    input.dir = isAr ? "rtl" : "ltr";
+    let rows;
+    if (isAr) {
+      const k = lxKey(t).replace(/^ال/, "");
+      const file = d.ar[k[0]];
+      const all = file ? await wiktFile(file) : [];
+      if (my !== ticket) return;
+      const exact = all.filter(x => x.k === k || x.k === "ال" + k);
+      const pre = all.filter(x => x.k !== k && x.k.startsWith(k)).slice(0, 30 - exact.length);
+      rows = exact.concat(pre);
+      res.innerHTML = "";
+      if (!rows.length) {
+        res.appendChild(el("p", "note lx-rtl", "لا مدخل بهذه الكلمة في ويكاموس. جرّب صيغتها المفردة أو المجردة، أو ابحث عن جذرها في لسان العرب."));
+      }
+      rows.forEach(x => res.appendChild(wiktArCard(d, x, exact.includes(x))));
+    } else {
+      const k = t.toLowerCase().replace(/^(to|a|an|the) /, "");
+      const m = await wiktFile("en-" + k[0]);
+      if (my !== ticket) return;
+      const keys = Object.keys(m);
+      const hit = keys.filter(x => x === k).concat(keys.filter(x => x !== k && x.startsWith(k)).sort((a, b) => a.length - b.length).slice(0, 12));
+      res.innerHTML = "";
+      if (!hit.length) { res.appendChild(el("p", "note", "No Arabic entry carries that meaning. Try a simpler or singular form.")); return; }
+      hit.forEach(key => {
+        const box = el("div", "wk-card");
+        box.appendChild(el("p", "wk-en-head", esc(key)));
+        m[key].forEach(([w, p, g]) => {
+          const row = el("p", "wk-pair");
+          row.innerHTML = '<span class="wk-ar" dir="rtl" lang="ar">' + esc(w) + '</span><span class="wk-pos">' + esc(d.pos[p] || p) + '</span><span class="wk-g">' + esc(g) + "</span>";
+          box.appendChild(row);
+        });
+        res.appendChild(box);
+      });
+    }
+  }
+  input.addEventListener("input", draw);
+  const src = el("p", "pr-ref");
+  src.innerHTML = 'Source: <a href="' + d.source.url + '" target="_blank" rel="noopener">Wiktionary</a>, Arabic entries as extracted by <a href="' +
+    d.source.kaikki + '" target="_blank" rel="noopener">kaikki.org</a> (CC BY-SA 4.0).';
+  stage.appendChild(src);
+  stage.appendChild(footNav());
+  input.focus();
+}
+function wiktArCard(d, x, exact) {
+  const box = el("div", "wk-card" + (exact ? " exact" : ""));
+  const head = el("p", "wk-head");
+  head.innerHTML = '<span class="wk-ar" dir="rtl" lang="ar">' + esc(x.w) + "</span>" +
+    (x.r ? '<span class="wk-rom">' + esc(x.r) + "</span>" : "") + '<span class="wk-pos">' + esc(d.pos[x.p] || x.p) + "</span>";
+  box.appendChild(head);
+  const ol = document.createElement("ol"); ol.className = "wk-gl";
+  x.g.forEach(g => { const li = document.createElement("li"); li.textContent = g; ol.appendChild(li); });
+  box.appendChild(ol);
+  const meta = [];
+  if (x.pl) meta.push("الجمع: " + x.pl.join("، "));
+  if (x.rt) meta.push("الجذر: " + x.rt.split("").join(" "));
+  if (meta.length) box.appendChild(el("p", "wk-meta lx-rtl", esc(meta.join(" · "))));
+  const go = el("button", "chip", "افتح الجذر في لسان العرب");
+  go.type = "button";
+  go.addEventListener("click", async () => {
+    let L; try { L = await loadLisan(); } catch (e) { flash("Lisan al-Arab could not be loaded.", true); return; }
+    const hits = x.rt ? (L.byKey[lxKey(x.rt)] || []).concat(lxRoots(x.w, L)) : lxRoots(x.w, L);
+    if (!hits.length) { flash("لم نجد جذرها في لسان العرب.", true); return; }
+    const h = hits[0];
+    pushTrail("ويكاموس", () => runWikt());
+    lxRoot(L, h.bi, h.fi, h.ri);
+  });
+  box.appendChild(go);
+  return box;
+}
+
 async function loadLib(name) {
   if (LIB_CACHE[name]) return LIB_CACHE[name];
   const r = await fetch("library/" + name + ".json?v=" + BUILD, { cache: "no-cache" });
