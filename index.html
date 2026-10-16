@@ -18420,7 +18420,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-2800";
+const BUILD = "1016-2900";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -20661,21 +20661,20 @@ function poemDesk(p, opts) {
   window.scrollTo(0, 0);
   setCount(poet.prose ? "Translate a passage · no score" : "Translate a poem · no score");
 
-  /* the poem read or sung, when the owner added a video of it: at the top,
-     playing as soon as the poem opens. Phones only let a video start by
-     itself without sound, so it starts muted; the player's own controls
-     pause it, move through it, replay it and turn the sound on. */
+  /* the poet reading the poem, when the owner added a video of it: at the
+     top, with its sound on. It starts by itself where the browser allows a
+     video to play with sound; where it does not (most phones), one tap on
+     the player starts it, sound and all. It is never muted. */
   if (p.video) {
     const vb = el("div", "pr-video");
     const fr = document.createElement("iframe");
     fr.src = "https://www.youtube-nocookie.com/embed/" + p.video.id +
-      "?autoplay=1&mute=1&playsinline=1&rel=0&controls=1&modestbranding=1";
+      "?autoplay=1&playsinline=1&rel=0&controls=1&modestbranding=1";
     fr.title = p.video.t || p.title;
     fr.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
     fr.allowFullscreen = true;
     vb.appendChild(fr);
     stage.appendChild(vb);
-    stage.appendChild(el("p", "pr-video-note", "اضغط 🔊 لسماع الصوت · Tap 🔊 for sound"));
   }
 
   const card = el("div", "pr-desk");
