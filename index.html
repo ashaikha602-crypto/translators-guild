@@ -8081,75 +8081,67 @@ const BOOTH_GENRES = [
     ]
   },
   {
-    /* ISLAMIC AND RELIGIOUS. Nothing here is the site's own rendering.
-       Terms: Husni & Newman (2015), p. 126, and the notes to their
-       marriage contract, pp. 147–150. Formulas: Husni & Newman (2013),
-       A to Z, entries "The conditional", "The past" and "Terms of
-       address"; the contract's own formulas, pp. 145–148. Sentences and
-       turns: the contract clauses (Arabic pp. 145–146, English pp. 147–148).
-       No Qur'anic verses are used. */
+    /* ISLAMIC AND RELIGIOUS. Every item and every English rendering is
+       printed in a published source; nothing here is the site's own.
+       No Qur'anic verses are used.
+       HN15 = Husni & Newman (2015), Arabic–English–Arabic Translation:
+         Islamic legal terms and strategies, pp. 101, 113, 121, 126–127;
+         hajj season, p. 65; Minister of Justice and Islamic Affairs, p. 104.
+       HN13 = Husni & Newman (2013), A to Z of Arabic–English–Arabic
+         Translation: entries "Terms of address", "The conditional",
+         "The past", "Arab/Arabic/Arabian", "In case/in spite of", "Time",
+         "Interfere/interrupt/intervene", "Below/beneath/underneath/under". */
     id: "religious", en: "Islamic and religious", ar: "إسلامي وديني",
-    hint: "Religious formulas, Islamic terms and a marriage contract.",
+    hint: "Islamic legal terms, religious formulas and honorifics, from Husni & Newman.",
     icon: '<path d="M15.5 4.2a8 8 0 1 0 4.3 12.6A6.5 6.5 0 1 1 15.5 4.2z"/><path d="M17.6 7.3l.6 1.6 1.7.1-1.3 1.1.4 1.6-1.4-.9-1.4.9.4-1.6-1.3-1.1 1.7-.1z"/>',
     terms: [
-      { ar: "المهر", ok: ["dowry", "the dowry"] },
-      { ar: "الطلاق البائن", ok: ["irrevocable divorce", "an irrevocable divorce"] },
-      { ar: "العدّة", ok: ["idda", "iddah", "legally prescribed waiting period before marrying", "waiting period"] },
+      { ar: "الشريعة", ok: ["islamic law", "shariah", "sharia", "shariah law", "islamic (or shariah) law"] },
+      { ar: "السنة", ok: ["sunnah", "the sunnah", "sunna"] },
+      { ar: "الحديث", ok: ["hadith", "the hadith", "sayings of the prophet"] },
+      { ar: "الإجماع", ok: ["ijma", "ijma'", "consensus", "consensus among muslim legal scholars"] },
+      { ar: "القياس", ok: ["qiyas", "analogical reasoning"] },
+      { ar: "المحكمة الشرعية", ok: ["shariah court", "sharia court"] },
+      { ar: "القاضي", ok: ["islamic judge", "judge"] },
       { ar: "الفقيه", ok: ["faqih"] },
+      { ar: "الوقف", ok: ["waqf", "religious endowment", "religious endowments"] },
       { ar: "الربا", ok: ["riba", "riba'"] },
       { ar: "الحجاب", ok: ["hijab", "headscarf"] },
-      { ar: "الوقف", ok: ["waqf", "religious endowment"] },
-      { ar: "المأذون", ok: ["marriage registrar", "the marriage registrar"] },
-      { ar: "الزواج العرفي", ok: ["urfi marriage", "'urfi marriage"] },
-      { ar: "كتاب الله", ok: ["the holy quran", "holy quran", "the quran"] },
-      { ar: "الشهود العدول", ok: ["witnesses of reputable background and sound character"] }
+      { ar: "المهر", ok: ["dowry", "the dowry"] },
+      { ar: "العدة", ok: ["idda", "iddah", "legally prescribed waiting period before marrying", "waiting period"] },
+      { ar: "حلال", ok: ["lawful"] },
+      { ar: "المرحوم", ok: ["the late"] }
     ],
     phrases: [
       { ar: "إن شاء الله", ok: ["god willing"] },
       { ar: "بارك الله فيك", ok: ["may god bless you", "god bless you"] },
-      { ar: "رحمه الله", ok: ["may god have mercy on him", "god have mercy on him", "may the mercy of god be upon him"] },
-      { ar: "صلّى الله عليه وسلّم", ok: ["peace be upon him", "pbuh", "may god pray for him and grant him peace"] },
+      { ar: "رحمة الله عليه", ok: ["may the mercy of god be upon him", "the mercy of god be upon him"] },
       { ar: "رضي الله عنه", ok: ["may god be pleased with him"] },
-      { ar: "بعون الله", ok: ["with the help of god the almighty", "with the help of god"] },
-      { ar: "والله خير الشاهدين", ok: ["as god is our witness"] },
-      { ar: "على كتاب الله وسنّة رسوله", ok: ["in accordance with the holy quran and the sunna of the prophet muhammad"] }
+      { ar: "صلى الله عليه وسلم", ok: ["may god pray for him and grant him peace", "peace be upon him", "pbu", "pbuh"] },
+      { ar: "الخلفاء الراشدون", ok: ["the rightly-guided caliphs", "the rightly guided caliphs", "the righteous caliphs", "rightly-guided caliphs"] },
+      { ar: "موسم الحج", ok: ["hajj season", "the hajj season"] },
+      { ar: "وزير العدل والشؤون الإسلامية", ok: ["minister of justice and islamic affairs", "the minister of justice and islamic affairs"] },
+      { ar: "منظمة المؤتمر الإسلامي", ok: ["organization of the islamic conference", "the organization of the islamic conference", "oic"] },
+      { ar: "العمارة الإسلامية", ok: ["islamic architecture"] }
     ],
     sentences: [
-      { ar: "يعتبر التمهيد السابق جزءاً لا يتجزأ من هذا العقد.",
-        ok: ["The preceding Preamble shall constitute an integral part of the present agreement."],
-        keys: ["preamble", "integral", "part"] },
-      { ar: "يحرر هذا العقد من نسختين بيد كل طرف نسخة للعمل بموجبها عند الاقتضاء.",
-        ok: ["The present marriage contract has been executed in duplicate, each copy being signed by each party and valid in law."],
-        keys: ["contract", "duplicate", "copy"] },
-      { ar: "بعون الله اجتمع كل من ... وبحضور الشهود العدول المبين أسماؤهم بباطن هذا العقد.",
-        ok: ["With the help of God the Almighty, have appeared in the presence of witnesses of reputable background and sound character, whose names are stated in the present contract, the following."],
-        keys: ["help of god", "witnesses", "reputable", "names", "contract"] },
-      { ar: "قبل الطرفان هذا الزواج وعلم كل طرف حقوقه وواجباته تجاه الطرف الآخر.",
-        ok: ["Both parties accept this marriage, and each party is aware of its rights and duties towards the other."],
-        keys: ["both parties", "accept", "marriage", "rights", "duties"] },
-      { ar: "ولا يحق لأي طرف النكول والتقاعس عن التزامه تجاه الطرف الآخر.",
-        ok: ["Neither party shall be allowed to shirk from or neglect their obligations towards the other."],
-        keys: ["neither party", "shirk", "neglect", "obligations"] },
-      { ar: "يحق للطرف الآخر اللجوء إلى القضاء لاقتضاء حقه من الطرف المخالف.",
-        ok: ["Either party is entitled to seek redress and demand his/her right from the offending party before the courts."],
-        keys: ["entitled", "redress", "right", "offending party", "courts"] }
+      { ar: "دخل الحاج مصطفى الغرفة.",
+        ok: ["Hajj Mustafa came into the room."], keys: ["hajj mustafa", "came", "room"] },
+      { ar: "بِرَغْمِ الحِصارِ اسْتَعَدَّ الشَّعْبُ لِشَهْرِ رَمَضانَ.",
+        ok: ["The population made preparations for Ramadan despite the blockade."], keys: ["ramadan", "despite", "blockade", "prepar"] },
+      { ar: "سَتَتَوَسَّطُ مُنَظَّمَةُ المُؤْتَمَرِ الإِسْلامِيِّ بَيْنَ الطَّرَفَيْنِ.",
+        ok: ["The Organization of the Islamic Conference (OIC) will intervene between the two parties."], keys: ["organization of the islamic conference", "intervene", "two parties"] },
+      { ar: "انْتَشَرَتِ العِمارَةُ الإِسْلامِيَّةُ في القُرُونِ الوُسْطَى.",
+        ok: ["Islamic architecture spread in the Middle Ages."], keys: ["islamic architecture", "spread", "middle ages"] },
+      { ar: "اشْتَرَيْتُ كِتاباً بِاللُّغَةِ العَرَبِيَّةِ عَنِ الأَنْدَلُسِ.",
+        ok: ["I bought an Arabic book on Islamic Spain."], keys: ["arabic book", "islamic spain", "bought"] },
+      { ar: "تَمْنَعُ السُّلُطاتُ المُحْتَلَّةُ المُصَلِّينَ دُونَ سِنِّ الخَمْسِينَ مِنْ دُخُولِ المَسْجِدِ.",
+        ok: ["The occupying authority refused entry to the mosque to worshippers below the age of fifty."], keys: ["occupying", "mosque", "worshippers", "fifty"] }
     ],
     turns: [
-      { ar: "طلب الطرف الأول من الطرف الثاني الارتباط بها على كتاب الله وسنة رسوله بقوله لها أريد الزواج منك على كتاب الله وسنة رسوله وعلى مذهب الإمام أبي حنيفة النعمان والصداق المسمى بيننا، ووافقته الطرف الثاني على ذلك بقولها له قبلت الزواج منك.",
-        ok: ["The groom hereby requests to enter into a bond with the bride, in accordance with the Holy Quran and the Sunna of the Prophet Muhammad, by saying, ‘I wish to marry you, in accordance with the Holy Quran, the Sunna of the Prophet Muhammad and the Hanafi School of Islamic Jurisprudence, and in exchange of the dowry fixed between us.’ The bride hereby agrees to this by saying, ‘I accept to marry you.’"],
-        keys: ["groom", "bride", "quran", "sunna", "hanafi", "dowry", "accept"] },
-      { ar: "يلتزم الطرف الأول تجاه الطرف الثاني بإعداد المسكن الشرعي الملائم وفقاً لحالته المادية والاجتماعية والقيام بجميع واجباته الشرعية تجاه الطرف الثاني.",
-        ok: ["The groom pledges to the bride that he shall prepare the appropriate legal residence, in accordance with his financial and social circumstances, status in society, and legal duties towards the bride."],
-        keys: ["groom", "bride", "residence", "financial", "social", "duties"] },
-      { ar: "يلتزم الطرف الثاني بالإشهار بهذا الزواج وأن يكون زواجاً أبدياً وليس مؤقتاً، وتم تنبيههم بأن شروط صحة هذا الزواج هو الإشهار والإعلان ولا يكون مؤقتاً، ووافقوا على ذلك.",
-        ok: ["The bride pledges to announce this marriage, that it is indefinite, not temporary. Both parties have been apprised of the conditions of legality of this marriage to be made public, and of the fact that it is not temporary, and both have agreed to it."],
-        keys: ["bride", "announce", "marriage", "temporary", "agreed"] },
-      { ar: "لما كان الطرف الأول يرغب الزواج من الطرف الثاني وقد وافقته على ذلك على يد الشهود العدول المبين أسماؤهم بهذا العقد وعلى الصداق المسمى بينهما وعلى مذهب الإمام أبي حنيفة النعمان.",
-        ok: ["Whereas the groom wishes to enter into marriage with the bride, who has accepted this in the presence of witnesses whose names are mentioned in the contract, for a dowry fixed between them and in accordance with the principles of the Hanafi School of Islamic Jurisprudence."],
-        keys: ["whereas", "groom", "bride", "witnesses", "dowry", "hanafi"] },
-      { ar: "يقر الطرفان بأن من حق أي منهما اللجوء إلى القضاء للإقرار بصحة هذا الزواج والتصديق عليه أمام المحكمة أو إثبات محتواه ومضمونه في وثيقة زواج رسمية على يد مأذون منذ تاريخ هذا العقد حماية لحقوق كل طرف تجاه الطرف الآخر.",
-        ok: ["Both parties agree that either of them may resort to legal action in order to establish the legal validity of the present marriage and have it certified before the court or its contents authenticated in an official marriage document drawn up by a marriage registrar, to take effect as from the date of the present contract, with each party’s rights being safeguarded in respect of the other."],
-        keys: ["both parties", "legal action", "validity", "court", "marriage registrar", "rights"] }
+      { ar: "مَواقِيتُ عَمَلِ مَكاتِبِ البَرِيدِ في شَهْرِ رَمَضانَ مِنَ الثّامِنَةِ صَباحاً إِلَى الخامِسَةِ مَساءً.",
+        ok: ["The post office opening times during Ramadan are from 8 a.m. until 5 p.m."], keys: ["post office", "opening times", "ramadan", "8", "5"] },
+      { ar: "حَضْرَةُ صاحِبِ الجَلالَةِ السُّلْطانُ قابُوس بن سَعِيد المُعَظَّم حَفِظَهُ اللهُ وَرَعاهُ",
+        ok: ["His Majesty, Sultan Qaboos bin Said al-Muazzam – may God preserve him and watch over him"], keys: ["his majesty", "sultan qaboos", "preserve", "watch over"] }
     ]
   },
   {
@@ -19473,7 +19465,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1019-0115";
+const BUILD = "1019-0200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
