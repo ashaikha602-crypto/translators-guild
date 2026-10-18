@@ -9341,13 +9341,13 @@ const AZ_Q = [
       { t: "The troops moved towards the south and east of the country.", tag: "two regions, not one" }
     ],
     why: "English always puts north or south before east or west. " + HN13 + ", entry “Northeast/southeast/…”.", ch: "A to Z" },
-  { src: "وافَقَتِ الدُّكْتُورَةُ سارَة عَلَى هذا الأَمْرِ",
+  { src: "Dr Sarah Johnson", srcEn: true, ask: "Arabic says الدكتورة سارة, with the title before the first name. How does English refer to her?",
     opts: [
-      { t: "Dr Sarah agreed on this matter.", tag: "Arabic puts the title before the first name" },
+      { t: "Dr Sarah agreed on this matter.", tag: "the Arabic usage carried over" },
       { t: "Dr Johnson agreed on this matter.", tag: "English puts the title before the surname", ok: true },
       { t: "Doctor Sarah Johnson she agreed on this matter.", tag: "a resumptive pronoun English does not use" }
     ],
-    why: "The example in the book is a woman called Dr Sarah Johnson. " + HN13 + ", entry “Terms of address”.", ch: "A to Z" },
+    why: "Arabic uses a title with the first name; English keeps it for the last name. " + HN13 + ", entry “Terms of address”.", ch: "A to Z" },
   { src: "هذِهِ المُهِمَّةُ أَصْعَبُ مِنْ أَنْ نَقُومَ بِها",
     opts: [
       { t: "This is too difficult task for us to do.", tag: "too cannot go before adjective + noun" },
@@ -9403,7 +9403,35 @@ const AZ_Q = [
       { t: "يُفْرِطُ في الشَّرابِ", tag: "أفرط في, ‘to be excessive in’", ok: true },
       { t: "يَشْرَبُ أَيْضاً", tag: "too read as ‘also’" }
     ],
-    why: HN13 + ", entry “Too”.", ch: "A to Z" }
+    why: HN13 + ", entry “Too”.", ch: "A to Z" },
+  { src: "Naguib Mahfouz · Nagib Machfus · Nadjib Mahfoez", srcEn: true, ask: "Spelling a name by the sounds of each target language: what does the A to Z call this?",
+    opts: [
+      { t: "Transliteration", tag: "one-to-one, character for character" },
+      { t: "Transcription", tag: "sounds rendered by the nearest target letters", ok: true },
+      { t: "Translation", tag: "names are not translated" }
+    ],
+    why: "Both are forms of romanization; the scholarly transliteration of the same name is Najīb Maḥfūẓ. " + HN13 + ", entry “Transliteration and transcription”.", ch: "A to Z" },
+  { src: "Arabic honorifics and terms of address", srcEn: true, ask: "Translating Arabic into English, what generally happens to them?",
+    opts: [
+      { t: "They are toned down or left out", tag: "Arabic → English", ok: true },
+      { t: "They are kept word for word", tag: "a mock-exotic English" },
+      { t: "They are amplified", tag: "that is the English → Arabic direction" }
+    ],
+    why: "Into Arabic, markers of respect must be added, so the target is an amplified version of the original. " + HN13 + ", entry “Terms of address”.", ch: "A to Z" },
+  { src: "صلّى الله عليه وسلّم → ‘Peace Be Upon Him’ (PBUH)", ask: "Where does the A to Z say this rendering belongs?",
+    opts: [
+      { t: "In every text that names the Prophet", tag: "too wide" },
+      { t: "In texts for a Muslim readership", tag: "not in general media texts", ok: true },
+      { t: "Nowhere: always leave it out", tag: "that is the advice for رضي الله عنه" }
+    ],
+    why: "It remains a highly ‘foreignizing’ device that makes a general text unnecessarily exotic. " + HN13 + ", entry “Terms of address”.", ch: "A to Z" },
+  { src: "The A to Z of Arabic–English–Arabic Translation", srcEn: true, ask: "What is the book’s focus, in its own words?",
+    opts: [
+      { t: "A grammar book and composition manual", tag: "what it says it is not" },
+      { t: "A history of Arabic–English translation", tag: "also what it says it is not" },
+      { t: "Common errors, in both directions, at the level of words and structures", tag: "the microstructural elements", ok: true }
+    ],
+    why: "The authors add that this practical aim is still rooted in theory. " + HN13 + ", Introduction.", ch: "A to Z" }
 ];
 const LEGAL_Q = [
   { src: "مَجْلِس الأُمَّة", ask: "Kuwait: what is the official English name?",
@@ -9511,6 +9539,92 @@ const LEGAL_Q = [
       { t: "‘Irrevocable divorce’", tag: "that is طلاق بائن" }
     ],
     why: "Islamic terms are rendered by an equivalent, a paraphrase or a borrowing, depending on readership. " + HN15 + ", p. 126.", ch: "Legal Translation" }
+];
+const CONCEPT_Q = [
+  { src: "Recognition, comprehension, reproduction.", srcEn: true, ask: "What are these three, in Husni and Newman?",
+    opts: [
+      { t: "The three levels of the problem of translating collocations", tag: "obstacles the translator must negotiate", ok: true },
+      { t: "The three types of collocation", tag: "the types are lexical, grammatical and lexicogrammatical" },
+      { t: "The three stages of revision", tag: "not their terms" }
+    ],
+    why: HN15 + ", p. 15.", ch: "Concepts" },
+  { src: "to perpetrate a crime · اِرْتَكَبَ جريمةً", ask: "What kind of collocation is this?",
+    opts: [
+      { t: "Free (open) collocation", tag: "each element combines freely" },
+      { t: "Restricted collocation", tag: "the verb joins only words related to ‘crime’", ok: true },
+      { t: "Grammatical collocation", tag: "a verb with a preposition or particle" }
+    ],
+    why: "The verb has a limited collocational range. " + HN15 + ", p. 3.", ch: "Concepts" },
+  { src: "to go · to motion", srcEn: true, ask: "Which has the wider collocational range, and why?",
+    opts: [
+      { t: "To go: the more generic the word, the wider its range", tag: "range depends on specificity", ok: true },
+      { t: "To motion: longer words combine with more words", tag: "length is not the factor" },
+      { t: "Both are the same: collocation is random", tag: "the book says it is not entirely random" }
+    ],
+    why: "Likewise <i>shoulder</i> has more meanings than the medical <i>clavicula</i>. " + HN15 + ", p. 2.", ch: "Concepts" },
+  { src: "to pass up on + opportunity", srcEn: true, ask: "Which type of collocation do the authors call this?",
+    opts: [
+      { t: "Lexical collocation", tag: "content words only" },
+      { t: "Lexicogrammatical collocation", tag: "a lexical item with a grammatical combination", ok: true },
+      { t: "An idiom", tag: "its meaning is not figurative" }
+    ],
+    why: "Arabic examples include اعتكف في with جامع or مسجد. " + HN15 + ", p. 15.", ch: "Concepts" },
+  { src: "A fixed expression whose meaning is not the sum of the meanings of its words.", srcEn: true, ask: "What is it?",
+    opts: [
+      { t: "An idiom", tag: "non-literal, metaphorical meaning", ok: true },
+      { t: "‘Idiomatic’ usage", tag: "natural, native-like language" },
+      { t: "A compound", tag: "a word built from two lexical units" }
+    ],
+    why: HN15 + ", p. 26.", ch: "Concepts" },
+  { src: "فقدَ أعصابَه · to lose one’s nerve", ask: "Why are these false friends?",
+    opts: [
+      { t: "Reinterpretation: the Arabic means ‘to lose one’s temper’", tag: "the form was borrowed, the meaning changed", ok: true },
+      { t: "Partial borrowing: only one sense crossed", tag: "that is cover story → موضوع الغلاف" },
+      { t: "They are not false friends; they mean the same", tag: "the English means losing courage" }
+    ],
+    why: "Meaning is not always transferred with form. " + HN15 + ", p. 29.", ch: "Concepts" },
+  { src: "cover story → موضوع الغلاف", ask: "Which process made this a false friend?",
+    opts: [
+      { t: "Reinterpretation", tag: "that is فقد أعصابه" },
+      { t: "Partial borrowing", tag: "of two English senses, Arabic took one", ok: true },
+      { t: "Exact borrowing", tag: "the meaning did not cross whole" }
+    ],
+    why: "In English, a cover story is either the main story on a cover or a made-up story; the Arabic calque has only one of these senses. " + HN15 + ", p. 29.", ch: "Concepts" },
+  { src: "Two varieties of a language side by side in one community, each with a definite role.", srcEn: true, ask: "What is this, and who defined it in 1959?",
+    opts: [
+      { t: "Diglossia, Charles Ferguson", tag: "a ‘high’ and a ‘low’ variety", ok: true },
+      { t: "Bilingualism, William Marçais", tag: "Marçais used ‘diglossia’ for Arabic earlier" },
+      { t: "Register, El-Said Badawi", tag: "Badawi described levels of Egyptian speech in 1973" }
+    ],
+    why: "In Arabic, the ‘high’ variety is fuṣḥā and the ‘low’ varieties are the dialects. " + HN15 + ", p. 59.", ch: "Concepts" },
+  { src: "diglossia", srcEn: true, ask: "Who introduced the term, and for which language?",
+    opts: [
+      { t: "Ioannis Psicharis, for Greek", tag: "demotiki and katharevousa, 1886–9", ok: true },
+      { t: "Charles Ferguson, for Arabic", tag: "he defined it in 1959" },
+      { t: "William Marçais, for French", tag: "he first applied it to Arabic" }
+    ],
+    why: "The word literally means ‘bilingual’ in Greek. " + HN15 + ", p. 58.", ch: "Concepts" },
+  { src: "Heritage fuṣḥā, contemporary fuṣḥā and three levels of colloquial (1973).", srcEn: true, ask: "Whose model of Egyptian Arabic is this?",
+    opts: [
+      { t: "El-Said Badawi", tag: "the first Arab scholar to examine diglossia in detail", ok: true },
+      { t: "H. Blanc", tag: "five levels from an experiment, 1960" },
+      { t: "Charles Ferguson", tag: "two varieties, H and L" }
+    ],
+    why: HN15 + ", p. 60.", ch: "Concepts" },
+  { src: "A translation memory returns a segment that differs only slightly from the new one.", srcEn: true, ask: "What is this called?",
+    opts: [
+      { t: "An exact match", tag: "the segment is identical" },
+      { t: "A fuzzy match", tag: "differences are minimal", ok: true },
+      { t: "Post-editing", tag: "the translator’s revision afterwards" }
+    ],
+    why: "Translation memory tools work best for translators who stay in one field. " + HN15 + ", p. 166.", ch: "Concepts" },
+  { src: "Compounding", srcEn: true, ask: "Which language uses it far more?",
+    opts: [
+      { t: "English", tag: "compounding is extremely active", ok: true },
+      { t: "Arabic", tag: "far less active" },
+      { t: "Both equally", tag: "their word formation differs" }
+    ],
+    why: "The difference lies in lexical structure and word formation. " + HN15 + ", p. 40.", ch: "Concepts" }
 ];
 const BAS_Q = [
   { src: "Not word for word, but sense for sense.", ask: "Whose principle is this?",
@@ -12871,6 +12985,10 @@ const ITEMS = [
     direction: "both",
     blurb: "Which letter is this sign, which sign is this letter, and what the lessons say about the language.",
     run: () => runChoice(kslQuiz(), "Which is right?") },
+  { id: "conceptq", ar: "مفاهيم الترجمة", en: "Key Concepts", kind: "trial", section: "trials",
+    subject: "Husni & Newman (2015) · The Library",
+    blurb: "Collocation, idiom, false friends, diglossia, translation memory: the ideas behind the examples.",
+    run: () => runChoice(CONCEPT_Q, "Which is right?") },
   { id: "bassq", ar: "دراسات الترجمة", en: "Translation Studies", kind: "trial", section: "trials",
     subject: "Bassnett (2014) · The Library",
     blurb: "Who said it, whose model, which theory: from Cicero to skopos.",
@@ -19353,7 +19471,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1018-2200";
+const BUILD = "1019-0100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -20958,6 +21076,7 @@ function latelyRow(r) {
 /* One ledger of cards, used by both the Learn and Practice screens. */
 const TRIAL_ORDER = [
   "bassq",                                   /* The field: Bassnett */
+  "conceptq",                                /* concepts: Husni & Newman */
   "courtesy", "context", "human",            /* 2.2 speech acts · 2.3 context · 2.4 equivalence */
   "colloc", "proverb", "kuwaiti", "cultural", /* 3.1 collocation · 3.2 idioms and proverbs · 3.3 */
   "nameproc",                                /* 4.2 procedures */
