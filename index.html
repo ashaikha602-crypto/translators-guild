@@ -7914,104 +7914,155 @@ const BOOTH_GENRES = [
     ]
   },
   {
+    /* LEGAL AND COURT. Every item and every English rendering is printed
+       in Husni & Newman (2015), Arabic–English–Arabic Translation, ch. 3:
+       legislative bodies, pp. 110–111; courts, Table 3.2; preambles of
+       Omani, Bahraini and Egyptian legislation, pp. 103–105; in compliance
+       with, p. 123; Latin and French terms and doublets, pp. 124–125;
+       seize, pp. 125–126; shall in UN texts, pp. 139–140. The book's
+       Arabic is reproduced as printed, with its scanned letters
+       restored (e.g. اإلطالع → الاطلاع). */
     id: "legal", en: "Legal and court", ar: "قانوني وقضائي",
-    hint: "Court Arabic, where an approximate word is a professional failure.",
+    hint: "Courts, parliaments, decrees and the legal shall, from published Arabic–English legal texts.",
     icon: '<path d="M12 4v16M7 20h10M5 8h14M7 8l-2.5 5a3 3 0 0 0 5 0L7 8zM17 8l-2.5 5a3 3 0 0 0 5 0L17 8z"/>',
     terms: [
-      { ar: "النيابة العامة", ok: ["the public prosecution", "public prosecution", "the prosecution", "the public prosecutor"], arAlt: ["النيابة", "الادعاء العام"] },
-      { ar: "المدّعى عليه", ok: ["the defendant", "defendant", "the accused"], arAlt: ["المتّهم"] },
-      { ar: "الشاهد", ok: ["the witness", "witness"], arAlt: ["شاهد"] },
-      { ar: "الاستئناف", ok: ["appeal", "an appeal", "the appeal"], arAlt: ["الطعن"] },
-      { ar: "البراءة", ok: ["acquittal", "an acquittal", "not guilty"], arAlt: ["الحكم بالبراءة"] },
-      { ar: "حكم غيابي", ok: ["a judgment in absentia", "judgment in absentia", "judgement in absentia", "in absentia"], arAlt: ["الحكم الغيابي"] },
-      { ar: "توكيل رسمي", ok: ["a power of attorney", "power of attorney"], arAlt: ["وكالة رسمية"] },
-      { ar: "الحبس الاحتياطي", ok: ["pre trial detention", "pretrial detention", "remand in custody", "remand"], arAlt: ["التوقيف الاحتياطي"] }
+      { ar: "محكمة التمييز", ok: ["court of cassation", "the court of cassation"] },
+      { ar: "محكمة الاستئناف", ok: ["court of appeal", "the court of appeal"] },
+      { ar: "مجلس الأمة", ok: ["national assembly", "the national assembly"] },
+      { ar: "مجلس الشورى", ok: ["consultative council", "the consultative council", "shura council"] },
+      { ar: "مجلس الوزراء", ok: ["council of ministers", "the council of ministers"] },
+      { ar: "المرسوم السلطاني", ok: ["royal decree", "the royal decree"] },
+      { ar: "مرسوم بقانون", ok: ["legislative decree"] },
+      { ar: "القانون المدني", ok: ["civil code", "the civil code"] },
+      { ar: "نية جرمية", ok: ["mens rea"] },
+      { ar: "جريمة", ok: ["crime"] },
+      { ar: "قرار", ok: ["verdict"] },
+      { ar: "باطل", ok: ["null and void"] },
+      { ar: "شروط", ok: ["terms and conditions"] },
+      { ar: "وصية", ok: ["last will and testament"] }
     ],
     phrases: [
-      { ar: "أمام محكمة الاستئناف", ok: ["before the court of appeal", "before the appeal court", "in the court of appeal"] },
-      { ar: "بناءً على طلب الدفاع", ok: ["at the request of the defence", "at the request of the defense", "on the application of the defence"] },
-      { ar: "أداء اليمين القانونية", ok: ["taking the legal oath", "taking the oath", "swearing the oath"] },
-      { ar: "إخلاء سبيل بكفالة", ok: ["release on bail", "released on bail", "bail"] },
-      { ar: "صدر الحكم بالإجماع", ok: ["the judgment was issued unanimously", "the judgement was unanimous", "the verdict was unanimous"] },
-      { ar: "عقد إيجار", ok: ["a lease", "lease", "a tenancy agreement", "rental contract"], arAlt: ["اتفاقية إيجار"] }
+      { ar: "عملاً بـ", ok: ["in compliance with"] },
+      { ar: "جزء لا يتجزأ", ok: ["part and parcel"] },
+      { ar: "بعد الاطلاع على الدستور", ok: ["having reviewed the constitution"] },
+      { ar: "وبناء على ما تقتضيه المصلحة العامة", ok: ["and in accordance with the public interest", "in accordance with the public interest"] },
+      { ar: "رسمنا بما هو آت", ok: ["have decreed as follows"] },
+      { ar: "رسمنا بالقانون الآتي", ok: ["hereby enact the following law"] },
+      { ar: "يقرر أن يبقي المسألة قيد نظره الفعلي", ok: ["decides to remain seized of the matter"] }
     ],
     sentences: [
-      { ar: "أطلب من المحكمة إخلاء سبيل موكّلي بكفالة.", ok: ["I ask the court to release my client on bail."],
-        keys: ["court", "release", "client", "bail"] },
-      { ar: "رُفض الاستئناف لعدم كفاية الأدلة.", ok: ["The appeal was rejected for lack of evidence."],
-        keys: ["appeal", "reject", "evidence"] },
-      { ar: "من حقّك أن تستعين بمحامٍ.", ok: ["You have the right to a lawyer."],
-        keys: ["right", "lawyer"] },
-      { ar: "تؤجّل المحكمة الجلسة إلى الأسبوع القادم.", ok: ["The court adjourns the hearing until next week."],
-        keys: ["court", "adjourn", "next week"] },
-      { ar: "قرّرت المحكمة براءة المتّهم.", ok: ["The court found the defendant not guilty."],
-        keys: ["court", "not guilty", "defendant"] },
-      { ar: "هل تقسم أن تقول الحقّ وكلّ الحقّ؟", ok: ["Do you swear to tell the truth, the whole truth?"],
-        keys: ["swear", "truth", "whole truth"] }
+      { ar: "تتخذ كل دولة طرف التدابير اللازمة.",
+        ok: ["Each State Party shall adopt such measures as may be necessary."],
+        keys: ["each state party", "adopt", "measures", "necessary"] },
+      { ar: "تخطر كل دولة طرف الأمين العام للأمم المتحدة.",
+        ok: ["Each State Party shall notify the Secretary-General of the United Nations."],
+        keys: ["each state party", "notify", "secretary-general"] },
+      { ar: "يفي الدول الأطراف بالتزاماتها.",
+        ok: ["States Parties shall carry out their obligations."],
+        keys: ["states parties", "carry out", "obligations"] },
+      { ar: "تتبادل الدول أكبر قدر من المساعدة.",
+        ok: ["States shall afford one another the greatest measure of assistance."],
+        keys: ["states", "afford one another", "greatest measure", "assistance"] },
+      { ar: "قبضت الشرطة اللص عند خروجه من موقع الجريمة.",
+        ok: ["The police seized the thief as he left the crime scene."],
+        keys: ["police", "seized", "thief", "crime scene"] },
+      { ar: "نحن حمد بن عيسى آل خليفة أمير دولة البحرين.",
+        ok: ["We, Hamad bin Isa Al Khalifa, Amir of the State of Bahrain."],
+        keys: ["hamad bin isa al khalifa", "amir", "state of bahrain"] },
+      { ar: "يقرر أن تتخذ جميع الدول الأعضاء فوراً التدابير اللازمة لمنع ...",
+        ok: ["Decides that all Member States shall immediately take the necessary measures to prevent ..."],
+        keys: ["decides", "member states", "immediately", "necessary measures", "prevent"] }
     ],
     turns: [
-      { ar: "يرجى إبلاغ المتّهم بأنّ من حقّه التزام الصمت، وأنّ كلّ ما يقوله قد يُستخدم ضدّه.",
-        ok: ["Please inform the defendant that he has the right to remain silent, and that anything he says may be used against him."],
-        keys: ["defendant", "right", "silent", "used against"] },
-      { ar: "قرّرت المحكمة تأجيل النظر في الدعوى لحين ورود تقرير الخبير المنتدب.",
-        ok: ["The court decided to adjourn the case until the appointed expert's report is received."],
-        keys: ["court", "adjourn", "case", "expert", "report"] },
-      { ar: "أرجو من المترجم أن ينقل للشاهد أنّ عليه الإجابة بنعم أو لا فقط.",
-        ok: ["Please tell the witness through the interpreter that he must answer yes or no only."],
-        keys: ["witness", "interpreter", "answer", "yes or no"] },
-      { ar: "قضت المحكمة بحبس المتّهم سنةً مع إيقاف التنفيذ، وألزمته بدفع الرسوم.",
-        ok: ["The court sentenced the defendant to one year suspended and ordered him to pay the costs."],
-        keys: ["court", "sentenc", "one year", "suspended", "costs"] }
+      { ar: "نحن قابوس بن سعيد، سلطان عمان، بعد الاطلاع على النظام الأساسي للدولة الصادر بالمرسوم السلطاني رقم 101/96، وعلى قانون العمل الصادر بالمرسوم السلطاني رقم 34/73 وتعديلاته، وبناء على ما تقتضيه المصلحة العامة، رسمنا بما هو آت.",
+        ok: ["We, Qaboos Bin Said, Sultan of Oman, after perusal of the State Basic Law promulgated by the Royal Decree No. 101/96, and the Labour Law issued by the Royal Decree No. 34/73 and amendments thereof, and in accordance with the public interest, have decreed as follows."],
+        keys: ["qaboos", "sultan of oman", "perusal", "state basic law", "royal decree", "labour law", "public interest", "decreed as follows"] },
+      { ar: "وبناء على عرض وزير العدل والشئون الإسلامية، وبعد أخذ رأي مجلس الشورى، وبعد موافقة مجلس الوزراء، رسمنا بالقانون الآتي.",
+        ok: ["And upon the submission of the Minister of Justice and Islamic Affairs, and having sought the opinion of the Consultative Council, and with the approval of the Council of Ministers, hereby enact the following law."],
+        keys: ["submission", "minister of justice and islamic affairs", "opinion", "consultative council", "approval", "council of ministers", "enact"] },
+      { ar: "يؤكد من جديد أن على جميع الدول الأعضاء، بما فيها إريتريا، أن تمتثل تماماً لأحكام حظر توريد الأسلحة.",
+        ok: ["Reiterates that all Member States, including Eritrea, shall comply fully with the terms of the arms embargo."],
+        keys: ["reiterates", "member states", "eritrea", "comply fully", "arms embargo"] },
+      { ar: "نحن جماهير شعب مصر؛ باسم الله وبعون الله نلتزم إلى غير ما حد، وبدون قيد أو شرط أن نبذل كل الجهود لنحقق.",
+        ok: ["We, the Egyptian people, in the name of God and by His assistance, pledge indefinitely and unconditionally to exert every effort to realise."],
+        keys: ["egyptian people", "name of god", "assistance", "pledge", "unconditionally", "every effort"] }
     ]
   },
   {
+    /* JOURNALISTIC AND MEDIA. Every item and every English rendering is
+       printed in a published source; nothing here is the site's own.
+       HN15 = Husni & Newman (2015), ch. 2: newspaper passages from
+         Tunisia (al-Sabah) and Egypt (al-Misri al-Yawm) with their
+         English, p. 65; regional press vocabulary, pp. 66–67.
+       HN13 = Husni & Newman (2013), A to Z, example sentences in the
+         entries "Adverbs", "Agreement", "The present", "Rise/raise",
+         "Conversation/conversant", "Hire/rent/let/lease/charter",
+         "Criticism/critic/critique/critical", "Disused/misuse/abuse",
+         "Hardly/barely/scarcely/no sooner", "The future", "Keep on …",
+         "The passive". The English of p. 65 is kept as printed,
+         except the typo ‘demonstations’. */
     id: "media", en: "Journalistic and media", ar: "إعلامي وصحفي",
-    hint: "The register of a bulletin: attribution, hedging and speed.",
+    hint: "Real newspaper passages and press vocabulary, from Husni & Newman.",
     icon: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h6M7 13h6M7 16h4M16 9h2M16 13h2"/>',
     terms: [
-      { ar: "مؤتمر صحفي", ok: ["a press conference", "press conference", "news conference"] },
-      { ar: "بيان صحفي", ok: ["a press release", "press release", "a statement"], arAlt: ["بيان للصحافة"] },
-      { ar: "مصدر مسؤول", ok: ["an official source", "official source", "a senior source"], arAlt: ["مصدر رسمي"] },
-      { ar: "وكالة الأنباء", ok: ["the news agency", "news agency", "the press agency"], arAlt: ["وكالة الأخبار"] },
-      { ar: "عاجل", ok: ["breaking", "breaking news", "urgent"], arAlt: ["خبر عاجل"] },
-      { ar: "تغطية حيّة", ok: ["live coverage", "live"], arAlt: ["تغطية مباشرة", "بث مباشر"] },
-      { ar: "افتتاحية", ok: ["an editorial", "editorial", "a leader"], arAlt: ["المقال الافتتاحي"] },
-      { ar: "حصيلة الضحايا", ok: ["the death toll", "death toll", "the casualty toll", "the toll"], arAlt: ["عدد الضحايا", "حصيلة القتلى"] }
+      { ar: "حالة الاستنفار", ok: ["state of emergency", "a state of emergency"] },
+      { ar: "خصخصة", ok: ["privatization", "privatisation"] },
+      { ar: "رئيس البلدية", ok: ["mayor", "the mayor"] },
+      { ar: "المحافظة", ok: ["governorate", "province", "the governorate"] },
+      { ar: "البلدية", ok: ["municipality", "the municipality"] },
+      { ar: "مظاهرة", ok: ["demonstration", "a demonstration"] },
+      { ar: "مداهمة", ok: ["raid", "police raid", "a raid"] },
+      { ar: "المخابرات", ok: ["intelligence services", "the intelligence services"] },
+      { ar: "توقيف", ok: ["arrest"] },
+      { ar: "الوزير الأول", ok: ["prime minister", "the prime minister"] },
+      { ar: "المعارضة", ok: ["the opposition", "opposition"] },
+      { ar: "عقوبات", ok: ["sanctions"] }
     ],
     phrases: [
-      { ar: "أفادت مصادر مطّلعة", ok: ["well informed sources said", "informed sources said", "sources familiar with the matter said"] },
-      { ar: "نفت الوزارة هذه الأنباء", ok: ["the ministry denied these reports", "the ministry has denied the reports", "the ministry denied the news"] },
-      { ar: "في تصريح للصحفيين", ok: ["in remarks to reporters", "speaking to reporters", "in comments to journalists"] },
-      { ar: "نقلاً عن وكالة الأنباء", ok: ["citing the news agency", "quoting the news agency", "according to the news agency"] },
-      { ar: "لم يصدر تعليق رسمي بعد", ok: ["there has been no official comment yet", "no official comment has been issued", "there is no official comment so far"] }
+      { ar: "حل المجلس البلدي", ok: ["the dissolution of the municipal council", "dissolution of the municipal council"] },
+      { ar: "حسب مصدر مسؤول", ok: ["according to an official source"] },
+      { ar: "نائب الرئيس", ok: ["vice-president", "the vice-president", "vice president"] },
+      { ar: "الوفد الحكومي", ok: ["the government delegation", "government delegation"] },
+      { ar: "الانتخابات المحلية", ok: ["the local elections", "local elections"] },
+      { ar: "انتهاكات حقوق الإنسان", ok: ["human rights abuses"] },
+      { ar: "قصر الرئاسة", ok: ["the presidential palace", "presidential palace"] }
     ],
     sentences: [
-      { ar: "لم يتسنَّ لنا التحقّق من صحّة هذه المعلومات.", ok: ["We have not been able to verify this information."],
-        keys: ["not", "verify", "information"] },
-      { ar: "سنوافيكم بالتفاصيل فور ورودها.", ok: ["We will bring you the details as soon as they come in."],
-        keys: ["details", "as soon as"] },
-      { ar: "سيعقد الوزير مؤتمراً صحفياً بعد قليل.", ok: ["The minister will hold a press conference shortly."],
-        keys: ["minister", "press conference", "shortly"] },
-      { ar: "أكّدت المصادر أنّ الاجتماع تأجّل إلى الغد.", ok: ["Sources confirmed that the meeting has been postponed until tomorrow."],
-        keys: ["sources", "meeting", "postpone", "tomorrow"] },
-      { ar: "ارتفعت حصيلة المصابين إلى عشرين شخصاً.", ok: ["The number of injured has risen to twenty."],
-        keys: ["injured", "risen", "twenty"] },
-      { ar: "ننقل لكم الآن تغطية حيّة من مكان الحدث.", ok: ["We bring you live coverage now from the scene."],
-        keys: ["live", "coverage", "scene"] }
+      { ar: "أَلْقَى الوَزِيرُ أَمْسِ مُحاضَرَةً في القاهِرَةِ.",
+        ok: ["The minister delivered a speech yesterday in Cairo."],
+        keys: ["minister", "delivered", "speech", "yesterday", "cairo"] },
+      { ar: "لَقَدْ وافَقَتِ الحُكُومَةُ عَلَى زِيادَةٍ جَدِيدَةٍ في الضَّرائِبِ.",
+        ok: ["The government have agreed upon a new tax increase."],
+        keys: ["government", "agreed", "new tax increase"] },
+      { ar: "تَقُومُ المُعارَضَةُ بِاحْتِجاجاتٍ غَيْرِ مَسْبُوقَةٍ ضِدَّ الحُكُومَةِ.",
+        ok: ["The opposition are organizing unprecedented demonstrations against the government."],
+        keys: ["opposition", "unprecedented", "demonstrations", "government"] },
+      { ar: "رَفَعَتِ الحُكُومَةُ الأَسْعارَ الأُسْبُوعَ الماضِي.",
+        ok: ["The government raised prices last week."],
+        keys: ["government", "raised", "prices", "last week"] },
+      { ar: "انْتَقَدَ الصَّحَفِيُّ الوَزِيرَ انْتِقاداً لاذِعاً خِلالَ الحَدِيثِ.",
+        ok: ["During the interview, the journalist severely criticized the minister."],
+        keys: ["interview", "journalist", "severely", "criticized", "minister"] },
+      { ar: "اسْتَأْجَرَ الوَفْدُ الحُكُومِيُّ طائِرَةً خاصَّةً لِجَوْلَتِهِ الأُورُوبِيَّةِ.",
+        ok: ["The government delegation chartered a private plane for their European tour."],
+        keys: ["government delegation", "chartered", "private plane", "european tour"] },
+      { ar: "كانَتِ الجَرِيدَةُ انْتِقادِيَّةً لِقَرارِ الحُكُومَةِ السّابِقَةِ.",
+        ok: ["The newspaper was critical of the decision made by the previous government."],
+        keys: ["newspaper", "critical", "decision", "previous government"] },
+      { ar: "بَدَأَ وُزَراءُ الاتِّحادِ الأُورُوبِيِّ العَمَلَ لِفَرْضِ عُقُوباتٍ بِشَأْنِ انْتِهاكاتِ حُقُوقِ الإِنْسانِ.",
+        ok: ["EU Ministers are set to impose sanctions over human rights abuses."],
+        keys: ["eu ministers", "impose", "sanctions", "human rights abuses"] }
     ],
     turns: [
-      { ar: "وقال المراسل إنّ الأوضاع في المنطقة لا تزال متوتّرة، وإنّ فرق الإنقاذ تواصل عملها منذ الصباح.",
-        ok: ["The correspondent said that the situation in the area remains tense and that rescue teams have been working since the morning."],
-        keys: ["correspondent", "situation", "tense", "rescue", "morning"] },
-      { ar: "ونقلت الصحيفة عن مسؤول لم تكشف عن هويته قوله إنّ القرار لم يُتّخذ بعد.",
-        ok: ["The newspaper quoted an unnamed official as saying that the decision has not yet been taken."],
-        keys: ["newspaper", "official", "decision", "not yet"] },
-      { ar: "وذكرت الوكالة نقلاً عن مصدر مسؤول أنّ المحادثات ستُستأنف الأسبوع المقبل دون تحديد موعد نهائي.",
-        ok: ["The agency, citing an official source, reported that the talks will resume next week without a final date being set."],
-        keys: ["agency", "official source", "talks", "resume", "next week"] },
-      { ar: "وأضاف المتحدّث أنّ الوزارة تتابع الوضع عن كثب وستصدر بياناً في وقت لاحق اليوم.",
-        ok: ["The spokesperson added that the ministry is following the situation closely and will issue a statement later today."],
-        keys: ["spokes", "ministry", "closely", "statement", "later today"] }
+      { ar: "وقد خلف الفراغ الذي تركته السلطة المحلية تفشي العديد من مظاهر الفوضى وخرقات كثيرة للقانون، فانتشرت ظاهرة البناء الفوضوي والاستيلاء على أراض تعود ملكيتها للبلدية أو للدولة بلغت حسب مصدر مسؤول نحو 42 هكتاراً.",
+        ok: ["The vacuum left by the local authorities has in many cases led to chaos and breaches of the law. The number of illegal building activities and exploitation of land belonging to the municipality or the state has spread across an area of approximately 42 hectares, according to an official source."],
+        keys: ["vacuum", "local authorities", "chaos", "breaches of the law", "illegal building", "municipality", "42 hectares", "official source"] },
+      { ar: "شهدت القاهرة وبعض المحافظات، أمس، عدداً من المظاهرات الفئوية، وتظاهر العشرات من أصحاب شركات إلحاق العمالة المصرية بالخارج، أمام مجلس الوزراء للتنديد بمشروع قرار يعد له الدكتور أحمد البرعي، وزير القوى العاملة، يهدف إلى تولي الوزارة عملية إلحاق العمالة المصرية المؤقتة بالسعودية أثناء موسم الحج.",
+        ok: ["A number of sectarian demonstrations took place yesterday both in Cairo and a number of Governorates. Dozens of owners of companies that employ Egyptian workers abroad staged a demonstration outside the Council for Ministers to protest against the proposal, resubmitted by Dr Ahmed al-Baraei, the Minister for Labour, that is aimed at giving the Ministry the power to administer the Egyptian workers who are temporarily in Saudi Arabia during the hajj season."],
+        keys: ["demonstrations", "cairo", "governorates", "egyptian workers abroad", "council", "proposal", "minister for labour", "hajj season"] },
+      { ar: "ما إِنْ قَرَأَ الرَّئِيسُ هذا التَّقْرِيرَ حَتَّى أَمَرَ بِتَصْحِيحِ الوَضْعِ.",
+        ok: ["No sooner did the president read this report than he ordered that the situation be improved."],
+        keys: ["no sooner", "president", "report", "ordered", "situation", "improved"] }
     ]
   },
   {
@@ -19528,7 +19579,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1019-0300";
+const BUILD = "1019-0400";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
