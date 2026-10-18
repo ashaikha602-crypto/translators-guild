@@ -3568,9 +3568,6 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
 :root[data-skin="clear"] .lm-time::before { background: linear-gradient(#0071e3, rgba(0,113,227,.12)); }
 :root[data-skin="clear"] .lr-when { color: #0066cc; }
 :root[data-skin="clear"] a, :root[data-skin="clear"] .c-src, :root[data-skin="clear"] .link { color: #0066cc; }
-:root[data-skin="clear"] button:not(.ghost):not(.link):not(.opt):not(.lesson-row):not(.icon-btn):not(.pick):not(.alpha):not(.m-course):not(.handle-btn):not(.c-vid-play) {
-  border-radius: 980px;
-}
 :root[data-skin="clear"] .ghost { color: #0066cc; border-color: rgba(0,113,227,.35); background: transparent; border-radius: 980px; }
 :root[data-skin="clear"] .icon-btn { background: transparent; }
 :root[data-skin="clear"] .icon-btn svg { stroke: #1d1d1f; }
@@ -3582,6 +3579,20 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
 :root[data-skin="clear"] .opt.right { box-shadow: 0 0 0 2px #1d8338 inset; }
 :root[data-skin="clear"] .opt.miss { box-shadow: 0 0 0 2px #d70015 inset; }
 :root[data-skin="clear"] .prompt::before, :root[data-skin="clear"] .prompt::after { display: none; }
+/* Practice cards in Clear: the title and one quiet line, nothing else.
+   The running number and the kind chip are dropped; resume stays. */
+:root[data-skin="clear"] .commission { padding: 1.15rem 1.25rem; gap: .35rem; }
+:root[data-skin="clear"] .commission .cnum,
+:root[data-skin="clear"] .commission .kind { display: none; }
+:root[data-skin="clear"] .commission .c-top { justify-content: flex-end; min-height: 0; }
+:root[data-skin="clear"] .commission .seal-pip:not(.earned) { display: none; }
+:root[data-skin="clear"] .commission .c-top:not(:has(.resume-tag, .seal-pip.earned, .soon)) { display: none; }
+:root[data-skin="clear"] .commission .c-en { font-size: 1.12rem; letter-spacing: -.015em; }
+:root[data-skin="clear"] .commission .c-subject { text-transform: none; letter-spacing: 0; font-size: .84rem; color: #6e6e73; }
+:root[data-skin="clear"] .commission .soon { border-color: rgba(0,113,227,.3); color: #0066cc; letter-spacing: .02em; text-transform: none; }
+:root[data-skin="clear"] .commission .seal-pip { box-shadow: none; }
+:root[data-skin="clear"] .chip-tag.solid { background: #0071e3; border-color: #0071e3; color: #fff; box-shadow: none; }
+
 </style>
 
 <div class="aura" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
@@ -18655,7 +18666,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1018-0200";
+const BUILD = "1018-0300";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
