@@ -2621,6 +2621,43 @@ a.ks-s-en:hover { color: var(--white); }
 .dm-pick-page i { font-style: normal; font-size: .72rem; color: var(--ink-faint); align-self: center; }
 .dm-note { margin: 0 1rem .4rem; font-size: .8rem; color: #ffb3c1; text-align: center; }
 .dm-note:empty { display: none; }
+/* photo editor for chats: always dark, like a camera */
+.pe { position: fixed; inset: 0; z-index: 9500; display: flex; flex-direction: column; background: #0b0710; color: #fff;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left); font-family: var(--f-sans); }
+.pe-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .6rem .9rem; }
+.pe-title { font-weight: 600; font-size: .95rem; }
+.pe-link { all: unset; cursor: pointer; padding: .45rem .3rem; color: rgba(255,255,255,.8); font-size: .95rem; }
+.pe-send { all: unset; cursor: pointer; padding: .5rem 1.2rem; border-radius: 999px; background: var(--grad-h); color: #fff; font-weight: 700; font-size: .95rem; }
+.pe-send:disabled { opacity: .6; }
+.pe-stage { flex: 1; min-height: 0; display: grid; place-items: center; overflow: hidden; }
+.pe-frame { position: relative; touch-action: none; user-select: none; -webkit-user-select: none; }
+.pe-frame canvas { display: block; width: 100%; height: 100%; }
+.pe-frame.drawing canvas { cursor: crosshair; }
+.pe-label { position: absolute; transform: translate(-50%, -50%); font-weight: 700; line-height: 1.15; white-space: pre; cursor: move;
+  touch-action: none; padding: .05em .2em; outline: 1.5px dashed rgba(255,255,255,.7); outline-offset: 2px;
+  text-shadow: 0 0 .15em rgba(0,0,0,.45); font-family: Outfit, "Readex Pro", "Noto Sans Arabic", "Geeza Pro", sans-serif; }
+.pe-crop { position: absolute; border: 1.5px solid #fff; box-shadow: 0 0 0 9999px rgba(0,0,0,.55); touch-action: none; cursor: move; }
+.pe-frame:has(.pe-crop) { overflow: hidden; }
+.pe-h { position: absolute; width: 26px; height: 26px; border: 0 solid #fff; }
+.pe-h.tl { left: -4px; top: -4px; border-width: 4px 0 0 4px; cursor: nwse-resize; }
+.pe-h.tr { right: -4px; top: -4px; border-width: 4px 4px 0 0; cursor: nesw-resize; }
+.pe-h.bl { left: -4px; bottom: -4px; border-width: 0 0 4px 4px; cursor: nesw-resize; }
+.pe-h.br { right: -4px; bottom: -4px; border-width: 0 4px 4px 0; cursor: nwse-resize; }
+.pe-opts { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .6rem .9rem; padding: .5rem .9rem; min-height: 3.2rem; }
+.pe-sws { display: flex; gap: .55rem; }
+.pe-sw { all: unset; cursor: pointer; width: 24px; height: 24px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.45); }
+.pe-sw.on { outline: 2px solid #fff; outline-offset: 2px; }
+.pe-range { width: 7.5rem; accent-color: #a726d0; }
+.pe-input { flex: 1 1 100%; max-width: 26rem; padding: .6rem 1rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.25);
+  background: rgba(255,255,255,.08); color: #fff; font: 16px var(--f-sans); outline: none; }
+.pe-input::placeholder { color: rgba(255,255,255,.5); }
+.pe-chip { all: unset; cursor: pointer; padding: .45rem .95rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.25); font-size: .85rem; }
+.pe-chip.strong { background: #fff; color: #170d26; font-weight: 700; border-color: #fff; }
+.pe-tools { display: flex; justify-content: space-around; padding: .4rem .5rem calc(.6rem + env(safe-area-inset-bottom)); border-top: 1px solid rgba(255,255,255,.08); }
+.pe-tool { all: unset; cursor: pointer; display: grid; justify-items: center; gap: .2rem; padding: .35rem .6rem; font-size: .72rem; color: rgba(255,255,255,.72); }
+.pe-tool svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.pe-tool.on { color: #d6bfea; }
+.pe-tool:disabled { opacity: .35; cursor: default; }
 :root[data-theme="light"] .dm-view, :root[data-theme="light"] .dm-head { background: #fff; color: #111; }
 :root[data-theme="light"] .dm-head { border-bottom-color: #efefef; }
 :root[data-theme="light"] .dm-line.them .dm-bubble { background: #efefef; color: #111; }
@@ -17644,6 +17681,289 @@ async function dmUpload(cid, f) {
   if (!r.ok) throw new Error(r.status === 404 || r.status === 400 ? "Sending files is not switched on yet." : "That file could not be sent.");
   return { p: path, n: f.name || "file", t: f.type || "", s: f.size };
 }
+/* A photo can be edited before it goes into a chat: cropped, turned,
+   drawn on and written on. Resolves with the edited photo, the original
+   when it was not changed or cannot be read here, or null on Cancel. */
+const PE_COLORS = ["#ffffff", "#111111", "#a726d0", "#ff5c7a", "#ffc46b", "#2ed9a0", "#4aa8ff"];
+const PE_ICONS = {
+  crop: '<path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/>',
+  turn: '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
+  draw: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+  text: '<path d="M4 7V5h16v2"/><path d="M12 5v14"/><path d="M9 19h6"/>',
+  undo: '<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>'
+};
+function dmEditPhoto(file) {
+  return new Promise(resolve => {
+    const src = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => { URL.revokeObjectURL(src); open(); };
+    img.onerror = () => { URL.revokeObjectURL(src); resolve(file); };
+    img.src = src;
+
+    function open() {
+      const k = Math.min(1, 2048 / Math.max(img.naturalWidth, img.naturalHeight));
+      let work = document.createElement("canvas");
+      work.width = Math.max(1, Math.round(img.naturalWidth * k));
+      work.height = Math.max(1, Math.round(img.naturalHeight * k));
+      work.getContext("2d").drawImage(img, 0, 0, work.width, work.height);
+
+      let mode = "", color = PE_COLORS[0], changed = false;
+      let brush = 3, tsize = 7;                 /* slider values, per tool */
+      let label = null;                         /* text waiting to be placed */
+      let crop = null;                          /* {x,y,w,h} as fractions */
+      const undo = [];
+
+      const wrap = el("div", "pe");
+      wrap.setAttribute("role", "dialog");
+      wrap.setAttribute("aria-label", "Edit photo");
+      const top = el("div", "pe-top");
+      const cancel = el("button", "pe-link", "Cancel"); cancel.type = "button";
+      const send = el("button", "pe-send", "Send"); send.type = "button";
+      top.appendChild(cancel); top.appendChild(el("span", "pe-title", "Edit photo")); top.appendChild(send);
+      const stage = el("div", "pe-stage");
+      const frame = el("div", "pe-frame");
+      frame.appendChild(work); stage.appendChild(frame);
+      const opts = el("div", "pe-opts");
+      const tools = el("div", "pe-tools");
+      wrap.appendChild(top); wrap.appendChild(stage); wrap.appendChild(opts); wrap.appendChild(tools);
+
+      const btn = {};
+      [["crop", "Crop"], ["turn", "Rotate"], ["draw", "Draw"], ["text", "Text"], ["undo", "Undo"]].forEach(([id, name]) => {
+        const b = el("button", "pe-tool",
+          '<svg viewBox="0 0 24 24" aria-hidden="true">' + PE_ICONS[id] + "</svg><span>" + name + "</span>");
+        b.type = "button"; btn[id] = b; tools.appendChild(b);
+      });
+      btn.undo.disabled = true;
+
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      document.body.appendChild(wrap);
+
+      let scale = 1;
+      function fit() {
+        const aw = stage.clientWidth - 16, ah = stage.clientHeight - 16;
+        scale = Math.max(0.01, Math.min(aw / work.width, ah / work.height));
+        frame.style.width = Math.round(work.width * scale) + "px";
+        frame.style.height = Math.round(work.height * scale) + "px";
+        if (label) sizeLabel();
+      }
+      window.addEventListener("resize", fit);
+      requestAnimationFrame(fit);
+
+      const copy = c => { const n = document.createElement("canvas"); n.width = c.width; n.height = c.height; n.getContext("2d").drawImage(c, 0, 0); return n; };
+      function use(c) { frame.replaceChild(c, work); work = c; fit(); }
+      function snap() { undo.push(copy(work)); if (undo.length > 15) undo.shift(); btn.undo.disabled = false; changed = true; }
+
+      /* the row above the tools: colours and size, or the crop buttons */
+      function swatches(after) {
+        const row = el("div", "pe-sws");
+        PE_COLORS.forEach(c => {
+          const s = el("button", "pe-sw" + (c === color ? " on" : "")); s.type = "button";
+          s.style.background = c; s.setAttribute("aria-label", "Colour " + c);
+          s.addEventListener("click", () => {
+            color = c; row.querySelectorAll(".pe-sw").forEach(x => x.classList.toggle("on", x === s));
+            if (after) after();
+          });
+          row.appendChild(s);
+        });
+        return row;
+      }
+      function slider(min, max, val, on, name) {
+        const r = document.createElement("input");
+        r.type = "range"; r.min = min; r.max = max; r.value = val; r.className = "pe-range";
+        r.setAttribute("aria-label", name);
+        r.addEventListener("input", () => on(+r.value));
+        return r;
+      }
+      function setMode(m) {
+        if (mode === "text" && m !== "text") placeText();
+        if (mode === "crop" && m !== "crop") endCrop();
+        mode = m;
+        ["crop", "draw", "text"].forEach(id => btn[id].classList.toggle("on", id === m));
+        frame.classList.toggle("drawing", m === "draw");
+        opts.innerHTML = "";
+        if (m === "draw") {
+          opts.appendChild(swatches());
+          opts.appendChild(slider(1, 12, brush, v => { brush = v; }, "Pen size"));
+        } else if (m === "text") {
+          const inp = document.createElement("input");
+          inp.className = "pe-input"; inp.placeholder = "Type here, then drag it into place";
+          inp.maxLength = 120; inp.dir = "auto"; inp.enterKeyHint = "done";
+          inp.addEventListener("input", () => { label.textContent = inp.value; label.hidden = !inp.value; });
+          inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); inp.blur(); } });
+          opts.appendChild(inp);
+          opts.appendChild(swatches(() => { if (label) label.style.color = color; }));
+          opts.appendChild(slider(3, 16, tsize, v => { tsize = v; sizeLabel(); }, "Text size"));
+          newLabel();
+          setTimeout(() => inp.focus(), 50);
+        } else if (m === "crop") {
+          startCrop();
+          const reset = el("button", "pe-chip", "Reset"); reset.type = "button";
+          const sq = el("button", "pe-chip", "Square"); sq.type = "button";
+          const ok = el("button", "pe-chip strong", "Apply crop"); ok.type = "button";
+          reset.addEventListener("click", () => { crop = { x: 0, y: 0, w: 1, h: 1 }; showCrop(); });
+          sq.addEventListener("click", () => {
+            const side = Math.min(work.width, work.height);
+            const w = side / work.width, h = side / work.height;
+            crop = { x: (1 - w) / 2, y: (1 - h) / 2, w, h }; showCrop();
+          });
+          ok.addEventListener("click", applyCrop);
+          opts.appendChild(reset); opts.appendChild(sq); opts.appendChild(ok);
+        }
+      }
+      ["crop", "draw", "text"].forEach(id => btn[id].addEventListener("click", () => setMode(mode === id ? "" : id)));
+
+      /* rotate a quarter turn anticlockwise, as the icon shows */
+      btn.turn.addEventListener("click", () => {
+        setMode("");
+        snap();
+        const c = document.createElement("canvas"); c.width = work.height; c.height = work.width;
+        const g = c.getContext("2d");
+        g.translate(0, c.height); g.rotate(-Math.PI / 2); g.drawImage(work, 0, 0);
+        use(c);
+      });
+      btn.undo.addEventListener("click", () => {
+        if (label && mode === "text") { label.remove(); label = null; setMode(""); return; }
+        const c = undo.pop(); if (!c) return;
+        use(c); btn.undo.disabled = !undo.length; changed = undo.length > 0;
+      });
+
+      /* drawing */
+      let last = null;
+      const at = e => { const r = frame.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width * work.width, y: (e.clientY - r.top) / r.height * work.height }; };
+      frame.addEventListener("pointerdown", e => {
+        if (mode !== "draw" || e.target !== work) return;
+        e.preventDefault();
+        frame.setPointerCapture(e.pointerId);
+        snap();
+        last = at(e);
+        const g = work.getContext("2d");
+        g.fillStyle = color; g.beginPath();
+        g.arc(last.x, last.y, work.width * brush / 800, 0, Math.PI * 2); g.fill();
+      });
+      frame.addEventListener("pointermove", e => {
+        if (!last) return;
+        const p = at(e), g = work.getContext("2d");
+        g.strokeStyle = color; g.lineWidth = work.width * brush / 400; g.lineCap = "round"; g.lineJoin = "round";
+        g.beginPath(); g.moveTo(last.x, last.y); g.lineTo(p.x, p.y); g.stroke();
+        last = p;
+      });
+      const lift = () => { last = null; };
+      frame.addEventListener("pointerup", lift);
+      frame.addEventListener("pointercancel", lift);
+
+      /* text: typed below, dragged on the photo, painted in when done */
+      function newLabel() {
+        label = el("div", "pe-label");
+        label.hidden = true; label.dir = "auto"; label.style.color = color;
+        label.dataset.x = 0.5; label.dataset.y = 0.5;
+        frame.appendChild(label); sizeLabel(); placeLabel();
+        let grab = null;
+        label.addEventListener("pointerdown", e => {
+          e.preventDefault(); label.setPointerCapture(e.pointerId);
+          grab = { x: e.clientX, y: e.clientY, lx: +label.dataset.x, ly: +label.dataset.y };
+        });
+        label.addEventListener("pointermove", e => {
+          if (!grab) return;
+          const r = frame.getBoundingClientRect();
+          label.dataset.x = Math.min(1, Math.max(0, grab.lx + (e.clientX - grab.x) / r.width));
+          label.dataset.y = Math.min(1, Math.max(0, grab.ly + (e.clientY - grab.y) / r.height));
+          placeLabel();
+        });
+        label.addEventListener("pointerup", () => { grab = null; });
+        label.addEventListener("pointercancel", () => { grab = null; });
+      }
+      function placeLabel() { label.style.left = (label.dataset.x * 100) + "%"; label.style.top = (label.dataset.y * 100) + "%"; }
+      function sizeLabel() { if (label) label.style.fontSize = (work.width * tsize / 100 * scale) + "px"; }
+      function placeText() {
+        if (!label) return;
+        const t = label.textContent.trim();
+        if (t) {
+          snap();
+          const g = work.getContext("2d"), f = work.width * tsize / 100;
+          g.save();
+          g.font = "700 " + f + "px Outfit, 'Readex Pro', 'Noto Sans Arabic', 'Geeza Pro', sans-serif";
+          g.textAlign = "center"; g.textBaseline = "middle";
+          g.direction = /[֐-ࣿ]/.test(t) ? "rtl" : "ltr";
+          g.shadowColor = "rgba(0,0,0,.45)"; g.shadowBlur = f * 0.15;
+          g.fillStyle = label.style.color || color;
+          g.fillText(t, label.dataset.x * work.width, label.dataset.y * work.height);
+          g.restore();
+        }
+        label.remove(); label = null;
+      }
+
+      /* cropping: drag the corners or the whole box */
+      let box = null;
+      function startCrop() {
+        crop = { x: 0, y: 0, w: 1, h: 1 };
+        box = el("div", "pe-crop");
+        ["tl", "tr", "bl", "br"].forEach(h => { const d = el("span", "pe-h " + h); d.dataset.h = h; box.appendChild(d); });
+        frame.appendChild(box); showCrop();
+        let grab = null;
+        box.addEventListener("pointerdown", e => {
+          e.preventDefault(); box.setPointerCapture(e.pointerId);
+          grab = { h: e.target.dataset.h || "move", x: e.clientX, y: e.clientY, c: Object.assign({}, crop) };
+        });
+        box.addEventListener("pointermove", e => {
+          if (!grab) return;
+          const r = frame.getBoundingClientRect(), MIN = 0.08;
+          const dx = (e.clientX - grab.x) / r.width, dy = (e.clientY - grab.y) / r.height, c = grab.c;
+          let { x, y, w, h } = c;
+          if (grab.h === "move") {
+            x = Math.min(1 - w, Math.max(0, c.x + dx)); y = Math.min(1 - h, Math.max(0, c.y + dy));
+          } else {
+            if (grab.h[1] === "l") { x = Math.min(c.x + c.w - MIN, Math.max(0, c.x + dx)); w = c.x + c.w - x; }
+            else w = Math.min(1 - c.x, Math.max(MIN, c.w + dx));
+            if (grab.h[0] === "t") { y = Math.min(c.y + c.h - MIN, Math.max(0, c.y + dy)); h = c.y + c.h - y; }
+            else h = Math.min(1 - c.y, Math.max(MIN, c.h + dy));
+          }
+          crop = { x, y, w, h }; showCrop();
+        });
+        box.addEventListener("pointerup", () => { grab = null; });
+        box.addEventListener("pointercancel", () => { grab = null; });
+      }
+      function showCrop() {
+        if (!box) return;
+        box.style.left = crop.x * 100 + "%"; box.style.top = crop.y * 100 + "%";
+        box.style.width = crop.w * 100 + "%"; box.style.height = crop.h * 100 + "%";
+      }
+      function endCrop() { if (box) box.remove(); box = null; crop = null; }
+      function applyCrop() {
+        if (crop && (crop.w < 0.999 || crop.h < 0.999)) {
+          snap();
+          const sx = Math.round(crop.x * work.width), sy = Math.round(crop.y * work.height);
+          const sw = Math.max(1, Math.round(crop.w * work.width)), sh = Math.max(1, Math.round(crop.h * work.height));
+          const c = document.createElement("canvas"); c.width = sw; c.height = sh;
+          c.getContext("2d").drawImage(work, sx, sy, sw, sh, 0, 0, sw, sh);
+          endCrop(); use(c);
+        }
+        setMode("");
+      }
+
+      function close(result) {
+        window.removeEventListener("resize", fit);
+        document.removeEventListener("keydown", esc);
+        document.body.style.overflow = prevOverflow;
+        wrap.remove();
+        resolve(result);
+      }
+      const esc = e => { if (e.key === "Escape") close(null); };
+      document.addEventListener("keydown", esc);
+      cancel.addEventListener("click", () => close(null));
+      send.addEventListener("click", () => {
+        setMode("");
+        if (!changed) return close(file);
+        send.disabled = true;
+        work.toBlob(b => {
+          if (!b) return close(file);
+          const name = (file.name || "photo").replace(/\.[^.]+$/, "") + ".jpg";
+          close(new File([b], name, { type: "image/jpeg" }));
+        }, "image/jpeg", 0.9);
+      });
+    }
+  });
+}
 const dmSigned = {};
 async function dmSign(path) {
   if (dmSigned[path] && dmSigned[path].at > Date.now() - 50 * 60000) return dmSigned[path].url;
@@ -18041,8 +18361,9 @@ async function runThread(otherId, hint) {
   /* + : a photo or video, any file, a post, or a page of the Compass */
   const pick = accept => { picker.value = ""; picker.accept = accept; picker.click(); };
   picker.addEventListener("change", async () => {
-    const f = picker.files && picker.files[0];
+    let f = picker.files && picker.files[0];
     if (!f) return;
+    if (/^image\//.test(f.type || "")) { f = await dmEditPhoto(f); if (!f) return; }
     note.textContent = "Sending " + (f.name || "file") + "…";
     try {
       const meta = await dmUpload(cid, f);
@@ -19032,7 +19353,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1018-0800";
+const BUILD = "1018-2200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
