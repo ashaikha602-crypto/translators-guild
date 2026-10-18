@@ -520,6 +520,17 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .j-tile span { display: block; margin-top: .2rem; font-size: .64rem; font-weight: 600; letter-spacing: .14em;
   text-transform: uppercase; color: var(--lilac-dim); }
 .j-continue { display: grid; gap: .55rem; }
+.j-eye { display: inline-flex; align-items: center; gap: .45rem; margin-top: .55rem; cursor: pointer;
+  font-size: .72rem; color: var(--ink-soft); }
+.sw.sm { width: 34px; height: 20px; }
+.sw.sm::after { top: 2px; inset-inline-start: 2px; width: 16px; height: 16px; }
+.sw.sm:checked::after { transform: translateX(14px); }
+.hall-theme { display: flex; width: max-content; gap: 2px; margin-top: 1rem; padding: 3px; border-radius: 999px;
+  background: rgba(214,191,234,.08); border: var(--hair); }
+.hall-theme button { all: unset; cursor: pointer; padding: .38rem .9rem; border-radius: 999px;
+  font-size: .78rem; font-weight: 600; color: var(--ink-soft); }
+.hall-theme button.on { background: var(--grad-h); color: #fff; }
+:root[data-skin="clear"] .hall-theme button.on { background: #1d1d1f; }
 .j-continue .j-label { font-size: .64rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
   color: var(--lilac-dim); }
 .j-continue button { width: 100%; text-align: center; }
@@ -3829,6 +3840,12 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
         <blockquote>Words travel worlds. Translators do the driving.</blockquote>
         <figcaption>Anna Rusconi</figcaption>
       </figure>
+      <!-- The look of the site, chosen right here on Home. -->
+      <div class="hall-theme" role="radiogroup" aria-label="Theme">
+        <button type="button" data-theme-pick="dark" role="radio" aria-checked="true">Dark</button>
+        <button type="button" data-theme-pick="light" role="radio" aria-checked="false">Light</button>
+        <button type="button" data-theme-pick="clear" role="radio" aria-checked="false">Clear</button>
+      </div>
     </header>
 
     <!-- Finding people starts here, at the top of home, as it does in
@@ -7829,54 +7846,71 @@ const BOOTH_ROUND_SIZE = BOOTH_LEVELS.reduce((n, L) => n + L.take, 0);
 
 const BOOTH_GENRES = [
   {
+    /* DIPLOMATIC AND POLITICAL. The Charter of the United Nations (1945)
+       in its official Arabic and English texts, both on Wikisource
+       (ميثاق الأمم المتحدة; Charter of the United Nations). Every term,
+       phrase, sentence and turn is the Charter's own wording: the
+       Preamble and Articles 1, 2, 4, 6, 7, 24 and 97. Quotation marks
+       around "الأمم المتحدة" in the Arabic are left out. */
     id: "diplomatic", en: "Diplomatic and political", ar: "سياسي ودبلوماسي",
-    hint: "Titles, institutions and the careful verbs of a communiqué.",
+    hint: "The Charter of the United Nations, in the UN’s own Arabic and English.",
     icon: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15 0 18M12 3c-2.5 2.6-2.5 15 0 18"/>',
     terms: [
-      { ar: "مجلس الأمن", ok: ["the security council", "security council"], arAlt: ["مجلس الأمن الدولي"] },
-      { ar: "الأمين العام", ok: ["the secretary general", "secretary-general", "secretary general"], arAlt: ["أمين عام الأمم المتحدة"] },
-      { ar: "وقف إطلاق النار", ok: ["ceasefire", "a ceasefire", "cease-fire", "truce"], arAlt: ["هدنة"] },
-      { ar: "مذكّرة تفاهم", ok: ["memorandum of understanding", "mou", "a memorandum of understanding"], arAlt: ["مذكّرة التفاهم"] },
-      { ar: "المجتمع الدولي", ok: ["the international community", "international community"], arAlt: ["الأسرة الدولية"] },
-      { ar: "صاحب السموّ", ok: ["his highness", "highness"], arAlt: ["سموّ الأمير"] },
-      { ar: "السيادة الوطنية", ok: ["national sovereignty", "sovereignty"] },
-      { ar: "العلاقات الثنائية", ok: ["bilateral relations", "bilateral ties"], arAlt: ["العلاقات بين البلدين"] }
+      { ar: "الجمعية العامة", ok: ["general assembly", "the general assembly"] },
+      { ar: "مجلس الأمن", ok: ["security council", "the security council"] },
+      { ar: "المجلس الاقتصادي والاجتماعي", ok: ["economic and social council", "the economic and social council"] },
+      { ar: "مجلس الوصاية", ok: ["trusteeship council", "the trusteeship council"] },
+      { ar: "محكمة العدل الدولية", ok: ["international court of justice", "the international court of justice"] },
+      { ar: "الأمانة", ok: ["secretariat", "the secretariat"] },
+      { ar: "الأمين العام", ok: ["secretary-general", "secretary general", "the secretary-general"] },
+      { ar: "المساواة في السيادة", ok: ["sovereign equality"] },
+      { ar: "التدابير المشتركة الفعّالة", ok: ["effective collective measures"] },
+      { ar: "أعمال العدوان", ok: ["acts of aggression"] },
+      { ar: "السلطان الداخلي", ok: ["domestic jurisdiction"] },
+      { ar: "المحبة للسلام", ok: ["peace-loving", "peace loving"] }
     ],
     phrases: [
-      { ar: "على هامش الاجتماعات", ok: ["on the sidelines of the meetings", "on the sidelines", "on the margins of the meetings"] },
-      { ar: "بحث سبل تعزيز التعاون", ok: ["discussed ways of strengthening cooperation", "discussed ways to strengthen cooperation", "reviewed ways of boosting cooperation"] },
-      { ar: "أعرب عن قلقه البالغ", ok: ["expressed his deep concern", "expressed deep concern", "voiced grave concern"] },
-      { ar: "دعا إلى ضبط النفس", ok: ["called for restraint", "called for self restraint", "urged restraint"] },
-      { ar: "رحّب بالوفد الزائر", ok: ["welcomed the visiting delegation", "welcomed the delegation"] },
-      { ar: "التدخّل في الشؤون الداخلية", ok: ["interference in internal affairs", "interference in domestic affairs", "interference in the internal affairs"] }
+      { ar: "حفظ السلم والأمن الدولي", ok: ["maintain international peace and security", "to maintain international peace and security", "maintenance of international peace and security", "the maintenance of international peace and security"] },
+      { ar: "بالوسائل السلمية", ok: ["by peaceful means"] },
+      { ar: "في حسن نية", ok: ["in good faith"] },
+      { ar: "إنماء العلاقات الودية بين الأمم", ok: ["to develop friendly relations among nations", "develop friendly relations among nations"] },
+      { ar: "بناءً على توصية مجلس الأمن", ok: ["upon the recommendation of the security council"] },
+      { ar: "ويلات الحرب", ok: ["the scourge of war", "scourge of war"] },
+      { ar: "الحقوق الأساسية للإنسان", ok: ["fundamental human rights"] }
     ],
     sentences: [
-      { ar: "رحّب بالوفد الزائر وأشاد بجهوده.", ok: ["He welcomed the visiting delegation and praised its efforts."],
-        keys: ["welcom", "delegation", "efforts"] },
-      { ar: "تدعم الكويت الجهود الرامية إلى تسوية النزاع.", ok: ["Kuwait supports efforts to settle the dispute."],
-        keys: ["kuwait", "support", "settle", "dispute"] },
-      { ar: "ندعو جميع الأطراف إلى ضبط النفس.", ok: ["We call on all parties to exercise restraint."],
-        keys: ["call", "all parties", "restraint"] },
-      { ar: "تمّ التوقيع على مذكّرة تفاهم بين البلدين.", ok: ["A memorandum of understanding was signed between the two countries."],
-        keys: ["memorandum", "signed", "two countries"] },
-      { ar: "تؤكّد الكويت دعمها الكامل للجهود الدولية.", ok: ["Kuwait affirms its full support for international efforts."],
-        keys: ["kuwait", "support", "international"] },
-      { ar: "شكر صاحب السموّ الوفود المشاركة.", ok: ["His Highness thanked the participating delegations."],
-        keys: ["highness", "thank", "delegation"] }
+      { ar: "تقوم الهيئة على مبدأ المساواة في السيادة بين جميع أعضائها.",
+        ok: ["The Organization is based on the principle of the sovereign equality of all its Members."],
+        keys: ["organization", "principle", "sovereign equality", "members"] },
+      { ar: "يفض جميع أعضاء الهيئة منازعاتهم الدولية بالوسائل السلمية على وجه لا يجعل السلم والأمن والعدل الدولي عرضة للخطر.",
+        ok: ["All Members shall settle their international disputes by peaceful means in such a manner that international peace and security, and justice, are not endangered."],
+        keys: ["members", "disputes", "peaceful means", "peace and security", "justice", "endangered"] },
+      { ar: "قبول أية دولة من هذه الدول في عضوية الأمم المتحدة يتم بقرار من الجمعية العامة بناءً على توصية مجلس الأمن.",
+        ok: ["The admission of any such state to membership in the United Nations will be effected by a decision of the General Assembly upon the recommendation of the Security Council."],
+        keys: ["admission", "membership", "general assembly", "recommendation", "security council"] },
+      { ar: "إذا أمعن عضو من أعضاء الأمم المتحدة في انتهاك مبادئ الميثاق جاز للجمعية العامة أن تفصله من الهيئة بناءً على توصية مجلس الأمن.",
+        ok: ["A Member of the United Nations which has persistently violated the Principles contained in the present Charter may be expelled from the Organization by the General Assembly upon the recommendation of the Security Council."],
+        keys: ["member", "persistently violated", "principles", "expelled", "general assembly", "security council"] },
+      { ar: "والأمين العام هو الموظف الإداري الأكبر في الهيئة.",
+        ok: ["He shall be the chief administrative officer of the Organization."],
+        keys: ["chief administrative officer", "organization"] },
+      { ar: "يرفع مجلس الأمن تقارير سنوية، وأخرى خاصة، إذا اقتضت الحال إلى الجمعية العامة لتنظر فيها.",
+        ok: ["The Security Council shall submit annual and, when necessary, special reports to the General Assembly for its consideration."],
+        keys: ["security council", "annual", "special reports", "general assembly", "consideration"] }
     ],
     turns: [
-      { ar: "وأعرب الجانبان عن ارتياحهما لمستوى التعاون القائم، واتفقا على مواصلة المشاورات.",
-        ok: ["The two sides expressed satisfaction with the level of cooperation and agreed to continue consultations."],
-        keys: ["two sides", "satisf", "cooperation", "continue", "consultation"] },
-      { ar: "ودعا المجتمع الدولي إلى تحمّل مسؤولياته وتقديم المساعدات العاجلة للمتضرّرين.",
-        ok: ["He called on the international community to shoulder its responsibilities and provide urgent aid to those affected."],
-        keys: ["international community", "responsibilit", "urgent", "aid", "affected"] },
-      { ar: "أكّد سموّه في كلمته أنّ بلاده تدعم الحلول السلمية، وتدعو إلى حوار جادّ بين جميع الأطراف.",
-        ok: ["In his address, His Highness affirmed that his country supports peaceful solutions and calls for serious dialogue between all parties."],
-        keys: ["highness", "address", "peaceful", "dialogue", "parties"] },
-      { ar: "وأشار إلى أنّ العلاقات بين البلدين تشهد تطوّراً ملحوظاً في مختلف المجالات.",
-        ok: ["He noted that relations between the two countries are developing markedly in various fields."],
-        keys: ["relations", "two countries", "develop", "fields"] }
+      { ar: "نحن شعوب الأمم المتحدة وقد آلينا على أنفسنا أن ننقذ الأجيال المقبلة من ويلات الحرب التي في خلال جيل واحد جلبت على الإنسانية مرتين أحزاناً يعجز عنها الوصف.",
+        ok: ["We the peoples of the United Nations determined to save succeeding generations from the scourge of war, which twice in our lifetime has brought untold sorrow to mankind."],
+        keys: ["peoples of the united nations", "determined", "succeeding generations", "scourge of war", "twice", "untold sorrow"] },
+      { ar: "يمتنع أعضاء الهيئة جميعاً في علاقاتهم الدولية عن التهديد باستعمال القوة أو استخدامها ضد سلامة الأراضي أو الاستقلال السياسي لأية دولة أو على أي وجه آخر لا يتفق ومقاصد الأمم المتحدة.",
+        ok: ["All Members shall refrain in their international relations from the threat or use of force against the territorial integrity or political independence of any state, or in any other manner inconsistent with the Purposes of the United Nations."],
+        keys: ["refrain", "threat or use of force", "territorial integrity", "political independence", "inconsistent", "purposes"] },
+      { ar: "رغبة في أن يكون العمل الذي تقوم به الأمم المتحدة سريعاً فعالاً، يعهد أعضاء تلك الهيئة إلى مجلس الأمن بالتبعات الرئيسية في أمر حفظ السلم والأمن الدولي ويوافقون على أن هذا المجلس يعمل نائباً عنهم في قيامه بواجباته التي تفرضها عليه هذه التبعات.",
+        ok: ["In order to ensure prompt and effective action by the United Nations, its Members confer on the Security Council primary responsibility for the maintenance of international peace and security, and agree that in carrying out its duties under this responsibility the Security Council acts on their behalf."],
+        keys: ["prompt and effective", "confer", "security council", "primary responsibility", "peace and security", "on their behalf"] },
+      { ar: "إنماء العلاقات الودية بين الأمم على أساس احترام المبدأ الذي يقضي بالتسوية في الحقوق بين الشعوب وبأن يكون لكل منها تقرير مصيرها، وكذلك اتخاذ التدابير الأخرى الملائمة لتعزيز السلم العام.",
+        ok: ["To develop friendly relations among nations based on respect for the principle of equal rights and self-determination of peoples, and to take other appropriate measures to strengthen universal peace."],
+        keys: ["friendly relations", "equal rights", "self-determination", "appropriate measures", "universal peace"] }
     ]
   },
   {
@@ -17408,10 +17442,39 @@ function paintSeal() {
     '<div class="j-stats">' +
       '<div class="j-tile"><b>' + n + '</b><span>Marks</span></div>' +
       '<div class="j-tile"><b>' + done + ' / ' + trials.length + '</b><span>Trials</span></div>' +
-      '<div class="j-tile wide"><b>' + rank.en + '</b><span>Rank</span></div>' +
+      '<div class="j-tile wide j-rank"><b>' + rank.en + '</b><span>Rank</span></div>' +
     '</div>' +
     '<div class="j-continue"><span class="j-label">' +
       (done ? "Continue where you stopped" : "Start here") + '</span></div>';
+
+  /* Show or hide the rank on one's profile: the same show_progress
+     setting as Privacy, so the two always agree. */
+  if (backend === "supabase" && myId()) {
+    const tile = box.querySelector(".j-rank");
+    const row = el("label", "j-eye");
+    const cb = document.createElement("input");
+    cb.type = "checkbox"; cb.className = "sw sm";
+    cb.checked = !(state.profile && state.profile.show_progress === false);
+    const txt = el("span", null, cb.checked ? "Shown on my profile" : "Hidden from my profile");
+    row.appendChild(cb); row.appendChild(txt);
+    cb.addEventListener("change", async () => {
+      const on = cb.checked;
+      txt.textContent = on ? "Shown on my profile" : "Hidden from my profile";
+      try {
+        await patchMyProfile({ show_progress: on });
+        if (state.profile) state.profile.show_progress = on;
+        loadRankHidden(true);
+      } catch (e) {
+        cb.checked = !on;
+        txt.textContent = cb.checked ? "Shown on my profile" : "Hidden from my profile";
+      }
+    });
+    tile.appendChild(row);
+    if (!state.profile) loadMyProfile().then(() => {
+      cb.checked = !(state.profile && state.profile.show_progress === false);
+      txt.textContent = cb.checked ? "Shown on my profile" : "Hidden from my profile";
+    }).catch(() => {});
+  }
 
   const cont = box.querySelector(".j-continue");
   if (nextTrial) {
@@ -19465,7 +19528,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1019-0200";
+const BUILD = "1019-0300";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
