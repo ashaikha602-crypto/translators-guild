@@ -741,6 +741,14 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .lr-sub { font-size: .8rem; line-height: 1.4; color: var(--lilac-dim); display: -webkit-box; -webkit-line-clamp: 2;
   -webkit-box-orient: vertical; overflow: hidden; }
 .lr-go { font-size: 1.4rem; color: var(--lilac-dim); }
+/* a timeline: the dots joined by a thread, the span above each title */
+.lm-time { position: relative; }
+.lm-time::before { content: ""; position: absolute; left: calc(.9rem + 1.05rem - 1px); top: 1.6rem; bottom: 1.6rem;
+  width: 2px; background: linear-gradient(var(--lilac), rgba(214,191,234,.15)); border-radius: 2px; pointer-events: none; }
+.lm-time .lesson-row { position: relative; }
+.lm-time .lr-num { background: var(--lilac); color: transparent; box-shadow: 0 0 0 5px rgba(214,191,234,.12); width: .9rem; height: .9rem; justify-self: center; position: relative; z-index: 1; }
+.lr-when { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--lilac); font-weight: 600; }
+:root[data-theme="light"] .lr-when { color: #5b3fb5; }
 :root[data-theme="light"] .lesson-row { background: rgba(91,63,181,.04); color: #22163f; }
 :root[data-theme="light"] .lm-head h2 { color: #22163f; }
 
@@ -1329,6 +1337,16 @@ a.ks-s-en:hover { color: var(--white); }
 .ks-s-say { font-size: .82rem; font-weight: 300; line-height: 1.55; color: var(--ink-soft); }
 
 .ksl-more { justify-self: start; }
+.ksl-poster { margin: .4rem 0 0; display: grid; gap: .5rem; }
+.ksl-poster img { width: 100%; height: auto; display: block; border-radius: 16px; border: 1px solid var(--ink-ghost); }
+.ksl-poster figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: .75rem; flex-wrap: wrap;
+  font-size: .8rem; color: var(--lilac-dim); }
+.prompt .q-hand { width: min(12rem, 60vw); height: auto; display: block; margin: .4rem auto 0; border-radius: 50%;
+  background: rgba(214,191,234,.12); }
+.opt.opt-hand { align-items: center; }
+.opt.opt-hand .txt { display: flex; align-items: center; justify-content: flex-start; direction: ltr; }
+.prompt .src.big-letter { font-size: 4.2rem; line-height: 1.25; margin: .2rem 0 0; }
+.opt .o-hand { width: 5.2rem; height: 5.2rem; border-radius: 50%; background: rgba(214,191,234,.12); }
 
 @media (min-width: 520px) { .alpha-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 760px) {
@@ -1863,6 +1881,9 @@ a.ks-s-en:hover { color: var(--white); }
 .icon-btn .ic-sun { display: none; }
 :root[data-theme="light"] .icon-btn .ic-moon { display: none; }
 :root[data-theme="light"] .icon-btn .ic-sun  { display: block; }
+.icon-btn .ic-clear { display: none; }
+:root[data-skin="clear"] .icon-btn .ic-sun { display: none; }
+:root[data-skin="clear"] .icon-btn .ic-clear { display: block; color: var(--lilac); }
 
 /* The head, to her drawing: the picture on the left, and the name, the
    two badges and the three numbers stacked beside it. Sizes follow the
@@ -2260,6 +2281,7 @@ a.ks-s-en:hover { color: var(--white); }
 
 /* the three appearance choices */
 .pick-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; margin-top: .9rem; }
+.pick-row.three { grid-template-columns: repeat(3, 1fr); }
 .pick { display: grid; gap: .4rem; justify-items: center; padding: .85rem .4rem;
   border-radius: var(--r-md); border: var(--hair); background: rgba(255,255,255,.03);
   color: var(--lilac-dim); font-family: inherit; font-size: .8rem; cursor: pointer;
@@ -3498,6 +3520,68 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
   -webkit-background-clip: text; background-clip: text; color: transparent; }
 #unlock .u-kicker { font-size: .74rem; font-weight: 600; letter-spacing: .26em; text-transform: uppercase;
   color: var(--lilac); margin: 0; }
+
+/* ═══════════ CLEAR · the Apple-store look ═══════════
+   Sits on top of the light theme. White cards on a soft grey ground,
+   near-black type, generous space, no glow and no decoration behind the
+   page; one blue for everything that can be pressed. */
+:root[data-skin="clear"] {
+  --void: #f5f5f7; --void-2: #ffffff; --void-3: #e8e8ed;
+  --lilac: #1d1d1f; --lilac-dim: #6e6e73; --white: #1d1d1f;
+  --magenta: #0071e3; --violet: #0071e3; --mag-ink: #0066cc; --workshop-ink: #0066cc;
+  --ink: #1d1d1f; --ink-soft: #424245; --ink-faint: #6e6e73; --ink-ghost: #86868b;
+  --mint: #1d8338; --coral: #d70015; --amber: #b25000; --coral-soft: #d70015; --mint-soft: #1d8338;
+  --well: #f5f5f7; --well-lit: #fff; --scrim: rgba(245,245,247,.94);
+  --grad: linear-gradient(180deg, #0077ed, #0071e3);
+  --grad-soft: linear-gradient(180deg, #ffffff, #ffffff);
+  --hair: 1px solid rgba(0,0,0,.08);
+  --hair-lit: 1px solid rgba(0,0,0,.12);
+  --shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12);
+  --glow: none;
+  --f-serif: -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, "Readex Pro", "Noto Sans Arabic", "Geeza Pro", sans-serif;
+  --f-sans: -apple-system, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, "Readex Pro", "Noto Sans Arabic", "Geeza Pro", sans-serif;
+}
+:root[data-skin="clear"] body { background: #f5f5f7; letter-spacing: -.01em; }
+:root[data-skin="clear"] .compass-bg,
+:root[data-skin="clear"] .aura { display: none; }
+:root[data-skin="clear"] .panel,
+:root[data-skin="clear"] .commission,
+:root[data-skin="clear"] .card,
+:root[data-skin="clear"] .rec-row,
+:root[data-skin="clear"] .pair,
+:root[data-skin="clear"] .block,
+:root[data-skin="clear"] .j-tile,
+:root[data-skin="clear"] .lesson-row,
+:root[data-skin="clear"] .verdict,
+:root[data-skin="clear"] .prompt,
+:root[data-skin="clear"] .opt {
+  background: #fff; border: 0; border-radius: 18px; color: #1d1d1f;
+  box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12);
+}
+:root[data-skin="clear"] .lesson-row:hover,
+:root[data-skin="clear"] .opt:hover { background: #fbfbfd; }
+:root[data-skin="clear"] h1, :root[data-skin="clear"] h2, :root[data-skin="clear"] h3,
+:root[data-skin="clear"] .lm-head h2, :root[data-skin="clear"] .lr-en { color: #1d1d1f; font-weight: 600; letter-spacing: -.02em; }
+:root[data-skin="clear"] .lm-head .note { color: #6e6e73; letter-spacing: .02em; text-transform: none; font-size: .82rem; }
+:root[data-skin="clear"] .lr-num { background: #f5f5f7; color: #1d1d1f; }
+:root[data-skin="clear"] .lm-time .lr-num { background: #0071e3; box-shadow: 0 0 0 5px rgba(0,113,227,.12); }
+:root[data-skin="clear"] .lm-time::before { background: linear-gradient(#0071e3, rgba(0,113,227,.12)); }
+:root[data-skin="clear"] .lr-when { color: #0066cc; }
+:root[data-skin="clear"] a, :root[data-skin="clear"] .c-src, :root[data-skin="clear"] .link { color: #0066cc; }
+:root[data-skin="clear"] button:not(.ghost):not(.link):not(.opt):not(.lesson-row):not(.icon-btn):not(.pick):not(.alpha):not(.m-course):not(.handle-btn):not(.c-vid-play) {
+  border-radius: 980px;
+}
+:root[data-skin="clear"] .ghost { color: #0066cc; border-color: rgba(0,113,227,.35); background: transparent; border-radius: 980px; }
+:root[data-skin="clear"] .icon-btn { background: transparent; }
+:root[data-skin="clear"] .icon-btn svg { stroke: #1d1d1f; }
+:root[data-skin="clear"] #bottom-nav { background: rgba(255,255,255,.82); backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px); border-top: 1px solid rgba(0,0,0,.08); }
+:root[data-skin="clear"] #bottom-nav button { color: #6e6e73; }
+:root[data-skin="clear"] #bottom-nav button[aria-current="page"] { color: #0071e3; background: transparent; }
+:root[data-skin="clear"] .pick.on { border-color: #0071e3; color: #0071e3; }
+:root[data-skin="clear"] .opt.right { box-shadow: 0 0 0 2px #1d8338 inset; }
+:root[data-skin="clear"] .opt.miss { box-shadow: 0 0 0 2px #d70015 inset; }
+:root[data-skin="clear"] .prompt::before, :root[data-skin="clear"] .prompt::after { display: none; }
 </style>
 
 <div class="aura" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
@@ -3773,9 +3857,10 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
       </button>
       <span class="top-acts">
         <button type="button" class="icon-btn" id="theme-toggle"
-                aria-label="Switch between dark and light">
+                aria-label="Switch between dark, light and clear">
           <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
           <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>
+          <svg class="ic-clear" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></svg>
         </button>
         <!-- Who looked at your profile. Not rendered at all unless the
              account holds the capability, and the database refuses the
@@ -3866,13 +3951,16 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
     <div id="seal-settings">
     <details class="panel appearance-more">
       <summary><span>Appearance</span><span class="j-next" id="appearance-now">System</span></summary>
-      <div class="pick-row two" role="radiogroup" aria-label="Theme">
+      <div class="pick-row three" role="radiogroup" aria-label="Theme">
         <button type="button" class="pick" data-theme-pick="dark" role="radio" aria-checked="true">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
           <span>Dark</span></button>
         <button type="button" class="pick" data-theme-pick="light" role="radio" aria-checked="false">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></svg>
           <span>Light</span></button>
+        <button type="button" class="pick" data-theme-pick="clear" role="radio" aria-checked="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17"/></svg>
+          <span>Clear</span></button>
       </div>
     </details>
 
@@ -12513,6 +12601,11 @@ const ITEMS = [
     direction: "both",
     blurb: "Official names of Arab courts and parliaments, doublets, shall, and the legal meaning of everyday words.",
     run: () => runChoice(LEGAL_Q, "Which is right?") },
+  { id: "kslq", ar: "لغة الإشارة الكويتية", en: "Kuwaiti Sign Language", kind: "trial", section: "trials",
+    subject: "لغة الإشارة الكويتية · Learn",
+    direction: "both",
+    blurb: "Which letter is this sign, which sign is this letter, and what the lessons say about the language.",
+    run: () => runChoice(kslQuiz(), "Which is right?") },
   { id: "bassq", ar: "دراسات الترجمة", en: "Translation Studies", kind: "trial", section: "trials",
     subject: "Bassnett (2014) · The Library",
     blurb: "Who said it, whose model, which theory: from Cicero to skopos.",
@@ -17129,8 +17222,8 @@ function settingsMenu() {
       ["people", "Discover people", "", go(() => openItem(FIND_ITEM))]
     ]],
     ["Display", [
-      ["moon", "Appearance", dark ? "Dark" : "Light", () => {
-        setThemeChoice(dark ? "light" : "dark"); close(); settingsMenu();
+      ["moon", "Appearance", THEME_NAMES[themeChoice()], () => {
+        setThemeChoice(nextTheme()); close(); settingsMenu();
       }]
     ]],
     ["Login", [
@@ -18478,10 +18571,7 @@ function wireProfileButtons() {
   const tt = document.getElementById("theme-toggle");
   if (tt && !tt.dataset.wired) {
     tt.dataset.wired = "1";
-    tt.addEventListener("click", () => {
-      const dark = !document.documentElement.matches('[data-theme="light"]');
-      setThemeChoice(dark ? "light" : "dark");
-    });
+    tt.addEventListener("click", () => setThemeChoice(nextTheme()));
   }
   const a = document.getElementById("avatar-edit");
   if (a && !a.dataset.wired) { a.dataset.wired = "1"; a.addEventListener("click", photoMenu); }
@@ -18565,7 +18655,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1016-4900";
+const BUILD = "1018-0200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -20204,14 +20294,17 @@ function fillLedger(sectionId, section) {
    the material to dip into. Compact rows, so a phone shows the whole map
    without scrolling through eleven large cards. */
 const LEARN_GROUPS = [
-  { id: "library", en: "The Library", note: "The three course books", order: ["lib-atoz", "lib-legal", "lib-bassnett"] },
-  { id: "theory", en: "Theory and history", note: "Dip in any time", order: ["theories", "lineage"] },
-  { id: "ku",     en: "Kuwait University courses", note: "The Translation Minor", order: ["minor"] },
+  { id: "field",  en: "The field", note: "Start here", order: ["lib-bassnett"] },
+  /* oldest first: the practice from the 3rd century BC, then the theories
+     from Cicero in 46 BCE; each row carries its span */
+  { id: "time",   en: "Through time", note: "Oldest to newest", timeline: true, order: ["lineage", "theories"],
+    when: { lineage: "3rd c. BC → today", theories: "46 BCE → today" } },
   { id: "core",   en: "The core course", note: "Follow in order",
     order: ["meaning", "phrase", "procedures", "toolkit", "variety", "texttypes", "fields", "errors", "commentary"] },
+  { id: "ku",     en: "Kuwait University courses", note: "The Translation Minor", order: ["minor"] },
   { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
   { id: "dict",   en: "Dictionaries", note: "المعاجم", order: ["lisan", "wikt"] },
-  { id: "ref",    en: "Reference", note: "Look things up", order: ["glossary"] }
+  { id: "ref",    en: "The reference shelf", note: "Look things up", order: ["glossary", "lib-atoz", "lib-legal"] }
 ];
 function renderLearn() {
   const box = document.getElementById("sec-method");
@@ -20222,7 +20315,7 @@ function renderLearn() {
   LEARN_GROUPS.forEach(g => {
     const sec = el("div", "lm-group");
     sec.appendChild(el("div", "lm-head", '<h2>' + g.en + '</h2><span class="note">' + g.note + '</span>'));
-    const list = el("div", "lm-list");
+    const list = el("div", "lm-list" + (g.timeline ? " lm-time" : ""));
     g.order.map(id => ITEMS.find(t => t.id === id)).filter(Boolean).forEach(t => {
       n++;
       const b = el("button", "lesson-row");
@@ -20230,7 +20323,8 @@ function renderLearn() {
       b.innerHTML =
         (t.thumb ? '<img class="pr-face" src="' + t.thumb + '" alt="" loading="lazy">'
                  : '<span class="lr-num">' + (g.id === "core" ? g.order.indexOf(t.id) + 1 : "•") + '</span>') +
-        '<span class="lr-txt"><span class="lr-en">' + t.en + '</span>' +
+        '<span class="lr-txt">' + (g.when && g.when[t.id] ? '<span class="lr-when">' + g.when[t.id] + '</span>' : '') +
+        '<span class="lr-en">' + t.en + '</span>' +
         '<span class="lr-sub">' + (t.blurb || t.subject || "") + '</span></span>' +
         '<span class="lr-go" aria-hidden="true">›</span>';
       b.addEventListener("click", () => openItem(t));
@@ -20288,24 +20382,36 @@ document.getElementById("seal-back").addEventListener("click", () => {
    which is not what a house with a face of its own should do. */
 const THEME_KEY = "guild.theme";
 
+/* Three looks: Dark (the Guild's own face, and the default), Light, and
+   Clear — white and soft grey, near-black type, one blue for anything you
+   can press, in the manner of Apple's store pages. Clear is built on top of
+   Light (data-theme stays "light"), so every screen that already works in
+   Light works in Clear; data-skin="clear" only restyles the surfaces. */
+const THEME_NAMES = { dark: "Dark", light: "Light", clear: "Clear" };
+const THEME_ORDER = ["dark", "light", "clear"];
 function themeChoice() {
-  try { return localStorage.getItem(THEME_KEY) === "light" ? "light" : "dark"; }
+  try { const v = localStorage.getItem(THEME_KEY); return v === "light" || v === "clear" ? v : "dark"; }
   catch (e) { return "dark"; }
 }
+function nextTheme() { const c = themeChoice(); return THEME_ORDER[(THEME_ORDER.indexOf(c) + 1) % THEME_ORDER.length]; }
 function paintTheme() {
   const choice = themeChoice();
-  document.documentElement.setAttribute("data-theme", choice);
+  document.documentElement.setAttribute("data-theme", choice === "dark" ? "dark" : "light");
+  if (choice === "clear") document.documentElement.setAttribute("data-skin", "clear");
+  else document.documentElement.removeAttribute("data-skin");
+  const tc = document.querySelector('meta[name="theme-color"]');
+  if (tc) { if (!tc.dataset.orig) tc.dataset.orig = tc.content; tc.content = choice === "clear" ? "#f5f5f7" : tc.dataset.orig; }
   document.querySelectorAll("[data-theme-pick]").forEach(b => {
     const on = b.dataset.themePick === choice;
     b.classList.toggle("on", on);
     b.setAttribute("aria-checked", String(on));
   });
   const sub = document.getElementById("appearance-now");
-  if (sub) sub.textContent = choice === "light" ? "Light" : "Dark";
+  if (sub) sub.textContent = THEME_NAMES[choice];
 }
 function setThemeChoice(choice) {
   try {
-    if (choice === "light") localStorage.setItem(THEME_KEY, "light");
+    if (choice === "light" || choice === "clear") localStorage.setItem(THEME_KEY, choice);
     else localStorage.removeItem(THEME_KEY);
   } catch (e) {}
   paintTheme();
@@ -24282,6 +24388,99 @@ function resumeOrRestart(saved, unit, onResume, onRestart) {
   go.focus();
 }
 
+/* A hand for a quiz. The alt text says nothing about the letter, because
+   the alt text is read aloud and would give the answer away. */
+function quizHand(src, cls) {
+  const im = document.createElement("img");
+  im.src = src; im.alt = "A handshape"; im.className = cls;
+  im.width = 560; im.height = 560; im.decoding = "async";
+  return im;
+}
+
+/* ═══════════ KSL TRIAL ═══════════
+   Three kinds of question. Sign to letter and letter to sign are built
+   from the twenty-eight hands of the alphabet page (the same @ksl_dictionary
+   photographs), so nothing is drawn or guessed. The questions about the
+   language take their answers word for word from the KSL lessons. */
+function kslQuiz() {
+  const A = KSL_ALPHA;
+  const others = (L, n) => shuffled(A.filter(x => x.l !== L.l)).slice(0, n);
+  const CH = "KSL";
+  const pool = [];
+  A.forEach(L => {
+    pool.push({ src: "sign → " + L.n, srcImg: L.img, ask: "Which letter is this sign?",
+      opts: [{ t: L.l, tag: L.n, ok: true }].concat(others(L, 2).map(x => ({ t: x.l, tag: x.n }))),
+      why: "This is the handshape for <span class='ar-inline' dir='rtl' lang='ar'>" + L.n + "</span> in the @ksl_dictionary alphabet.", ch: CH });
+    pool.push({ src: L.l, big: true, ask: "Which sign is this letter?",
+      opts: [{ t: L.n, img: L.img, tag: L.n, ok: true }].concat(others(L, 2).map(x => ({ t: x.n, img: x.img, tag: x.n }))),
+      why: "The handshape for <span class='ar-inline' dir='rtl' lang='ar'>" + L.n + "</span> in the @ksl_dictionary alphabet.", ch: CH });
+  });
+  const F = [
+    { src: "Kuwaiti Sign Language", srcEn: true, ask: "What is it?",
+      opts: [{ t: "The language of Kuwait's Deaf community, a language of its own", tag: "the KSL lessons", ok: true },
+             { t: "Arabic performed with the hands", tag: "the lessons say it is not" },
+             { t: "The same language as the sign language of Egypt or Jordan", tag: "the lessons say it is not" }],
+      why: "“Not Arabic performed with the hands. Not gestures agreed on for convenience. Not the same language as the sign language of Egypt, or Jordan, or America.”" },
+    { src: "One sign language for the whole world?", srcEn: true, ask: "Is there one?",
+      opts: [{ t: "No. Sign languages arise in communities, over generations", tag: "the KSL lessons", ok: true },
+             { t: "Yes, with local accents", tag: "there is no world sign language" },
+             { t: "Yes, for every country that shares a spoken language", tag: "the opposite is true" }],
+      why: "Two countries sharing a spoken language can have sign languages that are not mutually intelligible at all." },
+    { src: "The Ministry of Education's KSL dictionary", srcEn: true, ask: "How many signs does it hold?",
+      opts: [{ t: "More than 2,000, collected from Kuwaiti Deaf signers", tag: "the KSL lessons", ok: true },
+             { t: "About 200", tag: "not the figure given" },
+             { t: "More than 20,000", tag: "not the figure given" }],
+      why: "The Ministry gives its reason too: sign vocabulary is shaped by the culture and the place it grows in." },
+    { src: "KSL or ArSL?", srcEn: true, ask: "What did Kuwaiti Deaf signers, interpreters and teachers answer (Almubayei, 2024)?",
+      opts: [{ t: "KSL, or KSL and ArSL together, not ArSL alone", tag: "Almubayei (2024)", ok: true },
+             { t: "ArSL alone", tag: "the one answer they did not give" },
+             { t: "Neither: written Arabic instead", tag: "not in the study" }],
+      why: "So material labelled <i>Arabic sign language</i> is very often ArSL, a different language. Never put an ArSL sign on a Kuwaiti page." },
+    { src: "A deaf client arrives", srcEn: true, ask: "What do you do first?",
+      opts: [{ t: "Ask which language they use, and use the one you are told", tag: "the KSL lessons", ok: true },
+             { t: "Assume KSL: everyone deaf in Kuwait uses it", tag: "not every deaf person uses KSL" },
+             { t: "Write everything down instead", tag: "an assumption, not a question" }],
+      why: "An interpreter booked for the wrong language is worse than none, because everyone in the room believes communication is happening." },
+    { src: "Deaf, with a capital D", srcEn: true, ask: "What does it describe?",
+      opts: [{ t: "Belonging: someone who uses a sign language and identifies with its community", tag: "the KSL lessons", ok: true },
+             { t: "How little someone hears", tag: "that is small-d deaf" },
+             { t: "Partial hearing", tag: "that is hard of hearing" }],
+      why: "Small <i>d</i> deaf is a fact about hearing; capital <i>D</i> Deaf is about belonging. A deaf person may not be Deaf." },
+    { src: "الصمّ والبُكم", ask: "Should you use this term?",
+      opts: [{ t: "No. Use الصمّ", tag: "the KSL lessons", ok: true },
+             { t: "Yes, it is the polite form", tag: "it is not what people call themselves" },
+             { t: "Only in formal writing", tag: "not in the lessons" }],
+      why: "It is still in wide circulation, but it is not what people call themselves." },
+    { src: "In the room with an interpreter", srcEn: true, ask: "Who do you speak to?",
+      opts: [{ t: "The person, not the interpreter", tag: "the KSL lessons", ok: true },
+             { t: "The interpreter, who passes it on", tag: "the habit to avoid" },
+             { t: "Whoever answers", tag: "not in the lessons" }],
+      why: "Speak to the person, and look at the person." },
+    { src: "Getting a signer's attention", srcEn: true, ask: "Which is right?",
+      opts: [{ t: "A wave, a tap on the shoulder, or the lights", tag: "the KSL lessons", ok: true },
+             { t: "Holding their hands while they sign", tag: "that interrupts a sentence" },
+             { t: "Calling out louder", tag: "not in the lessons" }],
+      why: "Do not hold someone's hands while they are signing: you are interrupting a sentence." },
+    { src: "Fingerspelling", srcEn: true, ask: "What does it produce?",
+      opts: [{ t: "Arabic, in the air", tag: "the KSL lessons", ok: true },
+             { t: "KSL", tag: "that is the lexical sign" },
+             { t: "A new sign for the word", tag: "spelling is not signing" }],
+      why: "Fingerspelling gives letters as handshapes; a lexical sign is one sign for one word, and belongs to KSL." },
+    { src: "When to fingerspell", srcEn: true, ask: "Which is one of the cases the lessons give?",
+      opts: [{ t: "A name of a person, a place or an institution", tag: "the KSL lessons", ok: true },
+             { t: "Every word, to be safe", tag: "no Deaf person can follow that at speed" },
+             { t: "Everyday words like ‘house’", tag: "conversation runs on lexical signs" }],
+      why: "Spell for names, words with no established sign, technical or foreign terms the first time, and emphasis." },
+    { src: "The face", srcEn: true, ask: "What does it do in a sign?",
+      opts: [{ t: "Often carries the grammar of the sentence", tag: "the KSL lessons", ok: true },
+             { t: "Adds emotion, nothing more", tag: "the lessons say it is more" },
+             { t: "Nothing: only the hands matter", tag: "one of the six things to watch" }],
+      why: "Brows, mouth, head and posture are not expression added to a sign; they are often the grammar." }
+  ];
+  F.forEach(q => { q.ch = CH; pool.push(q); });
+  return pool;
+}
+
 function runChoice(items, ask) {
   const tid = active && active.id;
   let i = 0;
@@ -24301,7 +24500,8 @@ function runChoice(items, ask) {
     const card = el("div", "prompt");
     card.appendChild(el("p", "ask", q.ask || ask));
     const isArSrc = !q.srcEn && AR_RE.test(q.src);
-    card.appendChild(el("p", isArSrc ? "src" : "src-en", isArSrc ? q.src : "“" + q.src + "”"));
+    if (q.srcImg) card.appendChild(quizHand(q.srcImg, "q-hand"));
+    else card.appendChild(el("p", (isArSrc ? "src" : "src-en") + (q.big ? " big-letter" : ""), isArSrc ? q.src : "“" + q.src + "”"));
     if (q.lit) card.appendChild(el("p", "lit", 'word for word: <b>' + q.lit + '</b>'));
     stage.appendChild(card);
 
@@ -24312,7 +24512,8 @@ function runChoice(items, ask) {
       b.style.animationDelay = (120 + k * 80) + "ms";
       const isAr = AR_RE.test(o.t) && !/[a-z]/i.test(o.t);
       b.innerHTML = '<span class="key">' + keys[k] + '</span>' +
-                    '<span class="txt' + (isAr ? " is-ar" : "") + '">' + o.t + '</span>';
+                    '<span class="txt' + (isAr ? " is-ar" : "") + '">' + (o.img ? "" : o.t) + '</span>';
+      if (o.img) { b.classList.add("opt-hand"); b.querySelector(".txt").appendChild(quizHand(o.img, "o-hand")); }
       b.addEventListener("click", () => answer(k, wrap, q));
       wrap.appendChild(b);
     });
@@ -24391,10 +24592,10 @@ function chapterOf(s) {
 function chapterLine(own) {
   const ch = own || chapterOf(active && active.subject);
   if (!ch) return document.createDocumentFragment();
-  const LIB_PAGE = { "A to Z": "lib-atoz", "Legal Translation": "lib-legal", "Bassnett": "lib-bassnett" };
+  const LIB_PAGE = { "A to Z": "lib-atoz", "Legal Translation": "lib-legal", "Bassnett": "lib-bassnett", "KSL": "ksl" };
   if (LIB_PAGE[own]) {
     const t = ITEMS.find(x => x.id === LIB_PAGE[own]);
-    const p = el("p", "vmore", "Want it in more depth? Open <b>" + t.en + "</b> in the Library ");
+    const p = el("p", "vmore", "Want it in more depth? Open <b>" + t.en + "</b>" + (own === "KSL" ? " in Learn " : " in the Library "));
     const go = el("button", "ghost", "→"); go.type = "button";
     go.addEventListener("click", () => openItem(t));
     p.appendChild(go);
@@ -24919,6 +25120,16 @@ function runKsl() {
     stage.appendChild(grid);
 
     stage.appendChild(el("p", "ksl-credit", KSL_CREDIT));
+
+    /* The Guild's printed chart of the same alphabet, to keep or print. */
+    const poster = el("figure", "ksl-poster");
+    poster.innerHTML =
+      '<a href="ksl/ksl-alphabet-poster.jpg" target="_blank" rel="noopener">' +
+        '<img src="ksl/ksl-alphabet-poster.webp" alt="The KSL alphabet chart: the twenty-eight Arabic letters and their handshapes" loading="lazy" width="1320" height="1842">' +
+      '</a>' +
+      '<figcaption><span>The KSL Alphabet · أبجدية لغة الإشارة الكويتية</span>' +
+        '<a class="c-src" href="ksl/ksl-alphabet-poster.jpg" download="KSL-Alphabet.jpg">Save the chart ↓</a></figcaption>';
+    stage.appendChild(poster);
 
     /* The reading, behind one door rather than spread down the page. */
     const more = el("button", "ghost ksl-more", "The lessons \u2192");
