@@ -8017,6 +8017,77 @@ const BOOTH_GENRES = [
     ]
   },
   {
+    /* ISLAMIC AND RELIGIOUS. Nothing here is the site's own rendering.
+       Terms: Husni & Newman (2015), p. 126, and the notes to their
+       marriage contract, pp. 147–150. Formulas: Husni & Newman (2013),
+       A to Z, entries "The conditional", "The past" and "Terms of
+       address"; the contract's own formulas, pp. 145–148. Sentences and
+       turns: the contract clauses (Arabic pp. 145–146, English pp. 147–148)
+       and al-Fatiha, Arabic from the Madinah Mushaf (Hafs) on Arabic
+       Wikisource, English from Pickthall, The Meaning of the Glorious
+       Koran (1930), on English Wikisource. arAlt for a verse is the same
+       words in ordinary spelling, so typed Arabic is not marked down for
+       the Mushaf's orthography. */
+    id: "religious", en: "Islamic and religious", ar: "إسلامي وديني",
+    hint: "Religious formulas, Islamic terms, a marriage contract and al-Fātiḥa.",
+    icon: '<path d="M15.5 4.2a8 8 0 1 0 4.3 12.6A6.5 6.5 0 1 1 15.5 4.2z"/><path d="M17.6 7.3l.6 1.6 1.7.1-1.3 1.1.4 1.6-1.4-.9-1.4.9.4-1.6-1.3-1.1 1.7-.1z"/>',
+    terms: [
+      { ar: "المهر", ok: ["dowry", "the dowry"] },
+      { ar: "الطلاق البائن", ok: ["irrevocable divorce", "an irrevocable divorce"] },
+      { ar: "العدّة", ok: ["idda", "iddah", "legally prescribed waiting period before marrying", "waiting period"] },
+      { ar: "الفقيه", ok: ["faqih"] },
+      { ar: "الربا", ok: ["riba", "riba'"] },
+      { ar: "الحجاب", ok: ["hijab", "headscarf"] },
+      { ar: "الوقف", ok: ["waqf", "religious endowment"] },
+      { ar: "المأذون", ok: ["marriage registrar", "the marriage registrar"] },
+      { ar: "الزواج العرفي", ok: ["urfi marriage", "'urfi marriage"] },
+      { ar: "كتاب الله", ok: ["the holy quran", "holy quran", "the quran"] },
+      { ar: "الشهود العدول", ok: ["witnesses of reputable background and sound character"] }
+    ],
+    phrases: [
+      { ar: "إن شاء الله", ok: ["god willing"] },
+      { ar: "بارك الله فيك", ok: ["may god bless you", "god bless you"] },
+      { ar: "رحمه الله", ok: ["may god have mercy on him", "god have mercy on him", "may the mercy of god be upon him"] },
+      { ar: "صلّى الله عليه وسلّم", ok: ["peace be upon him", "pbuh", "may god pray for him and grant him peace"] },
+      { ar: "رضي الله عنه", ok: ["may god be pleased with him"] },
+      { ar: "بعون الله", ok: ["with the help of god the almighty", "with the help of god"] },
+      { ar: "والله خير الشاهدين", ok: ["as god is our witness"] },
+      { ar: "على كتاب الله وسنّة رسوله", ok: ["in accordance with the holy quran and the sunna of the prophet muhammad"] }
+    ],
+    sentences: [
+      { ar: "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ", arAlt: ["بسم الله الرحمن الرحيم"],
+        ok: ["In the name of Allah, the Beneficent, the Merciful."], keys: ["name", "merciful"] },
+      { ar: "ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ", arAlt: ["الحمد لله رب العالمين"],
+        ok: ["Praise be to Allah, Lord of the Worlds."], keys: ["praise", "lord"] },
+      { ar: "مَٰلِكِ يَوۡمِ ٱلدِّينِ", arAlt: ["مالك يوم الدين"],
+        ok: ["Owner of the Day of Judgment."], keys: ["day", "judgment"] },
+      { ar: "إِيَّاكَ نَعۡبُدُ وَإِيَّاكَ نَسۡتَعِينُ", arAlt: ["إياك نعبد وإياك نستعين"],
+        ok: ["Thee (alone) we worship; Thee (alone) we ask for help."], keys: ["worship", "help"] },
+      { ar: "ٱهۡدِنَا ٱلصِّرَٰطَ ٱلۡمُسۡتَقِيمَ", arAlt: ["اهدنا الصراط المستقيم"],
+        ok: ["Show us the straight path."], keys: ["straight", "path"] },
+      { ar: "يعتبر التمهيد السابق جزءاً لا يتجزأ من هذا العقد.",
+        ok: ["The preceding Preamble shall constitute an integral part of the present agreement."],
+        keys: ["preamble", "integral", "part"] },
+      { ar: "يحرر هذا العقد من نسختين بيد كل طرف نسخة للعمل بموجبها عند الاقتضاء.",
+        ok: ["The present marriage contract has been executed in duplicate, each copy being signed by each party and valid in law."],
+        keys: ["contract", "duplicate", "copy"] }
+    ],
+    turns: [
+      { ar: "طلب الطرف الأول من الطرف الثاني الارتباط بها على كتاب الله وسنة رسوله بقوله لها أريد الزواج منك على كتاب الله وسنة رسوله وعلى مذهب الإمام أبي حنيفة النعمان والصداق المسمى بيننا، ووافقته الطرف الثاني على ذلك بقولها له قبلت الزواج منك.",
+        ok: ["The groom hereby requests to enter into a bond with the bride, in accordance with the Holy Quran and the Sunna of the Prophet Muhammad, by saying, ‘I wish to marry you, in accordance with the Holy Quran, the Sunna of the Prophet Muhammad and the Hanafi School of Islamic Jurisprudence, and in exchange of the dowry fixed between us.’ The bride hereby agrees to this by saying, ‘I accept to marry you.’"],
+        keys: ["groom", "bride", "quran", "sunna", "hanafi", "dowry", "accept"] },
+      { ar: "يلتزم الطرف الأول تجاه الطرف الثاني بإعداد المسكن الشرعي الملائم وفقاً لحالته المادية والاجتماعية والقيام بجميع واجباته الشرعية تجاه الطرف الثاني.",
+        ok: ["The groom pledges to the bride that he shall prepare the appropriate legal residence, in accordance with his financial and social circumstances, status in society, and legal duties towards the bride."],
+        keys: ["groom", "bride", "residence", "financial", "social", "duties"] },
+      { ar: "يلتزم الطرف الثاني بالإشهار بهذا الزواج وأن يكون زواجاً أبدياً وليس مؤقتاً، وتم تنبيههم بأن شروط صحة هذا الزواج هو الإشهار والإعلان ولا يكون مؤقتاً، ووافقوا على ذلك.",
+        ok: ["The bride pledges to announce this marriage, that it is indefinite, not temporary. Both parties have been apprised of the conditions of legality of this marriage to be made public, and of the fact that it is not temporary, and both have agreed to it."],
+        keys: ["bride", "announce", "marriage", "temporary", "agreed"] },
+      { ar: "إِيَّاكَ نَعۡبُدُ وَإِيَّاكَ نَسۡتَعِينُ ۝ ٱهۡدِنَا ٱلصِّرَٰطَ ٱلۡمُسۡتَقِيمَ ۝ صِرَٰطَ ٱلَّذِينَ أَنۡعَمۡتَ عَلَيۡهِمۡ غَيۡرِ ٱلۡمَغۡضُوبِ عَلَيۡهِمۡ وَلَا ٱلضَّآلِّينَ", arAlt: ["إياك نعبد وإياك نستعين اهدنا الصراط المستقيم صراط الذين أنعمت عليهم غير المغضوب عليهم ولا الضالين"],
+        ok: ["Thee (alone) we worship; Thee (alone) we ask for help. Show us the straight path, the path of those whom Thou hast favoured; not (the path) of those who earn Thine anger nor of those who go astray."],
+        keys: ["worship", "help", "straight path", "favoured", "anger", "astray"] }
+    ]
+  },
+  {
     id: "community", en: "Community and liaison", ar: "مجتمعي ومُرافِق",
     hint: "A clinic desk, a school, an office. Formulas with no English words and exact English functions.",
     icon: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.4"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5M15.5 19c.4-2 1.5-3.3 3-3.5"/>',
@@ -18666,7 +18737,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1018-0500";
+const BUILD = "1018-0600";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -25750,6 +25821,7 @@ function boothDir() {
 function arNorm(s) {
   return String(s || "")
     .replace(/[ً-ٰٟـ]/g, "")
+    .replace(/[\u06D6-\u06ED]/g, "")   /* Qur'anic annotation marks: the Madinah text's sukun, pause and verse signs */
     .replace(/[أإآٱ]/g, "ا")
     .replace(/ى/g, "ي")
     .replace(/ة/g, "ه")
@@ -26164,7 +26236,8 @@ const BOOTH_FIELD_TITLES = {
   media:      { en: "Media Interpreter",                    ar: "مُترجِم شفويّ إعلاميّ" },
   medical:    { en: "Medical Interpreter",                  ar: "مُترجِم شفويّ طبّيّ" },
   conference: { en: "Conference Interpreter",               ar: "مُترجِم شفويّ للمؤتمرات" },
-  community:  { en: "Community Interpreter",                ar: "مُترجِم شفويّ مجتمعيّ" }
+  community:  { en: "Community Interpreter",                ar: "مُترجِم شفويّ مجتمعيّ" },
+  religious:  { en: "Islamic and Religious Interpreter",    ar: "مُترجِم شفويّ للشؤون الإسلامية والدينية" }
 };
 /* Mirrors interpreting_rank_for() in the database, which is what the
    server actually writes. If one of these changes the other must. */
@@ -26308,7 +26381,7 @@ function runBooth() { stopBooth(); chooseGenre(); }
 function chooseGenre() {
   stopBooth();
   stage.innerHTML = "";
-  setCount("Six settings · " + BOOTH_ROUND_SIZE + " turns a round");
+  setCount(BOOTH_GENRES.length + " settings · " + BOOTH_ROUND_SIZE + " turns a round");
   setDots(0, 0, 0);
 
 
