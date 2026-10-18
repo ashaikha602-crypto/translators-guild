@@ -8114,6 +8114,126 @@ const BOOTH_GENRES = [
     ]
   },
   {
+    /* BUSINESS AND COMMERCIAL. Every pair is printed side by side in
+       Husni & Newman (2015): an Egyptian employment contract with its
+       English (pp. 156–157) and the Zanussi-Electrolux guarantee with its
+       Arabic (pp. 158–159). The bracketed فقط formula is left out of the
+       salary clause, as their note ii on p. 157 says it should be. */
+    id: "business", en: "Business and commercial", ar: "تجاري واقتصادي",
+    hint: "Employment contracts and product guarantees, from published bilingual texts.",
+    icon: '<rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5M3.5 12.5h17"/>',
+    terms: [
+      { ar: "المرتب الشهري", ok: ["monthly salary", "the monthly salary"] },
+      { ar: "مدة الاختبار", ok: ["probationary period", "the probationary period"] },
+      { ar: "تعويض", ok: ["compensation"] },
+      { ar: "مكافأة", ok: ["remuneration"] },
+      { ar: "إخطار سابق", ok: ["prior notice"] },
+      { ar: "علاوات إضافية", ok: ["supplementary allowances"] },
+      { ar: "الضرائب والرسوم", ok: ["taxes and fees", "taxes, fees"] },
+      { ar: "شروط الضمان", ok: ["guarantee conditions"] },
+      { ar: "وثيقة إثبات الشراء", ok: ["proof of purchase"] },
+      { ar: "العطل العامة", ok: ["bank holidays", "public holidays"] }
+    ],
+    phrases: [
+      { ar: "اعتباراً من", ok: ["as from"] },
+      { ar: "لمدة غير محددة", ok: ["for an indefinite period"] },
+      { ar: "دون حاجة إلى إخطار سابق", ok: ["without any prior notice", "without prior notice"] },
+      { ar: "بدون إذن كتابي من الشركة", ok: ["without written permission from the company"] },
+      { ar: "مجاناً وبدون أي تكاليف مادية", ok: ["free of any charge", "free of charge"] },
+      { ar: "خلال مدة 12 شهراً من تاريخ شراء هذا المنتج", ok: ["within 12 months of the date of purchase"] }
+    ],
+    sentences: [
+      { ar: "المرتب الشهري المتفق عليه هو ... جنيه مصري تدفعه الشركة شهرياً في نهاية كل شهر ميلادي.",
+        ok: ["The monthly salary agreed upon is ... Egyptian Pounds, payable monthly by the company at the end of each calendar month."],
+        keys: ["monthly salary", "egyptian pounds", "payable", "end of each", "month"] },
+      { ar: "يتعهد الطرف الثاني بأن يكرس كل وقته وجهده لأعمال الطرف الأول أثناء ساعات العمل المقررة في القانون رقم 91.",
+        ok: ["Employee shall devote the whole of his time and attention to employer’s business during working hours, in accordance with the provisions set forth in Labour Act No. 91."],
+        keys: ["employee", "time", "employer", "working hours", "91"] },
+      { ar: "يلتزم الطرف الثاني بأن يراعي كافة الأوامر والتعليمات التي تصدر إليه من إدارة الشركة.",
+        ok: ["Employee undertakes to comply with all orders and instructions issued to employee by employer’s Management."],
+        keys: ["employee", "comply", "orders", "instructions", "management"] },
+      { ar: "يعد هذا الضمان إضافة إلى حقوقك القانونية الأخرى.",
+        ok: ["This guarantee is in addition to your statutory and other legal rights."],
+        keys: ["guarantee", "addition", "legal rights"] },
+      { ar: "يصبح أي جهاز أو جزء عاطل تم استبداله ملكاً خاصاً بالشركة.",
+        ok: ["Any appliance or defective part replaced shall become the Company’s property."],
+        keys: ["appliance", "defective", "replaced", "property"] },
+      { ar: "وربما يتم طلب وثيقة إثبات الشراء.",
+        ok: ["Proof of purchase may be required."],
+        keys: ["proof of purchase", "required"] }
+    ],
+    turns: [
+      { ar: "يوافق الطرف الأول على استخدام الطرف الثاني اعتباراً من ... لشغل وظيفة ...، على أن يكون للطرف الأول الحق في أن يعهد إلى الطرف الثاني بأي عمل آخر يتفق مع طبيعة مؤهلاته.",
+        ok: ["Employer agrees to employ employee as from .... in the capacity of …, provided that employer shall have the right to assign to employee any other services and duties within the nature of employee’s qualifications."],
+        keys: ["employer", "employ", "as from", "provided", "assign", "qualifications"] },
+      { ar: "يعتبر الطرف الثاني معيناً تحت الاختبار لمدة ثلاثة شهور، وفي خلال هذه الفترة أو عند انتهائها يكون للطرف الأول الحق في إنهاء أو فسخ هذا العقد فوراً دون حاجة إلى إخطار سابق ودون دفع أي مبلغ بصفة تعويض أو مكافأة.",
+        ok: ["Employee shall be deemed to have been appointed subject to a three-month probationary period, during which, or upon expiration thereof, employer shall be entitled to terminate or annul the present agreement without any prior notice or payment of any compensation or remuneration."],
+        keys: ["employee", "three-month", "probationary", "terminate", "notice", "compensation"] },
+      { ar: "نحن شركة زانوسي الكترولكس، نتعهد في حال وجود أي عيب تصنيعي أو مادي خلال مدة 12 شهراً من تاريخ شراء هذا المنتج، بأن نقوم بإصلاحه أو استبداله مجاناً وبدون أي تكاليف مادية، سواء للأيدي العاملة أو المواد المستخدمة أو لأجور النقل.",
+        ok: ["We, Zanussi-Electrolux, undertake that if within 12 months of the date of purchase this Zanussi-Electrolux appliance or any part thereof is proved to be defective by reason only of faulty workmanship or materials, we will at our discretion repair or replace the same free of any charge for labour, materials or carriage."],
+        keys: ["undertake", "12 months", "purchase", "defective", "repair", "replace", "free"] }
+    ]
+  },
+  {
+    /* HUMAN RIGHTS AND HUMANITARIAN. The Universal Declaration of Human
+       Rights (UN General Assembly resolution 217 A (III), 1948), in its
+       official Arabic and English texts, both on Wikisource. Every term,
+       phrase, sentence and turn is the Declaration's own wording. */
+    id: "rights", en: "Human rights and humanitarian", ar: "حقوق الإنسان والعمل الإنساني",
+    hint: "The Universal Declaration of Human Rights, in the UN’s own Arabic and English.",
+    icon: '<path d="M12 3.5l7 3v5.2c0 4.4-3 7.6-7 8.8-4-1.2-7-4.4-7-8.8V6.5z"/><path d="M9 12l2 2 4-4"/>',
+    terms: [
+      { ar: "حقوق الإنسان", ok: ["human rights"] },
+      { ar: "الكرامة", ok: ["dignity"] },
+      { ar: "التعذيب", ok: ["torture"] },
+      { ar: "الجنسية", ok: ["nationality"] },
+      { ar: "الاضطهاد", ok: ["persecution"] },
+      { ar: "التمييز", ok: ["discrimination", "distinction"] },
+      { ar: "الاسترقاق", ok: ["slavery"] },
+      { ar: "الحريات الأساسية", ok: ["fundamental freedoms"] }
+    ],
+    phrases: [
+      { ar: "بروح الإخاء", ok: ["in a spirit of brotherhood"] },
+      { ar: "دون أي تمييز", ok: ["without distinction of any kind", "without any discrimination"] },
+      { ar: "حرية الرأي والتعبير", ok: ["freedom of opinion and expression"] },
+      { ar: "حرية الاشتراك في الجمعيات والجماعات السلمية", ok: ["freedom of peaceful assembly and association"] },
+      { ar: "حرية التنقل", ok: ["freedom of movement"] },
+      { ar: "سواسية أمام القانون", ok: ["equal before the law"] }
+    ],
+    sentences: [
+      { ar: "لكل فرد الحق في الحياة والحرية وفي الأمان على شخصه.",
+        ok: ["Everyone has the right to life, liberty and the security of person."], keys: ["right", "life", "liberty", "security"] },
+      { ar: "لا يجوز استرقاق أحد أو استعباده، ويحظر الاسترقاق وتجارة الرقيق بجميع صورهما.",
+        ok: ["No one shall be held in slavery or servitude; slavery and the slave trade shall be prohibited in all their forms."], keys: ["slavery", "servitude", "slave trade", "prohibited"] },
+      { ar: "لا يعرض أي إنسان للتعذيب ولا للعقوبات أو المعاملات القاسية أو الوحشية أو الحاطة بالكرامة.",
+        ok: ["No one shall be subjected to torture or to cruel, inhuman or degrading treatment or punishment."], keys: ["torture", "cruel", "degrading", "treatment"] },
+      { ar: "لا يجوز القبض على أي إنسان أو حجزه أو نفيه تعسفاً.",
+        ok: ["No one shall be subjected to arbitrary arrest, detention or exile."], keys: ["arbitrary", "arrest", "detention", "exile"] },
+      { ar: "لكل فرد حق التمتع بجنسية ما.",
+        ok: ["Everyone has the right to a nationality."], keys: ["right", "nationality"] },
+      { ar: "لا يجوز تجريد أحد من ملكه تعسفاً.",
+        ok: ["No one shall be arbitrarily deprived of his property."], keys: ["arbitrarily", "deprived", "property"] },
+      { ar: "لا يجوز إرغام أحد على الانضمام إلى جمعية ما.",
+        ok: ["No one may be compelled to belong to an association."], keys: ["compelled", "belong", "association"] },
+      { ar: "يحق لكل فرد أن يغادر أية بلاد بما في ذلك بلده كما يحق له العودة إليه.",
+        ok: ["Everyone has the right to leave any country, including his own, and to return to his country."], keys: ["leave", "country", "own", "return"] }
+    ],
+    turns: [
+      { ar: "يولد جميع الناس أحراراً متساوين في الكرامة والحقوق. وقد وهبوا عقلاً وضميراً وعليهم أن يعامل بعضهم بعضاً بروح الإخاء.",
+        ok: ["All human beings are born free and equal in dignity and rights. They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood."],
+        keys: ["born free", "equal", "dignity", "reason", "conscience", "brotherhood"] },
+      { ar: "لكل شخص الحق في حرية الرأي والتعبير. ويشمل هذا الحق حرية اعتناق الآراء دون أي تدخل، واستقاء الأنباء والأفكار وتلقيها وإذاعتها بأية وسيلة كانت دون تقيد بالحدود الجغرافية.",
+        ok: ["Everyone has the right to freedom of opinion and expression; this right includes freedom to hold opinions without interference and to seek, receive and impart information and ideas through any media and regardless of frontiers."],
+        keys: ["freedom", "opinion", "expression", "interference", "information", "frontiers"] },
+      { ar: "لكل فرد الحق أن يلجأ إلى بلاد أخرى أو يحاول الالتجاء إليها هرباً من الاضطهاد. ولا ينتفع بهذا الحق من قدم للمحاكمة في جرائم غير سياسية أو لأعمال تناقض أغراض الأمم المتحدة ومبادئها.",
+        ok: ["Everyone has the right to seek and to enjoy in other countries asylum from persecution. This right may not be invoked in the case of prosecutions genuinely arising from non-political crimes or from acts contrary to the purposes and principles of the United Nations."],
+        keys: ["asylum", "persecution", "non-political", "purposes", "principles", "united nations"] },
+      { ar: "لا يعرض أحد لتدخل تعسفي في حياته الخاصة أو أسرته أو مسكنه أو مراسلاته أو لحملات على شرفه وسمعته. ولكل شخص الحق في حماية القانون من مثل هذا التدخل أو تلك الحملات.",
+        ok: ["No one shall be subjected to arbitrary interference with his privacy, family, home or correspondence, nor to attacks upon his honour and reputation. Everyone has the right to the protection of the law against such interference or attacks."],
+        keys: ["arbitrary", "privacy", "family", "honour", "reputation", "protection of the law"] }
+    ]
+  },
+  {
     id: "community", en: "Community and liaison", ar: "مجتمعي ومُرافِق",
     hint: "A clinic desk, a school, an office. Formulas with no English words and exact English functions.",
     icon: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.4"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5M15.5 19c.4-2 1.5-3.3 3-3.5"/>',
@@ -18912,7 +19032,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1018-0700";
+const BUILD = "1018-0800";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -26412,7 +26532,9 @@ const BOOTH_FIELD_TITLES = {
   medical:    { en: "Medical Interpreter",                  ar: "مُترجِم شفويّ طبّيّ" },
   conference: { en: "Conference Interpreter",               ar: "مُترجِم شفويّ للمؤتمرات" },
   community:  { en: "Community Interpreter",                ar: "مُترجِم شفويّ مجتمعيّ" },
-  religious:  { en: "Islamic and Religious Interpreter",    ar: "مُترجِم شفويّ للشؤون الإسلامية والدينية" }
+  religious:  { en: "Islamic and Religious Interpreter",    ar: "مُترجِم شفويّ للشؤون الإسلامية والدينية" },
+  business:   { en: "Business Interpreter",                 ar: "مُترجِم شفويّ تجاريّ" },
+  rights:     { en: "Human Rights Interpreter",             ar: "مُترجِم شفويّ لحقوق الإنسان" }
 };
 /* Mirrors interpreting_rank_for() in the database, which is what the
    server actually writes. If one of these changes the other must. */
