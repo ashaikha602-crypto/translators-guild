@@ -8066,103 +8066,154 @@ const BOOTH_GENRES = [
     ]
   },
   {
+    /* MEDICAL. Every item and every English rendering is printed in
+       Husni & Newman (2013), A to Z of Arabic–English–Arabic Translation,
+       in the entries "Anymore/no more/no longer/any longer",
+       "Effective/efficient/efficacious", "Disused/misuse/abuse",
+       "Even/even if/even though/even so", "Flammable, inflammable",
+       "Transliteration and transcription", "Nevertheless/notwithstanding",
+       "As/because/since/for", "Holiday/holidays/vacation/leave",
+       the entry on ظِلّ (in the light of) and "Ensure/insure/assure". The Arabic was read
+       from the book's page images. A medical glossary from a named
+       bilingual source (for example the WHO Constitution in its official
+       Arabic and English) is still to be added. */
     id: "medical", en: "Medical", ar: "طبّي",
-    hint: "A clinic, where a guessed word can change what a patient agrees to.",
+    hint: "Patients, medicines and health insurance, in the A to Z’s own example sentences.",
     icon: '<path d="M4 12h3l2-5 3 10 2.5-6 1.5 3h4"/><rect x="2.5" y="4.5" width="19" height="15" rx="3"/>',
     terms: [
-      { ar: "ضغط الدم", ok: ["blood pressure"], arAlt: ["الضغط"] },
-      { ar: "التاريخ المرضي", ok: ["medical history", "the medical history", "patient history"], arAlt: ["التاريخ الطبي", "السيرة المرضية"] },
-      { ar: "الأعراض", ok: ["the symptoms", "symptoms"], arAlt: ["العلامات"] },
-      { ar: "التشخيص", ok: ["the diagnosis", "diagnosis"], arAlt: ["تشخيص الحالة"] },
-      { ar: "قسم الطوارئ", ok: ["the emergency department", "emergency department", "a and e", "the er", "casualty"], arAlt: ["الطوارئ", "قسم الإسعاف"] },
-      { ar: "موافقة مستنيرة", ok: ["informed consent", "consent"], arAlt: ["الموافقة الواعية"] },
-      { ar: "الجرعة", ok: ["the dose", "dose", "the dosage", "dosage"], arAlt: ["المقدار"] },
-      { ar: "الأعراض الجانبية", ok: ["side effects", "the side effects", "adverse effects"], arAlt: ["الآثار الجانبية"] }
+      { ar: "شلل الأطفال", ok: ["polio"] },
+      { ar: "الصداع", ok: ["headache", "headaches"] },
+      { ar: "الأسبرين", ok: ["aspirin"] },
+      { ar: "الالتهاب", ok: ["inflammation"] },
+      { ar: "الأمراض الباطنية", ok: ["internal medicine"] },
+      { ar: "التأمين الصحي", ok: ["health insurance"] },
+      { ar: "الشهادة الطبية", ok: ["medical certificate", "a medical certificate"] },
+      { ar: "عطلة الأمومة", ok: ["maternity leave"] },
+      { ar: "نقابة الصيادلة", ok: ["the pharmacists' union", "pharmacists' union", "pharmacists union"] },
+      { ar: "الأدوية", ok: ["medicines"] },
+      { ar: "المستشفى", ok: ["hospital", "the hospital"] },
+      { ar: "العلاج", ok: ["treatment"] }
     ],
     phrases: [
-      { ar: "على معدة فارغة", ok: ["on an empty stomach", "before food", "nil by mouth"] },
-      { ar: "مرّتين في اليوم بعد الأكل", ok: ["twice a day after food", "twice daily after meals", "two times a day after eating"] },
-      { ar: "هل لديك حساسية من أي دواء؟", ok: ["do you have any drug allergies", "are you allergic to any medication", "any allergies to medicines"] },
-      { ar: "سنجري بعض الفحوصات", ok: ["we will run some tests", "we are going to do some tests", "well do some tests"] },
-      { ar: "منذ متى وأنت تشعر بهذا؟", ok: ["how long have you been feeling this", "how long has this been going on", "how long have you had this"] }
+      { ar: "دواء فعّال ضد الصداع", ok: ["an effective drug against headaches", "effective drug against headaches"] },
+      { ar: "يضر بالصحة", ok: ["constitutes a health hazard", "a health hazard"] },
+      { ar: "نظام التأمين الصحي الوطني", ok: ["the national health insurance scheme", "national health insurance scheme"] },
+      { ar: "مرض قاتل", ok: ["a deadly disease", "deadly disease"] },
+      { ar: "التهاب الأمعاء", ok: ["inflammation of the intestines", "an inflammation of the intestines"] },
+      { ar: "رفع أسعار الأدوية", ok: ["an increase in the price of medicines", "increase in the price of medicines"] },
+      { ar: "برغم نصيحة طبيبها", ok: ["doctor's orders notwithstanding", "doctor’s orders notwithstanding"] }
     ],
     sentences: [
-      { ar: "سأقيس لك ضغط الدم الآن.", ok: ["I am going to take your blood pressure now."],
-        keys: ["blood pressure", "now"] },
-      { ar: "هل سبق أن أجريت عملية جراحية؟", ok: ["Have you ever had an operation?"],
-        keys: ["ever", "operation"] },
-      { ar: "أين يؤلمك بالضبط؟", ok: ["Where exactly does it hurt?"],
-        keys: ["where", "hurt"] },
-      { ar: "هل تتناول أي أدوية حالياً؟", ok: ["Are you taking any medication at the moment?"],
-        keys: ["taking", "medic"] },
-      { ar: "سنحتاج إلى موافقتك قبل إجراء العملية.", ok: ["We will need your consent before the operation."],
-        keys: ["consent", "before", "operation"] },
-      { ar: "ستظهر النتائج خلال يومين.", ok: ["The results will be ready within two days."],
-        keys: ["results", "two days"] }
+      { ar: "لَمْ يَعُدْ شَلَلُ الأَطْفالِ مَرَضاً قاتِلاً.",
+        ok: ["Polio is no longer a deadly disease."],
+        keys: ["polio", "no longer", "deadly disease"] },
+      { ar: "الأَسْبِرِينُ دَواءٌ فَعّالٌ ضِدَّ الصُّداعِ.",
+        ok: ["Aspirin is an effective drug against headaches."],
+        keys: ["aspirin", "effective", "drug", "headaches"] },
+      { ar: "إِنَّ سُوءَ اسْتِعْمالِ الجِهازِ يُضِرُّ بِالصِّحَّةِ.",
+        ok: ["Misuse of the equipment constitutes a health hazard."],
+        keys: ["misuse", "equipment", "health hazard"] },
+      { ar: "أُرِيدُ أَنْ أَزُورَ أُمّي في المُسْتَشْفَى حَتَّى وَلَوْ لِساعَةٍ واحِدَةٍ.",
+        ok: ["I want to visit my mother in hospital, if only for an hour."],
+        keys: ["visit", "mother", "hospital", "if only", "hour"] },
+      { ar: "هُناكَ أَدْوِيَةٌ عَدِيدَةٌ لِعِلاجِ الْتِهابِ الأَمْعاءِ.",
+        ok: ["There are plenty of medicines to treat an inflammation of the intestines."],
+        keys: ["plenty of medicines", "treat", "inflammation", "intestines"] },
+      { ar: "كَتَبَ البُرُوفِسُور أَنْدِي سْمِيث مَقالَةً حَوْلَ الأَمْراضِ الباطِنِيَّةِ.",
+        ok: ["Professor Andy Smith wrote an article on internal medicine."],
+        keys: ["professor andy smith", "article", "internal medicine"] },
+      { ar: "سافَرَتْ إِلَى مِصْرَ بِرَغْمِ نَصِيحَةِ طَبِيبِها.",
+        ok: ["She travelled to Egypt, doctor’s orders notwithstanding."],
+        keys: ["travelled", "egypt", "doctor", "notwithstanding"] },
+      { ar: "بِما أَنَّهُ مَرِيضٌ جِدّاً فَلَنْ يَحْضُرَ الاجْتِماعَ غَداً.",
+        ok: ["As he’s very ill, he won’t attend the meeting tomorrow."],
+        keys: ["very ill", "attend", "meeting", "tomorrow"] }
     ],
     turns: [
-      { ar: "سيصف لك الطبيب مضادّاً حيوياً لمدة خمسة أيام، ويجب أن تكمل العلاج حتى لو تحسّنت.",
-        ok: ["The doctor will prescribe you an antibiotic for five days, and you must finish the course even if you feel better."],
-        keys: ["doctor", "antibiotic", "five days", "finish", "better"] },
-      { ar: "نحتاج إلى عيّنة دم وعيّنة بول، ويمكنك تناول الطعام بعد السحب مباشرة.",
-        ok: ["We need a blood sample and a urine sample, and you can eat straight after they are taken."],
-        keys: ["blood", "urine", "sample", "eat", "after"] },
-      { ar: "يريد الطبيب أن يوضّح لك أنّ العملية بسيطة، لكن لها بعض المخاطر، ولن نبدأ قبل أن توافق.",
-        ok: ["The doctor wants to explain that the operation is straightforward, but it carries some risks, and we will not begin until you consent."],
-        keys: ["doctor", "operation", "risk", "not begin", "consent"] },
-      { ar: "تقول المريضة إنّ الألم بدأ قبل ثلاثة أيام، ويزداد في الليل، ولم تأخذ أي دواء حتى الآن.",
-        ok: ["The patient says the pain started three days ago, gets worse at night, and she has not taken any medication so far."],
-        keys: ["pain", "three days", "worse at night", "not taken", "medic"] }
+      { ar: "ما دامَتْ عُطْلَةُ الأُمُومَةِ مُوَثَّقَةً بِالشَّهاداتِ الطِّبِّيَّةِ فَإِنَّهُ لا يُمْكِنُ لِصاحِبِ العَمَلِ أَنْ يَفْصِلَ المَرْأَةَ مِنْ عَمَلِها.",
+        ok: ["As long as the maternity leave is justified by a medical certificate, the employer cannot dismiss the woman."],
+        keys: ["as long as", "maternity leave", "medical certificate", "employer", "dismiss"] },
+      { ar: "اعْتَبَرَتْ نِقابَةُ الصَّيادِلَةِ أَنَّ رَفْعَ أَسْعارِ الأَدْوِيَةِ لَيْسَ لَهُ ما يُبَرِّرُهُ، خُصُوصاً في ظِلِّ الظُّرُوفِ الاقْتِصادِيَّةِ الصَّعْبَةِ الَّتي يَعِيشُها المُواطِنُونَ.",
+        ok: ["The pharmacists’ union believed that an increase in the price of medicines was not justifiable, particularly in light of the difficult economic conditions that people are living in."],
+        keys: ["pharmacists", "union", "increase", "price of medicines", "not justifiable", "in light of", "economic conditions"] },
+      { ar: "لِكُلِّ فَرْدٍ الحَقُّ في العِلاجِ طِبْقاً لِنِظامِ التَّأْمِينِ الصِّحِّيِّ الوَطَنِيِّ.",
+        ok: ["Every individual is entitled to treatment under the national health insurance scheme."],
+        keys: ["every individual", "entitled", "treatment", "national health insurance scheme"] }
     ]
   },
   {
+    /* CONFERENCE AND ACADEMIC. Every item and every English rendering is
+       printed in Husni & Newman (2013), A to Z of Arabic–English–Arabic
+       Translation, in the example sentences of these entries: "All (of)/
+       each/every", "Although/though/albeit", "Auxiliary verbs",
+       "Border/frontier/boundary", "Classic/classical/…", "Each/every",
+       "Happen/occur/take place", "Industrial/industrious", "Not only/just
+       … but also", "Number/figure/digit/numeral", "The past", "Wa and fa",
+       "Obligation", "Depend/dependent/dependant", "Agreement". */
     id: "conference", en: "Conference and academic", ar: "مؤتمرات وأكاديمي",
-    hint: "The furniture of a programme and a paper, which recurs everywhere.",
+    hint: "Lectures, exams, research and conferences, in the A to Z’s own example sentences.",
     icon: '<path d="M3 8l9-4 9 4-9 4-9-4z"/><path d="M7 10.5V15c0 1.5 2.5 3 5 3s5-1.5 5-3v-4.5M21 8v5"/>',
     terms: [
-      { ar: "جدول الأعمال", ok: ["the agenda", "agenda"], arAlt: ["الأجندة"] },
-      { ar: "ورقة بحثية", ok: ["a research paper", "research paper", "a paper"], arAlt: ["بحث", "ورقة علمية"] },
-      { ar: "الملخّص", ok: ["the abstract", "abstract", "the summary"], arAlt: ["المستخلص"] },
-      { ar: "المنهجية", ok: ["the methodology", "methodology", "the method"], arAlt: ["المنهج"] },
-      { ar: "محضر الاجتماع", ok: ["the minutes", "minutes of the meeting", "the minutes of the meeting"], arAlt: ["المحضر"] },
-      { ar: "مراجعة الأقران", ok: ["peer review", "peer reviewed", "peer-review"], arAlt: ["تحكيم الأقران", "التحكيم العلمي"] },
-      { ar: "عيّنة الدراسة", ok: ["the study sample", "the sample", "sample"], arAlt: ["العيّنة"] },
-      { ar: "المتحدّث الرئيسي", ok: ["the keynote speaker", "keynote speaker", "the keynote"], arAlt: ["المتحدّث الرئيس"] }
+      { ar: "عميد الكلية", ok: ["dean of the faculty", "the dean of the faculty"] },
+      { ar: "المحاضرة", ok: ["lecture", "the lecture"] },
+      { ar: "الامتحان", ok: ["exam", "the exam"] },
+      { ar: "البحث", ok: ["research"] },
+      { ar: "المجلة", ok: ["journal", "the journal"] },
+      { ar: "الأساتذة", ok: ["lecturers", "the lecturers"] },
+      { ar: "أستاذ جامعي", ok: ["university teacher", "a university teacher"] },
+      { ar: "شهادة الثانوية العامة", ok: ["secondary school certificate", "the secondary school certificate"] },
+      { ar: "مجمع اللغة العربية", ok: ["academy of the arabic language", "the academy of the arabic language"] },
+      { ar: "المناهج الدراسية", ok: ["curricula", "the curricula"] },
+      { ar: "الباحث", ok: ["scholar", "the scholar"] },
+      { ar: "الواجب", ok: ["assignment", "assignments"] }
     ],
     phrases: [
-      { ar: "ننتقل إلى البند التالي", ok: ["we move to the next item", "moving on to the next item", "we turn to the next item"] },
-      { ar: "نفتح باب الأسئلة", ok: ["we open the floor to questions", "we will take questions", "questions are now open"] },
-      { ar: "مع خالص الشكر للمنظّمين", ok: ["with sincere thanks to the organisers", "with sincere thanks to the organizers", "our thanks to the organisers"] },
-      { ar: "في الجلسة الصباحية", ok: ["in the morning session", "during the morning session"] },
-      { ar: "تهدف هذه الدراسة إلى", ok: ["this study aims to", "the aim of this study is to", "this study sets out to"] }
+      { ar: "قام بإجراء هذا البحث", ok: ["he carried out this research", "he conducted this research", "carried out this research"] },
+      { ar: "توسع آفاق العلم", ok: ["push back the frontiers of science"] },
+      { ar: "نظرية اقتصادية تقليدية", ok: ["classical economic theory"] },
+      { ar: "جلسات المؤتمر", ok: ["the sessions of the conference", "sessions of the conference"] },
+      { ar: "في العدد الثامن للمجلة", ok: ["in the eighth issue of the journal"] },
+      { ar: "نجحنا في الامتحانات", ok: ["made it through the exams", "we made it through the exams"] }
     ],
     sentences: [
-      { ar: "سنأخذ استراحة قصيرة لمدة خمس عشرة دقيقة.", ok: ["We will take a short break of fifteen minutes."],
-        keys: ["break", "fifteen"] },
-      { ar: "يُرجى تسليم الملخّصات قبل نهاية الشهر.", ok: ["Abstracts should be submitted before the end of the month."],
-        keys: ["abstract", "submit", "end of the month"] },
-      { ar: "يسعدني أن أرحّب بكم في افتتاح المؤتمر.", ok: ["I am pleased to welcome you to the opening of the conference."],
-        keys: ["pleased", "welcome", "opening", "conference"] },
-      { ar: "سيتحدّث المتحدّث الرئيسي لمدة عشرين دقيقة.", ok: ["The keynote speaker will speak for twenty minutes."],
-        keys: ["keynote", "twenty minutes"] },
-      { ar: "نرجو من الحضور إغلاق الهواتف المحمولة.", ok: ["We ask the audience to switch off their mobile phones."],
-        keys: ["audience", "switch off", "phones"] },
-      { ar: "ستُنشر الأوراق في عدد خاص من المجلة.", ok: ["The papers will be published in a special issue of the journal."],
-        keys: ["papers", "published", "special issue", "journal"] }
+      { ar: "حَضَرْنا كُلُّنا المُحاضَرَةَ الَّتي أَلْقاها عَمِيدُ الكُلِّيَّةِ.",
+        ok: ["All of us attended the lecture by the Dean of the Faculty."],
+        keys: ["all of us", "attended", "lecture", "dean of the faculty"] },
+      { ar: "بِرَغْمِ أَنَّ الامْتِحانَ كانَ صَعْباً إِلّا أَنَّني أَجَبْتُ عَلَى جَمِيعِ الأَسْئِلَةِ.",
+        ok: ["Even though the exam was difficult, I answered all the questions."],
+        keys: ["even though", "exam", "difficult", "answered", "questions"] },
+      { ar: "تُحاوِلُ جامِعَتُنا أَنْ تُوَسِّعَ آفاقَ العِلْمِ.",
+        ok: ["Our University is trying to push back the frontiers of science."],
+        keys: ["university", "push back", "frontiers of science"] },
+      { ar: "سَلَّمَ كُلُّ طالِبٍ واجِبَهُ.",
+        ok: ["The students each handed in their assignments."],
+        keys: ["students", "each", "handed in", "assignments"] },
+      { ar: "فَشِلَ في الامْتِحانِ فَيَجِبُ أَنْ يَتْرُكَ الجامِعَةَ.",
+        ok: ["He failed the exam and (so he) had to leave the university."],
+        keys: ["failed", "exam", "leave", "university"] },
+      { ar: "نُشِرَتِ المَقالَةُ في العَدَدِ الثّامِنِ لِلْمَجَلَّةِ.",
+        ok: ["The article was published in the eighth issue of the journal."],
+        keys: ["article", "published", "eighth issue", "journal"] },
+      { ar: "كانَ الباحِثُ يُبْدِعُ غَيْرَ مُعَوِّلٍ عَلَى الفَلْسَفَةِ.",
+        ok: ["The scholar created the theory independent of philosophy."],
+        keys: ["scholar", "created", "theory", "independent", "philosophy"] },
+      { ar: "خَرَجَ الأَساتِذَةُ واتَّجَهُوا إِلَى المَطارِ.",
+        ok: ["The lecturers left and headed for the airport."],
+        keys: ["lecturers", "left", "headed", "airport"] }
     ],
     turns: [
-      { ar: "اعتمدت الدراسة على منهج وصفي تحليلي، وقُسّمت العيّنة إلى مجموعتين متساويتين.",
-        ok: ["The study used a descriptive analytical method, and the sample was divided into two equal groups."],
-        keys: ["study", "descriptive", "method", "sample", "divided"] },
-      { ar: "أودّ أن أذكّر المتحدّثين بالالتزام بالوقت المحدّد، حتى نتمكّن من إتاحة فرصة كافية للنقاش.",
-        ok: ["I would like to remind speakers to keep to the time allotted, so that we can allow enough opportunity for discussion."],
-        keys: ["remind", "speakers", "time", "enough", "discussion"] },
-      { ar: "تناولت هذه الورقة أثر السياق الثقافي في اختيار المكافئ، واعتمدت على عيّنة من مئة نصّ مترجم.",
-        ok: ["This paper examined the effect of cultural context on the choice of equivalent, drawing on a sample of one hundred translated texts."],
-        keys: ["paper", "cultural context", "equivalent", "sample", "hundred"] },
-      { ar: "قبل أن نفتح باب الأسئلة، أودّ أن أشكر اللجنة المنظّمة وجميع الزملاء الذين راجعوا الأوراق.",
-        ok: ["Before we open the floor to questions, I would like to thank the organising committee and all the colleagues who reviewed the papers."],
-        keys: ["before", "questions", "thank", "committee", "review"] }
+      { ar: "انْعَقَدَتِ الشَّهْرَ الماضِيَ جَلَساتُ مُؤْتَمَرِ الدَّوْرَةِ الخامِسَةِ وَالسِّتِّينَ لِمَجْمَعِ اللُّغَةِ العَرَبِيَّةِ في القاهِرَةِ.",
+        ok: ["Last month the sessions of the sixty-fifth conference of the Cairo Academy of the Arabic Language took place."],
+        keys: ["last month", "sessions", "sixty-fifth", "conference", "cairo academy of the arabic language", "took place"] },
+      { ar: "لَمْ يَكُنْ أُسْتاذاً جامِعِيّاً وَمُرَبِّياً فَقَطْ بَلْ ناقِداً وَكاتِباً كَذلِكَ.",
+        ok: ["He was not only a university teacher and educationalist but also a critic and a writer."],
+        keys: ["not only", "university teacher", "educationalist", "but also", "critic", "writer"] },
+      { ar: "سَبَقَ أَنْ عَرَضْنا الأَهْدافَ الرَّئِيسِيَّةَ لِلِاسْتِراتِيجِيَّةِ في المَقالِ السّابِقِ.",
+        ok: ["We had put forward the principal goals of the strategy in the previous article."],
+        keys: ["put forward", "principal goals", "strategy", "previous article"] },
+      { ar: "يَجِبُ أَنْ تُوضَعَ المَناهِجُ الدِّراسِيَّةُ مَعَ مُراعاةِ عُمْرِ الأَطْفالِ.",
+        ok: ["The curricula have to be designed with the children’s ages in mind."],
+        keys: ["curricula", "designed", "children", "ages", "in mind"] }
     ]
   },
   {
@@ -8350,53 +8401,75 @@ const BOOTH_GENRES = [
     ]
   },
   {
+    /* COMMUNITY AND LIAISON. Every item and every English rendering is
+       printed in Husni & Newman (2013), A to Z of Arabic–English–Arabic
+       Translation, in the example sentences of these entries: "Terms of
+       address", "Relative pronouns", "Hire/rent/let/lease/charter",
+       "Holiday/holidays/vacation/leave", "If/whether", "There is/are …",
+       "As/like", "Time", "Can/may/might", "As soon as", "During/for/in/
+       since", "Everyone/every one". The Arabic of "Terms of address" was
+       read from the book's page images. */
     id: "community", en: "Community and liaison", ar: "مجتمعي ومُرافِق",
-    hint: "A clinic desk, a school, an office. Formulas with no English words and exact English functions.",
+    hint: "Hotels, post offices, flats and neighbours, in the A to Z’s own example sentences.",
     icon: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.4"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5M15.5 19c.4-2 1.5-3.3 3-3.5"/>',
     terms: [
-      { ar: "صباح الخير", ok: ["good morning", "morning"] },
-      { ar: "تفضّل", ok: ["here you go", "go ahead", "after you", "please", "help yourself", "here"] },
-      { ar: "إن شاء اللّه", ok: ["hopefully", "god willing", "fingers crossed", "well see", "we'll see", "if all goes well"] },
-      { ar: "يعطيك العافية", ok: ["thanks", "thank you", "well done", "nice work", "good work", "appreciate"] },
-      { ar: "الحمد للّه", ok: ["thank god", "all good", "cant complain", "can't complain", "fine", "good", "not bad"] },
-      { ar: "ولا يهمّك", ok: ["dont worry", "don't worry", "no worries", "no problem", "its fine", "it's fine", "all good"] },
-      { ar: "اللّه أعلم", ok: ["who knows", "no idea", "god knows", "your guess", "hard to say"] },
-      { ar: "مع السلامة", ok: ["goodbye", "bye", "take care", "see you"] }
+      { ar: "الفندق", ok: ["hotel", "the hotel"] },
+      { ar: "المدخل", ok: ["entrance", "the entrance"] },
+      { ar: "مكاتب البريد", ok: ["post offices", "the post offices", "post office"] },
+      { ar: "غرفة الانتظار", ok: ["waiting room", "the waiting room"] },
+      { ar: "الشرطة", ok: ["police", "the police"] },
+      { ar: "الجيران", ok: ["neighbours", "the neighbours", "neighbors"] },
+      { ar: "شقة", ok: ["flat", "a flat"] },
+      { ar: "المصرف", ok: ["bank", "the bank"] },
+      { ar: "وظائف شاغرة", ok: ["vacancies", "vacant positions"] },
+      { ar: "المطار", ok: ["airport", "the airport"] },
+      { ar: "الحلاق", ok: ["hairdresser's", "the hairdresser's", "hairdresser"] },
+      { ar: "إضراب", ok: ["strike"] }
     ],
     phrases: [
-      { ar: "لحظة من فضلك", ok: ["one moment please", "just a moment", "one second please", "hold on please"] },
-      { ar: "خذ رقماً وانتظر دورك", ok: ["take a number and wait your turn", "take a ticket and wait your turn", "take a number and wait"] },
-      { ar: "المكتب مغلق اليوم", ok: ["the office is closed today", "the office is shut today"] },
-      { ar: "تعال بكرة الصبح", ok: ["come back tomorrow morning", "come tomorrow morning", "come in tomorrow morning"] },
-      { ar: "ما عندي مانع", ok: ["i have no objection", "thats fine by me", "i dont mind", "i have no problem with that"] }
+      { ar: "ما اسم حضرتك؟", ok: ["what is your name?", "what is your name, please?", "excuse me, sir, what is your name please?", "what is your name"] },
+      { ar: "يا أستاذ، أين المدخل من فضلك؟", ok: ["excuse me sir, where is the entrance, please?", "excuse me sir, where is the entrance?"] },
+      { ar: "أوقات عمل مكاتب البريد", ok: ["post office opening times", "the post office opening times"] },
+      { ar: "في البيت أم في المكتب", ok: ["at home or at work"] },
+      { ar: "الأموال المزيفة", ok: ["counterfeit money"] },
+      { ar: "حالما يعطيني المال", ok: ["as soon as he gives me the money"] }
     ],
     sentences: [
-      { ar: "هل تفضّل أن نتحدّث بالعربية أم بالإنجليزية؟", ok: ["Would you rather we spoke in Arabic or in English?"],
-        keys: ["arabic", "english"] },
-      { ar: "أحضر معك الهوية وصورة عنها.", ok: ["Bring your ID and a copy of it with you."],
-        keys: ["bring", "id", "copy"] },
-      { ar: "هل تحتاج إلى مترجم؟", ok: ["Do you need an interpreter?"],
-        keys: ["need", "interpreter"] },
-      { ar: "من فضلك املأ هذه الاستمارة.", ok: ["Please fill in this form."],
-        keys: ["fill", "form"] },
-      { ar: "سأشرح لك الإجراءات خطوة بخطوة.", ok: ["I will explain the procedure to you step by step."],
-        keys: ["explain", "procedure", "step by step"] },
-      { ar: "لا تقلق، سنساعدك.", ok: ["Don't worry, we will help you."],
-        keys: ["worry", "help"] }
+      { ar: "نَسِيتُ الحَقِيبَةَ في الفُنْدُقِ الَّذِي نُقِيمُ فِيهِ.",
+        ok: ["I forgot the suitcase in the hotel (that) we are staying at."],
+        keys: ["forgot", "suitcase", "hotel", "staying"] },
+      { ar: "اسْتَأْجَرَ شَقَّةً صَغِيرَةً تَتَكَوَّنُ مِنْ غُرْفَتَيْنِ فَقَطْ.",
+        ok: ["He rented a flat with only two rooms."],
+        keys: ["rented", "flat", "two rooms"] },
+      { ar: "هَلْ هُناكَ وَظائِفُ شاغِرَةٌ في الشَّرِكَةِ الآنَ؟",
+        ok: ["Are there any vacancies/vacant positions in the company now?"],
+        keys: ["vacancies", "company", "now"] },
+      { ar: "هَلْ تَعْرِفُ إِنْ كانَ في البَيْتِ أَمْ في المَكْتَبِ؟",
+        ok: ["Do you know if/whether he’ll be at home or at work?"],
+        keys: ["know", "home", "work"] },
+      { ar: "لَمْ تَكُنْ هُناكَ جَرائِدُ في غُرْفَةِ الانْتِظارِ.",
+        ok: ["There were no newspapers in the waiting room."],
+        keys: ["no", "newspapers", "waiting room"] },
+      { ar: "يَجِبُ أَنْ تَذْهَبَ إِلَى الحَلّاقِ كَما قالَتْ أُمّي.",
+        ok: ["As my mother said, you should go to the hairdresser’s."],
+        keys: ["mother", "should go", "hairdresser"] },
+      { ar: "دَخَلَ الحاجُّ مُصْطَفَى الغُرْفَةَ.",
+        ok: ["Hajj Mustafa came into the room."],
+        keys: ["hajj mustafa", "came", "room"] },
+      { ar: "يَعْمَلُ هُنا مُنْذُ خَمْسِ سَنَواتٍ.",
+        ok: ["He has worked here for five years."],
+        keys: ["has worked", "here", "five years"] }
     ],
     turns: [
-      { ar: "يقول إنه انتظر ساعتين، ويرجو أن يُنظر في طلبه اليوم لأنه يسافر غداً.",
-        ok: ["He says he has waited two hours and asks for his application to be looked at today because he is travelling tomorrow."],
-        keys: ["waited", "two hours", "today", "travel", "tomorrow"] },
-      { ar: "أبلغيها من فضلك أنّ الموعد تغيّر إلى يوم الأحد الساعة التاسعة صباحاً، وأنّ عليها إحضار التقرير.",
-        ok: ["Please tell her that the appointment has changed to Sunday at nine in the morning, and that she must bring the report."],
-        keys: ["appointment", "changed", "sunday", "nine", "report"] },
-      { ar: "تقول إنها حضرت أمس ولم تجد أحداً في المكتب، وتريد أن تعرف متى يمكنها أن تعود.",
-        ok: ["She says she came yesterday and found nobody in the office, and she wants to know when she can come back."],
-        keys: ["yesterday", "nobody", "office", "when", "come back"] },
-      { ar: "يقول إنه لا يفهم الرسالة التي وصلته، ويطلب أن يشرحها له أحد باللغة العربية.",
-        ok: ["He says he does not understand the letter he received, and he is asking for someone to explain it to him in Arabic."],
-        keys: ["understand", "letter", "explain", "arabic"] }
+      { ar: "لا يُمْكِنُكَ أَنْ تَعْزِفَ مُوسِيقَى صاخِبَةً في مُنْتَصَفِ اللَّيْلِ وَإِلّا سَيَقُومُ الجِيرانُ بِاسْتِدْعاءِ الشُّرْطَةِ!",
+        ok: ["You can’t play such loud music in the middle of the night; the neighbours will call the police!"],
+        keys: ["can’t", "loud music", "middle of the night", "neighbours", "call the police"] },
+      { ar: "سَأُعْطِيهِ مِفْتاحَ البَيْتِ حالَما يُعْطِيني المالَ.",
+        ok: ["As soon as he gives me the money, I’ll give him the keys to the house."],
+        keys: ["as soon as", "money", "keys", "house"] },
+      { ar: "مَواقِيتُ عَمَلِ مَكاتِبِ البَرِيدِ في شَهْرِ رَمَضانَ مِنَ الثّامِنَةِ صَباحاً إِلَى الخامِسَةِ مَساءً.",
+        ok: ["The post office opening times during Ramadan are from 8 a.m. until 5 p.m."],
+        keys: ["post office", "opening times", "ramadan", "8", "5"] }
     ]
   }
 ];
@@ -19579,7 +19652,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1019-0400";
+const BUILD = "1019-0500";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
