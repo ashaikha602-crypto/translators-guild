@@ -1031,6 +1031,7 @@ details.tg > .tg-in { padding: 0 .9rem .8rem; }
   color: var(--white); line-height: 1.8; margin: 0; max-width: 30ch; }
 /* A sentence is not a term. Set at term size it overflows the card and
    stops being readable, so the longer levels step the type down. */
+.prompt .src { white-space: normal; overflow-wrap: anywhere; }
 .prompt .src.long { font-size: clamp(1.12rem,3.6vw,1.45rem); line-height: 1.95; max-width: 42ch; }
 /* Arabic set inside an English sentence. It needs the Arabic face, a step
    up in size to match the Latin x-height, and its own bidi island so the
@@ -8085,14 +8086,10 @@ const BOOTH_GENRES = [
        marriage contract, pp. 147–150. Formulas: Husni & Newman (2013),
        A to Z, entries "The conditional", "The past" and "Terms of
        address"; the contract's own formulas, pp. 145–148. Sentences and
-       turns: the contract clauses (Arabic pp. 145–146, English pp. 147–148)
-       and al-Fatiha, Arabic from the Madinah Mushaf (Hafs) on Arabic
-       Wikisource, English from Pickthall, The Meaning of the Glorious
-       Koran (1930), on English Wikisource. arAlt for a verse is the same
-       words in ordinary spelling, so typed Arabic is not marked down for
-       the Mushaf's orthography. */
+       turns: the contract clauses (Arabic pp. 145–146, English pp. 147–148).
+       No Qur'anic verses are used. */
     id: "religious", en: "Islamic and religious", ar: "إسلامي وديني",
-    hint: "Religious formulas, Islamic terms, a marriage contract and al-Fātiḥa.",
+    hint: "Religious formulas, Islamic terms and a marriage contract.",
     icon: '<path d="M15.5 4.2a8 8 0 1 0 4.3 12.6A6.5 6.5 0 1 1 15.5 4.2z"/><path d="M17.6 7.3l.6 1.6 1.7.1-1.3 1.1.4 1.6-1.4-.9-1.4.9.4-1.6-1.3-1.1 1.7-.1z"/>',
     terms: [
       { ar: "المهر", ok: ["dowry", "the dowry"] },
@@ -8118,22 +8115,24 @@ const BOOTH_GENRES = [
       { ar: "على كتاب الله وسنّة رسوله", ok: ["in accordance with the holy quran and the sunna of the prophet muhammad"] }
     ],
     sentences: [
-      { ar: "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ", arAlt: ["بسم الله الرحمن الرحيم"],
-        ok: ["In the name of Allah, the Beneficent, the Merciful."], keys: ["name", "merciful"] },
-      { ar: "ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ", arAlt: ["الحمد لله رب العالمين"],
-        ok: ["Praise be to Allah, Lord of the Worlds."], keys: ["praise", "lord"] },
-      { ar: "مَٰلِكِ يَوۡمِ ٱلدِّينِ", arAlt: ["مالك يوم الدين"],
-        ok: ["Owner of the Day of Judgment."], keys: ["day", "judgment"] },
-      { ar: "إِيَّاكَ نَعۡبُدُ وَإِيَّاكَ نَسۡتَعِينُ", arAlt: ["إياك نعبد وإياك نستعين"],
-        ok: ["Thee (alone) we worship; Thee (alone) we ask for help."], keys: ["worship", "help"] },
-      { ar: "ٱهۡدِنَا ٱلصِّرَٰطَ ٱلۡمُسۡتَقِيمَ", arAlt: ["اهدنا الصراط المستقيم"],
-        ok: ["Show us the straight path."], keys: ["straight", "path"] },
       { ar: "يعتبر التمهيد السابق جزءاً لا يتجزأ من هذا العقد.",
         ok: ["The preceding Preamble shall constitute an integral part of the present agreement."],
         keys: ["preamble", "integral", "part"] },
       { ar: "يحرر هذا العقد من نسختين بيد كل طرف نسخة للعمل بموجبها عند الاقتضاء.",
         ok: ["The present marriage contract has been executed in duplicate, each copy being signed by each party and valid in law."],
-        keys: ["contract", "duplicate", "copy"] }
+        keys: ["contract", "duplicate", "copy"] },
+      { ar: "بعون الله اجتمع كل من ... وبحضور الشهود العدول المبين أسماؤهم بباطن هذا العقد.",
+        ok: ["With the help of God the Almighty, have appeared in the presence of witnesses of reputable background and sound character, whose names are stated in the present contract, the following."],
+        keys: ["help of god", "witnesses", "reputable", "names", "contract"] },
+      { ar: "قبل الطرفان هذا الزواج وعلم كل طرف حقوقه وواجباته تجاه الطرف الآخر.",
+        ok: ["Both parties accept this marriage, and each party is aware of its rights and duties towards the other."],
+        keys: ["both parties", "accept", "marriage", "rights", "duties"] },
+      { ar: "ولا يحق لأي طرف النكول والتقاعس عن التزامه تجاه الطرف الآخر.",
+        ok: ["Neither party shall be allowed to shirk from or neglect their obligations towards the other."],
+        keys: ["neither party", "shirk", "neglect", "obligations"] },
+      { ar: "يحق للطرف الآخر اللجوء إلى القضاء لاقتضاء حقه من الطرف المخالف.",
+        ok: ["Either party is entitled to seek redress and demand his/her right from the offending party before the courts."],
+        keys: ["entitled", "redress", "right", "offending party", "courts"] }
     ],
     turns: [
       { ar: "طلب الطرف الأول من الطرف الثاني الارتباط بها على كتاب الله وسنة رسوله بقوله لها أريد الزواج منك على كتاب الله وسنة رسوله وعلى مذهب الإمام أبي حنيفة النعمان والصداق المسمى بيننا، ووافقته الطرف الثاني على ذلك بقولها له قبلت الزواج منك.",
@@ -8145,9 +8144,12 @@ const BOOTH_GENRES = [
       { ar: "يلتزم الطرف الثاني بالإشهار بهذا الزواج وأن يكون زواجاً أبدياً وليس مؤقتاً، وتم تنبيههم بأن شروط صحة هذا الزواج هو الإشهار والإعلان ولا يكون مؤقتاً، ووافقوا على ذلك.",
         ok: ["The bride pledges to announce this marriage, that it is indefinite, not temporary. Both parties have been apprised of the conditions of legality of this marriage to be made public, and of the fact that it is not temporary, and both have agreed to it."],
         keys: ["bride", "announce", "marriage", "temporary", "agreed"] },
-      { ar: "إِيَّاكَ نَعۡبُدُ وَإِيَّاكَ نَسۡتَعِينُ ۝ ٱهۡدِنَا ٱلصِّرَٰطَ ٱلۡمُسۡتَقِيمَ ۝ صِرَٰطَ ٱلَّذِينَ أَنۡعَمۡتَ عَلَيۡهِمۡ غَيۡرِ ٱلۡمَغۡضُوبِ عَلَيۡهِمۡ وَلَا ٱلضَّآلِّينَ", arAlt: ["إياك نعبد وإياك نستعين اهدنا الصراط المستقيم صراط الذين أنعمت عليهم غير المغضوب عليهم ولا الضالين"],
-        ok: ["Thee (alone) we worship; Thee (alone) we ask for help. Show us the straight path, the path of those whom Thou hast favoured; not (the path) of those who earn Thine anger nor of those who go astray."],
-        keys: ["worship", "help", "straight path", "favoured", "anger", "astray"] }
+      { ar: "لما كان الطرف الأول يرغب الزواج من الطرف الثاني وقد وافقته على ذلك على يد الشهود العدول المبين أسماؤهم بهذا العقد وعلى الصداق المسمى بينهما وعلى مذهب الإمام أبي حنيفة النعمان.",
+        ok: ["Whereas the groom wishes to enter into marriage with the bride, who has accepted this in the presence of witnesses whose names are mentioned in the contract, for a dowry fixed between them and in accordance with the principles of the Hanafi School of Islamic Jurisprudence."],
+        keys: ["whereas", "groom", "bride", "witnesses", "dowry", "hanafi"] },
+      { ar: "يقر الطرفان بأن من حق أي منهما اللجوء إلى القضاء للإقرار بصحة هذا الزواج والتصديق عليه أمام المحكمة أو إثبات محتواه ومضمونه في وثيقة زواج رسمية على يد مأذون منذ تاريخ هذا العقد حماية لحقوق كل طرف تجاه الطرف الآخر.",
+        ok: ["Both parties agree that either of them may resort to legal action in order to establish the legal validity of the present marriage and have it certified before the court or its contents authenticated in an official marriage document drawn up by a marriage registrar, to take effect as from the date of the present contract, with each party’s rights being safeguarded in respect of the other."],
+        keys: ["both parties", "legal action", "validity", "court", "marriage registrar", "rights"] }
     ]
   },
   {
@@ -19471,7 +19473,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1019-0100";
+const BUILD = "1019-0115";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
