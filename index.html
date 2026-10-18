@@ -525,6 +525,13 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .sw.sm { width: 34px; height: 20px; }
 .sw.sm::after { top: 2px; inset-inline-start: 2px; width: 16px; height: 16px; }
 .sw.sm:checked::after { transform: translateX(14px); }
+/* switches in the light looks: the light-theme input rule paints every
+   input white, so the track and knob get their own colours here */
+:root[data-theme="light"] input.sw { background: #ddd3ea; border: 1px solid #c7b8da; }
+:root[data-theme="light"] input.sw::after { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.28); }
+:root[data-theme="light"] input.sw:checked { background: #8218c7; border-color: #8218c7; }
+:root[data-skin="clear"] input.sw { background: #e5e5ea; border-color: #d1d1d6; }
+:root[data-skin="clear"] input.sw:checked { background: #34c759; border-color: #34c759; }
 .hall-theme { display: flex; width: max-content; gap: 2px; margin-top: 1rem; padding: 3px; border-radius: 999px;
   background: rgba(214,191,234,.08); border: var(--hair); }
 .hall-theme button { all: unset; cursor: pointer; padding: .38rem .9rem; border-radius: 999px;
@@ -19652,7 +19659,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1019-0500";
+const BUILD = "1019-0510";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
