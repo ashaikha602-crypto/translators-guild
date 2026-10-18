@@ -3818,6 +3818,14 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
       <p class="note">The trials earn marks. The chambers never run out.</p>
     </header>
 
+    <div id="block-trials">
+      <div class="sec-head">
+        <h2>The Trials</h2>
+        <span class="note">Each earns a mark</span>
+      </div>
+      <div class="ledger" id="sec-trials"></div>
+    </div>
+
     <div id="block-poetry">
       <div class="sec-head">
         <h2>Poetry</h2>
@@ -3832,14 +3840,6 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
         <span class="note">Translate a passage from a classic book</span>
       </div>
       <div class="ledger" id="sec-prose"></div>
-    </div>
-
-    <div id="block-trials">
-      <div class="sec-head">
-        <h2>The Trials</h2>
-        <span class="note">Each earns a mark</span>
-      </div>
-      <div class="ledger" id="sec-trials"></div>
     </div>
 
     <div id="block-chambers">
@@ -18666,7 +18666,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1018-0300";
+const BUILD = "1018-0500";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -20269,11 +20269,30 @@ function latelyRow(r) {
 }
 
 /* One ledger of cards, used by both the Learn and Practice screens. */
+const TRIAL_ORDER = [
+  "bassq",                                   /* The field: Bassnett */
+  "courtesy", "context", "human",            /* 2.2 speech acts · 2.3 context · 2.4 equivalence */
+  "colloc", "proverb", "kuwaiti", "cultural", /* 3.1 collocation · 3.2 idioms and proverbs · 3.3 */
+  "nameproc",                                /* 4.2 procedures */
+  "legalq",                                  /* legal texts */
+  "revise",                                  /* 9.1 revision */
+  "subtitle",                                /* 10.2 subtitling */
+  "booth", "kslq",                           /* interpreting and signing */
+  "atozq"                                    /* the reference shelf */
+];
 function fillLedger(sectionId, section) {
   const box = document.getElementById(sectionId);
   if (!box) return;
   box.innerHTML = "";
-  ITEMS.filter(t => t.section === section).forEach((t, i) => {
+  const list = ITEMS.filter(t => t.section === section);
+  /* The trials follow the Learn page: the field first, then the core
+     course section by section, then interpreting and signing, then the
+     reference shelf. Anything not named keeps its place at the end. */
+  if (section === "trials") list.sort((a, b) => {
+    const ia = TRIAL_ORDER.indexOf(a.id), ib = TRIAL_ORDER.indexOf(b.id);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+  });
+  list.forEach((t, i) => {
     const b = el("button", "commission");
     b.style.animationDelay = (i * 45) + "ms";
     /* Only a Trial can earn a Mark, so only a Trial carries the pip. A
@@ -20294,8 +20313,8 @@ function fillLedger(sectionId, section) {
       '</span>' +
       '<span class="ctitles">' +
         '<span class="c-en">' + t.en + '</span>' +
-        (t.subject ? '<span class="c-subject">' + t.subject + '</span>' : '') +
       '</span>';
+    /* titles only: what a card holds is shown once it is opened */
     b.addEventListener("click", () => openItem(t));
     box.appendChild(b);
   });
@@ -20335,8 +20354,7 @@ function renderLearn() {
         (t.thumb ? '<img class="pr-face" src="' + t.thumb + '" alt="" loading="lazy">'
                  : '<span class="lr-num">' + (g.id === "core" ? g.order.indexOf(t.id) + 1 : "•") + '</span>') +
         '<span class="lr-txt">' + (g.when && g.when[t.id] ? '<span class="lr-when">' + g.when[t.id] + '</span>' : '') +
-        '<span class="lr-en">' + t.en + '</span>' +
-        '<span class="lr-sub">' + (t.blurb || t.subject || "") + '</span></span>' +
+        '<span class="lr-en">' + t.en + '</span></span>' +
         '<span class="lr-go" aria-hidden="true">›</span>';
       b.addEventListener("click", () => openItem(t));
       list.appendChild(b);
@@ -20749,8 +20767,7 @@ function poetryHall(d) {
   const mineBtn = el("button", "lesson-row pr-mine-row");
   mineBtn.type = "button";
   mineBtn.innerHTML = '<span class="lr-num">✎</span><span class="lr-txt"><span class="lr-en">My translations</span>' +
-    '<span class="lr-sub">' + (n ? n + (n === 1 ? " translation kept" : " translations kept") : "Nothing kept yet") +
-    ' · on this device</span></span><span class="lr-go" aria-hidden="true">›</span>';
+    '</span><span class="lr-go" aria-hidden="true">›</span>';
   mineBtn.addEventListener("click", () => {
     pushTrail(hallName(), () => { stage.innerHTML = ""; poetryHall(d); });
     poemMine(d);
@@ -20813,8 +20830,7 @@ function poetryHall(d) {
                    : '<span class="lr-num pr-count">' + p.count + "</span>") +
           '<span class="lr-txt"><span class="lr-en"><span class="pr-ar-name">' + esc(diwanAr(p)) + '</span>' +
           '<span class="pr-en-name">' + esc(diwanEn(p)) + "</span></span>" +
-          '<span class="lr-sub">' + esc((p.prose ? p.en + " · " : "") + (p.years || "") + " · " + (p.count ? p.count + " " + (p.count === 1 ? unitW(p).work : unitW(p).works) : "poems coming soon") +
-            (hits ? " · " + hits + " match" + (hits === 1 ? "" : "es") : "")) + "</span></span>" +
+          (hits ? '<span class="lr-sub">' + hits + " match" + (hits === 1 ? "" : "es") + "</span>" : "") + "</span>" +
           '<span class="lr-go" aria-hidden="true">›</span>';
         b.addEventListener("click", () => {
           pushTrail(hallName(), () => { stage.innerHTML = ""; poetryHall(d); });
