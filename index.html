@@ -2593,6 +2593,32 @@ a.ks-s-en:hover { color: var(--white); }
 .dm-heart { all: unset; cursor: pointer; font-size: 1.3rem; width: 2.4rem; height: 2.4rem; display: grid; place-items: center; }
 .dm-send { all: unset; cursor: pointer; font-weight: 700; font-size: .95rem; color: #8ab4ff; padding: 0 .8rem; height: 2.4rem; }
 .dm-send[hidden], .dm-heart[hidden] { display: none; }
+.dm-plus { all: unset; cursor: pointer; width: 2.1rem; height: 2.1rem; border-radius: 50%; display: grid; place-items: center;
+  background: var(--grad); flex: none; margin: .15rem 0; }
+.dm-plus svg { width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; }
+.dm-photo { all: unset; cursor: pointer; display: block; max-width: min(15rem, 70vw); border-radius: 18px; overflow: hidden; background: var(--void-3); }
+.dm-photo img { display: block; width: 100%; height: auto; max-height: 22rem; object-fit: cover; }
+.dm-photo.gone, .dm-link:disabled { padding: .7rem 1rem; font-size: .85rem; color: var(--ink-faint); }
+.dm-video { display: block; max-width: min(15rem, 70vw); max-height: 22rem; border-radius: 18px; background: #000; }
+.dm-file, .dm-link { all: unset; cursor: pointer; display: flex; align-items: center; gap: .7rem; max-width: min(16rem, 72vw);
+  padding: .7rem .9rem; border-radius: 18px; background: var(--void-3); border: var(--hair); box-sizing: border-box; }
+.dm-file-ic svg { width: 26px; height: 26px; fill: none; stroke: var(--lilac); stroke-width: 1.6; stroke-linejoin: round; }
+.dm-file-t { display: grid; min-width: 0; }
+.dm-file-t b { font-size: .9rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--white); }
+.dm-file-t i { font-style: normal; font-size: .75rem; color: var(--ink-faint); }
+.dm-link { display: grid; gap: .15rem; }
+.dm-link b { font-size: .95rem; color: var(--white); }
+.dm-link-k { font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--lilac); font-weight: 600; }
+.dm-pick-posts { display: grid; grid-template-columns: repeat(3, 1fr); gap: .35rem; max-height: 55vh; overflow: auto; margin: .4rem 0; }
+.dm-pick-post { all: unset; cursor: pointer; position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; background: var(--void-3); }
+.dm-pick-post img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dm-pp-ph { display: grid; place-items: center; height: 100%; padding: .4rem; font-size: .72rem; text-align: center; color: var(--ink-soft); }
+.dm-pp-by { position: absolute; left: 0; right: 0; bottom: 0; padding: .2rem .35rem; font-size: .62rem; color: #fff;
+  background: linear-gradient(transparent, rgba(0,0,0,.6)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dm-pick-pages { display: grid; gap: .3rem; max-height: 50vh; overflow: auto; margin: .4rem 0; }
+.dm-pick-page { all: unset; cursor: pointer; display: flex; justify-content: space-between; gap: .6rem; padding: .7rem .8rem; border-radius: 12px; background: var(--void-3); }
+.dm-pick-page span { font-size: .92rem; color: var(--white); }
+.dm-pick-page i { font-style: normal; font-size: .72rem; color: var(--ink-faint); align-self: center; }
 .dm-note { margin: 0 1rem .4rem; font-size: .8rem; color: #ffb3c1; text-align: center; }
 .dm-note:empty { display: none; }
 :root[data-theme="light"] .dm-view, :root[data-theme="light"] .dm-head { background: #fff; color: #111; }
@@ -17456,6 +17482,11 @@ async function findOrOpenConversation(otherId) {
    or "<emoji> Reacted to your story [s:ID]". Older replies have no id. */
 function dmParse(body) {
   const b = body || "";
+  /* a file or picture sent in a chat, and a page of the Compass */
+  const fm = /^\u2063f:([^\u2063]{1,1200})\u2063/.exec(b);
+  if (fm) { try { const f = JSON.parse(decodeURIComponent(fm[1])); if (f && f.p) return { kind: "file", file: f, text: b.slice(fm[0].length).trim() }; } catch (e) {} }
+  const lm = /^\u2063l:([0-9A-Za-z_-]{1,40})\u2063/.exec(b);
+  if (lm) return { kind: "link", item: lm[1], text: b.slice(lm[0].length).trim() };
   /* a post sent in a message: the same mark a post shared to a story carries */
   const pm = /^[\u2063\u200b\ufeff\s]*p:([0-9A-Za-z-]{1,40})\u2063?/.exec(b);
   if (pm && b.indexOf("\u2063") >= 0) return { kind: "post", post: pm[1], text: b.slice(pm[0].length).trim() };
@@ -17468,9 +17499,78 @@ function dmParse(body) {
 function dmPreview(body, mine) {
   const p = dmParse(body);
   if (p.kind === "post") return mine ? "You sent a post" : "Sent you a post";
+  if (p.kind === "file") {
+    const what = /^image\//.test(p.file.t || "") ? "a photo" : /^video\//.test(p.file.t || "") ? "a video" : "a file";
+    return mine ? "You sent " + what : "Sent you " + what;
+  }
+  if (p.kind === "link") return mine ? "You shared a page" : "Shared a page with you";
   if (p.kind === "reply") return mine ? "You replied to their story" : "Replied to your story";
   if (p.kind === "react") return (mine ? "You reacted " : "Reacted ") + p.text + " to " + (mine ? "their" : "your") + " story";
   return (mine ? "You: " : "") + p.text.replace(/\s+/g, " ").slice(0, 70);
+}
+/* Chat files live in their own private bucket, under the conversation's
+   id, so only the two people in it can sign a link (supabase/dm-files.sql). */
+const DM_FILE_MAX = 25 * 1024 * 1024;
+async function dmUpload(cid, f) {
+  if (f.size > DM_FILE_MAX) throw new Error("That file is over 25 MB.");
+  const safe = (f.name || "file").replace(/[^\w.\- ]+/g, "_").slice(0, 80);
+  const path = cid + "/" + myId() + "/" + Date.now() + "-" + safe;
+  const tk = await freshToken();
+  const r = await fetch(SUPABASE.url + "/storage/v1/object/dm-files/" + encodeURI(path), {
+    method: "POST",
+    headers: { apikey: SUPABASE.key, Authorization: "Bearer " + tk, "Content-Type": f.type || "application/octet-stream" },
+    body: f
+  });
+  if (!r.ok) throw new Error(r.status === 404 || r.status === 400 ? "Sending files is not switched on yet." : "That file could not be sent.");
+  return { p: path, n: f.name || "file", t: f.type || "", s: f.size };
+}
+const dmSigned = {};
+async function dmSign(path) {
+  if (dmSigned[path] && dmSigned[path].at > Date.now() - 50 * 60000) return dmSigned[path].url;
+  const tk = await freshToken();
+  const r = await fetch(SUPABASE.url + "/storage/v1/object/sign/dm-files/" + encodeURI(path), {
+    method: "POST",
+    headers: { apikey: SUPABASE.key, Authorization: "Bearer " + tk, "Content-Type": "application/json" },
+    body: JSON.stringify({ expiresIn: 3600 })
+  });
+  if (!r.ok) throw new Error("This file could not be opened.");
+  const url = SUPABASE.url + "/storage/v1" + (await r.json()).signedURL;
+  dmSigned[path] = { url, at: Date.now() };
+  return url;
+}
+function dmSize(n) { return n > 1048576 ? (n / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB"; }
+/* what a chat message looks like when it carries a file */
+function dmFileView(f) {
+  const t = f.t || "";
+  if (/^image\//.test(t)) {
+    const b = el("button", "dm-photo"); b.type = "button";
+    const im = document.createElement("img"); im.alt = f.n || "Photo"; im.loading = "lazy";
+    b.appendChild(im);
+    dmSign(f.p).then(u => { im.src = u; b.onclick = () => window.open(u, "_blank", "noopener"); })
+      .catch(() => { b.classList.add("gone"); b.textContent = "Photo unavailable"; });
+    return b;
+  }
+  if (/^video\//.test(t)) {
+    const v = document.createElement("video"); v.className = "dm-video"; v.controls = true; v.playsInline = true; v.preload = "metadata";
+    dmSign(f.p).then(u => { v.src = u; }).catch(() => {});
+    return v;
+  }
+  const a = el("button", "dm-file"); a.type = "button";
+  a.innerHTML = '<span class="dm-file-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span>' +
+    '<span class="dm-file-t"><b dir="auto">' + esc(f.n || "File") + '</b><i>' + esc(dmSize(f.s || 0)) + '</i></span>';
+  a.addEventListener("click", async () => {
+    try { window.open(await dmSign(f.p), "_blank", "noopener"); } catch (e) { a.querySelector("i").textContent = "Could not open"; }
+  });
+  return a;
+}
+/* what a chat message looks like when it carries a page of the Compass */
+function dmLinkView(id, onOpen) {
+  const it = ITEMS.find(x => x.id === id);
+  const b = el("button", "dm-link"); b.type = "button";
+  b.innerHTML = '<span class="dm-link-k">' + esc(it ? (it.kind === "trial" ? "Trial" : it.section === "method" ? "Learn" : "Practice") : "Page") + '</span>' +
+    '<b>' + (it ? it.en : "This page is no longer here") + '</b>';
+  if (it) b.addEventListener("click", () => onOpen(it)); else b.disabled = true;
+  return b;
 }
 const dmEmojiOnly = t => !!t && t.length <= 12 && /^(\p{Extended_Pictographic}|\p{Emoji_Component}|‍|️|\s)+$/u.test(t) && !/^[0-9#*\s]+$/.test(t);
 
@@ -17621,6 +17721,11 @@ async function runThread(otherId, hint) {
   heart.type = "button"; heart.setAttribute("aria-label", "Send a heart");
   const send = el("button", "dm-send", "Send");
   send.type = "submit"; send.hidden = true;
+  const plus = el("button", "dm-plus", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>');
+  plus.type = "button"; plus.setAttribute("aria-label", "Send a photo, a file, a post or a page");
+  const picker = document.createElement("input");
+  picker.type = "file"; picker.hidden = true;
+  bar.appendChild(plus); bar.appendChild(picker);
   bar.appendChild(box); bar.appendChild(heart); bar.appendChild(send);
   ov.appendChild(bar);
   const note = el("p", "dm-note");
@@ -17736,7 +17841,11 @@ async function runThread(otherId, hint) {
         line.appendChild(a);
       }
       const col = el("div", "dm-col");
-      if (m.p.kind === "post") {
+      if (m.p.kind === "file") {
+        col.appendChild(dmFileView(m.p.file));
+      } else if (m.p.kind === "link") {
+        col.appendChild(dmLinkView(m.p.item, it => { close(); openItem(it); }));
+      } else if (m.p.kind === "post") {
         col.appendChild(el("span", "dm-ctx", m.mine ? "You sent a post" : "Sent you a post"));
         const quote = el("div", "dm-quote dm-post");
         storyPostCard(m.p.post, "", r => { close(); openPost(r); }).then(c => quote.appendChild(c));
@@ -17808,6 +17917,72 @@ async function runThread(otherId, hint) {
     box.focus();
   });
   heart.addEventListener("click", () => post("❤️"));
+
+  /* + : a photo or video, any file, a post, or a page of the Compass */
+  const pick = accept => { picker.value = ""; picker.accept = accept; picker.click(); };
+  picker.addEventListener("change", async () => {
+    const f = picker.files && picker.files[0];
+    if (!f) return;
+    note.textContent = "Sending " + (f.name || "file") + "…";
+    try {
+      const meta = await dmUpload(cid, f);
+      if (await post("\u2063f:" + encodeURIComponent(JSON.stringify(meta)) + "\u2063")) note.textContent = "";
+    } catch (e) { note.textContent = e.message || "That file could not be sent."; }
+  });
+  plus.addEventListener("click", () => {
+    const { sheet, done } = storySheet("Send");
+    const opt = (label, fn) => { const b = el("button", "sheet-act", label); b.type = "button"; b.addEventListener("click", fn); sheet.appendChild(b); };
+    opt("Photo or video", () => { done(); pick("image/*,video/*"); });
+    opt("File", () => { done(); pick(""); });
+    opt("A post", () => { done(); dmPickPost(id => post("\u2063p:" + id + "\u2063")); });
+    opt("A page of the Compass", () => { done(); dmPickPage(id => post("\u2063l:" + id + "\u2063")); });
+    const no = el("button", "sheet-act quiet", "Cancel"); no.addEventListener("click", done); sheet.appendChild(no);
+  });
+}
+
+/* Choose a post to send: the newest the feed shows you, yours included. */
+async function dmPickPost(onPick) {
+  const { sheet, done } = storySheet("Send a post");
+  const list = el("div", "dm-pick-posts");
+  sheet.appendChild(list);
+  list.appendChild(el("p", "sheet-note", "Loading…"));
+  let rows = [];
+  try { rows = await sbGet("feed?select=" + FEED_COLS + "&order=created_at.desc&limit=30"); } catch (e) {}
+  list.innerHTML = "";
+  if (!rows.length) list.appendChild(el("p", "sheet-note", "No posts to send yet."));
+  const links = await signedLinks(rows.map(r => r.thumb_path)).catch(() => ({}));
+  rows.forEach(r => {
+    const b = el("button", "dm-pick-post"); b.type = "button";
+    const u = r.thumb_path && links[r.thumb_path];
+    b.innerHTML = (u && /^image\//.test(r.thumb_type || "") ? '<img src="' + esc(u) + '" alt="">' : '<span class="dm-pp-ph">' + esc((r.title || r.content || "Post").slice(0, 60)) + '</span>') +
+      '<span class="dm-pp-by" dir="auto">' + esc(r.display_name || "") + '</span>';
+    b.addEventListener("click", () => { done(); onPick(r.repost_of || r.id); });
+    list.appendChild(b);
+  });
+  const no = el("button", "sheet-act quiet", "Cancel"); no.addEventListener("click", done); sheet.appendChild(no);
+}
+
+/* Choose a page of the Compass to send: everything in Learn and Practice. */
+function dmPickPage(onPick) {
+  const { sheet, done } = storySheet("Send a page");
+  const q = document.createElement("input");
+  q.type = "search"; q.className = "f-in"; q.placeholder = "Search the Compass";
+  sheet.appendChild(q);
+  const list = el("div", "dm-pick-pages");
+  sheet.appendChild(list);
+  const all = ITEMS.filter(t => t.en && (t.section === "method" || t.section === "trials" || t.section === "chambers" || t.section === "poetry" || t.section === "prose"));
+  const paint = () => {
+    const v = q.value.trim().toLowerCase();
+    list.innerHTML = "";
+    all.filter(t => !v || (t.en + " " + (t.ar || "")).toLowerCase().includes(v)).slice(0, 40).forEach(t => {
+      const b = el("button", "dm-pick-page"); b.type = "button";
+      b.innerHTML = '<span>' + t.en + '</span><i>' + (t.kind === "trial" ? "Trial" : t.section === "method" ? "Learn" : "Practice") + '</i>';
+      b.addEventListener("click", () => { done(); onPick(t.id); });
+      list.appendChild(b);
+    });
+  };
+  q.addEventListener("input", paint); paint();
+  const no = el("button", "sheet-act quiet", "Cancel"); no.addEventListener("click", done); sheet.appendChild(no);
 }
 
 const N_SAYS = {
@@ -18737,7 +18912,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1018-0600";
+const BUILD = "1018-0700";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
