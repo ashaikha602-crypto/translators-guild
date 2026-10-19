@@ -19659,7 +19659,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1019-0520";
+const BUILD = "1019-1120";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -21271,14 +21271,16 @@ const TRIAL_ORDER = [
   "legalq",                                  /* legal texts */
   "revise",                                  /* 9.1 revision */
   "subtitle",                                /* 10.2 subtitling */
-  "booth", "kslq",                           /* interpreting and signing */
+  "kslq",                                    /* signing (interpreting has its own tab) */
   "atozq"                                    /* the reference shelf */
 ];
 function fillLedger(sectionId, section) {
   const box = document.getElementById(sectionId);
   if (!box) return;
   box.innerHTML = "";
-  const list = ITEMS.filter(t => t.section === section);
+  /* Interpreting has its own tab in the bottom bar, so it is not listed
+     again among the Practice trials. Its mark still counts. */
+  const list = ITEMS.filter(t => t.section === section && !(section === "trials" && t.id === "booth"));
   /* The trials follow the Learn page: the field first, then the core
      course section by section, then interpreting and signing, then the
      reference shelf. Anything not named keeps its place at the end. */
