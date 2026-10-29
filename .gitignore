@@ -18,3 +18,6 @@ __pycache__/
 # scripts in the session scratchpad if it needs refreshing.
 guide/
 reports/
+
+# Installed by npm for the Study Helper function; Vercel installs its own.
+node_modules/

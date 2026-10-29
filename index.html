@@ -1119,6 +1119,31 @@ details.tg > .tg-in { padding: 0 .9rem .8rem; }
 .th-ttx b { color: var(--white); }
 .th-tmeta { grid-column: 1 / 3; display: flex; justify-content: space-between; align-items: center; }
 .th-try textarea { margin: .4rem 0; }
+/* Study Helper: a conversation, member on the right, helper on the left */
+.hp { display: grid; gap: .9rem; max-width: var(--measure); }
+.hp-intro { color: var(--ink-soft); margin: 0; }
+.hp-log { display: grid; gap: .7rem; }
+.hp-msg { padding: .8rem 1rem; border-radius: var(--r-md); line-height: 1.6; overflow-wrap: anywhere; max-width: 92%; }
+.hp-msg p { margin: 0 0 .45rem; }
+.hp-msg p:last-child { margin-bottom: 0; }
+.hp-user { justify-self: end; background: var(--grad-soft); border: var(--hair-lit); color: var(--white); white-space: pre-wrap; }
+.hp-assistant { justify-self: start; background: var(--well); border: var(--hair); color: var(--ink); }
+.hp-assistant b { color: var(--white); }
+.hp-li { padding-inline-start: 1rem; position: relative; }
+.hp-li::before { content: "•"; position: absolute; inset-inline-start: .2rem; color: var(--mag-ink); }
+.hp-more { font-size: .8rem; color: var(--ink-faint); border-top: var(--hair); padding-top: .45rem; margin-top: .3rem !important; }
+.hp-wait { color: var(--ink-faint); font-style: italic; }
+.hp-err { border-color: var(--coral); color: var(--coral-soft); }
+.hp-tries { display: grid; gap: .5rem; }
+.hp-tries[hidden] { display: none; }
+button.hp-try { text-align: start; text-transform: none; letter-spacing: normal; font-weight: 400; padding: .6rem 1rem; border-radius: var(--r-md); }
+.hp-form { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: .5rem; align-items: end; }
+.hp-input { font-family: var(--f-sans); font-size: 1rem; line-height: 1.5; color: var(--white); background: var(--void-2);
+  border: var(--hair-lit); border-radius: var(--r-md); padding: .7rem .9rem; resize: vertical; min-height: 3rem; width: 100%; box-sizing: border-box; }
+.hp-input:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; }
+.hp-send { padding: .75rem 1.3rem; }
+.hp-send:disabled { opacity: .55; cursor: default; transform: none; }
+button.hp-new { justify-self: start; padding: .45rem 1rem; font-size: .78rem; }
 .th-face { flex: none; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; display: block;
   background: rgba(214,191,234,.08); border: 1px dashed rgba(214,191,234,.35); }
 .th-face.has { border: 2px solid rgba(207,122,232,.55); }
@@ -13046,6 +13071,10 @@ const ITEMS = [
     subject: "الترجمة الشفوية · Section 1.1",
     blurb: "Simultaneous, consecutive, sight, whispered, relay, remote &mdash; and where each one goes wrong.",
     run: runModes },
+  { id: "helper", ar: "المساعد الدِّراسيّ", en: "Study Helper", kind: "guide", section: "method", group: "ref",
+    subject: "Answers from the Guild's own material, with where to read more",
+    blurb: "Ask a question about any term, theory, procedure or proverb on the site. It answers only from the Guild's material and says when something is not covered.",
+    run: runHelper },
   { id: "glossary", ar: "مَسرَد المُصطلَحات", en: "Glossary of the Field", kind: "guide", section: "method", group: "ref",
     subject: "مَسرَد المُصطلَحات · every key term, both languages",
     blurb: "Every term the handbook defines, searchable in either language. Star the ones you want.",
@@ -19659,7 +19688,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1019-1120";
+const BUILD = "1029-2300";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -21320,6 +21349,7 @@ function fillLedger(sectionId, section) {
    the material to dip into. Compact rows, so a phone shows the whole map
    without scrolling through eleven large cards. */
 const LEARN_GROUPS = [
+  { id: "ask",    en: "Ask a question", note: "Study Helper", order: ["helper"] },
   { id: "field",  en: "The field", note: "Start here", order: ["lib-bassnett"] },
   /* oldest first: the practice from the 3rd century BC, then the theories
      from Cicero in 46 BCE; each row carries its span */
@@ -25987,6 +26017,107 @@ function runSubtitle() {
    carry most of the work, then the two that sit beside them, then the
    two working arrangements. The last entry is the one the field has not
    settled in Arabic, and it says so. */
+/* ═══════════ STUDY HELPER ═══════════
+   A conversation with the helper in api/chat.js. It answers from the
+   Guild's own Learn, Practice and Library material only, and ends every
+   answer with where on the site to read more. Only signed-in members
+   can ask: the member's own token goes with each question.
+   The conversation lives in this tab only; nothing is saved. */
+const HELPER_URL = "/api/chat";
+const helperLog = [];
+const HELPER_TRY = [
+  "What is the difference between a method and a procedure?",
+  "ما الفرق بين الترجمة الفورية والترجمة التتابعية؟",
+  "How would I translate مال البخيل ياكله العيار?"
+];
+function helperHTML(text) {
+  return String(text).split("\n").map(line => {
+    const l = esc(line).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+    if (/^\s*Read more:/i.test(line)) return '<p class="hp-more">' + l + '</p>';
+    if (/^\s*[-•] /.test(line)) return '<p class="hp-li">' + l.replace(/^\s*[-•] /, "") + '</p>';
+    return line.trim() ? '<p>' + l + '</p>' : "";
+  }).join("");
+}
+function runHelper() {
+  setCount(""); setDots(0, 0, 0);
+  const wrap = el("div", "hp");
+  wrap.appendChild(el("p", "hp-intro",
+    "Ask about anything in Learn, Practice or the Library: a term, a theory, a procedure, a proverb. " +
+    "Answers come only from the Guild's own material and say where to read more. " +
+    "If the site does not cover something yet, the helper says so instead of guessing."));
+  const log = el("div", "hp-log");
+  log.setAttribute("aria-live", "polite");
+  const tries = el("div", "hp-tries");
+  const fresh = el("button", "ghost hp-new", "New conversation");
+  fresh.type = "button";
+  const form = el("form", "hp-form");
+  const box = el("textarea", "hp-input");
+  box.rows = 2; box.maxLength = 1500; box.dir = "auto";
+  box.placeholder = "Ask a question · اكتب سؤالك";
+  box.setAttribute("aria-label", "Your question");
+  const go = el("button", "hp-send", "Ask");
+  go.type = "submit";
+  form.append(box, go);
+  wrap.append(log, tries, fresh, form);
+  stage.appendChild(wrap);
+
+  const bubble = (role, html) => {
+    const b = el("div", "hp-msg hp-" + role, html);
+    b.dir = "auto";
+    log.appendChild(b);
+    return b;
+  };
+  const paint = () => {
+    log.innerHTML = "";
+    helperLog.forEach(m => bubble(m.role, m.role === "user" ? esc(m.content) : helperHTML(m.content)));
+    tries.hidden = helperLog.length > 0;
+    fresh.hidden = helperLog.length === 0;
+  };
+  HELPER_TRY.forEach(q => {
+    const b = el("button", "ghost hp-try");
+    b.type = "button"; b.dir = "auto"; b.textContent = q;
+    b.addEventListener("click", () => { box.value = q; send(); });
+    tries.appendChild(b);
+  });
+  fresh.addEventListener("click", () => { helperLog.length = 0; paint(); box.focus(); });
+  paint();
+
+  let busy = false;
+  async function send() {
+    const q = box.value.trim();
+    if (!q || busy) return;
+    busy = true; go.disabled = true; tries.hidden = true;
+    bubble("user", esc(q));
+    box.value = "";
+    const wait = bubble("assistant", '<p class="hp-wait">Looking through the Guild’s material…</p>');
+    wait.scrollIntoView({ block: "nearest" });
+    helperLog.push({ role: "user", content: q });
+    try {
+      const t = await freshToken();
+      if (!t) throw new Error("Sign in to use the Study Helper.");
+      const r = await fetch(HELPER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + t },
+        body: JSON.stringify({ messages: helperLog.slice(-8) })
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.reply) throw new Error(j.message || "The Study Helper could not answer just now. Try again.");
+      wait.innerHTML = helperHTML(j.reply);
+      helperLog.push({ role: "assistant", content: j.reply });
+    } catch (e) {
+      helperLog.pop();   // unanswered, so it is not sent again as history
+      wait.classList.add("hp-err");
+      wait.innerHTML = "<p>" + esc(e.message || "Something went wrong. Try again.") + "</p>";
+    }
+    busy = false; go.disabled = false; fresh.hidden = helperLog.length === 0;
+    wait.scrollIntoView({ block: "nearest", behavior: prefersStill() ? "auto" : "smooth" });
+  }
+  form.addEventListener("submit", e => { e.preventDefault(); send(); });
+  box.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); }
+  });
+}
+
 function runModes() {
   setCount("الترجمة الشفوية · six modes");
 
