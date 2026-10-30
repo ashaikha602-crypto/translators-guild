@@ -4324,9 +4324,6 @@ button.up-next[hidden] { display: none; }
       <div class="ledger" id="sec-trials"></div>
     </div>
 
-    <!-- The unscored rooms, folded under one heading. -->
-    <details class="ws-group" id="block-workshops">
-      <summary><span class="ws-t"><b>Workshops</b><small>Poetry, prose and the chambers · unscored</small></span><span class="ws-chev" aria-hidden="true">›</span></summary>
     <div id="block-poetry">
       <div class="sec-head">
         <h2>Poetry</h2>
@@ -4350,7 +4347,6 @@ button.up-next[hidden] { display: none; }
       </div>
       <div class="ledger" id="sec-chambers"></div>
     </div>
-    </details>
   </section>
 
   <!-- ══════════════ THE MEMBER'S SEAL ══════════════
@@ -20087,7 +20083,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1031-2300";
+const BUILD = "1101-0000";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
