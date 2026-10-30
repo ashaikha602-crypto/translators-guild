@@ -3995,6 +3995,20 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
 #lineage-block .strip-card .s-ar { font-size: .72rem; line-height: 1.35; }
 #lineage-block .strip-card .s-role { display: none; }
 #lineage-block .strip-card .s-life { font-size: .62rem; letter-spacing: .04em; }
+/* Profile grid, like a photo grid: square tiles, 2px apart, nothing written on top */
+#seal .grid-tabs { justify-content: center; }
+#seal .grid-tab { flex: 0 1 8rem; padding: .65rem .3rem; }
+.post-grid { gap: 2px; margin: 2px 0 1rem; }
+.tile { border: 0; border-radius: 0; padding: .6rem; align-content: center; justify-items: center; text-align: center;
+  background: linear-gradient(160deg, rgba(167,38,208,.28), rgba(101,15,208,.14)); }
+.tile.has-pic { background: rgba(255,255,255,.04); padding: 0; }
+.tile-t { font-size: .74rem; line-height: 1.35; -webkit-line-clamp: 4; color: var(--white); font-weight: 500; letter-spacing: 0; }
+.tile-ico { position: absolute; top: .35rem; right: .35rem; width: 18px; height: 18px; color: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.6)); }
+.tile-ico svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.tile:active { opacity: .8; }
+:root[data-theme="light"] .tile { background: linear-gradient(160deg, rgba(167,38,208,.14), rgba(101,15,208,.06)); }
+:root[data-theme="light"] .tile-t { color: #2b1c40; }
 /* ═══════════ ROUND TWO ═══════════ */
 .see-all { all: unset; cursor: pointer; margin-inline-start: auto; font-size: .9rem; font-weight: 600; color: var(--mag-ink); }
 .see-all:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; border-radius: 4px; }
@@ -19500,14 +19514,13 @@ function profileGrid(authorId, isMe) {
     GRID_TABS.filter(t2 => !t2.mine || isMe).forEach(t2 => {
       /* icon and a word under it: an icon alone has to be guessed */
       const b = el("button", "grid-tab",
-        '<svg viewBox="0 0 24 24" aria-hidden="true">' + t2.ico + '</svg><span class="gt-lab">' + t2.lab + '</span>');
+        '<svg viewBox="0 0 24 24" aria-hidden="true">' + t2.ico + '</svg>');
       b.type = "button";
       b.setAttribute("role", "tab");
       b.setAttribute("aria-label", t2.lab);
       b.title = t2.lab;
       b.setAttribute("aria-selected", String(tab === t2.id));
       b.addEventListener("click", () => {
-        if (t2.id === "saved") { openItem(SAVED_ITEM); return; }
         if (tab !== t2.id) { tab = t2.id; draw(); }
       });
       tabs.appendChild(b);
@@ -19534,14 +19547,8 @@ function profileGrid(authorId, isMe) {
 const GRID_TABS = [
   { id: "all",    lab: "Posts",
     ico: '<rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/>' },
-  { id: "reel",   lab: "Reels",
-    ico: '<rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M10 9l5 3-5 3z"/>' },
   { id: "repost", lab: "Reposts",
-    ico: '<path d="M4 9.5A3.5 3.5 0 0 1 7.5 6H17l-2.5-2.5M20 14.5A3.5 3.5 0 0 1 16.5 18H7l2.5 2.5"/>' },
-  { id: "translation", lab: "Translations",
-    ico: '<path d="M4 5h9M8.5 3v2M6 5c0 4 2.5 7 6 8.5M11 5c0 3.5-2.5 7-6.5 8.5"/><path d="M13 21l4-10 4 10M14.5 17.5h5"/>' },
-  { id: "saved", lab: "Saved", mine: true,
-    ico: '<path d="M6.5 3.5h11v17l-5.5-4-5.5 4z"/>' }
+    ico: '<path d="M4 9.5A3.5 3.5 0 0 1 7.5 6H17l-2.5-2.5M20 14.5A3.5 3.5 0 0 1 16.5 18H7l2.5 2.5"/>' }
 ];
 
 async function authorFeed(id, kind) {
@@ -19572,15 +19579,15 @@ function postTile(r) {
                 r.orig_text || "";
   const hasPic = !!r.thumb_path;
   const isVid = /^video\//.test(r.thumb_type || "");
+  /* like a photo grid: the picture fills the square; a text post shows
+     its first words; a small icon marks a video or a repost */
+  const mark = isVid ? '<svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>'
+    : r.repost_of ? '<svg viewBox="0 0 24 24"><path d="M4 9.5A3.5 3.5 0 0 1 7.5 6H17l-2.5-2.5M20 14.5A3.5 3.5 0 0 1 16.5 18H7l2.5 2.5"/></svg>' : "";
   const b = el("button", "tile" + (hasPic ? " has-pic" : ""),
-    (hasPic ? '<span class="tile-shade"></span>' : '') +
-    '<span class="tile-k">' +
-      (r.repost_of ? REPOST_ICO + " " : "") +
-      esc(kind ? kind.en : shownType) + '</span>' +
     (hasPic ? '' : '<span class="tile-t" dir="auto">' + esc(words.slice(0, 140)) + '</span>') +
-    '<span class="tile-n">' +
-      (isVid ? '<span class="tile-play" aria-hidden="true">\u25B6</span> ' : '') +
-      '\u2661 ' + (r.likes || 0) + ' \u00b7 \u25CB ' + (r.comments || 0) + '</span>');
+    (mark ? '<span class="tile-ico" aria-hidden="true">' + mark + '</span>' : ''));
+  b.setAttribute("aria-label", (kind ? kind.en : shownType) + (words ? ": " + words.slice(0, 80) : "") +
+    " · " + (r.likes || 0) + " likes · " + (r.comments || 0) + " comments");
   b.type = "button";
   b.addEventListener("click", () => openPost(r));
   return b;
@@ -20080,7 +20087,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1031-2200";
+const BUILD = "1031-2300";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
