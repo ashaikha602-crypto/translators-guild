@@ -3959,6 +3959,39 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
 #seal .st-hl > span:last-child { font-size: .7rem; }
 #seal .hilite-row { margin: .2rem 0 0; }
 #seal .grid-tabs { margin-top: .3rem; }
+/* Contact, simplified: one line, an email row, one grouped form */
+.ct { gap: 1.1rem; max-width: 34rem; }
+.ct-lede { margin: 0; color: var(--ink-soft); font-size: .95rem; line-height: 1.5; display: grid; gap: .15rem; }
+.ct-lede span { font-size: .9rem; }
+a.ct-row { display: flex; align-items: center; gap: .8rem; padding: .7rem .9rem; border-radius: 16px; border: var(--hair);
+  background: rgba(214,191,234,.045); text-decoration: none; color: inherit; }
+a.ct-row .ct-ico { width: 34px; height: 34px; border-radius: 10px; }
+a.ct-row .ct-ico svg { width: 18px; height: 18px; }
+.ct-row-t { display: grid; flex: 1; min-width: 0; }
+.ct-row-t small { font-size: .72rem; color: var(--ink-faint); }
+.ct-row-t b { color: var(--mag-ink); font-weight: 600; font-size: .95rem; overflow-wrap: anywhere; }
+.ct-form { display: grid; gap: .75rem; }
+.ct-h { margin: .4rem 0 0; font-size: .8rem; font-weight: 600; color: var(--ink-faint); }
+.ct-seg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; padding: 3px; border-radius: 12px; background: rgba(214,191,234,.08); }
+button.ct-kind { all: unset; cursor: pointer; display: grid; justify-items: center; gap: 0; padding: .4rem .2rem; border-radius: 9px;
+  font-size: .8rem; font-weight: 600; color: var(--ink-soft); text-align: center; }
+button.ct-kind small { font-size: .66rem; font-weight: 500; opacity: .8; font-family: var(--f-ar); }
+button.ct-kind[aria-checked="true"] { background: var(--grad); color: #fff; }
+button.ct-kind:focus-visible { outline: 2px solid var(--magenta); outline-offset: 1px; }
+.ct-group { display: grid; border-radius: 16px; overflow: hidden; border: var(--hair); background: rgba(214,191,234,.045); }
+.ct-group input, .ct-group textarea { all: unset; box-sizing: border-box; width: 100%; padding: .75rem .95rem; font-size: 1rem; color: var(--white); line-height: 1.45; }
+.ct-group > input + input, .ct-group > input + textarea { border-top: 1px solid rgba(214,191,234,.14); }
+.ct-group textarea { min-height: 7.5rem; white-space: pre-wrap; }
+.ct-group input::placeholder, .ct-group textarea::placeholder { color: var(--ink-faint); }
+.ct-group:focus-within { border-color: rgba(167,38,208,.55); }
+.ct-form .btn-wide { margin-top: .2rem; }
+.ct-msg { margin: 0; font-size: .85rem; color: var(--ink-soft); text-align: center; }
+.ct-done { padding: 1.4rem .5rem; }
+:root[data-theme="light"] a.ct-row, :root[data-theme="light"] .ct-group { background: #fff; border-color: rgba(60,30,100,.08); }
+:root[data-theme="light"] .ct-group > input + input, :root[data-theme="light"] .ct-group > input + textarea { border-top-color: rgba(60,30,100,.10); }
+:root[data-skin="clear"] .ct-group > input + input, :root[data-skin="clear"] .ct-group > input + textarea { border-top-color: rgba(0,0,0,.08); }
+:root[data-skin="clear"] a.ct-row, :root[data-skin="clear"] .ct-group { background: #fff; border: 0; box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
+:root[data-skin="clear"] .ct-seg { background: rgba(118,118,128,.12); }
 /* ═══════════ ROUND TWO ═══════════ */
 .see-all { all: unset; cursor: pointer; margin-inline-start: auto; font-size: .9rem; font-weight: 600; color: var(--mag-ink); }
 .see-all:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; border-radius: 4px; }
@@ -20039,7 +20072,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1031-1400";
+const BUILD = "1031-1600";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -25309,7 +25342,7 @@ function wiktArCard(d, x, exact) {
    English word its Arabic, from Wiktionary. The work stays where it is;
    a word tapped in the results goes into the translation at the cursor.
    Not in the booth: interpreting is done against the clock. */
-const QD_SKIP = new Set(["booth"]);
+const QD_SKIP = new Set(["booth", "contact"]);
 /* a place to write a translation: a text box, long or one line (search boxes are not) */
 const QD_BOX = 'textarea, input[type="text"], input:not([type])';
 const qdIsBox = n => n && n.matches && n.matches(QD_BOX);
@@ -26493,7 +26526,8 @@ function runSubtitle() {
    "Have a question or feedback?" sits at the foot of Home and under
    Contact us in Settings. It opens a page with the team's email and a
    form. Each message is emailed to the team through FormSubmit
-   (formsubmit.co; the address confirms it once with an Activate link),
+   (formsubmit.co; the address must confirm it once with the Activate
+   link FormSubmit emails it, or nothing is forwarded),
    with the member's name and email so a reply goes straight back, and
    a copy is kept in public.feedback (supabase/feedback.sql), readable
    only in the Supabase dashboard. It counts as sent if either arrives. */
@@ -26528,46 +26562,46 @@ function runContact() {
   const u = (session && session.user) || {};
   const wrap = el("div", "ct");
   wrap.innerHTML =
-    '<div class="ct-hero"><h2>We’re here to hear from you</h2>' +
-      '<p>Your feedback, suggestions and problem reports go straight to the team. Write to us by email, or use the form below.</p>' +
-      '<p lang="ar" dir="rtl">نحن هنا لنسمع منكم. ملاحظاتكم واقتراحاتكم وبلاغاتكم تصل إلى الفريق مباشرة.</p></div>' +
-    '<div class="ct-box ct-mail"><span class="ct-ico">' + CT_ICON_MAIL + '</span><b>Email · البريد الإلكتروني</b>' +
-      '<a class="ct-addr" href="mailto:' + CONTACT_EMAIL + '">' + CONTACT_EMAIL + '</a></div>' +
-    '<form class="ct-box ct-form" novalidate>' +
-      '<p class="ct-k">Contact form · نموذج التواصل</p>' +
-      '<h3>Send a message</h3>' +
-      '<p>Choose the kind of message and write it clearly. The team keeps it and replies when needed.</p>' +
-      '<div class="ct-tip"><span aria-hidden="true">💡</span><span>Reporting a problem? Say which page it was on and what happened, so it is easy to trace.</span></div>' +
-      '<div class="ct-kinds" role="group" aria-label="Kind of message"></div>' +
-      '<label class="ct-f"><span>Name · الاسم</span><input name="name" maxlength="120" autocomplete="name" required></label>' +
-      '<label class="ct-f"><span>Email · البريد الإلكتروني</span><input name="email" type="email" maxlength="200" autocomplete="email" required></label>' +
-      '<label class="ct-f"><span>Message · الرسالة</span><textarea name="message" maxlength="2000" dir="auto" required></textarea></label>' +
+    '<p class="ct-lede">Questions, ideas or a problem? We read every message.<span lang="ar" dir="rtl">نقرأ كل رسالة تصلنا.</span></p>' +
+    '<a class="ct-row" href="mailto:' + CONTACT_EMAIL + '"><span class="ct-ico">' + CT_ICON_MAIL + '</span>' +
+      '<span class="ct-row-t"><small>Email · البريد</small><b>' + CONTACT_EMAIL + '</b></span><span class="ct-go" aria-hidden="true">›</span></a>' +
+    '<form class="ct-form" novalidate>' +
+      '<p class="ct-h">Send a message · أرسل رسالة</p>' +
+      '<div class="ct-seg" role="radiogroup" aria-label="Kind of message"></div>' +
+      '<div class="ct-group">' +
+        '<input name="name" maxlength="120" autocomplete="name" placeholder="Name · الاسم" aria-label="Name" required>' +
+        '<input name="email" type="email" maxlength="200" autocomplete="email" placeholder="Email · البريد" aria-label="Email" required>' +
+        '<textarea name="message" maxlength="2000" dir="auto" placeholder="Your message · رسالتك" aria-label="Message" required></textarea>' +
+      '</div>' +
       '<button type="submit" class="btn-wide">Send · إرسال</button>' +
       '<p class="ct-msg" aria-live="polite"></p>' +
     '</form>';
   stage.appendChild(wrap);
 
   const form = wrap.querySelector(".ct-form");
-  const kinds = form.querySelector(".ct-kinds");
+  const seg = form.querySelector(".ct-seg");
   const msg = form.querySelector(".ct-msg");
   const send = form.querySelector('button[type="submit"]');
+  const field = n => form.querySelector('[name="' + n + '"]');
   let kind = "note";
-  CT_KINDS.forEach(([id, en, ar]) => {
-    const b = el("button", "ct-kind", en + ' · <span lang="ar">' + ar + '</span>');
+  const SHORT = { note: ["Feedback", "ملاحظة"], suggestion: ["Idea", "اقتراح"], thanks: ["Thanks", "شكر"], problem: ["Problem", "مشكلة"] };
+  CT_KINDS.forEach(([id]) => {
+    const b = el("button", "ct-kind", SHORT[id][0] + '<small lang="ar">' + SHORT[id][1] + '</small>');
     b.type = "button";
-    b.setAttribute("aria-pressed", String(id === kind));
+    b.setAttribute("role", "radio");
+    b.setAttribute("aria-checked", String(id === kind));
     b.addEventListener("click", () => {
       kind = id;
-      kinds.querySelectorAll(".ct-kind").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+      seg.querySelectorAll(".ct-kind").forEach(x => x.setAttribute("aria-checked", String(x === b)));
+      field("message").placeholder = id === "problem"
+        ? "Which page, and what happened? · أي صفحة، وماذا حدث؟" : "Your message · رسالتك";
     });
-    kinds.appendChild(b);
+    seg.appendChild(b);
   });
-  const field = n => form.querySelector('[name="' + n + '"]');
   field("name").value = p.display_name || "";
   field("email").value = u.email || "";
 
-  /* the email to the team: name and address in the message, and as the
-     reply-to, so answering it in the inbox writes back to the member */
+  /* 1. the email to the team (FormSubmit; the address confirms it once) */
   const byEmail = async (name, email, text) => {
     const label = CT_KINDS.find(k => k[0] === kind);
     const r = await fetch("https://formsubmit.co/ajax/" + CONTACT_EMAIL, {
@@ -26581,8 +26615,11 @@ function runContact() {
       })
     });
     const j = await r.json().catch(() => ({}));
+    if (!(r.ok && String(j.success) === "true")) console.warn("contact email:", r.status, j.message || "");
     return r.ok && String(j.success) === "true";
   };
+  /* 2. a copy in public.feedback (supabase/feedback.sql), readable only
+     in the Supabase dashboard */
   const toTable = async (name, email, text) => {
     const r = await fetch(SUPABASE.url + "/rest/v1/feedback", {
       method: "POST", headers: await sbHeaders(),
@@ -26603,13 +26640,12 @@ function runContact() {
     const [mail, row] = await Promise.allSettled([byEmail(name, email, text), toTable(name, email, text)]);
     if ((mail.status === "fulfilled" && mail.value) || (row.status === "fulfilled" && row.value)) {
       form.innerHTML = '<div class="ct-done"><b>Thank you · شكراً لكم</b>' +
-        '<p>Your message has reached the team. A reply will go to ' + esc(email) + '.</p>' +
-        '<p lang="ar" dir="rtl">وصلت رسالتكم إلى الفريق، وسيصلكم الرد على ' + esc(email) + '.</p></div>';
+        '<p>Your message has reached the team. A reply will go to ' + esc(email) + '.</p></div>';
       return;
     }
     send.disabled = false;
     msg.className = "ct-msg bad";
-    msg.innerHTML = "The message did not go through. Please try again in a moment. · لم تُرسل الرسالة، حاول مرة أخرى بعد قليل.";
+    msg.textContent = "The message did not go through. Please try again in a moment. · لم تُرسل الرسالة، حاول مرة أخرى بعد قليل.";
   });
 }
 
