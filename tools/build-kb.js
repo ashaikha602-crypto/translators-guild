@@ -1,5 +1,5 @@
-/* ═══════════ STUDY HELPER KNOWLEDGE ═══════════
-   Builds api/_kb.json, the only material the Study Helper may answer
+/* ═══════════ ASK COMPASS KNOWLEDGE ═══════════
+   Builds api/_kb.json, the only material Ask Compass may answer
    from. It reads the site's own Learn and Practice content out of
    index.html (in a headless browser, so every constant is read exactly
    as the page sees it) and the three Library files, and cuts them into
@@ -57,6 +57,10 @@ const CONSTS = {
   LEGAL_Q:        ["Practice › Legal trial", "Husni & Newman (2015), ch. 3"],
   BAS_Q:          ["Practice › Bassnett trial", "Bassnett (2014)"],
   CONCEPT_Q:      ["Practice › Key Concepts trial", "Husni & Newman (2015)"],
+  CONTEXT_Q:      ["Practice › Context and Ambiguity", ""],
+  REVISE:         ["Practice › Revision", ""],
+  "kslQuiz()":    ["Practice › Kuwaiti Sign Language trial", ""],
+  KSL_VIDEOS:     ["Learn › Kuwaiti Sign Language", ""],
 };
 /* pages whose text is written straight into their render function:
    these are opened in the page and read tab by tab */
@@ -64,7 +68,14 @@ const PAGES = {
   toolkit: ["Learn › Method, Procedure and Strategy", ""],
   errors:  ["Learn › Revision and Common Errors", ""],
   modes:   ["Learn › The Modes of Interpreting", ""],
+  ksl:     ["Learn › Kuwaiti Sign Language", ""],
+  phraseology: ["Practice › Chambers › Phraseology", ""],
+  register:    ["Practice › Chambers › Register", ""],
+  roots:       ["Practice › Chambers › Roots and Patterns", ""],
 };
+/* where each item lives, so the helper can point members to it */
+const SECTION = { method: "Learn", trials: "Practice › Trials", chambers: "Practice › Chambers",
+  poetry: "Practice › Poetry", prose: "Practice › Prose" };
 const LIBRARY = {
   "atoz.json":     "Library › A to Z",
   "legal.json":    "Library › Legal Translation",
@@ -175,7 +186,44 @@ function addCollection(where, src, v) {
       add(where, src, label || where.split(" › ").pop(), paras);
     }
   }
+  const items = await page.evaluate(() => ITEMS.map(t => ({ en: t.en, ar: t.ar, section: t.section, kind: t.kind, subject: t.subject || "", blurb: t.blurb || "" })));
+  for (const t of items) {
+    const where = (SECTION[t.section] || t.section) + " › " + clean(t.en);
+    add(where, "", clean(t.en), ["Site map:", clean(t.en), clean(t.ar), "is a " + t.kind + " in " + (SECTION[t.section] || t.section) + ".",
+      clean(t.subject), clean(t.blurb)].filter(Boolean));
+  }
+  /* features named in the code, the ranks and how many marks each needs */
+  const extra = await page.evaluate(() => {
+    const src = document.documentElement.innerHTML;
+    const names = [...new Set([...src.matchAll(/\nconst ([A-Z_]+_ITEM)\b/g)].map(m => m[1]))];
+    const feats = names.map(n => { try { const v = eval(n); return [v.en, v.subject || ""]; } catch (e) { return null; } }).filter(Boolean);
+    const trials = ITEMS.filter(t => t.section === "trials" && t.published !== false).length;
+    return { feats, trials, ranks: RANKS.map(r => [r.en, r.ar, rankAt(r)]) };
+  });
+  add("Site guide › Profile", "", "Profile features",
+    ["The Profile tab and the ☰ menu hold these:"].concat(extra.feats.map(([en, sub]) => clean(en) + (sub ? " — " + clean(sub) : "") + ".")));
+  add("Site guide › Ranks", "", "Ranks and marks (الرتب والعلامات)",
+    ["There are " + extra.trials + " Trials, counting the Interpreting booth, and each one passed earns one mark. Your rank follows your marks:"]
+      .concat(extra.ranks.map(([en, ar, at]) => en + " (" + ar + "): " + at + " mark" + (at === 1 ? "" : "s") + " or more."))
+      .concat(["To rank up, pass more Trials in Practice. (Search terms: rank, level, promotion, marks, الرتبة، رتبة أعلى، المستوى، الترقية، العلامات)"]));
   await browser.close();
+
+  /* how to use the site, checked by hand: tools/site-guide.json */
+  const guide = JSON.parse(fs.readFileSync(path.join(__dirname, "site-guide.json"), "utf8"));
+  /* the search terms let a question in either language find the passage */
+  for (const p of guide.passages) add("Site guide › " + p.title, "", p.title, [p.text, p.keys ? "(Search terms: " + p.keys + ")" : ""].filter(Boolean));
+
+  /* who is in the Diwans and the prose shelf: names, dates and titles
+     only, not the texts themselves */
+  for (const [file, where, list] of [["poetry/index.json", "Practice › Poetry (The Diwans)", "poets"],
+                                     ["books/index.json", "Practice › Prose Classics", "books"]]) {
+    const d = JSON.parse(fs.readFileSync(path.join(ROOT, file), "utf8"));
+    for (const p of d[list] || []) {
+      add(where, clean(d.credit || ""), clean(p.en || p.ar), [p.ar, p.en, p.era, p.years, p.diwanAr, p.diwanEn,
+        p.count ? p.count + (list === "poets" ? " poems" : " chapters") : "",
+        (p.titles || []).length ? "Titles: " + p.titles.slice(0, 40).join("، ") : ""].filter(Boolean).map(clean));
+    }
+  }
 
   for (const [file, where] of Object.entries(LIBRARY)) {
     const d = JSON.parse(fs.readFileSync(path.join(ROOT, "library", file), "utf8"));

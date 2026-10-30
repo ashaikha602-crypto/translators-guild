@@ -1,0 +1,80 @@
+{
+  "_about": "How to use the site, for Ask Compass. Taken from the Member's Handbook (autumn 2026) and checked against the site's code on 30 October 2026; anything the site no longer does was left out. Lists that change (the trials, the guides, the ranks) are read from the site itself by tools/build-kb.js, not written here. Edit this file when a feature changes, then run node tools/build-kb.js.",
+  "passages": [
+    {
+      "title": "The five tabs",
+      "text": "The site has five tabs, always one tap away along the bottom of the screen (along the top on a computer): Home, Learn, Practice, Interpreting and Profile. Home is the Hall: member search, stories, your progress and what the community is posting. Learn is theory and method: guides with videos, theorists, the Library and a glossary. Practice has the Trials that earn marks, the Chambers you can explore without a score, and the Poetry and Prose workshops. Interpreting is the booth: real settings, two directions, against the clock. Profile is your page, your posts, your messages and every setting. ← Back returns to the page you came from, step by step, and Back to the hall at the foot of a page takes you home.",
+      "keys": "features, sections, menu, navigation, what is on the site. الأقسام، المميزات، القائمة، التنقل، ماذا يوجد في الموقع، الصفحة الرئيسية، تعلم، تدريب، الترجمة الشفوية، الملف الشخصي"
+    },
+    {
+      "title": "Home (the Hall)",
+      "text": "Every visit starts in the Hall. At the top you can switch the look of the site between Dark, Light and Clear. Search members finds anyone by name. Stories shows circles of what members posted in the last 24 hours, yours first. Where you are shows your marks, the Trials you have passed and your rank, and how many marks stand between you and the next rank. Continue where you stopped takes you back into a Trial you have not finished. The Lineage lists translators from history: tap one to read their story. Further down, From the Community shows the latest posts from members, newest first; you can like, comment, save, repost or share a post to your story without leaving the page.",
+      "keys": "home page, hall, theme, dark mode, light mode. الصفحة الرئيسية، القاعة، الوضع الداكن، الوضع الفاتح، المظهر، القصص، تقدمي، رتبتي، البحث عن الأعضاء"
+    },
+    {
+      "title": "Learn",
+      "text": "Learn holds the guides to the theory, method and history of translation, the Kuwait University Translation Minor courses, interpreting and Kuwaiti Sign Language, two dictionaries (Lisan al-Arab and Wiktionary), and the reference shelf: the Glossary of the Field and the Library books. Guides are for reading and watching and carry no score, so you can come back to them as often as you like, before a Trial or after one. Where a guide has videos, they sit near the top under Watch first, from universities, professional bodies and the institutions themselves.",
+      "keys": "guides, lessons, videos, library, dictionaries, glossary. تعلم، الدروس، الأدلة، الفيديوهات، المكتبة، المعاجم، المسرد"
+    },
+    {
+      "title": "Practice, trials and marks",
+      "text": "Practice has three kinds of room. The Trials each earn a mark when you pass them. The Chambers (Phraseology, Register, Roots and Patterns) are unassessed and never run out. The Poetry workshop (The Diwans) lets you translate a poem and share your version, and the Prose workshop lets you translate a passage from a classic Arabic book. If you leave a Trial part-way, open it again and choose Resume trial, or use Continue where you stopped in the Hall. Marks decide your rank.",
+      "keys": "trials, tests, quizzes, exercises, marks, workshops, chambers. التدريب، الاختبارات، التمارين، العلامات، الدرجات، الورش، الشعر، النثر، استئناف"
+    },
+    {
+      "title": "Interpreting tab",
+      "text": "The Interpreting tab is the booth: practise interpreting in real settings, such as diplomatic, legal, medical, media, business and community settings, in two directions, against the clock. It has its own tab, so it is not listed among the Trials in Practice.",
+      "keys": "what is the booth, booth, interpreting practice. الكابينة، كابينة الترجمة الفورية، الترجمة الشفوية، التدريب على الترجمة الفورية"
+    },
+    {
+      "title": "Pocket dictionary (قاموس)",
+      "text": "While you are typing a translation in a Trial, a قاموس button appears at the bottom of the screen. It opens a pocket dictionary for a word in Arabic or English; if you highlight a word first, it looks that word up. Tap a word in the results to add it to your translation where your cursor was. The entries come from Wiktionary (CC BY-SA).",
+      "keys": "dictionary, look up a word. القاموس، معنى كلمة، البحث عن كلمة"
+    },
+    {
+      "title": "Your account and signing in",
+      "text": "One account works on every device, so marks earned on your phone are there when you sign in on a laptop. Log In with your email and password. Keep Remember me ticked on your own phone, and untick it on a shared computer. Forgot Password? sends a reset link to your email address. Other members see your display name, your username and what you put on your profile; they never see your email address.",
+      "keys": "login, log in, sign in, password, forgot password, email. تسجيل الدخول، كلمة المرور، نسيت كلمة السر، الحساب، البريد الإلكتروني"
+    },
+    {
+      "title": "Put the site on your Home Screen",
+      "text": "Added to your Home Screen, the site opens full-screen with its own icon, like an app, and on iPhone this is also what makes notifications possible. Nothing needs installing from a store. iPhone (Safari): open the site in Safari, tap Share (the square with the arrow pointing up), scroll down and choose Add to Home Screen, then Add, and from then on open it from its icon. Android (Chrome): open the site in Chrome, tap the ⋮ menu, choose Add to Home screen (or Install app) and confirm. If you added it a while ago and see an older icon, remove the shortcut and add it again; phones keep the first icon they were given.",
+      "keys": "install, app, download, icon. تثبيت، تطبيق، تحميل، الشاشة الرئيسية، أيقونة، إضافة إلى الشاشة الرئيسية، آيفون، أندرويد، أنزل الموقع، تنزيل الموقع، كتطبيق، نزل التطبيق، أحمل التطبيق"
+    },
+    {
+      "title": "Phone notifications",
+      "text": "The site can tell your phone when someone messages you, follows you, or likes, comments on, replies to or reposts your post, even while the site is closed. While you have it open, the notice slides down from the top of the screen instead. To turn them on, open the site from your Home Screen icon (on iPhone, Apple allows website notifications only there), tap Turn on on the notifications card, then Allow. To choose which kinds you get, go to Profile → ☰ → Phone notifications; each kind has its own switch. Not seeing them? That is a phone setting: on iPhone go to Settings → Notifications → Guild, tick Banners, and check that no Focus mode is on.",
+      "keys": "alerts, push. الإشعارات، التنبيهات، تفعيل الإشعارات"
+    },
+    {
+      "title": "Your profile",
+      "text": "Open Profile and tap Edit profile. Everything there is optional except your display name. You can choose a title before your name (for example Student, Freshman, Sophomore, Junior, Senior, Grad. Student, Researcher or Dr., or type your own). To change your photo, tap the + on your picture and choose Change profile photo, drag to place it, zoom, and tap ✓. You can add your working languages, translation and interpreting interests, your major and your university, which other members use to find people to talk to. Share profile gives you a link straight to your page.",
+      "keys": "edit profile, photo, picture, title, bio. الملف الشخصي، تعديل الملف، الصورة، تغيير الصورة، اللقب، الجامعة، التخصص"
+    },
+    {
+      "title": "Posts and stories",
+      "text": "Create from the ⊞ at the top of your profile. A Post is a photo or video for your profile and the feed. A Translation post is written work, and you choose its kind: My Translation (share something you translated and ask for feedback), Translation Help (ask about a difficult passage), Translation Request (ask for help with a piece of work), Discussion (a question of terminology, strategy or theory), Challenge (post a passage for others to translate) or Research (a paper, a chapter, a finding worth reading). A story is a photo, a short video or a line of text, gone after 24 hours; to keep one, add it to a Highlight on your profile. To add one, tap + on your picture and choose Add to your story. You can also share any post to your story. When someone replies or reacts to your story, it arrives as a private message.",
+      "keys": "post, story, share, publish, highlight. منشور، نشر، قصة، ستوري، مشاركة، ترجمتي، طلب ترجمة، تحدي"
+    },
+    {
+      "title": "Messages, people and notifications",
+      "text": "Open Messages from the ✉ on your profile, or tap Message on someone else's page. Conversations work like the messaging apps you know: newest at the top, a dot for unread, Seen under what they have read, and a heart for a quick reply. Each member decides who may message them. Search members sits at the top of the Hall, and Discover people on your profile suggests members you might know; follow someone to see their posts in your feed. The bell at the top of your profile collects likes, comments, replies, follows, reposts and messages, newest first, grouped by Today, This week and Earlier. A tick beside a name means the Guild has confirmed who that member is (Verified).",
+      "keys": "message, chat, DM, follow, friends, verified. رسالة، رسائل، رسالة خاصة، محادثة، متابعة، الأصدقاء، الإشعارات، توثيق"
+    },
+    {
+      "title": "Settings and privacy",
+      "text": "Every setting lives behind the ☰ at the top right of your profile, under Settings and activity, with a search box to find any of them by name. Account privacy decides who can see you: Public (anyone with the link), Members only (people signed in), Followers (only people who follow you) or Private (only you). Saved keeps the posts you bookmarked. Your translations lists everything you posted as written work. Your progress shows marks, Trials and rank in one view. Appearance is also switched on Home: Dark, Light or Clear.",
+      "keys": "settings, privacy, who can see me, saved, appearance. الإعدادات، الخصوصية، من يرى ملفي، المحفوظات، المظهر، حساب خاص"
+    },
+    {
+      "title": "Updates and when something looks wrong",
+      "text": "The site updates itself. When a newer version is ready, a bar says \"A newer version of the site is ready.\" with Refresh and Later; tap Refresh. If something still looks out of date, close the site fully and open it again. If a page will not load, check your connection and sign in again.",
+      "keys": "problem, bug, not working, error, refresh, update. مشكلة، خطأ، لا يعمل، تحديث، الموقع لا يفتح"
+    },
+    {
+      "title": "Ask Compass",
+      "text": "Ask Compass is the round button at the bottom right of every page. It answers questions about anything on the site, from translation theory, history, terms and procedures to the Library, the trials and how to use the site, in Arabic or English. It answers only from the site's own material and says where to read more. Only signed-in members can use it, and the conversation is not saved: New chat starts again.",
+      "keys": "assistant, chatbot, help. المساعد، اسأل البوصلة، مساعدة، روبوت المحادثة"
+    }
+  ]
+}
