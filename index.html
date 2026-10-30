@@ -3796,7 +3796,7 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
    between the boxes in them, a little more inside each box, and on a
    phone a bottom bar that floats as a rounded pill, clear of the edges,
    instead of a strip fused to the bottom of the screen. */
-#hall, #seal { gap: 3rem; }
+#hall { gap: 3rem; }
 #learn, #practice { gap: 2.75rem; }
 .learn-map { gap: 2.6rem; }
 .lm-head { margin: 0 0 .95rem; }
@@ -3931,6 +3931,97 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
 :root[data-skin="clear"] .lm-list .lesson-row { background: transparent; border-radius: 0; box-shadow: none; }
 :root[data-skin="clear"] .lm-list .lesson-row + .lesson-row::before,
 :root[data-skin="clear"] .genre + .genre::before { background: rgba(0,0,0,.08); }
+/* Profile, compact like Instagram: the posts should start on the first screen */
+#seal { gap: .85rem; }
+#seal .ig-head { gap: 1rem; }
+#seal .ig-head .avatar { width: 78px; height: 78px; }
+#seal .ig-name { font-size: 1.15rem; }
+#seal .ig-id { gap: .3rem; }
+#seal .ig-id .chips-row { gap: .25rem; }
+#seal .ig-id .chip-tag { font-size: .62rem; padding: .18rem .5rem; }
+#seal .count-row b { font-size: 1rem; }
+#seal .count-row span { font-size: .7rem; }
+#seal .ig-bio { gap: .05rem; }
+#seal .ident-line, #seal .seal-bio { font-size: .86rem; line-height: 1.45; }
+#seal .seal-motto { font-size: .9rem; margin: 0; }
+#seal .ig-ints { gap: .35rem; }
+#seal .ig-ints .pub-h { font-size: .7rem; letter-spacing: .04em; text-transform: none; }
+#seal .ig-ints .chips-row { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0; }
+#seal .ig-ints .chips-row::-webkit-scrollbar { display: none; }
+#seal .ig-ints .chip-tag { font-size: .72rem; padding: .22rem .6rem; white-space: nowrap; letter-spacing: .02em; }
+#seal .ig-actions { margin: .1rem 0 0; }
+#seal .ig-btn { height: 32px; font-size: .85rem; }
+#seal .st-hl-box { gap: .3rem; }
+#seal .st-hl-box .pub-h { font-size: .7rem; letter-spacing: .04em; text-transform: none; }
+#seal .st-hl { width: 3.8rem; }
+#seal .st-hl-c { width: 3.3rem; height: 3.3rem; }
+#seal .st-hl-new .st-hl-c { font-size: 1.6rem; }
+#seal .st-hl > span:last-child { font-size: .7rem; }
+#seal .hilite-row { margin: .2rem 0 0; }
+#seal .grid-tabs { margin-top: .3rem; }
+/* ═══════════ ROUND TWO ═══════════ */
+.see-all { all: unset; cursor: pointer; margin-inline-start: auto; font-size: .9rem; font-weight: 600; color: var(--mag-ink); }
+.see-all:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; border-radius: 4px; }
+.lately-more { width: 100%; }
+/* Learn search */
+.learn-find { display: flex; align-items: center; gap: .55rem; padding: .6rem .9rem; border-radius: 14px;
+  background: rgba(214,191,234,.07); border: var(--hair); }
+.learn-find:focus-within { border-color: rgba(167,38,208,.6); }
+.learn-find svg { width: 18px; height: 18px; flex: none; fill: none; stroke: var(--ink-faint); stroke-width: 2; stroke-linecap: round; }
+.learn-find input { all: unset; flex: 1; min-width: 0; font-size: 1rem; color: var(--white); }
+.learn-find input::placeholder { color: var(--ink-faint); }
+.learn-none { text-align: center; color: var(--ink-soft); display: grid; gap: .7rem; justify-items: center; }
+.learn-none[hidden], .lm-group[hidden], .lesson-row[hidden], #lineage-block[hidden] { display: none; }
+.lr-num.done { background: var(--grad); color: #fff; }
+:root[data-theme="light"] .learn-find { background: #fff; border-color: rgba(60,30,100,.10); }
+:root[data-skin="clear"] .learn-find { background: rgba(118,118,128,.12); border: 0; }
+/* Practice: up next, and the folded workshops */
+button.up-next { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: minmax(0,1fr) auto;
+  gap: .15rem .8rem; align-items: center; width: 100%; padding: 1rem 1.1rem; border-radius: 18px;
+  background: var(--grad); color: #fff; box-shadow: 0 14px 34px -16px rgba(101,15,208,.9); }
+button.up-next[hidden] { display: none; }
+.un-k { grid-column: 1; font-size: .75rem; font-weight: 600; letter-spacing: .04em; opacity: .85; }
+.un-t { grid-column: 1; font-size: 1.15rem; font-weight: 600; }
+.un-s { grid-column: 1; font-size: .8rem; opacity: .8; }
+.un-go { grid-column: 2; grid-row: 1 / 4; font-size: 1.6rem; opacity: .85; }
+.ws-group > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: .8rem; padding: .9rem 1.05rem;
+  border-radius: 16px; border: var(--hair); background: rgba(214,191,234,.045); }
+.ws-group > summary::-webkit-details-marker { display: none; }
+.ws-t { display: grid; gap: .1rem; flex: 1; }
+.ws-t b { color: var(--white); font-size: 1.05rem; font-weight: 600; }
+.ws-t small { color: var(--ink-faint); font-size: .8rem; }
+.ws-chev { font-size: 1.4rem; color: var(--ink-faint); transition: transform 200ms var(--ease); }
+.ws-group[open] .ws-chev { transform: rotate(90deg); }
+.ws-group[open] > summary { margin-bottom: 1.6rem; }
+.ws-group > div + div { margin-top: 2rem; }
+:root[data-theme="light"] .ws-group > summary { background: #fff; border-color: rgba(60,30,100,.08); }
+:root[data-skin="clear"] .ws-group > summary { background: #fff; border: 0; box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
+/* Profile: icon tabs with a word under each */
+.grid-tab { display: grid; justify-items: center; gap: .15rem; }
+.gt-lab { font-size: .64rem; font-weight: 600; letter-spacing: .01em; }
+.grid-tabs { overflow-x: auto; scrollbar-width: none; }
+.grid-tabs::-webkit-scrollbar { display: none; }
+/* Inside a trial or guide: the title bar stays at the top, with a thin
+   line that fills as the member goes */
+#trial .trial-head { position: sticky; top: 0; z-index: 20; margin: 0 -1.15rem; padding: .7rem 1.15rem .75rem;
+  background: var(--scrim); -webkit-backdrop-filter: saturate(160%) blur(18px); backdrop-filter: saturate(160%) blur(18px);
+  border-bottom: var(--hair); flex-wrap: nowrap; align-items: center !important; }
+#trial .trial-head::after { content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: calc(var(--prog, 0) * 100%);
+  background: var(--grad-h); transition: width 300ms var(--ease); }
+#trial .trial-head h2 { font-size: 1.15rem; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#trial .trial-head .th-titles { flex: 1; min-width: 0; }
+#trial .trial-head .trial-subject { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: .1rem 0 0; }
+#trial .trial-head .t-right { flex: 0 1 auto !important; max-width: 38%; }
+#trial .trial-head .t-count { font-size: .72rem; line-height: 1.3; text-align: right; display: block; }
+#trial .trial-head .top-back { width: 2.2rem; height: 2.2rem; font-size: 1.05rem; margin-right: .2rem; }
+#trial .dots { display: none; }
+@media (min-width: 761px) { #trial .trial-head { top: 4.4rem; margin: 0; padding-inline: 0; } }
+:root[data-theme="light"] #trial .trial-head { background: rgba(250,248,253,.88); }
+:root[data-skin="clear"] #trial .trial-head { background: rgba(245,245,247,.85); }
+.stage { padding-top: 1.1rem; }
+/* answers at a standard size */
+.opt { padding: .85rem 1rem; font-size: 1rem; font-weight: 400; border-radius: 14px; gap: .75rem; min-height: 48px; animation: none; }
+.opt:hover:not(:disabled) { transform: none; }
 </style>
 
 <div class="aura" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
@@ -4111,6 +4202,9 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
       </div>
     </header>
 
+    <!-- Stories first, right under the greeting, as in every social app. -->
+    <div class="story-bar" id="story-bar" hidden></div>
+
     <!-- Finding people starts here, at the top of home, as it does in
          every social app. Tapping it opens the member search. -->
     <button type="button" class="home-search" id="home-search" hidden>
@@ -4119,18 +4213,9 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
     </button>
     <!-- Asks once a week to turn on phone notifications, until it is on. -->
     <div id="push-nudge" hidden></div>
-    <!-- Stories: a row of circles, as everywhere else people post them. -->
-    <div class="story-bar" id="story-bar" hidden></div>
 
     <div class="panel seal-journey" id="seal-journey"></div>
 
-    <div>
-      <div class="strip-head">
-        <h2>The Lineage</h2>
-        <span class="note">Sixteen translators &mdash; tap any one</span>
-      </div>
-      <div class="strip" id="strip"></div>
-    </div>
 
     <!-- What the Guild has been posting. Under the lineage, because the
          dead translators are the ground and the living ones are the
@@ -4138,7 +4223,7 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
     <div id="lately-wrap" hidden>
       <div class="strip-head">
         <h2>From the Community</h2>
-        <span class="note">What members have been posting</span>
+        <button type="button" class="see-all" id="lately-all">See all</button>
       </div>
       <div id="lately"></div>
     </div>
@@ -4154,7 +4239,20 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
       <h1>Theory &amp; Method</h1>
       <p class="note">The field, its terms and its errors. Nothing here is marked.</p>
     </header>
+    <label class="learn-find">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input type="search" id="learn-search" placeholder="Search Learn · ابحث في تعلّم" aria-label="Search Learn" dir="auto">
+    </label>
+    <!-- The Lineage: moved here from Home, because it is study material. -->
+    <div id="lineage-block">
+      <div class="strip-head">
+        <h2>The Lineage</h2>
+        <span class="note">Sixteen translators, tap any one</span>
+      </div>
+      <div class="strip" id="strip"></div>
+    </div>
     <div id="block-method"><div class="ledger" id="sec-method"></div></div>
+    <div class="learn-none" id="learn-none" hidden></div>
   </section>
 
   <!-- ══════════════ PRACTICE ══════════════ -->
@@ -4164,6 +4262,9 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
       <p class="note">The trials earn marks. The chambers never run out.</p>
     </header>
 
+    <!-- Up next: the first Trial in the course order not yet passed. -->
+    <button type="button" class="up-next" id="practice-next" hidden></button>
+
     <div id="block-trials">
       <div class="sec-head">
         <h2>The Trials</h2>
@@ -4172,6 +4273,9 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
       <div class="ledger" id="sec-trials"></div>
     </div>
 
+    <!-- The unscored rooms, folded under one heading. -->
+    <details class="ws-group" id="block-workshops">
+      <summary><span class="ws-t"><b>Workshops</b><small>Poetry, prose and the chambers · unscored</small></span><span class="ws-chev" aria-hidden="true">›</span></summary>
     <div id="block-poetry">
       <div class="sec-head">
         <h2>Poetry</h2>
@@ -4195,6 +4299,7 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
       </div>
       <div class="ledger" id="sec-chambers"></div>
     </div>
+    </details>
   </section>
 
   <!-- ══════════════ THE MEMBER'S SEAL ══════════════
@@ -19351,15 +19456,19 @@ function profileGrid(authorId, isMe) {
     /* Posts, reels, reposts — drawn as icons, the way she marked them
        on the reference. Translations keep their own way in, from the
        circle above. */
-    GRID_TABS.forEach(t2 => {
+    GRID_TABS.filter(t2 => !t2.mine || isMe).forEach(t2 => {
+      /* icon and a word under it: an icon alone has to be guessed */
       const b = el("button", "grid-tab",
-        '<svg viewBox="0 0 24 24" aria-hidden="true">' + t2.ico + '</svg>');
+        '<svg viewBox="0 0 24 24" aria-hidden="true">' + t2.ico + '</svg><span class="gt-lab">' + t2.lab + '</span>');
       b.type = "button";
       b.setAttribute("role", "tab");
       b.setAttribute("aria-label", t2.lab);
       b.title = t2.lab;
       b.setAttribute("aria-selected", String(tab === t2.id));
-      b.addEventListener("click", () => { if (tab !== t2.id) { tab = t2.id; draw(); } });
+      b.addEventListener("click", () => {
+        if (t2.id === "saved") { openItem(SAVED_ITEM); return; }
+        if (tab !== t2.id) { tab = t2.id; draw(); }
+      });
       tabs.appendChild(b);
     });
 
@@ -19387,7 +19496,11 @@ const GRID_TABS = [
   { id: "reel",   lab: "Reels",
     ico: '<rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M10 9l5 3-5 3z"/>' },
   { id: "repost", lab: "Reposts",
-    ico: '<path d="M4 9.5A3.5 3.5 0 0 1 7.5 6H17l-2.5-2.5M20 14.5A3.5 3.5 0 0 1 16.5 18H7l2.5 2.5"/>' }
+    ico: '<path d="M4 9.5A3.5 3.5 0 0 1 7.5 6H17l-2.5-2.5M20 14.5A3.5 3.5 0 0 1 16.5 18H7l2.5 2.5"/>' },
+  { id: "translation", lab: "Translations",
+    ico: '<path d="M4 5h9M8.5 3v2M6 5c0 4 2.5 7 6 8.5M11 5c0 3.5-2.5 7-6.5 8.5"/><path d="M13 21l4-10 4 10M14.5 17.5h5"/>' },
+  { id: "saved", lab: "Saved", mine: true,
+    ico: '<path d="M6.5 3.5h11v17l-5.5-4-5.5 4z"/>' }
 ];
 
 async function authorFeed(id, kind) {
@@ -19926,7 +20039,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1031-1100";
+const BUILD = "1031-1400";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -21477,7 +21590,7 @@ async function renderLately() {
   if (backend !== "supabase" || !myId()) { wrap.hidden = true; return; }
   let rows = [];
   try {
-    rows = await sbGet("feed?select=" + FEED_COLS + "&order=created_at.desc&limit=12");
+    rows = await sbGet("feed?select=" + FEED_COLS + "&order=created_at.desc&limit=3");
   } catch (e) { wrap.hidden = true; return; }
   if (!rows.length) { wrap.hidden = true; return; }
 
@@ -21487,7 +21600,7 @@ async function renderLately() {
   rows.forEach(r => list.appendChild(latelyRow(r)));
   box.appendChild(list);
 
-  const more = el("button", "lately-more", "Open the Compass Feed");
+  const more = el("button", "lately-more", "See all posts in the Compass Feed");
   more.type = "button";
   more.addEventListener("click", () => openItem(COMMUNITY_ITEM));
   box.appendChild(more);
@@ -21613,9 +21726,14 @@ function renderLearn() {
       n++;
       const b = el("button", "lesson-row");
       b.style.animationDelay = (n * 30) + "ms";
+      /* what the search box matches: both names and the subject line */
+      b.dataset.q = learnKey([t.en, t.ar, t.subject, t.blurb, g.en].join(" "));
+      /* the course is a path: a unit already opened shows a tick */
+      const opened = g.id === "core" && state.opened && state.opened[t.id];
       b.innerHTML =
         (t.thumb ? '<img class="pr-face" src="' + t.thumb + '" alt="" loading="lazy">'
-                 : '<span class="lr-num">' + (g.id === "core" ? g.order.indexOf(t.id) + 1 : "•") + '</span>') +
+                 : '<span class="lr-num' + (opened ? ' done' : '') + '">' +
+                     (opened ? '✓' : (g.id === "core" ? g.order.indexOf(t.id) + 1 : "•")) + '</span>') +
         '<span class="lr-txt">' + (g.when && g.when[t.id] ? '<span class="lr-when">' + g.when[t.id] + '</span>' : '') +
         '<span class="lr-en">' + t.en + '</span></span>' +
         '<span class="lr-go" aria-hidden="true">›</span>';
@@ -21625,8 +21743,66 @@ function renderLearn() {
     sec.appendChild(list);
     box.appendChild(sec);
   });
+  const f = document.getElementById("learn-search");
+  if (f && f.value) learnFilter(f.value);
 }
-function renderPractice() { fillLedger("sec-trials", "trials"); fillLedger("sec-chambers", "chambers"); fillLedger("sec-poetry", "poetry"); fillLedger("sec-prose", "prose"); }
+/* Learn's search: rows whose names or subject hold every word typed */
+const learnKey = t => String(t || "").toLowerCase().replace(/<[^>]+>/g, " ")
+  .replace(/[\u064B-\u065F\u0670]/g, "").replace(/[أإآ]/g, "ا").replace(/ة/g, "ه");
+function learnFilter(q) {
+  const words = learnKey(q).split(/\s+/).filter(Boolean);
+  const box = document.getElementById("sec-method");
+  if (!box) return;
+  let shown = 0;
+  box.querySelectorAll(".lm-group").forEach(g => {
+    let any = 0;
+    g.querySelectorAll(".lesson-row").forEach(r => {
+      const hit = words.every(w => (r.dataset.q || "").includes(w));
+      r.hidden = !hit; if (hit) any++;
+    });
+    g.hidden = !any; shown += any;
+  });
+  const lin = document.getElementById("lineage-block");
+  if (lin) lin.hidden = words.length > 0;
+  const none = document.getElementById("learn-none");
+  if (!none) return;
+  none.hidden = !(words.length && !shown);
+  if (!none.hidden) {
+    none.innerHTML = '<p>Nothing in Learn matches “' + esc(q) + '”.</p>';
+    const ask = el("button", "ghost", "Ask Compass about it");
+    ask.type = "button";
+    ask.addEventListener("click", () => {
+      helperOpen();
+      const box2 = hpView.querySelector("textarea");
+      box2.value = q; box2.dispatchEvent(new Event("input"));
+    });
+    none.appendChild(ask);
+  }
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const f = document.getElementById("learn-search");
+  if (f) f.addEventListener("input", () => learnFilter(f.value));
+});
+
+function renderPractice() {
+  fillLedger("sec-trials", "trials"); fillLedger("sec-chambers", "chambers"); fillLedger("sec-poetry", "poetry"); fillLedger("sec-prose", "prose");
+  /* the next Trial to take: the first in the course order not yet passed */
+  const up = document.getElementById("practice-next");
+  if (!up) return;
+  const next = ITEMS.filter(t => t.section === "trials" && t.id !== "booth" && t.published !== false && !state.marks[t.id])
+    .sort((a, b) => {
+      const ia = TRIAL_ORDER.indexOf(a.id), ib = TRIAL_ORDER.indexOf(b.id);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    })[0];
+  up.hidden = !next;
+  if (!next) return;
+  const part = trialLoad(next.id);
+  up.innerHTML = '<span class="un-k">' + (part ? "Continue" : "Up next") + ' · ' + (part ? "تابع" : "التالي") + '</span>' +
+    '<span class="un-t">' + next.en + '</span>' +
+    (next.subject ? '<span class="un-s">' + next.subject + '</span>' : '') +
+    '<span class="un-go" aria-hidden="true">›</span>';
+  up.onclick = () => openItem(next);
+}
 
 
 document.getElementById("signout-btn").addEventListener("click", async () => {
@@ -21862,6 +22038,10 @@ function openItem(t, arg, keepTrail) {
     }
   }
   active = t;
+  if (t.section === "method" && t.id) {
+    state.opened = state.opened || {};
+    if (!state.opened[t.id]) { state.opened[t.id] = Date.now(); save(); }
+  }
   setAct(t.section === "method" ? 2 : 3);
   document.getElementById("trial-en").textContent = t.en;
   /* the precise subject, so a member can find the same material in the
@@ -21876,6 +22056,8 @@ function openItem(t, arg, keepTrail) {
 }
 function setCount(txt) { document.getElementById("trial-count").textContent = txt; }
 function setDots(total, done, now) {
+  const head = document.querySelector("#trial .trial-head");
+  if (head) head.style.setProperty("--prog", total ? Math.min(1, done / total) : 0);
   document.getElementById("trial-dots").innerHTML = total ? dotsRow(total, done, now) : "";
 }
 /* ═══════════ WHERE BACK ACTUALLY GOES ═══════════
@@ -27983,8 +28165,6 @@ function chooseGenre() {
     BOOTH_DIRS.find(d => d.id === boothDir()).say));
   stage.appendChild(dirWrap);
 
-  stage.appendChild(videoStrip(BOOTH_VIDEOS, "Professionals at work"));
-
   const last = lastGenre();
   const grid = el("div", "genre-grid");
   BOOTH_GENRES.forEach(g => {
@@ -28004,6 +28184,8 @@ function chooseGenre() {
     grid.appendChild(b);
   });
   stage.appendChild(grid);
+  /* the settings are what the page is for; the videos come after them */
+  stage.appendChild(videoStrip(BOOTH_VIDEOS, "Watch professionals"));
 
   /* What the booth has awarded this member so far, and what is left. The
      six settings are the ladder; the rank underneath counts them. */
