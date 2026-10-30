@@ -3828,6 +3828,109 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
   :root[data-skin="clear"] #bottom-nav { border: 1px solid rgba(0,0,0,.08); box-shadow: 0 14px 34px -16px rgba(0,0,0,.3); }
   :root[data-skin="clear"] #bottom-nav button[aria-current="page"] { background: rgba(0,113,227,.08); }
 }
+/* ═══════════ LIKE AN APP ═══════════
+   Sized and moving the way an iPhone app does (Apple's Human Interface
+   Guidelines): 44pt touch targets, 16pt margins, lists grouped into one
+   rounded block with hairline dividers rather than a separate heavy box
+   per row, sentence-case labels instead of wide-spaced capitals, and
+   rows that do not fly in one by one. Pages move like a navigation
+   stack: a deeper page slides in from the right, Back slides it away,
+   and switching tabs is instant. */
+#app { perspective: none; }
+.view { transform-style: flat; backface-visibility: visible; }
+.view.in-push  { animation: navIn 340ms cubic-bezier(.32,.72,0,1) both; }
+.view.out-push { animation: navOutLeft 300ms cubic-bezier(.32,.72,0,1) both; }
+.view.in-pull  { animation: navBackIn 340ms cubic-bezier(.32,.72,0,1) both; }
+.view.out-pull { animation: navOutRight 300ms cubic-bezier(.32,.72,0,1) both; }
+.view.in-tab   { animation: tabIn 160ms ease-out both; }
+.view.out-tab  { animation: tabOut 90ms ease-in both; }
+@keyframes navIn       { from { opacity: 0; transform: translate3d(36%,0,0); } to { opacity: 1; transform: none; } }
+@keyframes navOutLeft  { from { opacity: 1; transform: none; } to { opacity: 0; transform: translate3d(-22%,0,0); } }
+@keyframes navBackIn   { from { opacity: 0; transform: translate3d(-22%,0,0); } to { opacity: 1; transform: none; } }
+@keyframes navOutRight { from { opacity: 1; transform: none; } to { opacity: 0; transform: translate3d(36%,0,0); } }
+@keyframes tabIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes tabOut { from { opacity: 1; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .view.in-push, .view.out-push, .view.in-pull, .view.out-pull, .view.in-tab, .view.out-tab { animation: none; }
+}
+.lesson-row, .commission, .genre { animation: none; }
+
+/* labels: sentence case, normal spacing */
+.lm-head .note, .sec-head .note, .strip-head .note { text-transform: none; letter-spacing: 0; font-size: .82rem; color: var(--ink-faint); }
+.lm-head h2, .sec-head h2, .strip-head h2 { font-size: 1.2rem; }
+.lr-when { letter-spacing: .06em; font-size: .64rem; }
+.dir-lab, .c-watch-head .vh, .c-watch-head > span:first-child { letter-spacing: .04em; }
+.dir-lab { font-size: .78rem; text-transform: none; font-weight: 600; color: var(--ink-soft); }
+
+/* one grouped block per list (Learn) */
+.lm-list { gap: 0; border-radius: 16px; overflow: hidden; border: var(--hair); background: rgba(214,191,234,.045); }
+.lm-list .lesson-row { position: relative; border: 0; border-radius: 0; background: transparent;
+  padding: .72rem 1rem; min-height: 52px; gap: .8rem; grid-template-columns: 1.9rem minmax(0,1fr) .8rem; }
+.lm-list .lesson-row + .lesson-row::before { content: ""; position: absolute; top: 0; right: 0; left: 3.7rem; height: 1px; background: rgba(214,191,234,.12); }
+.lm-list .lesson-row:hover, .lm-list .lesson-row:active { background: rgba(214,191,234,.08); }
+.lr-en { font-family: var(--f-sans); font-size: 1rem; font-weight: 500; line-height: 1.3; letter-spacing: 0; }
+.lr-num { width: 1.9rem; height: 1.9rem; font-size: .8rem; }
+.lr-go { opacity: .5; }
+:root[data-theme="light"] .lm-list { background: #fff; border-color: rgba(60,30,100,.08); }
+:root[data-theme="light"] .lm-list .lesson-row + .lesson-row::before { background: rgba(60,30,100,.08); }
+
+/* Interpreting: smaller direction switch, settings as a grouped list, narrower video cards */
+.dir-btn { padding: .6rem .5rem; border-radius: 14px; gap: .15rem; }
+.d-from, .d-to { font-size: 1rem; }
+.d-en { font-size: .72rem; }
+.dir-btn.on { box-shadow: none; }
+.genre-grid { gap: 0; border-radius: 16px; overflow: hidden; border: var(--hair); background: rgba(214,191,234,.045); }
+.genre { position: relative; border: 0; border-radius: 0; background: transparent; padding: .7rem 1rem; align-items: center; gap: .8rem; }
+.genre + .genre::before { content: ""; position: absolute; top: 0; right: 0; left: 3.8rem; height: 1px; background: rgba(214,191,234,.12); }
+.genre:hover { border-color: transparent; background: rgba(214,191,234,.08); }
+.genre.last { border-color: transparent; }
+.g-icon { width: 32px; height: 32px; border-radius: 9px; }
+.g-icon svg { width: 18px; height: 18px; }
+.g-en { font-family: var(--f-sans); font-size: 1rem; font-weight: 500; }
+.g-ar { font-size: .82rem; }
+.g-n { text-transform: none; letter-spacing: 0; font-size: .75rem; font-weight: 500; color: var(--ink-faint); }
+.c-vids > .c-vid { flex-basis: 72%; }
+.c-vid-t { font-size: .95rem; }
+.c-vid-icon { transform: scale(.75); transform-origin: top left; }
+:root[data-theme="light"] .genre-grid { background: #fff; border-color: rgba(60,30,100,.08); }
+:root[data-theme="light"] .genre + .genre::before { background: rgba(60,30,100,.08); }
+
+/* Practice on a phone: each section a grouped list of rows */
+@media (max-width: 760px) {
+  .ledger { gap: 0; border-radius: 16px; overflow: hidden; border: var(--hair); background: rgba(214,191,234,.045); }
+  .ledger .commission { position: relative; grid-template-columns: 1.6rem minmax(0,1fr) auto; align-items: center; gap: .75rem;
+    border: 0; border-radius: 0; background: transparent; padding: .8rem 1rem; min-height: 52px; }
+  .ledger .commission + .commission::before { content: ""; position: absolute; top: 0; right: 0; left: 3.35rem; height: 1px; background: rgba(214,191,234,.12); }
+  .ledger .commission:hover { transform: none; box-shadow: none; background: rgba(214,191,234,.08); border-color: transparent; }
+  .ledger .c-top { display: contents; }
+  .ledger .cnum { order: 0; font-size: .8rem; opacity: .55; }
+  .ledger .ctitles { order: 1; min-width: 0; }
+  .ledger .c-meta { order: 2; }
+  .ledger .commission .kind { display: none; }
+  .ledger .c-en { font-family: var(--f-sans); font-size: 1rem; font-weight: 500; }
+  :root[data-theme="light"] .ledger { background: #fff; border-color: rgba(60,30,100,.08); }
+  :root[data-theme="light"] .ledger .commission + .commission::before { background: rgba(60,30,100,.08); }
+  /* Learn's map carries the ledger class too, but it is a page, not a list */
+  .ledger.learn-map { gap: 2.4rem; border: 0; border-radius: 0; background: none; overflow: visible; }
+  :root[data-theme="light"] .ledger.learn-map { background: none; }
+  /* Clear: rows inside one white block; no numbers, so the title takes the room */
+  :root[data-skin="clear"] .ledger:not(.learn-map) { background: #fff; border: 0; box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
+  :root[data-skin="clear"] .ledger .commission { background: transparent; border-radius: 0; box-shadow: none; padding: .85rem 1rem;
+    grid-template-columns: minmax(0,1fr) auto; }
+  :root[data-skin="clear"] .ledger .commission + .commission::before { left: 1rem; background: rgba(0,0,0,.08); }
+}
+/* the small labels at the top of a page: sentence case, quiet */
+#trial-count, #trial-subject, .trial-subject { letter-spacing: .02em; text-transform: none; font-size: .8rem; }
+.c-watch-head .c-h { letter-spacing: .02em; text-transform: none; font-size: 1rem; font-weight: 600; }
+/* rows are buttons: no button glow under each one */
+.lm-list .lesson-row, .ledger .commission, .genre { box-shadow: none; }
+.lm-list .lesson-row:hover, .genre:hover { transform: none; box-shadow: none; }
+/* Clear: the same grouped blocks, in white */
+:root[data-skin="clear"] .lm-list, :root[data-skin="clear"] .genre-grid { background: #fff; border: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
+:root[data-skin="clear"] .lm-list .lesson-row { background: transparent; border-radius: 0; box-shadow: none; }
+:root[data-skin="clear"] .lm-list .lesson-row + .lesson-row::before,
+:root[data-skin="clear"] .genre + .genre::before { background: rgba(0,0,0,.08); }
 </style>
 
 <div class="aura" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
@@ -14669,16 +14772,21 @@ function show(name) {
   if (typeof helperSync === "function") helperSync(name);
   const from = curView;
   const back = !!from && DEPTH[name] < DEPTH[from];
+  /* moving between the tabs along the bottom is not going deeper */
+  const sideways = !!from && from !== name && DEPTH[name] === DEPTH[from];
+  const IN = sideways ? "in-tab" : back ? "in-pull" : "in-push";
+  const OUT = sideways ? "out-tab" : back ? "out-pull" : "out-push";
+  const MOVES = ["in-push", "in-pull", "out-push", "out-pull", "in-tab", "out-tab"];
 
   if (from && from !== name) {
     const fv = views[from];
-    fv.classList.remove("in-push", "in-pull", "out-push", "out-pull");
+    fv.classList.remove(...MOVES);
     void fv.offsetWidth;
-    fv.classList.add(back ? "out-pull" : "out-push");
+    fv.classList.add(OUT);
     setTimeout(() => {
       fv.hidden = true;
-      fv.classList.remove("out-push", "out-pull");
-    }, 470);
+      fv.classList.remove(...MOVES);
+    }, sideways ? 100 : 310);
   }
   Object.entries(views).forEach(([k, e]) => {
     if (k !== name && k !== from) e.hidden = true;
@@ -14686,9 +14794,9 @@ function show(name) {
 
   const tv = views[name];
   tv.hidden = false;
-  tv.classList.remove("in-push", "in-pull");
+  tv.classList.remove(...MOVES);
   void tv.offsetWidth;
-  tv.classList.add(back ? "in-pull" : "in-push");
+  tv.classList.add(IN);
 
   curView = name;
   window.scrollTo({ top: 0 });
@@ -19818,7 +19926,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1031-0700";
+const BUILD = "1031-1100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -21701,6 +21809,22 @@ const isTextBox = n => n && (n.tagName === "TEXTAREA" || n.tagName === "SELECT" 
     }, 300);
     setTimeout(unstick, 800);
   });
+}
+
+/* Swipe in from the left edge to go back, as in any iPhone app. */
+{
+  let sx = 0, sy = 0, armed = false;
+  document.addEventListener("touchstart", e => {
+    const t = e.touches[0];
+    armed = e.touches.length === 1 && t.clientX < 24 && curView === "trial" && !document.body.classList.contains("st-open");
+    sx = t.clientX; sy = t.clientY;
+  }, { passive: true });
+  document.addEventListener("touchend", e => {
+    if (!armed) return;
+    armed = false;
+    const t = e.changedTouches[0];
+    if (t.clientX - sx > 70 && Math.abs(t.clientY - sy) < 60) { goBack(); window.scrollTo(0, 0); }
+  }, { passive: true });
 }
 
 if (navBar) {
