@@ -3986,6 +3986,15 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
 .hall-head { position: relative; }
 .hall-head .hall-theme { order: -1; justify-self: end; margin: 0 0 .1rem; padding: 2px; }
 .hall-head .hall-theme button { padding: .2rem .55rem; font-size: .72rem; }
+/* The Lineage on Home: shorter cards (smaller portrait, lines closer, no role line) */
+#lineage-block .strip { gap: .5rem; padding-bottom: .4rem; }
+#lineage-block .strip-card { width: 7.4rem; padding: .7rem .5rem .65rem; gap: .2rem; }
+#lineage-block .strip-card > :first-child { width: 56px !important; height: 56px !important; margin-bottom: .25rem; }
+#lineage-block .strip-card > :first-child * { max-width: 100%; max-height: 100%; }
+#lineage-block .strip-card .s-name { font-size: .8rem; }
+#lineage-block .strip-card .s-ar { font-size: .72rem; line-height: 1.35; }
+#lineage-block .strip-card .s-role { display: none; }
+#lineage-block .strip-card .s-life { font-size: .62rem; letter-spacing: .04em; }
 /* ═══════════ ROUND TWO ═══════════ */
 .see-all { all: unset; cursor: pointer; margin-inline-start: auto; font-size: .9rem; font-weight: 600; color: var(--mag-ink); }
 .see-all:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; border-radius: 4px; }
@@ -20071,7 +20080,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1031-2100";
+const BUILD = "1031-2200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
