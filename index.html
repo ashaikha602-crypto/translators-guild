@@ -3788,6 +3788,9 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
 :root[data-skin="clear"] .commission .seal-pip { box-shadow: none; }
 :root[data-skin="clear"] .chip-tag.solid { background: #0071e3; border-color: #0071e3; color: #fff; box-shadow: none; }
 
+/* on a phone, while the keyboard is up: no bar and no Ask Compass button
+   over it (the dictionary stays, it is for the text being typed) */
+body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
 /* ═══════════ ROOM TO BREATHE ═══════════
    Everything sat too close together. More space between sections and
    between the boxes in them, a little more inside each box, and on a
@@ -19815,7 +19818,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1031-0500";
+const BUILD = "1031-0700";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -21649,12 +21652,32 @@ function showNav(on) {
   document.body.classList.toggle("has-nav", !!on);
 }
 
-/* iPhone sometimes leaves a fixed bar where it was when the keyboard
-   closes or a long scroll ends; a one-frame relayout puts it back. */
+/* iPhone sometimes leaves fixed things where they were when the keyboard
+   closes or a long scroll ends: the bar and the round buttons then hang
+   in mid-screen, a keyboard's height above the bottom. Two defences:
+   while a member is typing on a phone they are hidden (they have no
+   business above the keyboard), and once the keyboard has gone a scroll
+   to where the page already is, plus a one-frame relayout of each,
+   makes Safari place them again. */
+const FIXED_BITS = () => [navBar, typeof hpFab !== "undefined" ? hpFab : null,
+  typeof qdBtn !== "undefined" ? qdBtn : null].filter(Boolean);
 function repinNav() {
-  if (!navBar || navBar.hidden) return;
-  navBar.style.display = "none"; void navBar.offsetHeight; navBar.style.display = "";
+  FIXED_BITS().forEach(n => {
+    if (n.hidden) return;
+    n.style.display = "none"; void n.offsetHeight; n.style.display = "";
+  });
 }
+function keyboardGone() {
+  const vv = window.visualViewport;
+  return !vv || vv.height > window.innerHeight - 80;
+}
+function unstick() {
+  if (!keyboardGone()) return;
+  window.scrollTo(window.scrollX, window.scrollY);
+  repinNav();
+}
+const isTextBox = n => n && (n.tagName === "TEXTAREA" || n.tagName === "SELECT" || n.isContentEditable ||
+  (n.tagName === "INPUT" && !/^(checkbox|radio|range|button|submit|file|color)$/i.test(n.type)));
 {
   let st = null;
   window.addEventListener("scroll", () => {
@@ -21664,10 +21687,19 @@ function repinNav() {
   }, { passive: true });
   if (window.visualViewport) {
     let rt = null;
-    window.visualViewport.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(repinNav, 120); });
+    window.visualViewport.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(unstick, 120); });
   }
+  const phone = window.matchMedia("(pointer: coarse)");
+  document.addEventListener("focusin", e => {
+    if (phone.matches && isTextBox(e.target)) document.body.classList.add("typing");
+  });
   document.addEventListener("focusout", e => {
-    if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) setTimeout(repinNav, 300);
+    if (!isTextBox(e.target)) return;
+    setTimeout(() => {
+      if (!isTextBox(document.activeElement)) document.body.classList.remove("typing");
+      unstick();
+    }, 300);
+    setTimeout(unstick, 800);
   });
 }
 
