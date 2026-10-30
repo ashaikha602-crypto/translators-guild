@@ -3788,6 +3788,43 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
 :root[data-skin="clear"] .commission .seal-pip { box-shadow: none; }
 :root[data-skin="clear"] .chip-tag.solid { background: #0071e3; border-color: #0071e3; color: #fff; box-shadow: none; }
 
+/* ═══════════ ROOM TO BREATHE ═══════════
+   Everything sat too close together. More space between sections and
+   between the boxes in them, a little more inside each box, and on a
+   phone a bottom bar that floats as a rounded pill, clear of the edges,
+   instead of a strip fused to the bottom of the screen. */
+#hall, #seal { gap: 3rem; }
+#learn, #practice { gap: 2.75rem; }
+.learn-map { gap: 2.6rem; }
+.lm-head { margin: 0 0 .95rem; }
+.lm-list { gap: .8rem; }
+.ledger { gap: .9rem; }
+.sec-head { margin-bottom: 1.15rem; }
+.strip-head { margin-bottom: 1.1rem; }
+.screen-head { gap: .5rem; padding-bottom: .4rem; }
+.lesson-row { padding: 1rem 1.05rem; border-radius: 18px; gap: .9rem; }
+.commission { padding: 1.15rem 1.25rem; gap: .7rem; }
+@media (max-width: 760px) {
+  #app { padding-left: 1.15rem; padding-right: 1.15rem; }
+  #bottom-nav {
+    left: 12px; right: 12px; inset-inline: auto; width: auto;
+    left: max(12px, env(safe-area-inset-left)); right: max(12px, env(safe-area-inset-right));
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    padding: .4rem; border-radius: 30px;
+    border: 1px solid rgba(214,191,234,.16); border-top: 1px solid rgba(214,191,234,.16);
+    box-shadow: 0 16px 40px -14px rgba(0,0,0,.7);
+  }
+  #bottom-nav button { min-height: 54px; border-radius: 24px; }
+  #bottom-nav .bn-t { font-size: .64rem; letter-spacing: .02em; text-transform: none; font-weight: 600; }
+  body.has-nav main { padding-bottom: calc(7.5rem + env(safe-area-inset-bottom)); }
+  .hp-fab, .qd-btn { bottom: calc(96px + env(safe-area-inset-bottom)); }
+  body.qd-on .hp-fab { bottom: calc(156px + env(safe-area-inset-bottom)); }
+  .flash { bottom: calc(6.4rem + env(safe-area-inset-bottom)); }
+  .new-build { bottom: calc(6.2rem + env(safe-area-inset-bottom)); }
+  :root[data-theme="light"] #bottom-nav { border: 1px solid rgba(60,30,100,.10); box-shadow: 0 14px 34px -14px rgba(40,20,70,.35); }
+  :root[data-skin="clear"] #bottom-nav { border: 1px solid rgba(0,0,0,.08); box-shadow: 0 14px 34px -16px rgba(0,0,0,.3); }
+  :root[data-skin="clear"] #bottom-nav button[aria-current="page"] { background: rgba(0,113,227,.08); }
+}
 </style>
 
 <div class="aura" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
@@ -19778,7 +19815,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1031-0300";
+const BUILD = "1031-0500";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
