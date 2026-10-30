@@ -1119,31 +1119,53 @@ details.tg > .tg-in { padding: 0 .9rem .8rem; }
 .th-ttx b { color: var(--white); }
 .th-tmeta { grid-column: 1 / 3; display: flex; justify-content: space-between; align-items: center; }
 .th-try textarea { margin: .4rem 0; }
-/* Study Helper: a conversation, member on the right, helper on the left */
-.hp { display: grid; gap: .9rem; max-width: var(--measure); }
-.hp-intro { color: var(--ink-soft); margin: 0; }
-.hp-log { display: grid; gap: .7rem; }
-.hp-msg { padding: .8rem 1rem; border-radius: var(--r-md); line-height: 1.6; overflow-wrap: anywhere; max-width: 92%; }
-.hp-msg p { margin: 0 0 .45rem; }
+/* Study Helper: a quiet bar at the top of Learn that opens a panel from
+   the bottom, the same shape as the pocket dictionary */
+button.hp-bar { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: .65rem; width: 100%;
+  margin: 0 0 1.4rem; padding: .8rem 1rem; border-radius: var(--r-pill); border: var(--hair-lit); background: var(--well);
+  color: var(--ink-faint); font-family: var(--f-sans); font-size: .95rem; transition: border-color 200ms var(--ease), background 200ms var(--ease); }
+button.hp-bar:hover, button.hp-bar:focus-visible { border-color: rgba(167,38,208,.7); background: var(--well-lit); }
+button.hp-bar:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; }
+.learn-map > button.hp-bar { grid-column: 1 / -1; align-self: start; max-width: 560px; }
+.hp-bar-mark { color: var(--mag-ink); font-size: 1rem; }
+.hp-bar-ar { margin-inline-start: auto; font-family: var(--f-ar); font-size: .85rem; color: var(--ink-ghost); }
+.hp-sheet { position: fixed; z-index: 62; left: 0; right: 0; bottom: 0; height: min(78vh, 640px); display: flex; flex-direction: column; gap: .6rem;
+  padding: .9rem 16px calc(.9rem + env(safe-area-inset-bottom)); background: #1b0d2e; border-top: 1px solid rgba(214,191,234,.25);
+  border-radius: 18px 18px 0 0; box-shadow: 0 -12px 36px rgba(0,0,0,.45); }
+.hp-sheet[hidden] { display: none; }
+@media (min-width: 900px) { .hp-sheet { left: auto; right: 24px; bottom: 24px; width: 400px; border-radius: 18px; border: 1px solid rgba(214,191,234,.25); } }
+:root[data-theme="light"] .hp-sheet { background: #fbf7ff; }
+.hp-top { display: flex; align-items: center; gap: .5rem; }
+.hp-title { font-family: var(--f-serif); font-size: 1.1rem; color: var(--white); margin-inline-end: auto; }
+.hp-title span { font-family: var(--f-ar); font-size: .8rem; color: var(--ink-faint); margin-inline-start: .4rem; }
+button.hp-new { all: unset; cursor: pointer; font-size: .78rem; color: var(--ink-soft); padding: .3rem .6rem; border-radius: var(--r-pill); }
+button.hp-new:hover, button.hp-new:focus-visible { background: rgba(214,191,234,.12); color: var(--white); }
+.hp-sub { margin: 0; font-size: .78rem; color: var(--ink-faint); }
+.hp-log { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: .6rem; padding: .2rem 0; }
+.hp-msg { padding: .65rem .85rem; border-radius: 14px; line-height: 1.55; font-size: .93rem; overflow-wrap: anywhere; max-width: 88%; }
+.hp-msg p { margin: 0 0 .4rem; }
 .hp-msg p:last-child { margin-bottom: 0; }
-.hp-user { justify-self: end; background: var(--grad-soft); border: var(--hair-lit); color: var(--white); white-space: pre-wrap; }
-.hp-assistant { justify-self: start; background: var(--well); border: var(--hair); color: var(--ink); }
+.hp-user { align-self: flex-end; background: var(--grad-soft); border: var(--hair-lit); color: var(--white); white-space: pre-wrap; }
+.hp-assistant { align-self: flex-start; background: rgba(214,191,234,.06); border: var(--hair); color: var(--ink); }
 .hp-assistant b { color: var(--white); }
-.hp-li { padding-inline-start: 1rem; position: relative; }
-.hp-li::before { content: "•"; position: absolute; inset-inline-start: .2rem; color: var(--mag-ink); }
-.hp-more { font-size: .8rem; color: var(--ink-faint); border-top: var(--hair); padding-top: .45rem; margin-top: .3rem !important; }
+.hp-li { padding-inline-start: .9rem; position: relative; }
+.hp-li::before { content: "•"; position: absolute; inset-inline-start: .1rem; color: var(--mag-ink); }
+.hp-more { font-size: .75rem; color: var(--ink-faint); border-top: var(--hair); padding-top: .4rem; margin-top: .25rem !important; }
 .hp-wait { color: var(--ink-faint); font-style: italic; }
 .hp-err { border-color: var(--coral); color: var(--coral-soft); }
-.hp-tries { display: grid; gap: .5rem; }
+.hp-tries { display: flex; flex-direction: column; gap: .4rem; margin-top: auto; }
 .hp-tries[hidden] { display: none; }
-button.hp-try { text-align: start; text-transform: none; letter-spacing: normal; font-weight: 400; padding: .6rem 1rem; border-radius: var(--r-md); }
-.hp-form { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: .5rem; align-items: end; }
-.hp-input { font-family: var(--f-sans); font-size: 1rem; line-height: 1.5; color: var(--white); background: var(--void-2);
-  border: var(--hair-lit); border-radius: var(--r-md); padding: .7rem .9rem; resize: vertical; min-height: 3rem; width: 100%; box-sizing: border-box; }
-.hp-input:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; }
-.hp-send { padding: .75rem 1.3rem; }
-.hp-send:disabled { opacity: .55; cursor: default; transform: none; }
-button.hp-new { justify-self: start; padding: .45rem 1rem; font-size: .78rem; }
+.hp-tries-h { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-ghost); margin: 0 0 .1rem; }
+button.hp-try { all: unset; cursor: pointer; box-sizing: border-box; padding: .5rem .8rem; border-radius: 12px; border: var(--hair-lit);
+  font-size: .85rem; color: var(--ink-soft); }
+button.hp-try:hover, button.hp-try:focus-visible { border-color: rgba(167,38,208,.7); color: var(--white); }
+.hp-form { display: flex; gap: .45rem; align-items: flex-end; }
+.hp-input { flex: 1; min-width: 0; font-family: var(--f-sans); font-size: 1rem; line-height: 1.45; color: var(--white);
+  background: rgba(214,191,234,.06); border: 1px solid rgba(214,191,234,.25); border-radius: 14px; padding: .6rem .8rem;
+  resize: none; max-height: 7.5rem; box-sizing: border-box; }
+.hp-input:focus { outline: none; border-color: rgba(167,38,208,.75); }
+button.hp-send { flex: none; width: 2.6rem; height: 2.6rem; padding: 0; display: grid; place-items: center; font-size: 1.05rem; }
+button.hp-send:disabled { opacity: .5; cursor: default; transform: none; }
 .th-face { flex: none; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; display: block;
   background: rgba(214,191,234,.08); border: 1px dashed rgba(214,191,234,.35); }
 .th-face.has { border: 2px solid rgba(207,122,232,.55); }
@@ -13071,10 +13093,6 @@ const ITEMS = [
     subject: "الترجمة الشفوية · Section 1.1",
     blurb: "Simultaneous, consecutive, sight, whispered, relay, remote &mdash; and where each one goes wrong.",
     run: runModes },
-  { id: "helper", ar: "المساعد الدِّراسيّ", en: "Study Helper", kind: "guide", section: "method", group: "ref",
-    subject: "Answers from the Guild's own material, with where to read more",
-    blurb: "Ask a question about any term, theory, procedure or proverb on the site. It answers only from the Guild's material and says when something is not covered.",
-    run: runHelper },
   { id: "glossary", ar: "مَسرَد المُصطلَحات", en: "Glossary of the Field", kind: "guide", section: "method", group: "ref",
     subject: "مَسرَد المُصطلَحات · every key term, both languages",
     blurb: "Every term the handbook defines, searchable in either language. Star the ones you want.",
@@ -14540,6 +14558,7 @@ let curView = null;
 
 function show(name) {
   setTimeout(() => { if (typeof qdSync === "function") qdSync(); }, 0);
+  if (name !== curView) helperClose();   /* the Study Helper belongs to the page it was opened on */
   const from = curView;
   const back = !!from && DEPTH[name] < DEPTH[from];
 
@@ -19688,7 +19707,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1029-2300";
+const BUILD = "1030-0900";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -21349,7 +21368,6 @@ function fillLedger(sectionId, section) {
    the material to dip into. Compact rows, so a phone shows the whole map
    without scrolling through eleven large cards. */
 const LEARN_GROUPS = [
-  { id: "ask",    en: "Ask a question", note: "Study Helper", order: ["helper"] },
   { id: "field",  en: "The field", note: "Start here", order: ["lib-bassnett"] },
   /* oldest first: the practice from the 3rd century BC, then the theories
      from Cicero in 46 BCE; each row carries its span */
@@ -21367,6 +21385,7 @@ function renderLearn() {
   if (!box) return;
   box.innerHTML = "";
   box.classList.add("learn-map");
+  box.appendChild(helperBar());
   let n = 0;
   LEARN_GROUPS.forEach(g => {
     const sec = el("div", "lm-group");
@@ -26022,7 +26041,9 @@ function runSubtitle() {
    Guild's own Learn, Practice and Library material only, and ends every
    answer with where on the site to read more. Only signed-in members
    can ask: the member's own token goes with each question.
-   The conversation lives in this tab only; nothing is saved. */
+   It opens from a quiet bar at the top of Learn into a panel from the
+   bottom, so it is there when wanted and out of the way when not. The
+   conversation lives in this tab only; nothing is saved. */
 const HELPER_URL = "/api/chat";
 const helperLog = [];
 const HELPER_TRY = [
@@ -26038,33 +26059,45 @@ function helperHTML(text) {
     return line.trim() ? '<p>' + l + '</p>' : "";
   }).join("");
 }
-function runHelper() {
-  setCount(""); setDots(0, 0, 0);
-  const wrap = el("div", "hp");
-  wrap.appendChild(el("p", "hp-intro",
-    "Ask about anything in Learn, Practice or the Library: a term, a theory, a procedure, a proverb. " +
-    "Answers come only from the Guild's own material and say where to read more. " +
-    "If the site does not cover something yet, the helper says so instead of guessing."));
-  const log = el("div", "hp-log");
-  log.setAttribute("aria-live", "polite");
-  const tries = el("div", "hp-tries");
-  const fresh = el("button", "ghost hp-new", "New conversation");
-  fresh.type = "button";
-  const form = el("form", "hp-form");
-  const box = el("textarea", "hp-input");
-  box.rows = 2; box.maxLength = 1500; box.dir = "auto";
-  box.placeholder = "Ask a question · اكتب سؤالك";
-  box.setAttribute("aria-label", "Your question");
-  const go = el("button", "hp-send", "Ask");
-  go.type = "submit";
-  form.append(box, go);
-  wrap.append(log, tries, fresh, form);
-  stage.appendChild(wrap);
+function helperBar() {
+  const b = el("button", "hp-bar",
+    '<span class="hp-bar-mark" aria-hidden="true">✦</span><span>Ask the Study Helper</span>' +
+    '<span class="hp-bar-ar" lang="ar" dir="rtl">اسأل المساعد</span>');
+  b.type = "button";
+  b.addEventListener("click", helperOpen);
+  return b;
+}
+let hpSheet = null;
+function helperEnsure() {
+  if (hpSheet) return;
+  hpSheet = el("div", "hp-sheet");
+  hpSheet.hidden = true;
+  hpSheet.setAttribute("role", "dialog");
+  hpSheet.setAttribute("aria-label", "Study Helper");
+  hpSheet.innerHTML =
+    '<div class="hp-top"><span class="hp-title">Study Helper<span lang="ar">المساعد الدراسي</span></span>' +
+      '<button type="button" class="hp-new" hidden>New</button>' +
+      '<button type="button" class="qd-x" aria-label="Close">✕</button></div>' +
+    '<p class="hp-sub">Answers from the Guild’s own material, with where to read more.</p>' +
+    '<div class="hp-log" aria-live="polite"></div>' +
+    '<div class="hp-tries"><p class="hp-tries-h">Try</p></div>' +
+    '<form class="hp-form"><textarea class="hp-input" rows="1" maxlength="1500" dir="auto" ' +
+      'placeholder="Ask a question · اكتب سؤالك" aria-label="Your question"></textarea>' +
+      '<button type="submit" class="hp-send" aria-label="Ask">↑</button></form>';
+  document.body.appendChild(hpSheet);
+
+  const log = hpSheet.querySelector(".hp-log");
+  const tries = hpSheet.querySelector(".hp-tries");
+  const fresh = hpSheet.querySelector(".hp-new");
+  const form = hpSheet.querySelector(".hp-form");
+  const box = hpSheet.querySelector(".hp-input");
+  const go = hpSheet.querySelector(".hp-send");
 
   const bubble = (role, html) => {
     const b = el("div", "hp-msg hp-" + role, html);
     b.dir = "auto";
     log.appendChild(b);
+    log.scrollTop = log.scrollHeight;
     return b;
   };
   const paint = () => {
@@ -26073,13 +26106,17 @@ function runHelper() {
     tries.hidden = helperLog.length > 0;
     fresh.hidden = helperLog.length === 0;
   };
+  const fit = () => { box.style.height = "auto"; box.style.height = box.scrollHeight + 2 + "px"; };
   HELPER_TRY.forEach(q => {
-    const b = el("button", "ghost hp-try");
+    const b = el("button", "hp-try");
     b.type = "button"; b.dir = "auto"; b.textContent = q;
     b.addEventListener("click", () => { box.value = q; send(); });
     tries.appendChild(b);
   });
+  hpSheet.querySelector(".qd-x").addEventListener("click", helperClose);
   fresh.addEventListener("click", () => { helperLog.length = 0; paint(); box.focus(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !hpSheet.hidden) helperClose(); });
+  box.addEventListener("input", fit);
   paint();
 
   let busy = false;
@@ -26088,9 +26125,8 @@ function runHelper() {
     if (!q || busy) return;
     busy = true; go.disabled = true; tries.hidden = true;
     bubble("user", esc(q));
-    box.value = "";
+    box.value = ""; fit();
     const wait = bubble("assistant", '<p class="hp-wait">Looking through the Guild’s material…</p>');
-    wait.scrollIntoView({ block: "nearest" });
     helperLog.push({ role: "user", content: q });
     try {
       const t = await freshToken();
@@ -26110,12 +26146,21 @@ function runHelper() {
       wait.innerHTML = "<p>" + esc(e.message || "Something went wrong. Try again.") + "</p>";
     }
     busy = false; go.disabled = false; fresh.hidden = helperLog.length === 0;
-    wait.scrollIntoView({ block: "nearest", behavior: prefersStill() ? "auto" : "smooth" });
+    /* keep the start of the answer in view, not its last line */
+    log.scrollTop = Math.max(0, wait.offsetTop - log.offsetTop - 8);
   }
   form.addEventListener("submit", e => { e.preventDefault(); send(); });
   box.addEventListener("keydown", e => {
     if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); }
   });
+}
+function helperOpen() {
+  helperEnsure();
+  hpSheet.hidden = false;
+  hpSheet.querySelector(".hp-input").focus({ preventScroll: true });
+}
+function helperClose() {
+  if (hpSheet) hpSheet.hidden = true;
 }
 
 function runModes() {
