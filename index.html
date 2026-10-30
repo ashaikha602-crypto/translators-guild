@@ -19778,7 +19778,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1030-2300";
+const BUILD = "1031-0100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -24948,11 +24948,10 @@ document.addEventListener("selectionchange", () => {
   t = t.trim();
   if (t && t.split(/\s+/).length <= 4 && t.length <= 40) qdSel = t;
 });
-/* On every page once a member is in, so a word can be looked up at any
-   moment; not in the booth, where interpreting runs against the clock. */
 function qdWanted() {
-  if (!curView || curView === "gate") return false;
-  return !(curView === "trial" && active && QD_SKIP.has(active.id));
+  /* a comment box is not a translation: not on a post's page */
+  return curView === "trial" && active && !QD_SKIP.has(active.id) && !String(active.id).startsWith("post:") &&
+    [...stage.querySelectorAll(QD_BOX)].some(n => !n.closest(".c-write"));
 }
 let qdBtn = null, qdSheet = null;
 function qdEnsure() {
@@ -26154,7 +26153,7 @@ function runContact() {
   wrap.innerHTML =
     '<div class="ct-hero"><h2>We’re here to hear from you</h2>' +
       '<p>Your feedback, suggestions and problem reports go straight to the team. Write to us by email, or use the form below.</p>' +
-      '<p lang="ar" dir="rtl">نحن هنا لنسمع منك. ملاحظاتك واقتراحاتك وبلاغاتك تصل إلى الفريق مباشرة.</p></div>' +
+      '<p lang="ar" dir="rtl">نحن هنا لنسمع منكم. ملاحظاتكم واقتراحاتكم وبلاغاتكم تصل إلى الفريق مباشرة.</p></div>' +
     '<div class="ct-box ct-mail"><span class="ct-ico">' + CT_ICON_MAIL + '</span><b>Email · البريد الإلكتروني</b>' +
       '<a class="ct-addr" href="mailto:' + CONTACT_EMAIL + '">' + CONTACT_EMAIL + '</a></div>' +
     '<form class="ct-box ct-form" novalidate>' +
