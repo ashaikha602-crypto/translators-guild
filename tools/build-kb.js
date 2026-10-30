@@ -83,7 +83,7 @@ const LIBRARY = {
 };
 
 const SKIP = new Set(["icon", "img", "thumb", "wiki", "mono", "c", "pct", "meta", "credit",
-  "srcDir", "outDir", "dir", "g", "y", "n", "key", "lib", "secs", "lines", "fig", "figs", "video"]);
+  "srcDir", "outDir", "dir", "g", "y", "n", "key", "lib", "secs", "lines", "fig", "figs", "video", "kind", "lvl", "srcEn"]);
 
 const clean = s => String(s)
   .replace(/<[^>]+>/g, "")
@@ -130,9 +130,14 @@ function add(where, src, title, parts) {
     chunks.push({ id: chunks.length, where, src, title: n ? title + " (cont.)" : title, text: text.trim() });
     text = ""; n++;
   };
+  /* labels such as a name, dates and a role are separate strings; a
+     dot between them keeps them from running together when read */
+  let last = "";
   for (const p of parts) {
     if (text.length + p.length > 1600) push();
-    text += (text ? " " : "") + p;
+    const sep = !text ? "" : /[.!?:;،؟…)\]»"”']$/.test(text) ? " " : (p.length < 45 || last.length < 45 ? " · " : ". ");
+    text += sep + p;
+    last = p;
   }
   push();
 }

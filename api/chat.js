@@ -9,6 +9,12 @@
      POST /api/chat  { messages: [{ role: "user"|"assistant", content }] }
        Authorization: Bearer <the member's Supabase access token>
        -> { reply, sources: [{ where, src, title }] }
+       or, in search mode, { mode: "search", passages: [{ where, src, title, text }] }
+
+   Search mode is the free way in. With no key set, or when Claude cannot
+   be reached, the member is shown the passages themselves, labelled with
+   where they live, and nothing is written by a model. Adding the key
+   switches to written answers on the next request; nothing else changes.
 
    Only signed-in members can use it: the token is checked with Supabase
    on every request. The Claude API key is never in this file or in the
@@ -88,7 +94,8 @@ function search(query, k) {
       s += idf * (f * 2.2) / (f + 1.2 * (0.25 + 0.75 * d.len / AVG));
     }
     return { d, s };
-  }).filter(x => x.s > 0).sort((a, b) => b.s - a.s).slice(0, k).map(x => x.d.c);
+  }).filter(x => x.s > 0).sort((a, b) => b.s - a.s).slice(0, k)
+    .map(x => Object.assign({ score: x.s }, x.d.c));
 }
 
 const label = c => c.where + (c.src ? " (" + c.src + ")" : "");
@@ -115,15 +122,25 @@ function allowed(id) {
   return true;
 }
 
-const client = new Anthropic();   // reads ANTHROPIC_API_KEY
+let client = null;   // made on the first answer, once a key is set
+
+/* the free answer: the site's own passages, as they are */
+const SHOW = 3;
+const searchReply = found => {
+  /* only passages that match nearly as well as the best one: the model
+     can set a weak match aside, a reader shown it cannot */
+  const top = found.length ? found[0].score : 0;
+  return {
+    mode: "search",
+    passages: found.filter(c => c.score >= top * 0.5).slice(0, SHOW)
+      .map(c => ({ where: c.where, src: c.src, title: c.title, text: c.text })),
+  };
+};
 
 module.exports = async (req, res) => {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "method_not_allowed" });
-  }
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return res.status(503).json({ error: "not_configured", message: "Ask Compass is not available yet. Please try again later." });
   }
   const who = await member(req);
   if (!who) return res.status(401).json({ error: "signed_out", message: "Sign in to use Ask Compass." });
@@ -154,6 +171,9 @@ module.exports = async (req, res) => {
       .filter(c => !ids.has(c.id))).slice(0, PASSAGES);
   }
 
+  if (!process.env.ANTHROPIC_API_KEY) return res.status(200).json(searchReply(found));
+  if (!client) client = new Anthropic();   // reads ANTHROPIC_API_KEY
+
   const last = msgs.pop();
   const messages = msgs.concat([{
     role: "user",
@@ -181,18 +201,13 @@ module.exports = async (req, res) => {
       sources: found.map(c => ({ where: c.where, src: c.src, title: c.title })),
     });
   } catch (e) {
-    if (e instanceof Anthropic.AuthenticationError) {
-      return res.status(503).json({ error: "bad_key", message: "Ask Compass's key is not valid. Tell the site owner." });
-    }
-    if (e instanceof Anthropic.RateLimitError) {
-      return res.status(429).json({ error: "busy", message: "Ask Compass is busy. Try again in a minute." });
-    }
-    if (e instanceof Anthropic.APIError) {
-      console.error("claude", e.status, e.message);
-      return res.status(502).json({ error: "upstream", message: "Ask Compass could not answer just now. Try again." });
-    }
-    console.error(e);
-    return res.status(500).json({ error: "failed", message: "Something went wrong. Try again." });
+    /* a bad key, no credit left, a busy moment: the member still gets
+       the passages, and the reason goes to the Vercel logs */
+    if (e instanceof Anthropic.AuthenticationError) console.error("claude: the key is not valid");
+    else if (e instanceof Anthropic.RateLimitError) console.error("claude: rate limited");
+    else if (e instanceof Anthropic.APIError) console.error("claude", e.status, e.message);
+    else console.error(e);
+    return res.status(200).json(searchReply(found));
   }
 };
 

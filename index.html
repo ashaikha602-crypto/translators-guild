@@ -1170,6 +1170,15 @@ button.hp-try:hover, button.hp-try:focus-visible { border-color: rgba(167,38,208
 @keyframes hpDot { 0%, 80%, 100% { opacity: .3; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
 @media (prefers-reduced-motion: reduce) { .hp-wait i { animation: none; opacity: .7; } }
 .hp-err { border-color: var(--coral) !important; color: var(--coral-soft); }
+/* search mode: the site's own passages, shown as they are */
+.hp-found-h { margin: 0 0 .55rem !important; font-size: .85rem; color: var(--ink-soft); }
+.hp-card { border: var(--hair-lit); border-radius: 14px; padding: .65rem .8rem; margin-top: .5rem; background: rgba(214,191,234,.03); }
+.hp-card-where { display: block; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mag-ink); margin-bottom: .2rem; }
+.hp-card b { display: block; color: var(--white); margin-bottom: .25rem; }
+.hp-card-t { margin: 0 !important; font-size: .92rem; white-space: pre-wrap; }
+.hp-card-src { display: block; font-size: .75rem; color: var(--ink-faint); margin-top: .35rem; }
+button.hp-card-more { all: unset; cursor: pointer; font-size: .8rem; font-weight: 600; color: var(--mag-ink); margin-top: .3rem; }
+button.hp-card-more:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; border-radius: 4px; }
 .hp-bar { display: flex; align-items: flex-end; gap: .4rem; width: calc(100% - 1.5rem); max-width: 46rem; box-sizing: border-box;
   margin: .45rem auto calc(env(safe-area-inset-bottom, 0px) + .6rem);
   padding: .3rem .3rem .3rem 1rem; border-radius: 26px; background: rgba(214,191,234,.07); border: 1px solid rgba(214,191,234,.18); }
@@ -19722,7 +19731,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1030-1900";
+const BUILD = "1030-2100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -26082,6 +26091,26 @@ function helperHTML(text) {
     return line.trim() ? '<p>' + l + '</p>' : "";
   }).join("");
 }
+/* Search mode (no key yet, or the model is unreachable): the passages
+   themselves, cut short with a way to read the rest. */
+const HP_CUT = 280;
+function helperCards(passages, question) {
+  const ar = /[\u0600-\u06FF]/.test(question || "");
+  if (!passages || !passages.length) {
+    return '<p>' + (ar ? "لا يغطي الموقع هذا بعد. جرّب كلمات أخرى، أو تصفّح قسم تعلّم."
+                       : "The site does not cover this yet. Try other words, or browse Learn.") + '</p>';
+  }
+  return '<p class="hp-found-h">' + (ar ? "هذا ما يقوله الموقع:" : "Here is what the site says:") + '</p>' +
+    passages.map(p => {
+      const text = String(p.text).replace(/\s*\(Search terms:[^)]*\)\s*$/, "").replace(/^Site map:\s*/, "");
+      const short = text.length > HP_CUT ? text.slice(0, text.lastIndexOf(" ", HP_CUT) > 200 ? text.lastIndexOf(" ", HP_CUT) : HP_CUT) + "\u2026" : text;
+      return '<div class="hp-card" dir="auto"><span class="hp-card-where">' + esc(p.where) + '</span>' +
+        '<b>' + esc(p.title) + '</b>' +
+        '<p class="hp-card-t" data-full="' + esc(text) + '">' + esc(short) + '</p>' +
+        (short !== text ? '<button type="button" class="hp-card-more">More</button>' : '') +
+        (p.src ? '<span class="hp-card-src">' + esc(p.src) + '</span>' : '') + '</div>';
+    }).join("");
+}
 let hpFab = null, hpView = null, hpUnfit = null;
 function helperEnsure() {
   if (hpFab) return;
@@ -26135,7 +26164,8 @@ function helperEnsure() {
   };
   const paint = () => {
     log.innerHTML = "";
-    helperLog.forEach(m => bubble(m.role, m.role === "user" ? esc(m.content) : helperHTML(m.content)));
+    helperLog.forEach((m, i) => bubble(m.role, m.role === "user" ? esc(m.content)
+      : m.passages ? helperCards(m.passages, (helperLog[i - 1] || {}).content) : helperHTML(m.content)));
     hello.hidden = helperLog.length > 0;
     fresh.hidden = helperLog.length === 0;
     toEnd();
@@ -26152,6 +26182,13 @@ function helperEnsure() {
     tries.appendChild(b);
   });
   hpView.querySelector(".dm-back").addEventListener("click", helperClose);
+  log.addEventListener("click", e => {
+    const more = e.target.closest(".hp-card-more");
+    if (!more) return;
+    const t = more.previousElementSibling;
+    t.textContent = t.dataset.full;
+    more.remove();
+  });
   fresh.addEventListener("click", () => { helperLog.length = 0; paint(); box.focus(); });
   document.addEventListener("keydown", e => { if (e.key === "Escape" && !hpView.hidden) helperClose(); });
   box.addEventListener("input", fit);
@@ -26174,12 +26211,18 @@ function helperEnsure() {
       const r = await fetch(HELPER_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + t },
-        body: JSON.stringify({ messages: helperLog.slice(-8) })
+        body: JSON.stringify({ messages: helperLog.slice(-8).map(m => ({ role: m.role, content: m.content })) })
       });
       const j = await r.json().catch(() => ({}));
-      if (!r.ok || !j.reply) throw new Error(j.message || "Ask Compass could not answer just now. Try again.");
-      wait.innerHTML = helperHTML(j.reply);
-      helperLog.push({ role: "assistant", content: j.reply });
+      if (r.ok && j.mode === "search") {
+        wait.innerHTML = helperCards(j.passages, q);
+        helperLog.push({ role: "assistant", passages: j.passages,
+          content: (j.passages || []).map(p => p.where + ": " + p.title).join("\n") || "Nothing on the site matched." });
+      } else {
+        if (!r.ok || !j.reply) throw new Error(j.message || "Ask Compass could not answer just now. Try again.");
+        wait.innerHTML = helperHTML(j.reply);
+        helperLog.push({ role: "assistant", content: j.reply });
+      }
     } catch (e) {
       helperLog.pop();   // unanswered, so it is not sent again as history
       wait.classList.add("hp-err");
