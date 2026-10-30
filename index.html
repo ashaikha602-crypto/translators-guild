@@ -20083,7 +20083,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1101-0000";
+const BUILD = "1101-0100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -28214,6 +28214,9 @@ function chooseGenre() {
     BOOTH_DIRS.find(d => d.id === boothDir()).say));
   stage.appendChild(dirWrap);
 
+  /* professionals at work first, then the settings to practise */
+  stage.appendChild(videoStrip(BOOTH_VIDEOS, "Watch professionals"));
+
   const last = lastGenre();
   const grid = el("div", "genre-grid");
   BOOTH_GENRES.forEach(g => {
@@ -28233,8 +28236,6 @@ function chooseGenre() {
     grid.appendChild(b);
   });
   stage.appendChild(grid);
-  /* the settings are what the page is for; the videos come after them */
-  stage.appendChild(videoStrip(BOOTH_VIDEOS, "Watch professionals"));
 
   /* What the booth has awarded this member so far, and what is left. The
      six settings are the ladder; the rank underneath counts them. */
