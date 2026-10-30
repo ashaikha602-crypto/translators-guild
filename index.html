@@ -3796,7 +3796,7 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
    between the boxes in them, a little more inside each box, and on a
    phone a bottom bar that floats as a rounded pill, clear of the edges,
    instead of a strip fused to the bottom of the screen. */
-#hall { gap: 3rem; }
+#hall { gap: 1.6rem; }
 #learn, #practice { gap: 2.75rem; }
 .learn-map { gap: 2.6rem; }
 .lm-head { margin: 0 0 .95rem; }
@@ -3968,6 +3968,20 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
 :root[data-skin="black"] .qd-sheet, :root[data-skin="black"] .dm-line.them .dm-bubble { background: #141416; }
 :root[data-skin="black"] #bottom-nav { background: rgba(10,10,12,.88); }
 .pick-row.four { grid-template-columns: repeat(4, 1fr); }
+/* Home, tighter: less empty space, the three numbers in one row */
+.hall-head { gap: .35rem; }
+.hall-theme { margin-top: .55rem; }
+.story-bar { padding: 0; }
+.story-bar[hidden], #push-nudge[hidden], #lately-wrap[hidden] { display: none !important; }
+.home-search { padding: .6rem .9rem !important; min-height: 0; font-size: .95rem; }
+.seal-journey { padding: 1rem 1.05rem !important; gap: .75rem !important; }
+.seal-journey .j-stats { grid-template-columns: repeat(3, minmax(0,1fr)) !important; gap: .45rem; }
+.seal-journey .j-tile { padding: .55rem .35rem; grid-column: auto !important; }
+.seal-journey .j-tile b { font-size: 1.15rem; }
+.seal-journey .j-tile.wide b { font-size: .92rem; line-height: 1.6; }
+.seal-journey .j-tile span { font-size: .6rem; letter-spacing: .08em; margin-top: .1rem; }
+.seal-journey .j-eye { margin-top: 0; justify-self: center; }
+.seal-journey .j-continue { gap: .45rem; }
 /* ═══════════ ROUND TWO ═══════════ */
 .see-all { all: unset; cursor: pointer; margin-inline-start: auto; font-size: .9rem; font-weight: 600; color: var(--mag-ink); }
 .see-all:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; border-radius: 4px; }
@@ -17982,7 +17996,8 @@ function paintSeal() {
         txt.textContent = cb.checked ? "Shown on my profile" : "Hidden from my profile";
       }
     });
-    tile.appendChild(row);
+    /* under the three numbers, not inside the rank box */
+    box.querySelector(".j-stats").after(row);
     if (!state.profile) loadMyProfile().then(() => {
       cb.checked = !(state.profile && state.profile.show_progress === false);
       txt.textContent = cb.checked ? "Shown on my profile" : "Hidden from my profile";
@@ -20052,7 +20067,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1031-1900";
+const BUILD = "1031-2000";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
