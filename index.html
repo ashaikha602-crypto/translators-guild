@@ -3982,6 +3982,10 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
 .seal-journey .j-tile span { font-size: .6rem; letter-spacing: .08em; margin-top: .1rem; }
 .seal-journey .j-eye { margin-top: 0; justify-self: center; }
 .seal-journey .j-continue { gap: .45rem; }
+/* the look switch: small, in the top corner, out of the way */
+.hall-head { position: relative; }
+.hall-head .hall-theme { order: -1; justify-self: end; margin: 0 0 .1rem; padding: 2px; }
+.hall-head .hall-theme button { padding: .2rem .55rem; font-size: .72rem; }
 /* ═══════════ ROUND TWO ═══════════ */
 .see-all { all: unset; cursor: pointer; margin-inline-start: auto; font-size: .9rem; font-weight: 600; color: var(--mag-ink); }
 .see-all:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; border-radius: 4px; }
@@ -20067,7 +20071,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1031-2000";
+const BUILD = "1031-2100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
