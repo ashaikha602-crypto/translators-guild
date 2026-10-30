@@ -3181,6 +3181,48 @@ html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: no
   cursor: pointer; padding: .55rem 1rem; border-radius: 999px; font-family: "Amiri", serif; font-size: 1.1rem; color: #fff;
   background: linear-gradient(135deg, #8d2ab8, #5b1a8c); box-shadow: 0 8px 24px rgba(40,0,70,.45); }
 .qd-btn[hidden], .qd-sheet[hidden] { display: none; }
+body.st-open .qd-btn { display: none; }
+/* Contact: a card on Home and in Settings, and the page it opens */
+button.ct-card { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: .85rem; width: 100%;
+  margin: 1.6rem 0 .4rem; padding: 1rem 1.1rem; border-radius: 22px; border: var(--hair-lit); background: var(--well); }
+button.ct-card:hover, button.ct-card:focus-visible { border-color: rgba(167,38,208,.6); }
+button.ct-card:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; }
+.ct-ico { flex: none; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: rgba(214,191,234,.08); color: var(--mag-ink); }
+.ct-ico svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.ct-card-t { display: grid; gap: .2rem; min-width: 0; flex: 1; }
+.ct-card-t b { color: var(--white); font-size: 1.02rem; }
+.ct-card-t b span { display: block; font-family: var(--f-ar); font-weight: 600; color: var(--ink-soft); font-size: .9rem; margin-top: .1rem; }
+.ct-card-t small { color: var(--ink-soft); font-size: .85rem; line-height: 1.45; }
+.ct-go { color: var(--mag-ink); font-size: 1.3rem; }
+.ct { display: grid; gap: 1rem; max-width: 40rem; }
+.ct-hero h2 { margin: .2rem 0 .4rem; font-family: var(--f-serif); font-size: 1.5rem; color: var(--white); }
+.ct-hero p { margin: 0; color: var(--ink-soft); line-height: 1.6; }
+.ct-box { border: var(--hair-lit); border-radius: 22px; padding: 1rem 1.1rem; background: var(--well); }
+.ct-mail { display: grid; grid-template-columns: auto minmax(0,1fr); gap: .3rem .85rem; align-items: center; }
+.ct-mail b { color: var(--white); }
+.ct-mail a.ct-addr { grid-column: 1 / -1; color: var(--mag-ink); font-weight: 600; font-size: 1.05rem; text-decoration: none; overflow-wrap: anywhere; }
+.ct-mail a.ct-addr:hover { text-decoration: underline; }
+.ct-k { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mag-ink); margin: 0; }
+.ct-box h3 { margin: .2rem 0 .35rem; font-family: var(--f-serif); font-size: 1.3rem; color: var(--white); }
+.ct-box > p { margin: 0 0 .8rem; color: var(--ink-soft); font-size: .92rem; line-height: 1.55; }
+.ct-tip { display: flex; gap: .55rem; padding: .7rem .85rem; border-radius: 14px; border: var(--hair); color: var(--ink-soft); font-size: .88rem; line-height: 1.5; margin-bottom: .9rem; }
+.ct-kinds { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: .9rem; }
+button.ct-kind { all: unset; cursor: pointer; padding: .5rem .95rem; border-radius: var(--r-pill); border: var(--hair-lit); color: var(--ink); font-size: .9rem; }
+button.ct-kind[aria-pressed="true"] { background: var(--grad); color: #fff; border-color: transparent; }
+button.ct-kind:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; }
+.ct-f { display: grid; gap: .3rem; margin-bottom: .75rem; }
+.ct-f span { font-size: .8rem; color: var(--ink-soft); }
+.ct-f input, .ct-f textarea { font: inherit; font-size: 1rem; color: var(--white); background: rgba(214,191,234,.06); border: 1px solid rgba(214,191,234,.22);
+  border-radius: 14px; padding: .65rem .85rem; width: 100%; box-sizing: border-box; }
+.ct-f textarea { min-height: 8rem; resize: vertical; line-height: 1.5; }
+.ct-f input:focus, .ct-f textarea:focus { outline: none; border-color: rgba(167,38,208,.75); }
+.ct-msg { margin: .6rem 0 0; font-size: .9rem; color: var(--ink-soft); }
+.ct-msg.bad { color: var(--coral-soft); }
+.ct-msg a { color: var(--mag-ink); }
+.ct-done { text-align: center; padding: 1rem .5rem; }
+.ct-done b { display: block; font-family: var(--f-serif); font-size: 1.3rem; color: var(--white); margin-bottom: .3rem; }
+:root[data-theme="light"] .ct-f input, :root[data-theme="light"] .ct-f textarea { background: #fff; border-color: rgba(60,30,100,.16); }
+button.hp-contact { all: unset; cursor: pointer; color: var(--mag-ink); font-weight: 600; font-size: .9rem; }
 .qd-btn:focus-visible { outline: 3px solid #e3c3ff; outline-offset: 2px; }
 @media (min-width: 900px) { .qd-btn { bottom: 24px; } }
 .qd-sheet { position: fixed; z-index: 61; left: 0; right: 0; bottom: 0; max-height: 62vh; display: flex; flex-direction: column; gap: .5rem;
@@ -3957,6 +3999,8 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
       </div>
       <div id="lately"></div>
     </div>
+
+    <div id="contact-card-slot"></div>
 
     <p class="signature">Shaikha Al-Khaldi</p>
   </section>
@@ -17869,6 +17913,9 @@ function settingsMenu() {
         setThemeChoice(nextTheme()); close(); settingsMenu();
       }]
     ]],
+    ["Help", [
+      ["mail", "Contact us", "", go(() => openItem(CONTACT_ITEM))]
+    ]],
     ["Login", [
       (typeof admIsAdmin !== "undefined" && admIsAdmin) ? ["admin", "Content Admin", "", tap("admin-btn")] : null,
       ["reset", "Reset my marks", "", tap("reset-btn"), "warn"],
@@ -19731,7 +19778,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1030-2100";
+const BUILD = "1030-2300";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -24901,10 +24948,11 @@ document.addEventListener("selectionchange", () => {
   t = t.trim();
   if (t && t.split(/\s+/).length <= 4 && t.length <= 40) qdSel = t;
 });
+/* On every page once a member is in, so a word can be looked up at any
+   moment; not in the booth, where interpreting runs against the clock. */
 function qdWanted() {
-  /* a comment box is not a translation: not on a post's page */
-  return curView === "trial" && active && !QD_SKIP.has(active.id) && !String(active.id).startsWith("post:") &&
-    [...stage.querySelectorAll(QD_BOX)].some(n => !n.closest(".c-write"));
+  if (!curView || curView === "gate") return false;
+  return !(curView === "trial" && active && QD_SKIP.has(active.id));
 }
 let qdBtn = null, qdSheet = null;
 function qdEnsure() {
@@ -24951,8 +24999,13 @@ function qdClose() {
 }
 /* put a word into the translation where the cursor was */
 function qdInsert(word) {
-  const box = qdLastBox && document.body.contains(qdLastBox) ? qdLastBox : stage.querySelector(QD_BOX);
-  if (!box) return;
+  const box = qdLastBox && document.body.contains(qdLastBox) ? qdLastBox
+    : curView === "trial" ? stage.querySelector(QD_BOX) : null;
+  /* nowhere to write on this page: copy the word instead */
+  if (!box) {
+    try { navigator.clipboard.writeText(word); flash("Copied · نُسخت"); } catch (e) {}
+    return;
+  }
   const a = box.selectionStart ?? box.value.length, b = box.selectionEnd ?? a;
   const before = box.value.slice(0, a), after = box.value.slice(b);
   const pad = before && !/\s$/.test(before) ? " " : "";
@@ -26062,6 +26115,109 @@ function runSubtitle() {
    carry most of the work, then the two that sit beside them, then the
    two working arrangements. The last entry is the one the field has not
    settled in Arabic, and it says so. */
+/* ═══════════ CONTACT ═══════════
+   "Have a question or feedback?" sits at the foot of Home and under Help
+   in Settings. It opens a page with the team's email and a form. A
+   message from the form is kept in public.feedback (supabase/feedback.sql),
+   which only the owner can read, in the Supabase dashboard. If it cannot
+   be sent, the same message opens in the member's email app instead. */
+const CONTACT_EMAIL = "ashaikha602@gmail.com";
+const CT_ICON_CHAT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-11 6.6L4 19.5l1.4-4.4A7.5 7.5 0 1 1 20 11.5z"/></svg>';
+const CT_ICON_MAIL = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg>';
+const CT_KINDS = [
+  ["note", "Feedback", "ملاحظة"],
+  ["suggestion", "Suggestion", "اقتراح"],
+  ["thanks", "Thanks", "شكر"],
+  ["problem", "Report a problem", "بلاغ عن مشكلة"]
+];
+const CONTACT_ITEM = { id: "contact", en: "Contact us", ar: "تواصل معنا", kind: "guide", section: "profile",
+  subject: "Questions, suggestions and problems", run: runContact };
+function contactCard() {
+  const b = el("button", "ct-card",
+    '<span class="ct-ico">' + CT_ICON_CHAT + '</span>' +
+    '<span class="ct-card-t"><b>Have a question or feedback?<span lang="ar">عندك سؤال أو ملاحظة؟</span></b>' +
+    '<small>Write to us by email, or send a message from the Contact page.</small></span>' +
+    '<span class="ct-go" aria-hidden="true">›</span>');
+  b.type = "button";
+  b.addEventListener("click", () => openItem(CONTACT_ITEM));
+  return b;
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const slot = document.getElementById("contact-card-slot");
+  if (slot && !slot.firstChild) slot.appendChild(contactCard());
+});
+function runContact() {
+  setCount(""); setDots(0, 0, 0);
+  const p = state.profile || {};
+  const u = (session && session.user) || {};
+  const wrap = el("div", "ct");
+  wrap.innerHTML =
+    '<div class="ct-hero"><h2>We’re here to hear from you</h2>' +
+      '<p>Your feedback, suggestions and problem reports go straight to the team. Write to us by email, or use the form below.</p>' +
+      '<p lang="ar" dir="rtl">نحن هنا لنسمع منك. ملاحظاتك واقتراحاتك وبلاغاتك تصل إلى الفريق مباشرة.</p></div>' +
+    '<div class="ct-box ct-mail"><span class="ct-ico">' + CT_ICON_MAIL + '</span><b>Email · البريد الإلكتروني</b>' +
+      '<a class="ct-addr" href="mailto:' + CONTACT_EMAIL + '">' + CONTACT_EMAIL + '</a></div>' +
+    '<form class="ct-box ct-form" novalidate>' +
+      '<p class="ct-k">Contact form · نموذج التواصل</p>' +
+      '<h3>Send a message</h3>' +
+      '<p>Choose the kind of message and write it clearly. The team keeps it and replies when needed.</p>' +
+      '<div class="ct-tip"><span aria-hidden="true">💡</span><span>Reporting a problem? Say which page it was on and what happened, so it is easy to trace.</span></div>' +
+      '<div class="ct-kinds" role="group" aria-label="Kind of message"></div>' +
+      '<label class="ct-f"><span>Name · الاسم</span><input name="name" maxlength="120" autocomplete="name"></label>' +
+      '<label class="ct-f"><span>Email for a reply (optional) · بريدك للرد</span><input name="email" type="email" maxlength="200" autocomplete="email"></label>' +
+      '<label class="ct-f"><span>Message · الرسالة</span><textarea name="message" maxlength="2000" dir="auto" required></textarea></label>' +
+      '<button type="submit" class="btn-wide">Send · إرسال</button>' +
+      '<p class="ct-msg" aria-live="polite"></p>' +
+    '</form>';
+  stage.appendChild(wrap);
+
+  const form = wrap.querySelector(".ct-form");
+  const kinds = form.querySelector(".ct-kinds");
+  const msg = form.querySelector(".ct-msg");
+  const send = form.querySelector('button[type="submit"]');
+  let kind = "note";
+  CT_KINDS.forEach(([id, en, ar]) => {
+    const b = el("button", "ct-kind", en + ' · <span lang="ar">' + ar + '</span>');
+    b.type = "button";
+    b.setAttribute("aria-pressed", String(id === kind));
+    b.addEventListener("click", () => {
+      kind = id;
+      kinds.querySelectorAll(".ct-kind").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    });
+    kinds.appendChild(b);
+  });
+  const field = n => form.querySelector('[name="' + n + '"]');
+  field("name").value = p.display_name || "";
+  field("email").value = u.email || "";
+
+  const mailto = (name, email, text) => "mailto:" + CONTACT_EMAIL +
+    "?subject=" + encodeURIComponent("Compass · " + CT_KINDS.find(k => k[0] === kind)[1]) +
+    "&body=" + encodeURIComponent(text + "\n\n— " + (name || "") + (email ? " <" + email + ">" : ""));
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const name = field("name").value.trim(), email = field("email").value.trim(), text = field("message").value.trim();
+    msg.className = "ct-msg";
+    if (!text) { msg.className = "ct-msg bad"; msg.textContent = "Write your message first."; field("message").focus(); return; }
+    send.disabled = true; msg.textContent = "Sending…";
+    try {
+      const r = await fetch(SUPABASE.url + "/rest/v1/feedback", {
+        method: "POST", headers: await sbHeaders(),
+        body: JSON.stringify({ member_id: myId(), kind, name: name || null, email: email || null,
+          message: text, page: "contact" })
+      });
+      if (!r.ok) throw new Error(String(r.status));
+      form.innerHTML = '<div class="ct-done"><b>Thank you · شكراً لك</b>' +
+        '<p>Your message has reached the team.' + (email ? " If it needs a reply, it will go to " + esc(email) + "." : "") + '</p></div>';
+    } catch (err) {
+      send.disabled = false;
+      msg.className = "ct-msg bad";
+      msg.innerHTML = 'The message could not be sent from here. <a href="' + esc(mailto(name, email, text)) +
+        '">Send it by email instead</a>, or write to ' + CONTACT_EMAIL + '.';
+    }
+  });
+}
+
 /* ═══════════ ASK COMPASS ═══════════
    A conversation with the helper in api/chat.js. It answers from the
    Guild's own material only, everything on the site from theory and
@@ -26098,7 +26254,8 @@ function helperCards(passages, question) {
   const ar = /[\u0600-\u06FF]/.test(question || "");
   if (!passages || !passages.length) {
     return '<p>' + (ar ? "لا يغطي الموقع هذا بعد. جرّب كلمات أخرى، أو تصفّح قسم تعلّم."
-                       : "The site does not cover this yet. Try other words, or browse Learn.") + '</p>';
+                       : "The site does not cover this yet. Try other words, or browse Learn.") + '</p>' +
+      '<p><button type="button" class="hp-contact">' + (ar ? "اسأل الفريق ←" : "Ask the team →") + '</button></p>';
   }
   return '<p class="hp-found-h">' + (ar ? "هذا ما يقوله الموقع:" : "Here is what the site says:") + '</p>' +
     passages.map(p => {
@@ -26183,6 +26340,7 @@ function helperEnsure() {
   });
   hpView.querySelector(".dm-back").addEventListener("click", helperClose);
   log.addEventListener("click", e => {
+    if (e.target.closest(".hp-contact")) { helperClose(); openItem(CONTACT_ITEM); return; }
     const more = e.target.closest(".hp-card-more");
     if (!more) return;
     const t = more.previousElementSibling;
