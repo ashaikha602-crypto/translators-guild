@@ -4066,6 +4066,18 @@ button.st-go.light { background: #fff; color: #5b14b8; border: 0; font-weight: 7
 .fv-pdf { width: 100%; height: 100%; min-height: 70vh; border: 0; background: #fff; }
 .fv-text { margin: 0; padding: 1rem; white-space: pre-wrap; font-size: .95rem; line-height: 1.6; color: var(--ink); }
 .fv-msg { margin: auto; color: var(--ink-soft); }
+.fv-doc { margin: .9rem; padding: 1.4rem 1.2rem; border-radius: 10px; background: #fff; color: #1d1d1f; font-size: .95rem; line-height: 1.65;
+  align-self: start; overflow-wrap: anywhere; box-shadow: 0 10px 30px -14px rgba(0,0,0,.6); }
+.fv-doc .fv-msg { color: #6e6e73; text-align: center; margin: 2rem 0; }
+.fv-doc p { margin: 0 0 .75rem; }
+.fv-doc h1, .fv-doc h2, .fv-doc h3, .fv-doc h4 { color: #111; line-height: 1.3; margin: 1rem 0 .5rem; }
+.fv-doc h1 { font-size: 1.35rem; } .fv-doc h2 { font-size: 1.18rem; } .fv-doc h3 { font-size: 1.05rem; }
+.fv-doc [dir="rtl"] { font-family: var(--f-ar-text); font-size: 1.08em; }
+.fv-doc ul, .fv-doc ol { padding-inline-start: 1.3rem; margin: 0 0 .75rem; }
+.fv-doc table { border-collapse: collapse; width: 100%; margin: .5rem 0 1rem; font-size: .88rem; }
+.fv-doc td, .fv-doc th { border: 1px solid #d2d2d7; padding: .4rem .5rem; vertical-align: top; }
+.fv-doc img { max-width: 100%; height: auto; }
+.fv-doc a { color: #5b14b8; }
 .fv-img { margin: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
 .fv-card { margin: auto; display: grid; justify-items: center; gap: .4rem; text-align: center; padding: 1.5rem; max-width: 22rem; }
 .fv-card .fv-ext { width: 64px; height: 76px; border-radius: 12px; display: grid; place-items: center; background: var(--grad); color: #fff; font-weight: 700; font-size: .85rem; margin-bottom: .4rem; }
@@ -17476,6 +17488,50 @@ async function signedLink(path) {
   return SUPABASE.url + "/storage/v1" + j.signedURL;
 }
 
+/* loads a script kept on this site once, when it is first needed */
+const scriptsLoaded = {};
+function loadScriptOnce(src) {
+  if (!scriptsLoaded[src]) scriptsLoaded[src] = new Promise((ok, bad) => {
+    const sc = document.createElement("script");
+    sc.src = src; sc.async = true; sc.onload = ok; sc.onerror = bad;
+    document.head.appendChild(sc);
+  });
+  return scriptsLoaded[src];
+}
+/* A Word document's text, kept to plain document parts: headings,
+   paragraphs, lists, tables, emphasis, links that go to the web and
+   pictures carried inside the file. Anything else is dropped; each
+   paragraph takes its direction from its own first letters. */
+const DOC_TAGS = new Set(["P","H1","H2","H3","H4","H5","H6","STRONG","B","EM","I","U","S","SUB","SUP","UL","OL","LI",
+  "TABLE","THEAD","TBODY","TR","TD","TH","BR","A","IMG","BLOCKQUOTE"]);
+function cleanDocHTML(html) {
+  const src = new DOMParser().parseFromString("<div>" + html + "</div>", "text/html").body.firstChild;
+  const frag = document.createDocumentFragment();
+  const copy = (node, into) => {
+    node.childNodes.forEach(n => {
+      if (n.nodeType === 3) { into.appendChild(document.createTextNode(n.textContent)); return; }
+      if (n.nodeType !== 1) return;
+      if (!DOC_TAGS.has(n.tagName)) { copy(n, into); return; }
+      const e = document.createElement(n.tagName);
+      if (n.tagName === "A") {
+        const h = n.getAttribute("href") || "";
+        if (/^(https?:|mailto:)/i.test(h)) { e.href = h; e.target = "_blank"; e.rel = "noopener noreferrer"; }
+      } else if (n.tagName === "IMG") {
+        const sr = n.getAttribute("src") || "";
+        if (!/^data:image\//.test(sr)) return;
+        e.src = sr; e.alt = n.getAttribute("alt") || "";
+      } else if (n.tagName === "TD" || n.tagName === "TH") {
+        ["colspan", "rowspan"].forEach(k => { const v = n.getAttribute(k); if (v && /^\d+$/.test(v)) e.setAttribute(k, v); });
+      }
+      if (/^(P|H\d|LI|TD|TH|BLOCKQUOTE)$/.test(n.tagName)) e.dir = "auto";
+      copy(n, e);
+      into.appendChild(e);
+    });
+  };
+  copy(src, frag);
+  return frag;
+}
+
 /* ─── a file, opened inside Compass ───
    The file is fetched and shown here, under its own name: a PDF on the
    page, anything else as a card to download or share. The storage
@@ -17517,6 +17573,20 @@ async function openAttachment(a, size, sign) {
       const f = document.createElement("iframe");
       f.className = "fv-pdf"; f.src = url; f.title = a.file_name;
       body.appendChild(f);
+    } else if (/wordprocessingml/.test(type) || /\.docx$/i.test(a.file_name)) {
+      /* a Word file is read here, as a page, without downloading it */
+      const page = el("article", "fv-doc");
+      page.innerHTML = '<p class="fv-msg">Opening the document\u2026</p>';
+      body.appendChild(page);
+      try {
+        await loadScriptOnce("vendor/mammoth.browser.min.js");
+        const out = await window.mammoth.convertToHtml({ arrayBuffer: await blob.arrayBuffer() });
+        page.innerHTML = "";
+        page.appendChild(cleanDocHTML(out.value));
+        if (!page.textContent.trim()) page.innerHTML = '<p class="fv-msg">This document has no text to show.</p>';
+      } catch (e) {
+        page.innerHTML = '<p class="fv-msg">This document could not be shown here. Download it or share it to open it in Word.</p>';
+      }
     } else if (/^text\//.test(type)) {
       const pre = el("pre", "fv-text"); pre.dir = "auto";
       pre.textContent = await blob.text();
@@ -20410,7 +20480,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1101-0800";
+const BUILD = "1101-0900";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
