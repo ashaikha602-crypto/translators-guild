@@ -6,7 +6,7 @@
 <!-- The browser enforces this list. Scripts may come from this page and nowhere
      else, and the page may only talk to its own database, so a widget or
      tracker added later cannot run here or carry a member's session away. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://bldqausimrsusdzfbubk.supabase.co; connect-src 'self' https://bldqausimrsusdzfbubk.supabase.co https://formsubmit.co; media-src 'self' blob: https://bldqausimrsusdzfbubk.supabase.co; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://bldqausimrsusdzfbubk.supabase.co; connect-src 'self' https://bldqausimrsusdzfbubk.supabase.co https://formsubmit.co; media-src 'self' blob: https://bldqausimrsusdzfbubk.supabase.co; frame-src https://www.youtube-nocookie.com blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>The Translator's Compass — Learn Arabic–English Translation</title>
 <!-- What a search engine and a shared link will show. It describes what the
      site actually contains now, and names its companion book, because the two
@@ -4060,6 +4060,22 @@ button.st-go.light { background: #fff; color: #5b14b8; border: 0; font-weight: 7
 .pf-list { margin-top: .8rem; }
 :root[data-theme="light"] .st-card:not(.st-hero) { background: #fff; border-color: rgba(60,30,100,.08); }
 :root[data-skin="clear"] .st-card:not(.st-hero) { background: #fff; border: 0; box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
+/* the in-app file viewer */
+.fv-view { grid-template-rows: auto 1fr auto; }
+.fv-body { overflow: auto; -webkit-overflow-scrolling: touch; display: grid; min-height: 0; }
+.fv-pdf { width: 100%; height: 100%; min-height: 70vh; border: 0; background: #fff; }
+.fv-text { margin: 0; padding: 1rem; white-space: pre-wrap; font-size: .95rem; line-height: 1.6; color: var(--ink); }
+.fv-msg { margin: auto; color: var(--ink-soft); }
+.fv-img { margin: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+.fv-card { margin: auto; display: grid; justify-items: center; gap: .4rem; text-align: center; padding: 1.5rem; max-width: 22rem; }
+.fv-card .fv-ext { width: 64px; height: 76px; border-radius: 12px; display: grid; place-items: center; background: var(--grad); color: #fff; font-weight: 700; font-size: .85rem; margin-bottom: .4rem; }
+.fv-card b { color: var(--white); font-size: 1.02rem; overflow-wrap: anywhere; }
+.fv-card span { color: var(--ink-faint); font-size: .82rem; }
+.fv-card p { color: var(--ink-soft); font-size: .88rem; line-height: 1.5; margin: .6rem 0 0; }
+.fv-bar { display: flex; gap: .6rem; padding: .7rem 1rem calc(env(safe-area-inset-bottom, 0px) + .7rem); border-top: var(--hair); }
+.fv-bar:empty { display: none; }
+.fv-btn { flex: 1; text-align: center; padding: .7rem; border-radius: 12px; background: var(--grad); color: #fff; font-weight: 600; text-decoration: none; font-size: .95rem; border: 0; box-shadow: none; }
+.fv-btn.ghost { background: none; border: 1px solid rgba(199,125,255,.5); color: var(--mag-ink); }
 /* ═══════════ ROUND TWO ═══════════ */
 .see-all { all: unset; cursor: pointer; margin-inline-start: auto; font-size: .9rem; font-weight: 600; color: var(--mag-ink); }
 .see-all:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; border-radius: 4px; }
@@ -17460,6 +17476,71 @@ async function signedLink(path) {
   return SUPABASE.url + "/storage/v1" + j.signedURL;
 }
 
+/* ─── a file, opened inside Compass ───
+   The file is fetched and shown here, under its own name: a PDF on the
+   page, anything else as a card to download or share. The storage
+   service's address never appears, and a download keeps the name the
+   member gave the file. */
+async function openAttachment(a, size, sign) {
+  const ov = el("div", "dm-view fv-view");
+  ov.setAttribute("role", "dialog"); ov.setAttribute("aria-label", a.file_name);
+  const head = el("header", "dm-head");
+  const back = el("button", "dm-back", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>');
+  back.type = "button"; back.setAttribute("aria-label", "Back");
+  head.appendChild(back);
+  const t = el("span", "hp-head-t", '<b dir="auto">' + esc(a.file_name) + '</b><span>' + esc(size || "") + '</span>');
+  head.appendChild(t);
+  ov.appendChild(head);
+  const body = el("div", "fv-body", '<p class="fv-msg">Opening…</p>');
+  ov.appendChild(body);
+  const bar = el("div", "fv-bar");
+  ov.appendChild(bar);
+  document.body.appendChild(ov);
+  document.body.classList.add("st-open");
+  let url = "";
+  const close = () => { ov.remove(); document.body.classList.remove("st-open"); if (url) URL.revokeObjectURL(url); };
+  back.addEventListener("click", close);
+  try {
+    const signed = await (sign || signedLink)(a.file_path);
+    const r = await fetch(signed);
+    if (!r.ok) throw new Error(String(r.status));
+    const type = a.file_type || r.headers.get("content-type") || "application/octet-stream";
+    const blob = new Blob([await r.blob()], { type });
+    url = URL.createObjectURL(blob);
+    const file = new File([blob], a.file_name, { type });
+    body.innerHTML = "";
+    if (/^image\//.test(type)) {
+      const im = document.createElement("img");
+      im.className = "fv-img"; im.src = url; im.alt = a.file_name;
+      body.appendChild(im);
+    } else if (type === "application/pdf") {
+      const f = document.createElement("iframe");
+      f.className = "fv-pdf"; f.src = url; f.title = a.file_name;
+      body.appendChild(f);
+    } else if (/^text\//.test(type)) {
+      const pre = el("pre", "fv-text"); pre.dir = "auto";
+      pre.textContent = await blob.text();
+      body.appendChild(pre);
+    } else {
+      const ext = (a.file_name.split(".").pop() || "file").toUpperCase().slice(0, 5);
+      body.appendChild(el("div", "fv-card",
+        '<span class="fv-ext">' + esc(ext) + '</span><b dir="auto">' + esc(a.file_name) + '</b><span>' + esc(size || "") + '</span>' +
+        '<p>This kind of file opens in another app. Download it, or share it to save it to Files or open it in Word.</p>'));
+    }
+    const dl = el("a", "fv-btn", "Download");
+    dl.href = url; dl.download = a.file_name;
+    bar.appendChild(dl);
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      const sh = el("button", "fv-btn ghost", "Share");
+      sh.type = "button";
+      sh.addEventListener("click", () => navigator.share({ files: [file], title: a.file_name }).catch(() => {}));
+      bar.appendChild(sh);
+    }
+  } catch (e) {
+    body.innerHTML = '<p class="fv-msg">This file could not be opened. Please try again.</p>';
+  }
+}
+
 /* ─── one post, with its comments ─── */
 function openPost(r, o) {
   openItem({ id: "post:" + r.id, en: (POST_KINDS.find(k=>k.id===r.post_type)||{}).en || "Post",
@@ -17531,20 +17612,8 @@ async function runPost(id, o) {
          than a button that looks broken while the phone downloads it. */
       const ext = (a.file_name.split(".").pop() || "file").toUpperCase().slice(0, 5);
       b.innerHTML = '<span class="at-name" dir="auto">' + esc(a.file_name) + '</span>' +
-        '<span class="at-meta">' + ext + ' \u00b7 ' + size + ' \u00b7 opens in a new tab</span>';
-      b.addEventListener("click", async () => {
-        const meta = b.querySelector(".at-meta");
-        const was = meta.textContent;
-        b.disabled = true; meta.textContent = "Preparing the link\u2026";
-        try {
-          const u = await signedLink(a.file_path);
-          meta.textContent = kb > 2048 ? "Downloading \u2014 a large file takes a moment" : was;
-          window.open(u, "_blank", "noopener");
-          setTimeout(() => { meta.textContent = was; }, 4000);
-        }
-        catch (e) { meta.textContent = "Could not be opened."; }
-        finally { b.disabled = false; }
-      });
+        '<span class="at-meta">' + ext + ' \u00b7 ' + size + '</span>';
+      b.addEventListener("click", () => openAttachment(a, size));
       stage.appendChild(b);
     });
   }
@@ -18954,7 +19023,8 @@ function dmFileView(f) {
     const b = el("button", "dm-photo"); b.type = "button";
     const im = document.createElement("img"); im.alt = f.n || "Photo"; im.loading = "lazy";
     b.appendChild(im);
-    dmSign(f.p).then(u => { im.src = u; b.onclick = () => window.open(u, "_blank", "noopener"); })
+    dmSign(f.p).then(u => { im.src = u;
+      b.onclick = () => openAttachment({ file_path: f.p, file_name: f.n || "Photo", file_type: t }, f.s ? dmSize(f.s) : "", dmSign); })
       .catch(() => { b.classList.add("gone"); b.textContent = "Photo unavailable"; });
     return b;
   }
@@ -18967,7 +19037,7 @@ function dmFileView(f) {
   a.innerHTML = '<span class="dm-file-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span>' +
     '<span class="dm-file-t"><b dir="auto">' + esc(f.n || "File") + '</b><i>' + esc(dmSize(f.s || 0)) + '</i></span>';
   a.addEventListener("click", async () => {
-    try { window.open(await dmSign(f.p), "_blank", "noopener"); } catch (e) { a.querySelector("i").textContent = "Could not open"; }
+    openAttachment({ file_path: f.p, file_name: f.n || "File", file_type: t }, dmSize(f.s || 0), dmSign);
   });
   return a;
 }
@@ -20340,7 +20410,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1101-0700";
+const BUILD = "1101-0800";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
