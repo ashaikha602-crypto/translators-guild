@@ -4026,6 +4026,10 @@ button.st-make[hidden] { display: none; }
 .st-status { margin-left: auto; flex: none; font-size: .7rem; font-weight: 700; padding: .18rem .55rem; border-radius: 99px; }
 .st-status.open { background: rgba(255,196,107,.15); color: var(--amber); }
 .st-status.done { background: rgba(46,217,160,.15); color: var(--mint-soft); }
+.st-kind { align-self: flex-start; font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--mag-ink); }
+.st-kind.k-requests { color: #f0a85a; }
+.st-kind.k-challenges { color: #5ec8d8; }
+.st-kind.k-discuss { color: var(--ink-soft); }
 .st-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
 .st-tag { font-size: .7rem; padding: .16rem .55rem; border-radius: 99px; border: var(--hair-lit); color: var(--ink-soft); }
 .st-tag.p { border-color: rgba(199,125,255,.45); color: var(--mag-ink); font-weight: 600; }
@@ -16522,6 +16526,11 @@ const STUDIO = [
   { id: "photos",     en: "Photos",     kinds: ["image", "reel", "other"], make: null,
     empty: "No photos yet." }
 ];
+/* where each written kind lives in the Studio; the profile's Portfolio
+   holds all of them, and its middle tab only photos and videos */
+const STUDIO_SEC = { translation: "showcase", help: "requests", request: "requests",
+  challenge: "challenges", discussion: "discuss", research: "discuss" };
+const WRITTEN_KINDS = Object.keys(STUDIO_SEC);
 const LANG_CODE = { Arabic: "AR", English: "EN" };
 const pairTag = r => r.source_language && r.target_language
   ? (LANG_CODE[r.source_language] || r.source_language) + " → " + (LANG_CODE[r.target_language] || r.target_language) : "";
@@ -16534,7 +16543,7 @@ function daysLeft(iso) {
 const shortDate = iso => new Date(iso).toLocaleDateString(undefined, { day: "numeric", month: "short" });
 
 /* one card in the Studio; tapping it opens the full post with its comments */
-function studioCard(r, sec, hero) {
+function studioCard(r, sec, hero, kindLab) {
   const c = el("article", "st-card" + (hero ? " st-hero" : ""));
   c.tabIndex = 0;
   c.setAttribute("role", "button");
@@ -16556,6 +16565,8 @@ function studioCard(r, sec, hero) {
     } else who.appendChild(el("span", "st-when", when(r.created_at)));
     c.appendChild(who);
   }
+  /* on a profile's Portfolio the kinds sit together, so each says what it is */
+  if (kindLab) c.appendChild(el("span", "st-kind k-" + sec, esc(kindLab)));
 
   const tags = [];
   if (!hero && pairTag(r)) tags.push('<span class="st-tag p">' + esc(pairTag(r)) + '</span>');
@@ -19916,10 +19927,17 @@ function profileGrid(authorId, isMe) {
     try { rows = await authorFeed(authorId, tab); }
     catch (e) { msg.textContent = "Those posts could not be loaded."; return; }
     box.innerHTML = "";
-    if (!rows.length) { box.appendChild(isMe ? emptyMake(tab === "portfolio" ? "translation" : tab) : emptyThere(tab === "portfolio" ? "translation" : tab)); return; }
+    if (!rows.length) {
+      if (tab === "repost") box.appendChild(el("div", "empty-make", "<p>" + (isMe ? "Posts you repost appear here." : "No reposts here yet.") + "</p>"));
+      else box.appendChild(isMe ? emptyMake(tab === "portfolio" ? "translation" : tab) : emptyThere(tab === "portfolio" ? "translation" : tab));
+      return;
+    }
     if (tab === "portfolio") {
       const pl = el("div", "st-list pf-list");
-      rows.forEach(r => pl.appendChild(studioCard(r, "showcase")));
+      rows.forEach(r => {
+        const k = POST_KINDS.find(x => x.id === r.post_type) || {};
+        pl.appendChild(studioCard(r, STUDIO_SEC[r.post_type] || "discuss", false, k.en || "Post"));
+      });
       box.appendChild(pl);
       return;
     }
@@ -19936,7 +19954,7 @@ function profileGrid(authorId, isMe) {
 const GRID_TABS = [
   { id: "portfolio", lab: "Portfolio",
     ico: '<path d="M7 3.5h7l4 4v13H7z"/><path d="M14 3.5v4h4M9.5 12h6M9.5 15.5h6"/>' },
-  { id: "all",    lab: "Posts",
+  { id: "all",    lab: "Photos and videos",
     ico: '<rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/>' },
   { id: "repost", lab: "Reposts",
     ico: '<path d="M4 9.5A3.5 3.5 0 0 1 7.5 6H17l-2.5-2.5M20 14.5A3.5 3.5 0 0 1 16.5 18H7l2.5 2.5"/>' }
@@ -19949,8 +19967,8 @@ async function authorFeed(id, kind) {
      else on the Posts tab is a post of your own. */
   if (kind === "repost")      q += "&repost_of=not.is.null";
   /* the portfolio is the member's translations; Posts is everything else */
-  else if (kind === "portfolio") q += "&post_type=eq.translation&repost_of=is.null";
-  else if (kind === "all")    q += "&post_type=neq.translation&repost_of=is.null";
+  else if (kind === "portfolio") q += "&post_type=in.(" + WRITTEN_KINDS.join(",") + ")&repost_of=is.null";
+  else if (kind === "all")    q += "&post_type=in.(image,reel,other)&repost_of=is.null";
   else if (kind)              q += "&post_type=eq." + kind + "&repost_of=is.null";
   return sbGet(q);
 }
@@ -20038,14 +20056,13 @@ function emptyMake(tab) {
   const t = tab === "translation";
   const d = el("div", "empty-make",
     '<span class="empty-ring" aria-hidden="true">+</span>' +
-    '<h3>' + (t ? "No translations yet" : "Create your first post") + '</h3>' +
+    '<h3>' + (t ? "No translation posts yet" : "No photos or videos yet") + '</h3>' +
     '<p>' + (t
-      ? "Post something you have translated and the Compass will read it."
-      : "Share a translation, ask about a passage that will not sit still, " +
-        "or open a question of terminology.") + '</p>');
+      ? "Share a translation, ask for help with a passage, or open a question of terminology."
+      : "Photos and videos you post appear here.") + '</p>');
   const b = el("button", "primary", "Create");
   b.type = "button";
-  b.addEventListener("click", () => openItem(NEWPOST_ITEM));
+  b.addEventListener("click", () => t ? openItem(NEWPOST_ITEM) : photoPost());
   d.appendChild(b);
   return d;
 }
@@ -20053,8 +20070,8 @@ function emptyMake(tab) {
 /* Somebody else's empty grid is not an invitation; it is just empty. */
 function emptyThere(tab) {
   return el("div", "empty-make",
-    '<p>' + (tab === "translation" ? "No translations here yet."
-                                   : "Nothing posted here yet.") + '</p>');
+    '<p>' + (tab === "translation" ? "No translation posts here yet."
+                                   : "No photos or videos here yet.") + '</p>');
 }
 
 /* ── sharing a profile ──
@@ -20480,7 +20497,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1101-0900";
+const BUILD = "1101-1100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -21585,10 +21602,10 @@ function createMenu() {
     tr: '<path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z"/>'
   };
   const close = () => wrap.remove();
-  [["post", "Post", "A photo or video on your profile and in the feed", () => photoPost()],
+  [["tr", "Translation post", "A translation, a question, a request, a discussion", () => openItem(NEWPOST_ITEM)],
+   ["post", "Post", "A photo or video on your profile and in the feed", () => photoPost()],
    ["story", "Story", "Gone after 24 hours", () => openStoryComposer()],
-   ["hl", "Story highlight", "Keep stories on your profile", () => newHighlight(() => paintStoryHighlights(document.getElementById("seal-story-hl"), myId()))],
-   ["tr", "Translation post", "A translation, a question, a request, a discussion", () => openItem(NEWPOST_ITEM)]]
+   ["hl", "Story highlight", "Keep stories on your profile", () => newHighlight(() => paintStoryHighlights(document.getElementById("seal-story-hl"), myId()))]]
     .forEach(([k, label, say, fn]) => {
       const b = el("button", "cr-row");
       b.type = "button";
