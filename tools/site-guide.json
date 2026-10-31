@@ -8,7 +8,7 @@
     },
     {
       "title": "Home (the Hall)",
-      "text": "Every visit starts in the Hall. At the top you can switch the look of the site between Dark, Light and Clear. Search members finds anyone by name. Stories shows circles of what members posted in the last 24 hours, yours first. Where you are shows your marks, the Trials you have passed and your rank, and how many marks stand between you and the next rank. Continue where you stopped takes you back into a Trial you have not finished. The Lineage lists translators from history: tap one to read their story. Further down, From the Community shows the latest posts from members, newest first; you can like, comment, save, repost or share a post to your story without leaving the page.",
+      "text": "Every visit starts in the Hall. At the top you can switch the look of the site between Dark, Light and Clear. Search members finds anyone by name. Stories shows circles of what members posted in the last 24 hours, yours first. Where you are shows your marks, the Trials you have passed and your rank, and how many marks stand between you and the next rank. Continue where you stopped takes you back into a Trial you have not finished. The Lineage lists translators from history: tap one to read their story. Further down, From the Studio shows the three latest posts from members, with See all to open the Studio.",
       "keys": "home page, hall, theme, dark mode, light mode. الصفحة الرئيسية، القاعة، الوضع الداكن، الوضع الفاتح، المظهر، القصص، تقدمي، رتبتي، البحث عن الأعضاء"
     },
     {
@@ -75,6 +75,11 @@
       "title": "Ask Compass",
       "text": "Ask Compass is the round button at the bottom right of every page. It answers questions about anything on the site, from translation theory, history, terms and procedures to the Library, the trials and how to use the site, in Arabic or English. It answers only from the site's own material and says where to read more. Only signed-in members can use it, and the conversation is not saved: New chat starts again.",
       "keys": "assistant, chatbot, help. المساعد، اسأل البوصلة، مساعدة، روبوت المحادثة"
+    },
+    {
+      "title": "The Studio",
+      "text": "The Studio is where members share and discuss translation work. It opens from See all under From the Studio on Home. It has five sections. Showcase: members post a translation as finished work, with the source and the translation side by side, the direction (for example AR → EN), the field, and an optional translator's note; others give a ★ (well rendered) and write reviews. Requests: a member asks for help with a passage or a term, with an optional deadline; others tap Offer a translation to answer, and the request shows how many answers it has. Challenges: a passage set for everyone to translate, with a closing date; the current challenge leads, and members tap Submit your version to enter. Discuss: questions of terminology, strategy or theory, and research. Photos: photos and videos. Each section has its own button to share something of that kind. On your profile, the Portfolio tab shows your translations; Posts shows everything else; Reposts what you passed on.",
+      "keys": "studio, showcase, portfolio, requests, challenge, discussion, feed, community, share my translation. الاستوديو، أعمالي، طلبات الترجمة، تحدي، نقاش، مشاركة ترجمة"
     }
   ]
 }

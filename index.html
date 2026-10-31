@@ -4008,6 +4008,58 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
 .tile:active { opacity: .8; }
 :root[data-theme="light"] .tile { background: linear-gradient(160deg, rgba(167,38,208,.14), rgba(101,15,208,.06)); }
 :root[data-theme="light"] .tile-t { color: #2b1c40; }
+/* ═══════════ STUDIO ═══════════ */
+.st-seg { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding: 3px; border-radius: 12px; background: rgba(214,191,234,.08); margin-bottom: .8rem; }
+.st-seg::-webkit-scrollbar { display: none; }
+button.st-seg-b { all: unset; cursor: pointer; flex: 1 0 auto; text-align: center; padding: .45rem .45rem; border-radius: 9px; font-size: .76rem; font-weight: 600; color: var(--ink-soft); }
+button.st-seg-b[aria-selected="true"] { background: var(--grad); color: #fff; }
+button.st-make { all: unset; cursor: pointer; box-sizing: border-box; width: 100%; text-align: center; padding: .65rem; border-radius: 12px;
+  border: 1px dashed rgba(199,125,255,.55); color: var(--mag-ink); font-weight: 600; font-size: .92rem; margin-bottom: .9rem; }
+button.st-make[hidden] { display: none; }
+.st-list { display: grid; gap: .8rem; }
+.st-card { display: grid; gap: .6rem; padding: .85rem .95rem; border-radius: 16px; border: var(--hair); background: rgba(214,191,234,.045); cursor: pointer; }
+.st-card:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; }
+.st-who { display: flex; align-items: center; gap: .55rem; font-size: .85rem; min-width: 0; }
+.st-who .avatar.xs { width: 28px; height: 28px; font-size: .62rem; flex: none; }
+.st-who b { color: var(--white); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.st-when { margin-left: auto; color: var(--ink-faint); font-size: .75rem; flex: none; }
+.st-status { margin-left: auto; flex: none; font-size: .7rem; font-weight: 700; padding: .18rem .55rem; border-radius: 99px; }
+.st-status.open { background: rgba(255,196,107,.15); color: var(--amber); }
+.st-status.done { background: rgba(46,217,160,.15); color: var(--mint-soft); }
+.st-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+.st-tag { font-size: .7rem; padding: .16rem .55rem; border-radius: 99px; border: var(--hair-lit); color: var(--ink-soft); }
+.st-tag.p { border-color: rgba(199,125,255,.45); color: var(--mag-ink); font-weight: 600; }
+.st-title { margin: 0; color: var(--white); font-weight: 600; font-size: .98rem; line-height: 1.4; }
+.st-pair { display: grid; grid-template-columns: 1fr 1fr; border: var(--hair); border-radius: 12px; overflow: hidden; }
+.st-pair > div { padding: .6rem .65rem; min-width: 0; }
+.st-pair > div + div { border-left: var(--hair); }
+.st-pair small { display: block; font-size: .6rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: .2rem; }
+.st-pair p { margin: 0; font-size: .88rem; line-height: 1.45; color: var(--ink); overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+.st-pair p[dir="rtl"], .st-quote[dir="rtl"] { font-family: var(--f-ar-text); font-size: 1rem; }
+.st-note, .st-text { margin: 0; font-size: .84rem; line-height: 1.45; color: var(--ink-soft);
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.st-note b { color: var(--white); }
+.st-quote { margin: 0; padding: .6rem .7rem; border-radius: 12px; background: rgba(214,191,234,.06); color: var(--white); font-size: .92rem; line-height: 1.5;
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.st-acts { display: flex; gap: 1rem; align-items: center; font-size: .8rem; color: var(--ink-soft); }
+button.st-star { all: unset; cursor: pointer; font-size: .8rem; color: var(--ink-soft); }
+button.st-star b { color: var(--mag-ink); }
+button.st-star.on { color: var(--mag-ink); }
+button.st-go { all: unset; cursor: pointer; box-sizing: border-box; text-align: center; padding: .55rem; border-radius: 11px;
+  border: 1px solid rgba(199,125,255,.5); color: var(--mag-ink); font-weight: 600; font-size: .88rem; }
+.st-hero { background: var(--grad); border: 0; color: #fff; }
+.st-hero .st-kicker { font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; opacity: .9; }
+.st-hero .st-title { color: #fff; font-family: var(--f-serif); font-size: 1.25rem; }
+.st-hero .st-quote { background: rgba(0,0,0,.22); color: #fff; }
+.st-hero .st-quote.big[dir="rtl"] { font-size: 1.15rem; }
+.st-hero .st-acts { color: rgba(255,255,255,.9); justify-content: space-between; }
+.st-hero .st-tag { border-color: rgba(255,255,255,.4); color: #fff; }
+button.st-go.light { background: #fff; color: #5b14b8; border: 0; font-weight: 700; }
+.st-sec { margin: .4rem 0 -.2rem; font-size: .8rem; font-weight: 700; color: var(--ink-soft); }
+.pf-list { margin-top: .8rem; }
+:root[data-theme="light"] .st-card:not(.st-hero) { background: #fff; border-color: rgba(60,30,100,.08); }
+:root[data-skin="clear"] .st-card:not(.st-hero) { background: #fff; border: 0; box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
 /* ═══════════ ROUND TWO ═══════════ */
 .see-all { all: unset; cursor: pointer; margin-inline-start: auto; font-size: .9rem; font-weight: 600; color: var(--mag-ink); }
 .see-all:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; border-radius: 4px; }
@@ -4280,7 +4332,7 @@ button.up-next[hidden] { display: none; }
          reason to come back. -->
     <div id="lately-wrap" hidden>
       <div class="strip-head">
-        <h2>From the Community</h2>
+        <h2>From the Studio</h2>
         <button type="button" class="see-all" id="lately-all">See all</button>
       </div>
       <div id="lately"></div>
@@ -16417,8 +16469,193 @@ function when(iso) {
   return d.toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
 }
 
-const COMMUNITY_ITEM = { id: "community", en: "Compass Feed",
-                         subject: "The translation community", section: "profile", run: runFeed };
+const COMMUNITY_ITEM = { id: "community", en: "Studio",
+                         subject: "Work, requests and challenges from translators", section: "profile", run: runStudio };
+
+/* ═══════════ STUDIO ═══════════
+   The community's space, built around translators' work rather than a
+   photo feed. Each section is a kind of post the site already stores:
+   Showcase is "My Translation" (source and rendering side by side, the
+   translator's note, feedback wanted), Requests are "Translation Help"
+   and "Translation Request" (with a deadline), Challenges are passages
+   set for everyone (the deadline is the closing date; entries are
+   replies), Discuss is discussion and research, Photos the rest.
+   A ★ is the existing like, shown as "well rendered"; reviews, answers,
+   entries and replies are the existing comments. */
+const STUDIO = [
+  { id: "showcase",   en: "Showcase",   kinds: ["translation"], make: "translation", makeLab: "Share a translation",
+    empty: "No translations shared yet. Show your first piece of work." },
+  { id: "requests",   en: "Requests",   kinds: ["help", "request"], make: "request", makeLab: "Ask for help",
+    empty: "No requests yet. Stuck on a passage or a term? Ask here." },
+  { id: "challenges", en: "Challenges", kinds: ["challenge"], make: "challenge", makeLab: "Set a challenge",
+    empty: "No challenges yet. Post a passage for others to translate." },
+  { id: "discuss",    en: "Discuss",    kinds: ["discussion", "research"], make: "discussion", makeLab: "Start a discussion",
+    empty: "No discussions yet. Ask about terminology, strategy or theory." },
+  { id: "photos",     en: "Photos",     kinds: ["image", "reel", "other"], make: null,
+    empty: "No photos yet." }
+];
+const LANG_CODE = { Arabic: "AR", English: "EN" };
+const pairTag = r => r.source_language && r.target_language
+  ? (LANG_CODE[r.source_language] || r.source_language) + " → " + (LANG_CODE[r.target_language] || r.target_language) : "";
+const dirOfLang = l => l === "Arabic" ? "rtl" : "ltr";
+function daysLeft(iso) {
+  if (!iso) return null;
+  const end = new Date(iso); end.setHours(23, 59, 59, 999);
+  return Math.ceil((end - Date.now()) / 86400000);
+}
+const shortDate = iso => new Date(iso).toLocaleDateString(undefined, { day: "numeric", month: "short" });
+
+/* one card in the Studio; tapping it opens the full post with its comments */
+function studioCard(r, sec, hero) {
+  const c = el("article", "st-card" + (hero ? " st-hero" : ""));
+  c.tabIndex = 0;
+  c.setAttribute("role", "button");
+  const open = write => openPost(r, write ? { write: true } : undefined);
+  c.addEventListener("click", e => { if (!e.target.closest("button")) open(); });
+  c.addEventListener("keydown", e => { if (e.key === "Enter" && e.target === c) open(); });
+
+  if (hero) {
+    c.appendChild(el("span", "st-kicker", "Current challenge" + (pairTag(r) ? " · " + pairTag(r) : "")));
+  } else {
+    const who = el("div", "st-who");
+    const av = el("span", "avatar xs");
+    paintFace(av, r.avatar_path, r.display_name);
+    who.appendChild(av);
+    who.appendChild(el("b", null, esc(withTitle(r.author_title, r.display_name || "A member")) + verifiedMark(r.author_verified)));
+    if (sec === "requests") {
+      const n = r.comments || 0;
+      who.appendChild(el("span", "st-status " + (n ? "done" : "open"), n ? "✓ " + n + (n === 1 ? " answer" : " answers") : "Open"));
+    } else who.appendChild(el("span", "st-when", when(r.created_at)));
+    c.appendChild(who);
+  }
+
+  const tags = [];
+  if (!hero && pairTag(r)) tags.push('<span class="st-tag p">' + esc(pairTag(r)) + '</span>');
+  if (r.genre) tags.push('<span class="st-tag">' + esc(r.genre) + '</span>');
+  if (sec === "requests" && r.post_type === "help") tags.push('<span class="st-tag">Help with my attempt</span>');
+  if (sec === "requests" && r.deadline) tags.push('<span class="st-tag">Needed by ' + esc(shortDate(r.deadline)) + '</span>');
+  if (sec === "challenges" && r.difficulty) tags.push('<span class="st-tag">' + esc(r.difficulty) + '</span>');
+  if (sec === "showcase" && r.feedback_on && r.feedback_on.length) tags.push('<span class="st-tag">Feedback welcome</span>');
+  if (tags.length) c.appendChild(el("div", "st-tags", tags.join("")));
+
+  if (r.title) { const t = el("p", "st-title", esc(r.title)); t.dir = "auto"; c.appendChild(t); }
+
+  if (sec === "showcase" && (r.source_text || r.translated_text)) {
+    const pair = el("div", "st-pair");
+    const side = (lab, text, lang) => {
+      const d = el("div", null);
+      d.appendChild(el("small", null, lab));
+      const p = el("p", null, esc(text || ""));
+      p.dir = dirOfLang(lang); p.lang = lang === "Arabic" ? "ar" : "en";
+      d.appendChild(p); return d;
+    };
+    pair.appendChild(side("Source", r.source_text, r.source_language));
+    pair.appendChild(side("Translation", r.translated_text, r.target_language));
+    c.appendChild(pair);
+    if (r.translation_note) {
+      const n = el("p", "st-note", "<b>Translator’s note:</b> " + esc(r.translation_note));
+      n.dir = "auto"; c.appendChild(n);
+    }
+  } else if (r.source_text) {
+    const q = el("p", "st-quote" + (hero ? " big" : ""), esc(r.source_text));
+    q.dir = dirOfLang(r.source_language); c.appendChild(q);
+  } else if (r.content && sec !== "photos") {
+    const q = el("p", "st-text", esc(r.content)); q.dir = "auto"; c.appendChild(q);
+  }
+
+  const acts = el("div", "st-acts");
+  const n = r.comments || 0;
+  if (sec === "showcase") {
+    let liked = r.i_like, nLike = r.likes || 0;
+    const star = el("button", "st-star" + (liked ? " on" : ""));
+    star.type = "button";
+    const paint = () => { star.innerHTML = "★ <b>" + nLike + "</b> well rendered"; star.classList.toggle("on", liked);
+      star.setAttribute("aria-pressed", String(!!liked)); };
+    paint();
+    star.addEventListener("click", async () => {
+      star.disabled = true;
+      try {
+        if (liked) { await sbDel("post_likes?user_id=eq." + myId() + "&post_id=eq." + r.id); nLike--; }
+        else { await sbPost("post_likes", { user_id: myId(), post_id: r.id }); nLike++; }
+        liked = !liked; paint();
+      } catch (e) {} finally { star.disabled = false; }
+    });
+    acts.appendChild(star);
+    acts.appendChild(el("span", null, "💬 " + n + (n === 1 ? " review" : " reviews")));
+  } else if (sec === "challenges") {
+    const d = daysLeft(r.deadline);
+    acts.appendChild(el("span", null, d === null ? "Open" : d > 1 ? "⏳ Ends in " + d + " days" : d === 1 ? "⏳ Ends today" : "Closed"));
+    acts.appendChild(el("span", null, n + (n === 1 ? " entry" : " entries")));
+  } else if (sec === "discuss") {
+    acts.appendChild(el("span", null, "💬 " + n + (n === 1 ? " reply" : " replies")));
+  }
+  if (acts.children.length) c.appendChild(acts);
+
+  if (sec === "requests" || sec === "challenges") {
+    const closed = sec === "challenges" && daysLeft(r.deadline) !== null && daysLeft(r.deadline) < 1;
+    if (!closed) {
+      const go = el("button", hero ? "st-go light" : "st-go", sec === "requests" ? "Offer a translation" : "Submit your version");
+      go.type = "button";
+      go.addEventListener("click", () => open(true));
+      c.appendChild(go);
+    }
+  }
+  return c;
+}
+
+function runStudio(section) {
+  let cur = STUDIO.find(x => x.id === section) || STUDIO[0];
+  setCount(""); stage.innerHTML = "";
+  const seg = el("div", "st-seg");
+  seg.setAttribute("role", "tablist");
+  STUDIO.forEach(x => {
+    const b = el("button", "st-seg-b", x.en);
+    b.type = "button"; b.setAttribute("role", "tab");
+    b.addEventListener("click", () => { cur = x; paintSeg(); draw(); });
+    b.dataset.id = x.id;
+    seg.appendChild(b);
+  });
+  const paintSeg = () => seg.querySelectorAll(".st-seg-b").forEach(b => b.setAttribute("aria-selected", String(b.dataset.id === cur.id)));
+  stage.appendChild(seg);
+  const make = el("button", "st-make");
+  make.type = "button";
+  stage.appendChild(make);
+  const list = el("div", "st-list");
+  const msg = el("p", "f-msg", "");
+  stage.appendChild(list); stage.appendChild(msg);
+  paintSeg();
+
+  let seq = 0;
+  async function draw() {
+    const mine = ++seq;
+    make.hidden = !cur.make;
+    make.innerHTML = '<span aria-hidden="true">＋</span> ' + (cur.makeLab || "");
+    make.onclick = () => cur.make ? openItem(NEWPOST_ITEM, cur.make) : photoPost();
+    list.innerHTML = ""; msg.textContent = "Loading…";
+    try {
+      const rows = await sbGet("feed?select=" + FEED_COLS + "&post_type=in.(" + cur.kinds.join(",") + ")" +
+        "&repost_of=is.null&order=created_at.desc&limit=40");
+      if (mine !== seq) return;
+      msg.textContent = rows.length ? "" : cur.empty;
+      if (cur.id === "photos") { rows.forEach(r => list.appendChild(postCard(r))); paintMedia(list); return; }
+      let rest = rows;
+      if (cur.id === "challenges") {
+        /* the newest challenge still open leads, large */
+        const lead = rows.find(r => daysLeft(r.deadline) === null || daysLeft(r.deadline) >= 1);
+        if (lead) {
+          list.appendChild(studioCard(lead, cur.id, true));
+          rest = rows.filter(r => r !== lead);
+          if (rest.length) list.appendChild(el("p", "st-sec", "More challenges"));
+        }
+      }
+      rest.forEach(r => list.appendChild(studioCard(r, cur.id)));
+    } catch (e) {
+      if (mine === seq) msg.textContent = "The Studio could not be loaded.";
+    }
+  }
+  draw();
+  stage.appendChild(footNav({ backLabel: "Profile" }));
+}
 
 function runFeed(kind) {
   let filter = kind || "all";
@@ -17007,7 +17244,7 @@ async function runList(get, empty) {
 const NEWPOST_ITEM = { id: "newpost", en: "Create a post",
                        subject: "What are you posting?", section: "profile", run: runNewPost };
 
-async function runNewPost() {
+async function runNewPost(preset) {
   setCount(""); stage.innerHTML = "";
   /* the rules appear as soon as someone starts a post */
   if (!(await rulesGate())) {
@@ -17018,6 +17255,9 @@ async function runNewPost() {
     stage.appendChild(footNav({ backLabel: "Feed" }));
     return;
   }
+  /* from a Studio section: straight to that kind's form */
+  const pre = typeof preset === "string" && POST_KINDS.find(k => k.id === preset);
+  if (pre) { postForm(pre); return; }
   stage.appendChild(el("p", "note", "What are you posting?"));
   const list = el("div", "kind-list");
   POST_KINDS.forEach(k => {
@@ -17039,7 +17279,7 @@ function postForm(kind) {
     help:        { langs:1, genre:1, src:1, tgt:1, note:1, fb:1, title:1 },
     request:     { langs:1, genre:1, src:1, deadline:1, title:1 },
     discussion:  { title:1 },
-    challenge:   { langs:1, genre:1, src:1, difficulty:1, title:1 },
+    challenge:   { langs:1, genre:1, src:1, difficulty:1, title:1, deadline:1 },
     research:    { title:1, langs:1 },
     image:       { title:1 },
     reel:        { title:1 },
@@ -17093,7 +17333,7 @@ function postForm(kind) {
   const diff = wants.difficulty ? mk("Difficulty", null, select(["Beginner","Intermediate","Advanced"],"Intermediate")) : null;
   let dead = null;
   if (wants.deadline) { const d=document.createElement("input"); d.type="date"; d.className="f-in";
-    dead = mk("Deadline", "Optional.", d); }
+    dead = kind.id === "challenge" ? mk("Closes on", "When entries close. Optional.", d) : mk("Deadline", "Optional.", d); }
 
   const chosen = [];
   if (wants.fb) {
@@ -19507,7 +19747,7 @@ function profileGrid(authorId, isMe) {
   tabs.setAttribute("role", "tablist");
   const box = el("div", null);
   wrap.appendChild(tabs); wrap.appendChild(box);
-  let tab = "all";
+  let tab = "portfolio";
 
   async function draw() {
     tabs.innerHTML = "";
@@ -19536,7 +19776,13 @@ function profileGrid(authorId, isMe) {
     try { rows = await authorFeed(authorId, tab); }
     catch (e) { msg.textContent = "Those posts could not be loaded."; return; }
     box.innerHTML = "";
-    if (!rows.length) { box.appendChild(isMe ? emptyMake(tab) : emptyThere(tab)); return; }
+    if (!rows.length) { box.appendChild(isMe ? emptyMake(tab === "portfolio" ? "translation" : tab) : emptyThere(tab === "portfolio" ? "translation" : tab)); return; }
+    if (tab === "portfolio") {
+      const pl = el("div", "st-list pf-list");
+      rows.forEach(r => pl.appendChild(studioCard(r, "showcase")));
+      box.appendChild(pl);
+      return;
+    }
     const grid = el("div", "post-grid");
     const tiles = rows.map(r => { const t2 = postTile(r); grid.appendChild(t2); return t2; });
     box.appendChild(grid);
@@ -19548,6 +19794,8 @@ function profileGrid(authorId, isMe) {
 }
 
 const GRID_TABS = [
+  { id: "portfolio", lab: "Portfolio",
+    ico: '<path d="M7 3.5h7l4 4v13H7z"/><path d="M14 3.5v4h4M9.5 12h6M9.5 15.5h6"/>' },
   { id: "all",    lab: "Posts",
     ico: '<rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/>' },
   { id: "repost", lab: "Reposts",
@@ -19560,7 +19808,9 @@ async function authorFeed(id, kind) {
   /* Reposts are the posts that point at somebody else's; everything
      else on the Posts tab is a post of your own. */
   if (kind === "repost")      q += "&repost_of=not.is.null";
-  else if (kind === "all")    q += "&repost_of=is.null";
+  /* the portfolio is the member's translations; Posts is everything else */
+  else if (kind === "portfolio") q += "&post_type=eq.translation&repost_of=is.null";
+  else if (kind === "all")    q += "&post_type=neq.translation&repost_of=is.null";
   else if (kind)              q += "&post_type=eq." + kind + "&repost_of=is.null";
   return sbGet(q);
 }
@@ -20090,7 +20340,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1101-0400";
+const BUILD = "1101-0700";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -21651,7 +21901,7 @@ async function renderLately() {
   rows.forEach(r => list.appendChild(latelyRow(r)));
   box.appendChild(list);
 
-  const more = el("button", "lately-more", "See all posts in the Compass Feed");
+  const more = el("button", "lately-more", "Open the Studio");
   more.type = "button";
   more.addEventListener("click", () => openItem(COMMUNITY_ITEM));
   box.appendChild(more);
@@ -21829,6 +22079,8 @@ function learnFilter(q) {
   }
 }
 document.addEventListener("DOMContentLoaded", () => {
+  const all = document.getElementById("lately-all");
+  if (all) all.addEventListener("click", () => openItem(COMMUNITY_ITEM));
   const f = document.getElementById("learn-search");
   if (f) f.addEventListener("input", () => learnFilter(f.value));
 });
