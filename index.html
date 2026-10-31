@@ -17608,10 +17608,20 @@ async function openAttachment(a, size, sign) {
         '<span class="fv-ext">' + esc(ext) + '</span><b dir="auto">' + esc(a.file_name) + '</b><span>' + esc(size || "") + '</span>' +
         '<p>This kind of file opens in another app. Download it, or share it to save it to Files or open it in Word.</p>'));
     }
+    const canShare = !!(navigator.canShare && navigator.canShare({ files: [file] }));
+    /* iPhone and iPad ignore a download link in an app on the Home
+       Screen, so there Download opens the share sheet, whose Save to
+       Files keeps the file under its own name. */
+    const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
     const dl = el("a", "fv-btn", "Download");
     dl.href = url; dl.download = a.file_name;
+    if (ios && canShare) dl.addEventListener("click", e => {
+      e.preventDefault();
+      navigator.share({ files: [file] }).catch(() => {});
+    });
     bar.appendChild(dl);
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    if (canShare) {
       const sh = el("button", "fv-btn ghost", "Share");
       sh.type = "button";
       sh.addEventListener("click", () => navigator.share({ files: [file], title: a.file_name }).catch(() => {}));
@@ -20497,7 +20507,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1101-1100";
+const BUILD = "1101-1200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
