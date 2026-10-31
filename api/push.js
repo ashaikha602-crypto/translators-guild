@@ -93,6 +93,8 @@ function word(p) {
     case "repost":  return { title: "New repost", body: "🔁 " + name + " reposted your post" + post, url: to("post:" + p.post_id) };
     case "story":   return { title: "New story", body: "✨ " + name + " posted a new story", url: to("member:" + p.actor_id), tag: "story-" + p.actor_id };
     case "post":    return { title: "New post", body: "📝 " + name + " shared a new post" + post, url: to("post:" + p.post_id) };
+    /* an announcement to every member; the same words as UPDATE_NOTE in the page */
+    case "update":  return { title: "New in Compass ✨", body: "A fresh look, Ask Compass and more. Tap to explore.", url: SITE + "/", tag: "update" };
     default:        return { title: "Compass", body: name + " interacted with you", url: to("notifs") };
   }
 }

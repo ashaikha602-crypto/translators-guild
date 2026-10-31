@@ -2044,7 +2044,7 @@ a.ks-s-en:hover { color: var(--white); }
 /* phone notifications */
 .push-toast { all: unset; cursor: pointer; box-sizing: border-box; position: fixed; z-index: 300; left: 10px; right: 10px;
   top: calc(env(safe-area-inset-top, 0px) + 8px); display: grid; grid-template-columns: 38px 1fr; gap: .7rem; align-items: center;
-  padding: .7rem .85rem; border-radius: 20px; background: rgba(40,22,58,.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  padding: .7rem .85rem; border-radius: 20px; background: rgba(38,38,42,.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 10px 30px rgba(0,0,0,.35); color: #fff; transform: translateY(-140%); transition: transform .35s cubic-bezier(.2,.9,.3,1.1);
   max-width: 520px; margin: 0 auto; }
 .push-toast.in { transform: none; }
@@ -2052,8 +2052,7 @@ a.ks-s-en:hover { color: var(--white); }
 .push-toast > span { display: grid; gap: .1rem; min-width: 0; }
 .push-toast b { font-size: .88rem; font-weight: 600; }
 .push-toast span span { font-size: .84rem; line-height: 1.35; color: rgba(255,255,255,.85); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-:root[data-theme="light"] .push-toast { background: rgba(255,255,255,.95); color: #111; }
-:root[data-theme="light"] .push-toast span span { color: #444; }
+/* the same dark banner in every look, like the iPhone's own in dark mode */
 #push-nudge { margin: .2rem 0 .9rem; }
 #push-nudge[hidden] { display: none; }
 .push-card { position: relative; display: grid; grid-template-columns: auto 1fr; gap: .8rem; align-items: start;
@@ -19198,6 +19197,10 @@ function noteWhen(iso) {
   return "Earlier";
 }
 
+/* An announcement from Compass to every member (kind "update"); the same
+   words as the phone notification in api/push.js. */
+const UPDATE_NOTE = { title: "New in Compass ✨", body: "A fresh look, Ask Compass and more. Tap to explore." };
+
 async function runNotifications() {
   setCount(""); stage.innerHTML = "";
   const list = el("div", "n-list");
@@ -19223,17 +19226,20 @@ async function runNotifications() {
 
     const b = el("button", "n-item" + (n.read_at ? "" : " unread"));
     b.type = "button";
+    const isUpdate = n.kind === "update";
     const av = el("span", "avatar sm");
-    paintFace(av, n.avatar_path, n.display_name);
+    if (isUpdate) av.innerHTML = '<img src="icons/icon-192.png?v=5" alt="">';
+    else paintFace(av, n.avatar_path, n.display_name);
     b.appendChild(av);
     const txt = el("div", "n-txt");
-    const about = n.comment_text || n.about || "";
+    const about = isUpdate ? UPDATE_NOTE.body : (n.comment_text || n.about || "");
     const says = n.kind === "message" && n.count > 1
       ? "sent you " + n.count + " messages"
       : (N_SAYS[n.kind] || "interacted with you");
     txt.innerHTML =
-      '<span class="n-line"><b>' + esc(withTitle(n.title, n.display_name || "A member")) + '</b> ' +
-        esc(says) + '</span>' +
+      (isUpdate ? '<span class="n-line"><b>' + esc(UPDATE_NOTE.title) + '</b></span>'
+        : '<span class="n-line"><b>' + esc(withTitle(n.title, n.display_name || "A member")) + '</b> ' +
+        esc(says) + '</span>') +
       (about ? '<span class="n-about" dir="auto">' + esc(about) + '</span>' : '') +
       '<span class="n-when">' + when(n.created_at) + '</span>';
     b.appendChild(txt);
@@ -19248,6 +19254,7 @@ async function runNotifications() {
           .then(paintBadges).catch(() => {});
       }
       if (n.kind === "message") { openItem(INBOX_ITEM); return; }
+      if (isUpdate) { goHall(); return; }
       if (n.kind === "story") {
         try {
           const gs = await loadStoryGroups();
@@ -20083,7 +20090,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1101-0200";
+const BUILD = "1101-0300";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
