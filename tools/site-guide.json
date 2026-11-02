@@ -37,6 +37,11 @@
       "keys": "login, log in, sign in, password, forgot password, email. تسجيل الدخول، كلمة المرور، نسيت كلمة السر، الحساب، البريد الإلكتروني"
     },
     {
+      "title": "Continue as a guest",
+      "text": "At the bottom of the sign-in screen, Continue as a guest lets anyone in without an account. Type your name and tap Continue, and the site opens straight away and greets you by name. A guest can use Learn, Practice and Interpreting; marks and progress are kept on that device only. Posting in the Studio, messages, notifications and Ask Compass need an account. To create one, or to log in, open the Profile tab and choose Create an account or Log in.",
+      "keys": "guest, without account, no account, visitor, try the site. ضيف، الدخول كضيف، بدون حساب، زائر"
+    },
+    {
       "title": "Put the site on your Home Screen",
       "text": "Added to your Home Screen, the site opens full-screen with its own icon, like an app, and on iPhone this is also what makes notifications possible. Nothing needs installing from a store. iPhone (Safari): open the site in Safari, tap Share (the square with the arrow pointing up), scroll down and choose Add to Home Screen, then Add, and from then on open it from its icon. Android (Chrome): open the site in Chrome, tap the ⋮ menu, choose Add to Home screen (or Install app) and confirm. If you added it a while ago and see an older icon, remove the shortcut and add it again; phones keep the first icon they were given.",
       "keys": "install, app, download, icon. تثبيت، تطبيق، تحميل، الشاشة الرئيسية، أيقونة، إضافة إلى الشاشة الرئيسية، آيفون، أندرويد، أنزل الموقع، تنزيل الموقع، كتطبيق، نزل التطبيق، أحمل التطبيق"

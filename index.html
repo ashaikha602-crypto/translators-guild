@@ -493,6 +493,15 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .check:hover { color: var(--lilac); }
 .opt-row { display: flex; align-items: center; justify-content: space-between; gap: .75rem; flex-wrap: wrap; }
 .btn-wide { width: 100%; }
+.guest-or { display: flex; align-items: center; gap: .75rem; margin: .1rem 0 -.2rem; font-size: .75rem; color: var(--lilac-dim); }
+.guest-or::before, .guest-or::after { content: ""; flex: 1; height: 1px; background: currentColor; opacity: .35; }
+#guest-btn { padding: .8rem 1rem; border-radius: 14px; font-weight: 600; }
+.guest-card { display: grid; gap: .9rem; text-align: center; padding: 1.6rem 1.2rem; border-radius: 18px; border: var(--hair); background: rgba(214,191,234,.045); }
+.guest-card .avatar { margin: 0 auto; }
+.guest-card h2 { margin: 0; }
+.guest-card p { margin: 0; color: var(--ink-soft); }
+.guest-card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: .35rem; text-align: start; font-size: .9rem; }
+.guest-card li::before { content: "✦ "; color: var(--mag-ink); }
 .auth-alt { margin: 0; text-align: center; font-size: .82rem; color: var(--lilac-dim); }
 .auth-alt .link { font-weight: 600; color: var(--lilac); }
 
@@ -4260,10 +4269,36 @@ button.up-next[hidden] { display: none; }
           <button type="button" class="link" id="alt-switch">Sign Up</button>
         </p>
 
+        <div class="guest-or" aria-hidden="true"><span>or</span></div>
+        <button type="button" class="ghost btn-wide" id="guest-btn">Continue as a guest</button>
+
         <!-- Which build is actually running. A single HTML file gets cached
              hard on phones, and without this there is no way to tell a fixed
              site from a stale copy of it except by guessing. -->
         <p class="build-mark">The Translator&rsquo;s Compass &middot; بوصلة المترجم</p>
+      </div>
+
+      <!-- ── A GUEST ── a name, and the door opens -->
+      <div class="step" id="step-guest" hidden>
+        <div class="step-head">
+          <span class="step-chip">✦</span>
+          <span class="sh-en">Guest</span>
+        </div>
+        <div>
+          <h2 class="auth-title">What&rsquo;s your name?</h2>
+          <p class="note">Type your name to start. You can create an account any time.</p>
+        </div>
+        <form id="guest-form" novalidate>
+          <div class="field">
+            <label for="guest-name">Your name</label>
+            <input id="guest-name" type="text" autocomplete="name" maxlength="40" placeholder="Enter your name">
+            <p class="field-error" id="err-guest" hidden></p>
+          </div>
+          <button type="submit" class="btn-wide">Continue</button>
+        </form>
+        <p class="auth-alt">
+          <button type="button" class="link" id="guest-back">&larr; Back to log in</button>
+        </p>
       </div>
 
       <!-- ── THE SIX DIGITS ──
@@ -15643,7 +15678,7 @@ function enterHall(user) {
   gateBusy(false);
   clearErrs();
   gateEl.pass.value = ""; gateEl.pass2.value = "";
-  state.member = email; save();
+  state.member = email; state.guest = ""; save();
   paintWho();
 
   const a = document.getElementById("step-seal");
@@ -15662,7 +15697,7 @@ function unlock() {
   document.body.appendChild(ov);
   /* If they arrived on somebody's shared link, that profile is where
      they were going; the hall was only the gate's other side. */
-  connectBackend(state.member).then(() => { openSharedProfile(); openFromLink(); pushOnConnect(); paintPushNudge(); }).catch(() => {});
+  if (!isGuest()) connectBackend(state.member).then(() => { openSharedProfile(); openFromLink(); pushOnConnect(); paintPushNudge(); }).catch(() => {});
   setTimeout(() => {
     paintBuild(); renderHall(); show("hall"); setAct(markCount() ? 3 : 2);
     ov.style.transition = "opacity 420ms ease"; ov.style.opacity = "0";
@@ -18349,6 +18384,7 @@ function memberName() {
   const full = [(u.firstName || "").trim(), (u.lastName || "").trim()]
     .filter(Boolean).join(" ");
   if (full) return full;
+  if (!session && state.guest) return state.guest;
   const addr = u.email || state.member || "";
   return addr ? addr.split("@")[0] : "";
 }
@@ -20507,7 +20543,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1101-1200";
+const BUILD = "1102-1000";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -22377,7 +22413,10 @@ function navTo(where) {
   if (where === "home")      { renderHall();  show("hall"); }
   if (where === "learn")     { renderLearn(); show("learn"); }
   if (where === "practice")  { renderPractice(); show("practice"); }
-  if (where === "profile")   { renderSeal();  show("seal"); }
+  if (where === "profile")   {
+    if (isGuest()) { openItem(GUEST_ITEM); paintNav("profile"); return; }
+    renderSeal();  show("seal");
+  }
   if (where === "interpret") {
     /* The Booth is the interpreting trial; the tab opens the work itself. */
     const booth = ITEMS.find(t => t.id === "booth");
@@ -29917,6 +29956,70 @@ ADM_TABS.forEach(([tabId, paneId, open]) => {
   });
 });
 
+/* ═══════════ GUESTS ═══════════
+   A guest gives a name and goes in. Learning and practice work, kept on
+   this device; posting, messages and Ask Compass need an account. */
+const isGuest = () => !session && !!state.guest;
+(function wireGuest() {
+  const seal = document.getElementById("step-seal");
+  const step = document.getElementById("step-guest");
+  const input = document.getElementById("guest-name");
+  const err = document.getElementById("err-guest");
+  document.getElementById("guest-btn").addEventListener("click", () => {
+    seal.hidden = true; step.hidden = false;
+    err.hidden = true; input.value = state.guest || "";
+    setTimeout(() => input.focus(), 50);
+  });
+  document.getElementById("guest-back").addEventListener("click", () => {
+    step.hidden = true; seal.hidden = false;
+  });
+  document.getElementById("guest-form").addEventListener("submit", e => {
+    e.preventDefault();
+    const name = input.value.replace(/\s+/g, " ").trim();
+    if (name.length < 2) {
+      err.textContent = "Please type your name to continue.";
+      err.hidden = false; input.focus(); return;
+    }
+    state.guest = name.slice(0, 40); state.member = ""; save();
+    step.hidden = true;
+    paintWho();
+    unlock();
+  });
+})();
+
+function leaveGuest(mode) {
+  state.guest = ""; save();
+  clearTrail();
+  document.getElementById("step-guest").hidden = true;
+  resetGateSteps();
+  setAuthMode(mode);
+  paintWho();
+  show("gate");
+}
+
+const GUEST_ITEM = { id: "guest-me", en: "Profile", subject: "Browsing as a guest", run: runGuestProfile };
+function runGuestProfile() {
+  setCount(""); stage.innerHTML = "";
+  const c = el("div", "guest-card");
+  const av = el("span", "avatar lg");
+  paintAvatar(av, state.guest);
+  c.appendChild(av);
+  const h = el("h2", null, esc(state.guest)); h.dir = "auto";
+  c.appendChild(h);
+  c.appendChild(el("p", null, "You are browsing as a guest. Learn and Practice are open to you, and your progress stays on this device."));
+  c.appendChild(el("ul", null,
+    "<li>Keep your marks and rank on every device</li>" +
+    "<li>Post your translations in the Studio</li>" +
+    "<li>Message members and get notifications</li>" +
+    "<li>Ask Compass questions</li>"));
+  const up = el("button", "btn-wide", "Create an account");
+  up.type = "button"; up.addEventListener("click", () => leaveGuest("up"));
+  const lin = el("button", "ghost btn-wide", "Log in");
+  lin.type = "button"; lin.addEventListener("click", () => leaveGuest("in"));
+  c.appendChild(up); c.appendChild(lin);
+  stage.appendChild(c);
+}
+
 /* ═══════════ BOOT ═══════════ */
 load();
 carryFromOldSite();
@@ -29929,6 +30032,11 @@ loadPortraits();
 (async function resume() {
   const kept = readStoredSession();
   if (kept) views.gate.hidden = true;
+  if (!kept && state.guest) {
+    views.gate.hidden = true;
+    paintWho(); renderHall(); setAct(markCount() ? 3 : 2); show("hall");
+    return;
+  }
   if (!kept || !(await freshToken())) { storeSession(null); show("gate"); return; }
   /* Someone already logged in goes to their member area. The Member's Seal
      screen stays a public sign up / log in screen and never shows who was
