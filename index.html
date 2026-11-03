@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <!-- The browser enforces this list. Scripts may come from this page and nowhere
      else, and the page may only talk to its own database, so a widget or
      tracker added later cannot run here or carry a member's session away. -->
@@ -3985,6 +3985,14 @@ html:root[data-look="compass"] .jx-num b { font-family: var(--f-serif); font-siz
 
 .grid-tab .gt-l { display: none; }
 .c-tsrc { display: block; margin-top: .3rem; font-size: .72rem; color: var(--ink-faint); }
+
+/* iPhone zooms the whole page in when a typing box with letters under
+   16px is tapped, and often leaves it at an odd scale. On touch screens
+   every box is 16px or more, so it never has a reason to. */
+@media (pointer: coarse) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), textarea, select { font-size: max(16px, 1em) !important; }
+}
+
 /* on a phone, while the keyboard is up: no bar and no Ask Compass button
    over it (the dictionary stays, it is for the text being typed) */
 body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
@@ -20814,7 +20822,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1104-1300";
+const BUILD = "1104-1400";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
