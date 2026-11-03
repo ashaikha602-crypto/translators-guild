@@ -5303,9 +5303,9 @@ function runLineage(startAt) {
     }
 
     stage.appendChild(footNav({
-      back: era > 0 ? (() => { era--; render(); scrollTop(); }) : home,
+      back: era > 0 ? ((v) => () => { era = v - 1; render(); scrollTop(); })(era) : home,
       backLabel: era > 0 ? ERAS[era - 1].en : "All of it",
-      next: era < ERAS.length - 1 ? (() => { era++; render(); scrollTop(); }) : null,
+      next: era < ERAS.length - 1 ? ((v) => () => { era = v + 1; render(); scrollTop(); })(era) : null,
       nextLabel: era < ERAS.length - 1 ? ERAS[era + 1].en : "",
       note: "The practice · " + (era + 1) + " of " + ERAS.length
     }));
@@ -5327,9 +5327,9 @@ function runLineage(startAt) {
     M.blocks.forEach(b => stage.appendChild(block(b)));
 
     stage.appendChild(footNav({
-      back: mom > 0 ? (() => { mom--; render(); scrollTop(); }) : home,
+      back: mom > 0 ? ((v) => () => { mom = v - 1; render(); scrollTop(); })(mom) : home,
       backLabel: mom > 0 ? DISCIPLINE[mom - 1].en : "All of it",
-      next: mom < DISCIPLINE.length - 1 ? (() => { mom++; render(); scrollTop(); }) : null,
+      next: mom < DISCIPLINE.length - 1 ? ((v) => () => { mom = v + 1; render(); scrollTop(); })(mom) : null,
       nextLabel: mom < DISCIPLINE.length - 1 ? DISCIPLINE[mom + 1].en : "",
       note: "The discipline · " + (mom + 1) + " of " + DISCIPLINE.length
     }));
@@ -5379,9 +5379,9 @@ function runLineage(startAt) {
       }
 
       stage.appendChild(footNav({
-        back: cur > 0 ? (() => { cur--; render(); scrollTop(); }) : home,
+        back: cur > 0 ? ((v) => () => { cur = v - 1; render(); scrollTop(); })(cur) : home,
         backLabel: cur > 0 ? figName(LINEAGE[cur - 1]) : "All sixteen",
-        next: cur < LINEAGE.length - 1 ? (() => { cur++; render(); scrollTop(); }) : null,
+        next: cur < LINEAGE.length - 1 ? ((v) => () => { cur = v + 1; render(); scrollTop(); })(cur) : null,
         nextLabel: cur < LINEAGE.length - 1 ? figName(LINEAGE[cur + 1]) : "",
         note: (cur + 1) + " of " + LINEAGE.length
       }));
@@ -15147,9 +15147,9 @@ function runBookGuide(G) {
 
     const tryIt = ITEMS.find(x => x.id === G.practise);
     stage.appendChild(footNav({
-      back: cur > 0 ? (() => { cur--; render(); scrollTop(); }) : null,
+      back: cur > 0 ? ((v) => () => { cur = v - 1; render(); scrollTop(); })(cur) : null,
       backLabel: cur > 0 ? G.pages[cur - 1].t : "",
-      next: last ? (tryIt ? (() => openItem(tryIt)) : null) : (() => { cur++; render(); scrollTop(); }),
+      next: last ? (tryIt ? (() => openItem(tryIt)) : null) : ((v) => () => { cur = v + 1; render(); scrollTop(); })(cur),
       nextLabel: last ? (tryIt ? "Practise: " + tryIt.en : "") : G.pages[cur + 1].t,
       note: "Page " + (cur + 1) + " of " + G.pages.length
     }));
@@ -20814,7 +20814,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1104-1200";
+const BUILD = "1104-1300";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -22861,16 +22861,57 @@ function setDots(total, done, now) {
    quieter way out at the bottom — one of them, not two.
    ════════════════════════════════════════════════════════════════ */
 const trail = [];
-function pushTrail(label, restore) {
-  trail.push({ label: label, restore: restore });
+function pushTrail(label, restore, extra) {
+  const y = window.scrollY || 0;
+  trail.push(Object.assign({ label: label, restore: () => { restore(); backTo(y); } }, extra || {}));
   if (trail.length > 40) trail.shift();
+}
+/* after Back, the page returns to where it was read, once it has drawn */
+function backTo(y) {
+  requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo(0, y)));
+  setTimeout(() => window.scrollTo(0, y), 250);
 }
 function trailTop() { return trail.length ? trail[trail.length - 1] : null; }
 function clearTrail() { trail.length = 0; }
 document.addEventListener("DOMContentLoaded", () => {
   const tb = document.getElementById("top-back");
-  if (tb) tb.addEventListener("click", () => { goBack(); window.scrollTo(0, 0); });
+  if (tb) tb.addEventListener("click", () => goBack());
 });
+/* Many pages draw their own sub-pages in place: the eras of the history
+   guide, a translator from the Lineage, a school of theory. A tap that
+   replaces what is on the page keeps the old page aside, so Back puts it
+   back exactly, scrolled where it was. Trials are left out: answering a
+   question is not going somewhere. */
+let stageSnap = null;
+(function watchStage() {
+  const st = document.getElementById("stage");
+  if (!st) return;
+  st.addEventListener("click", e => {
+    if (e.target.closest(".fn-back, .fn-home, [data-no-trail]")) { stageSnap = null; return; }
+    if (!active || active.kind === "trial" || curView !== "trial") { stageSnap = null; return; }
+    stageSnap = { at: Date.now(), item: active, nodes: [...st.childNodes], y: window.scrollY || 0,
+      count: document.getElementById("trial-count").textContent,
+      dots: document.getElementById("trial-dots").innerHTML,
+      prog: (document.querySelector("#trial .trial-head") || { style: { getPropertyValue: () => "" } }).style.getPropertyValue("--prog") };
+  }, true);
+  new MutationObserver(() => {
+    const sn = stageSnap;
+    if (!sn || Date.now() - sn.at > 1500 || sn.item !== active || curView !== "trial") return;
+    if (sn.nodes.some(n => n.parentNode === st)) return;   /* not replaced, only changed */
+    stageSnap = null;
+    trail.push({ label: sn.item.en, snap: sn.item, restore: () => {
+      st.replaceChildren(...sn.nodes);
+      document.getElementById("trial-count").textContent = sn.count;
+      document.getElementById("trial-dots").innerHTML = sn.dots;
+      const head = document.querySelector("#trial .trial-head");
+      if (head && sn.prog !== "") head.style.setProperty("--prog", sn.prog);
+      if (curView !== "trial") show("trial");
+      backTo(sn.y);
+    } });
+    if (trail.length > 40) trail.shift();
+  }).observe(st, { childList: true });
+})();
+
 function goBack() {
   stopBooth();
   const prev = trail.pop();
@@ -22895,7 +22936,11 @@ function footNav(opts) {
   const backLab = opts.backLabel || (top ? top.label : "Back");
   const back = el("button", "fn-back", "\u2190 " + backLab);
   back.setAttribute("aria-label", "Back to " + backLab);
-  back.addEventListener("click", opts.back || goBack);
+  back.addEventListener("click", () => {
+    const t = trailTop();
+    if (t && t.snap && t.snap === active) goBack();
+    else (opts.back || goBack)();
+  });
   row.appendChild(back);
 
   if (opts.next) {
@@ -24005,9 +24050,9 @@ function runProcedures() {
     const lastOne = cur >= PROCEDURES.length - 1;
     const tryIt = ITEMS.find(x => x.id === "nameproc");
     const pager = footNav({
-      back: cur > 0 ? (() => { cur--; render(); scrollTop(); }) : null,
+      back: cur > 0 ? ((v) => () => { cur = v - 1; render(); scrollTop(); })(cur) : null,
       backLabel: cur > 0 ? PROCEDURES[cur - 1].en : "",
-      next: lastOne ? (() => openItem(tryIt)) : (() => { cur++; render(); scrollTop(); }),
+      next: lastOne ? (() => openItem(tryIt)) : ((v) => () => { cur = v + 1; render(); scrollTop(); })(cur),
       nextLabel: lastOne ? "Now try naming them" : PROCEDURES[cur + 1].en,
       note: "Procedure " + (cur + 1) + " of " + PROCEDURES.length
     });
@@ -24066,9 +24111,9 @@ function runTextTypes() {
     stage.appendChild(card);
 
     const pager = footNav({
-      back: cur > 0 ? (() => { cur--; render(); scrollTop(); }) : null,
+      back: cur > 0 ? ((v) => () => { cur = v - 1; render(); scrollTop(); })(cur) : null,
       backLabel: cur > 0 ? TEXT_WORLDS[cur - 1].en : "",
-      next: cur < TEXT_WORLDS.length - 1 ? (() => { cur++; render(); scrollTop(); }) : null,
+      next: cur < TEXT_WORLDS.length - 1 ? ((v) => () => { cur = v + 1; render(); scrollTop(); })(cur) : null,
       nextLabel: cur < TEXT_WORLDS.length - 1 ? TEXT_WORLDS[cur + 1].en : "",
       note: "World " + (cur + 1) + " of " + TEXT_WORLDS.length
     });
@@ -25594,9 +25639,9 @@ function runToolkit() {
     }
 
     stage.appendChild(footNav({
-      back: tab > 0 ? (() => { tab--; render(); scrollTop(); }) : null,
+      back: tab > 0 ? ((v) => () => { tab = v - 1; render(); scrollTop(); })(tab) : null,
       backLabel: tab > 0 ? TABS[tab - 1] : "",
-      next: tab < TABS.length - 1 ? (() => { tab++; render(); scrollTop(); }) : null,
+      next: tab < TABS.length - 1 ? ((v) => () => { tab = v + 1; render(); scrollTop(); })(tab) : null,
       nextLabel: tab < TABS.length - 1 ? TABS[tab + 1] : "",
       note: TABS[tab]
     }));
@@ -26491,9 +26536,9 @@ function runErrors() {
     }
 
     stage.appendChild(footNav({
-      back: tab > 0 ? (() => { tab--; render(); scrollTop(); }) : null,
+      back: tab > 0 ? ((v) => () => { tab = v - 1; render(); scrollTop(); })(tab) : null,
       backLabel: tab > 0 ? TABS[tab - 1] : "",
-      next: tab < TABS.length - 1 ? (() => { tab++; render(); scrollTop(); }) : null,
+      next: tab < TABS.length - 1 ? ((v) => () => { tab = v + 1; render(); scrollTop(); })(tab) : null,
       nextLabel: tab < TABS.length - 1 ? TABS[tab + 1] : "",
       note: TABS[tab]
     }));
@@ -29624,9 +29669,9 @@ function runPhraseology() {
     stage.appendChild(v);
 
     const pager = footNav({
-      back: cur > 0 ? (() => { cur--; render(); scrollTop(); }) : null,
+      back: cur > 0 ? ((v) => () => { cur = v - 1; render(); scrollTop(); })(cur) : null,
       backLabel: cur > 0 ? PHRASE_SETS[cur - 1].en : "",
-      next: cur < PHRASE_SETS.length - 1 ? (() => { cur++; render(); scrollTop(); }) : null,
+      next: cur < PHRASE_SETS.length - 1 ? ((v) => () => { cur = v + 1; render(); scrollTop(); })(cur) : null,
       nextLabel: cur < PHRASE_SETS.length - 1 ? PHRASE_SETS[cur + 1].en : "",
       note: "A chamber · free to wander · nothing here is scored"
     });
