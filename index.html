@@ -15210,6 +15210,8 @@ function show(name) {
   tv.classList.add(IN);
 
   curView = name;
+  /* the sign-in screen is always dark; the chosen look returns inside */
+  if ((name === "gate") !== (from === "gate") && typeof paintTheme === "function") paintTheme();
   window.scrollTo({ top: 0 });
 
   /* the bar belongs to the Guild, not to the gate */
@@ -20701,7 +20703,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1103-1900";
+const BUILD = "1103-2000";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -22532,7 +22534,8 @@ function themeChoice() {
 }
 function nextTheme() { const c = themeChoice(); return THEME_ORDER[(THEME_ORDER.indexOf(c) + 1) % THEME_ORDER.length]; }
 function paintTheme() {
-  const choice = themeChoice();
+  const gate = typeof curView !== "undefined" && (curView === "gate" || (curView === null && !readStoredSession() && !state.guest));
+  const choice = gate ? "compass-dark" : themeChoice();
   const root = document.documentElement;
   const compass = choice === "compass" || choice === "compass-dark";
   root.setAttribute("data-theme", choice === "compass" ? "light" : "dark");
