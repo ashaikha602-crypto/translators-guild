@@ -3984,6 +3984,7 @@ html:root[data-look="compass"] .jx-num b { font-family: var(--f-serif); font-siz
 
 
 .grid-tab .gt-l { display: none; }
+.c-tsrc { display: block; margin-top: .3rem; font-size: .72rem; color: var(--ink-faint); }
 /* on a phone, while the keyboard is up: no bar and no Ask Compass button
    over it (the dictionary stays, it is for the text being typed) */
 body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
@@ -13105,20 +13106,20 @@ const KU_MINOR = {
         },
         {
           code: "280", en: "Translation I", ar: "ترجمة ١", pre: "142",
-          line: "The first course where the work has your name on it.",
-          body: "General texts, in both directions, translated and then defended out loud. Where the framework from 180 stops being something to recite and becomes a series of decisions you have to make and stand behind." +
-                "<p>Most of the difficulty is not vocabulary. It is that words arrive in company, and a dictionary that hands them over one at a time will mislead you roughly once a paragraph.</p>",
+          line: "English into Arabic: one direction, done properly.",
+          body: "General texts translated from <b>English into Arabic</b> only. The course moves from the sentence outward: first how an English sentence is rebuilt as an Arabic one, then agreement, tense and the passive, then how sentences are linked, and last the punctuation, names and numbers that make a page read as Arabic rather than as English in Arabic words." +
+                "<p>Most of the difficulty is not vocabulary. It is that English structure shows through: the subject placed first out of habit, the passive kept with its agent, commas doing the work that و and ف should do.</p>",
           settings: ["Correspondence", "Journalism", "General prose", "The ground every specialism stands on"],
-          asks: "Volume, and the habit of revision. The gap between a first draft and a finished rendering is the course.",
+          asks: "Arabic that reads as if it had been written in Arabic, and a reason for every structural change you make.",
           meets: ["commentary", "colloc"]
         },
         {
           code: "281", en: "Translation II", ar: "ترجمة ٢", pre: "142",
-          line: "The step from a passage to a whole document.",
-          body: "Longer texts, harder genres, and revision treated as part of the work rather than as something done if time allows. A file behaves differently from a paragraph: it has to hold together across pages that will be read hours apart." +
-                "<p>Which makes consistency the new skill. Not elegance &mdash; sameness, in the places where sameness is what carries the meaning.</p>",
-          settings: ["Reports", "Articles", "Contracts", "Book chapters"],
-          asks: "Consistency across length, and the discipline of reading the draft three times for three different things.",
+          line: "Arabic into English: the other direction, with its own traps.",
+          body: "Texts translated from <b>Arabic into English</b> only. The course follows the same order as Translation I, in reverse: where an English sentence should end when the Arabic one goes on, how the Arabic verbal and nominal sentence become English word order, how one Arabic tense opens onto six English ones, and how English punctuation, articles and cohesion are built rather than copied." +
+                "<p>The typical failure here is the opposite of Translation I: English that is grammatical and still un-English, because the Arabic sentence length, its pairs of near-synonyms and its punctuation came across unchanged.</p>",
+          settings: ["Reports", "News and opinion", "Official letters", "Book chapters"],
+          asks: "English a native reader would not stop at, and the habit of revising for structure, not only for words.",
           meets: ["errors", "commentary"]
         }
       ]
@@ -13203,6 +13204,8 @@ const KU_MINOR = {
            for "an example". If a case cannot be sourced it does not go in.
    videos  YouTube, loaded only when tapped, so a course page does not pull
            in four players nobody asked for.                             */
+const SRC_AZ = "Husni &amp; Newman, <i>A to Z of Arabic–English–Arabic Translation</i>";
+const SRC_HN = "Husni &amp; Newman (2015), <i>Arabic–English–Arabic Translation: Issues and Strategies</i>";
 const KU_COURSE_MORE = {
   "180": {
     cases: [
@@ -13250,14 +13253,20 @@ const KU_COURSE_MORE = {
   },
 
   "280": {
+    /* English into Arabic only, in the order the course builds it */
     topics: [
-      { en: "Reading before translating", ar: "القراءة قبل الترجمة", say: "Who wrote it, for whom, and what it is for &mdash; settled before the first sentence." },
-      { en: "The unit of translation", ar: "وحدة الترجمة", say: "Not the word: the phrase, the clause, sometimes the sentence. Choosing the unit is the first decision." },
-      { en: "Collocation and fixed phrases", ar: "المتلازمات والتعابير الثابتة", say: "Words that travel together and must be translated together &mdash; the commonest source of a sentence that is right word by word and wrong as a whole." },
-      { en: "Word order and sentence structure", ar: "ترتيب الكلمات وبناء الجملة", say: "Nominal and verbal sentences, passive and active, where English and Arabic put the weight." },
-      { en: "Into English, into Arabic", ar: "الترجمة في الاتجاهين", say: "General texts both ways, and why each direction fails differently." },
-      { en: "Register", ar: "مستوى اللغة", say: "Formal, neutral, familiar &mdash; and the cost of getting it wrong in front of a reader." },
-      { en: "Revision and self-assessment", ar: "المراجعة والتقييم الذاتي", say: "Reading your draft as a stranger would, and defending each choice out loud." }
+      { en: "Reading the English source", ar: "قراءة النص الإنجليزي قبل ترجمته", say: "Who wrote it, for whom, and what it is for, settled before the first sentence is rendered." },
+      { en: "Rebuilding the sentence: verbal or nominal", ar: "إعادة بناء الجملة: فعلية أم اسمية", say: "English puts the subject first; Arabic may open with the verb (a verbal sentence) or with the noun (a nominal sentence). Choosing between them is the first structural decision, and keeping the English order by habit is the commonest trace of translationese.", src: SRC_AZ + ", “The past” (perfect tense in nominal and verbal sentences)" },
+      { en: "Agreement: gender, number, the dual", ar: "المطابقة: التذكير والتأنيث والعدد والمثنى", say: "Verbs, adjectives, pronouns and relative pronouns agree with the noun in Arabic, including the dual, which English does not have. English gives no gender to <i>they</i>, <i>you</i> or <i>the teachers</i>; the Arabic translator has to decide it.", src: SRC_AZ + ", “Agreement”" },
+      { en: "Definiteness and the construct (iḍāfa)", ar: "التعريف والتنكير والإضافة", say: "English noun + noun compounds and <i>of</i>-phrases usually become an iḍāfa in Arabic, with the definite article on the last noun only.", src: SRC_HN + ", ch. 1, compounds" },
+      { en: "Tense and aspect", ar: "الزمن والجهة", say: "English has six past tenses; Arabic expresses the past mainly with the perfect, adding قد, كان or ما زال where the English tense carries a nuance that would otherwise be lost.", src: SRC_AZ + ", “The past”, “The present”, “The future”, Appendix I: Tenses" },
+      { en: "The passive", ar: "المبني للمجهول", say: "English names the agent freely (<i>was signed by the minister</i>). Normative Arabic does not express the agent with the passive; <i>من قِبَل</i> is common in the media but frowned upon by careful writers. Make the agent the subject of an active verb, or use a form with inherent passive meaning.", src: SRC_AZ + ", “The passive”" },
+      { en: "Relative clauses and long noun phrases", ar: "جمل الصلة والعبارات الاسمية الطويلة", say: "English stacks modifiers before the noun and drops relative pronouns; Arabic places them after the noun and needs الذي/التي/الذين, agreeing in gender and number.", src: SRC_AZ + ", “Relative pronouns”" },
+      { en: "Linking sentences: و, ف, ثم", ar: "الربط بين الجمل: الواو والفاء وثمّ", say: "Where English links with commas and punctuation, Arabic links with particles: و to add, ف for sequence or consequence, and the two are not interchangeable.", src: SRC_AZ + ", “Wa and fa”, “Correlative particles and conjuncts”" },
+      { en: "Collocations and fixed phrases", ar: "المتلازمات اللفظية والتعابير الثابتة", say: "Words that travel together in English rarely travel together in Arabic; the Arabic collocation has to be found, not built word by word.", src: SRC_HN + ", ch. 1, Phraseology" },
+      { en: "Names, abbreviations and numbers", ar: "الأعلام والمختصرات والأرقام", say: "Established Arabic forms of foreign names, acronyms spelled out or kept (الأمم المتحدة, but ناتو), and figures written the way an Arabic reader expects.", src: SRC_AZ + ", “Transliteration and transcription”, “Abbreviations/acronyms”, “Number/figure/digit/numeral”" },
+      { en: "Arabic punctuation", ar: "علامات الترقيم في العربية", say: "The Arabic comma (،), semicolon (؛) and question mark (؟), quotation marks «», and why an English comma does not always become an Arabic one.", src: SRC_AZ + ", “Punctuation”" },
+      { en: "Revision: reading it as Arabic", ar: "المراجعة: قراءة الترجمة بوصفها نصاً عربياً", say: "A last pass without the English beside you, to catch what an Arabic reader would trip on." }
     ],
     cases: [
       { k: "Interpreting", yr: "1977", t: "Carter in Warsaw",
@@ -13277,14 +13286,20 @@ const KU_COURSE_MORE = {
   },
 
   "281": {
+    /* Arabic into English only, in the order the course builds it */
     topics: [
-      { en: "From passage to document", ar: "من الفقرة إلى الوثيقة", say: "What changes when a text runs to pages: cross-references, headings, a reader who will not read it in one sitting." },
-      { en: "Consistency", ar: "الاتساق", say: "One term, one rendering, everywhere it carries the same thing &mdash; and knowing where variation is allowed." },
-      { en: "Genres: report, article, contract", ar: "الأجناس النصية: التقرير والمقالة والعقد", say: "Each has conventions of layout and phrasing the reader expects, in each language." },
-      { en: "Cohesion across paragraphs", ar: "السبك عبر الفقرات", say: "Reference, connectors, repetition &mdash; the threads that hold a long text together, and do not cross languages one for one." },
-      { en: "Glossaries and style sheets", ar: "المسارد ودليل الأسلوب", say: "Writing decisions down so the last page agrees with the first." },
-      { en: "Revision in passes", ar: "المراجعة على مراحل", say: "One pass for meaning, one for terms, one for the target language as a reader meets it." },
-      { en: "Editing other people's translations", ar: "مراجعة ترجمات الآخرين", say: "What to change, what to leave, and how to say why." }
+      { en: "Reading the Arabic source", ar: "قراءة النص العربي قبل ترجمته", say: "Genre, purpose and variety: Modern Standard Arabic, a dialect, or both in one text, and what that means for the English register.", src: SRC_HN + ", ch. 2, Language variation and translation" },
+      { en: "Where the sentence ends", ar: "أين تنتهي الجملة", say: "Arabic sentences often run on through و; English readers expect shorter sentences. Deciding where to put the full stop is the first structural decision.", src: SRC_AZ + ", “Wa and fa”; " + SRC_HN + ", ch. 3, sentence length" },
+      { en: "From verbal and nominal sentences to English word order", ar: "من الجملة الفعلية والاسمية إلى ترتيب الجملة الإنجليزية", say: "A verbal sentence becomes subject–verb–object; a nominal sentence needs the verb <i>to be</i> that Arabic leaves unsaid; إنّ and أنّ are rendered by structure and emphasis, not by a word for word particle.", src: SRC_AZ + ", “An, anna, in, inna”, “The present” (the verb <i>to be</i> and the nominal sentence)" },
+      { en: "Articles: a, an, the, or nothing", ar: "أدوات التعريف والتنكير في الإنجليزية", say: "The Arabic definite article does not map onto <i>the</i>: generic nouns often take no article in English, and an indefinite Arabic noun usually needs <i>a</i> or <i>an</i>." },
+      { en: "Tense and aspect", ar: "الزمن والجهة", say: "One Arabic perfect may need the English simple past, present perfect or past perfect, chosen from the context and time markers, not from the verb form alone.", src: SRC_AZ + ", “The past”, “The present”, Appendix I: Tenses" },
+      { en: "The passive, and naming the agent", ar: "المبني للمجهول وذكر الفاعل", say: "Arabic passives and verbs with inherent passive meaning become English passives or actives; English may name the agent where the Arabic could not.", src: SRC_AZ + ", “The passive”" },
+      { en: "The construct and noun chains", ar: "الإضافة وسلاسل الأسماء", say: "A chain of iḍāfas becomes an <i>of</i>-phrase, a possessive or an English compound, chosen so the reader can follow who owns what.", src: SRC_HN + ", ch. 1, compounds" },
+      { en: "Pairs of near-synonyms", ar: "الثنائيات المترادفة", say: "Arabic often uses two near-synonyms for emphasis; English usually keeps one, or keeps the emphasis another way.", src: SRC_HN + ", ch. 1, binomials (omission of the near-synonym, compensation)" },
+      { en: "Linking and cohesion", ar: "الربط والتماسك", say: "و can mean <i>and</i>, <i>while</i> or nothing at all; ف can mean <i>so</i> or <i>then</i>. English cohesion is built with conjunctions, pronouns and punctuation instead of repetition.", src: SRC_AZ + ", “Wa and fa”, “Correlative particles and conjuncts”" },
+      { en: "Names, titles and culture-specific terms", ar: "الأعلام والألقاب والمفردات الثقافية", say: "One consistent transliteration, established English forms where they exist, and a gloss only where the reader would otherwise be lost.", src: SRC_AZ + ", “Transliteration and transcription”, “Terms of address”" },
+      { en: "English punctuation", ar: "علامات الترقيم في الإنجليزية", say: "Fewer exclamation marks than the Arabic, no ellipsis in place of <i>etc.</i>, and quotation marks and italics where Arabic uses brackets.", src: SRC_AZ + ", “Punctuation”" },
+      { en: "Revision: reading it as English", ar: "المراجعة: قراءة الترجمة بوصفها نصاً إنجليزياً", say: "A last pass without the Arabic beside you, to catch what an English reader would stop at." }
     ],
     cases: [
       { k: "Law", yr: "1982", t: "Twenty-four originals, one law",
@@ -20799,7 +20814,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1104-1100";
+const BUILD = "1104-1200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -28095,14 +28110,15 @@ function runMinor() {
     } else if (more.topics) {
       const v = el("div", "c-body");
       v.innerHTML = '<h3 class="c-h">The course, section by section</h3>' +
-        '<p>The sections a course of this kind is built from. Your instructor may order them differently.</p>';
+        '<p>The sections of the course, in the order they build on one another. Your instructor may order them differently.</p>';
       stage.appendChild(v);
       const ol = el("ol", "c-topics");
       more.topics.forEach(t => {
         const li = el("li", "c-topic");
         li.innerHTML = '<span class="c-tn">' + t.en +
           ' <span class="c-tar" dir="rtl" lang="ar">' + t.ar + '</span></span>' +
-          '<span class="c-tsay">' + t.say + '</span>';
+          '<span class="c-tsay">' + t.say + '</span>' +
+          (t.src ? '<span class="c-tsrc">Source: ' + t.src + '</span>' : '');
         ol.appendChild(li);
       });
       stage.appendChild(ol);
