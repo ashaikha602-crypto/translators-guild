@@ -1977,12 +1977,12 @@ a.ks-s-en:hover { color: var(--white); }
 .icon-btn svg { width: 19px; height: 19px; fill: none; stroke: var(--lilac);
   stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 /* one glyph at a time: the moon when it is dark, the sun when it is light */
-.icon-btn .ic-sun { display: none; }
-:root[data-theme="light"] .icon-btn .ic-moon { display: none; }
-:root[data-theme="light"] .icon-btn .ic-sun  { display: block; }
-.icon-btn .ic-clear { display: none; }
-:root[data-skin="clear"] .icon-btn .ic-sun { display: none; }
-:root[data-skin="clear"] .icon-btn .ic-clear { display: block; color: var(--lilac); }
+/* one icon, for the look you are in: moon for Dark, sun for Light,
+   the compass for Purple */
+.icon-btn .ic-moon, .icon-btn .ic-sun, .icon-btn .ic-clear { display: none; }
+:root[data-look="compass"][data-mode="dark"] .icon-btn .ic-moon { display: block; }
+:root[data-look="compass"]:not([data-mode]) .icon-btn .ic-sun { display: block; }
+:root:not([data-look]) .icon-btn .ic-clear { display: block; }
 
 /* The head, to her drawing: the picture on the left, and the name, the
    two badges and the three numbers stacked beside it. Sizes follow the
@@ -3954,6 +3954,36 @@ html:root[data-look="compass"] .jx-num { display: block; font-size: .78rem; colo
 html:root[data-look="compass"] .jx-num b { font-family: var(--f-serif); font-size: 1.55rem; color: var(--k-ink); margin-right: 2px; }
 @media (prefers-reduced-motion: reduce) { html:root[data-look="compass"] .jx-needle { animation: none; } }
 
+
+/* ═══ NOTIFICATIONS: a quiet list ═══ */
+.n-list { gap: 2px; margin: 0 0 .6rem; }
+.n-head { margin: 1.2rem 0 .35rem; padding: 0 .15rem; font-size: .95rem; font-weight: 700; letter-spacing: -.01em;
+  text-transform: none; color: var(--white); font-family: var(--f-sans); }
+.n-head:first-child { margin-top: .4rem; }
+.n-item, .n-item.unread { grid-template-columns: auto 1fr auto; gap: .8rem; align-items: center; padding: .6rem .15rem;
+  background: transparent; border: 0; border-radius: 14px; box-shadow: none; }
+.n-item:hover, .n-item.unread:hover { background: color-mix(in srgb, var(--white) 4%, transparent); }
+.n-face { position: relative; display: block; flex: none; }
+.n-face .avatar { width: 46px; height: 46px; font-size: .9rem; }
+.n-badge { position: absolute; right: -3px; bottom: -3px; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center;
+  color: #fff; border: 2.5px solid var(--void); background: #8A889C; }
+.n-badge svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.n-badge.k-like { background: #F472B6; } .n-badge.k-comment, .n-badge.k-reply { background: #4FB0FF; }
+.n-badge.k-follow { background: #FFB547; } .n-badge.k-repost { background: #2BC48A; }
+.n-badge.k-message, .n-badge.k-feedback { background: #A78BFA; } .n-badge.k-story { background: #FF6B6B; } .n-badge.k-post { background: #FF8A5C; }
+.n-txt { gap: .12rem; }
+.n-line { font-size: .88rem; line-height: 1.38; }
+.n-line b { font-weight: 700; }
+.n-line .n-when { font-size: .8rem; color: var(--ink-faint); margin-left: .15rem; white-space: nowrap; }
+.n-about { font-size: .8rem; color: var(--ink-faint); -webkit-line-clamp: 1; }
+.n-dot { width: 8px; height: 8px; background: #4FB0FF; margin-right: .2rem; }
+.n-set { all: unset; cursor: pointer; display: flex; justify-content: space-between; width: 100%; box-sizing: border-box;
+  margin: .4rem 0 1rem; padding: .85rem 1rem; border-radius: 14px; background: var(--void-2); border: var(--hair);
+  font-size: .88rem; font-weight: 600; color: var(--white); }
+.n-set span { color: var(--ink-faint); }
+
+
+.grid-tab .gt-l { display: none; }
 /* on a phone, while the keyboard is up: no bar and no Ask Compass button
    over it (the dictionary stays, it is for the text being typed) */
 body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
@@ -4643,10 +4673,10 @@ button.up-next[hidden] { display: none; }
       </button>
       <span class="top-acts">
         <button type="button" class="icon-btn" id="theme-toggle"
-                aria-label="Switch between dark, light and clear">
+                aria-label="Switch the look: Dark, Light or Purple">
           <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
           <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>
-          <svg class="ic-clear" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></svg>
+          <svg class="ic-clear" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 5.5l2 6.5-2 6.5-2-6.5z"/></svg>
         </button>
         <!-- Who looked at your profile. Not rendered at all unless the
              account holds the capability, and the database refuses the
@@ -19827,6 +19857,18 @@ const N_SAYS = {
    Comments and replies stay separate, because each one says something
    different. */
 const N_MERGE = { message: 1, follow: 1, like: 1, repost: 1 };
+/* the small sign on the picture, one per kind */
+const N_BADGE = {
+  like: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="currentColor" stroke="none"/>',
+  comment: '<path d="M20 11.5a7.5 7.5 0 0 1-11 6.6L4 19.5l1.4-4.4A7.5 7.5 0 1 1 20 11.5z" fill="currentColor" stroke="none"/>',
+  reply: '<path d="M10 8 5 12l5 4M5 12h9a5 5 0 0 1 5 5"/>',
+  follow: '<circle cx="10" cy="8" r="3.4" fill="currentColor" stroke="none"/><path d="M4 19a6 6 0 0 1 12 0M18 8v6M15 11h6"/>',
+  repost: '<path d="M4 9.5A3.5 3.5 0 0 1 7.5 6H17l-2.5-2.5M20 14.5A3.5 3.5 0 0 1 16.5 18H7l2.5 2.5"/>',
+  message: '<rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="currentColor" stroke="none"/>',
+  story: '<circle cx="12" cy="12" r="7" stroke-dasharray="3 2.4"/>',
+  post: '<path d="M12 6v12M6 12h12"/>',
+  feedback: '<path d="M4 6h16v10H8l-4 3z" fill="currentColor" stroke="none"/>'
+};
 
 function groupNotifications(rows) {
   const out = [], seen = {};
@@ -19864,10 +19906,10 @@ async function runNotifications() {
   pushIsOn().catch(() => false).then(on => {
     const top = el("div", "n-top");
     if (!on) { const c = pushCard("notifs", () => {}); if (c) top.appendChild(c); }
-    const gear = el("button", "n-set", '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>Phone notification settings');
+    if (top.children.length && list.parentNode === stage) stage.insertBefore(top, list);
+    const gear = el("button", "n-set", 'Notification settings <span aria-hidden="true">›</span>');
     gear.type = "button"; gear.addEventListener("click", () => openItem(PUSH_ITEM));
-    top.appendChild(gear);
-    if (list.parentNode === stage) stage.insertBefore(top, list);
+    list.after(gear);
   });
   stage.appendChild(list); stage.appendChild(msg);
   let rows = [];
@@ -19883,21 +19925,23 @@ async function runNotifications() {
     const b = el("button", "n-item" + (n.read_at ? "" : " unread"));
     b.type = "button";
     const isUpdate = n.kind === "update";
+    const face = el("span", "n-face");
     const av = el("span", "avatar sm");
     if (isUpdate) av.innerHTML = '<img src="icons/icon-192.png?v=7" alt="">';
     else paintFace(av, n.avatar_path, n.display_name);
-    b.appendChild(av);
+    face.appendChild(av);
+    if (N_BADGE[n.kind]) face.appendChild(el("span", "n-badge k-" + n.kind, '<svg viewBox="0 0 24 24" aria-hidden="true">' + N_BADGE[n.kind] + '</svg>'));
+    b.appendChild(face);
     const txt = el("div", "n-txt");
     const about = isUpdate ? UPDATE_NOTE.body : (n.comment_text || n.about || "");
     const says = n.kind === "message" && n.count > 1
       ? "sent you " + n.count + " messages"
       : (N_SAYS[n.kind] || "interacted with you");
     txt.innerHTML =
-      (isUpdate ? '<span class="n-line"><b>' + esc(UPDATE_NOTE.title) + '</b></span>'
-        : '<span class="n-line"><b>' + esc(withTitle(n.title, n.display_name || "A member")) + '</b> ' +
-        esc(says) + '</span>') +
-      (about ? '<span class="n-about" dir="auto">' + esc(about) + '</span>' : '') +
-      '<span class="n-when">' + when(n.created_at) + '</span>';
+      (isUpdate ? '<span class="n-line"><b>' + esc(UPDATE_NOTE.title) + '</b> <span class="n-when">' + when(n.created_at) + '</span></span>'
+        : '<span class="n-line"><b>' + esc(n.display_name || "A member") + '</b> ' +
+        esc(says) + ' <span class="n-when">' + when(n.created_at) + '</span></span>') +
+      (about ? '<span class="n-about" dir="auto">' + esc(about) + '</span>' : '');
     b.appendChild(txt);
     if (!n.read_at) {
       const dot = el("span", "n-dot");
@@ -19934,17 +19978,11 @@ async function runNotifications() {
     list.appendChild(b);
   });
 
+  /* opening the list is reading it: the badge clears now, and what was
+     new keeps its mark until the list is next opened */
   if (rows.some(n => !n.read_at)) {
-    const all = el("button", "ghost small", "Mark all as read");
-    all.addEventListener("click", async () => {
-      all.disabled = true;
-      try {
-        await sbPatch("notifications?user_id=eq." + myId() + "&read_at=is.null",
-                      { read_at: new Date().toISOString() });
-        paintBadges(); runNotifications();
-      } catch (e) { all.disabled = false; }
-    });
-    stage.appendChild(all);
+    sbPatch("notifications?user_id=eq." + myId() + "&read_at=is.null", { read_at: new Date().toISOString() })
+      .then(paintBadges).catch(() => {});
   }
   stage.appendChild(footNav({ backLabel: "Profile" }));
   paintBadges();
@@ -20172,7 +20210,7 @@ function profileGrid(authorId, isMe) {
     GRID_TABS.filter(t2 => !t2.mine || isMe).forEach(t2 => {
       /* icon and a word under it: an icon alone has to be guessed */
       const b = el("button", "grid-tab",
-        '<svg viewBox="0 0 24 24" aria-hidden="true">' + t2.ico + '</svg>');
+        '<svg viewBox="0 0 24 24" aria-hidden="true">' + t2.ico + '</svg><span class="gt-l">' + (t2.short || t2.lab) + '</span>');
       b.type = "button";
       b.setAttribute("role", "tab");
       b.setAttribute("aria-label", t2.lab);
@@ -20218,7 +20256,7 @@ function profileGrid(authorId, isMe) {
 const GRID_TABS = [
   { id: "portfolio", lab: "Portfolio",
     ico: '<path d="M7 3.5h7l4 4v13H7z"/><path d="M14 3.5v4h4M9.5 12h6M9.5 15.5h6"/>' },
-  { id: "all",    lab: "Photos and videos",
+  { id: "all",    lab: "Photos and videos", short: "Photos",
     ico: '<rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/>' },
   { id: "repost", lab: "Reposts",
     ico: '<path d="M4 9.5A3.5 3.5 0 0 1 7.5 6H17l-2.5-2.5M20 14.5A3.5 3.5 0 0 1 16.5 18H7l2.5 2.5"/>' }
@@ -20761,7 +20799,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1103-2700";
+const BUILD = "1104-1100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
