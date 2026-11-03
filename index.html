@@ -3936,6 +3936,24 @@ html:root[data-look="compass"][data-mode="dark"] select { background: var(--k-ca
 html:root[data-look="compass"][data-mode="dark"] .jx-c.s { background: color-mix(in srgb, var(--cs) 18%, transparent); }
 
 
+
+/* the progress compass */
+html:root[data-look="compass"] .jx-dial { flex: none; width: 112px; height: 112px; }
+html:root[data-look="compass"] .jx-dial svg { width: 100%; height: 100%; overflow: visible; }
+html:root[data-look="compass"] .jx-dial path.on, html:root[data-look="compass"] .jx-dial path.off { fill: none; stroke-width: 6; stroke-linecap: round; }
+html:root[data-look="compass"] .jx-dial path.off { stroke: var(--k-track); }
+html:root[data-look="compass"] .jx-face { fill: var(--k-card2); }
+html:root[data-look="compass"] .jx-dial text { font: 700 8px var(--f-sans); fill: var(--k-faint); text-anchor: middle; dominant-baseline: middle; }
+html:root[data-look="compass"] .jx-dial text:first-of-type { fill: #FF6B6B; }
+html:root[data-look="compass"] .jx-needle { transform-origin: 50px 50px; transform-box: view-box; animation: jx-swing 1.4s cubic-bezier(.2,.9,.25,1.15) both; }
+@keyframes jx-swing { from { transform: rotate(-40deg); } }
+html:root[data-look="compass"] .jx-needle .nn { fill: #FF6B6B; }
+html:root[data-look="compass"] .jx-needle .ns { fill: var(--k-faint); opacity: .55; }
+html:root[data-look="compass"] .jx-hub { fill: var(--k-card); stroke: var(--k-ink); stroke-width: 2; }
+html:root[data-look="compass"] .jx-num { display: block; font-size: .78rem; color: var(--k-faint); margin-bottom: 4px; }
+html:root[data-look="compass"] .jx-num b { font-family: var(--f-serif); font-size: 1.55rem; color: var(--k-ink); margin-right: 2px; }
+@media (prefers-reduced-motion: reduce) { html:root[data-look="compass"] .jx-needle { animation: none; } }
+
 /* on a phone, while the keyboard is up: no bar and no Ask Compass button
    over it (the dictionary stays, it is for the text being typed) */
 body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
@@ -13946,12 +13964,28 @@ function recordAttempt(id, score, total, passed, stopped) {
        happened, but it is not a performance and never becomes a best */
     stopped: !!stopped,
     at: new Date().toISOString(),
+    member: state.member || "",
     direction: (item && item.direction) || "",
     content_version: (item && item.content_version) || CONTENT_VERSION
   });
   /* keep the record from growing without bound on a shared browser */
   if (state.history.length > 400) state.history = state.history.slice(-400);
   save(); pushBackend();
+}
+
+/* A pass this device recorded is a mark, even if the mark itself was lost:
+   until 3 November the database refused any save above nine marks, and
+   signing out cleared the marks that had only been kept here. Passes
+   recorded under another member's address are left alone. */
+function reclaimFromHistory() {
+  let added = 0;
+  (state.history || []).forEach(a => {
+    if (!a || !a.passed || a.stopped || state.marks[a.id]) return;
+    if (a.member && state.member && a.member !== state.member) return;
+    state.marks[a.id] = true; added++;
+  });
+  if (added) save();
+  return added;
 }
 
 /* The best a Trial has ever been done, for the Seal. */
@@ -14653,6 +14687,7 @@ async function connectBackend(email) {
     loadHalves();
     admCheck();
     absorb(row);
+    reclaimFromHistory();
     await sbWrite(member);
   } catch (e) {
     // tier 2 — the artifact store
@@ -15211,7 +15246,7 @@ function show(name) {
 
   curView = name;
   /* the sign-in screen is always dark; the chosen look returns inside */
-  if ((name === "gate") !== (from === "gate") && typeof paintTheme === "function") paintTheme();
+  if ((name === "gate") !== themeOnGate && typeof paintTheme === "function") paintTheme();
   window.scrollTo({ top: 0 });
 
   /* the bar belongs to the Guild, not to the gate */
@@ -18540,6 +18575,34 @@ function firstName() {
   return full ? full.split(" ")[0] : "";
 }
 
+/* ─── the progress compass on Home ───
+   One segment of the bezel for each trial, lit in the Compass colours as
+   marks are earned; the needle points to how far round the member has
+   come. */
+function jxDial(n, total) {
+  total = Math.max(total, 1);
+  const COLS = ["#FFB547", "#FF8A5C", "#FF6B6B", "#F472B6", "#C77DFF", "#A78BFA", "#5FB8E0", "#2DD4BF"];
+  const gap = 4, seg = 360 / total, r = 46, c = 50;
+  const arc = (a0, a1) => {
+    const p = a => [c + r * Math.sin(a * Math.PI / 180), c - r * Math.cos(a * Math.PI / 180)];
+    const [x0, y0] = p(a0), [x1, y1] = p(a1);
+    return "M" + x0.toFixed(2) + " " + y0.toFixed(2) + " A" + r + " " + r + " 0 0 1 " + x1.toFixed(2) + " " + y1.toFixed(2);
+  };
+  let segs = "";
+  for (let i = 0; i < total; i++) {
+    const on = i < n;
+    segs += '<path d="' + arc(i * seg + gap / 2, (i + 1) * seg - gap / 2) + '" class="' + (on ? "on" : "off") + '"' +
+      (on ? ' style="stroke:' + COLS[Math.floor(i / total * COLS.length)] + '"' : '') + '/>';
+  }
+  const turn = Math.min(n, total) / total * 360;
+  return '<div class="jx-dial" aria-hidden="true"><svg viewBox="0 0 100 100">' + segs +
+    '<circle cx="50" cy="50" r="38" class="jx-face"/>' +
+    '<text x="50" y="19.5">N</text><text x="81" y="51">E</text><text x="50" y="82">S</text><text x="19" y="51">W</text>' +
+    '<g class="jx-needle" style="transform:rotate(' + turn.toFixed(1) + 'deg)">' +
+      '<path d="M50 22 L55 50 L45 50 Z" class="nn"/><path d="M50 78 L55 50 L45 50 Z" class="ns"/></g>' +
+    '<circle cx="50" cy="50" r="4.5" class="jx-hub"/></svg></div>';
+}
+
 /* ─── THE HALL: what to do next ─── */
 function paintSeal() {
   const n = markCount(), rank = currentRank(), who = firstName();
@@ -18573,8 +18636,8 @@ function paintSeal() {
       (done ? "Continue where you stopped" : "Start here") + '</span>' +
       '<span class="jx-k">' + (done ? "Continue · تابع" : "Start here · ابدأ هنا") + '</span></div>' +
     '<div class="jx" style="--pct:' + Math.round(n / Math.max(totalMarks(), 1) * 100) + '">' +
-      '<div class="jx-ring"><div><b>' + n + '</b><small>of ' + totalMarks() + ' marks</small></div></div>' +
-      '<div class="jx-t"><h3>' + rank.en + '</h3><p>' + nextTxt + '</p>' +
+      jxDial(n, totalMarks()) +
+      '<div class="jx-t"><span class="jx-num"><b>' + n + '</b> of ' + totalMarks() + ' marks</span><h3>' + rank.en + '</h3><p>' + nextTxt + '</p>' +
       '<div class="jx-chips"><span class="jx-c s">' + done + ' / ' + trials.length + ' trials</span></div></div></div>' +
     '<div class="jtiles">' +
       '<button type="button" class="jt" data-jt="learn"><span class="jt-i e"><svg viewBox="0 0 24 24"><path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/></svg></span><b>Learn</b><span>Theory &amp; method</span></button>' +
@@ -20703,7 +20766,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1103-2100";
+const BUILD = "1103-2400";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -22478,6 +22541,8 @@ document.getElementById("signout-btn").addEventListener("click", async () => {
   /* the marks stay on the server against the account; this browser forgets
      them so the next person to sign in does not inherit them */
   state.marks = {}; state.seenRank = ""; state.finale = false; state.member = "";
+  /* the profile (name, photo) belongs to the account, not the phone */
+  state.profile = null;
   save();
   backend = "local";
   b.disabled = false;
@@ -22533,8 +22598,10 @@ function themeChoice() {
   } catch (e) { return "compass"; }
 }
 function nextTheme() { const c = themeChoice(); return THEME_ORDER[(THEME_ORDER.indexOf(c) + 1) % THEME_ORDER.length]; }
+var themeOnGate = false;
 function paintTheme() {
   const gate = typeof curView !== "undefined" && (curView === "gate" || (curView === null && !readStoredSession() && !state.guest));
+  themeOnGate = gate;
   const choice = gate ? "compass-dark" : themeChoice();
   const root = document.documentElement;
   const compass = choice === "compass" || choice === "compass-dark";
@@ -30153,7 +30220,7 @@ const isGuest = () => !session && !!state.guest;
       err.textContent = "Please type your name to continue.";
       err.hidden = false; input.focus(); return;
     }
-    state.guest = name.slice(0, 40); state.member = ""; save();
+    state.guest = name.slice(0, 40); state.member = ""; state.profile = null; save();
     step.hidden = true;
     paintWho();
     unlock();
@@ -30175,7 +30242,7 @@ function runGuestProfile() {
   setCount(""); stage.innerHTML = "";
   const c = el("div", "guest-card");
   const av = el("span", "avatar lg");
-  paintAvatar(av, state.guest);
+  paintFace(av, null, state.guest);   /* a guest has initials, never a photo */
   c.appendChild(av);
   const h = el("h2", null, esc(state.guest)); h.dir = "auto";
   c.appendChild(h);
