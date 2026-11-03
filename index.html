@@ -30,9 +30,9 @@
      in the Add to Home Screen sheet — this only sets the default. -->
 <meta name="apple-mobile-web-app-title" content="Compass">
 <meta name="application-name" content="Compass">
-<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png?v=6">
-<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=6">
-<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=6">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png?v=7">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=7">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=7">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -135,7 +135,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   --hair: 1px solid rgba(214,191,234,.14);
   --hair-lit: 1px solid rgba(214,191,234,.28);
   --grad-h: linear-gradient(90deg, #a726d0 0%, #8218c7 55%, #650fd0 100%);
-  --logo: url("icons/logo-1024.png?v=5");
+  --logo: url("icons/logo-1024.png?v=7");
   --ease: cubic-bezier(.16,.84,.28,1);
   --measure: 64ch;
 }
@@ -19825,7 +19825,7 @@ async function runNotifications() {
     b.type = "button";
     const isUpdate = n.kind === "update";
     const av = el("span", "avatar sm");
-    if (isUpdate) av.innerHTML = '<img src="icons/icon-192.png?v=6" alt="">';
+    if (isUpdate) av.innerHTML = '<img src="icons/icon-192.png?v=7" alt="">';
     else paintFace(av, n.avatar_path, n.display_name);
     b.appendChild(av);
     const txt = el("div", "n-txt");
@@ -20373,7 +20373,7 @@ function pushToast(d) {
   if (old) old.remove();
   const t = el("button", "push-toast");
   t.type = "button";
-  t.innerHTML = '<img src="icons/icon-192.png?v=6" alt="">' +
+  t.innerHTML = '<img src="icons/icon-192.png?v=7" alt="">' +
     '<span><b>' + esc(d.title || "Compass") + '</b><span>' + esc(d.body || "") + '</span></span>';
   const go = () => { t.remove(); if (d.url) { location.hash = new URL(d.url, location.href).hash; openFromLink(); } };
   t.addEventListener("click", go);
@@ -20703,7 +20703,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1103-2000";
+const BUILD = "1103-2100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
