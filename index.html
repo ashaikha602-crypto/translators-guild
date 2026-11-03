@@ -15,7 +15,7 @@
 <meta name="author" content="Shaikha Al-Khaldi">
 <meta name="keywords" content="Arabic English translation, translation studies, translation procedures, translation strategies, equivalence, collocation, idioms, register, subtitling, interpreting, Kuwait">
 <link rel="canonical" href="https://translators-guild.vercel.app/">
-<meta name="theme-color" content="#110620">
+<meta name="theme-color" content="#0e0e16">
 
 <!-- ═══ ON A HOME SCREEN ═══
      Added to a phone's home screen with none of this, iOS drew its own
@@ -4524,8 +4524,8 @@ button.up-next[hidden] { display: none; }
       </figure>
       <!-- The look of the site, chosen right here on Home. -->
       <div class="hall-theme" role="radiogroup" aria-label="Theme">
-        <button type="button" data-theme-pick="compass" role="radio" aria-checked="true">Light</button>
-        <button type="button" data-theme-pick="compass-dark" role="radio" aria-checked="false">Dark</button>
+        <button type="button" data-theme-pick="compass-dark" role="radio" aria-checked="true">Dark</button>
+        <button type="button" data-theme-pick="compass" role="radio" aria-checked="false">Light</button>
         <button type="button" data-theme-pick="dark" role="radio" aria-checked="false">Purple</button>
       </div>
     </header>
@@ -20761,7 +20761,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1103-2600";
+const BUILD = "1103-2700";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -22579,17 +22579,15 @@ const THEME_KEY = "guild.theme";
    Light (data-theme stays "light"), so every screen that already works in
    Light works in Clear; data-skin="clear" only restyles the surfaces. */
 const THEME_NAMES = { compass: "Light", "compass-dark": "Dark", dark: "Purple" };
-const THEME_ORDER = ["compass", "compass-dark", "dark"];
+const THEME_ORDER = ["compass-dark", "compass", "dark"];
 function themeChoice() {
-  /* Three looks: Light and Dark (the Compass design) and Purple (the
-     original). Choices from the retired looks carry over: Black to Dark,
-     Light and Clear to Light. */
+  /* Three looks: Dark (the default) and Light, the Compass design, and
+     Purple, the original. Light is kept only once someone picks it. */
   try {
     const v = localStorage.getItem(THEME_KEY);
-    if (v === "dark" || v === "compass-dark") return v;
-    if (v === "black") return "compass-dark";
-    return "compass";
-  } catch (e) { return "compass"; }
+    if (v === "dark" || v === "compass") return v;
+    return "compass-dark";
+  } catch (e) { return "compass-dark"; }
 }
 function nextTheme() { const c = themeChoice(); return THEME_ORDER[(THEME_ORDER.indexOf(c) + 1) % THEME_ORDER.length]; }
 var themeOnGate = false;
@@ -22607,7 +22605,7 @@ function paintTheme() {
   else root.removeAttribute("data-mode");
   const tc = document.querySelector('meta[name="theme-color"]');
   if (tc) { if (!tc.dataset.orig) tc.dataset.orig = tc.content;
-    tc.content = choice === "compass" ? "#f7f6f3" : choice === "compass-dark" ? "#0e0e16" : tc.dataset.orig; }
+    tc.content = choice === "compass" ? "#f7f6f3" : choice === "compass-dark" ? "#0e0e16" : "#110620"; }
   document.querySelectorAll("[data-theme-pick]").forEach(b => {
     const on = b.dataset.themePick === choice;
     b.classList.toggle("on", on);
@@ -22618,7 +22616,7 @@ function paintTheme() {
 }
 function setThemeChoice(choice) {
   try {
-    if (choice === "dark" || choice === "compass-dark") localStorage.setItem(THEME_KEY, choice);
+    if (choice === "dark" || choice === "compass") localStorage.setItem(THEME_KEY, choice);
     else localStorage.removeItem(THEME_KEY);
   } catch (e) {}
   paintTheme();

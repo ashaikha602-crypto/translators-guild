@@ -8,7 +8,7 @@
     },
     {
       "title": "Home (the Hall)",
-      "text": "Every visit starts in the Hall. At the top you can switch the look of the site between Light (the default), Dark and Purple, the original look. Each part of the app has its own colour: Home amber, Learn sky blue, Practice coral, Interpreting lavender and Profile rose. Search members finds anyone by name. Stories shows circles of what members posted in the last 24 hours, yours first. Where you are shows your marks, the Trials you have passed and your rank, and how many marks stand between you and the next rank. Continue where you stopped takes you back into a Trial you have not finished. The Lineage lists translators from history: tap one to read their story. Further down, From the Studio shows the three latest posts from members, with See all to open the Studio.",
+      "text": "Every visit starts in the Hall. At the top you can switch the look of the site between Dark (the default), Light and Purple, the original look. Each part of the app has its own colour: Home amber, Learn sky blue, Practice coral, Interpreting lavender and Profile rose. Search members finds anyone by name. Stories shows circles of what members posted in the last 24 hours, yours first. Where you are shows your marks, the Trials you have passed and your rank, and how many marks stand between you and the next rank. Continue where you stopped takes you back into a Trial you have not finished. The Lineage lists translators from history: tap one to read their story. Further down, From the Studio shows the three latest posts from members, with See all to open the Studio.",
       "keys": "home page, hall, theme, dark mode, light mode. الصفحة الرئيسية، القاعة، الوضع الداكن، الوضع الفاتح، المظهر، القصص، تقدمي، رتبتي، البحث عن الأعضاء"
     },
     {
@@ -68,7 +68,7 @@
     },
     {
       "title": "Settings and privacy",
-      "text": "Every setting lives behind the ☰ at the top right of your profile, under Settings and activity, with a search box to find any of them by name. Account privacy decides who can see you: Public (anyone with the link), Members only (people signed in), Followers (only people who follow you) or Private (only you). Saved keeps the posts you bookmarked. Your translations lists everything you posted as written work. Your progress shows marks, Trials and rank in one view. Appearance is also switched on Home: Light, Dark or Purple.",
+      "text": "Every setting lives behind the ☰ at the top right of your profile, under Settings and activity, with a search box to find any of them by name. Account privacy decides who can see you: Public (anyone with the link), Members only (people signed in), Followers (only people who follow you) or Private (only you). Saved keeps the posts you bookmarked. Your translations lists everything you posted as written work. Your progress shows marks, Trials and rank in one view. Appearance is also switched on Home: Dark, Light or Purple.",
       "keys": "settings, privacy, who can see me, saved, appearance. الإعدادات، الخصوصية، من يرى ملفي، المحفوظات، المظهر، حساب خاص"
     },
     {
