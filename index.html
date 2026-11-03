@@ -30,9 +30,9 @@
      in the Add to Home Screen sheet — this only sets the default. -->
 <meta name="apple-mobile-web-app-title" content="Compass">
 <meta name="application-name" content="Compass">
-<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png?v=5">
-<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=5">
-<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=5">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png?v=6">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=6">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=6">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -82,7 +82,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 </style>
 </head>
 <body>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Readex+Pro:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Readex+Pro:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 
 <style>
 /* ═══════════════════════════════════════════════════════════
@@ -546,7 +546,7 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .hall-theme button { all: unset; cursor: pointer; padding: .38rem .9rem; border-radius: 999px;
   font-size: .78rem; font-weight: 600; color: var(--ink-soft); }
 .hall-theme button.on { background: var(--grad-h); color: #fff; }
-:root[data-skin="clear"] .hall-theme button.on { background: #1d1d1f; }
+:root[data-skin="clear"] .hall-theme button.on { background: var(--k-ink, #1d1d1f); }
 .j-continue .j-label { font-size: .64rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
   color: var(--lilac-dim); }
 .j-continue button { width: 100%; text-align: center; }
@@ -3729,14 +3729,15 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
    near-black type, generous space, no glow and no decoration behind the
    page; one blue for everything that can be pressed. */
 :root[data-skin="clear"] {
-  --void: #f5f5f7; --void-2: #ffffff; --void-3: #e8e8ed;
-  --lilac: #1d1d1f; --lilac-dim: #6e6e73; --white: #1d1d1f;
-  --magenta: #0071e3; --violet: #0071e3; --mag-ink: #0066cc; --workshop-ink: #0066cc;
-  --ink: #1d1d1f; --ink-soft: #424245; --ink-faint: #6e6e73; --ink-ghost: #86868b;
+  --acc: #0071e3; --acc-ink: #0066cc;
+  --void: var(--k-bg, #f5f5f7); --void-2: var(--k-card, #fff); --void-3: var(--k-card2, #e8e8ed);
+  --lilac: var(--k-ink, #1d1d1f); --lilac-dim: var(--k-faint, #6e6e73); --white: var(--k-ink, #1d1d1f);
+  --magenta: var(--acc); --violet: var(--acc); --mag-ink: var(--acc-ink); --workshop-ink: var(--acc-ink);
+  --ink: var(--k-ink, #1d1d1f); --ink-soft: var(--k-soft, #424245); --ink-faint: var(--k-faint, #6e6e73); --ink-ghost: var(--k-faint, #86868b);
   --mint: #1d8338; --coral: #d70015; --amber: #b25000; --coral-soft: #d70015; --mint-soft: #1d8338;
-  --well: #f5f5f7; --well-lit: #fff; --scrim: rgba(245,245,247,.94);
-  --grad: linear-gradient(180deg, #0077ed, #0071e3);
-  --grad-soft: linear-gradient(180deg, #ffffff, #ffffff);
+  --well: var(--k-bg, #f5f5f7); --well-lit: var(--k-card, #fff); --scrim: var(--k-scrim, rgba(245,245,247,.94));
+  --grad: linear-gradient(180deg, var(--acc), var(--acc));
+  --grad-soft: linear-gradient(180deg, var(--k-card, #fff), var(--k-card, #fff));
   --hair: 1px solid rgba(0,0,0,.08);
   --hair-lit: 1px solid rgba(0,0,0,.12);
   --shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12);
@@ -3744,7 +3745,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
   --f-serif: -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, "Readex Pro", "Noto Sans Arabic", "Geeza Pro", sans-serif;
   --f-sans: -apple-system, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, "Readex Pro", "Noto Sans Arabic", "Geeza Pro", sans-serif;
 }
-:root[data-skin="clear"] body { background: #f5f5f7; letter-spacing: -.01em; }
+:root[data-skin="clear"] body { background: var(--k-bg, #f5f5f7); letter-spacing: -.01em; }
 :root[data-skin="clear"] .compass-bg,
 :root[data-skin="clear"] .aura { display: none; }
 :root[data-skin="clear"] .panel,
@@ -3758,27 +3759,27 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
 :root[data-skin="clear"] .verdict,
 :root[data-skin="clear"] .prompt,
 :root[data-skin="clear"] .opt {
-  background: #fff; border: 0; border-radius: 18px; color: #1d1d1f;
+  background: var(--k-card, #fff); border: 0; border-radius: 18px; color: var(--k-ink, #1d1d1f);
   box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12);
 }
 :root[data-skin="clear"] .lesson-row:hover,
-:root[data-skin="clear"] .opt:hover { background: #fbfbfd; }
+:root[data-skin="clear"] .opt:hover { background: var(--k-card2, #fbfbfd); }
 :root[data-skin="clear"] h1, :root[data-skin="clear"] h2, :root[data-skin="clear"] h3,
-:root[data-skin="clear"] .lm-head h2, :root[data-skin="clear"] .lr-en { color: #1d1d1f; font-weight: 600; letter-spacing: -.02em; }
-:root[data-skin="clear"] .lm-head .note { color: #6e6e73; letter-spacing: .02em; text-transform: none; font-size: .82rem; }
-:root[data-skin="clear"] .lr-num { background: #f5f5f7; color: #1d1d1f; }
-:root[data-skin="clear"] .lm-time .lr-num { background: #0071e3; box-shadow: 0 0 0 5px rgba(0,113,227,.12); }
-:root[data-skin="clear"] .lm-time::before { background: linear-gradient(#0071e3, rgba(0,113,227,.12)); }
-:root[data-skin="clear"] .lr-when { color: #0066cc; }
-:root[data-skin="clear"] a, :root[data-skin="clear"] .c-src, :root[data-skin="clear"] .link { color: #0066cc; }
-:root[data-skin="clear"] .ghost { color: #0066cc; border-color: rgba(0,113,227,.35); background: transparent; border-radius: 980px; }
+:root[data-skin="clear"] .lm-head h2, :root[data-skin="clear"] .lr-en { color: var(--k-ink, #1d1d1f); font-weight: 600; letter-spacing: -.02em; }
+:root[data-skin="clear"] .lm-head .note { color: var(--k-faint, #6e6e73); letter-spacing: .02em; text-transform: none; font-size: .82rem; }
+:root[data-skin="clear"] .lr-num { background: var(--k-bg, #f5f5f7); color: var(--k-ink, #1d1d1f); }
+:root[data-skin="clear"] .lm-time .lr-num { background: var(--acc); box-shadow: 0 0 0 5px color-mix(in srgb, var(--acc) 12%, transparent); }
+:root[data-skin="clear"] .lm-time::before { background: linear-gradient(var(--acc), color-mix(in srgb, var(--acc) 12%, transparent)); }
+:root[data-skin="clear"] .lr-when { color: var(--acc-ink); }
+:root[data-skin="clear"] a, :root[data-skin="clear"] .c-src, :root[data-skin="clear"] .link { color: var(--acc-ink); }
+:root[data-skin="clear"] .ghost { color: var(--acc-ink); border-color: color-mix(in srgb, var(--acc) 35%, transparent); background: transparent; border-radius: 980px; }
 :root[data-skin="clear"] .icon-btn { background: transparent; }
-:root[data-skin="clear"] .icon-btn svg { stroke: #1d1d1f; }
+:root[data-skin="clear"] .icon-btn svg { stroke: var(--k-ink, #1d1d1f); }
 :root[data-skin="clear"] #bottom-nav { background: rgba(255,255,255,.82); backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px); border-top: 1px solid rgba(0,0,0,.08); }
-:root[data-skin="clear"] #bottom-nav button { color: #6e6e73; }
-:root[data-skin="clear"] #bottom-nav button[aria-current="page"] { color: #0071e3; background: transparent; }
-:root[data-skin="clear"] .pick.on { border-color: #0071e3; color: #0071e3; }
+:root[data-skin="clear"] #bottom-nav button { color: var(--k-faint, #6e6e73); }
+:root[data-skin="clear"] #bottom-nav button[aria-current="page"] { color: var(--acc); background: transparent; }
+:root[data-skin="clear"] .pick.on { border-color: var(--acc); color: var(--acc); }
 :root[data-skin="clear"] .opt.right { box-shadow: 0 0 0 2px #1d8338 inset; }
 :root[data-skin="clear"] .opt.miss { box-shadow: 0 0 0 2px #d70015 inset; }
 :root[data-skin="clear"] .prompt::before, :root[data-skin="clear"] .prompt::after { display: none; }
@@ -3791,10 +3792,147 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
 :root[data-skin="clear"] .commission .seal-pip:not(.earned) { display: none; }
 :root[data-skin="clear"] .commission .c-top:not(:has(.resume-tag, .seal-pip.earned, .soon)) { display: none; }
 :root[data-skin="clear"] .commission .c-en { font-size: 1.12rem; letter-spacing: -.015em; }
-:root[data-skin="clear"] .commission .c-subject { text-transform: none; letter-spacing: 0; font-size: .84rem; color: #6e6e73; }
-:root[data-skin="clear"] .commission .soon { border-color: rgba(0,113,227,.3); color: #0066cc; letter-spacing: .02em; text-transform: none; }
+:root[data-skin="clear"] .commission .c-subject { text-transform: none; letter-spacing: 0; font-size: .84rem; color: var(--k-faint, #6e6e73); }
+:root[data-skin="clear"] .commission .soon { border-color: color-mix(in srgb, var(--acc) 30%, transparent); color: var(--acc-ink); letter-spacing: .02em; text-transform: none; }
 :root[data-skin="clear"] .commission .seal-pip { box-shadow: none; }
-:root[data-skin="clear"] .chip-tag.solid { background: #0071e3; border-color: #0071e3; color: #fff; box-shadow: none; }
+:root[data-skin="clear"] .chip-tag.solid { background: var(--acc); border-color: var(--acc); color: #fff; box-shadow: none; }
+
+/* ═══════════ COMPASS · the house look ═══════════
+   Four cardinal colours, one for each part of the app, meeting in one
+   signature gradient. Solid surfaces: a soft pearl ground and white
+   cards, no art behind the page and nothing see-through. The colour of
+   buttons and links follows the section you are in (data-sec). */
+.jx, .jtiles, .jx-k, .jx-sub { display: none; }
+html:root[data-look="compass"] {
+  --cn: #F59E0B; --ce: #0FB5A3; --cs: #F25555; --cw: #8B6CF0; --cp: #E64F9C;
+  --cn-ink: #B45309; --ce-ink: #0F766E; --cs-ink: #D43B3B; --cw-ink: #6D4ED8; --cp-ink: #C0307C;
+  --sig: conic-gradient(from 210deg, #FFB547, #FF6B6B, #F472B6, #A78BFA, #2DD4BF, #FFB547);
+  --sig-l: linear-gradient(120deg, #FFB547 0%, #FF6B6B 35%, #F472B6 62%, #A78BFA 100%);
+  --acc: var(--cn); --acc-ink: var(--cn-ink); --acc2: var(--cs);
+  --k-bg: #F7F6F3; --k-card: #FFFFFF; --k-card2: #F0EEE9; --k-ink: #16151F; --k-soft: #4C4A5E; --k-faint: #8A889C;
+  --k-line: rgba(22,21,31,.07); --k-track: #EFEDE8; --k-scrim: rgba(247,246,243,.96); --k-lift: rgba(22,21,31,.18);
+  --void: var(--k-bg); --void-2: var(--k-card); --void-3: var(--k-card2);
+  --lilac: var(--k-ink); --lilac-dim: var(--k-faint); --white: var(--k-ink);
+  --magenta: var(--acc); --violet: var(--acc); --mag-ink: var(--acc-ink); --workshop-ink: var(--acc-ink);
+  --ink: var(--k-ink); --ink-soft: var(--k-soft); --ink-faint: var(--k-faint); --ink-ghost: var(--k-faint);
+  --well: var(--k-bg); --well-lit: var(--k-card); --scrim: var(--k-scrim);
+  --grad: linear-gradient(135deg, var(--acc), var(--acc2));
+  --grad-h: linear-gradient(90deg, var(--acc), var(--acc2));
+  --grad-soft: linear-gradient(180deg, var(--k-card), var(--k-card));
+  --on-grad: #fff;
+  --hair: 1px solid var(--k-line); --hair-lit: 1px solid var(--k-line);
+  --shadow: 0 1px 2px rgba(22,21,31,.04), 0 10px 28px -16px var(--k-lift);
+  --glow: none;
+  --f-serif: "Fraunces", "Amiri", Georgia, serif;
+  --f-sans: "Plus Jakarta Sans", "Readex Pro", "Noto Sans Arabic", "Geeza Pro", system-ui, -apple-system, sans-serif;
+}
+html:root[data-look="compass"][data-sec="learn"]     { --acc: var(--ce); --acc-ink: var(--ce-ink); --acc2: var(--cw); }
+html:root[data-look="compass"][data-sec="practice"]  { --acc: var(--cs); --acc-ink: var(--cs-ink); --acc2: var(--cp); }
+html:root[data-look="compass"][data-sec="interpret"] { --acc: var(--cw); --acc-ink: var(--cw-ink); --acc2: var(--cp); }
+html:root[data-look="compass"][data-sec="profile"]   { --acc: var(--cp); --acc-ink: var(--cp-ink); --acc2: var(--cw); }
+html:root[data-look="compass"] body { background: var(--k-bg); letter-spacing: 0; }
+html:root[data-look="compass"] h1, html:root[data-look="compass"] h2, html:root[data-look="compass"] h3,
+html:root[data-look="compass"] .lm-head h2, html:root[data-look="compass"] .lr-en {
+  font-family: var(--f-serif); font-weight: 700; letter-spacing: -.02em; color: var(--k-ink); }
+html:root[data-look="compass"] .panel, html:root[data-look="compass"] .card, html:root[data-look="compass"] .commission,
+html:root[data-look="compass"] .rec-row, html:root[data-look="compass"] .pair, html:root[data-look="compass"] .block,
+html:root[data-look="compass"] .lesson-row, html:root[data-look="compass"] .verdict, html:root[data-look="compass"] .prompt,
+html:root[data-look="compass"] .opt, html:root[data-look="compass"] .st-card, html:root[data-look="compass"] .strip-card {
+  background: var(--k-card); border: 1px solid var(--k-line); border-radius: 22px;
+  box-shadow: 0 1px 2px rgba(22,21,31,.03), 0 10px 26px -18px var(--k-lift); }
+html:root[data-look="compass"] .hall-quote { border-color: var(--acc); }
+/* the theme switch: a quiet pill, the chosen look filled */
+html:root[data-look="compass"] .hall-theme { background: var(--k-card); border: 1px solid var(--k-line); }
+html:root[data-look="compass"] .hall-theme button { color: var(--k-soft); }
+html:root[data-look="compass"] .hall-theme button.on { background: var(--k-ink); color: var(--k-bg); }
+/* the bar: solid white, each tab lights in its own colour */
+html:root[data-look="compass"] #bottom-nav { background: var(--k-card); backdrop-filter: none; -webkit-backdrop-filter: none;
+  border: 1px solid var(--k-line); box-shadow: 0 14px 32px -16px rgba(0,0,0,.3); }
+html:root[data-look="compass"] #bottom-nav button { color: var(--k-faint); background: transparent; position: relative; }
+html:root[data-look="compass"] #bottom-nav button[aria-current="page"] { background: transparent; }
+html:root[data-look="compass"] #bottom-nav button[aria-current="page"]::after { content: ""; position: absolute; left: 50%; bottom: 3px;
+  width: 18px; height: 3px; margin-left: -9px; border-radius: 3px; background: currentColor; }
+html:root[data-look="compass"] #bottom-nav button[data-go="home"][aria-current="page"]      { color: var(--cn); }
+html:root[data-look="compass"] #bottom-nav button[data-go="learn"][aria-current="page"]     { color: var(--ce); }
+html:root[data-look="compass"] #bottom-nav button[data-go="practice"][aria-current="page"]  { color: var(--cs); }
+html:root[data-look="compass"] #bottom-nav button[data-go="interpret"][aria-current="page"] { color: var(--cw); }
+html:root[data-look="compass"] #bottom-nav button[data-go="profile"][aria-current="page"]   { color: var(--cp); }
+/* the signature ring: Ask Compass, portraits, your picture */
+html:root[data-look="compass"] .hp-fab { background: var(--k-card); color: var(--k-ink); box-shadow: 0 10px 24px -10px rgba(22,21,31,.35); }
+html:root[data-look="compass"] .hp-fab::before { content: ""; position: absolute; inset: 0; border-radius: 50%; padding: 2.5px;
+  background: var(--sig); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; }
+html:root[data-look="compass"] .strip-card .pf, html:root[data-look="compass"] #seal-initials {
+  background: var(--sig); padding: 3px; border-radius: 50%; }
+html:root[data-look="compass"] .strip-card .pf img, html:root[data-look="compass"] .strip-card .pf .medal { border: 3px solid var(--k-card); border-radius: 50%; box-shadow: none; }
+html:root[data-look="compass"] .strip-card .s-name { color: var(--k-ink); }
+/* Home: the hero, the ring and the four tiles */
+html:root[data-look="compass"] .seal-journey { background: transparent !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; gap: 14px !important; }
+html:root[data-look="compass"] .seal-journey .j-head,
+html:root[data-look="compass"] .seal-journey .j-track,
+html:root[data-look="compass"] .seal-journey .j-stats,
+html:root[data-look="compass"] .seal-journey .j-label { display: none; }
+html:root[data-look="compass"] .seal-journey .j-continue { order: -1; display: grid; gap: 4px; position: relative; overflow: hidden;
+  padding: 20px; border-radius: 26px; background: var(--sig-l); color: #fff; }
+html:root[data-look="compass"] .seal-journey .j-continue::after { content: ""; position: absolute; right: -44px; top: -44px; width: 170px; height: 170px;
+  border-radius: 50%; border: 2px solid rgba(255,255,255,.35); pointer-events: none; }
+html:root[data-look="compass"] .seal-journey .j-continue::before { content: ""; position: absolute; right: 22px; top: 22px; width: 46px; height: 46px;
+  border-radius: 50%; border: 2px solid rgba(255,255,255,.35); pointer-events: none; }
+html:root[data-look="compass"] .jx-k { display: block; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.9); }
+html:root[data-look="compass"] .seal-journey .j-continue button { all: unset; cursor: pointer; font-family: var(--f-serif); font-weight: 700;
+  font-size: 1.5rem; line-height: 1.15; letter-spacing: -.02em; color: #fff; padding-right: 60px; }
+html:root[data-look="compass"] .jx-sub { display: block; font-size: 13px; color: rgba(255,255,255,.92); margin-bottom: 10px; }
+html:root[data-look="compass"] .seal-journey .j-continue::marker { display: none; }
+html:root[data-look="compass"] .seal-journey .j-continue button::after { content: "Start ›"; display: table; margin-top: 14px; font-family: var(--f-sans);
+  font-size: 14px; font-weight: 700; letter-spacing: 0; padding: 10px 18px; border-radius: 99px; background: rgba(22,21,31,.88); color: #fff; }
+html:root[data-look="compass"] .seal-journey .j-done { color: #fff; margin: 0; }
+html:root[data-look="compass"] .jx { display: flex; gap: 18px; align-items: center; padding: 18px; border-radius: 24px; background: var(--k-card);
+  border: 1px solid var(--k-line); box-shadow: 0 1px 2px rgba(22,21,31,.03), 0 10px 26px -18px var(--k-lift); }
+html:root[data-look="compass"] .jx-ring { flex: none; width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center;
+  background: conic-gradient(#F59E0B, #F25555 calc(var(--pct) * .6%), #E64F9C calc(var(--pct) * 1%), var(--k-track) 0); }
+html:root[data-look="compass"] .jx-ring > div { width: 78px; height: 78px; border-radius: 50%; background: var(--k-card); display: grid; place-content: center; text-align: center; }
+html:root[data-look="compass"] .jx-ring b { font-family: var(--f-serif); font-size: 1.7rem; line-height: 1; color: var(--k-ink); }
+html:root[data-look="compass"] .jx-ring small { font-size: 10px; font-weight: 600; color: var(--k-faint); margin-top: 2px; }
+html:root[data-look="compass"] .jx-t h3 { font-family: var(--f-sans); font-size: 1.05rem; font-weight: 700; letter-spacing: -.01em; margin: 0; }
+html:root[data-look="compass"] .jx-t p { font-size: .82rem; color: var(--k-soft); margin: 4px 0 0; line-height: 1.4; }
+html:root[data-look="compass"] .jx-chips { display: flex; gap: 6px; margin-top: 10px; }
+html:root[data-look="compass"] .jx-c { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 99px; }
+html:root[data-look="compass"] .jx-c.s { background: color-mix(in srgb, var(--cs) 14%, transparent); color: var(--cs-ink); }
+html:root[data-look="compass"] .jtiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+html:root[data-look="compass"] .jt { all: unset; box-sizing: border-box; cursor: pointer; display: grid; gap: 2px; padding: 16px; border-radius: 22px;
+  background: var(--k-card); border: 1px solid var(--k-line); box-shadow: 0 1px 2px rgba(22,21,31,.03), 0 10px 26px -18px var(--k-lift); }
+html:root[data-look="compass"] .jt:active { transform: scale(.98); }
+html:root[data-look="compass"] .jt b { font-size: .98rem; color: var(--k-ink); margin-top: 10px; }
+html:root[data-look="compass"] .jt > span:last-child { font-size: .76rem; color: var(--k-faint); }
+html:root[data-look="compass"] .jt-i { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; }
+html:root[data-look="compass"] .jt-i svg { width: 21px; height: 21px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+html:root[data-look="compass"] .jt-i.e { background: var(--ce); } html:root[data-look="compass"] .jt-i.s { background: var(--cs); }
+html:root[data-look="compass"] .jt-i.w { background: var(--cw); } html:root[data-look="compass"] .jt-i.p { background: var(--cp); }
+/* Practice: the next trial is a coral hero */
+html:root[data-look="compass"] button.up-next { background: linear-gradient(120deg, #F25555, #E64F9C); border-radius: 24px; box-shadow: none; }
+/* buttons and links follow the section */
+html:root[data-look="compass"] .btn-wide:not(.ghost), html:root[data-look="compass"] button.primary { background: var(--k-ink); color: var(--k-bg); box-shadow: none; }
+html:root[data-look="compass"] .ghost { color: var(--acc-ink); border-color: color-mix(in srgb, var(--acc) 45%, transparent); }
+html:root[data-look="compass"] a, html:root[data-look="compass"] .link, html:root[data-look="compass"] .lr-when, html:root[data-look="compass"] .c-src { color: var(--acc-ink); }
+html:root[data-look="compass"] .lm-time .lr-num { background: var(--acc); box-shadow: 0 0 0 5px color-mix(in srgb, var(--acc) 14%, transparent); }
+html:root[data-look="compass"] .lr-num { background: color-mix(in srgb, var(--acc) 15%, var(--k-card)); color: var(--acc-ink); }
+html:root[data-look="compass"] .lm-head .note { color: var(--acc-ink); }
+html:root[data-look="compass"] .commission .c-en { font-family: var(--f-sans); font-weight: 700; letter-spacing: -.01em; }
+html:root[data-look="compass"] #learn-search { background: transparent !important; border: 0 !important; box-shadow: none !important; color: var(--k-ink); }
+html:root[data-look="compass"] #learn-search:focus { outline: none; }
+html:root[data-look="compass"] .learn-find { background: var(--k-card) !important; border: 1px solid var(--k-line) !important; border-radius: 16px !important; }
+html:root[data-look="compass"] .jx-sub { margin: 2px 0 0; order: 0; }
+
+/* COMPASS DARK: the same look on deep ink; the colours glow brighter */
+html:root[data-look="compass"][data-mode="dark"] {
+  --k-bg: #0E0E16; --k-card: #181826; --k-card2: #20202F; --k-ink: #F5F4FA; --k-soft: #B9B7C9; --k-faint: #7D7B90;
+  --k-line: rgba(255,255,255,.07); --k-track: #262636; --k-scrim: rgba(14,14,22,.94); --k-lift: rgba(0,0,0,.5);
+  --cn: #FFB547; --ce: #2DD4BF; --cs: #FF6B6B; --cw: #A78BFA; --cp: #F472B6;
+  --cn-ink: #FFB547; --ce-ink: #2DD4BF; --cs-ink: #FF7A7A; --cw-ink: #B9A2FF; --cp-ink: #F689C4;
+}
+html:root[data-look="compass"][data-mode="dark"] input, html:root[data-look="compass"][data-mode="dark"] textarea,
+html:root[data-look="compass"][data-mode="dark"] select { background: var(--k-card2); color: var(--k-ink); border-color: var(--k-line); }
+html:root[data-look="compass"][data-mode="dark"] .jx-c.s { background: color-mix(in srgb, var(--cs) 18%, transparent); }
 
 /* on a phone, while the keyboard is up: no bar and no Ask Compass button
    over it (the dictionary stays, it is for the text being typed) */
@@ -3834,7 +3972,7 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
   .new-build { bottom: calc(6.2rem + env(safe-area-inset-bottom)); }
   :root[data-theme="light"] #bottom-nav { border: 1px solid rgba(60,30,100,.10); box-shadow: 0 14px 34px -14px rgba(40,20,70,.35); }
   :root[data-skin="clear"] #bottom-nav { border: 1px solid rgba(0,0,0,.08); box-shadow: 0 14px 34px -16px rgba(0,0,0,.3); }
-  :root[data-skin="clear"] #bottom-nav button[aria-current="page"] { background: rgba(0,113,227,.08); }
+  :root[data-skin="clear"] #bottom-nav button[aria-current="page"] { background: color-mix(in srgb, var(--acc) 8%, transparent); }
 }
 /* ═══════════ LIKE AN APP ═══════════
    Sized and moving the way an iPhone app does (Apple's Human Interface
@@ -3922,7 +4060,7 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
   .ledger.learn-map { gap: 2.4rem; border: 0; border-radius: 0; background: none; overflow: visible; }
   :root[data-theme="light"] .ledger.learn-map { background: none; }
   /* Clear: rows inside one white block; no numbers, so the title takes the room */
-  :root[data-skin="clear"] .ledger:not(.learn-map) { background: #fff; border: 0; box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
+  :root[data-skin="clear"] .ledger:not(.learn-map) { background: var(--k-card, #fff); border: 0; box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
   :root[data-skin="clear"] .ledger .commission { background: transparent; border-radius: 0; box-shadow: none; padding: .85rem 1rem;
     grid-template-columns: minmax(0,1fr) auto; }
   :root[data-skin="clear"] .ledger .commission + .commission::before { left: 1rem; background: rgba(0,0,0,.08); }
@@ -3934,7 +4072,7 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
 .lm-list .lesson-row, .ledger .commission, .genre { box-shadow: none; }
 .lm-list .lesson-row:hover, .genre:hover { transform: none; box-shadow: none; }
 /* Clear: the same grouped blocks, in white */
-:root[data-skin="clear"] .lm-list, :root[data-skin="clear"] .genre-grid { background: #fff; border: 0;
+:root[data-skin="clear"] .lm-list, :root[data-skin="clear"] .genre-grid { background: var(--k-card, #fff); border: 0;
   box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
 :root[data-skin="clear"] .lm-list .lesson-row { background: transparent; border-radius: 0; box-shadow: none; }
 :root[data-skin="clear"] .lm-list .lesson-row + .lesson-row::before,
@@ -3976,6 +4114,8 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
 :root[data-skin="black"] .qd-sheet, :root[data-skin="black"] .dm-line.them .dm-bubble { background: #141416; }
 :root[data-skin="black"] #bottom-nav { background: rgba(10,10,12,.88); }
 .pick-row.four { grid-template-columns: repeat(4, 1fr); }
+.pick-row.five { grid-template-columns: repeat(5, 1fr); gap: .35rem; }
+.pick-row.five .pick span { font-size: .72rem; }
 /* Home, tighter: less empty space, the three numbers in one row */
 .hall-head { gap: .35rem; }
 .hall-theme { margin-top: .55rem; }
@@ -4072,7 +4212,7 @@ button.st-go.light { background: #fff; color: #5b14b8; border: 0; font-weight: 7
 .st-sec { margin: .4rem 0 -.2rem; font-size: .8rem; font-weight: 700; color: var(--ink-soft); }
 .pf-list { margin-top: .8rem; }
 :root[data-theme="light"] .st-card:not(.st-hero) { background: #fff; border-color: rgba(60,30,100,.08); }
-:root[data-skin="clear"] .st-card:not(.st-hero) { background: #fff; border: 0; box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
+:root[data-skin="clear"] .st-card:not(.st-hero) { background: var(--k-card, #fff); border: 0; box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
 /* the in-app file viewer */
 .fv-view { grid-template-rows: auto 1fr auto; }
 .fv-body { overflow: auto; -webkit-overflow-scrolling: touch; display: grid; min-height: 0; }
@@ -4137,7 +4277,7 @@ button.up-next[hidden] { display: none; }
 .ws-group[open] > summary { margin-bottom: 1.6rem; }
 .ws-group > div + div { margin-top: 2rem; }
 :root[data-theme="light"] .ws-group > summary { background: #fff; border-color: rgba(60,30,100,.08); }
-:root[data-skin="clear"] .ws-group > summary { background: #fff; border: 0; box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
+:root[data-skin="clear"] .ws-group > summary { background: var(--k-card, #fff); border: 0; box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 10px 30px -14px rgba(0,0,0,.12); }
 /* Profile: icon tabs with a word under each */
 .grid-tab { display: grid; justify-items: center; gap: .15rem; }
 .gt-lab { font-size: .64rem; font-weight: 600; letter-spacing: .01em; }
@@ -4159,7 +4299,7 @@ button.up-next[hidden] { display: none; }
 #trial .dots { display: none; }
 @media (min-width: 761px) { #trial .trial-head { top: 4.4rem; margin: 0; padding-inline: 0; } }
 :root[data-theme="light"] #trial .trial-head { background: rgba(250,248,253,.88); }
-:root[data-skin="clear"] #trial .trial-head { background: rgba(245,245,247,.85); }
+:root[data-skin="clear"] #trial .trial-head { background: var(--k-scrim, rgba(245,245,247,.85)); }
 .stage { padding-top: 1.1rem; }
 /* answers at a standard size */
 .opt { padding: .85rem 1rem; font-size: 1rem; font-weight: 400; border-radius: 14px; gap: .75rem; min-height: 48px; animation: none; }
@@ -4364,10 +4504,9 @@ button.up-next[hidden] { display: none; }
       </figure>
       <!-- The look of the site, chosen right here on Home. -->
       <div class="hall-theme" role="radiogroup" aria-label="Theme">
-        <button type="button" data-theme-pick="dark" role="radio" aria-checked="true">Dark</button>
-        <button type="button" data-theme-pick="black" role="radio" aria-checked="false">Black</button>
-        <button type="button" data-theme-pick="light" role="radio" aria-checked="false">Light</button>
-        <button type="button" data-theme-pick="clear" role="radio" aria-checked="false">Clear</button>
+        <button type="button" data-theme-pick="compass" role="radio" aria-checked="true">Light</button>
+        <button type="button" data-theme-pick="compass-dark" role="radio" aria-checked="false">Dark</button>
+        <button type="button" data-theme-pick="dark" role="radio" aria-checked="false">Purple</button>
       </div>
     </header>
 
@@ -4578,19 +4717,16 @@ button.up-next[hidden] { display: none; }
     <div id="seal-settings">
     <details class="panel appearance-more">
       <summary><span>Appearance</span><span class="j-next" id="appearance-now">System</span></summary>
-      <div class="pick-row four" role="radiogroup" aria-label="Theme">
-        <button type="button" class="pick" data-theme-pick="dark" role="radio" aria-checked="true">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
-          <span>Dark</span></button>
-        <button type="button" class="pick" data-theme-pick="black" role="radio" aria-checked="false">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="currentColor"/></svg>
-          <span>Black</span></button>
-        <button type="button" class="pick" data-theme-pick="light" role="radio" aria-checked="false">
+      <div class="pick-row three" role="radiogroup" aria-label="Theme">
+        <button type="button" class="pick" data-theme-pick="compass" role="radio" aria-checked="true">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></svg>
           <span>Light</span></button>
-        <button type="button" class="pick" data-theme-pick="clear" role="radio" aria-checked="false">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17"/></svg>
-          <span>Clear</span></button>
+        <button type="button" class="pick" data-theme-pick="compass-dark" role="radio" aria-checked="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+          <span>Dark</span></button>
+        <button type="button" class="pick" data-theme-pick="dark" role="radio" aria-checked="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 5.5l2 6.5-2 6.5-2-6.5z"/></svg>
+          <span>Purple</span></button>
       </div>
     </details>
 
@@ -18430,7 +18566,26 @@ function paintSeal() {
       '<div class="j-tile wide j-rank"><b>' + rank.en + '</b><span>Rank</span></div>' +
     '</div>' +
     '<div class="j-continue"><span class="j-label">' +
-      (done ? "Continue where you stopped" : "Start here") + '</span></div>';
+      (done ? "Continue where you stopped" : "Start here") + '</span>' +
+      '<span class="jx-k">' + (done ? "Continue · تابع" : "Start here · ابدأ هنا") + '</span></div>' +
+    '<div class="jx" style="--pct:' + Math.round(n / Math.max(totalMarks(), 1) * 100) + '">' +
+      '<div class="jx-ring"><div><b>' + n + '</b><small>of ' + totalMarks() + ' marks</small></div></div>' +
+      '<div class="jx-t"><h3>' + rank.en + '</h3><p>' + nextTxt + '</p>' +
+      '<div class="jx-chips"><span class="jx-c s">' + done + ' / ' + trials.length + ' trials</span></div></div></div>' +
+    '<div class="jtiles">' +
+      '<button type="button" class="jt" data-jt="learn"><span class="jt-i e"><svg viewBox="0 0 24 24"><path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/></svg></span><b>Learn</b><span>Theory &amp; method</span></button>' +
+      '<button type="button" class="jt" data-jt="practice"><span class="jt-i s"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><b>Practice</b><span>' + trials.length + ' trials</span></button>' +
+      '<button type="button" class="jt" data-jt="interpret"><span class="jt-i w"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg></span><b>The Booth</b><span>Interpreting</span></button>' +
+      ((backend === "supabase" && myId())
+        ? '<button type="button" class="jt" data-jt="studio"><span class="jt-i p"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 15l3-3 2 2 3-4"/></svg></span><b>Studio</b><span>Share your work</span></button>'
+        : '<button type="button" class="jt" data-jt="library"><span class="jt-i p"><svg viewBox="0 0 24 24"><path d="M5 4h4v16H5zM10 4h4v16h-4zM15.5 4.5l3.6 1 -3.7 15-3.6-1z"/></svg></span><b>Library</b><span>Books &amp; glossary</span></button>') +
+    '</div>';
+  box.querySelectorAll(".jt").forEach(t => t.addEventListener("click", () => {
+    const k = t.dataset.jt;
+    if (k === "studio") openItem(COMMUNITY_ITEM);
+    else if (k === "library") navTo("learn");
+    else navTo(k);
+  }));
 
   /* Show or hide the rank on one's profile: the same show_progress
      setting as Privacy, so the two always agree. */
@@ -18467,6 +18622,7 @@ function paintSeal() {
     const b = el("button", null, nextTrial.en);
     b.addEventListener("click", () => openItem(nextTrial));
     cont.appendChild(b);
+    if (nextTrial.subject) cont.insertBefore(el("span", "jx-sub", nextTrial.subject), b);
   } else {
     cont.appendChild(el("p", "j-done",
       "Every trial published so far is complete. More are being written."));
@@ -19665,7 +19821,7 @@ async function runNotifications() {
     b.type = "button";
     const isUpdate = n.kind === "update";
     const av = el("span", "avatar sm");
-    if (isUpdate) av.innerHTML = '<img src="icons/icon-192.png?v=5" alt="">';
+    if (isUpdate) av.innerHTML = '<img src="icons/icon-192.png?v=6" alt="">';
     else paintFace(av, n.avatar_path, n.display_name);
     b.appendChild(av);
     const txt = el("div", "n-txt");
@@ -20213,7 +20369,7 @@ function pushToast(d) {
   if (old) old.remove();
   const t = el("button", "push-toast");
   t.type = "button";
-  t.innerHTML = '<img src="icons/icon-192.png?v=5" alt="">' +
+  t.innerHTML = '<img src="icons/icon-192.png?v=6" alt="">' +
     '<span><b>' + esc(d.title || "Compass") + '</b><span>' + esc(d.body || "") + '</span></span>';
   const go = () => { t.remove(); if (d.url) { location.hash = new URL(d.url, location.href).hash; openFromLink(); } };
   t.addEventListener("click", go);
@@ -20543,7 +20699,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1102-1000";
+const BUILD = "1103-1400";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -22359,22 +22515,33 @@ const THEME_KEY = "guild.theme";
    can press, in the manner of Apple's store pages. Clear is built on top of
    Light (data-theme stays "light"), so every screen that already works in
    Light works in Clear; data-skin="clear" only restyles the surfaces. */
-const THEME_NAMES = { dark: "Dark", black: "Black", light: "Light", clear: "Clear" };
-const THEME_ORDER = ["dark", "black", "light", "clear"];
+const THEME_NAMES = { compass: "Light", "compass-dark": "Dark", dark: "Purple" };
+const THEME_ORDER = ["compass", "compass-dark", "dark"];
 function themeChoice() {
-  try { const v = localStorage.getItem(THEME_KEY); return v === "light" || v === "clear" || v === "black" ? v : "dark"; }
-  catch (e) { return "dark"; }
+  /* Three looks: Light and Dark (the Compass design) and Purple (the
+     original). Choices from the retired looks carry over: Black to Dark,
+     Light and Clear to Light. */
+  try {
+    const v = localStorage.getItem(THEME_KEY);
+    if (v === "dark" || v === "compass-dark") return v;
+    if (v === "black") return "compass-dark";
+    return "compass";
+  } catch (e) { return "compass"; }
 }
 function nextTheme() { const c = themeChoice(); return THEME_ORDER[(THEME_ORDER.indexOf(c) + 1) % THEME_ORDER.length]; }
 function paintTheme() {
   const choice = themeChoice();
-  /* Black is the dark look on a true black ground */
-  document.documentElement.setAttribute("data-theme", choice === "dark" || choice === "black" ? "dark" : "light");
-  if (choice === "clear" || choice === "black") document.documentElement.setAttribute("data-skin", choice);
-  else document.documentElement.removeAttribute("data-skin");
+  const root = document.documentElement;
+  const compass = choice === "compass" || choice === "compass-dark";
+  root.setAttribute("data-theme", choice === "compass" ? "light" : "dark");
+  /* the Compass design is built on Clear's solid, card-based structure */
+  if (compass) { root.setAttribute("data-skin", "clear"); root.setAttribute("data-look", "compass"); }
+  else { root.removeAttribute("data-skin"); root.removeAttribute("data-look"); }
+  if (choice === "compass-dark") root.setAttribute("data-mode", "dark");
+  else root.removeAttribute("data-mode");
   const tc = document.querySelector('meta[name="theme-color"]');
   if (tc) { if (!tc.dataset.orig) tc.dataset.orig = tc.content;
-    tc.content = choice === "clear" ? "#f5f5f7" : choice === "black" ? "#000000" : tc.dataset.orig; }
+    tc.content = choice === "compass" ? "#f7f6f3" : choice === "compass-dark" ? "#0e0e16" : tc.dataset.orig; }
   document.querySelectorAll("[data-theme-pick]").forEach(b => {
     const on = b.dataset.themePick === choice;
     b.classList.toggle("on", on);
@@ -22385,7 +22552,7 @@ function paintTheme() {
 }
 function setThemeChoice(choice) {
   try {
-    if (choice === "light" || choice === "clear" || choice === "black") localStorage.setItem(THEME_KEY, choice);
+    if (choice === "dark" || choice === "compass-dark") localStorage.setItem(THEME_KEY, choice);
     else localStorage.removeItem(THEME_KEY);
   } catch (e) {}
   paintTheme();
@@ -22430,6 +22597,7 @@ function prefersStill() {
 }
 
 function paintNav(active) {
+  document.documentElement.setAttribute("data-sec", active || "home");
   if (!navBar) return;
   navBar.querySelectorAll("button").forEach(b => {
     const on = b.dataset.go === active;
