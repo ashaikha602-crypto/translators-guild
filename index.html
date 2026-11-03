@@ -3804,8 +3804,8 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
    buttons and links follows the section you are in (data-sec). */
 .jx, .jtiles, .jx-k, .jx-sub { display: none; }
 html:root[data-look="compass"] {
-  --cn: #F59E0B; --ce: #0FB5A3; --cs: #F25555; --cw: #8B6CF0; --cp: #E64F9C;
-  --cn-ink: #B45309; --ce-ink: #0F766E; --cs-ink: #D43B3B; --cw-ink: #6D4ED8; --cp-ink: #C0307C;
+  --cn: #F59E0B; --ce: #2B9AF3; --cs: #F25555; --cw: #8B6CF0; --cp: #E64F9C;
+  --cn-ink: #B45309; --ce-ink: #1A6FC4; --cs-ink: #D43B3B; --cw-ink: #6D4ED8; --cp-ink: #C0307C;
   --sig: conic-gradient(from 210deg, #FFB547, #FF6B6B, #F472B6, #A78BFA, #2DD4BF, #FFB547);
   --sig-l: linear-gradient(120deg, #FFB547 0%, #FF6B6B 35%, #F472B6 62%, #A78BFA 100%);
   --acc: var(--cn); --acc-ink: var(--cn-ink); --acc2: var(--cs);
@@ -3928,8 +3928,8 @@ html:root[data-look="compass"] .jx-sub { margin: 2px 0 0; order: 0; }
 html:root[data-look="compass"][data-mode="dark"] {
   --k-bg: #0E0E16; --k-card: #181826; --k-card2: #20202F; --k-ink: #F5F4FA; --k-soft: #B9B7C9; --k-faint: #7D7B90;
   --k-line: rgba(255,255,255,.07); --k-track: #262636; --k-scrim: rgba(14,14,22,.94); --k-lift: rgba(0,0,0,.5);
-  --cn: #FFB547; --ce: #2DD4BF; --cs: #FF6B6B; --cw: #A78BFA; --cp: #F472B6;
-  --cn-ink: #FFB547; --ce-ink: #2DD4BF; --cs-ink: #FF7A7A; --cw-ink: #B9A2FF; --cp-ink: #F689C4;
+  --cn: #FFB547; --ce: #4FB0FF; --cs: #FF6B6B; --cw: #A78BFA; --cp: #F472B6;
+  --cn-ink: #FFB547; --ce-ink: #5DB8FF; --cs-ink: #FF7A7A; --cw-ink: #B9A2FF; --cp-ink: #F689C4;
 }
 html:root[data-look="compass"][data-mode="dark"] input, html:root[data-look="compass"][data-mode="dark"] textarea,
 html:root[data-look="compass"][data-mode="dark"] select { background: var(--k-card2); color: var(--k-ink); border-color: var(--k-line); }
@@ -20766,7 +20766,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1103-2400";
+const BUILD = "1103-2500";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
