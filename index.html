@@ -1893,7 +1893,7 @@ a.ks-s-en:hover { color: var(--white); }
    blue. */
 .vf { display: inline-flex; vertical-align: -.12em; margin-inline-start: .3em; }
 .ico-vf { width: .82em; height: .82em; }
-.vf-seal { fill: var(--magenta); stroke: none; }
+.vf-seal { fill: #0071e3; stroke: none; }
 .vf-tick { fill: none; stroke: #fff; stroke-width: 2.4;
   stroke-linecap: round; stroke-linejoin: round; }
 .mm-name .ico-vf { width: .9em; height: .9em; }
@@ -3862,8 +3862,9 @@ html:root[data-look="compass"] .hp-fab { background: var(--k-card); color: var(-
 html:root[data-look="compass"] .hp-fab::before { content: ""; position: absolute; inset: 0; border-radius: 50%; padding: 2.5px;
   background: var(--sig); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude; }
-html:root[data-look="compass"] .strip-card .pf, html:root[data-look="compass"] #seal-initials {
-  background: var(--sig); padding: 3px; border-radius: 50%; }
+html:root[data-look="compass"] .strip-card .pf { background: var(--sig); padding: 3px; border-radius: 50%; }
+html:root[data-look="compass"] .avatar-wrap:not(.story-new)::before { content: ""; position: absolute; inset: -5px; border-radius: 50%; background: var(--sig); }
+html:root[data-look="compass"] .avatar-wrap:not(.story-new) > #seal-initials { position: relative; box-shadow: 0 0 0 3px var(--k-bg); }
 html:root[data-look="compass"] .strip-card .pf img, html:root[data-look="compass"] .strip-card .pf .medal { border: 3px solid var(--k-card); border-radius: 50%; box-shadow: none; }
 html:root[data-look="compass"] .strip-card .s-name { color: var(--k-ink); }
 /* Home: the hero, the ring and the four tiles */
@@ -20738,7 +20739,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1103-1700";
+const BUILD = "1103-1800";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
