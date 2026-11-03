@@ -16544,10 +16544,6 @@ async function runPublic(id) {
   if (p.bio)   { const n2 = el("p", "seal-bio", esc(p.bio));     n2.dir = "auto"; bioBlock.appendChild(n2); }
   if (p.motto) { const n3 = el("p", "seal-motto", esc(p.motto)); n3.dir = "auto"; bioBlock.appendChild(n3); }
 
-  const pubHl = el("div", "st-hl-box");
-  pubHl.hidden = true;
-  stage.appendChild(pubHl);
-  paintStoryHighlights(pubHl, id);
 
   if (langs.length) {
     const facts = el("div", "fact-row");
@@ -20135,7 +20131,6 @@ async function showLikers(postId) {
 const HILITES = [];
 
 function renderHilites() {
-  paintStoryHighlights(document.getElementById("seal-story-hl"), myId());
   const row = document.getElementById("seal-hilites");
   if (!row) return;
   /* Posting moved to the + in the top bar and searching to the home
@@ -20766,7 +20761,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1103-2500";
+const BUILD = "1103-2600";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -21389,7 +21384,6 @@ async function openStoryViewer(groups, gi, opts) {
           } catch (e) { b.disabled = false; b.textContent = "That could not be removed."; }
         });
       } else {
-        act("Add to highlights", () => { done(); addToHighlight(s, () => { if (!closed) resume(); }); pause(); });
       }
       act("Delete story", async b => {
         b.disabled = true; b.textContent = "Deleting…";
@@ -21874,7 +21868,7 @@ function createMenu() {
   [["tr", "Translation post", "A translation, a question, a request, a discussion", () => openItem(NEWPOST_ITEM)],
    ["post", "Post", "A photo or video on your profile and in the feed", () => photoPost()],
    ["story", "Story", "Gone after 24 hours", () => openStoryComposer()],
-   ["hl", "Story highlight", "Keep stories on your profile", () => newHighlight(() => paintStoryHighlights(document.getElementById("seal-story-hl"), myId()))]]
+  ]
     .forEach(([k, label, say, fn]) => {
       const b = el("button", "cr-row");
       b.type = "button";
