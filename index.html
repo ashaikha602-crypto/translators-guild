@@ -4071,9 +4071,19 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .mw > .mw-add { padding: .65rem; font-size: .84rem; border-radius: 13px; }
 .mw-filter { display: flex; align-items: center; justify-content: space-between; font-size: .78rem; color: var(--ink-soft); }
 .mw-all { all: unset; cursor: pointer; font-weight: 700; color: var(--white); padding: .25rem .6rem; border-radius: 99px; background: var(--void-3); font-size: .74rem; }
-.avt-step { display: grid; grid-template-columns: auto 1fr; gap: .8rem; align-items: start; }
-.avt-n { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: #F472B6; color: #fff; font-weight: 800; font-size: .9rem; margin-top: .2rem; }
+.avt-n { flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: #F472B6; color: #fff; font-weight: 800; font-size: .9rem; margin-top: .2rem; }
 .avt-cases { display: grid; gap: .7rem; margin-top: .6rem; }
+details.avt-step { border-radius: 18px; background: var(--void-2); border: var(--hair); overflow: hidden; }
+details.avt-step summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: .7rem; padding: .8rem .9rem; }
+details.avt-step summary::-webkit-details-marker { display: none; }
+details.avt-step summary b { font-family: var(--f-serif); font-size: 1.02rem; color: var(--white); flex: 1; }
+.avt-chev { color: var(--ink-faint); transition: transform .2s; }
+details.avt-step[open] .avt-chev { transform: rotate(180deg); }
+.avt-body { padding: 0 .95rem 1rem; display: grid; gap: .6rem; animation: swapIn 300ms var(--ease) both; }
+.avt-body p { margin: 0; line-height: 1.6; color: var(--ink-soft); }
+.st-media { margin: .4rem 0; border-radius: 16px; overflow: hidden; }
+.st-media img { width: 100%; max-height: 420px; object-fit: contain; background: #000; display: block; }
+.st-docchip { display: flex; align-items: center; gap: .6rem; padding: .6rem .7rem; border-radius: 12px; background: var(--well); font-size: .82rem; font-weight: 600; color: var(--ink-soft); margin: .3rem 0; }
 .guest-notice { font-size: .78rem; opacity: .8; }
 .gv-head { display: flex; align-items: baseline; gap: .45rem; }
 .gv-head b { font-family: var(--f-serif); font-size: 1.8rem; color: var(--white); }
@@ -13838,27 +13848,12 @@ const KU_COURSE_MORE = {
       ["5/6 s · 7 s", "shortest and longest time a subtitle stays up"]
     ], src: ["Netflix Timed Text Style Guide", "https://partnerhelp.netflixstudios.com/hc/en-us/articles/217350977-English-USA-Timed-Text-Style-Guide"] },
     cases: [
-      { k: "Subtitles", yr: "2019", t: "Parasite: “ram-don” and “Oxford”",
-        what: "Darcy Paquet subtitled Bong Joon-ho's <i>Parasite</i>. <i>Jjapaguri</i>, a mix of two instant-noodle brands, became <i>ram-don</i> (ramen + udon), a word he invented. Seoul National University became <i>Oxford</i>. KakaoTalk became WhatsApp. The film went on to win Best Picture.",
-        pair: ["짜파구리 · jjapaguri", "ram-don"],
-        point: "Each choice trades accuracy for speed of understanding, because a subtitle is read once, in about two seconds, while the picture keeps moving. Paquet explains every one of them in the first video at the top of this page.",
-        src: [["ATA Audiovisual Division", "https://ata-divisions.org/AVD/ata-61-recap-translating-into-hollywood-a-case-study-of-the-oscar-winning-film-parasite"],
-              ["The Jakarta Post", "https://newgelora.thejakartapost.com/life/2020/02/08/translation-wings-that-helped-parasite-soar-free-and-high"]] },
-      { k: "Captions", yr: "2021", t: "Squid Game: subtitles against captions",
-        what: "Korean-speaking comedian Youngmi Mayer showed that Netflix's English closed captions &mdash; transcribed from the English dub &mdash; flattened the dialogue. A character who says “I am very smart, I just never got a chance to study” reads as “I'm not a genius, but I still got it worked out.”",
-        pair: ["I am very smart, I just never got a chance to study", "I'm not a genius, but I still got it worked out"],
-        point: "The original line is about class, the subject of the whole series. A caption made from a dub is a translation of a translation, and loses what the first one already compressed.",
-        src: [["Rolling Stone", "https://www.rollingstone.com/culture/culture-news/squid-game-closed-captions-subtitles-mistranslation-1237308/"],
-              ["CBC", "https://www.cbc.ca/lite/story/1.6202592"]] },
       { k: "Dubbing", yr: "1998", t: "Pokémon's “jelly doughnuts”",
         what: "In the 4Kids English dub of <i>Pokémon</i>, Brock holds an onigiri &mdash; a Japanese rice ball, plainly visible on screen &mdash; and calls it a jelly-filled doughnut.",
         point: "Dubbing can replace a word but not a picture. Domesticate the dialogue while the image stays Japanese, and the audience sees the join. It is still a running joke two decades on.",
         src: [["Bulbapedia — Rice balls", "https://bulbapedia.bulbagarden.net/wiki/Rice_balls"]] }
     ],
     videos: [
-      { id: "KAZUKcCs9bc", t: "Translating Parasite: the many challenges of film subtitle translation", by: "Darcy Paquet · lecture, Academy of Korean Studies", why: "The translator walks through his subtitles for the film in the case below." },
-      { id: "uFJkrGYWi7Q", t: "Darcy Paquet on doing the subtitles for Parasite", by: "Asia Society Korea", why: "A shorter interview on the same choices." },
-      { id: "r_5WAY61muE", t: "Behind Netflix's global dubbing strategy", by: "The Wall Street Journal", why: "Why more viewers watched Squid Game dubbed than subtitled, and how a dub is made." },
       { id: "MCCajNjt5F4", t: "How to prepare subtitles for Netflix", by: "EZTitles", why: "The Netflix rules in the box below, applied in professional subtitling software." },
       { id: "y89reMUP1Jk", t: "Audio description at a glance", by: "American Council of the Blind", why: "Audio description and its best practices, from the organisation that runs the Audio Description Project." }
     ]
@@ -14882,15 +14877,15 @@ function runAVT() {
   stage.appendChild(hero);
   stage.appendChild(videoStrip([
     { id: "MCCajNjt5F4", t: "How to prepare subtitles for Netflix", by: "EZTitles", why: "Subtitles made to the Netflix rules, step by step, in professional subtitling software." },
-    { id: "KAZUKcCs9bc", t: "Translating Parasite: the many challenges of film subtitle translation", by: "Darcy Paquet · lecture, Academy of Korean Studies", why: "The film’s subtitler shows his subtitles and explains each choice." },
-    { id: "uFJkrGYWi7Q", t: "Darcy Paquet on doing the subtitles for Parasite", by: "Asia Society Korea", why: "A shorter interview on the same choices." },
-    { id: "r_5WAY61muE", t: "Behind Netflix's global dubbing strategy", by: "The Wall Street Journal", why: "How a dub is made, and why more viewers watched Squid Game dubbed than subtitled." },
     { id: "y89reMUP1Jk", t: "Audio description at a glance", by: "American Council of the Blind", why: "Audio description and its best practices." },
     { id: "iMnXXBmJj7E", t: "The trouble with subtitling is a matter of interpretation", by: "Lawrence Venuti · lecture, 3 December 2020", why: "Translation theory applied to the screen." }
   ], "Watch first"));
+  /* each part opens and closes, like the other Learn pages; the first
+     is open so the page starts somewhere */
   const step = (n, title, html) => {
-    const sec = el("section", "avt-step");
-    sec.innerHTML = '<span class="avt-n">' + n + '</span><div><h3 class="c-h">' + title + '</h3>' + html + '</div>';
+    const sec = document.createElement("details");
+    sec.className = "avt-step"; if (n === 1) sec.open = true;
+    sec.innerHTML = '<summary><span class="avt-n">' + n + '</span><b>' + title + '</b><span class="avt-chev" aria-hidden="true">⌄</span></summary><div class="avt-body">' + html + '</div>';
     stage.appendChild(sec); return sec;
   };
   step(1, "What it is", '<p>' + (c.body || "") + '</p>');
@@ -14913,8 +14908,11 @@ function runAVT() {
       '<div class="c-case-src">' + x.src.map(sr => '<a class="c-src" href="' + sr[1] + '" target="_blank" rel="noopener">' + sr[0] + ' ↗</a>').join("") + '</div>';
     cs.appendChild(card);
   });
-  step(5, "Real cases", '<p>Subtitles, captions and dubbing, each as it happened, with where it was reported.</p>').querySelector("div").appendChild(cs);
-  const where = step(6, "Where you meet it", '<div class="chips-row">' + (c.settings || []).map(x => '<span class="chip-tag">' + x + '</span>').join("") + '</div>' +
+  step(5, "A real case", '<p>As it happened, with where it was reported.</p>').querySelector(".avt-body").appendChild(cs);
+  const th = (typeof THEORIES !== "undefined") && THEORIES.find(t => t.en === "Audiovisual Translation");
+  if (th) step(6, "Where it sits in translation theory", '<p>' + th.idea + '</p><div class="chips-row">' + th.concepts.map(x => '<span class="chip-tag">' + x + '</span>').join("") + '</div>' +
+    '<p class="sd-note">From the Theories timeline in Learn · ' + th.refs.join("; ") + '</p>');
+  const where = step(7, "Where you meet it", '<div class="chips-row">' + (c.settings || []).map(x => '<span class="chip-tag">' + x + '</span>').join("") + '</div>' +
     (c.asks ? '<p><b>What it asks of you:</b> ' + c.asks + '</p>' : ''));
   const tr = el("div", "sf-try");
   tr.style.setProperty("--sd-c", "#F472B6");
@@ -18118,6 +18116,17 @@ function studioCard(r, sec, hero, kindLab) {
   if (r.title) { const t = el("p", "st-title", esc(r.title)); t.dir = "auto"; c.appendChild(t); }
   const ytC = r.post_type === "reel" && ytIdOf(r.source_text);
   if (ytC) c.appendChild(ytPlayer(ytC, ""));
+  /* the post's own file under its title: a video plays here, a picture
+     shows, a paper says it is there; the card opens the rest */
+  else if (r.thumb_path && sec !== "photos") {
+    if (/^(video|image)\//.test(r.thumb_type || "")) {
+      const m = el("div", "st-media"); m.dataset.mpath = r.thumb_path; m.dataset.mtype = r.thumb_type; c.appendChild(m);
+    } else {
+      const ext = (String(r.thumb_path).split(".").pop() || "file").toUpperCase().slice(0, 4);
+      c.appendChild(el("div", "st-docchip", '<span class="dx-ext">' + esc(ext) + '</span><span>' +
+        (r.post_type === "research" ? "The paper · tap to read it" : "Attached file · tap to read it") + '</span>'));
+    }
+  }
 
   if (ytC) { /* the link is the video; nothing else to show for it */ }
   else if (sec === "showcase" && (r.source_text || r.translated_text)) {
@@ -18229,6 +18238,7 @@ function runStudio(section) {
         }
       }
       rest.forEach(r => list.appendChild(studioCard(r, cur.id)));
+      paintMedia(list);
     } catch (e) {
       if (mine === seq) msg.textContent = "The Studio could not be loaded.";
     }
@@ -18933,8 +18943,7 @@ function postForm(kind) {
     }
     page.appendChild(how);
     if (id === "reel") page.appendChild(videoStrip([
-      { id: "MCCajNjt5F4", t: "How to prepare subtitles for Netflix", by: "EZTitles", why: "Subtitles made to those rules, step by step, in professional subtitling software." },
-      { id: "KAZUKcCs9bc", t: "Translating Parasite: the many challenges of film subtitle translation", by: "Darcy Paquet · lecture, Academy of Korean Studies", why: "The film’s subtitler shows his subtitles on screen and explains each choice." }
+      { id: "MCCajNjt5F4", t: "How to prepare subtitles for Netflix", by: "EZTitles", why: "Subtitles made to those rules, step by step, in professional subtitling software." }
     ], "Watch an example"));
   }
 
@@ -19098,10 +19107,20 @@ function postForm(kind) {
     go.disabled = true; msg.textContent = "Publishing…";
     try {
       const row = await sbPost("posts", payload);
-      if (f && row) { msg.textContent = "Uploading…"; await uploadAttachment(row.id, f); }
+      if (f && row) {
+        msg.textContent = "Uploading…";
+        try { await uploadAttachment(row.id, f); }
+        catch (up) {
+          /* a post without the file it was for is not posted at all */
+          try { await sbPatch("posts?id=eq." + row.id, { deleted_at: new Date().toISOString() }); } catch (e2) {}
+          throw new Error(/MB/.test(up.message || "") ? up.message
+            : /^video\//.test(f.type || "") ? "The video could not be uploaded: the site is not yet set up to take video files. Paste a YouTube link instead for now."
+            : "The file could not be uploaded, so nothing was posted. Try again.");
+        }
+      }
       clearTrail(); openItem(COMMUNITY_ITEM);
     } catch (e) {
-      go.disabled = false; msg.textContent = (e && /MB/.test(e.message || "")) ? e.message : "It could not be published."; msg.classList.add("bad");
+      go.disabled = false; msg.textContent = (e && /MB|upload/.test(e.message || "")) ? e.message : "It could not be published."; msg.classList.add("bad");
     }
   });
   page.appendChild(go);
@@ -19355,12 +19374,17 @@ async function runPost(id, o) {
   stage.appendChild(el("p","note","Loading…"));
   let r, cs, atts;
   try {
-    r = (await sbGet("feed?select=" + FEED_COLS + "&id=eq." + id))[0];
-    cs = await sbGet("comments?select=id,author_id,parent_id,quoted,content,created_at&post_id=eq." + id + "&order=created_at.asc");
+    /* the three reads at once, not one after another */
+    const AT = "post_attachments?select=id,file_path,file_name,file_type,file_size&post_id=eq.";
+    const [rr, cc, aa] = await Promise.all([
+      sbGet("feed?select=" + FEED_COLS + "&id=eq." + id),
+      sbGet("comments?select=id,author_id,parent_id,quoted,content,created_at&post_id=eq." + id + "&order=created_at.asc"),
+      sbGet(AT + id)
+    ]);
+    r = rr[0]; cs = cc; atts = aa;
     /* A repost has no files of its own: what it carries is the
        original's, so that is what the page opens. */
-    atts = await sbGet("post_attachments?select=id,file_path,file_name,file_type,file_size&post_id=eq." +
-                       (r && r.repost_of ? r.repost_of : id));
+    if (r && r.repost_of) atts = await sbGet(AT + r.repost_of);
   } catch (e) { stage.innerHTML=""; stage.appendChild(el("p","note","That post could not be opened.")); return; }
   if (!r) { stage.innerHTML=""; stage.appendChild(el("p","note","That post is not visible to you.")); return; }
 
@@ -21725,11 +21749,12 @@ function workSection(authorId, isMe) {
     rows.forEach(r => {
       const kk = workKind(r.post_type);
       const look = PK_LOOK[r.post_type] || PK_LOOK.other;
-      const c = studioCard(r, kk ? kk.sec : (r.post_type === "image" || r.post_type === "reel" ? "photos" : "discuss"), false,
+      const c = studioCard(r, kk ? kk.sec : "discuss", false,
         (POST_KINDS.find(x => x.id === r.post_type) || {}).en || (kk ? kk.one : "Post"));
       c.classList.add("mw-card"); c.style.setProperty("--mw-c", kk ? kk.c : look[0]);
       list.appendChild(c);
     });
+    paintMedia(list);
   }
   sbGet("feed?select=" + FEED_COLS + "&author_id=eq." + authorId + "&repost_of=is.null&order=created_at.desc&limit=100")
     .then(a => { own = a || []; paint(); })
@@ -22363,7 +22388,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-0500";
+const BUILD = "1105-0600";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
