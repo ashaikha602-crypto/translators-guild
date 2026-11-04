@@ -4080,6 +4080,15 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .gv-t b { color: var(--white); font-size: .92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .gv-t small { font-size: .72rem; color: var(--ink-faint); }
 .gv-seen { font-size: .74rem; color: var(--ink-soft); white-space: nowrap; }
+
+/* uploaded videos, played in place like the YouTube ones */
+.avt { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; background: #000; }
+.avt video { width: 100%; height: 100%; object-fit: contain; display: block; background: #000; }
+.avt-play { all: unset; cursor: pointer; position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: .6rem;
+  background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.55)); }
+.avt-play .c-vid-icon { position: relative; top: auto; left: auto; transform: none; }
+.avt-t { position: absolute; left: .9rem; right: .9rem; bottom: .7rem; color: #fff; font-weight: 700; font-size: .9rem; text-shadow: 0 1px 6px rgba(0,0,0,.6);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 /* Create a post: coloured tiles */
 .pk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
 .pk-tile { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: .65rem; padding: .75rem .8rem; border-radius: 16px;
@@ -17831,8 +17840,8 @@ const POST_KINDS = [
     say: "A paper, a thesis chapter, a finding, a reading worth sharing." },
   { id: "image", icon: "▣", en: "Image",
     say: "A picture, a page, a screenshot — with or without words." },
-  { id: "reel", icon: "▶", en: "Reel",
-    say: "A longer video: a lecture, a reading, a walk-through." },
+  { id: "reel", icon: "▶", en: "AVT · Audiovisual translation",
+    say: "A video you subtitled, dubbed or voiced over: upload it and members can watch it here." },
   { id: "other", icon: "•", en: "Something else",
     say: "Anything that does not fit the rest." }
 ];
@@ -18742,7 +18751,7 @@ function postForm(kind) {
                 : kind.id==="discussion" ? "Your thoughts"
                 : kind.id==="research" ? "What it is about"
                 : kind.id==="image" ? "Anything you want to say about it"
-                : kind.id==="reel" ? "What is in the video"
+                : kind.id==="reel" ? "About your audiovisual translation"
                 : kind.id==="other" ? "What you want to say"
                 : "Context",
                   kind.id==="help" ? "What exactly are you unsure about? Type @ to tag a member."
@@ -19059,9 +19068,7 @@ async function runPost(id, o) {
         fig.appendChild(cap);
         stage.appendChild(fig);
         signedLink(a.file_path).then(u => {
-          const v = document.createElement("video");
-          v.src = u; v.controls = true; v.playsInline = true; v.preload = "metadata";
-          fig.insertBefore(v, cap);
+          fig.insertBefore(avtPlayer(u, r && r.title ? r.title : ""), cap);
         }).catch(() => { cap.textContent = esc(a.file_name) + " \u00b7 could not be opened"; });
         return;
       }
@@ -21525,9 +21532,7 @@ async function paintMedia(root) {
     if (!url) return;
     s.dataset.done = "1";
     if (/^video\//.test(s.dataset.mtype || "")) {
-      const v = document.createElement("video");
-      v.src = url; v.controls = true; v.playsInline = true; v.preload = "metadata";
-      s.appendChild(v);
+      s.appendChild(avtPlayer(url, ""));
     } else {
       const img = document.createElement("img");
       img.src = url; img.alt = ""; img.loading = "lazy";
@@ -22027,7 +22032,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-0140";
+const BUILD = "1105-0230";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -29227,6 +29232,25 @@ function runKsl() {
 /* A swipeable strip of YouTube videos. Nothing loads, and nothing is
    sent to YouTube, until a card is tapped. Used by the course pages,
    the theorists and the theories. */
+/* An uploaded video shown the way the YouTube videos are: the whole
+   frame, nothing cropped, a play button over it, and it plays in place. */
+function avtPlayer(url, title) {
+  const box = el("div", "avt");
+  const v = document.createElement("video");
+  v.src = url + (url.indexOf("#") < 0 ? "#t=0.1" : ""); v.preload = "metadata"; v.playsInline = true; v.setAttribute("playsinline", "");
+  box.appendChild(v);
+  const play = el("button", "avt-play", '<span class="c-vid-icon" aria-hidden="true"></span>' + (title ? '<span class="avt-t" dir="auto">' + esc(title) + '</span>' : ''));
+  play.type = "button"; play.setAttribute("aria-label", "Play the video");
+  play.addEventListener("click", e => {
+    e.stopPropagation();
+    play.remove(); v.controls = true;
+    const pr = v.play(); if (pr && pr.catch) pr.catch(() => {});
+  });
+  box.appendChild(play);
+  box.addEventListener("click", e => { if (v.controls) e.stopPropagation(); });
+  return box;
+}
+
 function videoStrip(videos, title) {
   const n = videos.length;
   const watch = el("section", "c-watch");
