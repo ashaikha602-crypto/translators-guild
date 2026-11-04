@@ -22512,7 +22512,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-0930";
+const BUILD = "1105-1000";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -29566,15 +29566,6 @@ function runKsl() {
 
     stage.appendChild(el("p", "ksl-credit", KSL_CREDIT));
 
-    /* The Guild's printed chart of the same alphabet, to keep or print. */
-    const poster = el("figure", "ksl-poster");
-    poster.innerHTML =
-      '<a href="ksl/ksl-alphabet-poster.jpg" target="_blank" rel="noopener">' +
-        '<img src="ksl/ksl-alphabet-poster.webp" alt="The KSL alphabet chart: the twenty-eight Arabic letters and their handshapes" loading="lazy" width="1320" height="1842">' +
-      '</a>' +
-      '<figcaption><span>The KSL Alphabet · أبجدية لغة الإشارة الكويتية</span>' +
-        '<a class="c-src" href="ksl/ksl-alphabet-poster.jpg" download="KSL-Alphabet.jpg">Save the chart ↓</a></figcaption>';
-    stage.appendChild(poster);
 
     /* The reading, behind one door rather than spread down the page. */
     const more = el("button", "ghost ksl-more", "The lessons \u2192");
