@@ -4042,7 +4042,7 @@ html:root[data-look="compass"] .jx-num b { font-family: var(--f-serif); font-siz
 .mw-tile small { font-size: .74rem; font-weight: 600; color: var(--ink-faint); }
 .mw-add { all: unset; box-sizing: border-box; cursor: pointer; text-align: center; padding: .8rem; border-radius: 14px; font-weight: 700; font-size: .88rem;
   color: #FFB547; border: 1.5px dashed color-mix(in srgb, #FFB547 60%, transparent); }
-.mw-chips { display: flex; gap: .4rem; overflow-x: auto; scrollbar-width: none; }
+.mw-chips { display: flex; flex-wrap: wrap; gap: .4rem; }
 .mw-chips::-webkit-scrollbar { display: none; }
 .mw-chip { all: unset; cursor: pointer; white-space: nowrap; font-size: .78rem; font-weight: 700; padding: .45rem .8rem; border-radius: 99px; background: var(--void-3); color: var(--ink-soft); }
 .mw-chip.on { background: var(--white); color: var(--void); }
@@ -4061,6 +4061,7 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 #edit-profile-btn { display: none !important; }
 .ig-actions #share-profile-btn { background: var(--white); color: var(--void); }
 
+#seal .ig-actions { display: none !important; }
 /* on a phone, while the keyboard is up: no bar and no Ask Compass button
    over it (the dictionary stays, it is for the text being typed) */
 body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
@@ -4219,7 +4220,7 @@ body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
 #seal .seal-motto { font-size: .9rem; margin: 0; }
 #seal .ig-ints { gap: .35rem; }
 #seal .ig-ints .pub-h { font-size: .7rem; letter-spacing: .04em; text-transform: none; }
-#seal .ig-ints .chips-row { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0; }
+#seal .ig-ints .chips-row { flex-wrap: wrap; overflow: visible; gap: .35rem; margin: 0; }
 #seal .ig-ints .chips-row::-webkit-scrollbar { display: none; }
 #seal .ig-ints .chip-tag { font-size: .72rem; padding: .22rem .6rem; white-space: nowrap; letter-spacing: .02em; }
 #seal .ig-actions { margin: .1rem 0 0; }
@@ -19114,6 +19115,7 @@ async function renderAbout() {
    appearance, logging out. The profile keeps only Edit and Share. */
 const SET_ICO = {
   edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/>',
+  share: '<path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>',
   lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
   saved: '<path d="M6 4h12v16l-6-4-6 4z"/>',
   mine: '<path d="M5 4h10l4 4v12H5z"/><path d="M8 12h8M8 16h6"/>',
@@ -19159,6 +19161,7 @@ function settingsMenu() {
   const sections = [
     ["Your account", [
       ["edit", "Edit profile", "", go(() => openItem(EDIT_ITEM))],
+      ["share", "Share profile", "", go(() => shareProfile(document.createElement("button")))],
       ["lock", "Account privacy", vis, go(() => openItem(PRIVACY_ITEM))]
     ]],
     ["How you use the Compass", [
@@ -21177,7 +21180,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1104-1900";
+const BUILD = "1104-2000";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
