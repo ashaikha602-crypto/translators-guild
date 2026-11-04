@@ -4084,6 +4084,16 @@ details.avt-step[open] .avt-chev { transform: rotate(180deg); }
 .st-media { margin: .4rem 0; border-radius: 16px; overflow: hidden; }
 .st-media img { width: 100%; max-height: 420px; object-fit: contain; background: #000; display: block; }
 .st-docchip { display: flex; align-items: center; gap: .6rem; padding: .6rem .7rem; border-radius: 12px; background: var(--well); font-size: .82rem; font-weight: 600; color: var(--ink-soft); margin: .3rem 0; }
+.sf-th { display: grid; gap: .25rem; padding: .7rem .8rem; border-radius: 14px; background: var(--well); }
+.sf-th b { color: var(--white); }
+.sf-th small { color: var(--ink-faint); font-size: .74rem; }
+.sf-th-use { font-size: .84rem; }
+.sf-terms { display: grid; gap: .5rem; }
+.sf-az-list { display: grid; gap: .45rem; }
+details.sf-az-item { border-radius: 12px; background: var(--well); padding: .55rem .75rem; }
+details.sf-az-item summary { cursor: pointer; list-style: none; color: var(--white); }
+details.sf-az-item summary::-webkit-details-marker { display: none; }
+details.sf-az-item[open] { display: grid; gap: .45rem; }
 .guest-notice { font-size: .78rem; opacity: .8; }
 .gv-head { display: flex; align-items: baseline; gap: .45rem; }
 .gv-head b { font-family: var(--f-serif); font-size: 1.8rem; color: var(--white); }
@@ -14221,28 +14231,108 @@ const SPEC_FIELDS = [
     srcs: "Swan, <i>Practical English Usage</i>, on headlines; Husni &amp; Newman, <i>A to Z</i>, “Say/tell”." }
 ];
 
+/* each field page builds up in sections that open: the idea, the way
+   in, the theory behind it, its terms, real texts with their official
+   translations, the language traps, real cases, then practice. Every
+   section is made of material the Compass already carries with its
+   sources; a field without such material simply has fewer sections. */
+const SF_MORE = {
+  "sf-legal":     { booth: "legal",      theory: [], topics: ["Legal translation", "Risk and responsibility"],
+    cases: [["285", "The Treaty of Wuchale"], ["281", "Twenty-four originals, one law"], ["283", "Waitangi: sovereignty and kāwanatanga"]] },
+  "sf-medical":   { booth: "medical",    theory: [], topics: ["Medical translation", "Risk and responsibility"],
+    cases: [["285", "Willie Ramirez and “intoxicado”"], ["285", "Forty-seven knees in Berlin"], ["182", "Monkeypox becomes mpox"]] },
+  "sf-political": { booth: "diplomatic", theory: ["Hatim & Mason: Discourse and the Translator", "Narrative Theory", "Skopos Theory", "Postcolonial Approaches to Translation"], topics: [],
+    cases: [["180", "“We will bury you”"], ["283", "Resolution 242 and a missing “the”"], ["280", "Carter in Warsaw"]] },
+  "sf-economic":  { booth: "business",   theory: ["Skopos Theory"], topics: ["Business and financial texts"],
+    cases: [["280", "“Assume nothing” — “Do nothing”"]] },
+  "sf-technical": { booth: null,         theory: ["Skopos Theory"], topics: ["Technical translation", "Research and the parallel text"],
+    cases: [["182", "Mars Climate Orbiter"], ["182", "Pluto loses a definition"], ["388", "“Good morning” read as “attack them”"]] },
+  "sf-media":     { booth: "media",      theory: ["Hatim & Mason: Discourse and the Translator", "Narrative Theory"], topics: [],
+    cases: [["180", "Kennedy was not a jelly doughnut"], ["388", "“Good morning” read as “attack them”"], ["182", "Monkeypox becomes mpox"]] }
+};
 function runSpecField(f) {
   setCount(""); stage.innerHTML = "";
+  const M = SF_MORE[f.id] || {};
   const head = el("div", "c-hero");
   head.innerHTML = '<span class="c-badge">Specialized translation · <span dir="rtl" lang="ar">الترجمة المتخصصة</span></span>' +
     '<h2 class="c-title">' + f.en + '</h2><p class="c-ar" dir="rtl" lang="ar">' + f.ar + '</p>' +
     '<p class="c-line">' + f.line + '</p>';
   stage.appendChild(head);
-  stage.appendChild(el("div", "card sf-big", '<span class="b-lab">The main thing</span><p>' + f.big + '</p>'));
-  const how = el("div", "card");
-  how.innerHTML = '<span class="b-lab">How to approach it</span><ol class="sf-steps">' +
-    f.steps.map(([h, t]) => '<li><b>' + h + '</b><span>' + t + '</span></li>').join("") + '</ol>';
-  stage.appendChild(how);
+  let n = 0;
+  const sec = (title, html, open) => {
+    const d = document.createElement("details");
+    d.className = "avt-step"; if (open) d.open = true;
+    d.innerHTML = '<summary><span class="avt-n">' + (++n) + '</span><b>' + title + '</b><span class="avt-chev" aria-hidden="true">⌄</span></summary><div class="avt-body"></div>';
+    const body = d.querySelector(".avt-body");
+    if (typeof html === "string") body.innerHTML = html; else if (html) body.appendChild(html);
+    stage.appendChild(d); return body;
+  };
+  sec("The main thing", '<p>' + f.big + '</p>', true);
+  sec("How to approach it", '<ol class="sf-steps">' + f.steps.map(([h, t]) => '<li><b>' + h + '</b><span>' + t + '</span></li>').join("") + '</ol>');
+  const topics = ((KU_COURSE_MORE["285"] || {}).topics || []).filter(t => (M.topics || []).indexOf(t.en) >= 0 || t.en === "Language for specific purposes");
+  if (topics.length) sec("What makes it a specialised text", topics.map(t => '<p><b>' + t.en + '</b> <span dir="rtl" lang="ar">' + t.ar + '</span><br>' + t.say + '</p>').join("") +
+    '<p class="sd-note">From the Kuwait University course page, Translation for Special Purposes (285).</p>');
+  const th = (M.theory || []).map(name => THEORIES.find(t => t.en === name)).filter(Boolean);
+  if (th.length) sec("The theory behind it", th.map(t => '<div class="sf-th"><b>' + t.en + '</b><small>' + t.who + ' · ' + t.when + '</small><p>' + t.idea + '</p>' +
+    '<p class="sf-th-use"><b>Used for:</b> ' + t.use + '</p><span class="sd-src">' + (t.refs || []).join("; ") + '</span></div>').join("") +
+    '<p class="sd-note">From the Theories timeline in Learn.</p>');
+  const sd = SD_FIELDS.find(x => x.sf === f.id);
+  if (sd) {
+    const box = el("div", "sf-terms"); box.innerHTML = '<p class="fv-msg">Loading\u2026</p>';
+    sec("Its key terms", box);
+    sdEntries().then(all => {
+      const list = all.filter(e => e.f === sd.id).slice(0, 12);
+      box.innerHTML = "";
+      list.forEach(e => box.appendChild(sdRow(e)));
+      const more = el("button", "ghost", "The whole " + sd.en.toLowerCase() + " dictionary →"); more.type = "button";
+      more.addEventListener("click", () => openItem(ITEMS.find(t => t.id === "sd-" + sd.id)));
+      box.appendChild(more);
+    });
+  }
+  const g = M.booth && boothGenre(M.booth);
+  if (g && g.id === M.booth) {
+    const real = (g.sentences || []).concat(g.turns || []);
+    if (real.length) sec("In real texts: the official wording", '<p>Sentences from the published texts this field works with, each with the translation printed beside it.</p>' +
+      real.map(x => '<div class="sf-pair"><div><p dir="rtl" lang="ar">' + esc(x.ar) + '</p></div><div><p dir="ltr">' + esc(x.ok[0]) + '</p></div></div>').join("") +
+      '<p class="sd-note">Source: ' + esc((SD_BOOTH[g.id] || [])[1] || "") + '.</p>');
+  }
   if (f.ex) {
-    const e = f.ex, ex = el("div", "card sf-ex");
-    ex.innerHTML = '<span class="b-lab">A real text</span><b class="sf-ex-t">' + e.title + '</b>' +
+    const e = f.ex;
+    sec("A worked text, step by step", '<b class="sf-ex-t">' + e.title + '</b>' +
       '<div class="sf-pair"><div><small>' + e.srcLab + '</small><p dir="ltr">' + e.src + '</p></div>' +
       '<div><small>' + e.tgtLab + '</small><p dir="rtl" lang="ar">' + e.tgt + '</p></div></div>' +
-      '<span class="b-lab sf-nl">What to notice</span><ul class="sf-notes">' + e.notes.map(n => '<li>' + n + '</li>').join("") + '</ul>' +
-      '<p class="sf-from">From: ' + e.src2.map(([t, u]) => '<a href="' + u + '" target="_blank" rel="noopener noreferrer">' + t + '</a>').join(" · ") + '</p>';
-    stage.appendChild(ex);
+      '<span class="b-lab sf-nl">What to notice</span><ul class="sf-notes">' + e.notes.map(x => '<li>' + x + '</li>').join("") + '</ul>' +
+      '<p class="sf-from">From: ' + e.src2.map(([t, u]) => '<a href="' + u + '" target="_blank" rel="noopener noreferrer">' + t + '</a>').join(" · ") + '</p>');
   }
-  stage.appendChild(el("div", "card sf-watch", '<span class="b-lab">Watch out for</span><ul>' + f.watch.map(w => '<li>' + w + '</li>').join("") + '</ul>'));
+  if ((SF_ATOZ[f.id] || []).length) {
+    const box = el("div", "sf-az-list"); box.innerHTML = '<p class="fv-msg">Loading\u2026</p>';
+    sec("The language traps", box);
+    loadLib("atoz").then(data => {
+      box.innerHTML = '<p>Entries of Husni &amp; Newman’s <i>A to Z</i> whose problems turn up in this field. Tap one to open it.</p>';
+      SF_ATOZ[f.id].map(h => data.find(e => e.h === h)).filter(Boolean).forEach(e => {
+        const d = document.createElement("details"); d.className = "sf-az-item";
+        d.innerHTML = '<summary><b>' + esc(e.h) + '</b> <span dir="rtl" lang="ar">' + esc(e.ar || "") + '</span></summary>' +
+          '<p>' + esc(e.sum || "") + '</p>' + ((e.pts || []).length ? '<ul class="sf-notes">' + e.pts.map(x => '<li dir="auto">' + esc(x) + '</li>').join("") + '</ul>' : '') +
+          ((e.ex || []).length ? '<div class="sf-azex">' + e.ex.map(x => '<div><span dir="auto">' + esc(x[0]) + '</span><span dir="auto">' + esc(x[1] || "") + '</span></div>').join("") + '</div>' : '');
+        box.appendChild(d);
+      });
+    }).catch(() => { box.innerHTML = '<p class="fv-msg">Could not be loaded.</p>'; });
+  }
+  const cases = (M.cases || []).map(([code, t]) => ((KU_COURSE_MORE[code] || {}).cases || []).find(x => x.t === t)).filter(Boolean);
+  if (cases.length) {
+    const box = el("div", "avt-cases");
+    cases.forEach(x => {
+      const card = el("article", "c-case");
+      card.innerHTML = '<div class="c-case-top"><span class="c-case-k">' + x.k + '</span><span class="c-case-yr">' + x.yr + '</span></div>' +
+        '<h4 class="c-case-t">' + x.t + '</h4><p class="c-case-what">' + x.what + '</p>' +
+        (x.pair ? '<div class="c-pair"><span dir="auto">' + x.pair[0] + '</span><span class="c-pair-arr" aria-hidden="true">→</span><span dir="auto">' + x.pair[1] + '</span></div>' : '') +
+        '<div class="c-case-point"><span class="c-asks-lab">Why it matters</span><p>' + x.point + '</p></div>' +
+        '<div class="c-case-src">' + x.src.map(sr => '<a class="c-src" href="' + sr[1] + '" target="_blank" rel="noopener">' + sr[0] + ' ↗</a>').join("") + '</div>';
+      box.appendChild(card);
+    });
+    sec("Real cases: when it went wrong", box);
+  }
+  sec("Watch out for", '<ul class="sf-notes">' + f.watch.map(w => '<li>' + w + '</li>').join("") + '</ul>');
   stage.appendChild(el("p", "sd-note", "Sources: " + f.srcs));
   stage.appendChild(sfDeep(f));
   stage.appendChild(footNav({}));
@@ -14901,7 +14991,8 @@ function runAVT() {
   if (acc) step(4, "Accessibility", '<p><b>' + acc.en + '</b>: ' + acc.say + '</p>' +
     '<p>The American Council of the Blind video above shows audio description at work.</p>');
   const cs = el("div", "avt-cases");
-  (more.cases || []).forEach(x => {
+  const famous = ((KU_COURSE_MORE["284"] || {}).cases || []).filter(x => /Inside Out|Zootopia/.test(x.t));
+  (more.cases || []).concat(famous).forEach(x => {
     const card = el("article", "c-case");
     card.innerHTML = '<div class="c-case-top"><span class="c-case-k">' + x.k + '</span><span class="c-case-yr">' + x.yr + '</span></div>' +
       '<h4 class="c-case-t">' + x.t + '</h4><p class="c-case-what">' + x.what + '</p>' +
@@ -14910,7 +15001,7 @@ function runAVT() {
       '<div class="c-case-src">' + x.src.map(sr => '<a class="c-src" href="' + sr[1] + '" target="_blank" rel="noopener">' + sr[0] + ' ↗</a>').join("") + '</div>';
     cs.appendChild(card);
   });
-  step(5, "A real case", '<p>As it happened, with where it was reported.</p>').querySelector(".avt-body").appendChild(cs);
+  step(5, "Real cases from family films", '<p>As each happened, with where it was reported.</p>').querySelector(".avt-body").appendChild(cs);
   const th = (typeof THEORIES !== "undefined") && THEORIES.find(t => t.en === "Audiovisual Translation");
   if (th) step(6, "Where it sits in translation theory", '<p>' + th.idea + '</p><div class="chips-row">' + th.concepts.map(x => '<span class="chip-tag">' + x + '</span>').join("") + '</div>' +
     '<p class="sd-note">From the Theories timeline in Learn · ' + th.refs.join("; ") + '</p>');
@@ -22390,7 +22481,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-0700";
+const BUILD = "1105-0800";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
