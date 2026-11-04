@@ -4094,6 +4094,22 @@ details.sf-az-item { border-radius: 12px; background: var(--well); padding: .55r
 details.sf-az-item summary { cursor: pointer; list-style: none; color: var(--white); }
 details.sf-az-item summary::-webkit-details-marker { display: none; }
 details.sf-az-item[open] { display: grid; gap: .45rem; }
+.avt-body { grid-template-columns: minmax(0, 1fr); overflow-wrap: break-word; }
+.avt-body i, .avt-body em { padding-right: .12em; }
+.avt-body > * { min-width: 0; }
+details.avt-step summary { align-items: center; }
+.avt-st { display: grid; gap: .1rem; flex: 1; min-width: 0; }
+.avt-st b { font-family: var(--f-serif); font-size: 1.02rem; color: var(--white); }
+.avt-st small { font-size: .72rem; color: var(--ink-faint); font-weight: 600; }
+details.avt-step[open] { border-color: color-mix(in srgb, #F472B6 45%, transparent); }
+.avt-next { all: unset; cursor: pointer; justify-self: end; font-size: .8rem; font-weight: 700; padding: .5rem .9rem; border-radius: 99px; background: var(--white); color: var(--void); margin-top: .3rem; }
+details.sf-az-item summary { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .2rem .7rem; }
+details.sf-az-item summary b { min-width: 0; overflow-wrap: break-word; }
+details.sf-az-item summary span { font-family: var(--f-ar-text); color: var(--ink-soft); }
+.sf-bigp { font-size: 1.02rem; color: var(--white) !important; }
+.sf-it { margin-top: .4rem !important; font-size: .82rem; color: var(--ink-soft); }
+.sf-watchbox { display: grid; gap: .6rem; min-width: 0; }
+.c-case { min-width: 0; overflow-wrap: break-word; }
 .guest-notice { font-size: .78rem; opacity: .8; }
 .gv-head { display: flex; align-items: baseline; gap: .45rem; }
 .gv-head b { font-family: var(--f-serif); font-size: 1.8rem; color: var(--white); }
@@ -14259,27 +14275,36 @@ function runSpecField(f) {
     '<p class="c-line">' + f.line + '</p>';
   stage.appendChild(head);
   let n = 0;
-  const sec = (title, html, open) => {
+  const all = [];
+  const sec = (title, html, open, teaser) => {
     const d = document.createElement("details");
     d.className = "avt-step"; if (open) d.open = true;
-    d.innerHTML = '<summary><span class="avt-n">' + (++n) + '</span><b>' + title + '</b><span class="avt-chev" aria-hidden="true">⌄</span></summary><div class="avt-body"></div>';
+    d.innerHTML = '<summary><span class="avt-n">' + (++n) + '</span><span class="avt-st"><b>' + title + '</b>' +
+      (teaser ? '<small>' + teaser + '</small>' : '') + '</span><span class="avt-chev" aria-hidden="true">⌄</span></summary><div class="avt-body"></div>';
     const body = d.querySelector(".avt-body");
     if (typeof html === "string") body.innerHTML = html; else if (html) body.appendChild(html);
-    stage.appendChild(d); return body;
+    stage.appendChild(d); all.push(d); return body;
   };
-  sec("The main thing", '<p>' + f.big + '</p>', true);
-  sec("How to approach it", '<ol class="sf-steps">' + f.steps.map(([h, t]) => '<li><b>' + h + '</b><span>' + t + '</span></li>').join("") + '</ol>');
+  /* one tap to the next part, so the page reads like a lesson */
+  const chain = () => all.forEach((d, i) => {
+    const nx = all[i + 1]; if (!nx) return;
+    const b = el("button", "avt-next", "Next: " + nx.querySelector(".avt-st b").textContent + " →"); b.type = "button";
+    b.addEventListener("click", () => { d.open = false; nx.open = true; setTimeout(() => nx.scrollIntoView({ behavior: "smooth", block: "start" }), 60); });
+    d.querySelector(".avt-body").appendChild(b);
+  });
+  sec("The main thing", '<p class="sf-bigp">' + f.big + '</p>', true, "Start here");
+  sec("How to approach it", '<ol class="sf-steps">' + f.steps.map(([h, t]) => '<li><b>' + h + '</b><span>' + t + '</span></li>').join("") + '</ol>', false, f.steps.length + " steps");
   const topics = ((KU_COURSE_MORE["285"] || {}).topics || []).filter(t => (M.topics || []).indexOf(t.en) >= 0 || t.en === "Language for specific purposes");
   if (topics.length) sec("What makes it a specialised text", topics.map(t => '<p><b>' + t.en + '</b> <span dir="rtl" lang="ar">' + t.ar + '</span><br>' + t.say + '</p>').join("") +
-    '<p class="sd-note">From the Kuwait University course page, Translation for Special Purposes (285).</p>');
+    '<p class="sd-note">From the Kuwait University course page, Translation for Special Purposes (285).</p>', false, "Kuwait University · 285");
   const th = (M.theory || []).map(name => THEORIES.find(t => t.en === name)).filter(Boolean);
   if (th.length) sec("The theory behind it", th.map(t => '<div class="sf-th"><b>' + t.en + '</b><small>' + t.who + ' · ' + t.when + '</small><p>' + t.idea + '</p>' +
     '<p class="sf-th-use"><b>Used for:</b> ' + t.use + '</p><span class="sd-src">' + (t.refs || []).join("; ") + '</span></div>').join("") +
-    '<p class="sd-note">From the Theories timeline in Learn.</p>');
+    '<p class="sd-note">From the Theories timeline in Learn.</p>', false, th.map(t => t.who.split(" · ")[0]).join(", "));
   const sd = SD_FIELDS.find(x => x.sf === f.id);
   if (sd) {
     const box = el("div", "sf-terms"); box.innerHTML = '<p class="fv-msg">Loading\u2026</p>';
-    sec("Its key terms", box);
+    sec("Its key terms", box, false, "Tap ＋ to keep one");
     sdEntries().then(all => {
       const list = all.filter(e => e.f === sd.id).slice(0, 12);
       box.innerHTML = "";
@@ -14294,7 +14319,7 @@ function runSpecField(f) {
     const real = (g.sentences || []).concat(g.turns || []);
     if (real.length) sec("In real texts: the official wording", '<p>Sentences from the published texts this field works with, each with the translation printed beside it.</p>' +
       real.map(x => '<div class="sf-pair"><div><p dir="rtl" lang="ar">' + esc(x.ar) + '</p></div><div><p dir="ltr">' + esc(x.ok[0]) + '</p></div></div>').join("") +
-      '<p class="sd-note">Source: ' + esc((SD_BOOTH[g.id] || [])[1] || "") + '.</p>');
+      '<p class="sd-note">Source: ' + esc((SD_BOOTH[g.id] || [])[1] || "") + '.</p>', false, real.length + " sentences, both languages");
   }
   if (f.ex) {
     const e = f.ex;
@@ -14302,16 +14327,16 @@ function runSpecField(f) {
       '<div class="sf-pair"><div><small>' + e.srcLab + '</small><p dir="ltr">' + e.src + '</p></div>' +
       '<div><small>' + e.tgtLab + '</small><p dir="rtl" lang="ar">' + e.tgt + '</p></div></div>' +
       '<span class="b-lab sf-nl">What to notice</span><ul class="sf-notes">' + e.notes.map(x => '<li>' + x + '</li>').join("") + '</ul>' +
-      '<p class="sf-from">From: ' + e.src2.map(([t, u]) => '<a href="' + u + '" target="_blank" rel="noopener noreferrer">' + t + '</a>').join(" · ") + '</p>');
+      '<p class="sf-from">From: ' + e.src2.map(([t, u]) => '<a href="' + u + '" target="_blank" rel="noopener noreferrer">' + t + '</a>').join(" · ") + '</p>', false, e.title.replace(/<[^>]+>/g, ""));
   }
   if ((SF_ATOZ[f.id] || []).length) {
     const box = el("div", "sf-az-list"); box.innerHTML = '<p class="fv-msg">Loading\u2026</p>';
-    sec("The language traps", box);
+    sec("The language traps", box, false, SF_ATOZ[f.id].length + " to open, one by one");
     loadLib("atoz").then(data => {
       box.innerHTML = '<p>Entries of Husni &amp; Newman’s <i>A to Z</i> whose problems turn up in this field. Tap one to open it.</p>';
       SF_ATOZ[f.id].map(h => data.find(e => e.h === h)).filter(Boolean).forEach(e => {
         const d = document.createElement("details"); d.className = "sf-az-item";
-        d.innerHTML = '<summary><b>' + esc(e.h) + '</b> <span dir="rtl" lang="ar">' + esc(e.ar || "") + '</span></summary>' +
+        d.innerHTML = '<summary><b>' + esc(e.h).replace(/\//g, "/\u200b") + '</b> <span dir="rtl" lang="ar">' + esc(e.ar || "") + '</span></summary>' +
           '<p>' + esc(e.sum || "") + '</p>' + ((e.pts || []).length ? '<ul class="sf-notes">' + e.pts.map(x => '<li dir="auto">' + esc(x) + '</li>').join("") + '</ul>' : '') +
           ((e.ex || []).length ? '<div class="sf-azex">' + e.ex.map(x => '<div><span dir="auto">' + esc(x[0]) + '</span><span dir="auto">' + esc(x[1] || "") + '</span></div>').join("") + '</div>' : '');
         box.appendChild(d);
@@ -14319,8 +14344,8 @@ function runSpecField(f) {
     }).catch(() => { box.innerHTML = '<p class="fv-msg">Could not be loaded.</p>'; });
   }
   const cases = (M.cases || []).map(([code, t]) => ((KU_COURSE_MORE[code] || {}).cases || []).find(x => x.t === t)).filter(Boolean);
-  if (cases.length) {
-    const box = el("div", "avt-cases");
+  const box = el("div", "avt-cases");
+  {
     cases.forEach(x => {
       const card = el("article", "c-case");
       card.innerHTML = '<div class="c-case-top"><span class="c-case-k">' + x.k + '</span><span class="c-case-yr">' + x.yr + '</span></div>' +
@@ -14330,9 +14355,15 @@ function runSpecField(f) {
         '<div class="c-case-src">' + x.src.map(sr => '<a class="c-src" href="' + sr[1] + '" target="_blank" rel="noopener">' + sr[0] + ' ↗</a>').join("") + '</div>';
       box.appendChild(card);
     });
-    sec("Real cases: when it went wrong", box);
   }
-  sec("Watch out for", '<ul class="sf-notes">' + f.watch.map(w => '<li>' + w + '</li>').join("") + '</ul>');
+  /* what to watch for, then the real cases where it was not watched */
+  const watch = el("div", "sf-watchbox", '<ul class="sf-notes">' + f.watch.map(w => '<li>' + w + '</li>').join("") + '</ul>');
+  if (cases.length) {
+    watch.appendChild(el("p", "sf-it", "<b>It really happened</b> · " + cases.length + (cases.length === 1 ? " case" : " cases") + ", each with where it was reported"));
+    watch.appendChild(box);
+  }
+  sec("Watch out for", watch, false, cases.length ? "and " + cases.length + " real cases" : "");
+  chain();
   stage.appendChild(el("p", "sd-note", "Sources: " + f.srcs));
   stage.appendChild(sfDeep(f));
   stage.appendChild(footNav({}));
@@ -14977,7 +15008,7 @@ function runAVT() {
   const step = (n, title, html) => {
     const sec = document.createElement("details");
     sec.className = "avt-step"; if (n === 1) sec.open = true;
-    sec.innerHTML = '<summary><span class="avt-n">' + n + '</span><b>' + title + '</b><span class="avt-chev" aria-hidden="true">⌄</span></summary><div class="avt-body">' + html + '</div>';
+    sec.innerHTML = '<summary><span class="avt-n">' + n + '</span><span class="avt-st"><b>' + title + '</b></span><span class="avt-chev" aria-hidden="true">⌄</span></summary><div class="avt-body">' + html + '</div>';
     stage.appendChild(sec); return sec;
   };
   step(1, "What it is", '<p>' + (c.body || "") + '</p>');
@@ -22481,7 +22512,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-0800";
+const BUILD = "1105-0930";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -24028,6 +24059,17 @@ function renderHall() {
    view decides what each reader may see, so this adds no rule of its
    own — a post set to Only me never reaches anybody's home screen.
    Tapping one opens it. */
+/* A repost whose original was deleted goes with it: the feed only
+   returns posts that still exist, so any repost whose original is not
+   among them is dropped. */
+async function dropOrphans(rows) {
+  const ids = [...new Set(rows.filter(r => r.repost_of).map(r => r.repost_of))];
+  if (!ids.length) return rows;
+  let alive = new Set();
+  try { (await sbGet("feed?select=id&id=in.(" + ids.join(",") + ")")).forEach(x => alive.add(x.id)); }
+  catch (e) { return rows.filter(r => !r.repost_of); }
+  return rows.filter(r => !r.repost_of || alive.has(r.repost_of));
+}
 async function renderLately() {
   const wrap = document.getElementById("lately-wrap");
   const box = document.getElementById("lately");
@@ -24035,7 +24077,8 @@ async function renderLately() {
   if (backend !== "supabase" || !myId()) { wrap.hidden = true; return; }
   let rows = [];
   try {
-    rows = await sbGet("feed?select=" + FEED_COLS + "&order=created_at.desc&limit=3");
+    rows = await dropOrphans(await sbGet("feed?select=" + FEED_COLS + "&order=created_at.desc&limit=40"));
+    rows = rows.slice(0, 4);
   } catch (e) { wrap.hidden = true; return; }
   if (!rows.length) { wrap.hidden = true; return; }
 
