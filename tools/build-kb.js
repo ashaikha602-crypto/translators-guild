@@ -61,6 +61,8 @@ const CONSTS = {
   REVISE:         ["Practice › Revision", ""],
   "kslQuiz()":    ["Practice › Kuwaiti Sign Language trial", ""],
   KSL_VIDEOS:     ["Learn › Kuwaiti Sign Language", ""],
+  SPEC_FIELDS:    ["Learn › Specialized translation", ""],
+  COMPOSE:        ["Create a post › how to approach each kind", ""],
 };
 /* pages whose text is written straight into their render function:
    these are opened in the page and read tab by tab */
@@ -191,7 +193,21 @@ function addCollection(where, src, v) {
       add(where, src, label || where.split(" › ").pop(), paras);
     }
   }
-  const items = await page.evaluate(() => ITEMS.map(t => ({ en: t.en, ar: t.ar, section: t.section, kind: t.kind, subject: t.subject || "", blurb: t.blurb || "" })));
+  const items = await page.evaluate(() => ITEMS.map(t => ({ id: t.id, en: t.en, ar: t.ar, section: t.section, kind: t.kind, subject: t.subject || "", blurb: t.blurb || "",
+    group: ((typeof LEARN_GROUPS !== "undefined" && LEARN_GROUPS.find(g => (g.order || []).indexOf(t.id) >= 0)) || {}).en || "" })));
+  /* every page the helper can send a member to, by id, so an answer can
+     carry a button that opens it */
+  const MAP = items.filter(t => t.id && t.published !== false).map(t => ({ id: t.id,
+    where: (SECTION[t.section] || t.section || "") + (t.group ? " › " + t.group : ""),
+    en: clean(t.en), ar: clean(t.ar || ""), say: clean(t.blurb || t.subject || "").slice(0, 160) }));
+  [["home", "Home", "الرئيسية", "The Hall: progress, Studio and the community"], ["learn", "Learn", "تعلّم", "Every guide, the dictionaries and the Library"],
+   ["practice", "Practice", "تدرّب", "The Trials, Chambers, Poetry and Prose"], ["profile", "Profile", "الملف الشخصي صفحتي", "Your page: your work, glossary and settings"],
+   ["settings", "Settings", "الإعدادات", "Edit profile, share profile, appearance, notifications, contact us, log out"],
+   ["newpost", "Create a post", "انشر منشور ترجمة جديد", "Post a translation, help, request, discussion, challenge, research, image, AVT video"],
+   ["myglossary", "My glossary", "مسردي", "Your own terms, by field"], ["messages", "Messages", "الرسائل", "Private messages with members"],
+   ["notifications", "Notifications", "الإشعارات", "Likes, comments, follows and updates"], ["contact", "Contact us", "تواصل معنا", "Send a question or feedback to the team"]]
+    .forEach(([id, en, ar, say]) => { const had = MAP.find(m => m.id === id); if (had) { had.ar = (had.ar ? had.ar + " " : "") + ar; return; } MAP.push({ id, where: "App", en, ar, say }); });
+  fs.writeFileSync(path.join(ROOT, "api", "_sitemap.json"), JSON.stringify(MAP));
   for (const t of items) {
     const where = (SECTION[t.section] || t.section) + " › " + clean(t.en);
     add(where, "", clean(t.en), ["Site map:", clean(t.en), clean(t.ar), "is a " + t.kind + " in " + (SECTION[t.section] || t.section) + ".",

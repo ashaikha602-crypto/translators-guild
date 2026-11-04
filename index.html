@@ -4126,6 +4126,8 @@ details.avt-step[open] .avt-chev { transform: rotate(180deg); }
 .dx-more { all: unset; cursor: pointer; display: block; width: 100%; box-sizing: border-box; text-align: center; padding: .65rem; font-size: .82rem; font-weight: 700; color: var(--white); border-top: var(--hair); }
 .avt.yt { background: radial-gradient(120% 120% at 20% 0%, #8a2be2, #2a0b4a 70%); }
 .avt.yt iframe { width: 100%; height: 100%; border: 0; display: block; }
+.hp-gos { display: flex; flex-wrap: wrap; gap: .4rem; margin: .3rem 0; }
+.hp-go { all: unset; cursor: pointer; font-size: .82rem; font-weight: 700; padding: .5rem .85rem; border-radius: 99px; background: var(--white); color: var(--void); }
 /* the composer */
 .cp { display: grid; gap: .7rem; }
 .cp-hero { display: flex; align-items: center; gap: .8rem; padding: .95rem 1rem; border-radius: 20px; border: var(--hair);
@@ -22388,7 +22390,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-0600";
+const BUILD = "1105-0700";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -29053,6 +29055,8 @@ function runContact() {
 const HELPER_URL = "/api/chat";
 const helperLog = [];
 const HELPER_TRY = [
+  "Take me to the legal dictionary",
+  "How do I post a subtitled video?",
   "What is the difference between a method and a procedure?",
   "ما الفرق بين الترجمة الفورية والترجمة التتابعية؟",
   "Who was Jerome, and why does he matter?",
@@ -29061,9 +29065,32 @@ const HELPER_TRY = [
 ];
 const HELPER_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-11 6.6L4 19.5l1.4-4.4A7.5 7.5 0 1 1 20 11.5z"/>' +
   '<path d="M12 8.2v6.6M8.7 11.5h6.6" /></svg>';
-function helperHTML(text) {
+/* where a helper button goes: any page by its id, or a part of the app */
+function helperGo(id) {
+  helperClose();
+  const app = { home: () => navTo("home"), learn: () => navTo("learn"), practice: () => navTo("practice"),
+    profile: () => navTo("profile"), settings: () => { navTo("profile"); setTimeout(() => settingsMenu(), 250); },
+    newpost: () => openItem(NEWPOST_ITEM), myglossary: () => openItem(MYGLOSS_ITEM),
+    messages: () => { navTo("profile"); setTimeout(() => { const b = document.getElementById("seal-inbox"); if (b) b.click(); }, 250); },
+    notifications: () => { navTo("profile"); setTimeout(() => { const b = document.getElementById("seal-notifs"); if (b) b.click(); }, 250); },
+    contact: () => openItem(CONTACT_ITEM) };
+  if (app[id]) { app[id](); return; }
+  const t = ITEMS.find(x => x.id === id);
+  if (t) openItem(t);
+}
+function helperButtons(labels) {
+  return function (m, id) {
+    const t = ITEMS.find(x => x.id === id);
+    const lab = (labels && labels[id]) || (t && t.en) || id;
+    return '<button type="button" class="hp-go" data-go="' + esc(id) + '">Open ' + esc(lab) + ' →</button>';
+  };
+}
+function helperHTML(text, labels) {
+  const go = helperButtons(labels);
   return String(text).split("\n").map(line => {
-    const l = esc(line).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+    if (/^\s*\[\[open:[a-z0-9:_-]+\]\]\s*$/i.test(line)) return '<p class="hp-gos">' + line.replace(/\[\[open:([a-z0-9:_-]+)\]\]/gi, go) + '</p>';
+    line = line.replace(/\[\[open:([a-z0-9:_-]+)\]\]/gi, "\u0000$1\u0000");
+    const l = esc(line).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\u0000([a-z0-9:_-]+)\u0000/gi, go);
     if (/^\s*Read more:/i.test(line) || /^\s*للمزيد:/.test(line)) return '<p class="hp-more">' + l + '</p>';
     if (/^\s*[-•] /.test(line)) return '<p class="hp-li">' + l.replace(/^\s*[-•] /, "") + '</p>';
     return line.trim() ? '<p>' + l + '</p>' : "";
@@ -29072,14 +29099,16 @@ function helperHTML(text) {
 /* Search mode (no key yet, or the model is unreachable): the passages
    themselves, cut short with a way to read the rest. */
 const HP_CUT = 280;
-function helperCards(passages, question) {
+function helperCards(passages, question, actions) {
   const ar = /[\u0600-\u06FF]/.test(question || "");
+  const gos = (actions || []).length ? '<p class="hp-gos">' + actions.map(a => '<button type="button" class="hp-go" data-go="' + esc(a.id) + '">Open ' + esc(a.en) + ' →</button>').join("") + '</p>' : "";
+  if (gos && (!passages || !passages.length)) return gos;
   if (!passages || !passages.length) {
     return '<p>' + (ar ? "لا يغطي الموقع هذا بعد. جرّب كلمات أخرى، أو تصفّح قسم تعلّم."
                        : "The site does not cover this yet. Try other words, or browse Learn.") + '</p>' +
       '<p><button type="button" class="hp-contact">' + (ar ? "اسأل الفريق ←" : "Ask the team →") + '</button></p>';
   }
-  return '<p class="hp-found-h">' + (ar ? "هذا ما يقوله الموقع:" : "Here is what the site says:") + '</p>' +
+  return gos + '<p class="hp-found-h">' + (ar ? "هذا ما يقوله الموقع:" : "Here is what the site says:") + '</p>' +
     passages.map(p => {
       const text = String(p.text).replace(/\s*\(Search terms:[^)]*\)\s*$/, "").replace(/^Site map:\s*/, "");
       const short = text.length > HP_CUT ? text.slice(0, text.lastIndexOf(" ", HP_CUT) > 200 ? text.lastIndexOf(" ", HP_CUT) : HP_CUT) + "\u2026" : text;
@@ -29144,7 +29173,7 @@ function helperEnsure() {
   const paint = () => {
     log.innerHTML = "";
     helperLog.forEach((m, i) => bubble(m.role, m.role === "user" ? esc(m.content)
-      : m.passages ? helperCards(m.passages, (helperLog[i - 1] || {}).content) : helperHTML(m.content)));
+      : m.passages ? helperCards(m.passages, (helperLog[i - 1] || {}).content, m.actions) : helperHTML(m.content, m.labels)));
     hello.hidden = helperLog.length > 0;
     fresh.hidden = helperLog.length === 0;
     toEnd();
@@ -29163,6 +29192,8 @@ function helperEnsure() {
   hpView.querySelector(".dm-back").addEventListener("click", helperClose);
   log.addEventListener("click", e => {
     if (e.target.closest(".hp-contact")) { helperClose(); openItem(CONTACT_ITEM); return; }
+    const g = e.target.closest(".hp-go");
+    if (g) { helperGo(g.dataset.go); return; }
     const more = e.target.closest(".hp-card-more");
     if (!more) return;
     const t = more.previousElementSibling;
@@ -29195,13 +29226,13 @@ function helperEnsure() {
       });
       const j = await r.json().catch(() => ({}));
       if (r.ok && j.mode === "search") {
-        wait.innerHTML = helperCards(j.passages, q);
-        helperLog.push({ role: "assistant", passages: j.passages,
+        wait.innerHTML = helperCards(j.passages, q, j.actions);
+        helperLog.push({ role: "assistant", passages: j.passages, actions: j.actions,
           content: (j.passages || []).map(p => p.where + ": " + p.title).join("\n") || "Nothing on the site matched." });
       } else {
         if (!r.ok || !j.reply) throw new Error(j.message || "Ask Compass could not answer just now. Try again.");
-        wait.innerHTML = helperHTML(j.reply);
-        helperLog.push({ role: "assistant", content: j.reply });
+        wait.innerHTML = helperHTML(j.reply, j.labels);
+        helperLog.push({ role: "assistant", content: j.reply, labels: j.labels });
       }
     } catch (e) {
       helperLog.pop();   // unanswered, so it is not sent again as history

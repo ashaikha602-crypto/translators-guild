@@ -23,6 +23,11 @@
    can be changed there too, with HELPER_MODEL, without touching code. */
 const Anthropic = require("@anthropic-ai/sdk");
 const KB = require("./_kb.json");
+const MAP = require("./_sitemap.json");
+const MAP_IDS = new Set(MAP.map(m => m.id));
+/* the whole site, one line a page, given with every question so the
+   helper always knows what exists and where it is */
+const SITEMAP = MAP.map(m => m.id + " | " + m.where + " › " + m.en + (m.ar && m.ar !== m.en ? " (" + m.ar + ")" : "") + (m.say ? " — " + m.say : "")).join("\n");
 
 const SB = "https://bldqausimrsusdzfbubk.supabase.co";
 const ANON = "sb_publishable_kyHEHTc00jWi5wN2nyiD0w_NtLbVHy_";
@@ -30,7 +35,7 @@ const MODEL = process.env.HELPER_MODEL || "claude-opus-5-5";
 
 const MAX_TURNS = 8;          // earlier messages sent back for context
 const MAX_CHARS = 1500;       // per message from the member
-const PASSAGES = 8;           // passages given to the model per question
+const PASSAGES = 12;           // passages given to the model per question
 const PER_HOUR = 30;          // questions per member per hour, per server instance
 
 const SYSTEM = `You are Ask Compass, the assistant of the Translators' Guild inside its app, Compass. Members are university students of Arabic–English translation, many at Kuwait University. They ask about translation studies and its theories, the history of translation, terms, procedures and strategies, interpreting, sign language, proverbs and idioms, the Library books, the Kuwait University courses, the trials, and the site itself: its features, where things are and how to use them. Passages under "Site guide" describe the site. Call the app Compass when you refer to it.
@@ -46,7 +51,14 @@ How to answer
 - Reply in the language the member writes in. Give key terms in both Arabic and English when the passages give both.
 - Keep it short: a few sentences, or a short list, unless the member asks for more.
 - Plain text. You may use "- " for list items and **bold** for a key term. No headings, no tables.
-- End every answer with a line that starts "Read more:" naming where on the site the points came from and the published source when the passage gives one, for example: Read more: Learn › The Seven Procedures (Vinay & Darbelnet). Take these labels from the passages, never invent one.
+- End every answer that draws on study material with a line that starts "Read more:" naming where on the site the points came from and the published source when the passage gives one, for example: Read more: Learn › The Seven Procedures (Vinay & Darbelnet). Take these labels from the passages, never invent one.
+
+Taking members where they want to go
+- The <site_map> below lists every page and feature in Compass, one per line: its id, where it is, its name and what it holds. It is the truth about what exists on the site: use it to say whether something is there and where.
+- Whenever you point a member to a page or feature, add a button for it on its own line, written exactly [[open:ID]] with an id from the site map (for example [[open:avt]] or [[open:myglossary]]). Add at most three, only ids that are in the site map, and never make one up.
+- When a member asks to go somewhere or to do something ("open the legal dictionary", "I want to post a video", "where are my settings"), answer in one or two sentences with the button, and say in a few words how to do it if the site guide explains it.
+- When something they ask for is not on the site, say so plainly and suggest the nearest page that is, with its button.
+- For questions on how to use the site, explain the steps from the "Site guide" passages, in order, in plain words.
 
 Limits
 - Never quote, translate or explain verses of the Qur'an, and do not give religious rulings. If asked, say politely that Ask Compass does not handle religious texts.
@@ -63,7 +75,7 @@ const STOP = new Set(("the a an of to in on and or is are was were be by for wit
   "me us them about into than then there their not no yes if but so also any all some more most such").split(" ")
   .concat("في من على الى إلى عن ما ماذا هل هو هي هذا هذه ذلك التي الذي او أو و ثم كيف لماذا متى اين أين مع كل بين".split(" ").map(norm)));
 const stem = w => /^[؀-ۿ]/.test(w)
-  ? w.replace(/^(وال|بال|كال|فال|لل|ال)(?=..)/, "").replace(/^[وفب](?=...)/, "")
+  ? w.replace(/^(وال|بال|كال|فال|لل|ال)(?=..)/, "").replace(/^[وفب](?=...)/, "").replace(/(?<=..)يه?$/, "")
   : w.replace(/(ing|ed|es|s)$/, m => (w.length - m.length >= 4 ? "" : m));
 const tokens = s => (norm(s).match(/[a-z0-9]+|[ء-ي]+/g) || [])
   .filter(w => w.length > 1 && !STOP.has(w)).map(stem);
@@ -126,6 +138,19 @@ let client = null;   // made on the first answer, once a key is set
 
 /* the free answer: the site's own passages, as they are */
 const SHOW = 3;
+/* pages whose name or note matches the question, for a button even
+   when no model is writing the answer */
+function pagesFor(q) {
+  const t = [...new Set(tokens(q))];
+  if (!t.length) return [];
+  return MAP.map(m => {
+    const hay = new Set(tokens(m.en + " " + m.ar + " " + m.say + " " + m.where));
+    const name = new Set(tokens(m.en + " " + m.ar));
+    let s = 0; t.forEach(w => { if (name.has(w)) s += 3; else if (hay.has(w)) s += 1; });
+    return { m, s };
+  }).filter(x => x.s >= 3).sort((a, b) => b.s - a.s)
+    .filter((x, i, a) => a.findIndex(y => y.m.id === x.m.id) === i).slice(0, 3).map(x => ({ id: x.m.id, en: x.m.en }));
+}
 const searchReply = found => {
   /* only passages that match nearly as well as the best one: the model
      can set a weak match aside, a reader shown it cannot */
@@ -171,7 +196,8 @@ module.exports = async (req, res) => {
       .filter(c => !ids.has(c.id))).slice(0, PASSAGES);
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) return res.status(200).json(searchReply(found));
+  const pages = pagesFor(question);
+  if (!process.env.ANTHROPIC_API_KEY) return res.status(200).json(Object.assign(searchReply(found), { actions: pages }));
   if (!client) client = new Anthropic();   // reads ANTHROPIC_API_KEY
 
   const last = msgs.pop();
@@ -185,7 +211,7 @@ module.exports = async (req, res) => {
     const r = await client.beta.messages.create({
       model: MODEL,
       max_tokens: 4000,
-      system: SYSTEM,
+      system: [{ type: "text", text: SYSTEM }, { type: "text", text: "<site_map>\n" + SITEMAP + "\n</site_map>", cache_control: { type: "ephemeral" } }],
       messages,
       output_config: { effort: "low" },
       betas: ["server-side-fallback-2026-07-01"],
@@ -195,9 +221,12 @@ module.exports = async (req, res) => {
       return res.status(200).json({ reply: "I can't help with that one. Try asking about a translation topic from the site.", sources: [] });
     }
     let reply = r.content.filter(b => b.type === "text").map(b => b.text).join("").trim();
+    /* a button only for a page that exists */
+    reply = reply.replace(/\[\[open:([a-z0-9:_-]+)\]\]/gi, (m, id) => MAP_IDS.has(id) ? "[[open:" + id + "]]" : "");
     if (r.stop_reason === "max_tokens") reply += "\n\n(The answer was cut short. Ask for the rest.)";
     return res.status(200).json({
       reply: reply || "I couldn't put an answer together. Try asking another way.",
+      labels: Object.fromEntries([...reply.matchAll(/\[\[open:([a-z0-9:_-]+)\]\]/gi)].map(m => [m[1], (MAP.find(x => x.id === m[1]) || {}).en || m[1]])),
       sources: found.map(c => ({ where: c.where, src: c.src, title: c.title })),
     });
   } catch (e) {
@@ -207,10 +236,11 @@ module.exports = async (req, res) => {
     else if (e instanceof Anthropic.RateLimitError) console.error("claude: rate limited");
     else if (e instanceof Anthropic.APIError) console.error("claude", e.status, e.message);
     else console.error(e);
-    return res.status(200).json(searchReply(found));
+    return res.status(200).json(Object.assign(searchReply(found), { actions: pages }));
   }
 };
 
 /* exposed so the passage search can be tried locally:
    node -e "console.log(require('./api/chat.js').search('skopos', 5))" */
 module.exports.search = search;
+module.exports.pagesFor = pagesFor;
