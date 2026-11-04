@@ -4089,6 +4089,81 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .avt-play .c-vid-icon { position: relative; top: auto; left: auto; transform: none; }
 .avt-t { position: absolute; left: .9rem; right: .9rem; bottom: .7rem; color: #fff; font-weight: 700; font-size: .9rem; text-shadow: 0 1px 6px rgba(0,0,0,.6);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+
+/* a posted document shown in place */
+.dx { border-radius: 18px; overflow: hidden; background: var(--void-2); border: var(--hair); margin: .4rem 0; }
+.dx-h { display: flex; align-items: center; gap: .6rem; padding: .65rem .8rem; border-bottom: var(--hair); }
+.dx-ext { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; flex: none; font-size: .62rem; font-weight: 800; color: #fff; background: #4FB0FF; }
+.dx-t { display: grid; min-width: 0; flex: 1; }
+.dx-t b { font-size: .86rem; color: var(--white); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dx-t small { font-size: .7rem; color: var(--ink-faint); }
+.dx-open { all: unset; cursor: pointer; font-size: .74rem; font-weight: 700; padding: .35rem .7rem; border-radius: 99px; background: var(--void-3); color: var(--white); }
+.dx-b { max-height: 460px; overflow: hidden; position: relative; background: #fff; color: #16151F; }
+.dx-b::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70px; background: linear-gradient(transparent, #fff); pointer-events: none; }
+.dx.all .dx-b { max-height: none; }
+.dx.all .dx-b::after, .dx.pdf .dx-b::after { display: none; }
+.dx-doc, .dx-text { margin: 0; padding: 1.1rem 1.1rem 1.3rem; background: #fff; color: #16151F; box-shadow: none; border-radius: 0; }
+.dx-b h1, .dx-b h2, .dx-b h3, .dx-b h4, .dx-b p, .dx-b li, .dx-b td, .dx-b th, .dx-b pre, .dx-b span, .dx-b b, .dx-b strong { color: #16151F !important; }
+.dx-text { white-space: pre-wrap; font: 400 .9rem/1.6 var(--f-sans, inherit); }
+.dx.pdf .dx-b { max-height: none; }
+.dx-pdf { display: block; width: 100%; height: 70vh; border: 0; background: #fff; }
+.dx-more { all: unset; cursor: pointer; display: block; width: 100%; box-sizing: border-box; text-align: center; padding: .65rem; font-size: .82rem; font-weight: 700; color: var(--white); border-top: var(--hair); }
+/* the composer */
+.cp { display: grid; gap: .7rem; }
+.cp-hero { display: flex; align-items: center; gap: .8rem; padding: .95rem 1rem; border-radius: 20px; border: var(--hair);
+  background: radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--cp-c) 22%, transparent), transparent 60%), var(--void-2); }
+.cp-hero i { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; flex: none; background: var(--cp-c); }
+.cp-hero i svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.cp-hero b { font-family: var(--f-serif); font-size: 1.15rem; color: var(--white); }
+.cp-hero p { margin: .15rem 0 0; font-size: .84rem; color: var(--ink-soft); line-height: 1.4; }
+.cp-how { border-radius: 16px; background: var(--void-2); border: var(--hair); padding: .2rem .95rem .6rem; }
+.cp-how summary { cursor: pointer; padding: .55rem 0; font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--cp-c); list-style: none; }
+.cp-how summary::-webkit-details-marker { display: none; }
+.cp-how summary::after { content: "⌄"; float: right; color: var(--ink-faint); }
+.cp-how[open] summary::after { content: "⌃"; }
+.cp-how ol { margin: 0; padding-left: 1.1rem; display: grid; gap: .35rem; font-size: .86rem; color: var(--ink-soft); line-height: 1.45; }
+.cp-nums { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; margin-top: .7rem; }
+.cp-nums span { display: grid; gap: .1rem; text-align: center; padding: .5rem .2rem; border-radius: 12px; background: var(--well); }
+.cp-nums b { font-family: var(--f-serif); font-size: .95rem; color: var(--white); }
+.cp-nums small { font-size: .6rem; color: var(--ink-faint); line-height: 1.25; }
+.cp-src { font-size: .7rem; color: var(--ink-faint); margin: .5rem 0 0; }
+.cp-src a { color: var(--cp-c); }
+.cp-card { display: grid; gap: .45rem; padding: .8rem .9rem; border-radius: 16px; background: var(--void-2); border: var(--hair); }
+.cp-lab { font-size: .74rem; font-weight: 700; color: var(--ink-soft); }
+.cp-hint { font-size: .72rem; color: var(--ink-faint); margin-top: -.25rem; }
+.cp-in { font: 500 1rem var(--f-sans, inherit); width: 100%; box-sizing: border-box; padding: .55rem .1rem; border: 0; border-bottom: 1.5px solid var(--void-3);
+  background: transparent; color: var(--white); border-radius: 0; }
+.cp-in:focus { outline: none; border-bottom-color: var(--cp-c); }
+.cp-area { resize: none; line-height: 1.55; min-height: 4.5rem; border: 0; padding: .2rem .1rem; }
+.cp-date { color-scheme: dark; max-width: 12rem; }
+.cp-twin { grid-template-columns: 1fr; gap: .2rem; padding: 0; overflow: hidden; }
+.cp-col { display: grid; gap: .3rem; padding: .8rem .9rem; }
+.cp-col + .cp-col { border-top: var(--hair); background: color-mix(in srgb, var(--cp-c) 6%, transparent); }
+@media (min-width: 720px) { .cp-twin { grid-template-columns: 1fr 1fr; } .cp-col + .cp-col { border-top: 0; border-left: var(--hair); } }
+.cp-pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: .5rem; align-items: center; }
+.cp-side { all: unset; cursor: pointer; display: grid; gap: .1rem; padding: .55rem .8rem; border-radius: 13px; background: var(--well); text-align: center; }
+.cp-side small { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+.cp-side b { font-size: .95rem; color: var(--white); }
+.cp-swap { all: unset; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--cp-c); color: #fff; font-weight: 800; }
+.cp-chips { display: flex; flex-wrap: wrap; gap: .35rem; }
+.cp-chip { all: unset; cursor: pointer; font-size: .78rem; font-weight: 700; padding: .4rem .75rem; border-radius: 99px; background: var(--void-3); color: var(--ink-soft); }
+.cp-chip.on { background: var(--cp-c); color: #fff; }
+.cp-chips.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 3px; padding: 3px; border-radius: 13px; background: var(--well); }
+.cp-chips.seg .cp-chip { text-align: center; border-radius: 10px; background: transparent; padding: .45rem .3rem; font-size: .74rem; }
+.cp-chips.seg .cp-chip.on { background: var(--void-2); color: var(--white); box-shadow: 0 2px 8px -4px rgba(0,0,0,.5); }
+.cp-drop { all: unset; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: .6rem; padding: 1.1rem; border-radius: 14px;
+  border: 1.5px dashed color-mix(in srgb, var(--cp-c) 55%, transparent); color: var(--cp-c); font-weight: 700; font-size: .9rem; }
+.cp-drop-i { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--cp-c) 16%, transparent); }
+.cp-file { display: grid; gap: .5rem; }
+.cp-img { width: 100%; max-height: 360px; object-fit: contain; border-radius: 14px; background: #000; }
+.cp-file-row { display: flex; align-items: center; gap: .6rem; padding: .5rem .6rem; border-radius: 12px; background: var(--well); }
+.cp-doc { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; flex: none; font-size: .68rem; font-weight: 800; color: #fff; background: var(--cp-c); }
+.cp-fn { display: grid; min-width: 0; flex: 1; }
+.cp-fn b { font-size: .84rem; color: var(--white); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cp-fn small { font-size: .7rem; color: var(--ink-faint); }
+.cp-x { all: unset; cursor: pointer; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; color: var(--ink-soft); background: var(--void-3); }
+.cp-go { margin-top: .3rem; }
 /* Create a post: coloured tiles */
 .pk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
 .pk-tile { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: .65rem; padding: .75rem .8rem; border-radius: 16px;
@@ -18702,106 +18777,221 @@ async function runNewPost(preset) {
   stage.appendChild(footNav({ backLabel: "Feed" }));
 }
 
+/* ═══ THE COMPOSER ═══
+   Each kind of post has its own form, because each is approached
+   differently: a translation is two texts side by side, research is a
+   paper, an audiovisual translation is a video. Every form opens with
+   what the post is for and how to go about it, then asks only for what
+   that kind needs. */
+const COMPOSE = {
+  translation: { purpose: "Share a passage you translated and get feedback on it.",
+    tips: ["Paste the source text as it appears, and say where it is from if you can.",
+           "Put your translation beside it, as you would hand it in.",
+           "Pick what you want feedback on, so reviewers know where to look.",
+           "Add a note on any choice you made on purpose: a term, the register, something you left out."] },
+  help: { purpose: "Ask the community about a passage you are stuck on.",
+    tips: ["Quote only the part you are stuck on, with a line of context around it.",
+           "Show your attempt, even if you are unsure of it.",
+           "Say exactly what bothers you: a term, a structure, the tone."] },
+  request: { purpose: "Ask for help with a piece of work.",
+    tips: ["Say what the text is and who it is for: a contract, a speech, a menu.",
+           "Paste the text, or upload the file.",
+           "Give a deadline if there is one."] },
+  discussion: { purpose: "Open a question of terminology, strategy or theory.",
+    tips: ["Ask one clear question.",
+           "Give the example that made you ask it.",
+           "Say what you think so far, so the discussion has somewhere to start."] },
+  challenge: { purpose: "Set a passage for other members to translate.",
+    tips: ["Choose a passage with one real difficulty in it.",
+           "Name its source, so the original can be checked.",
+           "Set the level honestly, and a closing date for entries."] },
+  research: { purpose: "Share a paper, a thesis chapter, a finding or a reading.",
+    tips: ["Give the full title, and where it was published or presented.",
+           "Sum it up in a few lines: the question, the method, what was found.",
+           "Upload the paper so members can read it here."] },
+  image: { purpose: "Share a picture: a page, a sign, a screenshot.",
+    tips: ["Upload the picture first.", "Say what is in it and why it matters for translation."] },
+  reel: { purpose: "Share a video you subtitled, dubbed or voiced over.",
+    tips: ["Upload the clip with your subtitles in it, or the video and its .srt file.",
+           "Say what you translated from and into, and which kind of audiovisual translation it is.",
+           "Point to one decision you want feedback on: a cut, a line break, a joke, a song."] },
+  other: { purpose: "Anything that does not fit the other kinds.", tips: [] }
+};
+const AVT_MODES = ["Subtitles", "Dubbing", "Voice-over", "Subtitles for the deaf (SDH)", "Audio description"];
+
 function postForm(kind) {
   setCount(kind.en); stage.innerHTML = "";
+  const id = kind.id, cfg = COMPOSE[id] || COMPOSE.other;
+  const look = PK_LOOK[id] || PK_LOOK.other;
   const wants = {
-    translation: { langs:1, genre:1, src:1, tgt:1, note:1, fb:1 },
-    help:        { langs:1, genre:1, src:1, tgt:1, note:1, fb:1, title:1 },
-    request:     { langs:1, genre:1, src:1, deadline:1, title:1 },
-    discussion:  { title:1 },
-    challenge:   { langs:1, genre:1, src:1, difficulty:1, title:1, deadline:1 },
-    research:    { title:1, langs:1 },
-    image:       { title:1 },
-    reel:        { title:1 },
-    other:       { title:1 }
-  }[kind.id];
+    translation: { langs:1, genre:1, src:1, tgt:1, note:1, fb:1, file:"doc" },
+    help:        { langs:1, genre:1, src:1, tgt:1, title:1, file:"doc" },
+    request:     { langs:1, genre:1, src:1, deadline:1, title:1, file:"doc" },
+    discussion:  { title:1, file:"any" },
+    challenge:   { langs:1, genre:1, src:1, difficulty:1, title:1, deadline:1, file:"doc" },
+    research:    { title:1, file:"paper" },
+    image:       { title:1, file:"image" },
+    reel:        { title:1, langs:1, mode:1, file:"video" },
+    other:       { title:1, file:"any" }
+  }[id];
+  const page = el("div", "cp");
+  page.style.setProperty("--cp-c", look[0]);
+  stage.appendChild(page);
 
-  const mk = (label, hint, node) => {
-    const d = el("div", "f-row");
-    d.appendChild(el("label", "f-lab", label));
-    if (hint) d.appendChild(el("span", "f-hint", hint));
-    d.appendChild(node); stage.appendChild(d); return node;
-  };
-  /* dir="auto" on everything typed into: the browser picks the direction
-     from the first strong character, so Arabic goes right to left and
-     English left to right without the member choosing anything. */
-  const input = (max, ph) => { const i = document.createElement("input");
-    i.type="text"; i.className="f-in"; i.maxLength=max; i.dir="auto";
-    if(ph) i.placeholder=ph; return i; };
-  const area = (max, rows, ph) => { const t = document.createElement("textarea");
-    t.className="f-in f-area"; t.maxLength=max; t.rows=rows; t.dir="auto";
-    if(ph) t.placeholder=ph; return t; };
-  const select = (opts, cur) => { const s2 = document.createElement("select"); s2.className="f-in";
-    opts.forEach(v => { const o=document.createElement("option");
-      if (Array.isArray(v)) { o.value=v[0]; o.textContent=v[1]; } else { o.value=v; o.textContent=v; }
-      if (o.value===cur) o.selected=true; s2.appendChild(o); }); return s2; };
-
-  const title = wants.title ? mk(kind.id==="discussion" ? "Your question" : "Title", null, input(160)) : null;
-  let srcL, tgtL, genre;
-  if (wants.langs) {
-    const r = el("div", "f-row two-up");
-    const a = el("div", null); a.appendChild(el("label","f-lab","From")); srcL = select(LANGS,"Arabic"); a.appendChild(srcL);
-    const b = el("div", null); b.appendChild(el("label","f-lab","Into"));  tgtL = select(LANGS,"English"); b.appendChild(tgtL);
-    r.appendChild(a); r.appendChild(b); stage.appendChild(r);
+  /* what this kind is for, and how to go about it */
+  const hero = el("div", "cp-hero",
+    '<i><svg viewBox="0 0 24 24" aria-hidden="true">' + look[1] + '</svg></i><div><b>' + esc(kind.en) + '</b><p>' + esc(cfg.purpose) + '</p></div>');
+  page.appendChild(hero);
+  if (cfg.tips.length) {
+    const how = el("details", "cp-how");
+    how.open = true;
+    how.innerHTML = '<summary>How to approach it</summary><ol>' + cfg.tips.map(t => '<li>' + esc(t) + '</li>').join("") + '</ol>';
+    if (id === "reel") {
+      const n = el("div", "cp-nums");
+      [["42", "characters a line, at most"], ["2", "lines on screen"], ["17–20", "characters a second"], ["5/6 s – 7 s", "shortest and longest on screen"]]
+        .forEach(([a, b]) => n.appendChild(el("span", null, "<b>" + a + "</b><small>" + b + "</small>")));
+      how.appendChild(n);
+      how.appendChild(el("p", "cp-src", 'The numbers professional subtitlers work to, from the <a href="https://partnerhelp.netflixstudios.com/hc/en-us/articles/217350977-English-USA-Timed-Text-Style-Guide" target="_blank" rel="noopener">Netflix Timed Text Style Guide</a>.'));
+    }
+    page.appendChild(how);
+    if (id === "reel") page.appendChild(videoStrip([
+      { id: "MCCajNjt5F4", t: "How to prepare subtitles for Netflix", by: "EZTitles", why: "Subtitles made to those rules, step by step, in professional subtitling software." },
+      { id: "KAZUKcCs9bc", t: "Translating Parasite: the many challenges of film subtitle translation", by: "Darcy Paquet · lecture, Academy of Korean Studies", why: "The film’s subtitler shows his subtitles on screen and explains each choice." }
+    ], "Watch an example"));
   }
-  if (wants.genre) genre = mk("Genre", null, select(GENRES, "General"));
-  const src  = wants.src ? mk("Source text", null, area(8000, 5)) : null;
-  const tgt  = wants.tgt ? mk(kind.id==="help" ? "My attempt" : "My translation", null, area(8000, 5)) : null;
-  const body = mk(kind.id==="help" ? "The problem"
-                : kind.id==="discussion" ? "Your thoughts"
-                : kind.id==="research" ? "What it is about"
-                : kind.id==="image" ? "Anything you want to say about it"
-                : kind.id==="reel" ? "About your audiovisual translation"
-                : kind.id==="other" ? "What you want to say"
-                : "Context",
-                  kind.id==="help" ? "What exactly are you unsure about? Type @ to tag a member."
-                                   : "Type @ to tag a member.", area(6000, 4));
-  attachMentions(body);
-  if (title) attachMentions(title);
-  const note = wants.note ? mk("Translation note", "Optional.", area(1000, 2)) : null;
+
+  const card = (label, hint) => {
+    const c = el("section", "cp-card");
+    if (label) c.appendChild(el("span", "cp-lab", esc(label)));
+    if (hint) c.appendChild(el("span", "cp-hint", esc(hint)));
+    page.appendChild(c); return c;
+  };
+  const input = (max, ph) => { const i = document.createElement("input");
+    i.type = "text"; i.className = "cp-in"; i.maxLength = max; i.dir = "auto"; if (ph) i.placeholder = ph; return i; };
+  const area = (max, rows, ph) => { const t = document.createElement("textarea");
+    t.className = "cp-in cp-area"; t.maxLength = max; t.rows = rows; t.dir = "auto"; if (ph) t.placeholder = ph;
+    const grow = () => { t.style.height = "auto"; t.style.height = Math.min(t.scrollHeight + 2, 560) + "px"; };
+    t.addEventListener("input", grow); return t; };
+  const chips = (opts, cur, cls) => {
+    const row = el("div", "cp-chips" + (cls ? " " + cls : "")); let val = cur;
+    opts.forEach(o => { const [v, l] = Array.isArray(o) ? o : [o, o];
+      const b = el("button", "cp-chip" + (v === cur ? " on" : ""), esc(l)); b.type = "button";
+      b.addEventListener("click", () => { val = v; row.querySelectorAll(".cp-chip").forEach(x => x.classList.toggle("on", x === b)); });
+      row.appendChild(b); });
+    return { row, get value() { return val; } };
+  };
+
+  /* the file comes first where the post is the file */
+  let file = null, fileBox = null;
+  const fileFirst = wants.file === "video" || wants.file === "image" || wants.file === "paper";
+  function fileCard() {
+    const lab = { video: "Your video", image: "Your picture", paper: "Your paper", doc: "Or upload the file", any: "Attach a file" }[wants.file];
+    const hint = { video: "MP4 or MOV, up to 50 MB. Add the .srt as well if the subtitles are separate.", image: "JPG or PNG, up to 10 MB.",
+      paper: "PDF or Word, up to 10 MB. Members read it right here.", doc: "Word, PDF or text, up to 10 MB. It opens in full on the post.",
+      any: "Optional. Up to 10 MB." }[wants.file];
+    const c = card(lab, hint);
+    file = document.createElement("input"); file.type = "file"; file.hidden = true;
+    file.accept = { video: "video/*,.srt,.vtt", image: "image/*", paper: ".pdf,.docx,.doc", doc: ".pdf,.docx,.txt,.srt,.vtt", any: ".pdf,.docx,.txt,.srt,.vtt,image/*,video/*" }[wants.file];
+    const drop = el("button", "cp-drop", '<span class="cp-drop-i">＋</span><span>' +
+      ({ video: "Choose a video", image: "Choose a picture", paper: "Choose the paper" }[wants.file] || "Choose a file") + '</span>');
+    drop.type = "button"; drop.addEventListener("click", () => file.click());
+    fileBox = el("div", "cp-file"); fileBox.hidden = true;
+    file.addEventListener("change", () => {
+      const f = file.files && file.files[0];
+      fileBox.innerHTML = ""; fileBox.hidden = !f; drop.hidden = !!f;
+      if (!f) return;
+      const kb = Math.max(1, Math.round(f.size / 1024));
+      const url = URL.createObjectURL(f);
+      if (/^video\//.test(f.type)) fileBox.appendChild(avtPlayer(url, ""));
+      else if (/^image\//.test(f.type)) { const im = document.createElement("img"); im.src = url; im.alt = ""; im.className = "cp-img"; fileBox.appendChild(im); }
+      const row = el("div", "cp-file-row", '<span class="cp-doc">' + (/\.pdf$/i.test(f.name) ? "PDF" : /\.docx?$/i.test(f.name) ? "W" : /^video/.test(f.type) ? "▶" : /^image/.test(f.type) ? "▣" : "TXT") + '</span>' +
+        '<span class="cp-fn"><b>' + esc(f.name) + '</b><small>' + (kb > 1024 ? (kb / 1024).toFixed(1) + " MB" : kb + " KB") + '</small></span>');
+      const x = el("button", "cp-x", "×"); x.type = "button"; x.setAttribute("aria-label", "Remove the file");
+      x.addEventListener("click", () => { file.value = ""; fileBox.hidden = true; fileBox.innerHTML = ""; drop.hidden = false; });
+      row.appendChild(x); fileBox.appendChild(row);
+    });
+    c.appendChild(drop); c.appendChild(fileBox); c.appendChild(file);
+  }
+  if (fileFirst) fileCard();
+
+  const titleLab = { discussion: "Your question", research: "Title of the paper", image: "Caption", reel: "Title", help: "What you need help with", request: "What it is", challenge: "Name the challenge" }[id] || "Title";
+  const titlePh = { discussion: "e.g. Foreignization or domestication for proverbs?", help: "e.g. How would you render “without prejudice”?",
+    request: "e.g. A two-page tenancy contract, English into Arabic", challenge: "e.g. An opening paragraph from a UN speech",
+    research: "The full title", reel: "e.g. A scene from a Kuwaiti series, subtitled into English", image: "A line about the picture" }[id] || "";
+  const title = wants.title ? (card(titleLab).appendChild(input(160, titlePh))) : null;
+
+  /* languages: one tidy pair with a swap, not two drop-downs */
+  let pair = null;
+  if (wants.langs) {
+    const c = card(id === "reel" ? "Languages" : "Direction");
+    const st = { from: "Arabic", to: "English" };
+    const pr = el("div", "cp-pair");
+    const side = k => { const b = el("button", "cp-side"); b.type = "button";
+      const paint = () => { b.innerHTML = "<small>" + (k === "from" ? "From" : "Into") + "</small><b>" + st[k] + "</b>"; };
+      b.addEventListener("click", () => { const i = LANGS.indexOf(st[k]); st[k] = LANGS[(i + 1) % LANGS.length]; paint(); });
+      paint(); b.paint = paint; return b; };
+    const a = side("from"), b = side("to");
+    const sw = el("button", "cp-swap", "⇄"); sw.type = "button"; sw.setAttribute("aria-label", "Swap the languages");
+    sw.addEventListener("click", () => { const t = st.from; st.from = st.to; st.to = t; a.paint(); b.paint(); });
+    pr.appendChild(a); pr.appendChild(sw); pr.appendChild(b); c.appendChild(pr);
+    pair = st;
+  }
+  const mode = wants.mode ? (() => { const c = card("Kind of audiovisual translation"); const ch = chips(AVT_MODES, "Subtitles"); c.appendChild(ch.row); return ch; })() : null;
+  const genre = wants.genre ? (() => { const c = card("Field"); const ch = chips(GENRES, "General"); c.appendChild(ch.row); return ch; })() : null;
+  const diff = wants.difficulty ? (() => { const c = card("Level"); const ch = chips(["Beginner", "Intermediate", "Advanced"], "Intermediate", "seg"); c.appendChild(ch.row); return ch; })() : null;
+
+  /* the texts: side by side where it is a translation */
+  let src = null, tgt = null;
+  if (wants.src && wants.tgt) {
+    const c = card(null);
+    c.classList.add("cp-twin");
+    const s1 = el("div", "cp-col"); s1.appendChild(el("span", "cp-lab", "Source text")); src = area(8000, 6, "Paste the original here");
+    s1.appendChild(src);
+    const s2 = el("div", "cp-col"); s2.appendChild(el("span", "cp-lab", id === "help" ? "My attempt" : "My translation"));
+    tgt = area(8000, 6, id === "help" ? "Your best try, even if unsure" : "Your translation"); s2.appendChild(tgt);
+    c.appendChild(s1); c.appendChild(s2);
+  } else if (wants.src) {
+    src = card(id === "challenge" ? "The passage to translate" : "The text").appendChild(area(8000, 6, id === "challenge" ? "Paste the passage, with its source" : "Paste the text here"));
+  }
+  const bodyLab = { help: "What exactly are you unsure about?", discussion: "Your thoughts", research: "Summary", image: "About it",
+    reel: "Your choices", other: "What you want to say", request: "Who it is for, and anything else", challenge: "The brief", translation: "Context" }[id] || "Context";
+  const bodyPh = { research: "The question, the method, what was found", reel: "What you cut or changed, and why. Type @ to tag a member.",
+    translation: "Where the text is from and who it was for. Optional." }[id] || "Type @ to tag a member.";
+  const body = card(bodyLab).appendChild(area(6000, id === "translation" ? 2 : 4, bodyPh));
+  attachMentions(body); if (title) attachMentions(title);
+  const note = wants.note ? card("Translation note", "Optional: a choice you made on purpose.").appendChild(area(1000, 2, "")) : null;
   if (note) attachMentions(note);
-  const diff = wants.difficulty ? mk("Difficulty", null, select(["Beginner","Intermediate","Advanced"],"Intermediate")) : null;
-  let dead = null;
-  if (wants.deadline) { const d=document.createElement("input"); d.type="date"; d.className="f-in";
-    dead = kind.id === "challenge" ? mk("Closes on", "When entries close. Optional.", d) : mk("Deadline", "Optional.", d); }
 
   const chosen = [];
   if (wants.fb) {
-    stage.appendChild(el("h3","pub-h","What do you want feedback on?"));
-    const box = el("div","chips-row pickable");
-    FEEDBACK_ON.forEach(f => {
-      const c = el("button","chip-tag pick-chip", f);
-      c.addEventListener("click", () => {
-        const at = chosen.indexOf(f); if (at>=0) chosen.splice(at,1); else chosen.push(f);
-        c.classList.toggle("on", chosen.indexOf(f)>=0);
-      });
-      box.appendChild(c);
-    });
-    stage.appendChild(box);
+    const c = card("What do you want feedback on?");
+    const row = el("div", "cp-chips multi");
+    FEEDBACK_ON.forEach(f => { const b = el("button", "cp-chip", f); b.type = "button";
+      b.addEventListener("click", () => { const at = chosen.indexOf(f); if (at >= 0) chosen.splice(at, 1); else chosen.push(f); b.classList.toggle("on", chosen.indexOf(f) >= 0); });
+      row.appendChild(b); });
+    c.appendChild(row);
   }
+  let dead = null;
+  if (wants.deadline) { dead = document.createElement("input"); dead.type = "date"; dead.className = "cp-in cp-date";
+    card(id === "challenge" ? "Entries close on" : "Deadline", "Optional.").appendChild(dead); }
+  if (!fileFirst) fileCard();
 
-  const vis = mk("Who can see this?", null, select(VISIBILITIES, "members"));
+  const visC = card("Who can see it");
+  const vis = chips([["members", "Everyone"], ["followers", "My followers"], ["following", "People I follow"], ["private", "Only me"]], "members", "seg");
+  visC.appendChild(vis.row);
 
-  /* attachment */
-  stage.appendChild(el("h3","pub-h","Attachment"));
-  const file = document.createElement("input");
-  file.type = "file"; file.className = "f-in";
-  file.accept = ".pdf,.docx,.txt,.srt,.vtt,image/*,video/*";
-  stage.appendChild(file);
-  stage.appendChild(el("p","f-hint","Optional. Up to 10 MB. Only members who can see the post can open it."));
-
-  const msg = el("p","f-msg","");
-  stage.appendChild(msg);
-  const go = el("button","primary wide","Publish");
+  const msg = el("p", "f-msg", ""); page.appendChild(msg);
+  const go = el("button", "primary wide cp-go", "Publish"); go.type = "button";
   go.addEventListener("click", async () => {
     msg.classList.remove("bad");
+    const f = file && file.files && file.files[0];
     const payload = {
-      author_id: myId(), post_type: kind.id,
+      author_id: myId(), post_type: id,
       title: title && title.value.trim() || null,
       content: body.value.trim() || null,
-      source_language: srcL ? srcL.value : null,
-      target_language: tgtL ? tgtL.value : null,
-      genre: genre ? genre.value : null,
+      source_language: pair ? pair.from : null,
+      target_language: pair ? pair.to : null,
+      genre: mode ? mode.value : genre ? genre.value : null,
       source_text: src && src.value.trim() || null,
       translated_text: tgt && tgt.value.trim() || null,
       translation_note: note && note.value.trim() || null,
@@ -18810,23 +19000,20 @@ function postForm(kind) {
       deadline: dead && dead.value || null,
       visibility: vis.value
     };
-    if (!payload.content && !payload.source_text && !payload.title) {
+    if (!payload.content && !payload.source_text && !payload.title && !f) {
       msg.textContent = "There is nothing to publish yet."; msg.classList.add("bad"); return;
     }
+    if ((id === "reel" || id === "image") && !f) { msg.textContent = id === "reel" ? "Choose the video first." : "Choose the picture first."; msg.classList.add("bad"); return; }
     go.disabled = true; msg.textContent = "Publishing…";
     try {
       const row = await sbPost("posts", payload);
-      const f = file.files && file.files[0];
-      if (f && row) {
-        msg.textContent = "Uploading the attachment…";
-        await uploadAttachment(row.id, f);
-      }
+      if (f && row) { msg.textContent = "Uploading…"; await uploadAttachment(row.id, f); }
       clearTrail(); openItem(COMMUNITY_ITEM);
     } catch (e) {
-      go.disabled = false; msg.textContent = "It could not be published."; msg.classList.add("bad");
+      go.disabled = false; msg.textContent = (e && /MB/.test(e.message || "")) ? e.message : "It could not be published."; msg.classList.add("bad");
     }
   });
-  stage.appendChild(go);
+  page.appendChild(go);
   stage.appendChild(footNav({ back: () => runNewPost(), backLabel: "Post type" }));
 }
 
@@ -18939,6 +19126,47 @@ function cleanDocHTML(html) {
    page, anything else as a card to download or share. The storage
    service's address never appears, and a download keeps the name the
    member gave the file. */
+/* A posted document, readable on the post without opening anything. */
+function docInline(a, size, openBtn) {
+  const box = el("section", "dx");
+  const ext = (a.file_name.split(".").pop() || "file").toUpperCase().slice(0, 4);
+  const head = el("div", "dx-h", '<span class="dx-ext">' + esc(ext) + '</span><span class="dx-t"><b dir="auto">' + esc(a.file_name) + '</b><small>' + esc(size) + '</small></span>');
+  const full = el("button", "dx-open", "Full screen"); full.type = "button";
+  full.addEventListener("click", () => openAttachment(a, size));
+  head.appendChild(full);
+  box.appendChild(head);
+  const body = el("div", "dx-b", '<p class="fv-msg">Opening\u2026</p>');
+  box.appendChild(body);
+  const more = el("button", "dx-more", "Read it all"); more.type = "button"; more.hidden = true;
+  more.addEventListener("click", () => { const on = box.classList.toggle("all"); more.textContent = on ? "Show less" : "Read it all"; });
+  box.appendChild(more);
+  (async () => {
+    try {
+      const r = await fetch(await signedLink(a.file_path));
+      if (!r.ok) throw new Error(String(r.status));
+      const type = a.file_type || r.headers.get("content-type") || "";
+      const blob = await r.blob();
+      body.innerHTML = "";
+      if (/pdf/.test(type) || /\.pdf$/i.test(a.file_name)) {
+        const f = document.createElement("iframe");
+        f.className = "dx-pdf"; f.title = a.file_name;
+        f.src = URL.createObjectURL(new Blob([blob], { type: "application/pdf" }));
+        body.appendChild(f); box.classList.add("pdf");
+        return;
+      }
+      if (/wordprocessingml/.test(type) || /\.docx$/i.test(a.file_name)) {
+        await loadScriptOnce("vendor/mammoth.browser.min.js");
+        const out = await window.mammoth.convertToHtml({ arrayBuffer: await blob.arrayBuffer() });
+        const page = el("article", "fv-doc dx-doc"); page.appendChild(cleanDocHTML(out.value)); body.appendChild(page);
+      } else {
+        const pre = el("pre", "fv-text dx-text"); pre.dir = "auto"; pre.textContent = await blob.text(); body.appendChild(pre);
+      }
+      requestAnimationFrame(() => { if (body.scrollHeight > body.clientHeight + 8) more.hidden = false; else box.classList.add("all"); });
+    } catch (e) { box.replaceWith(openBtn); }
+  })();
+  return box;
+}
+
 async function openAttachment(a, size, sign) {
   const ov = el("div", "dm-view fv-view");
   ov.setAttribute("role", "dialog"); ov.setAttribute("aria-label", a.file_name);
@@ -19094,7 +19322,12 @@ async function runPost(id, o) {
       b.innerHTML = '<span class="at-name" dir="auto">' + esc(a.file_name) + '</span>' +
         '<span class="at-meta">' + ext + ' \u00b7 ' + size + '</span>';
       b.addEventListener("click", () => openAttachment(a, size));
-      stage.appendChild(b);
+      /* a document is shown on the post itself, the way a video is:
+         Word, PDF and text open in place, the card stays for full screen
+         and download */
+      if (/\.(docx|pdf|txt|srt|vtt)$/i.test(a.file_name) || /^text\/|pdf|wordprocessingml/.test(a.file_type || "")) {
+        stage.appendChild(docInline(a, size, b));
+      } else stage.appendChild(b);
     });
   }
 
@@ -22032,7 +22265,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-0230";
+const BUILD = "1105-0400";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
