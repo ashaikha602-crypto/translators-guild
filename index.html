@@ -4006,6 +4006,61 @@ html:root[data-look="compass"] .jx-num b { font-family: var(--f-serif); font-siz
 .sd-src span { font-weight: 700; color: var(--ink-soft); }
 .sd-src a { color: var(--mag-ink); word-break: break-word; }
 
+
+/* ═══ PROFILE · a translator's page ═══ */
+#seal .ig-head, #stage .ig-head { grid-template-columns: auto 1fr; align-items: center; gap: .9rem; }
+#seal .ig-head .avatar, #stage .ig-head .avatar { width: 64px; height: 64px; font-size: 1.25rem; }
+.ig-name { font-size: 1.25rem; line-height: 1.2; }
+.ig-id .chips-row { gap: .3rem; }
+.ig-id .chip-tag { font-size: .68rem; padding: .22rem .6rem; border-radius: 99px; }
+.ig-id .chip-tag.booth { all: unset; display: inline-flex; align-items: center; gap: .3rem; font-size: .74rem; font-weight: 700; padding: .22rem .6rem; border-radius: 99px;
+  color: #A78BFA; background: color-mix(in srgb, #A78BFA 15%, transparent); }
+.ig-id .chip-tag.booth .half { display: none; }
+.ig-id .chip-tag.booth b { font-weight: 700; opacity: .8; }
+/* followers as one quiet line, the posts count lives in My work */
+.count-row { display: flex !important; gap: .9rem; margin-top: .1rem; }
+.count-row div { display: flex; align-items: baseline; gap: .25rem; padding: 0 !important; border: 0 !important; text-align: left; }
+.count-row div:first-child { display: none; }
+.count-row b { font-size: .9rem !important; font-family: var(--f-sans) !important; }
+.count-row span { font-size: .8rem !important; }
+.ig-actions { display: flex; gap: .5rem; }
+.ig-actions .ig-btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: .4rem; }
+.ig-actions .ig-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ig-actions .ig-main { background: var(--white); color: var(--void); }
+#discover-btn { display: none !important; }
+.sp-link { font-size: .82rem; color: var(--ink-soft); background: var(--well); border-radius: 12px; padding: .7rem .8rem; word-break: break-all; margin: 0 0 .6rem; }
+/* My work */
+.mw { display: grid; gap: .75rem; margin-top: 1rem; }
+.mw-h b { font-family: var(--f-serif); font-size: 1.2rem; color: var(--white); }
+.mw-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.mw-tile { all: unset; box-sizing: border-box; cursor: pointer; display: flex; gap: .7rem; align-items: center; padding: .75rem .85rem; border-radius: 16px;
+  background: var(--void-2); border: var(--hair); }
+.mw-tile.on { outline: 2px solid var(--white); outline-offset: -2px; }
+.mw-tile i { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; flex: none; }
+.mw-tile i svg { width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mw-tile b { display: block; font-family: var(--f-serif); font-size: 1.2rem; line-height: 1.05; color: var(--white); }
+.mw-tile small { font-size: .74rem; font-weight: 600; color: var(--ink-faint); }
+.mw-add { all: unset; box-sizing: border-box; cursor: pointer; text-align: center; padding: .8rem; border-radius: 14px; font-weight: 700; font-size: .88rem;
+  color: #FFB547; border: 1.5px dashed color-mix(in srgb, #FFB547 60%, transparent); }
+.mw-chips { display: flex; gap: .4rem; overflow-x: auto; scrollbar-width: none; }
+.mw-chips::-webkit-scrollbar { display: none; }
+.mw-chip { all: unset; cursor: pointer; white-space: nowrap; font-size: .78rem; font-weight: 700; padding: .45rem .8rem; border-radius: 99px; background: var(--void-3); color: var(--ink-soft); }
+.mw-chip.on { background: var(--white); color: var(--void); }
+.mw-list { display: grid; gap: .6rem; }
+.mw-card, .mw-rp { border-left: 4px solid var(--mw-c) !important; }
+.mw-by { font-size: .76rem; color: var(--ink-faint); }
+/* on a profile the cards are all this person's: no name and picture on each */
+.mw-card .st-who .avatar, .mw-card .st-who > b { display: none; }
+.mw-card .st-who { justify-content: flex-end; min-height: 0; }
+html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); border-color: color-mix(in srgb, var(--cn-ink) 55%, transparent); }
+.mw-empty { font-size: .86rem; color: var(--ink-faint); text-align: center; padding: 1.2rem .5rem; }
+
+
+/* no story posting for now: no story bar on Home, no story ring on your photo */
+#story-bar { display: none !important; }
+#edit-profile-btn { display: none !important; }
+.ig-actions #share-profile-btn { background: var(--white); color: var(--void); }
+
 /* on a phone, while the keyboard is up: no bar and no Ask Compass button
    over it (the dictionary stays, it is for the text being typed) */
 body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
@@ -4730,7 +4785,7 @@ button.up-next[hidden] { display: none; }
     <div class="ig-head">
       <span class="avatar-wrap">
         <span class="avatar" id="seal-initials" aria-hidden="true"></span>
-        <button type="button" class="avatar-edit" id="avatar-edit" aria-label="Add to your story or change your photo">
+        <button type="button" class="avatar-edit" id="avatar-edit" aria-label="Change your photo">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg>
         </button>
       </span>
@@ -4739,7 +4794,6 @@ button.up-next[hidden] { display: none; }
         <p class="chips-row">
           <span class="chip-tag" id="chip-rank">Novice</span>
           <span id="chip-booth"></span>
-          <span class="chip-tag solid">Translation Team</span>
         </p>
         <div class="count-row mine" id="seal-counts"></div>
       </div>
@@ -4757,8 +4811,8 @@ button.up-next[hidden] { display: none; }
     <div class="ig-ints" id="seal-about" hidden></div>
 
     <p class="ig-actions">
-      <button type="button" class="ig-btn" id="edit-profile-btn">Edit profile</button>
-      <button type="button" class="ig-btn" id="share-profile-btn">Share profile</button>
+      <button type="button" class="ig-btn ig-main" id="edit-profile-btn" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z"/></svg>Edit profile</button>
+      <button type="button" class="ig-btn" id="share-profile-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>Share profile</button>
       <button type="button" class="ig-btn ig-sq" id="discover-btn" aria-label="Discover people">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.6"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M19 8v6M16 11h6"/></svg>
       </button>
@@ -13748,6 +13802,72 @@ const KSL_LESSONS = [
 
 /* Still to come. A short list, not eight large cards. */
 
+/* ═══════════ SPECIALIZED TRANSLATION ═══════════
+   One page per field. Each gathers what the Compass already holds for it,
+   all of it sourced elsewhere on the site: the reading, the field's
+   dictionaries, the booth setting to practise in, and the Kuwait
+   University course. A new field is one more entry in this list. */
+const SPEC_FIELDS = [
+  { id: "sf-legal", en: "Legal translation", ar: "الترجمة القانونية",
+    line: "Contracts, laws, judgments and official documents, where the wording is the obligation.",
+    study: ["lib-legal", "fields"], dicts: ["sd-unterm", "sd-wipo"], booth: "legal" },
+  { id: "sf-medical", en: "Medical translation", ar: "الترجمة الطبية",
+    line: "Patient information, clinical reports and medical research.",
+    study: [], dicts: ["sd-umd"], booth: "medical" },
+  { id: "sf-political", en: "Political and diplomatic translation", ar: "الترجمة السياسية والدبلوماسية",
+    line: "Speeches, resolutions, treaties and official statements.",
+    study: [], dicts: ["sd-unterm", "sd-diplo"], booth: "diplomatic" },
+  { id: "sf-economic", en: "Economic and financial translation", ar: "الترجمة الاقتصادية والمالية",
+    line: "Reports, budgets, banking and the texts of financial institutions.",
+    study: [], dicts: ["sd-imf", "sd-escwa"], booth: "business" },
+  { id: "sf-technical", en: "Scientific and technical translation", ar: "الترجمة العلمية والتقنية",
+    line: "Manuals, standards, patents and engineering texts.",
+    study: ["fields"], dicts: ["sd-arabterm", "sd-wipo", "sd-siwar"], booth: null },
+  { id: "sf-media", en: "Media translation", ar: "الترجمة الإعلامية",
+    line: "News, headlines and opinion, for a general reader.",
+    study: [], dicts: ["sd-unterm"], booth: "media" }
+];
+
+function runSpecField(f) {
+  setCount(""); stage.innerHTML = "";
+  const head = el("div", "c-hero");
+  head.innerHTML = '<span class="c-badge">Specialized translation · <span dir="rtl" lang="ar">الترجمة المتخصصة</span></span>' +
+    '<h2 class="c-title">' + esc(f.en) + '</h2><p class="c-ar" dir="rtl" lang="ar">' + esc(f.ar) + '</p>' +
+    '<p class="c-line">' + esc(f.line) + '</p>';
+  stage.appendChild(head);
+  const part = (title, ids) => {
+    const items = ids.map(id => ITEMS.find(t => t.id === id)).filter(Boolean);
+    if (!items.length) return;
+    stage.appendChild(el("span", "b-lab", title));
+    const list = el("div", "m-list");
+    items.forEach(t => {
+      const b = el("button", "m-course");
+      b.innerHTML = '<span class="m-txt"><span class="m-en">' + esc(t.en) + '</span>' +
+        (t.ar && t.ar !== t.en ? '<span class="m-arname" dir="rtl" lang="ar">' + esc(t.ar) + '</span>' : '') +
+        '<span class="m-line">' + esc(t.subject || "") + '</span></span>';
+      b.addEventListener("click", () => openItem(t));
+      list.appendChild(b);
+    });
+    stage.appendChild(list);
+  };
+  part("Read", f.study);
+  part("Dictionaries for this field", f.dicts);
+  if (f.booth && BOOTH_FIELD_TITLES[f.booth]) {
+    stage.appendChild(el("span", "b-lab", "Practise"));
+    const list = el("div", "m-list");
+    const b = el("button", "m-course");
+    b.innerHTML = '<span class="m-txt"><span class="m-en">The booth: ' + esc(BOOTH_FIELD_TITLES[f.booth].en) + '</span>' +
+      '<span class="m-arname" dir="rtl" lang="ar">' + esc(BOOTH_FIELD_TITLES[f.booth].ar) + '</span>' +
+      '<span class="m-line">Interpreting practice in this setting</span></span>';
+    b.addEventListener("click", () => openItem(ITEMS.find(t => t.id === "booth")));
+    list.appendChild(b);
+    stage.appendChild(list);
+  }
+  part("In the Kuwait University minor", ["minor"]);
+  if (!f.study.length) stage.appendChild(el("p", "sd-note", "Readings for this field are being added. Until then, start from its dictionaries and the booth."));
+  stage.appendChild(footNav({}));
+}
+
 /* ═══════════ SPECIALIZED DICTIONARIES ═══════════
    Free, published Arabic–English term banks, one per field, each opened
    on its publisher's own site. Every fact here is from the publisher or
@@ -13932,6 +14052,8 @@ const ITEMS = [
     subject: "Arabic ⇄ English",
     blurb: "Both directions: an Arabic word to its English meanings, an English word to its Arabic equivalents. 26,000+ entries.",
     run: runWikt },
+  ...SPEC_FIELDS.map(f => ({ id: f.id, ar: f.ar, en: f.en, kind: "guide", section: "method", group: "spectr",
+    subject: f.line, blurb: f.line, run: () => runSpecField(f) })),
   ...SPEC_DICTS.map(d => ({ id: d.id, ar: d.ar, en: d.en, kind: "guide", section: "method", group: "spec",
     subject: d.field + " · " + d.fieldAr, blurb: d.use, run: () => runSpecDict(d) })),
   { id: "lib-atoz", ar: "من الألف إلى الياء", en: "A to Z of Arabic–English Translation", kind: "guide", section: "method", group: "library",
@@ -16701,8 +16823,7 @@ async function runPublic(id) {
      view returns null for it otherwise. */
   who.appendChild(el("p", "chips-row",
     (memberRank(p) ? '<span class="chip-tag">' + esc(memberRank(p)) + '</span>' : '') +
-    interpretingChips(p) +
-    '<span class="chip-tag solid">Translation Team</span>'));
+    interpretingChips(p)));
   const c = counts || {};
   const cell = (n, lab) => '<div><b>' + tally(n) + '</b><span>' + lab + '</span></div>';
   const pubCounts = el("div", "count-row tappable",
@@ -16769,7 +16890,7 @@ async function runPublic(id) {
   }
   if (acts.children.length) stage.appendChild(acts);
 
-  stage.appendChild(profileGrid(id, false));
+  stage.appendChild(workSection(id, false));
 
   stage.appendChild(footNav({ backLabel: "Back" }));
 }
@@ -16780,7 +16901,7 @@ function photoMenu() {
   const has = !!(state.profile && state.profile.avatar_path);
   const wrap = el("div", "sheet-back");
   const card = el("div", "sheet");
-  if (storyReady !== false && backend === "supabase") {
+  if (STORIES_ON && storyReady !== false && backend === "supabase") {
     const st = el("button", "sheet-act st-first", "\uFF0B  Add to your story");
     st.addEventListener("click", () => { wrap.remove(); openStoryComposer(); });
     card.appendChild(st);
@@ -20352,6 +20473,83 @@ function renderHilites() {
    another member's it is the feed view that decides what appears, so a
    post they kept to their followers is not on it unless you follow
    them. */
+/* ═══ MY WORK ═══
+   A translator's page is the work: translations, requests, challenges and
+   discussions, counted at the top and listed below, with reposts as the
+   one social thing kept. Photos and videos stay in the Studio. */
+const WORK_KINDS = [
+  { id: "tr", en: "Translations", one: "Translation", types: ["translation"], sec: "showcase", c: "#FFB547",
+    ico: '<path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z"/>' },
+  { id: "rq", en: "Requests", one: "Request", types: ["request", "help"], sec: "requests", c: "#4FB0FF",
+    ico: '<path d="M12 18h.01M9.1 9a3 3 0 1 1 4.2 2.7c-.8.4-1.3 1.2-1.3 2.1V14"/>' },
+  { id: "ch", en: "Challenges", one: "Challenge", types: ["challenge"], sec: "challenges", c: "#FF6B6B",
+    ico: '<path d="M13 3 4 14h7l-1 7 9-11h-7z"/>' },
+  { id: "ds", en: "Discussions", one: "Discussion", types: ["discussion", "research"], sec: "discuss", c: "#A78BFA",
+    ico: '<path d="M20 11.5a7.5 7.5 0 0 1-11 6.6L4 19.5l1.4-4.4A7.5 7.5 0 1 1 20 11.5z"/>' }
+];
+function workKind(t) { return WORK_KINDS.find(k => k.types.indexOf(t) >= 0); }
+function workSection(authorId, isMe) {
+  const wrap = el("div", "mw");
+  wrap.appendChild(el("div", "mw-h", "<b>" + (isMe ? "My work" : "Their work") + "</b>"));
+  const tiles = el("div", "mw-tiles"); wrap.appendChild(tiles);
+  if (isMe) {
+    const add = el("button", "mw-add", "＋ Share a translation");
+    add.type = "button"; add.addEventListener("click", () => openItem(NEWPOST_ITEM));
+    wrap.appendChild(add);
+  }
+  const chips = el("div", "mw-chips"); wrap.appendChild(chips);
+  const list = el("div", "mw-list"); wrap.appendChild(list);
+  list.appendChild(el("p", "f-msg", "Loading\u2026"));
+  let own = [], reposts = [], pick = "all";
+  const types = WORK_KINDS.flatMap(k => k.types);
+  function paint() {
+    tiles.innerHTML = ""; chips.innerHTML = ""; list.innerHTML = "";
+    WORK_KINDS.forEach(k => {
+      const n = own.filter(r => k.types.indexOf(r.post_type) >= 0).length;
+      const t = el("button", "mw-tile" + (pick === k.id ? " on" : ""),
+        '<i style="background:' + k.c + '"><svg viewBox="0 0 24 24" aria-hidden="true">' + k.ico + '</svg></i><span><b>' + n + '</b><small>' + k.en + '</small></span>');
+      t.type = "button"; t.addEventListener("click", () => { pick = pick === k.id ? "all" : k.id; paint(); });
+      tiles.appendChild(t);
+    });
+    [["all", "All"]].concat(WORK_KINDS.map(k => [k.id, k.en]), [["rp", "Reposts"]]).forEach(([id, lab]) => {
+      const c = el("button", "mw-chip" + (pick === id ? " on" : ""), lab);
+      c.type = "button"; c.addEventListener("click", () => { pick = id; paint(); });
+      chips.appendChild(c);
+    });
+    let rows = pick === "rp" ? reposts
+      : pick === "all" ? own.concat(reposts).sort((a, b) => (a.created_at < b.created_at ? 1 : -1))
+      : own.filter(r => (WORK_KINDS.find(k => k.id === pick) || { types: [] }).types.indexOf(r.post_type) >= 0);
+    if (!rows.length) {
+      list.appendChild(el("p", "mw-empty", pick === "rp" ? (isMe ? "Posts you repost appear here." : "No reposts yet.")
+        : isMe ? "Nothing here yet. Share a translation, ask for help with a passage, or set a challenge." : "Nothing here yet."));
+      return;
+    }
+    rows.forEach(r => {
+      if (r.repost_of) {
+        const k = workKind(r.orig_type);
+        const c = el("article", "st-card mw-rp");
+        c.style.setProperty("--mw-c", "#2BC48A");
+        c.innerHTML = '<span class="st-kind" style="color:#2BC48A">Reposted' + (k ? " · " + k.one : "") + '</span>' +
+          '<p class="st-title" dir="auto">' + esc((r.orig_text || "A post").slice(0, 140)) + '</p>' +
+          '<span class="mw-by">by ' + esc(r.orig_display_name || (r.orig_username ? "@" + r.orig_username : "a member")) + ' · ' + when(r.created_at) + '</span>';
+        c.tabIndex = 0; c.addEventListener("click", () => openPost(r));
+        list.appendChild(c);
+        return;
+      }
+      const k = workKind(r.post_type) || WORK_KINDS[3];
+      const card = studioCard(r, k.sec, false, (POST_KINDS.find(x => x.id === r.post_type) || {}).en || k.one);
+      card.classList.add("mw-card"); card.style.setProperty("--mw-c", k.c);
+      list.appendChild(card);
+    });
+  }
+  Promise.all([
+    sbGet("feed?select=" + FEED_COLS + "&author_id=eq." + authorId + "&post_type=in.(" + types.join(",") + ")&repost_of=is.null&order=created_at.desc&limit=60"),
+    sbGet("feed?select=" + FEED_COLS + "&author_id=eq." + authorId + "&repost_of=not.is.null&order=created_at.desc&limit=40")
+  ]).then(([a, b2]) => { own = a || []; reposts = b2 || []; paint(); })
+    .catch(() => { list.innerHTML = ""; list.appendChild(el("p", "f-msg", "This work could not be loaded.")); });
+  return wrap;
+}
+
 function profileGrid(authorId, isMe) {
   const wrap = el("div", null);
   const tabs = el("div", "grid-tabs");
@@ -20438,7 +20636,7 @@ function renderGrid() {
   if (!box) return;
   box.innerHTML = "";
   if (backend !== "supabase" || !myId()) return;
-  box.appendChild(profileGrid(myId(), true));
+  box.appendChild(workSection(myId(), true));
 }
 
 function postTile(r) {
@@ -20549,6 +20747,27 @@ async function shareProfile(btn, handle) {
   const url = profileUrl(handle || (state.profile && state.profile.username));
   /* No handle, nothing to share: send them where they can choose one. */
   if (!url) { if (!handle) openItem(EDIT_ITEM); return; }
+  /* a small sheet: the link itself, copy it, or hand it to another app */
+  const { sheet, done } = storySheet("Share profile");
+  sheet.appendChild(el("p", "sp-link", esc(url)));
+  const copy = el("button", "sheet-act", "Copy link"); copy.type = "button";
+  copy.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(url); copy.textContent = "Copied ✓"; }
+    catch (e) { window.prompt("Copy this link", url); }
+    setTimeout(done, 900);
+  });
+  sheet.appendChild(copy);
+  if (navigator.share) {
+    const via = el("button", "sheet-act", "Share via…"); via.type = "button";
+    via.addEventListener("click", async () => {
+      done();
+      try { await navigator.share({ title: "The Translator’s Compass", url: url }); } catch (e) {}
+    });
+    sheet.appendChild(via);
+  }
+  const no = el("button", "sheet-act quiet", "Cancel"); no.type = "button"; no.addEventListener("click", done);
+  sheet.appendChild(no);
+  return;
   const was = btn.textContent;
   const say = m => { btn.textContent = m; setTimeout(() => { btn.textContent = was; }, 1800); };
   if (navigator.share) {
@@ -20888,7 +21107,8 @@ function wireProfileButtons() {
       if (storyReady === false) return photoMenu();
       const mine = gs.find(g => g.mine);
       if (mine) openStoryViewer(gs, gs.indexOf(mine), { onClose: paintMyStoryRing });
-      else openStoryComposer();
+      else if (STORIES_ON) openStoryComposer();
+      else photoMenu();
     };
     sa.addEventListener("click", go);
     sa.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
@@ -20957,7 +21177,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1104-1600";
+const BUILD = "1104-1900";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -21486,10 +21706,12 @@ async function openStoryViewer(groups, gi, opts) {
         foot.appendChild(seenBy);
         countViews(s, seenBy);
       }
-      const add = el("button", "st-pill", "+ Add to story");
-      add.type = "button";
-      add.addEventListener("click", e => { e.stopPropagation(); close(); openStoryComposer(); });
-      foot.appendChild(add);
+      if (STORIES_ON) {
+        const add = el("button", "st-pill", "+ Add to story");
+        add.type = "button";
+        add.addEventListener("click", e => { e.stopPropagation(); close(); openStoryComposer(); });
+        foot.appendChild(add);
+      }
     } else {
       const reacts = el("div", "st-reacts");
       STORY_REACTS.forEach(em => {
@@ -21751,7 +21973,10 @@ async function paintStoryHighlights(box, ownerId) {
 }
 
 /* ── the composer ── */
+/* Posting stories is switched off for now; true brings it all back. */
+const STORIES_ON = false;
 async function openStoryComposer() {
+  if (!STORIES_ON) return;
   if (backend !== "supabase" || !myId()) return;
   if (!(await rulesGate())) return;
   let mode = "photo", file = null, bg = "violet", busy = false;
@@ -22063,7 +22288,6 @@ function createMenu() {
   const close = () => wrap.remove();
   [["tr", "Translation post", "A translation, a question, a request, a discussion", () => openItem(NEWPOST_ITEM)],
    ["post", "Post", "A photo or video on your profile and in the feed", () => photoPost()],
-   ["story", "Story", "Gone after 24 hours", () => openStoryComposer()],
   ]
     .forEach(([k, label, say, fn]) => {
       const b = el("button", "cr-row");
@@ -22390,7 +22614,7 @@ function sharePost(r) {
   const inp = document.createElement("input");
   inp.className = "f-in"; inp.maxLength = 200; inp.dir = "auto"; inp.placeholder = "Add a line (optional)";
   sheet.appendChild(inp);
-  if (storyReady !== false) {
+  if (STORIES_ON && storyReady !== false) {
     const go = el("button", "sheet-act st-first", "Share to your story");
     go.addEventListener("click", async () => {
       go.disabled = true; go.textContent = "Sharing…";
@@ -22623,13 +22847,14 @@ const LEARN_GROUPS = [
   { id: "time",   en: "Through time", note: "Oldest to newest", timeline: true, order: ["lineage", "theories"],
     when: { lineage: "3rd c. BC → today", theories: "46 BCE → today" } },
   { id: "core",   en: "The core course", note: "Follow in order",
-    order: ["meaning", "phrase", "procedures", "toolkit", "variety", "texttypes", "fields", "errors", "commentary"] },
+    order: ["meaning", "phrase", "procedures", "toolkit", "variety", "texttypes", "fields", "errors", "commentary", "lib-atoz"] },
   { id: "ku",     en: "Kuwait University courses", note: "The Translation Minor", order: ["minor"] },
   { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
-  { id: "dict",   en: "Dictionaries", note: "المعاجم", order: ["lisan", "wikt"] },
+  { id: "spectr", en: "Specialized translation", note: "الترجمة المتخصصة",
+    order: SPEC_FIELDS.map(f => f.id) },
+  { id: "dict",   en: "Dictionaries", note: "المعاجم", order: ["lisan", "wikt", "glossary"] },
   { id: "spec",   en: "Specialized dictionaries", note: "المعاجم المتخصصة",
-    order: ["sd-umd", "sd-unterm", "sd-diplo", "sd-wipo", "sd-imf", "sd-escwa", "sd-arabterm", "sd-siwar"] },
-  { id: "ref",    en: "The reference shelf", note: "Look things up", order: ["glossary", "lib-atoz", "lib-legal"] }
+    order: ["sd-umd", "sd-unterm", "sd-diplo", "sd-wipo", "sd-imf", "sd-escwa", "sd-arabterm", "sd-siwar"] }
 ];
 function renderLearn() {
   const box = document.getElementById("sec-method");
@@ -23614,6 +23839,7 @@ function poemDesk(p, opts) {
   const keepB  = mk("primary", editing ? "Update my saved translation" : "Save to My translations");
   const postB  = mk("ghost", "Post it on the Compass feed");
   const storyB = mk("ghost", "Share to my Compass story");
+  if (!STORIES_ON) storyB.style.display = "none";
   const outB   = mk("ghost", "Share the image");
   const copyB  = mk("ghost", "Copy the text");
   stage.appendChild(acts);

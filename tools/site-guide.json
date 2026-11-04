@@ -13,7 +13,7 @@
     },
     {
       "title": "Learn",
-      "text": "Learn holds the guides to the theory, method and history of translation, the Kuwait University Translation Minor courses, interpreting and Kuwaiti Sign Language, two dictionaries (Lisan al-Arab and Wiktionary), and the reference shelf: the Glossary of the Field and the Library books. Guides are for reading and watching and carry no score, so you can come back to them as often as you like, before a Trial or after one. Where a guide has videos, they sit near the top under Watch first, from universities, professional bodies and the institutions themselves.",
+      "text": "Learn holds the guides to the theory, method and history of translation, the Kuwait University Translation Minor courses, interpreting and Kuwaiti Sign Language, two dictionaries (Lisan al-Arab and Wiktionary), and the reference shelf: the Glossary of the Field and the Library books. Guides are for reading and watching and carry no score, so you can come back to them as often as you like, before a Trial or after one. Where a guide has videos, they sit near the top under Watch first, from universities, professional bodies and the institutions themselves. Learn is arranged as: The field, Through time, The core course (including the A to Z of Arabic–English Translation), the Kuwait University courses, Interpreting and signing, Specialized translation (legal, medical, political and diplomatic, economic and financial, scientific and technical, media), Dictionaries (Lisan al-Arab, Wiktionary and the Glossary of the Field) and Specialized dictionaries.",
       "keys": "guides, lessons, videos, library, dictionaries, glossary. تعلم، الدروس، الأدلة، الفيديوهات، المكتبة، المعاجم، المسرد"
     },
     {
@@ -58,13 +58,13 @@
     },
     {
       "title": "Your profile",
-      "text": "Open Profile and tap Edit profile. Everything there is optional except your display name. You can choose a title before your name (for example Student, Freshman, Sophomore, Junior, Senior, Grad. Student, Researcher or Dr., or type your own). To change your photo, tap the + on your picture and choose Change profile photo, drag to place it, zoom, and tap ✓. You can add your working languages, translation and interpreting interests, your major and your university, which other members use to find people to talk to. Share profile gives you a link straight to your page.",
+      "text": "Your profile is a translator's page. At the top are your photo, name, rank and interpreting title, your followers in one line, your bio and a Share profile button, which shows your link with Copy link and Share via. Below it, My work counts your Translations, Requests, Challenges and Discussions; tap a count to show only that kind, or use the filters All, Translations, Requests, Challenges, Discussions and Reposts. ＋ Share a translation starts a new one. To edit your name, title, photo, languages, interests, major or university, open Settings (☰ at the top right) and choose Edit profile.",
       "keys": "edit profile, photo, picture, title, bio. الملف الشخصي، تعديل الملف، الصورة، تغيير الصورة، اللقب، الجامعة، التخصص"
     },
     {
-      "title": "Posts and stories",
-      "text": "Create from the ⊞ at the top of your profile. A Post is a photo or video for your profile and the feed. A Translation post is written work, and you choose its kind: My Translation (share something you translated and ask for feedback), Translation Help (ask about a difficult passage), Translation Request (ask for help with a piece of work), Discussion (a question of terminology, strategy or theory), Challenge (post a passage for others to translate) or Research (a paper, a chapter, a finding worth reading). A story is a photo, a short video or a line of text, gone after 24 hours. To add one, tap + on your picture and choose Add to your story. You can also share any post to your story. When someone replies or reacts to your story, it arrives as a private message.",
-      "keys": "post, story, share, publish. منشور، نشر، قصة، ستوري، مشاركة، ترجمتي، طلب ترجمة، تحدي"
+      "title": "Posts",
+      "text": "Create from the ⊞ at the top of your profile, or with ＋ Share a translation under My work. A Translation post is written work, and you choose its kind: My Translation (share something you translated and ask for feedback), Translation Help (ask about a difficult passage), Translation Request (ask for help with a piece of work), Discussion (a question of terminology, strategy or theory), Challenge (post a passage for others to translate) or Research. You can also post a photo or video, which appears in the Studio. Posting stories is switched off for now.",
+      "keys": "post, share, publish. منشور، نشر، مشاركة، ترجمتي، طلب ترجمة، تحدي"
     },
     {
       "title": "Messages, people and notifications",
