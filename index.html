@@ -4058,15 +4058,28 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 /* My work: four small squares */
 .mw-h .mw-plus { all: unset; cursor: pointer; margin-left: auto; font-size: .74rem; font-weight: 700; padding: .34rem .7rem; border-radius: 99px; color: #FFB547;
   background: color-mix(in srgb, #FFB547 14%, transparent); }
-.mw-tiles4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: .45rem; }
-.mw-sq { all: unset; box-sizing: border-box; cursor: pointer; display: grid; justify-items: center; gap: .18rem; padding: .55rem .2rem .5rem; border-radius: 14px;
-  background: var(--void-2); border: var(--hair); text-align: center; }
-.mw-sq i { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; }
-.mw-sq i svg { width: 15px; height: 15px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.mw-sq b { font-family: var(--f-serif); font-size: .98rem; line-height: 1; color: var(--white); }
-.mw-sq small { font-size: .6rem; font-weight: 700; color: var(--ink-faint); max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
-.mw-sq.on { border-color: var(--mw-c); background: color-mix(in srgb, var(--mw-c) 12%, var(--void-2)); }
+.mw-tiles4 { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.mw-sq { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: .6rem; padding: .6rem .7rem; border-radius: 14px;
+  background: var(--void-2); border: 1.5px solid transparent; outline: var(--hair); }
+.mw-sq i { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; flex: none; }
+.mw-sq i svg { width: 16px; height: 16px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mw-sq span { display: grid; gap: .1rem; min-width: 0; }
+.mw-sq b { font-family: var(--f-serif); font-size: 1.02rem; line-height: 1; color: var(--white); }
+.mw-sq small { font-size: .7rem; font-weight: 600; color: var(--ink-faint); }
+.mw-sq.on { border-color: var(--mw-c); background: color-mix(in srgb, var(--mw-c) 10%, var(--void-2)); }
 .mw-sq.on small { color: var(--mw-c); }
+.mw > .mw-add { padding: .65rem; font-size: .84rem; border-radius: 13px; }
+.guest-notice { font-size: .78rem; opacity: .8; }
+.gv-head { display: flex; align-items: baseline; gap: .45rem; }
+.gv-head b { font-family: var(--f-serif); font-size: 1.8rem; color: var(--white); }
+.gv-head span { color: var(--ink-soft); font-size: .9rem; }
+.gv-list { display: grid; gap: .45rem; }
+.gv-row { display: flex; align-items: center; gap: .7rem; padding: .65rem .8rem; border-radius: 14px; background: var(--void-2); border: var(--hair); }
+.gv-av { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; flex: none; font: 700 .8rem var(--f-serif); color: var(--white); background: var(--void-3); }
+.gv-t { display: grid; gap: .1rem; min-width: 0; flex: 1; }
+.gv-t b { color: var(--white); font-size: .92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gv-t small { font-size: .72rem; color: var(--ink-faint); }
+.gv-seen { font-size: .74rem; color: var(--ink-soft); white-space: nowrap; }
 /* Create a post: coloured tiles */
 .pk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
 .pk-tile { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: .65rem; padding: .75rem .8rem; border-radius: 16px;
@@ -4761,6 +4774,7 @@ button.up-next[hidden] { display: none; }
         <div>
           <h2 class="auth-title">What&rsquo;s your name?</h2>
           <p class="note">Type your name to start. You can create an account any time.</p>
+          <p class="note guest-notice">Your name and when you visit are shared with the site owner.</p>
         </div>
         <form id="guest-form" novalidate>
           <div class="field">
@@ -20040,6 +20054,7 @@ function settingsMenu() {
     ]],
     ["Login", [
       (typeof admIsAdmin !== "undefined" && admIsAdmin) ? ["admin", "Content Admin", "", tap("admin-btn")] : null,
+      (typeof admIsAdmin !== "undefined" && admIsAdmin) ? ["people", "Guests", "", go(() => openItem(GUESTS_ITEM))] : null,
       ["reset", "Reset my marks", "", tap("reset-btn"), "warn"],
       ["out", "Log out", "", tap("signout-btn"), "danger"]
     ]]
@@ -21348,14 +21363,13 @@ function workSection(authorId, isMe) {
      underneath. Little writing, nothing else. */
   const wrap = el("div", "mw");
   const h = el("div", "mw-h", "<b>" + (isMe ? "My work" : "Work") + "</b>");
-  if (isMe) {
-    const add = el("button", "mw-plus", "＋ Post");
-    add.type = "button"; add.setAttribute("aria-label", "Create a post");
-    add.addEventListener("click", () => openItem(NEWPOST_ITEM));
-    h.appendChild(add);
-  }
   wrap.appendChild(h);
   const tiles = el("div", "mw-tiles4"); wrap.appendChild(tiles);
+  if (isMe) {
+    const add = el("button", "mw-add", "＋ Share a translation");
+    add.type = "button"; add.addEventListener("click", () => openItem(NEWPOST_ITEM));
+    wrap.appendChild(add);
+  }
   const list = el("div", "mw-list"); wrap.appendChild(list);
   list.appendChild(el("p", "f-msg", "Loading\u2026"));
   let own = [], pick = "tr";
@@ -21365,7 +21379,7 @@ function workSection(authorId, isMe) {
     WORK_KINDS.forEach(k => {
       const n = own.filter(r => k.types.indexOf(r.post_type) >= 0).length;
       const t = el("button", "mw-sq" + (pick === k.id ? " on" : ""),
-        '<i style="background:' + k.c + '"><svg viewBox="0 0 24 24" aria-hidden="true">' + k.ico + '</svg></i><b>' + n + '</b><small>' + k.en + '</small>');
+        '<i style="background:' + k.c + '"><svg viewBox="0 0 24 24" aria-hidden="true">' + k.ico + '</svg></i><span><b>' + n + '</b><small>' + k.en + '</small></span>');
       t.type = "button"; t.style.setProperty("--mw-c", k.c);
       t.addEventListener("click", () => { pick = k.id; paint(); });
       tiles.appendChild(t);
@@ -22013,7 +22027,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-0110";
+const BUILD = "1105-0140";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -31522,8 +31536,78 @@ const isGuest = () => !session && !!state.guest;
     step.hidden = true;
     paintWho();
     unlock();
+    guestPing(true);
   });
 })();
+
+/* The owner's list of guests: a name and when this device was last here,
+   sent once on entry and then at most every ten minutes while in use. The
+   device keeps a random id so the same guest is one row, not many. */
+function guestDevice() {
+  try {
+    let id = localStorage.getItem("guild.gdev");
+    if (!id) { id = (crypto.randomUUID ? crypto.randomUUID() : ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16))); localStorage.setItem("guild.gdev", id); }
+    return id;
+  } catch (e) { return null; }
+}
+function guestPing(force) {
+  if (!isGuest()) return;
+  let last = 0;
+  try { last = Number(localStorage.getItem("guild.gping") || 0); } catch (e) {}
+  if (!force && Date.now() - last < 10 * 60 * 1000) return;
+  const dev = guestDevice(); if (!dev) return;
+  try { localStorage.setItem("guild.gping", String(Date.now())); } catch (e) {}
+  fetch(SUPABASE.url + "/rest/v1/rpc/guest_ping", {
+    method: "POST",
+    headers: { "apikey": SUPABASE.key, "Authorization": "Bearer " + SUPABASE.key, "Content-Type": "application/json" },
+    body: JSON.stringify({ p_device: dev, p_name: String(state.guest || "").slice(0, 40) })
+  }).catch(() => {});
+}
+setTimeout(() => guestPing(), 3000);
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") guestPing(); });
+
+const GUESTS_ITEM = { id: "guests", en: "Guests", subject: "Who continued as a guest", section: "profile", run: runGuests };
+async function runGuests() {
+  setCount(""); stage.innerHTML = "";
+  stage.appendChild(el("p", "note", "Loading\u2026"));
+  let rows;
+  try { rows = await sbGet("guest_visits?select=name,first_seen,last_seen,visits&order=last_seen.desc&limit=1000"); }
+  catch (e) { stage.innerHTML = ""; stage.appendChild(el("p", "note", "The guest list could not be read. It opens only for the site owner.")); stage.appendChild(footNav({})); return; }
+  let q = "";
+  function render() {
+    stage.innerHTML = "";
+    const head = el("div", "gv-head", '<b>' + rows.length + '</b><span>' + (rows.length === 1 ? "guest" : "guests") + ' so far</span>');
+    stage.appendChild(head);
+    if (rows.length > 8) {
+      const sb = el("div", "gl-search"); const i = document.createElement("input");
+      i.type = "search"; i.value = q; i.dir = "auto"; i.placeholder = "Search a name";
+      i.addEventListener("input", () => { q = i.value; paintList(); });
+      sb.appendChild(i); stage.appendChild(sb);
+    }
+    const list = el("div", "gv-list"); stage.appendChild(list);
+    function paintList() {
+      list.innerHTML = "";
+      const f = q.trim().toLowerCase();
+      const hits = rows.filter(r => !f || String(r.name || "").toLowerCase().indexOf(f) >= 0);
+      if (!hits.length) { list.appendChild(el("p", "mw-empty", rows.length ? "No guest by that name." : "No one has continued as a guest yet.")); return; }
+      hits.forEach(r => {
+        const nm = String(r.name || "Guest");
+        const ini = nm.split(/\s+/).map(w => w.charAt(0)).join("").slice(0, 2).toUpperCase();
+        const d = new Date(r.first_seen);
+        const row = el("div", "gv-row",
+          '<span class="gv-av">' + esc(ini) + '</span>' +
+          '<span class="gv-t"><b dir="auto">' + esc(nm) + '</b><small>First came ' +
+            d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) + ' · ' + (r.visits || 1) + (r.visits === 1 ? ' visit' : ' visits') + '</small></span>' +
+          '<span class="gv-seen">' + when(r.last_seen) + '</span>');
+        list.appendChild(row);
+      });
+    }
+    paintList();
+    stage.appendChild(el("p", "sd-note", "Guests type a name to look around without an account. Each device counts once; <i>last seen</i> is the last time it was open."));
+    stage.appendChild(footNav({}));
+  }
+  render();
+}
 
 function leaveGuest(mode) {
   state.guest = ""; save();
