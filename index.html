@@ -4062,6 +4062,23 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .ig-actions #share-profile-btn { background: var(--white); color: var(--void); }
 
 #seal .ig-actions { display: none !important; }
+
+/* specialized translation pages */
+.sf-big p { font-size: 1rem; line-height: 1.6; margin: .2rem 0 0; }
+.sf-steps { margin: .4rem 0 0; padding-left: 1.2rem; display: grid; gap: .6rem; }
+.sf-steps li b { display: block; color: var(--white); margin-bottom: .15rem; }
+.sf-steps li span { color: var(--ink-soft); font-size: .9rem; line-height: 1.5; }
+.sf-ex-t { display: block; font-family: var(--f-serif); font-size: 1.05rem; color: var(--white); margin: .2rem 0 .6rem; }
+.sf-pair { display: grid; gap: .5rem; }
+.sf-pair > div { background: var(--well); border-radius: 14px; padding: .7rem .85rem; }
+.sf-pair small { display: block; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; margin-bottom: .3rem; }
+.sf-pair p { margin: 0; line-height: 1.6; }
+.sf-pair p[lang="ar"] { font-family: var(--f-ar-text); font-size: 1.15rem; }
+.sf-nl { margin-top: .8rem; }
+.sf-notes, .sf-watch ul { margin: .3rem 0 0; padding-left: 1.1rem; display: grid; gap: .45rem; color: var(--ink-soft); font-size: .9rem; line-height: 1.5; }
+.sf-from { font-size: .76rem; color: var(--ink-faint); margin: .7rem 0 0; }
+.sf-from a { color: var(--mag-ink); }
+
 /* on a phone, while the keyboard is up: no bar and no Ask Compass button
    over it (the dictionary stays, it is for the text being typed) */
 body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
@@ -13810,62 +13827,132 @@ const KSL_LESSONS = [
    University course. A new field is one more entry in this list. */
 const SPEC_FIELDS = [
   { id: "sf-legal", en: "Legal translation", ar: "الترجمة القانونية",
-    line: "Contracts, laws, judgments and official documents, where the wording is the obligation.",
-    study: ["lib-legal", "fields"], dicts: ["sd-unterm", "sd-wipo"], booth: "legal" },
+    line: "Where the wording is the obligation.",
+    big: "In a legal text every word does a job. Change <i>shall</i> into <i>will</i> and a duty becomes a forecast. The translator's task is not to make it sound nice; it is to make it bind in exactly the same way.",
+    steps: [
+      ["Find the speech act", "Is the sentence granting a right, imposing a duty, forbidding something or defining a term? Mark it before you translate a word."],
+      ["Keep the modals exact", "<i>Shall</i> imposes an obligation and <i>may</i> grants permission; in Arabic they are usually rendered by structures such as يجب، يلتزم، لا يجوز and يجوز, not by a future tense."],
+      ["Respect the doublets", "Legal English pairs near-synonyms (<i>null and void</i>, <i>terms and conditions</i>) and legal Arabic does the same. Check whether the pair is a fixed formula before you drop half of it."],
+      ["Do not shorten", "Legal sentences are long on purpose, so that nothing is left out. Keep every condition and exception, in the same order."]
+    ],
+    ex: { title: "Universal Declaration of Human Rights, Article 4", srcLab: "English (official)", src: "No one shall be held in slavery or servitude; slavery and the slave trade shall be prohibited in all their forms.",
+      tgtLab: "Arabic (official UN text)", tgt: "لا يجوز استرقاق أحد أو استعباده، ويحظر الاسترقاق وتجارة الرقيق بكافة أوضاعهما.",
+      notes: ["<i>No one shall be held</i> becomes لا يجوز, a prohibition, not a future: <i>shall</i> carries the force of law.",
+              "The English pair <i>slavery or servitude</i> stays a pair: استرقاق ... أو استعباده.",
+              "The second <i>shall be prohibited</i> becomes يحظر, a passive that names no agent, as normative Arabic prefers."],
+      src2: [["UN · Universal Declaration of Human Rights", "https://www.un.org/en/about-us/universal-declaration-of-human-rights"], ["الأمم المتحدة · الإعلان العالمي لحقوق الإنسان", "https://www.un.org/ar/about-us/universal-declaration-of-human-rights"]] },
+    watch: ["Translating <i>shall</i> as سوف.", "Merging two conditions into one to make the sentence shorter.", "Using a word for a court, a body or an office from another country's system without checking that it is the same institution."],
+    srcs: "Husni &amp; Newman (2015), <i>Arabic–English–Arabic Translation: Issues and Strategies</i>, ch. 3, Legal translation." },
+
   { id: "sf-medical", en: "Medical translation", ar: "الترجمة الطبية",
-    line: "Patient information, clinical reports and medical research.",
-    study: [], dicts: ["sd-umd"], booth: "medical" },
+    line: "One term, one meaning, and a patient at the end of it.",
+    big: "A medical text may be read by a doctor or by a frightened patient. The term must be the accepted one, the dose must never move, and the register must suit the reader: clinical for a report, plain for a leaflet.",
+    steps: [
+      ["Ask who will read it", "A research article, a hospital report and a patient leaflet treat the same disease in three different registers."],
+      ["Use the unified term", "Medicine has agreed Arabic terms; the Unified Medical Dictionary of WHO's Eastern Mediterranean office exists so that hospitals in different countries use the same word."],
+      ["Copy numbers exactly", "Doses, units, dates and lab values are copied, never rounded or converted unless the brief says so."],
+      ["Keep definitions intact", "When a text defines something, the definition is the content: every part of it must survive."]
+    ],
+    ex: { title: "Constitution of the World Health Organization, the definition of health", srcLab: "English (official)", src: "Health is a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity.",
+      tgtLab: "Arabic (official WHO text)", tgt: "الصحة هي حالة من اكتمال السلامة بدنياً وعقلياً واجتماعياً، لا مجرد انعدام المرض أو العجز.",
+      notes: ["<i>Complete well-being</i> becomes اكتمال السلامة: the noun phrase is rebuilt, the meaning kept whole.",
+              "<i>Physical, mental and social</i> become three adverbs, بدنياً وعقلياً واجتماعياً, which is natural Arabic for <i>in body, mind and society</i>.",
+              "<i>Disease or infirmity</i> stays a pair: المرض أو العجز. Neither half can go, because together they are the definition."],
+      src2: [["WHO · Constitution", "https://www.who.int/about/governance/constitution"], ["دستور منظمة الصحة العالمية (PDF)", "https://apps.who.int/gb/EDG/pdf_files/Ref-docs/Constitution-ar.pdf"]] },
+    watch: ["Coining your own Arabic term when a unified one exists.", "Changing a unit (mg, mL) or a decimal point.", "Writing a patient leaflet in clinical Arabic the patient cannot follow."],
+    srcs: "WHO EMRO, Unified Medical Dictionary; WHO Constitution (official Arabic text)." },
+
   { id: "sf-political", en: "Political and diplomatic translation", ar: "الترجمة السياسية والدبلوماسية",
-    line: "Speeches, resolutions, treaties and official statements.",
-    study: [], dicts: ["sd-unterm", "sd-diplo"], booth: "diplomatic" },
+    line: "Where tone is policy.",
+    big: "In diplomacy, the choice between <i>regrets</i> and <i>condemns</i> is the message. The translator keeps the exact degree of every word, uses the official names of states and bodies, and follows the fixed formulas that every UN text in Arabic uses.",
+    steps: [
+      ["Match the strength", "<i>Notes</i>, <i>expresses concern</i>, <i>deplores</i> and <i>condemns</i> are a ladder. Do not move a rung up or down."],
+      ["Use official names", "States, organisations and treaties have official Arabic names; UNTERM, the UN's terminology database, records them."],
+      ["Follow the formulas", "UN resolutions in Arabic open their paragraphs with fixed forms such as إذ ... and وإذ ..., matching the English <i>Recalling</i>, <i>Noting</i>."],
+      ["Keep the register high", "A treaty or a charter is solemn in both languages; the Arabic should be too."]
+    ],
+    ex: { title: "Charter of the United Nations, the Preamble", srcLab: "English (official)", src: "We the peoples of the United Nations determined to save succeeding generations from the scourge of war …",
+      tgtLab: "Arabic (official UN text)", tgt: "نحن شعوب الأمم المتحدة وقد آلينا على أنفسنا أن ننقذ الأجيال المقبلة من ويلات الحرب …",
+      notes: ["<i>Determined</i> becomes وقد آلينا على أنفسنا, a solemn vow: one English word, a whole Arabic clause, the same weight.",
+              "<i>Scourge</i> becomes ويلات, a plural of calamity rather than a literal whip.",
+              "<i>Succeeding generations</i> becomes الأجيال المقبلة, the established phrase."],
+      src2: [["UN Charter · Preamble", "https://www.un.org/en/about-us/un-charter/preamble"], ["ميثاق الأمم المتحدة · الديباجة", "https://www.un.org/ar/about-us/un-charter/preamble"]] },
+    watch: ["Softening or sharpening a verb of judgement.", "Translating the name of a body word for word instead of using its official name.", "Adding your own view through word choice: <i>regime</i> or <i>government</i>, <i>militants</i> or <i>fighters</i>."],
+    srcs: "United Nations, UN Charter (official Arabic text); UNTERM." },
+
   { id: "sf-economic", en: "Economic and financial translation", ar: "الترجمة الاقتصادية والمالية",
-    line: "Reports, budgets, banking and the texts of financial institutions.",
-    study: [], dicts: ["sd-imf", "sd-escwa"], booth: "business" },
+    line: "Numbers, institutions and terms that must never drift.",
+    big: "Economic texts are made of figures and fixed terms. A wrong number is a wrong report; a term rendered two ways in one document looks like two different things.",
+    steps: [
+      ["Fix the terms first", "<i>Inflation</i>, <i>gross domestic product</i>, <i>fiscal deficit</i>: decide each rendering once, from an institutional source such as the IMF's terminology, and keep it."],
+      ["Check every figure", "Percentages, currencies, decimals and dates are compared with the source line by line."],
+      ["Keep goals as goals", "Policy texts set targets; an Arabic verbal noun often carries a goal more naturally than a full sentence."],
+      ["Mind the reader", "An annual report for investors is not a news article about prices."]
+    ],
+    ex: { title: "UN Sustainable Development Goal 1", srcLab: "English (official)", src: "End poverty in all its forms everywhere.",
+      tgtLab: "Arabic (official UN text)", tgt: "القضاء على الفقر بجميع أشكاله في كل مكان.",
+      notes: ["The English imperative <i>End</i> becomes a verbal noun, القضاء على: the usual Arabic way to state a goal.",
+              "<i>In all its forms</i> keeps its pronoun, بجميع أشكاله, agreeing with الفقر.",
+              "Nothing is added and nothing removed: a goal is a commitment, and its scope is the content."],
+      src2: [["UN · The 17 Goals", "https://sdgs.un.org/goals"], ["الأمم المتحدة · الهدف 1", "https://mongolia.un.org/ar/sdgs/1"]] },
+    watch: ["Rounding a figure.", "Two renderings for one term in the same document.", "Confusing <i>billion</i> in English and مليار in Arabic with older usages."],
+    srcs: "IMF Terminology; United Nations, Sustainable Development Goals (official Arabic text)." },
+
   { id: "sf-technical", en: "Scientific and technical translation", ar: "الترجمة العلمية والتقنية",
-    line: "Manuals, standards, patents and engineering texts.",
-    study: ["fields"], dicts: ["sd-arabterm", "sd-wipo", "sd-siwar"], booth: null },
+    line: "Clear, consistent, and nothing left to guess.",
+    big: "A technical text is meant to be used: to install, repair, measure. The reader must be able to act on it without asking. Consistency matters more than style, and the term must be the one the field uses.",
+    steps: [
+      ["Understand the device or the process", "You cannot translate a step you do not understand; read the whole procedure first."],
+      ["Use the field's term", "Engineering and energy have standardised Arabic terms; ARABTERM and the Siwar energy dictionary record them."],
+      ["Stay consistent", "Once a part has a name, it keeps it to the last page."],
+      ["Keep units and values", "Units, tolerances and codes are copied exactly."]
+    ],
+    ex: { title: "UN Sustainable Development Goal 7", srcLab: "English (official)", src: "Ensure access to affordable, reliable, sustainable and modern energy for all.",
+      tgtLab: "Arabic (official UN text)", tgt: "ضمان حصول الجميع بتكلفة ميسورة على خدمات الطاقة الحديثة الموثوقة والمستدامة.",
+      notes: ["<i>Ensure access</i> becomes ضمان حصول, a verbal noun and its complement.",
+              "<i>Affordable</i> becomes a phrase, بتكلفة ميسورة: Arabic has no single standard adjective for it.",
+              "The English stack of adjectives before <i>energy</i> moves after the noun in Arabic: خدمات الطاقة الحديثة الموثوقة والمستدامة."],
+      src2: [["UN · The 17 Goals", "https://sdgs.un.org/goals"], ["قرار الجمعية العامة A/RES/79/211 (PDF)", "https://digitallibrary.un.org/record/4072133/files/A_RES_79_211-AR.pdf"]] },
+    watch: ["Varying a term for style.", "Translating a warning loosely.", "Guessing at a step instead of asking."],
+    srcs: "ALECSO, ARABTERM; KSGAAL, Energy Terminology Dictionary; United Nations, SDGs (official Arabic text)." },
+
   { id: "sf-media", en: "Media translation", ar: "الترجمة الإعلامية",
-    line: "News, headlines and opinion, for a general reader.",
-    study: [], dicts: ["sd-unterm"], booth: "media" }
+    line: "Fast, accurate, and fair to who said what.",
+    big: "News is written against the clock for a general reader. The translator keeps the facts, the attribution and the tone exactly, and writes the way that language writes news.",
+    steps: [
+      ["Keep the attribution", "Who said it, and how: <i>said</i>, <i>claimed</i> and <i>confirmed</i> are not the same, and neither are قال، زعم and أكد."],
+      ["Know headline grammar", "English headlines drop articles and use the present simple for past events; Arabic headlines follow their own conventions. Rewrite, do not copy the shape."],
+      ["Check names and numbers", "People, places and figures are where news translation most often goes wrong."],
+      ["Stay neutral", "The translator does not add an opinion the reporter did not give."]
+    ],
+    ex: null,
+    watch: ["Turning <i>said</i> into a stronger or weaker verb.", "Keeping an English headline's grammar in Arabic.", "Translating a name differently from the way the outlet already writes it."],
+    srcs: "Swan, <i>Practical English Usage</i>, on headlines; Husni &amp; Newman, <i>A to Z</i>, “Say/tell”." }
 ];
 
 function runSpecField(f) {
   setCount(""); stage.innerHTML = "";
   const head = el("div", "c-hero");
   head.innerHTML = '<span class="c-badge">Specialized translation · <span dir="rtl" lang="ar">الترجمة المتخصصة</span></span>' +
-    '<h2 class="c-title">' + esc(f.en) + '</h2><p class="c-ar" dir="rtl" lang="ar">' + esc(f.ar) + '</p>' +
-    '<p class="c-line">' + esc(f.line) + '</p>';
+    '<h2 class="c-title">' + f.en + '</h2><p class="c-ar" dir="rtl" lang="ar">' + f.ar + '</p>' +
+    '<p class="c-line">' + f.line + '</p>';
   stage.appendChild(head);
-  const part = (title, ids) => {
-    const items = ids.map(id => ITEMS.find(t => t.id === id)).filter(Boolean);
-    if (!items.length) return;
-    stage.appendChild(el("span", "b-lab", title));
-    const list = el("div", "m-list");
-    items.forEach(t => {
-      const b = el("button", "m-course");
-      b.innerHTML = '<span class="m-txt"><span class="m-en">' + esc(t.en) + '</span>' +
-        (t.ar && t.ar !== t.en ? '<span class="m-arname" dir="rtl" lang="ar">' + esc(t.ar) + '</span>' : '') +
-        '<span class="m-line">' + esc(t.subject || "") + '</span></span>';
-      b.addEventListener("click", () => openItem(t));
-      list.appendChild(b);
-    });
-    stage.appendChild(list);
-  };
-  part("Read", f.study);
-  part("Dictionaries for this field", f.dicts);
-  if (f.booth && BOOTH_FIELD_TITLES[f.booth]) {
-    stage.appendChild(el("span", "b-lab", "Practise"));
-    const list = el("div", "m-list");
-    const b = el("button", "m-course");
-    b.innerHTML = '<span class="m-txt"><span class="m-en">The booth: ' + esc(BOOTH_FIELD_TITLES[f.booth].en) + '</span>' +
-      '<span class="m-arname" dir="rtl" lang="ar">' + esc(BOOTH_FIELD_TITLES[f.booth].ar) + '</span>' +
-      '<span class="m-line">Interpreting practice in this setting</span></span>';
-    b.addEventListener("click", () => openItem(ITEMS.find(t => t.id === "booth")));
-    list.appendChild(b);
-    stage.appendChild(list);
+  stage.appendChild(el("div", "card sf-big", '<span class="b-lab">The main thing</span><p>' + f.big + '</p>'));
+  const how = el("div", "card");
+  how.innerHTML = '<span class="b-lab">How to approach it</span><ol class="sf-steps">' +
+    f.steps.map(([h, t]) => '<li><b>' + h + '</b><span>' + t + '</span></li>').join("") + '</ol>';
+  stage.appendChild(how);
+  if (f.ex) {
+    const e = f.ex, ex = el("div", "card sf-ex");
+    ex.innerHTML = '<span class="b-lab">A real text</span><b class="sf-ex-t">' + e.title + '</b>' +
+      '<div class="sf-pair"><div><small>' + e.srcLab + '</small><p dir="ltr">' + e.src + '</p></div>' +
+      '<div><small>' + e.tgtLab + '</small><p dir="rtl" lang="ar">' + e.tgt + '</p></div></div>' +
+      '<span class="b-lab sf-nl">What to notice</span><ul class="sf-notes">' + e.notes.map(n => '<li>' + n + '</li>').join("") + '</ul>' +
+      '<p class="sf-from">From: ' + e.src2.map(([t, u]) => '<a href="' + u + '" target="_blank" rel="noopener noreferrer">' + t + '</a>').join(" · ") + '</p>';
+    stage.appendChild(ex);
   }
-  part("In the Kuwait University minor", ["minor"]);
-  if (!f.study.length) stage.appendChild(el("p", "sd-note", "Readings for this field are being added. Until then, start from its dictionaries and the booth."));
+  stage.appendChild(el("div", "card sf-watch", '<span class="b-lab">Watch out for</span><ul>' + f.watch.map(w => '<li>' + w + '</li>').join("") + '</ul>'));
+  stage.appendChild(el("p", "sd-note", "Sources: " + f.srcs));
   stage.appendChild(footNav({}));
 }
 
@@ -21180,7 +21267,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1104-2000";
+const BUILD = "1104-2200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -22855,9 +22942,8 @@ const LEARN_GROUPS = [
   { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
   { id: "spectr", en: "Specialized translation", note: "الترجمة المتخصصة",
     order: SPEC_FIELDS.map(f => f.id) },
-  { id: "dict",   en: "Dictionaries", note: "المعاجم", order: ["lisan", "wikt", "glossary"] },
-  { id: "spec",   en: "Specialized dictionaries", note: "المعاجم المتخصصة",
-    order: ["sd-umd", "sd-unterm", "sd-diplo", "sd-wipo", "sd-imf", "sd-escwa", "sd-arabterm", "sd-siwar"] }
+  { id: "dict",   en: "Dictionaries", note: "المعاجم", order: ["lisan", "wikt", "glossary"] }
+  /* Specialized dictionaries return here once they search inside the Compass */
 ];
 function renderLearn() {
   const box = document.getElementById("sec-method");
