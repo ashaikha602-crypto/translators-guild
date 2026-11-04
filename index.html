@@ -4217,6 +4217,13 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .mg-in-note span { font-family: var(--f-ar-text); color: var(--white); font-size: 1.05rem; }
 .sheet-act.warn { color: #FF6B6B; }
 .mg-toast span { white-space: nowrap; }
+.mg-yours { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin-top: .15rem; padding: .5rem .6rem; border-radius: 12px;
+  background: color-mix(in srgb, var(--mg-c) 9%, transparent); }
+.mg-yours-h { width: 100%; font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--mg-c); }
+.mg-yc { display: inline-flex; align-items: center; gap: .15rem; padding: .12rem .2rem .12rem .55rem; border-radius: 9px; background: var(--void-2); border: var(--hair); }
+.mg-yc span { font-family: var(--f-ar-text); font-size: 1rem; color: var(--white); }
+.mg-yx { all: unset; cursor: pointer; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; color: var(--ink-faint); font-size: 1rem; }
+.mg-yx:hover { color: #FF6B6B; }
 /* a field in depth */
 .sf-deep { display: grid; gap: .8rem; margin-top: .4rem; }
 .sf-dh { font-family: var(--f-serif); font-size: 1.2rem; margin: .4rem 0 0; color: var(--white); }
@@ -14266,8 +14273,81 @@ function glossTouch() {
   myGloss().at = new Date().toISOString();
   save();
   if (typeof pushBackend === "function" && !isGuest()) pushBackend().catch(() => {});
+  glossPublish();
 }
-function glossName() { return (myGloss().name || "").trim() || "My glossary"; }
+/* the copy other members see on her profile, under her name */
+let glossPubT = null;
+function glossPublish() {
+  clearTimeout(glossPubT);
+  glossPubT = setTimeout(async () => {
+    if (isGuest() || typeof myId !== "function" || !myId() || backend !== "supabase") return;
+    const g = myGloss();
+    try {
+      await fetch(SUPABASE.url + "/rest/v1/glossaries", {
+        method: "POST",
+        headers: Object.assign(await sbHeaders(), { "Prefer": "resolution=merge-duplicates,return=minimal" }),
+        body: JSON.stringify({ user_id: myId(), name: (g.name || "").trim() || null,
+          terms: g.terms.map(t => ({ en: t.en, ar: t.ar, own: t.own || "", alts: t.alts || [], f: t.f, src: t.src || "", note: t.note || "" })),
+          updated_at: new Date().toISOString() })
+      });
+    } catch (e) { /* the table may not be there yet; her own copy is safe on her row */ }
+  }, 800);
+}
+/* another member's glossary, read only, in their name */
+function runGlossView(row, who) {
+  const poss = who ? who + (/s$/i.test(who) ? "\u2019" : "\u2019s") : "Their";
+  const title = (row.name || "").trim() || poss + " glossary";
+  setCount("Terms, by field");
+  stage.innerHTML = "";
+  const terms = Array.isArray(row.terms) ? row.terms : [];
+  const byF = {};
+  terms.forEach(t => { (byF[t.f] = byF[t.f] || []).push(t); });
+  const secs = MG_FIELDS.filter(f => byF[f.id]);
+  const hero = el("div", "mg-hero");
+  hero.appendChild(el("div", "mg-name", "<h2>" + esc(title) + "</h2>"));
+  hero.appendChild(el("p", "mg-sub", terms.length + (terms.length === 1 ? " term" : " terms") + " · " + secs.length + (secs.length === 1 ? " section" : " sections")));
+  stage.appendChild(hero);
+  const box = el("div", "mg-secs");
+  secs.forEach(f => {
+    const sec = el("section", "mg-sec"); sec.style.setProperty("--mg-c", f.c);
+    const hd = el("button", "mg-sec-h", '<span class="mg-ic"><svg viewBox="0 0 24 24" aria-hidden="true">' + f.ico + '</svg></span>' +
+      '<span class="mg-sec-t"><b>' + f.en + '</b><small dir="rtl" lang="ar">' + f.ar + '</small></span><span class="mg-n">' + byF[f.id].length + '</span><span class="mg-chev" aria-hidden="true">⌄</span>');
+    hd.type = "button"; hd.addEventListener("click", () => sec.classList.toggle("shut"));
+    sec.appendChild(hd);
+    const body = el("div", "mg-terms");
+    byF[f.id].slice().sort((a, b) => String(a.en).toLowerCase() < String(b.en).toLowerCase() ? -1 : 1).forEach(t => {
+      const mine = (t.src ? [t.own].concat(t.alts || []) : (t.alts || [])).filter(Boolean);
+      const r = el("div", "mg-t");
+      r.innerHTML = '<div class="mg-pair"><span class="mg-en">' + esc(t.en) + '</span><span class="mg-ar" dir="rtl" lang="ar">' + esc(t.src ? t.ar : (t.own || t.ar)) + '</span></div>' +
+        '<span class="mg-src">' + (t.src ? esc(t.src) : "Added by " + esc(who || "the member")) + '</span>' +
+        (t.note ? '<p class="mg-note">' + esc(t.note) + '</p>' : '') +
+        (mine.length ? '<div class="mg-yours"><span class="mg-yours-h">' + esc(poss) + ' translation' + (mine.length > 1 ? 's' : '') + '</span>' +
+          mine.map(v => '<span class="mg-yc"><span dir="auto">' + esc(v) + '</span></span>').join("") + '</div>' : '');
+      body.appendChild(r);
+    });
+    sec.appendChild(body); box.appendChild(sec);
+  });
+  stage.appendChild(box);
+  stage.appendChild(footNav({}));
+}
+function glossVisitCard(userId, who) {
+  const holder = el("div");
+  sbGet("glossaries?select=name,terms&user_id=eq." + userId).then(rows => {
+    const row = rows && rows[0];
+    if (!row || !Array.isArray(row.terms) || !row.terms.length) return;
+    const poss = who ? who + (/s$/i.test(who) ? "\u2019" : "\u2019s") : "Their";
+    const c = el("button", "mg-card");
+    c.type = "button";
+    c.innerHTML = '<span class="mg-card-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10.5A3.5 3.5 0 0 1 19 8v11.5H8.5A3.5 3.5 0 0 1 5 16z"/><path d="M5 16a3.5 3.5 0 0 1 3.5-3.5H19M9 8h6"/></svg></span>' +
+      '<span class="mg-card-t"><b>' + esc((row.name || "").trim() || poss + " glossary") + '</b><small>' + row.terms.length + (row.terms.length === 1 ? " term" : " terms") + '</small></span><span class="mg-card-go" aria-hidden="true">›</span>';
+    c.addEventListener("click", () => openItem({ id: "gloss:" + userId, en: (row.name || "").trim() || poss + " glossary", subject: "Terms, by field",
+      section: "profile", run: () => runGlossView(row, who) }));
+    holder.appendChild(c);
+  }).catch(() => {});
+  return holder;
+}
+let glossFirstPub = false;
+function glossName() { return (myGloss().name || "").trim() || (glossOwner() !== "you" ? glossOwner(true) + " glossary" : "My glossary"); }
 function glossHas(e) { return myGloss().terms.some(t => t.f === e.f && t.en.toLowerCase() === e.en.toLowerCase()); }
 function sdFav(e) { return !!myGloss().fav[sdKey(e)]; }
 function sdToggleFav(e) {
@@ -14335,7 +14415,7 @@ function glossSheet(seed, onDone) {
       const e1 = en.value.trim(), a1 = ar.value.trim();
       if (!e1 || !a1) { msg.textContent = "Both languages, please."; return; }
       row = editing && editing.src
-        ? { en: e1, ar: editing.ar, own: a1 !== editing.ar ? a1 : "", src: editing.src }
+        ? { en: e1, ar: editing.ar, own: a1 !== editing.ar ? a1 : "", src: editing.src, alts: editing.alts || [] }
         : { en: e1, ar: a1, own: "", src: "" };
     }
     row.f = pick; row.note = note.value.trim();
@@ -14369,10 +14449,23 @@ function glossToast(e) {
   setTimeout(() => t.classList.add("out"), 2600);
   setTimeout(() => t.remove(), 3100);
 }
+/* whose translation it is: her given name, as it will read to anyone
+   who is shown her glossary */
+function glossOwner(poss) {
+  let n = "";
+  try { n = (typeof firstName === "function" && firstName()) || (state.guest || "").split(" ")[0] || ""; } catch (e) {}
+  if (!poss) return n || "you";
+  return n ? n + (/s$/i.test(n) ? "\u2019" : "\u2019s") : "Your";
+}
+function glossDropMine(t, v) {
+  if (t.own === v) t.own = (t.alts || []).shift() || "";
+  else t.alts = (t.alts || []).filter(a => a !== v);
+  glossTouch();
+}
 function glossFind(e) { return myGloss().terms.find(t => t.f === e.f && t.en.toLowerCase() === e.en.toLowerCase()); }
 /* a second (or third) way of saying it, kept with the term */
 function glossAltSheet(t, onDone) {
-  const s = storySheet("Add another option");
+  const s = storySheet("Add your translation");
   s.sheet.classList.add("mg-sheet");
   const form = el("div", "mg-form");
   form.appendChild(el("div", "mg-pick-h", '<b>' + esc(t.en) + '</b><span dir="rtl" lang="ar">' + esc(t.own || t.ar) + '</span>'));
@@ -14380,7 +14473,7 @@ function glossAltSheet(t, onDone) {
   const i = document.createElement("input"); i.dir = "auto"; i.placeholder = "Another way you render it";
   w.appendChild(i); form.appendChild(w);
   const msg = el("p", "mg-msg"); form.appendChild(msg);
-  const go = el("button", "primary mg-save", "Add this option"); go.type = "button";
+  const go = el("button", "primary mg-save", "Add as " + esc(glossOwner(true)) + " translation"); go.type = "button";
   go.addEventListener("click", () => {
     const v = i.value.trim();
     if (!v) { msg.textContent = "Write the translation first."; return; }
@@ -14400,7 +14493,8 @@ function glossTermMenu(e, after) {
     b.addEventListener("click", () => { s.done(); fn(); }); s.sheet.appendChild(b); };
   s.sheet.appendChild(el("p", "mg-in-note", "In <b>" + esc(glossName()) + "</b> as <span dir=\"rtl\" lang=\"ar\">" + esc(t.own || t.ar) + "</span>"));
   act("✎ Fix it: write my own translation", () => glossSheet({ id: t.id }, after));
-  act("＋ Add another option", () => glossAltSheet(t, after));
+  if (t.own || (t.alts || []).length) act("Remove my translations, keep the term", () => { t.own = ""; t.alts = []; glossTouch(); if (after) after(); });
+  act("＋ Add another translation", () => glossAltSheet(t, after));
   act("Open " + esc(glossName()), () => openItem(MYGLOSS_ITEM));
   act("Remove from the glossary", () => { const g = myGloss(); g.terms = g.terms.filter(x => x.id !== t.id); glossTouch(); if (after) after(); }, "warn");
 }
@@ -14523,7 +14617,7 @@ function runMyGlossary() {
     pen.type = "button"; pen.setAttribute("aria-label", "Rename your glossary");
     pen.addEventListener("click", () => {
       const i = document.createElement("input");
-      i.className = "mg-name-in"; i.value = g.name || ""; i.placeholder = "e.g. Shaikha’s glossary"; i.maxLength = 60;
+      i.className = "mg-name-in"; i.value = g.name || ""; i.placeholder = glossOwner(true) + " glossary"; i.maxLength = 60;
       h.replaceWith(i); pen.hidden = true; i.focus();
       const done = () => { g.name = i.value.trim(); glossTouch(); render(); };
       i.addEventListener("keydown", e => { if (e.key === "Enter") i.blur(); });
@@ -14581,19 +14675,34 @@ function runMyGlossary() {
         const body = el("div", "mg-terms");
         rows.forEach(t => {
           const r = el("div", "mg-t");
+          /* the dictionary's translation stays on the main line; the
+             member's own sit under it with her name, each removable on
+             its own without taking the term away */
+          const mine = [t.own].concat(t.alts || []).filter(Boolean);
           r.innerHTML = '<div class="mg-pair"><span class="mg-en">' + esc(t.en) + '</span>' +
-            '<span class="mg-ar" dir="rtl" lang="ar">' + esc(t.own || t.ar) + '</span></div>' +
-            (t.own ? '<span class="mg-mine">My rendering</span><span class="mg-dict">Dictionary: <span dir="rtl" lang="ar">' + esc(t.ar) + '</span></span>' : '') +
-            ((t.alts || []).length ? '<div class="mg-alts"><small>Also</small>' + t.alts.map(a2 => '<span dir="auto">' + esc(a2) + '</span>').join("") + '</div>' : '') +
-            (t.note ? '<p class="mg-note">' + esc(t.note) + '</p>' : '') +
-            (t.src ? '<span class="mg-src">' + esc(t.src) + '</span>' : '<span class="mg-src">Added by you</span>');
+            '<span class="mg-ar" dir="rtl" lang="ar">' + esc(t.src ? t.ar : (t.own || t.ar)) + '</span></div>' +
+            (t.src ? '<span class="mg-src">' + esc(t.src) + '</span>' : '<span class="mg-src">Added by ' + esc(glossOwner()) + '</span>') +
+            (t.note ? '<p class="mg-note">' + esc(t.note) + '</p>' : '');
+          const minesList = t.src ? mine : (t.alts || []);
+          if (minesList.length) {
+            const box2 = el("div", "mg-yours");
+            box2.appendChild(el("span", "mg-yours-h", esc(glossOwner(true)) + " translation" + (minesList.length > 1 ? "s" : "")));
+            minesList.forEach(v => {
+              const chip = el("span", "mg-yc", '<span dir="auto">' + esc(v) + '</span>');
+              const x = el("button", "mg-yx", "×"); x.type = "button";
+              x.setAttribute("aria-label", "Remove this translation");
+              x.addEventListener("click", () => { glossDropMine(t, v); render(); });
+              chip.appendChild(x); box2.appendChild(chip);
+            });
+            r.appendChild(box2);
+          }
           const a = el("div", "mg-tacts");
-          const ed = el("button", "mg-mini", "✎ Fix"); ed.type = "button";
+          const ed = el("button", "mg-mini", t.src ? "✎ My translation" : "✎ Fix"); ed.type = "button";
           ed.addEventListener("click", () => glossSheet({ id: t.id }, render));
-          const alt = el("button", "mg-mini", "＋ Option"); alt.type = "button";
+          const alt = el("button", "mg-mini", "＋ Another"); alt.type = "button";
           alt.addEventListener("click", () => glossAltSheet(t, render));
           a.appendChild(alt);
-          const rm = el("button", "mg-mini", "Remove"); rm.type = "button";
+          const rm = el("button", "mg-mini", "Remove term"); rm.type = "button";
           rm.addEventListener("click", () => {
             if (rm.dataset.sure) { g.terms = g.terms.filter(x => x.id !== t.id); glossTouch(); render(); }
             else { rm.dataset.sure = "1"; rm.textContent = "Tap again to remove"; rm.classList.add("warn"); }
@@ -14608,7 +14717,7 @@ function runMyGlossary() {
     paintSecs();
     const cp = el("button", "ghost mg-copy", "Copy the glossary as text"); cp.type = "button";
     cp.addEventListener("click", () => {
-      const txt = glossName() + "\n\n" + secs.map(f => f.en + "\n" + byF[f.id].map(t => "• " + t.en + " — " + (t.own || t.ar) + ((t.alts || []).length ? " / " + t.alts.join(" / ") : "") + (t.note ? " (" + t.note + ")" : "")).join("\n")).join("\n\n");
+      const txt = glossName() + "\n\n" + secs.map(f => f.en + "\n" + byF[f.id].map(t => "• " + t.en + " — " + (t.own || t.ar) + ((t.alts || []).length ? " / " + t.alts.join(" / ") : "") + (t.own && t.src ? " [dictionary: " + t.ar + "]" : "") + (t.note ? " (" + t.note + ")" : "")).join("\n")).join("\n\n");
       (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => { cp.textContent = "Copied ✓"; }, () => { cp.textContent = "Could not copy"; });
     });
     stage.appendChild(cp);
@@ -14622,6 +14731,7 @@ const MYGLOSS_ITEM = { id: "myglossary", ar: "مسردي", en: "My glossary", ki
 /* the glossary as it shows on the member's own profile */
 function glossCard() {
   const g = myGloss();
+  if (!glossFirstPub && g.terms.length) { glossFirstPub = true; glossPublish(); }
   const byF = {};
   g.terms.forEach(t => { byF[t.f] = (byF[t.f] || 0) + 1; });
   const fs = MG_FIELDS.filter(f => byF[f.id]);
@@ -17621,6 +17731,7 @@ async function runPublic(id) {
   if (acts.children.length) stage.appendChild(acts);
 
   stage.appendChild(workSection(id, false));
+  stage.appendChild(glossVisitCard(id, (p.first_name || String(p.display_name || "").trim().split(/\s+/)[0] || "").trim()));
 
   stage.appendChild(footNav({ backLabel: "Back" }));
 }
@@ -21902,7 +22013,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-0030";
+const BUILD = "1105-0110";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
