@@ -53,7 +53,7 @@
     },
     {
       "title": "Your profile",
-      "text": "Your profile is a translator's page. At the top are your photo, name, rank and interpreting title, your followers in one line and your bio, with your interests underneath. Below it is My work: four small coloured squares for Translations, Requests, Challenges and Discussions with their counts; tap one to list that kind underneath. ＋ Post beside the heading starts a new post, and under it a small My glossary line opens your glossary. To edit your name, title, photo, languages, interests, major or university, open Settings (☰ at the top right) and choose Edit profile; Share profile, just below it, gives you your link with Copy link and Share via.",
+      "text": "Your profile is a translator's page. At the top are your photo, name, rank and interpreting title, your followers in one line and your bio, with your interests underneath. Below it is My work: four small coloured squares for Translations, Requests, Challenges and Discussions with their counts; everything you have posted is listed underneath, newest first; tap a square to show only that kind, and tap it again (or Show everything) to see it all. ＋ Post beside the heading starts a new post, and under it a small My glossary line opens your glossary. To edit your name, title, photo, languages, interests, major or university, open Settings (☰ at the top right) and choose Edit profile; Share profile, just below it, gives you your link with Copy link and Share via.",
       "keys": "edit profile, photo, picture, title, bio. الملف الشخصي، تعديل الملف، الصورة، تغيير الصورة، اللقب، الجامعة، التخصص"
     },
     {
@@ -105,6 +105,11 @@
       "title": "Writing a post",
       "text": "Each kind of post has its own form. It opens with what that kind is for and How to approach it: three or four short steps (for a translation, paste the source, put your translation beside it, pick what you want feedback on, note any deliberate choice). Then it asks only for what that kind needs: a translation, help request or challenge has the direction (From and Into, with ⇄ to swap) and the field as chips; research has the title, a summary and the paper itself, with no languages; an image or an AVT post starts with the file. AVT shows the numbers subtitlers work to (42 characters a line, two lines, 17–20 characters a second, from the Netflix Timed Text Style Guide) and two example videos, and asks which kind it is: subtitles, dubbing, voice-over, subtitles for the deaf or audio description. Who can see it is the last choice. A Word, PDF or text file you post is shown in full on the post itself, with Read it all and Full screen; videos play in place.",
       "keys": "post form, how to post, create a post, research post, AVT, subtitles, attach a file, upload a paper, document on a post"
+    },
+    {
+      "title": "Audiovisual translation (AVT)",
+      "text": "Learn has an Audiovisual translation (AVT) section. It builds up in order: watch first (six videos, including how to prepare subtitles for Netflix, the subtitler of Parasite on his choices, how Netflix dubs, and audio description), what AVT is, its kinds and skills in order (subtitling, segmentation, condensation, dubbing and lip-sync, voice-over, humour and songs, and accessibility: SDH and audio description), the numbers subtitlers work to (42 characters a line, 2 lines, 17 to 20 characters a second, from the Netflix Timed Text Style Guide), real cases (Parasite, Squid Game, Pokémon), where you meet it, and then Start subtitling (the Subtitling trial) or Post an AVT. To post a video over 50 MB, upload it to YouTube as Unlisted and paste the link in the AVT post; it plays on the post.",
+      "keys": "AVT, audiovisual translation, subtitling, dubbing, voice-over, SDH, audio description, long video, YouTube link. الترجمة السمعية البصرية، السترجة، الدبلجة"
     }
   ]
 }

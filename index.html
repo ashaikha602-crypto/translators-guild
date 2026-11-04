@@ -4069,6 +4069,11 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .mw-sq.on { border-color: var(--mw-c); background: color-mix(in srgb, var(--mw-c) 10%, var(--void-2)); }
 .mw-sq.on small { color: var(--mw-c); }
 .mw > .mw-add { padding: .65rem; font-size: .84rem; border-radius: 13px; }
+.mw-filter { display: flex; align-items: center; justify-content: space-between; font-size: .78rem; color: var(--ink-soft); }
+.mw-all { all: unset; cursor: pointer; font-weight: 700; color: var(--white); padding: .25rem .6rem; border-radius: 99px; background: var(--void-3); font-size: .74rem; }
+.avt-step { display: grid; grid-template-columns: auto 1fr; gap: .8rem; align-items: start; }
+.avt-n { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: #F472B6; color: #fff; font-weight: 800; font-size: .9rem; margin-top: .2rem; }
+.avt-cases { display: grid; gap: .7rem; margin-top: .6rem; }
 .guest-notice { font-size: .78rem; opacity: .8; }
 .gv-head { display: flex; align-items: baseline; gap: .45rem; }
 .gv-head b { font-family: var(--f-serif); font-size: 1.8rem; color: var(--white); }
@@ -4109,6 +4114,8 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .dx.pdf .dx-b { max-height: none; }
 .dx-pdf { display: block; width: 100%; height: 70vh; border: 0; background: #fff; }
 .dx-more { all: unset; cursor: pointer; display: block; width: 100%; box-sizing: border-box; text-align: center; padding: .65rem; font-size: .82rem; font-weight: 700; color: var(--white); border-top: var(--hair); }
+.avt.yt { background: radial-gradient(120% 120% at 20% 0%, #8a2be2, #2a0b4a 70%); }
+.avt.yt iframe { width: 100%; height: 100%; border: 0; display: block; }
 /* the composer */
 .cp { display: grid; gap: .7rem; }
 .cp-hero { display: flex; align-items: center; gap: .8rem; padding: .95rem 1rem; border-radius: 20px; border: var(--hair);
@@ -14858,6 +14865,70 @@ const SF_ATOZ = {
 };
 const SF_VIDEO = { "sf-legal": "Legal", "sf-medical": "Medical", "sf-political": "Diplomatic" };
 
+/* ═══ AUDIOVISUAL TRANSLATION ═══
+   One page that builds up in order: what AVT is, its kinds from the most
+   common to accessibility, the numbers subtitlers work to, real cases,
+   then practice. Every fact is the one the Kuwait University course page
+   (387) already carries with its sources; the videos are the ones the
+   Compass already credits. */
+function runAVT() {
+  setCount("Audiovisual translation · AVT");
+  stage.innerHTML = "";
+  const c = allMinorCourses().find(x => x.code === "387") || {};
+  const more = KU_COURSE_MORE["387"] || {};
+  const hero = el("div", "c-hero");
+  hero.innerHTML = '<span class="c-badge">AVT</span><h2 class="c-title">Audiovisual translation</h2>' +
+    '<p class="c-ar" dir="rtl" lang="ar">الترجمة السمعية البصرية</p><p class="c-line">' + (c.line || "") + '</p>';
+  stage.appendChild(hero);
+  stage.appendChild(videoStrip([
+    { id: "MCCajNjt5F4", t: "How to prepare subtitles for Netflix", by: "EZTitles", why: "Subtitles made to the Netflix rules, step by step, in professional subtitling software." },
+    { id: "KAZUKcCs9bc", t: "Translating Parasite: the many challenges of film subtitle translation", by: "Darcy Paquet · lecture, Academy of Korean Studies", why: "The film’s subtitler shows his subtitles and explains each choice." },
+    { id: "uFJkrGYWi7Q", t: "Darcy Paquet on doing the subtitles for Parasite", by: "Asia Society Korea", why: "A shorter interview on the same choices." },
+    { id: "r_5WAY61muE", t: "Behind Netflix's global dubbing strategy", by: "The Wall Street Journal", why: "How a dub is made, and why more viewers watched Squid Game dubbed than subtitled." },
+    { id: "y89reMUP1Jk", t: "Audio description at a glance", by: "American Council of the Blind", why: "Audio description and its best practices." },
+    { id: "iMnXXBmJj7E", t: "The trouble with subtitling is a matter of interpretation", by: "Lawrence Venuti · lecture, 3 December 2020", why: "Translation theory applied to the screen." }
+  ], "Watch first"));
+  const step = (n, title, html) => {
+    const sec = el("section", "avt-step");
+    sec.innerHTML = '<span class="avt-n">' + n + '</span><div><h3 class="c-h">' + title + '</h3>' + html + '</div>';
+    stage.appendChild(sec); return sec;
+  };
+  step(1, "What it is", '<p>' + (c.body || "") + '</p>');
+  const topics = more.topics || [];
+  step(2, "Its kinds and skills, in the order they build", '<ol class="c-topics">' + topics.map(t =>
+    '<li class="c-topic"><span class="c-tn">' + t.en + ' <span class="c-tar" dir="rtl" lang="ar">' + t.ar + '</span></span><span class="c-tsay">' + t.say + '</span></li>').join("") + '</ol>');
+  if (more.rule) step(3, more.rule.t, '<div class="c-rule-grid">' + more.rule.lines.map(l =>
+    '<div class="c-rule-row"><b>' + l[0] + '</b><span>' + l[1] + '</span></div>').join("") + '</div>' +
+    '<a class="c-src" href="' + more.rule.src[1] + '" target="_blank" rel="noopener">Source: ' + more.rule.src[0] + ' ↗</a>');
+  const acc = topics.find(t => /SDH|audio description/i.test(t.en));
+  if (acc) step(4, "Accessibility", '<p><b>' + acc.en + '</b>: ' + acc.say + '</p>' +
+    '<p>The American Council of the Blind video above shows audio description at work.</p>');
+  const cs = el("div", "avt-cases");
+  (more.cases || []).forEach(x => {
+    const card = el("article", "c-case");
+    card.innerHTML = '<div class="c-case-top"><span class="c-case-k">' + x.k + '</span><span class="c-case-yr">' + x.yr + '</span></div>' +
+      '<h4 class="c-case-t">' + x.t + '</h4><p class="c-case-what">' + x.what + '</p>' +
+      (x.pair ? '<div class="c-pair"><span dir="auto">' + x.pair[0] + '</span><span class="c-pair-arr" aria-hidden="true">→</span><span dir="auto">' + x.pair[1] + '</span></div>' : '') +
+      '<div class="c-case-point"><span class="c-asks-lab">Why it matters</span><p>' + x.point + '</p></div>' +
+      '<div class="c-case-src">' + x.src.map(sr => '<a class="c-src" href="' + sr[1] + '" target="_blank" rel="noopener">' + sr[0] + ' ↗</a>').join("") + '</div>';
+    cs.appendChild(card);
+  });
+  step(5, "Real cases", '<p>Subtitles, captions and dubbing, each as it happened, with where it was reported.</p>').querySelector("div").appendChild(cs);
+  const where = step(6, "Where you meet it", '<div class="chips-row">' + (c.settings || []).map(x => '<span class="chip-tag">' + x + '</span>').join("") + '</div>' +
+    (c.asks ? '<p><b>What it asks of you:</b> ' + c.asks + '</p>' : ''));
+  const tr = el("div", "sf-try");
+  tr.style.setProperty("--sd-c", "#F472B6");
+  tr.innerHTML = '<span class="sf-try-k">Try it</span><b>Subtitling practice · <span dir="rtl" lang="ar">قيد الشاشة</span></b><p>Twelve lines everyone knows, six each way, against the limit the trade works to. Then share your own work as an AVT post.</p>';
+  const go = el("button", "primary sf-try-go", "Start subtitling"); go.type = "button";
+  go.addEventListener("click", () => openItem(ITEMS.find(t => t.id === "subtitle")));
+  const post = el("button", "ghost", "Post an AVT"); post.type = "button";
+  post.addEventListener("click", () => openItem(NEWPOST_ITEM, "reel"));
+  tr.appendChild(go); tr.appendChild(post);
+  stage.appendChild(tr);
+  stage.appendChild(el("p", "sd-note", "From the Kuwait University course page, Introduction to Audiovisual Translation (387), with the sources it names."));
+  stage.appendChild(footNav({}));
+}
+
 function runSfAtoz(f) {
   setCount("From the A to Z · " + f.en);
   stage.innerHTML = ""; stage.appendChild(el("p", "note", "Loading…"));
@@ -14993,6 +15064,8 @@ const ITEMS = [
   ...SD_FIELDS.map(f => ({ id: "sd-" + f.id, ar: "معجم " + f.ar, en: f.en + " dictionary", kind: "guide", section: "method", group: "spec",
     subject: "Specialized dictionary · searched here", blurb: "Search in English or Arabic; tap ＋ to add a term to your glossary.",
     run: () => runSpecDictPage(f.id) })),
+  { id: "avt", ar: "الترجمة السمعية البصرية", en: "Audiovisual translation (AVT)", kind: "guide", section: "method", group: "avt",
+    subject: "Subtitling, dubbing, voice-over, accessibility", blurb: "Its kinds in order, the numbers subtitlers work to, real cases, videos, then practice.", run: runAVT },
   Object.assign({ group: "spec", blurb: "Your own terms, each under its field. Name it, add to it, use your own renderings." }, MYGLOSS_ITEM),
   { id: "lib-atoz", ar: "من الألف إلى الياء", en: "A to Z of Arabic–English Translation", kind: "guide", section: "method", group: "library",
     subject: "Husni & Newman · every entry",
@@ -18043,8 +18116,11 @@ function studioCard(r, sec, hero, kindLab) {
   if (tags.length) c.appendChild(el("div", "st-tags", tags.join("")));
 
   if (r.title) { const t = el("p", "st-title", esc(r.title)); t.dir = "auto"; c.appendChild(t); }
+  const ytC = r.post_type === "reel" && ytIdOf(r.source_text);
+  if (ytC) c.appendChild(ytPlayer(ytC, ""));
 
-  if (sec === "showcase" && (r.source_text || r.translated_text)) {
+  if (ytC) { /* the link is the video; nothing else to show for it */ }
+  else if (sec === "showcase" && (r.source_text || r.translated_text)) {
     const pair = el("div", "st-pair");
     const side = (lab, text, lang) => {
       const d = el("div", null);
@@ -18387,7 +18463,9 @@ function postCard(r, opts) {
     return d;
   };
   const dirOf = l => l === "Arabic" ? "rtl" : "ltr";
-  if (r.source_text)     card.appendChild(block("Source", r.source_text, dirOf(r.source_language)));
+  const ytP = r.post_type === "reel" && ytIdOf(r.source_text);
+  if (ytP) card.appendChild(ytPlayer(ytP, r.title || ""));
+  else if (r.source_text) card.appendChild(block("Source", r.source_text, dirOf(r.source_language)));
   if (r.translated_text) card.appendChild(block(r.post_type === "help" ? "My attempt" : "My translation",
                                                 r.translated_text, dirOf(r.target_language)));
   if (r.translation_note) {
@@ -18886,7 +18964,7 @@ function postForm(kind) {
   const fileFirst = wants.file === "video" || wants.file === "image" || wants.file === "paper";
   function fileCard() {
     const lab = { video: "Your video", image: "Your picture", paper: "Your paper", doc: "Or upload the file", any: "Attach a file" }[wants.file];
-    const hint = { video: "MP4 or MOV, up to 50 MB. Add the .srt as well if the subtitles are separate.", image: "JPG or PNG, up to 10 MB.",
+    const hint = { video: "MP4 or MOV, up to 50 MB. Longer? Use the YouTube link below.", image: "JPG or PNG, up to 10 MB.",
       paper: "PDF or Word, up to 10 MB. Members read it right here.", doc: "Word, PDF or text, up to 10 MB. It opens in full on the post.",
       any: "Optional. Up to 10 MB." }[wants.file];
     const c = card(lab, hint);
@@ -18913,6 +18991,13 @@ function postForm(kind) {
     c.appendChild(drop); c.appendChild(fileBox); c.appendChild(file);
   }
   if (fileFirst) fileCard();
+  let ytIn = null;
+  if (id === "reel") {
+    const c = card("Or paste a YouTube link", "For videos over 50 MB: upload it to YouTube (Unlisted keeps it out of search), then paste the link here. It plays right on the post.");
+    ytIn = input(300, "https://youtu.be/…"); ytIn.dir = "ltr"; ytIn.inputMode = "url"; c.appendChild(ytIn);
+    const pv = el("div", "cp-file"); c.appendChild(pv);
+    ytIn.addEventListener("input", () => { pv.innerHTML = ""; const y = ytIdOf(ytIn.value); if (y) pv.appendChild(ytPlayer(y, "")); });
+  }
 
   const titleLab = { discussion: "Your question", research: "Title of the paper", image: "Caption", reel: "Title", help: "What you need help with", request: "What it is", challenge: "Name the challenge" }[id] || "Title";
   const titlePh = { discussion: "e.g. Foreignization or domestication for proverbs?", help: "e.g. How would you render “without prejudice”?",
@@ -18992,7 +19077,7 @@ function postForm(kind) {
       source_language: pair ? pair.from : null,
       target_language: pair ? pair.to : null,
       genre: mode ? mode.value : genre ? genre.value : null,
-      source_text: src && src.value.trim() || null,
+      source_text: ytIn && ytIdOf(ytIn.value) ? ytIn.value.trim() : (src && src.value.trim() || null),
       translated_text: tgt && tgt.value.trim() || null,
       translation_note: note && note.value.trim() || null,
       feedback_on: chosen,
@@ -19000,10 +19085,16 @@ function postForm(kind) {
       deadline: dead && dead.value || null,
       visibility: vis.value
     };
+    if (ytIn && ytIn.value.trim() && !ytIdOf(ytIn.value)) { msg.textContent = "That does not look like a YouTube link."; msg.classList.add("bad"); return; }
+    if (f && /^video\//.test(f.type || "") && f.size > VIDEO_MAX) {
+      msg.textContent = "That video is " + Math.round(f.size / 1048576) + " MB; the most a file can be is 50 MB. Upload it to YouTube as Unlisted and paste the link above instead, or trim it.";
+      msg.classList.add("bad"); return;
+    }
     if (!payload.content && !payload.source_text && !payload.title && !f) {
       msg.textContent = "There is nothing to publish yet."; msg.classList.add("bad"); return;
     }
-    if ((id === "reel" || id === "image") && !f) { msg.textContent = id === "reel" ? "Choose the video first." : "Choose the picture first."; msg.classList.add("bad"); return; }
+    if (id === "image" && !f) { msg.textContent = "Choose the picture first."; msg.classList.add("bad"); return; }
+    if (id === "reel" && !f && !payload.source_text) { msg.textContent = "Choose the video, or paste its YouTube link."; msg.classList.add("bad"); return; }
     go.disabled = true; msg.textContent = "Publishing…";
     try {
       const row = await sbPost("posts", payload);
@@ -21612,7 +21703,7 @@ function workSection(authorId, isMe) {
   }
   const list = el("div", "mw-list"); wrap.appendChild(list);
   list.appendChild(el("p", "f-msg", "Loading\u2026"));
-  let own = [], pick = "tr";
+  let own = [], pick = "all";
   const types = WORK_KINDS.flatMap(k => k.types);
   function paint() {
     tiles.innerHTML = ""; list.innerHTML = "";
@@ -21621,19 +21712,26 @@ function workSection(authorId, isMe) {
       const t = el("button", "mw-sq" + (pick === k.id ? " on" : ""),
         '<i style="background:' + k.c + '"><svg viewBox="0 0 24 24" aria-hidden="true">' + k.ico + '</svg></i><span><b>' + n + '</b><small>' + k.en + '</small></span>');
       t.type = "button"; t.style.setProperty("--mw-c", k.c);
-      t.addEventListener("click", () => { pick = k.id; paint(); });
+      t.addEventListener("click", () => { pick = pick === k.id ? "all" : k.id; paint(); });
       tiles.appendChild(t);
     });
+    /* everything she has posted, newest first; a square narrows it */
     const k = WORK_KINDS.find(x => x.id === pick);
-    const rows = own.filter(r => k.types.indexOf(r.post_type) >= 0);
-    if (!rows.length) { list.appendChild(el("p", "mw-empty", "No " + k.en.toLowerCase() + " yet.")); return; }
+    const rows = k ? own.filter(r => k.types.indexOf(r.post_type) >= 0) : own;
+    if (k) list.appendChild(el("div", "mw-filter", '<span>Showing ' + esc(k.en.toLowerCase()) + '</span>'));
+    if (k) { const all = el("button", "mw-all", "Show everything"); all.type = "button";
+      all.addEventListener("click", () => { pick = "all"; paint(); }); list.firstChild.appendChild(all); }
+    if (!rows.length) { list.appendChild(el("p", "mw-empty", k ? "No " + k.en.toLowerCase() + " yet." : (isMe ? "Nothing posted yet." : "No posts yet."))); return; }
     rows.forEach(r => {
-      const c = studioCard(r, k.sec, false, (POST_KINDS.find(x => x.id === r.post_type) || {}).en || k.one);
-      c.classList.add("mw-card"); c.style.setProperty("--mw-c", k.c);
+      const kk = workKind(r.post_type);
+      const look = PK_LOOK[r.post_type] || PK_LOOK.other;
+      const c = studioCard(r, kk ? kk.sec : (r.post_type === "image" || r.post_type === "reel" ? "photos" : "discuss"), false,
+        (POST_KINDS.find(x => x.id === r.post_type) || {}).en || (kk ? kk.one : "Post"));
+      c.classList.add("mw-card"); c.style.setProperty("--mw-c", kk ? kk.c : look[0]);
       list.appendChild(c);
     });
   }
-  sbGet("feed?select=" + FEED_COLS + "&author_id=eq." + authorId + "&post_type=in.(" + types.join(",") + ")&repost_of=is.null&order=created_at.desc&limit=60")
+  sbGet("feed?select=" + FEED_COLS + "&author_id=eq." + authorId + "&repost_of=is.null&order=created_at.desc&limit=100")
     .then(a => { own = a || []; paint(); })
     .catch(() => { list.innerHTML = ""; list.appendChild(el("p", "f-msg", "This work could not be loaded.")); });
   return wrap;
@@ -22265,7 +22363,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-0400";
+const BUILD = "1105-0500";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -23938,6 +24036,7 @@ const LEARN_GROUPS = [
     order: ["meaning", "phrase", "procedures", "toolkit", "variety", "texttypes", "fields", "errors", "commentary", "lib-atoz"] },
   { id: "ku",     en: "Kuwait University courses", note: "The Translation Minor", order: ["minor"] },
   { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
+  { id: "avt",    en: "Audiovisual translation", note: "AVT", order: ["avt"] },
   { id: "spectr", en: "Specialized translation", note: "الترجمة المتخصصة",
     order: SPEC_FIELDS.map(f => f.id) },
   { id: "spec",   en: "Specialized dictionaries", note: "المعاجم المتخصصة",
@@ -29467,6 +29566,28 @@ function runKsl() {
    the theorists and the theories. */
 /* An uploaded video shown the way the YouTube videos are: the whole
    frame, nothing cropped, a play button over it, and it plays in place. */
+/* A YouTube link on an AVT post: long videos live on YouTube (upload it
+   as Unlisted) and play here, in place, like the site's own videos. */
+function ytIdOf(u) {
+  const m = /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/.exec(String(u || ""));
+  return m ? m[1] : null;
+}
+function ytPlayer(id, title) {
+  const box = el("div", "avt yt");
+  const play = el("button", "avt-play", '<span class="c-vid-icon" aria-hidden="true"></span>' + (title ? '<span class="avt-t" dir="auto">' + esc(title) + '</span>' : ''));
+  play.type = "button"; play.setAttribute("aria-label", "Play the video");
+  play.addEventListener("click", e => {
+    e.stopPropagation();
+    const fr = document.createElement("iframe");
+    fr.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0&playsinline=1";
+    fr.title = title || "Video"; fr.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; fr.allowFullscreen = true;
+    box.innerHTML = ""; box.appendChild(fr);
+  });
+  box.appendChild(play);
+  box.addEventListener("click", e => e.stopPropagation());
+  return box;
+}
+
 function avtPlayer(url, title) {
   const box = el("div", "avt");
   const v = document.createElement("video");
