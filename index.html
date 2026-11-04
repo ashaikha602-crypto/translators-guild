@@ -4047,13 +4047,160 @@ html:root[data-look="compass"] .jx-num b { font-family: var(--f-serif); font-siz
 .mw-chip { all: unset; cursor: pointer; white-space: nowrap; font-size: .78rem; font-weight: 700; padding: .45rem .8rem; border-radius: 99px; background: var(--void-3); color: var(--ink-soft); }
 .mw-chip.on { background: var(--white); color: var(--void); }
 .mw-list { display: grid; gap: .6rem; }
-.mw-card, .mw-rp { border-left: 4px solid var(--mw-c) !important; }
+.mw-card { border-left: 4px solid var(--mw-c) !important; }
 .mw-by { font-size: .76rem; color: var(--ink-faint); }
 /* on a profile the cards are all this person's: no name and picture on each */
 .mw-card .st-who .avatar, .mw-card .st-who > b { display: none; }
 .mw-card .st-who { justify-content: flex-end; min-height: 0; }
 html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); border-color: color-mix(in srgb, var(--cn-ink) 55%, transparent); }
 .mw-empty { font-size: .86rem; color: var(--ink-faint); text-align: center; padding: 1.2rem .5rem; }
+/* My work, in three parts */
+.mw { gap: 1.4rem; }
+.mw-sec { display: grid; gap: .55rem; }
+.mw-h { display: flex; align-items: center; gap: .5rem; }
+.mw-h b { font-size: 1.05rem; }
+.mw-n { font-size: .74rem; font-weight: 700; color: var(--ink-faint); }
+.mw-h .mw-add { margin-left: auto; padding: .38rem .7rem; font-size: .74rem; border-radius: 99px; border-width: 1.2px; }
+.mw-chips { gap: .35rem; }
+.mw-chip { display: inline-flex; align-items: center; gap: .35rem; font-size: .72rem; padding: .32rem .65rem; }
+.mw-chip i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.mw-chip span { opacity: .7; }
+.mw-rps { display: flex; gap: .55rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: .2rem; scrollbar-width: none; }
+.mw-rps::-webkit-scrollbar { display: none; }
+.mw-rp { all: unset; box-sizing: border-box; cursor: pointer; flex: 0 0 72%; max-width: 260px; scroll-snap-align: start; display: grid; gap: .3rem; align-content: start;
+  padding: .7rem .8rem; border-radius: 14px; background: var(--void-2); border: var(--hair); border-top: 3px solid var(--mw-c); }
+.mw-rp-k { font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--mw-c); }
+.mw-rp-t { font-size: .84rem; line-height: 1.4; color: var(--white); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.mw-more { all: unset; cursor: pointer; justify-self: center; font-size: .78rem; font-weight: 700; color: var(--ink-soft); padding: .3rem .6rem; }
+.mw-sec .mw-empty { padding: .6rem .3rem; text-align: left; font-size: .8rem; }
+/* the glossary on the profile */
+.mg-card { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: .8rem; margin-top: 1rem; width: 100%;
+  padding: .85rem 1rem; border-radius: 18px; position: relative; isolation: isolate;
+  background: linear-gradient(135deg, color-mix(in srgb, #4FB0FF 16%, var(--void-2)), color-mix(in srgb, #A78BFA 14%, var(--void-2))); border: var(--hair); }
+.mg-card-ic { width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center; flex: none;
+  background: linear-gradient(135deg, #4FB0FF, #A78BFA); box-shadow: 0 8px 18px -8px #4FB0FF; }
+.mg-card-ic svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mg-card-t { display: grid; gap: .15rem; min-width: 0; }
+.mg-card-t b { font-family: var(--f-serif); font-size: 1.02rem; color: var(--white); }
+.mg-card-t small { font-size: .74rem; color: var(--ink-soft); }
+.mg-card-dots { display: flex; gap: .25rem; margin-top: .15rem; }
+.mg-card-dots i { width: 8px; height: 8px; border-radius: 50%; }
+.mg-card-go { margin-left: auto; font-size: 1.5rem; color: var(--ink-faint); }
+/* specialized dictionaries */
+.sd-hero { display: flex; align-items: center; gap: .9rem; padding: 1rem 1.1rem; border-radius: 20px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--sd-c) 20%, var(--void-2)), var(--void-2)); border: var(--hair); }
+.sd-hero h2 { font-family: var(--f-serif); font-size: 1.3rem; margin: 0; color: var(--white); }
+.sd-hero p { margin: .1rem 0 0; font-family: var(--f-ar-text); color: var(--ink-soft); }
+.sd-ic, .mg-ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; flex: none; background: var(--sd-c, var(--mg-c)); }
+.sd-ic svg, .mg-ic svg, .sf-dt i svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.sd-chips { display: flex; flex-wrap: wrap; gap: .35rem; }
+.sd-chip { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: .35rem; font-size: .74rem; font-weight: 700; padding: .38rem .7rem;
+  border-radius: 99px; background: var(--void-3); color: var(--ink-soft); }
+.sd-chip i { width: 7px; height: 7px; border-radius: 50%; }
+.sd-chip.on { background: var(--white); color: var(--void); }
+.sd-favc.on { background: #FFB547; color: #1a1205; }
+.sd-mg { all: unset; box-sizing: border-box; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: .5rem; width: 100%;
+  padding: .6rem .85rem; border-radius: 14px; background: var(--well); font-weight: 700; font-size: .86rem; color: var(--white); }
+.sd-mg small { font-weight: 600; color: var(--ink-faint); font-size: .74rem; }
+.sd-count { margin: 0; }
+.sd-list { display: grid; gap: .55rem; }
+.sd-row { position: relative; display: grid; gap: .35rem; padding: .8rem .9rem .75rem 1rem; border-radius: 16px; background: var(--void-2); border: var(--hair);
+  border-left: 4px solid var(--sd-c); }
+.sd-main { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .2rem .8rem; padding-right: 2rem; }
+.sd-en { font-weight: 700; color: var(--white); font-size: .96rem; }
+.sd-ar { font-family: var(--f-ar-text); font-size: 1.14rem; color: var(--white); margin-left: auto; }
+.sd-note2 { margin: 0; font-size: .8rem; color: var(--ink-soft); line-height: 1.45; }
+.sd-meta { display: flex; flex-wrap: wrap; gap: .2rem .6rem; font-size: .68rem; }
+.sd-tag { font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.sd-src { color: var(--ink-faint); }
+.sd-acts { display: flex; gap: .4rem; justify-content: flex-end; }
+.sd-star { all: unset; cursor: pointer; position: absolute; top: .55rem; right: .6rem; font-size: 1.05rem; color: var(--ink-faint); padding: .15rem .3rem; }
+.sd-star.on { color: #FFB547; }
+.sd-add { all: unset; cursor: pointer; font-size: .72rem; font-weight: 700; padding: .3rem .65rem; border-radius: 99px; color: var(--sd-c); background: color-mix(in srgb, var(--sd-c) 14%, transparent); }
+.sd-add.in { color: var(--ink-soft); background: var(--void-3); }
+/* my glossary */
+.mg-hero { position: relative; overflow: hidden; display: grid; gap: .5rem; padding: 1.3rem 1.2rem 1.1rem; border-radius: 24px; border: var(--hair);
+  background: radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, #4FB0FF 28%, transparent), transparent 60%),
+              radial-gradient(100% 90% at 100% 100%, color-mix(in srgb, #A78BFA 26%, transparent), transparent 60%), var(--void-2); }
+.mg-name { display: flex; align-items: center; gap: .5rem; }
+.mg-name h2 { font-family: var(--f-serif); font-size: 1.55rem; margin: 0; color: var(--white); line-height: 1.15; }
+.mg-name-in { font: 700 1.3rem var(--f-serif); width: 100%; background: var(--well); color: var(--white); border: var(--hair); border-radius: 12px; padding: .4rem .6rem; }
+.mg-pen { all: unset; cursor: pointer; width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: var(--void-3); flex: none; }
+.mg-pen svg { width: 15px; height: 15px; fill: none; stroke: var(--white); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mg-sub { margin: 0; font-size: .82rem; color: var(--ink-soft); }
+.mg-bar { display: flex; gap: 3px; height: 7px; border-radius: 99px; overflow: hidden; }
+.mg-bar i { display: block; }
+.mg-acts { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .3rem; }
+.mg-btn { all: unset; cursor: pointer; font-size: .82rem; font-weight: 700; padding: .55rem .9rem; border-radius: 12px; background: var(--void-3); color: var(--white); }
+.mg-btn.main { background: var(--white); color: var(--void); }
+.mg-empty { padding: 1.2rem 1rem; border-radius: 18px; border: 1.5px dashed var(--void-3); text-align: center; }
+.mg-empty b { font-family: var(--f-serif); font-size: 1.05rem; color: var(--white); }
+.mg-empty p { font-size: .86rem; color: var(--ink-soft); line-height: 1.55; margin: .4rem 0 0; }
+.mg-secs { display: grid; gap: .8rem; }
+.mg-sec { border-radius: 20px; background: var(--void-2); border: var(--hair); overflow: hidden; }
+.mg-sec-h { all: unset; box-sizing: border-box; cursor: pointer; width: 100%; display: flex; align-items: center; gap: .75rem; padding: .8rem .9rem;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--mg-c) 18%, transparent), transparent); }
+.mg-sec-h .mg-ic { width: 36px; height: 36px; border-radius: 12px; background: var(--mg-c); }
+.mg-sec-h .mg-ic svg { width: 18px; height: 18px; }
+.mg-sec-t { display: grid; }
+.mg-sec-t b { font-family: var(--f-serif); color: var(--white); font-size: 1rem; }
+.mg-sec-t small { font-family: var(--f-ar-text); color: var(--ink-faint); font-size: .82rem; text-align: left; }
+.mg-n { margin-left: auto; font-size: .76rem; font-weight: 800; color: var(--mg-c); background: color-mix(in srgb, var(--mg-c) 15%, transparent); padding: .2rem .55rem; border-radius: 99px; }
+.mg-chev { color: var(--ink-faint); transition: transform .2s; }
+.mg-sec.shut .mg-chev { transform: rotate(-90deg); }
+.mg-sec.shut .mg-terms { display: none; }
+.mg-terms { display: grid; }
+.mg-t { display: grid; gap: .25rem; padding: .75rem .95rem; border-top: var(--hair); }
+.mg-pair { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .2rem .8rem; }
+.mg-en { font-weight: 700; color: var(--white); font-size: .94rem; }
+.mg-ar { font-family: var(--f-ar-text); font-size: 1.14rem; color: var(--white); margin-left: auto; }
+.mg-mine { justify-self: end; font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--mg-c); }
+.mg-dict { justify-self: end; font-size: .74rem; color: var(--ink-faint); }
+.mg-note { margin: 0; font-size: .8rem; color: var(--ink-soft); }
+.mg-src { font-size: .68rem; color: var(--ink-faint); }
+.mg-tacts { display: flex; gap: .4rem; justify-content: flex-end; }
+.mg-mini { all: unset; cursor: pointer; font-size: .7rem; font-weight: 700; color: var(--ink-soft); padding: .2rem .5rem; border-radius: 8px; background: var(--void-3); }
+.mg-mini.warn { color: #FF6B6B; }
+.mg-copy { justify-self: center; }
+.sheet.mg-sheet { max-height: 86vh; max-height: 86dvh; overflow-y: auto; overscroll-behavior: contain; }
+.mg-sheet h3 { font-size: 1.15rem; }
+.mg-sheet .mg-form { display: grid; gap: .65rem; }
+.mg-save { position: sticky; bottom: 0; }
+.mg-fl { display: grid; gap: .3rem; font-size: .76rem; font-weight: 700; color: var(--ink-soft); }
+.mg-fl input { font: 500 1rem var(--f-sans, inherit); padding: .65rem .75rem; border-radius: 12px; border: var(--hair); background: var(--well); color: var(--white); }
+.mg-pick-h { display: grid; gap: .2rem; padding: .7rem .8rem; border-radius: 14px; background: var(--well); }
+.mg-pick-h b { color: var(--white); }
+.mg-pick-h span { font-family: var(--f-ar-text); font-size: 1.15rem; color: var(--white); }
+.mg-pick-h small { font-size: .7rem; color: var(--ink-faint); }
+.mg-opts { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.mg-opt { all: unset; box-sizing: border-box; cursor: pointer; display: grid; gap: .2rem; padding: .65rem .7rem; border-radius: 14px; border: 1.5px solid var(--void-3); }
+.mg-opt b { font-size: .8rem; color: var(--white); }
+.mg-opt span { font-size: .78rem; color: var(--ink-soft); }
+.mg-opt.on { border-color: #4FB0FF; background: color-mix(in srgb, #4FB0FF 10%, transparent); }
+.mg-fchips { display: flex; flex-wrap: wrap; gap: .3rem; }
+.mg-fchip { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: .3rem; font-size: .72rem; font-weight: 700; padding: .32rem .6rem; border-radius: 99px; background: var(--void-3); color: var(--ink-soft); }
+.mg-fchip i { width: 7px; height: 7px; border-radius: 50%; }
+.mg-fchip.on { background: var(--white); color: var(--void); }
+.mg-msg { margin: 0; font-size: .8rem; color: #FF6B6B; min-height: 1em; }
+/* a field in depth */
+.sf-deep { display: grid; gap: .8rem; margin-top: .4rem; }
+.sf-dh { font-family: var(--f-serif); font-size: 1.2rem; margin: .4rem 0 0; color: var(--white); }
+.sf-dgrid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.sf-dt { all: unset; box-sizing: border-box; cursor: pointer; display: grid; gap: .3rem; align-content: start; padding: .85rem; border-radius: 18px; background: var(--void-2); border: var(--hair); }
+.sf-dt i { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; margin-bottom: .2rem; }
+.sf-dt i svg { width: 18px; height: 18px; }
+.sf-dt b { font-size: .88rem; color: var(--white); line-height: 1.3; }
+.sf-dt small { font-size: .72rem; color: var(--ink-faint); line-height: 1.35; }
+.sf-try { display: grid; gap: .45rem; padding: 1.1rem; border-radius: 22px; margin-top: .4rem; border: var(--hair);
+  background: radial-gradient(120% 100% at 100% 0%, color-mix(in srgb, var(--sd-c) 30%, transparent), transparent 65%), var(--void-2); }
+.sf-try-k { font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--sd-c); }
+.sf-try b { font-family: var(--f-serif); font-size: 1.15rem; color: var(--white); }
+.sf-try p { margin: 0; font-size: .86rem; color: var(--ink-soft); line-height: 1.5; }
+.sf-try-go { justify-self: start; margin-top: .3rem; }
+.sf-azex { display: grid; gap: .4rem; }
+.sf-azex div { display: grid; gap: .15rem; background: var(--well); border-radius: 12px; padding: .55rem .7rem; font-size: .88rem; }
+.sf-azex div span[dir] { line-height: 1.5; }
+
 
 
 /* no story posting for now: no story bar on Home, no story ring on your photo */
@@ -13953,127 +14100,515 @@ function runSpecField(f) {
   }
   stage.appendChild(el("div", "card sf-watch", '<span class="b-lab">Watch out for</span><ul>' + f.watch.map(w => '<li>' + w + '</li>').join("") + '</ul>'));
   stage.appendChild(el("p", "sd-note", "Sources: " + f.srcs));
+  stage.appendChild(sfDeep(f));
   stage.appendChild(footNav({}));
 }
 
-/* ═══════════ SPECIALIZED DICTIONARIES ═══════════
-   Free, published Arabic–English term banks, one per field, each opened
-   on its publisher's own site. Every fact here is from the publisher or
-   a report about it, listed under "Where this is from"; nothing is
-   estimated. One print book is included and marked as such. */
-const SPEC_DICTS = [
-  { id: "sd-umd", field: "Medicine", fieldAr: "الطب",
-    en: "Unified Medical Dictionary", ar: "المعجم الطبي الموحد",
-    by: "World Health Organization, Regional Office for the Eastern Mediterranean (WHO EMRO)",
-    langs: "English ⇄ Arabic; many entries also in French, German and Spanish",
-    facts: ["The fifth online edition has more than 200,000 English–Arabic entries.",
-            "It began in Baghdad in the 1960s under the Arab Medical Union; WHO EMRO took over its development in 1973.",
-            "A WHO EMRO app is also available on the App Store."],
-    use: "Anatomy, diseases, drugs and procedures: the unified Arabic term rather than a translator's own coinage.",
-    url: "https://umd.emro.who.int/WHODictionary/", cta: "Open the dictionary",
-    src: [["WHO EMRO · About the UMD", "https://umd.emro.who.int/WHODictionary/Home/AboutUs"],
-          ["EMHJ (2016) · the WHO Global Arabic Programme", "https://www.emro.who.int/emhj-volume-22-2016/volume-22-issue-5/reviewing-the-role-of-the-who-global-arabic-programme.html"]] },
-  { id: "sd-unterm", field: "Diplomacy and politics", fieldAr: "الدبلوماسية والسياسة",
-    en: "UNTERM, the United Nations Terminology Database", ar: "قاعدة بيانات المصطلحات للأمم المتحدة",
-    by: "United Nations, Department for General Assembly and Conference Management",
-    langs: "The six official UN languages: Arabic, Chinese, English, French, Russian and Spanish",
-    facts: ["The official terminology of the UN's work, kept by UN language staff so that the same term is used across the system.",
-            "It brings together the terminology of the UN duty stations in New York, Geneva, Vienna and Nairobi, the regional commissions and agencies such as WHO and UNESCO.",
-            "Free to search, with no registration."],
-    use: "Resolutions, treaties, conferences, human rights, peacekeeping: the Arabic the UN itself uses.",
-    url: "https://unterm.un.org/unterm2/en", cta: "Open UNTERM",
-    src: [["UNTERM · About", "https://unterm.un.org/unterm2/about"],
-          ["Wikipedia · UN Multilingual Terminology Database", "https://en.wikipedia.org/wiki/United_Nations_Multilingual_Terminology_Database"]] },
-  { id: "sd-diplo", field: "Diplomacy and politics", fieldAr: "الدبلوماسية والسياسة",
-    en: "Diplomacy Arabic: Essential Middle Eastern Vocabularies", ar: "العربية الدبلوماسية",
-    by: "Edinburgh University Press · a print and e-book title, not free",
-    langs: "Arabic with English",
-    facts: ["More than 1,300 Arabic expressions, terms and idioms in ten key areas of diplomatic discourse.",
-            "An alphabetical index of every English term."],
-    use: "When the question is not a single term but how diplomatic Arabic is phrased.",
-    url: "https://www.degruyterbrill.com/document/doi/10.1515/9781474461252", cta: "See the book",
-    src: [["De Gruyter Brill · Diplomacy Arabic", "https://www.degruyterbrill.com/document/doi/10.1515/9781474461252"]] },
-  { id: "sd-wipo", field: "Law, patents and science", fieldAr: "القانون وبراءات الاختراع والعلوم",
-    en: "WIPO Pearl", ar: "بوابة ويبو بيرل للمصطلحات",
-    by: "World Intellectual Property Organization (WIPO)",
-    langs: "Ten languages, Arabic and English among them",
-    facts: ["More than 285,000 terms drawn from patent documents.",
-            "Every entry is validated by WIPO's language experts and terminologists and carries a reliability score.",
-            "Free; the interface is in Arabic as well as English."],
-    use: "Intellectual property law and the scientific and technical vocabulary of patents.",
-    url: "https://www.wipo.int/web/wipo-pearl", cta: "Open WIPO Pearl",
-    src: [["WIPO Pearl", "https://www.wipo.int/web/wipo-pearl"],
-          ["WIPO · WIPO Pearl interface in Arabic (2019)", "https://www.wipo.int/en/web/wipo-pearl/w/news/2019/news_0003"]] },
-  { id: "sd-imf", field: "Economics and finance", fieldAr: "الاقتصاد والمال",
-    en: "IMF Terminology", ar: "مصطلحات صندوق النقد الدولي",
-    by: "International Monetary Fund",
-    langs: "English, with Arabic, Chinese, French, Japanese, Portuguese, Russian and Spanish",
-    facts: ["More than 17,000 entries and acronyms from IMF documents.",
-            "Money and banking, public finance, the balance of payments and economic growth.",
-            "Open to the public to consult, read-only."],
-    use: "Economic reports, budgets, central-bank and financial texts.",
-    url: "https://www.imf.org/en/About/Terminology", cta: "Open IMF Terminology",
-    src: [["IMF · Terminology", "https://www.imf.org/en/About/Terminology"]] },
-  { id: "sd-escwa", field: "Development, society and water", fieldAr: "التنمية والمجتمع والمياه",
-    en: "ESCWA glossaries", ar: "مسارد الإسكوا",
-    by: "United Nations Economic and Social Commission for Western Asia (ESCWA)",
-    langs: "English ⇄ Arabic (the social protection glossary also in French)",
-    facts: ["Glossary of Shared Water Resources: technical, socio-economic and legal terms.",
-            "Trilingual Glossary of Key Social Protection Terminology, volume 1.",
-            "A gender glossary, English–Arabic."],
-    use: "Development reports, social policy, gender and water management in the Arab region.",
-    links: [["Shared water resources", "https://www.unescwa.org/publications/glossary-shared-water-resources"],
-            ["Social protection", "https://www.unescwa.org/publications/trilingual-glossary-social-protection-terminology-volume-1"],
-            ["Gender", "https://unescwa.org/tools/gender-glossary"]],
-    src: [["ESCWA publications", "https://www.unescwa.org/publications/glossary-shared-water-resources"]] },
-  { id: "sd-arabterm", field: "Engineering and technology", fieldAr: "الهندسة والتقنية",
-    en: "ARABTERM", ar: "المعجم التقني أرابترم",
-    by: "ALECSO (Arab League Educational, Cultural and Scientific Organization) with Germany's Federal Ministry for Economic Cooperation and Development; carried out by GIZ and the Arabization Coordination Bureau in Rabat",
-    langs: "Arabic, English, French and German",
-    facts: ["Standardised Modern Standard Arabic terms, often with a definition, organised by sector.",
-            "Fields include civil and hydraulic engineering, automotive technology, renewable energy, electrical engineering and IT, and water.",
-            "Free, with a phone app."],
-    use: "Technical manuals, engineering and energy texts.",
-    url: "https://www.arabterm.org", cta: "Open ARABTERM",
-    src: [["GIZ · ARABTERM", "https://giz.de/en/worldwide/16261.html"],
-          ["Al-Fanar Media (2014)", "https://al-fanarmedia.org/2014/01/arabterm-an-online-technical-dictionary/"]] },
-  { id: "sd-siwar", field: "Arabic dictionaries and energy terms", fieldAr: "معاجم عربية ومصطلحات الطاقة",
-    en: "Siwar", ar: "منصة سوار للمعاجم",
-    by: "King Salman Global Academy for the Arabic Language",
-    langs: "Arabic, with translation to and from Arabic",
-    facts: ["Launched in 2024 with ten dictionaries and more than 180,000 entries.",
-            "Includes the Energy Terminology Dictionary (with the Saudi Ministry of Energy): more than 1,500 Arabic–English terms in eight fields."],
-    use: "Checking an Arabic term against several dictionaries at once, and energy terminology.",
-    url: "https://siwar.ksaa.gov.sa", cta: "Open Siwar",
-    src: [["KSGAAL · Siwar launch", "https://ksaa.gov.sa/en/news/ksgaal-launches-siwar-linguistic-dictionaries-platform"],
-          ["KSGAAL · Energy Terminology Dictionary", "https://ksaa.gov.sa/en/news/ksgaal-launches-energy-terminology-dictionary-in-collaboration-with-the-ministry-of-energy"]] }
+/* ═══════════ SPECIALIZED DICTIONARIES · inside the Compass ═══════════
+   Searched here, like Lisan al-Arab and Wiktionary; nothing opens another
+   site. Every pair is printed in a named source the Compass already
+   carries: the official Arabic and English texts of the UN Charter and the
+   Universal Declaration, and Husni & Newman's two books (the legal chapter
+   of Issues and Strategies, the newspaper passages of its chapter 2, its
+   bilingual contract and guarantee, and the example sentences of the
+   A to Z). Each entry shows where it is from. Nothing is coined here. */
+const SD_FIELDS = [
+  { id: "legal",    en: "Legal",                   ar: "القانون",              c: "#FFB547", booth: "legal",      sf: "sf-legal",
+    ico: '<path d="M12 4v16M7 20h10M5 8h14M7 8l-2.5 5a3 3 0 0 0 5 0L7 8zM17 8l-2.5 5a3 3 0 0 0 5 0L17 8z"/>' },
+  { id: "politics", en: "Political and diplomatic", ar: "السياسة والدبلوماسية", c: "#4FB0FF", booth: "diplomatic", sf: "sf-political",
+    ico: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 3.9 5.2 3.9 8.5s-1.3 6.1-3.9 8.5c-2.6-2.4-3.9-5.2-3.9-8.5S9.4 5.9 12 3.5z"/>' },
+  { id: "media",    en: "Media and news",          ar: "الإعلام والأخبار",      c: "#FF6B6B", booth: "media",      sf: "sf-media",
+    ico: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h6M7 13h6M7 16h4M16 9h2M16 13h2"/>' },
+  { id: "medical",  en: "Medical",                 ar: "الطب",                 c: "#2BC48A", booth: "medical",    sf: "sf-medical",
+    ico: '<path d="M4 12h3l2-5 3 10 2.5-6 1.5 3h4"/>' },
+  { id: "economic", en: "Economic and commercial", ar: "الاقتصاد والتجارة",     c: "#F472B6", booth: "business",   sf: "sf-economic",
+    ico: '<path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/>' },
+  { id: "rights",   en: "Human rights",            ar: "حقوق الإنسان",          c: "#A78BFA", booth: "rights",     sf: null,
+    ico: '<path d="M12 21s-7-4.4-7-10.2A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 7 2.8C19 16.6 12 21 12 21z"/>' }
 ];
-
-function runSpecDict(d) {
-  setCount(""); stage.innerHTML = "";
-  const head = el("div", "c-hero");
-  head.innerHTML = '<span class="c-badge">' + esc(d.field) + ' · <span dir="rtl" lang="ar">' + esc(d.fieldAr) + '</span></span>' +
-    '<h2 class="c-title">' + esc(d.en) + '</h2>' +
-    '<p class="c-ar" dir="rtl" lang="ar">' + esc(d.ar) + '</p>' +
-    '<p class="c-line">' + esc(d.use) + '</p>';
-  stage.appendChild(head);
-  const card = el("div", "card sd-card");
-  card.innerHTML = '<dl class="sd-meta"><dt>Published by</dt><dd>' + esc(d.by) + '</dd><dt>Languages</dt><dd>' + esc(d.langs) + '</dd></dl>' +
-    '<ul class="sd-facts">' + d.facts.map(f => '<li>' + esc(f) + '</li>').join("") + '</ul>';
-  stage.appendChild(card);
-  const go = el("div", "sd-go");
-  (d.links || [[d.cta, d.url]]).forEach(([lab, url]) => {
-    const a = document.createElement("a");
-    a.className = "btn-wide sd-open"; a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer";
-    a.textContent = lab + " ↗";
-    go.appendChild(a);
+/* where each booth setting's pairs are printed (the booth's own notes say
+   so page by page) */
+const SD_BOOTH = {
+  diplomatic: ["politics", "Charter of the United Nations (1945), official Arabic and English texts"],
+  legal:      ["legal",    "Husni & Newman (2015), Arabic–English–Arabic Translation, ch. 3"],
+  media:      ["media",    "Husni & Newman (2015), ch. 2, and (2013), A to Z"],
+  medical:    ["medical",  "Husni & Newman (2013), A to Z of Arabic–English–Arabic Translation"],
+  business:   ["economic", "Husni & Newman (2015), pp. 156–159: an employment contract and a product guarantee"],
+  rights:     ["rights",   "Universal Declaration of Human Rights (1948), official Arabic and English texts"]
+};
+/* the booth keeps answers in lower case for matching; names of bodies
+   are shown as they are written */
+const SD_NAMES = ["general assembly", "security council", "economic and social council", "trusteeship council",
+  "international court of justice", "secretariat", "secretary-general", "court of cassation", "court of appeal",
+  "national assembly", "consultative council", "council of ministers", "civil code", "constitution"];
+function sdCase(s) {
+  let t = String(s || "");
+  SD_NAMES.forEach(n => {
+    t = t.replace(new RegExp("\\b" + n.replace(/-/g, "\\-") + "\\b", "g"),
+      n.split(" ").map(w => w.split("-").map(p => p === "and" || p === "of" ? p : p.charAt(0).toUpperCase() + p.slice(1)).join("-")).join(" "));
   });
-  stage.appendChild(go);
-  stage.appendChild(el("p", "sd-note", "Opens on the publisher's own site. Check each term against a source text in the field before you use it."));
-  const src = el("div", "sd-src");
-  src.innerHTML = '<span>Where this is from</span>' + d.src.map(([t, u]) => '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + esc(t) + '</a>').join("");
-  stage.appendChild(src);
-  stage.appendChild(footNav({}));
+  return t;
+}
+const sdFold = s => String(s || "").toLowerCase().replace(/[ً-ٰٟـ]/g, "")
+  .replace(/[أإآٱ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ه").replace(/[’']/g, "'");
+const sdKey = e => e.f + "|" + e.en.toLowerCase();
+const sdField = id => SD_FIELDS.find(f => f.id === id);
+
+let SD_CACHE = null;
+async function sdEntries() {
+  if (SD_CACHE) return SD_CACHE;
+  const out = [], seen = new Set();
+  const add = (f, en, ar, src, note, kind) => {
+    en = String(en || "").trim(); ar = String(ar || "").trim();
+    if (!en || !ar) return;
+    const k = f + "|" + sdFold(ar) + "|" + en.toLowerCase();
+    if (seen.has(k)) return;
+    seen.add(k);
+    out.push({ f: f, en: en, ar: ar, src: src, note: note || "", kind: kind || "term" });
+  };
+  BOOTH_GENRES.forEach(g => {
+    const m = SD_BOOTH[g.id]; if (!m) return;
+    (g.terms || []).forEach(t => add(m[0], sdCase(t.ok[0]), t.ar, m[1], "", "term"));
+    (g.phrases || []).forEach(t => add(m[0], sdCase(t.ok[0]), t.ar, m[1], "", "phrase"));
+  });
+  GLOSSARY.filter(g => g.lib === "lg").forEach(g => add("legal", g.en, g.ar, g.src, g.def, "term"));
+  try {
+    const L = await loadLib("legal");
+    const S = id => L.sections.find(s => s.id === id) || {};
+    const at = s => "Husni & Newman (2015), ch. 3, pp. " + (s.pg || "");
+    const parl = S("parliaments");
+    ((parl.table || {}).rows || []).forEach(r => add("politics", r[2], r[0], at(parl), "The official English name · " + r[1], "term"));
+    const lay = S("layout");
+    ((lay.table || {}).rows || []).forEach(r => {
+      const forms = [...new Set(r.slice(1))];
+      add("legal", r[0], forms.join(" / "), at(lay),
+        forms.length > 1 ? "Divisions of a law differ by country (Table 3.3): Egypt " + r[1] + ", Morocco " + r[2] + ", Syria " + r[3] + ", Tunisia " + r[4] + "." : "", "term");
+    });
+    const tm = S("terms");
+    ((tm.table || {}).rows || []).forEach(r => add("legal", r[1], r[0], at(tm), "", "term"));
+    const eng = S("english");
+    ((eng.table || {}).rows || []).forEach(r => add("legal", r[0], r[1], at(eng), "An English legal doublet: Arabic says it once.", "phrase"));
+    const com = S("common");
+    ((com.table || {}).rows || []).forEach(r => {
+      const legal = String(r[2] || "").split("·"), gen = String(r[1] || "").split("·");
+      if (legal.length === 2) add("legal", r[0] + " (" + legal[0].trim() + ")", legal[1].trim(), at(com),
+        "In everyday English: " + gen[0].trim() + (gen[1] ? " (" + gen[1].trim() + ")" : "") + ".", "term");
+    });
+    const ar = S("arabic");
+    ((ar.table || {}).rows || []).forEach(r => {
+      String(r[1] || "").split("·").forEach(chunk => {
+        const m2 = /^\s*([؀-ۿ\s]+?)[;\s]+([A-Za-z].*?)\s*$/.exec(chunk);
+        if (m2) add("legal", m2[2], m2[1], at(ar), "Strategy: " + r[0] + ".", "term");
+      });
+    });
+  } catch (e) { /* the legal chapter's tables come with the page next time */ }
+  out.sort((a, b) => a.en.toLowerCase() < b.en.toLowerCase() ? -1 : 1);
+  SD_CACHE = out;
+  return out;
+}
+
+/* ═══ MY GLOSSARY ═══
+   A member's own terms, from the dictionaries or their own, kept under the
+   field they belong to. It rides on the member's own row with the
+   portfolio, so it follows them from device to device and no one else
+   can read it. */
+const MG_FIELDS = SD_FIELDS.concat([
+  { id: "technical", en: "Scientific and technical", ar: "العلوم والتقنية", c: "#2DD4BF", ico: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>' },
+  { id: "literary",  en: "Literary",                 ar: "الأدب",           c: "#FBBF24", ico: '<path d="M5 4h9a5 5 0 0 1 5 5v11H10a5 5 0 0 1-5-5z"/>' },
+  { id: "general",   en: "General",                  ar: "عام",             c: "#94A3B8", ico: '<circle cx="12" cy="12" r="8.5"/>' }
+]);
+const mgField = id => MG_FIELDS.find(f => f.id === id) || MG_FIELDS[MG_FIELDS.length - 1];
+function myGloss() {
+  const w = workBook();
+  let g = w.__glossary;
+  if (!g || typeof g !== "object") g = w.__glossary = { text: "glossary", at: "", name: "", terms: [], fav: {} };
+  if (!Array.isArray(g.terms)) g.terms = [];
+  if (!g.fav || typeof g.fav !== "object") g.fav = {};
+  g.text = "glossary";
+  return g;
+}
+function glossTouch() {
+  myGloss().at = new Date().toISOString();
+  save();
+  if (typeof pushBackend === "function" && !isGuest()) pushBackend().catch(() => {});
+}
+function glossName() { return (myGloss().name || "").trim() || "My glossary"; }
+function glossHas(e) { return myGloss().terms.some(t => t.f === e.f && t.en.toLowerCase() === e.en.toLowerCase()); }
+function sdFav(e) { return !!myGloss().fav[sdKey(e)]; }
+function sdToggleFav(e) {
+  const g = myGloss(), k = sdKey(e);
+  if (g.fav[k]) delete g.fav[k]; else g.fav[k] = 1;
+  glossTouch();
+  return !!g.fav[k];
+}
+
+/* one sheet for adding from a dictionary, adding your own, and editing */
+function glossSheet(seed, onDone) {
+  const g = myGloss();
+  const editing = seed && seed.id && g.terms.find(t => t.id === seed.id);
+  const fromDict = !!(seed && seed.dict && !editing);
+  const s = storySheet(editing ? "Edit the term" : fromDict ? "Add to " + glossName() : "Add your own term");
+  s.sheet.classList.add("mg-sheet");
+  const form = el("div", "mg-form");
+  const field = (lab, v, ph, dir) => {
+    const w = el("label", "mg-fl", "<span>" + lab + "</span>");
+    const i = document.createElement("input");
+    i.value = v || ""; i.placeholder = ph || ""; if (dir) i.dir = dir;
+    w.appendChild(i); form.appendChild(w); return i;
+  };
+  let en, ar, own = null, useOwn = !!(editing && editing.own);
+  if (fromDict) {
+    form.appendChild(el("div", "mg-pick-h",
+      '<b>' + esc(seed.en) + '</b><span dir="rtl" lang="ar">' + esc(seed.ar) + '</span><small>' + esc(seed.src) + '</small>'));
+    const opts = el("div", "mg-opts");
+    const o1 = el("button", "mg-opt on", '<b>Use the dictionary’s</b><span dir="rtl" lang="ar">' + esc(seed.ar) + '</span>');
+    const o2 = el("button", "mg-opt", '<b>My own translation</b><span>The one you prefer</span>');
+    [o1, o2].forEach(b => { b.type = "button"; opts.appendChild(b); });
+    form.appendChild(opts);
+    const ownW = el("label", "mg-fl", "<span>Your translation</span>"); ownW.hidden = true;
+    own = document.createElement("input"); own.dir = "auto"; own.placeholder = "Write it the way you use it";
+    ownW.appendChild(own); form.appendChild(ownW);
+    o1.addEventListener("click", () => { useOwn = false; o1.classList.add("on"); o2.classList.remove("on"); ownW.hidden = true; });
+    o2.addEventListener("click", () => { useOwn = true; o2.classList.add("on"); o1.classList.remove("on"); ownW.hidden = false; own.focus(); });
+  } else {
+    en = field("English", editing ? editing.en : (seed && seed.en) || "", "e.g. ceasefire", "ltr");
+    ar = field("Arabic", editing ? (editing.own || editing.ar) : (seed && seed.ar) || "", "مثلاً: وقف إطلاق النار", "rtl");
+  }
+  const fw = el("div", "mg-fl", "<span>Section</span>");
+  const chips = el("div", "mg-fchips");
+  let pick = (editing && editing.f) || (seed && seed.f) || "general";
+  MG_FIELDS.forEach(f => {
+    const b = el("button", "mg-fchip" + (f.id === pick ? " on" : ""), '<i style="background:' + f.c + '"></i>' + f.en);
+    b.type = "button";
+    b.addEventListener("click", () => { pick = f.id; chips.querySelectorAll(".mg-fchip").forEach(x => x.classList.toggle("on", x === b)); });
+    chips.appendChild(b);
+  });
+  fw.appendChild(chips); form.appendChild(fw);
+  const note = field("Note (optional)", editing ? editing.note : "", "Where you use it, a context, a reminder");
+  const msg = el("p", "mg-msg"); form.appendChild(msg);
+  const go = el("button", "primary mg-save", editing ? "Save changes" : "Add to " + esc(glossName()));
+  go.type = "button"; form.appendChild(go);
+  s.sheet.appendChild(form);
+  go.addEventListener("click", () => {
+    let row;
+    if (fromDict) {
+      const mine = useOwn ? own.value.trim() : "";
+      if (useOwn && !mine) { msg.textContent = "Write your translation, or use the dictionary’s."; return; }
+      row = { en: seed.en, ar: seed.ar, own: mine, src: seed.src };
+    } else {
+      const e1 = en.value.trim(), a1 = ar.value.trim();
+      if (!e1 || !a1) { msg.textContent = "Both languages, please."; return; }
+      row = editing && editing.src
+        ? { en: e1, ar: editing.ar, own: a1 !== editing.ar ? a1 : "", src: editing.src }
+        : { en: e1, ar: a1, own: "", src: "" };
+    }
+    row.f = pick; row.note = note.value.trim();
+    if (editing) Object.assign(editing, row);
+    else {
+      const dup = g.terms.find(t => t.f === row.f && t.en.toLowerCase() === row.en.toLowerCase());
+      if (dup) Object.assign(dup, row);
+      else g.terms.push(Object.assign({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), at: new Date().toISOString() }, row));
+    }
+    glossTouch();
+    s.done();
+    if (onDone) onDone();
+  });
+}
+
+function sdRow(e, after) {
+  const f = sdField(e.f);
+  const row = el("div", "sd-row");
+  row.style.setProperty("--sd-c", f.c);
+  row.innerHTML =
+    '<div class="sd-main"><span class="sd-en">' + esc(e.en) + '</span>' +
+    '<span class="sd-ar" dir="rtl" lang="ar">' + esc(e.ar) + '</span></div>' +
+    (e.note ? '<p class="sd-note2">' + esc(e.note) + '</p>' : '') +
+    '<div class="sd-meta"><span class="sd-tag" style="color:' + f.c + '">' + f.en + (e.kind === "phrase" ? " · phrase" : "") + '</span>' +
+    '<span class="sd-src">' + esc(e.src) + '</span></div>';
+  const acts = el("div", "sd-acts");
+  const star = el("button", "sd-star" + (sdFav(e) ? " on" : ""), "★");
+  star.type = "button"; star.setAttribute("aria-label", "Favourite");
+  star.setAttribute("aria-pressed", sdFav(e) ? "true" : "false");
+  star.addEventListener("click", () => {
+    const on = sdToggleFav(e); star.classList.toggle("on", on); star.setAttribute("aria-pressed", on ? "true" : "false");
+    if (after) after("fav");
+  });
+  const add = el("button", "sd-add" + (glossHas(e) ? " in" : ""), glossHas(e) ? "✓ In glossary" : "＋ Glossary");
+  add.type = "button";
+  add.addEventListener("click", () => glossSheet(Object.assign({ dict: true }, e), () => {
+    add.classList.add("in"); add.textContent = "✓ In glossary"; if (after) after("add");
+  }));
+  acts.appendChild(star); acts.appendChild(add);
+  row.appendChild(acts);
+  return row;
+}
+
+function runSpecDictPage(fid) {
+  let q = "", pick = fid || "all", favOnly = false;
+  setCount("A dictionary · search in English or Arabic");
+  stage.innerHTML = "";
+  stage.appendChild(el("p", "note", "Loading…"));
+  sdEntries().then(all => {
+    let list, note;
+    function hits() {
+      const fq = sdFold(q.trim());
+      return all.filter(e => (pick === "all" || e.f === pick) && (!favOnly || sdFav(e)) &&
+        (!fq || sdFold(e.en + " " + e.ar + " " + e.note).indexOf(fq) >= 0));
+    }
+    function paintList() {
+      const h = hits();
+      list.innerHTML = "";
+      note.textContent = h.length ? h.length + (h.length === 1 ? " entry" : " entries") :
+        favOnly ? "No favourites here yet. Tap ★ beside a term to keep it." : "Nothing matches that. Try the other language, or a shorter word.";
+      h.slice(0, 250).forEach(e => list.appendChild(sdRow(e, k => { if (k === "fav" && favOnly) paintList(); })));
+    }
+    function render() {
+      stage.innerHTML = "";
+      setDots(0, 0, 0);
+      const f = sdField(pick);
+      const hero = el("div", "sd-hero");
+      hero.style.setProperty("--sd-c", f ? f.c : "#4FB0FF");
+      hero.innerHTML = '<span class="sd-ic"><svg viewBox="0 0 24 24" aria-hidden="true">' + (f ? f.ico : SD_FIELDS[1].ico) + '</svg></span>' +
+        '<div><h2>' + (f ? f.en + " dictionary" : "Specialized dictionaries") + '</h2>' +
+        '<p dir="rtl" lang="ar">' + (f ? "معجم " + f.ar : "المعاجم المتخصصة") + '</p></div>';
+      stage.appendChild(hero);
+      const search = el("div", "gl-search sd-search");
+      const input = document.createElement("input");
+      input.type = "search"; input.value = q; input.dir = "auto";
+      input.placeholder = "Search a term · ابحث عن مصطلح";
+      input.setAttribute("aria-label", "Search the dictionary");
+      input.addEventListener("input", () => { q = input.value; paintList(); });
+      search.appendChild(input); stage.appendChild(search);
+      const chips = el("div", "sd-chips");
+      [["all", "All fields", null]].concat(SD_FIELDS.map(x => [x.id, x.en, x.c])).forEach(([id, lab, c]) => {
+        const b = el("button", "sd-chip" + (pick === id ? " on" : ""), (c ? '<i style="background:' + c + '"></i>' : "") + lab);
+        b.type = "button"; b.addEventListener("click", () => { pick = id; render(); });
+        chips.appendChild(b);
+      });
+      const fb = el("button", "sd-chip sd-favc" + (favOnly ? " on" : ""), "★ Favourites");
+      fb.type = "button"; fb.addEventListener("click", () => { favOnly = !favOnly; render(); });
+      chips.appendChild(fb);
+      stage.appendChild(chips);
+      const mg = el("button", "sd-mg", '<span>📘 ' + esc(glossName()) + '</span><small>' + myGloss().terms.length + ' terms · open</small>');
+      mg.type = "button"; mg.addEventListener("click", () => openItem(MYGLOSS_ITEM));
+      stage.appendChild(mg);
+      note = el("p", "note sd-count"); stage.appendChild(note);
+      list = el("div", "sd-list"); stage.appendChild(list);
+      paintList();
+      stage.appendChild(el("p", "sd-note",
+        "Every entry is printed in the source named under it: the official Arabic and English texts of the Charter of the United Nations and " +
+        "the Universal Declaration of Human Rights, and Husni &amp; Newman, <i>Arabic–English–Arabic Translation: Issues and Strategies</i> (2015) " +
+        "and <i>A to Z of Arabic–English–Arabic Translation</i> (2013). The dictionaries grow as sources are added."));
+      stage.appendChild(footNav({}));
+    }
+    render();
+  });
+}
+
+function runMyGlossary() {
+  let q = "", open = {};
+  setCount("Your own terms, by field");
+  function render() {
+    stage.innerHTML = "";
+    setDots(0, 0, 0);
+    const g = myGloss();
+    const byF = {};
+    g.terms.forEach(t => { (byF[t.f] = byF[t.f] || []).push(t); });
+    const secs = MG_FIELDS.filter(f => byF[f.id]);
+    const hero = el("div", "mg-hero");
+    const nm = el("div", "mg-name");
+    const h = el("h2", null, esc(glossName()));
+    const pen = el("button", "mg-pen", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z"/></svg>');
+    pen.type = "button"; pen.setAttribute("aria-label", "Rename your glossary");
+    pen.addEventListener("click", () => {
+      const i = document.createElement("input");
+      i.className = "mg-name-in"; i.value = g.name || ""; i.placeholder = "e.g. Shaikha’s glossary"; i.maxLength = 60;
+      h.replaceWith(i); pen.hidden = true; i.focus();
+      const done = () => { g.name = i.value.trim(); glossTouch(); render(); };
+      i.addEventListener("keydown", e => { if (e.key === "Enter") i.blur(); });
+      i.addEventListener("blur", done);
+    });
+    nm.appendChild(h); nm.appendChild(pen);
+    hero.appendChild(nm);
+    hero.appendChild(el("p", "mg-sub", g.terms.length + (g.terms.length === 1 ? " term" : " terms") + " · " +
+      secs.length + (secs.length === 1 ? " section" : " sections")));
+    if (secs.length) {
+      const bar = el("div", "mg-bar");
+      secs.forEach(f => { const s2 = el("i"); s2.style.flex = byF[f.id].length; s2.style.background = f.c; bar.appendChild(s2); });
+      hero.appendChild(bar);
+    }
+    const acts = el("div", "mg-acts");
+    const addB = el("button", "mg-btn main", "＋ Add a term"); addB.type = "button";
+    addB.addEventListener("click", () => glossSheet(null, render));
+    const dictB = el("button", "mg-btn", "Browse the dictionaries"); dictB.type = "button";
+    dictB.addEventListener("click", () => openItem(ITEMS.find(t => t.id === "sd-politics")));
+    acts.appendChild(addB); acts.appendChild(dictB);
+    hero.appendChild(acts);
+    stage.appendChild(hero);
+
+    if (!g.terms.length) {
+      stage.appendChild(el("div", "mg-empty",
+        '<b>Your glossary is empty</b><p>Add the terms you use. Tap <b>＋ Glossary</b> beside any term in the specialized dictionaries, ' +
+        'keep its translation or write the one you prefer, and it lands here under its field: politics with politics, media with media.</p>'));
+      stage.appendChild(footNav({}));
+      return;
+    }
+    if (g.terms.length > 6) {
+      const search = el("div", "gl-search");
+      const input = document.createElement("input");
+      input.type = "search"; input.value = q; input.dir = "auto"; input.placeholder = "Search your glossary";
+      input.addEventListener("input", () => { q = input.value; paintSecs(); });
+      search.appendChild(input); stage.appendChild(search);
+    }
+    const box = el("div", "mg-secs"); stage.appendChild(box);
+    function paintSecs() {
+      box.innerHTML = "";
+      const fq = sdFold(q.trim());
+      secs.forEach(f => {
+        const rows = byF[f.id].filter(t => !fq || sdFold(t.en + " " + t.ar + " " + t.own + " " + t.note).indexOf(fq) >= 0)
+          .sort((a, b) => a.en.toLowerCase() < b.en.toLowerCase() ? -1 : 1);
+        if (!rows.length) return;
+        const sec = el("section", "mg-sec" + (open[f.id] === false ? " shut" : ""));
+        sec.style.setProperty("--mg-c", f.c);
+        const hd = el("button", "mg-sec-h",
+          '<span class="mg-ic"><svg viewBox="0 0 24 24" aria-hidden="true">' + f.ico + '</svg></span>' +
+          '<span class="mg-sec-t"><b>' + f.en + '</b><small dir="rtl" lang="ar">' + f.ar + '</small></span>' +
+          '<span class="mg-n">' + rows.length + '</span><span class="mg-chev" aria-hidden="true">⌄</span>');
+        hd.type = "button";
+        hd.addEventListener("click", () => { open[f.id] = sec.classList.contains("shut"); sec.classList.toggle("shut"); });
+        sec.appendChild(hd);
+        const body = el("div", "mg-terms");
+        rows.forEach(t => {
+          const r = el("div", "mg-t");
+          r.innerHTML = '<div class="mg-pair"><span class="mg-en">' + esc(t.en) + '</span>' +
+            '<span class="mg-ar" dir="rtl" lang="ar">' + esc(t.own || t.ar) + '</span></div>' +
+            (t.own ? '<span class="mg-mine">My rendering</span><span class="mg-dict">Dictionary: <span dir="rtl" lang="ar">' + esc(t.ar) + '</span></span>' : '') +
+            (t.note ? '<p class="mg-note">' + esc(t.note) + '</p>' : '') +
+            (t.src ? '<span class="mg-src">' + esc(t.src) + '</span>' : '<span class="mg-src">Added by you</span>');
+          const a = el("div", "mg-tacts");
+          const ed = el("button", "mg-mini", "Edit"); ed.type = "button";
+          ed.addEventListener("click", () => glossSheet({ id: t.id }, render));
+          const rm = el("button", "mg-mini", "Remove"); rm.type = "button";
+          rm.addEventListener("click", () => {
+            if (rm.dataset.sure) { g.terms = g.terms.filter(x => x.id !== t.id); glossTouch(); render(); }
+            else { rm.dataset.sure = "1"; rm.textContent = "Tap again to remove"; rm.classList.add("warn"); }
+          });
+          a.appendChild(ed); a.appendChild(rm); r.appendChild(a);
+          body.appendChild(r);
+        });
+        sec.appendChild(body);
+        box.appendChild(sec);
+      });
+    }
+    paintSecs();
+    const cp = el("button", "ghost mg-copy", "Copy the glossary as text"); cp.type = "button";
+    cp.addEventListener("click", () => {
+      const txt = glossName() + "\n\n" + secs.map(f => f.en + "\n" + byF[f.id].map(t => "• " + t.en + " — " + (t.own || t.ar) + (t.note ? " (" + t.note + ")" : "")).join("\n")).join("\n\n");
+      (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => { cp.textContent = "Copied ✓"; }, () => { cp.textContent = "Could not copy"; });
+    });
+    stage.appendChild(cp);
+    stage.appendChild(footNav({}));
+  }
+  render();
+}
+const MYGLOSS_ITEM = { id: "myglossary", ar: "مسردي", en: "My glossary", kind: "guide", section: "method",
+  subject: "Your own terms, by field", run: runMyGlossary };
+
+/* the glossary as it shows on the member's own profile */
+function glossCard() {
+  const g = myGloss();
+  const byF = {};
+  g.terms.forEach(t => { byF[t.f] = (byF[t.f] || 0) + 1; });
+  const fs = MG_FIELDS.filter(f => byF[f.id]);
+  const c = el("button", "mg-card");
+  c.type = "button";
+  c.innerHTML = '<span class="mg-card-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10.5A3.5 3.5 0 0 1 19 8v11.5H8.5A3.5 3.5 0 0 1 5 16z"/><path d="M5 16a3.5 3.5 0 0 1 3.5-3.5H19M9 8h6"/></svg></span>' +
+    '<span class="mg-card-t"><b>' + esc(glossName()) + '</b><small>' +
+    (g.terms.length ? g.terms.length + (g.terms.length === 1 ? " term" : " terms") + " · " + fs.length + (fs.length === 1 ? " section" : " sections") : "Your own terms, sorted by field") +
+    '</small>' + (fs.length ? '<span class="mg-card-dots">' + fs.map(f => '<i style="background:' + f.c + '" title="' + f.en + '"></i>').join("") + '</span>' : '') +
+    '</span><span class="mg-card-go" aria-hidden="true">›</span>';
+  c.addEventListener("click", () => openItem(MYGLOSS_ITEM));
+  return c;
+}
+
+/* ═══ A FIELD, IN DEPTH ═══
+   What opens under each field once the lesson is read: the field's own
+   dictionary, the chapter or A to Z entries that treat it, professionals
+   at work, and, last, the booth in that setting. */
+const SF_ATOZ = {
+  "sf-legal":     ["Will/shall", "Obligation", "Judicial/judicious/judiciary/judicature", "Nevertheless/notwithstanding", "Human/humane", "Hire/rent/let/lease/charter"],
+  "sf-medical":   ["Effective/efficient/efficacious", "Flammable, inflammable", "Anymore/no more/no longer/any longer", "Disused/misuse/abuse", "Ensure/insure/assure", "Transliteration and transcription", "As/because/since/for", "Nevertheless/notwithstanding", "Holiday/holidays/vacation/leave"],
+  "sf-political": ["Terms of address", "Interfere/interrupt/intervene", "Definite/definitive", "Criticism/critic/critique/critical", "The passive", "Northeast/southeast/…"],
+  "sf-economic":  ["Economic/economical", "Price/prize", "Rise/raise", "Affect/effect", "Hire/rent/let/lease/charter", "Invaluable/valueless"],
+  "sf-technical": ["Abbreviations/acronyms", "Transliteration and transcription", "Number/figure/digit/numeral", "Flammable, inflammable", "Punctuation"],
+  "sf-media":     ["Adverbs", "Agreement", "The present", "The future", "The passive", "Rise/raise", "Criticism/critic/critique/critical", "Conversation/conversant", "Hardly/barely/scarcely/no sooner", "Keep on …"]
+};
+const SF_VIDEO = { "sf-legal": "Legal", "sf-medical": "Medical", "sf-political": "Diplomatic" };
+
+function runSfAtoz(f) {
+  setCount("From the A to Z · " + f.en);
+  stage.innerHTML = ""; stage.appendChild(el("p", "note", "Loading…"));
+  loadLib("atoz").then(data => {
+    stage.innerHTML = "";
+    const want = SF_ATOZ[f.id] || [];
+    stage.appendChild(el("div", "verdict", '<span class="vh">Why these entries</span><p class="vb">The entries of Husni &amp; Newman’s ' +
+      '<i>A to Z of Arabic–English–Arabic Translation</i> whose problems turn up in ' + f.en.toLowerCase() +
+      ', with the book’s own Arabic and English pairs.</p>'));
+    want.map(h => data.find(e => e.h === h)).filter(Boolean).forEach(e => {
+      const c = el("section", "card sf-az");
+      c.innerHTML = '<div class="card-top"><h3>' + esc(e.h) + '</h3><span class="ct-ar" dir="rtl" lang="ar">' + esc(e.ar || "") + '</span></div>' +
+        '<p class="lib-p">' + esc(e.sum || "") + '</p>' +
+        ((e.pts || []).length ? '<ul class="sf-notes">' + e.pts.map(p => '<li dir="auto">' + esc(p) + '</li>').join("") + '</ul>' : '') +
+        ((e.ex || []).length ? '<div class="sf-azex">' + e.ex.map(x => '<div><span dir="auto">' + esc(x[0]) + '</span><span dir="auto">' + esc(x[1] || "") + '</span></div>').join("") + '</div>' : '');
+      stage.appendChild(c);
+    });
+    stage.appendChild(libSource("atoz"));
+    stage.appendChild(footNav({}));
+  }).catch(() => { stage.innerHTML = ""; stage.appendChild(el("p", "note", "That could not be loaded. Check the connection and try again.")); });
+}
+
+function sfDeep(f) {
+  const wrap = el("div", "sf-deep");
+  wrap.appendChild(el("h3", "sf-dh", "Go deeper"));
+  const sd = SD_FIELDS.find(x => x.sf === f.id);
+  const grid = el("div", "sf-dgrid");
+  const tile = (c, ico, t, s, go) => {
+    const b = el("button", "sf-dt", '<i style="background:' + c + '"><svg viewBox="0 0 24 24" aria-hidden="true">' + ico + '</svg></i><b>' + t + '</b><small>' + s + '</small>');
+    b.type = "button"; b.addEventListener("click", go); grid.appendChild(b);
+  };
+  if (sd) tile(sd.c, sd.ico, "The " + sd.en.toLowerCase() + " dictionary", "Search, favourite, add to your glossary",
+    () => openItem(ITEMS.find(t => t.id === "sd-" + sd.id)));
+  if (f.id === "sf-legal") tile("#FFB547", '<path d="M5 4h9a5 5 0 0 1 5 5v11H10a5 5 0 0 1-5-5z"/>', "The whole legal chapter",
+    "Husni &amp; Newman, ch. 3: thirteen sections", () => openItem(ITEMS.find(t => t.id === "lib-legal")));
+  if ((SF_ATOZ[f.id] || []).length) tile("#A78BFA", '<path d="M4 19h16M6 15l4-10 4 10M7.5 11.5h5M15 9h5"/>', "From the A to Z",
+    (SF_ATOZ[f.id] || []).length + " entries that trip translators here", () => openItem({ id: "sfaz-" + f.id, en: "From the A to Z",
+      subject: f.en, kind: "guide", section: "method", run: () => runSfAtoz(f) }));
+  tile("#2BC48A", '<path d="M5 4.5h10.5A3.5 3.5 0 0 1 19 8v11.5H8.5A3.5 3.5 0 0 1 5 16z"/>', esc(glossName()),
+    "Your own terms for this field", () => openItem(MYGLOSS_ITEM));
+  wrap.appendChild(grid);
+  const vk = SF_VIDEO[f.id];
+  const vids = vk ? BOOTH_VIDEOS.filter(v => v.t.indexOf(vk + " ·") === 0) : [];
+  if (vids.length) wrap.appendChild(videoStrip(vids, "Watch the field at work"));
+  /* last of all, as she asked: try it out loud */
+  if (sd && sd.booth) {
+    const dip = f.id === "sf-political";
+    const g = boothGenre(sd.booth);
+    const n = BOOTH_LEVELS.reduce((t, L) => t + (g[L.key] || []).length, 0);
+    const tr = el("div", "sf-try");
+    tr.style.setProperty("--sd-c", sd.c);
+    tr.innerHTML = '<span class="sf-try-k">' + (dip ? "Try diplomatic interpreting" : "Try interpreting") + '</span>' +
+      '<b>' + g.en + ' · <span dir="rtl" lang="ar">' + g.ar + '</span></b>' +
+      '<p>' + n + ' items from the same sources, from single terms up to a full turn of speech, against the clock.</p>';
+    const go = el("button", "primary sf-try-go", dip ? "Start diplomatic interpreting" : "Start interpreting");
+    go.type = "button";
+    go.addEventListener("click", () => {
+      const booth = ITEMS.find(t => t.id === "booth");
+      openItem(Object.assign({}, booth, { run: () => { stopBooth(); state.genre = g.id; save(); boothRound(g); } }));
+    });
+    tr.appendChild(go);
+    wrap.appendChild(tr);
+  }
+  return wrap;
 }
 
 const ITEMS = [
@@ -14142,8 +14677,10 @@ const ITEMS = [
     run: runWikt },
   ...SPEC_FIELDS.map(f => ({ id: f.id, ar: f.ar, en: f.en, kind: "guide", section: "method", group: "spectr",
     subject: f.line, blurb: f.line, run: () => runSpecField(f) })),
-  ...SPEC_DICTS.map(d => ({ id: d.id, ar: d.ar, en: d.en, kind: "guide", section: "method", group: "spec",
-    subject: d.field + " · " + d.fieldAr, blurb: d.use, run: () => runSpecDict(d) })),
+  ...SD_FIELDS.map(f => ({ id: "sd-" + f.id, ar: "معجم " + f.ar, en: f.en + " dictionary", kind: "guide", section: "method", group: "spec",
+    subject: "Specialized dictionary · searched here", blurb: "Search in English or Arabic, keep favourites, add terms to your glossary.",
+    run: () => runSpecDictPage(f.id) })),
+  Object.assign({ group: "spec", blurb: "Your own terms, each under its field. Name it, add to it, use your own renderings." }, MYGLOSS_ITEM),
   { id: "lib-atoz", ar: "من الألف إلى الياء", en: "A to Z of Arabic–English Translation", kind: "guide", section: "method", group: "library",
     subject: "Husni & Newman · every entry",
     blurb: "All 148 entries, from Abbreviations to Wish, with the book’s Arabic and English pairs. Searchable.",
@@ -20579,64 +21116,85 @@ const WORK_KINDS = [
 ];
 function workKind(t) { return WORK_KINDS.find(k => k.types.indexOf(t) >= 0); }
 function workSection(authorId, isMe) {
+  /* Three parts, each with its own heading, the way she asked: the
+     translations first, then the reposts, then everything else the
+     member has asked, set or opened, behind small tabs. */
   const wrap = el("div", "mw");
-  wrap.appendChild(el("div", "mw-h", "<b>" + (isMe ? "My work" : "Their work") + "</b>"));
-  const tiles = el("div", "mw-tiles"); wrap.appendChild(tiles);
+  const sec = (title, extra) => {
+    const s2 = el("section", "mw-sec");
+    const h = el("div", "mw-h", "<b>" + title + "</b><span class=\"mw-n\"></span>");
+    if (extra) h.appendChild(extra);
+    s2.appendChild(h);
+    wrap.appendChild(s2);
+    return { s: s2, n: h.querySelector(".mw-n") };
+  };
+  let addB = null;
   if (isMe) {
-    const add = el("button", "mw-add", "＋ Share a translation");
-    add.type = "button"; add.addEventListener("click", () => openItem(NEWPOST_ITEM));
-    wrap.appendChild(add);
+    addB = el("button", "mw-add", "＋ Post a translation");
+    addB.type = "button"; addB.addEventListener("click", () => openItem(NEWPOST_ITEM));
   }
-  const chips = el("div", "mw-chips"); wrap.appendChild(chips);
-  const list = el("div", "mw-list"); wrap.appendChild(list);
-  list.appendChild(el("p", "f-msg", "Loading\u2026"));
-  let own = [], reposts = [], pick = "all";
+  const T = sec(isMe ? "My translations" : "Translations", addB);
+  const trList = el("div", "mw-list"); T.s.appendChild(trList);
+  const R = sec("Reposts");
+  const rpRow = el("div", "mw-rps"); R.s.appendChild(rpRow);
+  const O = sec(isMe ? "Requests, challenges and discussions" : "Requests, challenges and discussions");
+  const tabs = el("div", "mw-chips"); O.s.appendChild(tabs);
+  const oList = el("div", "mw-list"); O.s.appendChild(oList);
+  trList.appendChild(el("p", "f-msg", "Loading\u2026"));
+  let own = [], reposts = [], pick = "rq", trAll = false;
   const types = WORK_KINDS.flatMap(k => k.types);
+  const card = r => {
+    const k = workKind(r.post_type) || WORK_KINDS[3];
+    const c = studioCard(r, k.sec, false, (POST_KINDS.find(x => x.id === r.post_type) || {}).en || k.one);
+    c.classList.add("mw-card"); c.style.setProperty("--mw-c", k.c);
+    return c;
+  };
   function paint() {
-    tiles.innerHTML = ""; chips.innerHTML = ""; list.innerHTML = "";
-    WORK_KINDS.forEach(k => {
-      const n = own.filter(r => k.types.indexOf(r.post_type) >= 0).length;
-      const t = el("button", "mw-tile" + (pick === k.id ? " on" : ""),
-        '<i style="background:' + k.c + '"><svg viewBox="0 0 24 24" aria-hidden="true">' + k.ico + '</svg></i><span><b>' + n + '</b><small>' + k.en + '</small></span>');
-      t.type = "button"; t.addEventListener("click", () => { pick = pick === k.id ? "all" : k.id; paint(); });
-      tiles.appendChild(t);
-    });
-    [["all", "All"]].concat(WORK_KINDS.map(k => [k.id, k.en]), [["rp", "Reposts"]]).forEach(([id, lab]) => {
-      const c = el("button", "mw-chip" + (pick === id ? " on" : ""), lab);
-      c.type = "button"; c.addEventListener("click", () => { pick = id; paint(); });
-      chips.appendChild(c);
-    });
-    let rows = pick === "rp" ? reposts
-      : pick === "all" ? own.concat(reposts).sort((a, b) => (a.created_at < b.created_at ? 1 : -1))
-      : own.filter(r => (WORK_KINDS.find(k => k.id === pick) || { types: [] }).types.indexOf(r.post_type) >= 0);
-    if (!rows.length) {
-      list.appendChild(el("p", "mw-empty", pick === "rp" ? (isMe ? "Posts you repost appear here." : "No reposts yet.")
-        : isMe ? "Nothing here yet. Share a translation, ask for help with a passage, or set a challenge." : "Nothing here yet."));
-      return;
+    const trs = own.filter(r => WORK_KINDS[0].types.indexOf(r.post_type) >= 0);
+    T.n.textContent = trs.length ? String(trs.length) : "";
+    trList.innerHTML = "";
+    if (!trs.length) trList.appendChild(el("p", "mw-empty", isMe ? "Your translations appear here. Post one to start." : "No translations yet."));
+    (trAll ? trs : trs.slice(0, 3)).forEach(r => trList.appendChild(card(r)));
+    if (trs.length > 3) {
+      const more = el("button", "mw-more", trAll ? "Show fewer" : "Show all " + trs.length);
+      more.type = "button"; more.addEventListener("click", () => { trAll = !trAll; paint(); });
+      trList.appendChild(more);
     }
-    rows.forEach(r => {
-      if (r.repost_of) {
-        const k = workKind(r.orig_type);
-        const c = el("article", "st-card mw-rp");
-        c.style.setProperty("--mw-c", "#2BC48A");
-        c.innerHTML = '<span class="st-kind" style="color:#2BC48A">Reposted' + (k ? " · " + k.one : "") + '</span>' +
-          '<p class="st-title" dir="auto">' + esc((r.orig_text || "A post").slice(0, 140)) + '</p>' +
-          '<span class="mw-by">by ' + esc(r.orig_display_name || (r.orig_username ? "@" + r.orig_username : "a member")) + ' · ' + when(r.created_at) + '</span>';
-        c.tabIndex = 0; c.addEventListener("click", () => openPost(r));
-        list.appendChild(c);
-        return;
-      }
-      const k = workKind(r.post_type) || WORK_KINDS[3];
-      const card = studioCard(r, k.sec, false, (POST_KINDS.find(x => x.id === r.post_type) || {}).en || k.one);
-      card.classList.add("mw-card"); card.style.setProperty("--mw-c", k.c);
-      list.appendChild(card);
+    R.n.textContent = reposts.length ? String(reposts.length) : "";
+    rpRow.innerHTML = "";
+    if (!reposts.length) rpRow.appendChild(el("p", "mw-empty", isMe ? "Posts you repost appear here." : "No reposts yet."));
+    reposts.forEach(r => {
+      const k = workKind(r.orig_type);
+      const c = el("button", "mw-rp");
+      c.type = "button";
+      c.style.setProperty("--mw-c", k ? k.c : "#2BC48A");
+      c.innerHTML = '<span class="mw-rp-k">' + (k ? k.one : "Post") + '</span>' +
+        '<span class="mw-rp-t" dir="auto">' + esc((r.orig_text || "A post").slice(0, 90)) + '</span>' +
+        '<span class="mw-by">' + esc(r.orig_display_name || (r.orig_username ? "@" + r.orig_username : "a member")) + ' · ' + when(r.created_at) + '</span>';
+      /* opens the post itself, not the empty shell that carries it */
+      c.addEventListener("click", () => openPost(r.repost_of ? { id: r.repost_of, post_type: r.orig_type, display_name: r.orig_display_name } : r));
+      rpRow.appendChild(c);
     });
+    tabs.innerHTML = ""; oList.innerHTML = "";
+    WORK_KINDS.slice(1).forEach(k => {
+      const n = own.filter(r => k.types.indexOf(r.post_type) >= 0).length;
+      const b = el("button", "mw-chip" + (pick === k.id ? " on" : ""),
+        '<i style="background:' + k.c + '"></i>' + k.en + (n ? ' <span>' + n + '</span>' : ''));
+      b.type = "button"; b.addEventListener("click", () => { pick = k.id; paint(); });
+      tabs.appendChild(b);
+    });
+    const k = WORK_KINDS.find(x => x.id === pick);
+    const rows = own.filter(r => k.types.indexOf(r.post_type) >= 0);
+    if (!rows.length) oList.appendChild(el("p", "mw-empty", isMe
+      ? (pick === "rq" ? "Ask for help with a passage and it shows here." : pick === "ch" ? "Challenges you set show here." : "Discussions you open show here.")
+      : "Nothing here yet."));
+    rows.forEach(r => oList.appendChild(card(r)));
   }
   Promise.all([
     sbGet("feed?select=" + FEED_COLS + "&author_id=eq." + authorId + "&post_type=in.(" + types.join(",") + ")&repost_of=is.null&order=created_at.desc&limit=60"),
     sbGet("feed?select=" + FEED_COLS + "&author_id=eq." + authorId + "&repost_of=not.is.null&order=created_at.desc&limit=40")
   ]).then(([a, b2]) => { own = a || []; reposts = b2 || []; paint(); })
-    .catch(() => { list.innerHTML = ""; list.appendChild(el("p", "f-msg", "This work could not be loaded.")); });
+    .catch(() => { trList.innerHTML = ""; trList.appendChild(el("p", "f-msg", "This work could not be loaded.")); });
   return wrap;
 }
 
@@ -20726,6 +21284,7 @@ function renderGrid() {
   if (!box) return;
   box.innerHTML = "";
   if (backend !== "supabase" || !myId()) return;
+  box.appendChild(glossCard());
   box.appendChild(workSection(myId(), true));
 }
 
@@ -21267,7 +21826,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1104-2200";
+const BUILD = "1104-2330";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -22942,8 +23501,9 @@ const LEARN_GROUPS = [
   { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
   { id: "spectr", en: "Specialized translation", note: "الترجمة المتخصصة",
     order: SPEC_FIELDS.map(f => f.id) },
+  { id: "spec",   en: "Specialized dictionaries", note: "المعاجم المتخصصة",
+    order: SD_FIELDS.map(f => "sd-" + f.id).concat(["myglossary"]) },
   { id: "dict",   en: "Dictionaries", note: "المعاجم", order: ["lisan", "wikt", "glossary"] }
-  /* Specialized dictionaries return here once they search inside the Compass */
 ];
 function renderLearn() {
   const box = document.getElementById("sec-method");
