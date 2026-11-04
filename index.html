@@ -4054,6 +4054,26 @@ html:root[data-look="compass"] .jx-num b { font-family: var(--f-serif); font-siz
 .mw-card .st-who { justify-content: flex-end; min-height: 0; }
 html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); border-color: color-mix(in srgb, var(--cn-ink) 55%, transparent); }
 .mw-empty { font-size: .86rem; color: var(--ink-faint); text-align: center; padding: 1.2rem .5rem; }
+
+/* My work: four small squares */
+.mw-h .mw-plus { all: unset; cursor: pointer; margin-left: auto; font-size: .74rem; font-weight: 700; padding: .34rem .7rem; border-radius: 99px; color: #FFB547;
+  background: color-mix(in srgb, #FFB547 14%, transparent); }
+.mw-tiles4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: .45rem; }
+.mw-sq { all: unset; box-sizing: border-box; cursor: pointer; display: grid; justify-items: center; gap: .18rem; padding: .55rem .2rem .5rem; border-radius: 14px;
+  background: var(--void-2); border: var(--hair); text-align: center; }
+.mw-sq i { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; }
+.mw-sq i svg { width: 15px; height: 15px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mw-sq b { font-family: var(--f-serif); font-size: .98rem; line-height: 1; color: var(--white); }
+.mw-sq small { font-size: .6rem; font-weight: 700; color: var(--ink-faint); max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.mw-sq.on { border-color: var(--mw-c); background: color-mix(in srgb, var(--mw-c) 12%, var(--void-2)); }
+.mw-sq.on small { color: var(--mw-c); }
+/* Create a post: coloured tiles */
+.pk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.pk-tile { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: .65rem; padding: .75rem .8rem; border-radius: 16px;
+  background: var(--void-2); border: var(--hair); }
+.pk-tile i { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; flex: none; }
+.pk-tile i svg { width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pk-tile b { font-size: .86rem; font-weight: 700; color: var(--white); line-height: 1.25; }
 /* My work, in three parts */
 .mw { gap: 1.4rem; }
 .mw-sec { display: grid; gap: .55rem; }
@@ -4073,19 +4093,17 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .mw-rp-t { font-size: .84rem; line-height: 1.4; color: var(--white); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .mw-more { all: unset; cursor: pointer; justify-self: center; font-size: .78rem; font-weight: 700; color: var(--ink-soft); padding: .3rem .6rem; }
 .mw-sec .mw-empty { padding: .6rem .3rem; text-align: left; font-size: .8rem; }
-/* the glossary on the profile */
-.mg-card { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: .8rem; margin-top: 1rem; width: 100%;
-  padding: .85rem 1rem; border-radius: 18px; position: relative; isolation: isolate;
-  background: linear-gradient(135deg, color-mix(in srgb, #4FB0FF 16%, var(--void-2)), color-mix(in srgb, #A78BFA 14%, var(--void-2))); border: var(--hair); }
-.mg-card-ic { width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center; flex: none;
-  background: linear-gradient(135deg, #4FB0FF, #A78BFA); box-shadow: 0 8px 18px -8px #4FB0FF; }
-.mg-card-ic svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.mg-card-t { display: grid; gap: .15rem; min-width: 0; }
-.mg-card-t b { font-family: var(--f-serif); font-size: 1.02rem; color: var(--white); }
-.mg-card-t small { font-size: .74rem; color: var(--ink-soft); }
-.mg-card-dots { display: flex; gap: .25rem; margin-top: .15rem; }
-.mg-card-dots i { width: 8px; height: 8px; border-radius: 50%; }
-.mg-card-go { margin-left: auto; font-size: 1.5rem; color: var(--ink-faint); }
+/* the glossary on the profile: quiet, a line under the work */
+.mg-card { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: .65rem; margin-top: 1.1rem; width: 100%;
+  padding: .6rem .75rem; border-radius: 14px; background: transparent; border: var(--hair); }
+.mg-card-ic { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; flex: none; background: var(--void-3); }
+.mg-card-ic svg { width: 16px; height: 16px; fill: none; stroke: var(--ink-soft); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.mg-card-t { display: flex; align-items: baseline; gap: .5rem; min-width: 0; flex-wrap: wrap; }
+.mg-card-t b { font-size: .86rem; font-weight: 700; color: var(--white); }
+.mg-card-t small { font-size: .72rem; color: var(--ink-faint); }
+.mg-card-dots { display: flex; gap: .2rem; align-self: center; }
+.mg-card-dots i { width: 6px; height: 6px; border-radius: 50%; }
+.mg-card-go { margin-left: auto; font-size: 1.2rem; color: var(--ink-faint); }
 /* specialized dictionaries */
 .sd-hero { display: flex; align-items: center; gap: .9rem; padding: 1rem 1.1rem; border-radius: 20px;
   background: linear-gradient(135deg, color-mix(in srgb, var(--sd-c) 20%, var(--void-2)), var(--void-2)); border: var(--hair); }
@@ -4120,8 +4138,7 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .sd-add.in { color: var(--ink-soft); background: var(--void-3); }
 /* my glossary */
 .mg-hero { position: relative; overflow: hidden; display: grid; gap: .5rem; padding: 1.3rem 1.2rem 1.1rem; border-radius: 24px; border: var(--hair);
-  background: radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, #4FB0FF 28%, transparent), transparent 60%),
-              radial-gradient(100% 90% at 100% 100%, color-mix(in srgb, #A78BFA 26%, transparent), transparent 60%), var(--void-2); }
+  background: radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, #4FB0FF 10%, transparent), transparent 60%), var(--void-2); }
 .mg-name { display: flex; align-items: center; gap: .5rem; }
 .mg-name h2 { font-family: var(--f-serif); font-size: 1.55rem; margin: 0; color: var(--white); line-height: 1.15; }
 .mg-name-in { font: 700 1.3rem var(--f-serif); width: 100%; background: var(--well); color: var(--white); border: var(--hair); border-radius: 12px; padding: .4rem .6rem; }
@@ -4139,8 +4156,8 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .mg-secs { display: grid; gap: .8rem; }
 .mg-sec { border-radius: 20px; background: var(--void-2); border: var(--hair); overflow: hidden; }
 .mg-sec-h { all: unset; box-sizing: border-box; cursor: pointer; width: 100%; display: flex; align-items: center; gap: .75rem; padding: .8rem .9rem;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--mg-c) 18%, transparent), transparent); }
-.mg-sec-h .mg-ic { width: 36px; height: 36px; border-radius: 12px; background: var(--mg-c); }
+  background: transparent; }
+.mg-sec-h .mg-ic { width: 32px; height: 32px; border-radius: 10px; background: color-mix(in srgb, var(--mg-c) 85%, #000); }
 .mg-sec-h .mg-ic svg { width: 18px; height: 18px; }
 .mg-sec-t { display: grid; }
 .mg-sec-t b { font-family: var(--f-serif); color: var(--white); font-size: 1rem; }
@@ -4182,6 +4199,24 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .mg-fchip i { width: 7px; height: 7px; border-radius: 50%; }
 .mg-fchip.on { background: var(--white); color: var(--void); }
 .mg-msg { margin: 0; font-size: .8rem; color: #FF6B6B; min-height: 1em; }
+
+.sd-plus { all: unset; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: 1.15rem; font-weight: 700;
+  position: absolute; top: .6rem; right: .6rem; color: #fff; background: var(--sd-c); box-shadow: 0 6px 14px -8px var(--sd-c); }
+.sd-plus.in { background: var(--void-3); color: var(--sd-c); box-shadow: none; }
+.sd-acts { display: contents; }
+.sd-main { padding-right: 2.6rem; }
+.mg-toast { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 90; display: flex; align-items: center; gap: .9rem;
+  padding: .65rem .7rem .65rem 1rem; border-radius: 14px; background: var(--white); color: var(--void); font-size: .84rem; box-shadow: 0 14px 30px -12px rgba(0,0,0,.6);
+  transition: opacity .4s, transform .4s; max-width: calc(100vw - 32px); }
+.mg-toast button { all: unset; cursor: pointer; font-weight: 800; padding: .3rem .7rem; border-radius: 9px; background: var(--void); color: var(--white); }
+.mg-toast.out { opacity: 0; transform: translate(-50%, 8px); }
+.mg-alts { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .3rem; align-items: center; }
+.mg-alts small { font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+.mg-alts span { font-family: var(--f-ar-text); font-size: .95rem; color: var(--ink-soft); background: var(--well); border-radius: 8px; padding: .1rem .45rem; }
+.mg-in-note { margin: 0 0 .6rem; font-size: .86rem; color: var(--ink-soft); }
+.mg-in-note span { font-family: var(--f-ar-text); color: var(--white); font-size: 1.05rem; }
+.sheet-act.warn { color: #FF6B6B; }
+.mg-toast span { white-space: nowrap; }
 /* a field in depth */
 .sf-deep { display: grid; gap: .8rem; margin-top: .4rem; }
 .sf-dh { font-family: var(--f-serif); font-size: 1.2rem; margin: .4rem 0 0; color: var(--white); }
@@ -14247,7 +14282,7 @@ function glossSheet(seed, onDone) {
   const g = myGloss();
   const editing = seed && seed.id && g.terms.find(t => t.id === seed.id);
   const fromDict = !!(seed && seed.dict && !editing);
-  const s = storySheet(editing ? "Edit the term" : fromDict ? "Add to " + glossName() : "Add your own term");
+  const s = storySheet(editing ? "Fix the translation" : fromDict ? "Add to " + glossName() : "Add your own term");
   s.sheet.classList.add("mg-sheet");
   const form = el("div", "mg-form");
   const field = (lab, v, ph, dir) => {
@@ -14272,7 +14307,8 @@ function glossSheet(seed, onDone) {
     o2.addEventListener("click", () => { useOwn = true; o2.classList.add("on"); o1.classList.remove("on"); ownW.hidden = false; own.focus(); });
   } else {
     en = field("English", editing ? editing.en : (seed && seed.en) || "", "e.g. ceasefire", "ltr");
-    ar = field("Arabic", editing ? (editing.own || editing.ar) : (seed && seed.ar) || "", "مثلاً: وقف إطلاق النار", "rtl");
+    ar = field(editing && editing.src ? "Your translation (the dictionary has " + esc(editing.ar) + ")" : "Arabic",
+      editing ? (editing.own || editing.ar) : (seed && seed.ar) || "", "مثلاً: وقف إطلاق النار", "rtl");
   }
   const fw = el("div", "mg-fl", "<span>Section</span>");
   const chips = el("div", "mg-fchips");
@@ -14315,6 +14351,71 @@ function glossSheet(seed, onDone) {
   });
 }
 
+/* one tap: the term goes into the glossary under its own field, with the
+   dictionary's translation; Edit there changes it to your own */
+function glossAdd(e) {
+  const g = myGloss();
+  if (glossHas(e)) return;
+  g.terms.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), at: new Date().toISOString(),
+    en: e.en, ar: e.ar, own: "", src: e.src, f: e.f, note: "" });
+  glossTouch();
+}
+function glossToast(e) {
+  document.querySelectorAll(".mg-toast").forEach(x => x.remove());
+  const t = el("div", "mg-toast", '<span>Added to <b>' + esc(glossName()) + '</b></span>');
+  const go = el("button", null, "Open"); go.type = "button";
+  go.addEventListener("click", () => { t.remove(); openItem(MYGLOSS_ITEM); });
+  t.appendChild(go); document.body.appendChild(t);
+  setTimeout(() => t.classList.add("out"), 2600);
+  setTimeout(() => t.remove(), 3100);
+}
+function glossFind(e) { return myGloss().terms.find(t => t.f === e.f && t.en.toLowerCase() === e.en.toLowerCase()); }
+/* a second (or third) way of saying it, kept with the term */
+function glossAltSheet(t, onDone) {
+  const s = storySheet("Add another option");
+  s.sheet.classList.add("mg-sheet");
+  const form = el("div", "mg-form");
+  form.appendChild(el("div", "mg-pick-h", '<b>' + esc(t.en) + '</b><span dir="rtl" lang="ar">' + esc(t.own || t.ar) + '</span>'));
+  const w = el("label", "mg-fl", "<span>Another translation</span>");
+  const i = document.createElement("input"); i.dir = "auto"; i.placeholder = "Another way you render it";
+  w.appendChild(i); form.appendChild(w);
+  const msg = el("p", "mg-msg"); form.appendChild(msg);
+  const go = el("button", "primary mg-save", "Add this option"); go.type = "button";
+  go.addEventListener("click", () => {
+    const v = i.value.trim();
+    if (!v) { msg.textContent = "Write the translation first."; return; }
+    t.alts = Array.isArray(t.alts) ? t.alts : [];
+    if (t.alts.indexOf(v) < 0 && v !== (t.own || t.ar)) t.alts.push(v);
+    glossTouch(); s.done(); if (onDone) onDone();
+  });
+  form.appendChild(go); s.sheet.appendChild(form);
+  setTimeout(() => i.focus(), 50);
+}
+/* the ✓ beside a term already in the glossary */
+function glossTermMenu(e, after) {
+  const t = glossFind(e); if (!t) return;
+  const s = storySheet(e.en);
+  s.sheet.classList.add("mg-sheet");
+  const act = (lab, fn, cls) => { const b = el("button", "sheet-act" + (cls ? " " + cls : ""), lab); b.type = "button";
+    b.addEventListener("click", () => { s.done(); fn(); }); s.sheet.appendChild(b); };
+  s.sheet.appendChild(el("p", "mg-in-note", "In <b>" + esc(glossName()) + "</b> as <span dir=\"rtl\" lang=\"ar\">" + esc(t.own || t.ar) + "</span>"));
+  act("✎ Fix it: write my own translation", () => glossSheet({ id: t.id }, after));
+  act("＋ Add another option", () => glossAltSheet(t, after));
+  act("Open " + esc(glossName()), () => openItem(MYGLOSS_ITEM));
+  act("Remove from the glossary", () => { const g = myGloss(); g.terms = g.terms.filter(x => x.id !== t.id); glossTouch(); if (after) after(); }, "warn");
+}
+/* stars from before the glossary had its own button become glossary terms */
+async function glossAbsorbFavs() {
+  const g = myGloss();
+  const keys = Object.keys(g.fav || {});
+  if (!keys.length) return;
+  const all = await sdEntries();
+  keys.forEach(k => { const e = all.find(x => sdKey(x) === k); if (e && !glossHas(e)) g.terms.push({
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), at: new Date().toISOString(),
+    en: e.en, ar: e.ar, own: "", src: e.src, f: e.f, note: "" }); });
+  g.fav = {};
+  glossTouch();
+}
 function sdRow(e, after) {
   const f = sdField(e.f);
   const row = el("div", "sd-row");
@@ -14326,19 +14427,21 @@ function sdRow(e, after) {
     '<div class="sd-meta"><span class="sd-tag" style="color:' + f.c + '">' + f.en + (e.kind === "phrase" ? " · phrase" : "") + '</span>' +
     '<span class="sd-src">' + esc(e.src) + '</span></div>';
   const acts = el("div", "sd-acts");
-  const star = el("button", "sd-star" + (sdFav(e) ? " on" : ""), "★");
-  star.type = "button"; star.setAttribute("aria-label", "Favourite");
-  star.setAttribute("aria-pressed", sdFav(e) ? "true" : "false");
-  star.addEventListener("click", () => {
-    const on = sdToggleFav(e); star.classList.toggle("on", on); star.setAttribute("aria-pressed", on ? "true" : "false");
-    if (after) after("fav");
+  const add = el("button", "sd-plus" + (glossHas(e) ? " in" : ""));
+  const paintAdd = () => {
+    const on = glossHas(e);
+    add.classList.toggle("in", on);
+    add.innerHTML = on ? "✓" : "＋";
+    add.setAttribute("aria-label", on ? "In My glossary: open it" : "Add to My glossary");
+    add.title = on ? "In My glossary" : "Add to My glossary";
+  };
+  add.type = "button"; paintAdd();
+  add.addEventListener("click", () => {
+    if (glossHas(e)) { glossTermMenu(e, paintAdd); return; }
+    glossAdd(e); paintAdd(); glossToast(e);
+    if (after) after("add");
   });
-  const add = el("button", "sd-add" + (glossHas(e) ? " in" : ""), glossHas(e) ? "✓ In glossary" : "＋ Glossary");
-  add.type = "button";
-  add.addEventListener("click", () => glossSheet(Object.assign({ dict: true }, e), () => {
-    add.classList.add("in"); add.textContent = "✓ In glossary"; if (after) after("add");
-  }));
-  acts.appendChild(star); acts.appendChild(add);
+  acts.appendChild(add);
   row.appendChild(acts);
   return row;
 }
@@ -14348,7 +14451,7 @@ function runSpecDictPage(fid) {
   setCount("A dictionary · search in English or Arabic");
   stage.innerHTML = "";
   stage.appendChild(el("p", "note", "Loading…"));
-  sdEntries().then(all => {
+  glossAbsorbFavs().catch(() => {}).then(sdEntries).then(all => {
     let list, note;
     function hits() {
       const fq = sdFold(q.trim());
@@ -14359,8 +14462,8 @@ function runSpecDictPage(fid) {
       const h = hits();
       list.innerHTML = "";
       note.textContent = h.length ? h.length + (h.length === 1 ? " entry" : " entries") :
-        favOnly ? "No favourites here yet. Tap ★ beside a term to keep it." : "Nothing matches that. Try the other language, or a shorter word.";
-      h.slice(0, 250).forEach(e => list.appendChild(sdRow(e, k => { if (k === "fav" && favOnly) paintList(); })));
+        "Nothing matches that. Try the other language, or a shorter word.";
+      h.slice(0, 250).forEach(e => list.appendChild(sdRow(e, () => { const c = document.querySelector(".sd-mg small"); if (c) c.textContent = myGloss().terms.length + " terms · open"; })));
     }
     function render() {
       stage.innerHTML = "";
@@ -14385,9 +14488,6 @@ function runSpecDictPage(fid) {
         b.type = "button"; b.addEventListener("click", () => { pick = id; render(); });
         chips.appendChild(b);
       });
-      const fb = el("button", "sd-chip sd-favc" + (favOnly ? " on" : ""), "★ Favourites");
-      fb.type = "button"; fb.addEventListener("click", () => { favOnly = !favOnly; render(); });
-      chips.appendChild(fb);
       stage.appendChild(chips);
       const mg = el("button", "sd-mg", '<span>📘 ' + esc(glossName()) + '</span><small>' + myGloss().terms.length + ' terms · open</small>');
       mg.type = "button"; mg.addEventListener("click", () => openItem(MYGLOSS_ITEM));
@@ -14408,6 +14508,7 @@ function runSpecDictPage(fid) {
 function runMyGlossary() {
   let q = "", open = {};
   setCount("Your own terms, by field");
+  if (Object.keys(myGloss().fav || {}).length) { glossAbsorbFavs().then(() => render(), () => {}); }
   function render() {
     stage.innerHTML = "";
     setDots(0, 0, 0);
@@ -14448,8 +14549,8 @@ function runMyGlossary() {
 
     if (!g.terms.length) {
       stage.appendChild(el("div", "mg-empty",
-        '<b>Your glossary is empty</b><p>Add the terms you use. Tap <b>＋ Glossary</b> beside any term in the specialized dictionaries, ' +
-        'keep its translation or write the one you prefer, and it lands here under its field: politics with politics, media with media.</p>'));
+        '<b>Your glossary is empty</b><p>Add the terms you use. Tap <b>＋</b> beside any term in the specialized dictionaries ' +
+        'and it lands here under its field; tap Edit to put your own translation: politics with politics, media with media.</p>'));
       stage.appendChild(footNav({}));
       return;
     }
@@ -14465,7 +14566,7 @@ function runMyGlossary() {
       box.innerHTML = "";
       const fq = sdFold(q.trim());
       secs.forEach(f => {
-        const rows = byF[f.id].filter(t => !fq || sdFold(t.en + " " + t.ar + " " + t.own + " " + t.note).indexOf(fq) >= 0)
+        const rows = byF[f.id].filter(t => !fq || sdFold(t.en + " " + t.ar + " " + t.own + " " + (t.alts || []).join(" ") + " " + t.note).indexOf(fq) >= 0)
           .sort((a, b) => a.en.toLowerCase() < b.en.toLowerCase() ? -1 : 1);
         if (!rows.length) return;
         const sec = el("section", "mg-sec" + (open[f.id] === false ? " shut" : ""));
@@ -14483,11 +14584,15 @@ function runMyGlossary() {
           r.innerHTML = '<div class="mg-pair"><span class="mg-en">' + esc(t.en) + '</span>' +
             '<span class="mg-ar" dir="rtl" lang="ar">' + esc(t.own || t.ar) + '</span></div>' +
             (t.own ? '<span class="mg-mine">My rendering</span><span class="mg-dict">Dictionary: <span dir="rtl" lang="ar">' + esc(t.ar) + '</span></span>' : '') +
+            ((t.alts || []).length ? '<div class="mg-alts"><small>Also</small>' + t.alts.map(a2 => '<span dir="auto">' + esc(a2) + '</span>').join("") + '</div>' : '') +
             (t.note ? '<p class="mg-note">' + esc(t.note) + '</p>' : '') +
             (t.src ? '<span class="mg-src">' + esc(t.src) + '</span>' : '<span class="mg-src">Added by you</span>');
           const a = el("div", "mg-tacts");
-          const ed = el("button", "mg-mini", "Edit"); ed.type = "button";
+          const ed = el("button", "mg-mini", "✎ Fix"); ed.type = "button";
           ed.addEventListener("click", () => glossSheet({ id: t.id }, render));
+          const alt = el("button", "mg-mini", "＋ Option"); alt.type = "button";
+          alt.addEventListener("click", () => glossAltSheet(t, render));
+          a.appendChild(alt);
           const rm = el("button", "mg-mini", "Remove"); rm.type = "button";
           rm.addEventListener("click", () => {
             if (rm.dataset.sure) { g.terms = g.terms.filter(x => x.id !== t.id); glossTouch(); render(); }
@@ -14503,7 +14608,7 @@ function runMyGlossary() {
     paintSecs();
     const cp = el("button", "ghost mg-copy", "Copy the glossary as text"); cp.type = "button";
     cp.addEventListener("click", () => {
-      const txt = glossName() + "\n\n" + secs.map(f => f.en + "\n" + byF[f.id].map(t => "• " + t.en + " — " + (t.own || t.ar) + (t.note ? " (" + t.note + ")" : "")).join("\n")).join("\n\n");
+      const txt = glossName() + "\n\n" + secs.map(f => f.en + "\n" + byF[f.id].map(t => "• " + t.en + " — " + (t.own || t.ar) + ((t.alts || []).length ? " / " + t.alts.join(" / ") : "") + (t.note ? " (" + t.note + ")" : "")).join("\n")).join("\n\n");
       (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => { cp.textContent = "Copied ✓"; }, () => { cp.textContent = "Could not copy"; });
     });
     stage.appendChild(cp);
@@ -14524,7 +14629,7 @@ function glossCard() {
   c.type = "button";
   c.innerHTML = '<span class="mg-card-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10.5A3.5 3.5 0 0 1 19 8v11.5H8.5A3.5 3.5 0 0 1 5 16z"/><path d="M5 16a3.5 3.5 0 0 1 3.5-3.5H19M9 8h6"/></svg></span>' +
     '<span class="mg-card-t"><b>' + esc(glossName()) + '</b><small>' +
-    (g.terms.length ? g.terms.length + (g.terms.length === 1 ? " term" : " terms") + " · " + fs.length + (fs.length === 1 ? " section" : " sections") : "Your own terms, sorted by field") +
+    (g.terms.length ? g.terms.length + (g.terms.length === 1 ? " term" : " terms") : "Your terms") +
     '</small>' + (fs.length ? '<span class="mg-card-dots">' + fs.map(f => '<i style="background:' + f.c + '" title="' + f.en + '"></i>').join("") + '</span>' : '') +
     '</span><span class="mg-card-go" aria-hidden="true">›</span>';
   c.addEventListener("click", () => openItem(MYGLOSS_ITEM));
@@ -14576,7 +14681,7 @@ function sfDeep(f) {
     const b = el("button", "sf-dt", '<i style="background:' + c + '"><svg viewBox="0 0 24 24" aria-hidden="true">' + ico + '</svg></i><b>' + t + '</b><small>' + s + '</small>');
     b.type = "button"; b.addEventListener("click", go); grid.appendChild(b);
   };
-  if (sd) tile(sd.c, sd.ico, "The " + sd.en.toLowerCase() + " dictionary", "Search, favourite, add to your glossary",
+  if (sd) tile(sd.c, sd.ico, "The " + sd.en.toLowerCase() + " dictionary", "Search, then ＋ to add to your glossary",
     () => openItem(ITEMS.find(t => t.id === "sd-" + sd.id)));
   if (f.id === "sf-legal") tile("#FFB547", '<path d="M5 4h9a5 5 0 0 1 5 5v11H10a5 5 0 0 1-5-5z"/>', "The whole legal chapter",
     "Husni &amp; Newman, ch. 3: thirteen sections", () => openItem(ITEMS.find(t => t.id === "lib-legal")));
@@ -14678,7 +14783,7 @@ const ITEMS = [
   ...SPEC_FIELDS.map(f => ({ id: f.id, ar: f.ar, en: f.en, kind: "guide", section: "method", group: "spectr",
     subject: f.line, blurb: f.line, run: () => runSpecField(f) })),
   ...SD_FIELDS.map(f => ({ id: "sd-" + f.id, ar: "معجم " + f.ar, en: f.en + " dictionary", kind: "guide", section: "method", group: "spec",
-    subject: "Specialized dictionary · searched here", blurb: "Search in English or Arabic, keep favourites, add terms to your glossary.",
+    subject: "Specialized dictionary · searched here", blurb: "Search in English or Arabic; tap ＋ to add a term to your glossary.",
     run: () => runSpecDictPage(f.id) })),
   Object.assign({ group: "spec", blurb: "Your own terms, each under its field. Name it, add to it, use your own renderings." }, MYGLOSS_ITEM),
   { id: "lib-atoz", ar: "من الألف إلى الياء", en: "A to Z of Arabic–English Translation", kind: "guide", section: "method", group: "library",
@@ -17606,6 +17711,17 @@ const POST_KINDS = [
   { id: "other", icon: "•", en: "Something else",
     say: "Anything that does not fit the rest." }
 ];
+const PK_LOOK = {
+  translation: ["#FFB547", '<path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z"/>'],
+  help:        ["#4FB0FF", '<path d="M12 18h.01M9.1 9a3 3 0 1 1 4.2 2.7c-.8.4-1.3 1.2-1.3 2.1V14"/>'],
+  request:     ["#2B9AF3", '<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/>'],
+  discussion:  ["#A78BFA", '<path d="M20 11.5a7.5 7.5 0 0 1-11 6.6L4 19.5l1.4-4.4A7.5 7.5 0 1 1 20 11.5z"/>'],
+  challenge:   ["#FF6B6B", '<path d="M13 3 4 14h7l-1 7 9-11h-7z"/>'],
+  research:    ["#8B7CF6", '<path d="M5 4h9a5 5 0 0 1 5 5v11H10a5 5 0 0 1-5-5zM9 9h6M9 13h6"/>'],
+  image:       ["#2BC48A", '<rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M20.5 16l-5-5-9 8.5"/>'],
+  reel:        ["#F472B6", '<rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M10 9.2v5.6l4.8-2.8z"/>'],
+  other:       ["#94A3B8", '<circle cx="6.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="17.5" cy="12" r="1.3"/>']
+};
 const GENRES = ["Literary","Technical","Legal","Medical","Journalistic","Political","General"];
 const LANGS  = ["Arabic","English","Other"];
 const FEEDBACK_ON = ["Accuracy","Naturalness","Terminology","Style","Grammar","Cultural adaptation","Overall"];
@@ -18437,13 +18553,14 @@ async function runNewPost(preset) {
   /* from a Studio section: straight to that kind's form */
   const pre = typeof preset === "string" && POST_KINDS.find(k => k.id === preset);
   if (pre) { postForm(pre); return; }
-  stage.appendChild(el("p", "note", "What are you posting?"));
-  const list = el("div", "kind-list");
+  /* coloured tiles, the same family as My work on the profile: the
+     colour and the name are enough, so the descriptions stay off */
+  const list = el("div", "pk-grid");
   POST_KINDS.forEach(k => {
-    const b = el("button", "kind");
-    b.innerHTML = '<span class="k-ico" aria-hidden="true">' + k.icon + '</span>' +
-      '<span class="k-txt"><span class="k-en">' + k.en + '</span>' +
-      '<span class="k-say">' + k.say + '</span></span>';
+    const v = PK_LOOK[k.id] || PK_LOOK.other;
+    const b = el("button", "pk-tile");
+    b.type = "button"; b.title = k.say;
+    b.innerHTML = '<i style="background:' + v[0] + '"><svg viewBox="0 0 24 24" aria-hidden="true">' + v[1] + '</svg></i><b>' + k.en + '</b>';
     b.addEventListener("click", () => postForm(k));
     list.appendChild(b);
   });
@@ -21116,85 +21233,44 @@ const WORK_KINDS = [
 ];
 function workKind(t) { return WORK_KINDS.find(k => k.types.indexOf(t) >= 0); }
 function workSection(authorId, isMe) {
-  /* Three parts, each with its own heading, the way she asked: the
-     translations first, then the reposts, then everything else the
-     member has asked, set or opened, behind small tabs. */
+  /* Four small coloured squares, one per kind; the one tapped is listed
+     underneath. Little writing, nothing else. */
   const wrap = el("div", "mw");
-  const sec = (title, extra) => {
-    const s2 = el("section", "mw-sec");
-    const h = el("div", "mw-h", "<b>" + title + "</b><span class=\"mw-n\"></span>");
-    if (extra) h.appendChild(extra);
-    s2.appendChild(h);
-    wrap.appendChild(s2);
-    return { s: s2, n: h.querySelector(".mw-n") };
-  };
-  let addB = null;
+  const h = el("div", "mw-h", "<b>" + (isMe ? "My work" : "Work") + "</b>");
   if (isMe) {
-    addB = el("button", "mw-add", "＋ Post a translation");
-    addB.type = "button"; addB.addEventListener("click", () => openItem(NEWPOST_ITEM));
+    const add = el("button", "mw-plus", "＋ Post");
+    add.type = "button"; add.setAttribute("aria-label", "Create a post");
+    add.addEventListener("click", () => openItem(NEWPOST_ITEM));
+    h.appendChild(add);
   }
-  const T = sec(isMe ? "My translations" : "Translations", addB);
-  const trList = el("div", "mw-list"); T.s.appendChild(trList);
-  const R = sec("Reposts");
-  const rpRow = el("div", "mw-rps"); R.s.appendChild(rpRow);
-  const O = sec(isMe ? "Requests, challenges and discussions" : "Requests, challenges and discussions");
-  const tabs = el("div", "mw-chips"); O.s.appendChild(tabs);
-  const oList = el("div", "mw-list"); O.s.appendChild(oList);
-  trList.appendChild(el("p", "f-msg", "Loading\u2026"));
-  let own = [], reposts = [], pick = "rq", trAll = false;
+  wrap.appendChild(h);
+  const tiles = el("div", "mw-tiles4"); wrap.appendChild(tiles);
+  const list = el("div", "mw-list"); wrap.appendChild(list);
+  list.appendChild(el("p", "f-msg", "Loading\u2026"));
+  let own = [], pick = "tr";
   const types = WORK_KINDS.flatMap(k => k.types);
-  const card = r => {
-    const k = workKind(r.post_type) || WORK_KINDS[3];
-    const c = studioCard(r, k.sec, false, (POST_KINDS.find(x => x.id === r.post_type) || {}).en || k.one);
-    c.classList.add("mw-card"); c.style.setProperty("--mw-c", k.c);
-    return c;
-  };
   function paint() {
-    const trs = own.filter(r => WORK_KINDS[0].types.indexOf(r.post_type) >= 0);
-    T.n.textContent = trs.length ? String(trs.length) : "";
-    trList.innerHTML = "";
-    if (!trs.length) trList.appendChild(el("p", "mw-empty", isMe ? "Your translations appear here. Post one to start." : "No translations yet."));
-    (trAll ? trs : trs.slice(0, 3)).forEach(r => trList.appendChild(card(r)));
-    if (trs.length > 3) {
-      const more = el("button", "mw-more", trAll ? "Show fewer" : "Show all " + trs.length);
-      more.type = "button"; more.addEventListener("click", () => { trAll = !trAll; paint(); });
-      trList.appendChild(more);
-    }
-    R.n.textContent = reposts.length ? String(reposts.length) : "";
-    rpRow.innerHTML = "";
-    if (!reposts.length) rpRow.appendChild(el("p", "mw-empty", isMe ? "Posts you repost appear here." : "No reposts yet."));
-    reposts.forEach(r => {
-      const k = workKind(r.orig_type);
-      const c = el("button", "mw-rp");
-      c.type = "button";
-      c.style.setProperty("--mw-c", k ? k.c : "#2BC48A");
-      c.innerHTML = '<span class="mw-rp-k">' + (k ? k.one : "Post") + '</span>' +
-        '<span class="mw-rp-t" dir="auto">' + esc((r.orig_text || "A post").slice(0, 90)) + '</span>' +
-        '<span class="mw-by">' + esc(r.orig_display_name || (r.orig_username ? "@" + r.orig_username : "a member")) + ' · ' + when(r.created_at) + '</span>';
-      /* opens the post itself, not the empty shell that carries it */
-      c.addEventListener("click", () => openPost(r.repost_of ? { id: r.repost_of, post_type: r.orig_type, display_name: r.orig_display_name } : r));
-      rpRow.appendChild(c);
-    });
-    tabs.innerHTML = ""; oList.innerHTML = "";
-    WORK_KINDS.slice(1).forEach(k => {
+    tiles.innerHTML = ""; list.innerHTML = "";
+    WORK_KINDS.forEach(k => {
       const n = own.filter(r => k.types.indexOf(r.post_type) >= 0).length;
-      const b = el("button", "mw-chip" + (pick === k.id ? " on" : ""),
-        '<i style="background:' + k.c + '"></i>' + k.en + (n ? ' <span>' + n + '</span>' : ''));
-      b.type = "button"; b.addEventListener("click", () => { pick = k.id; paint(); });
-      tabs.appendChild(b);
+      const t = el("button", "mw-sq" + (pick === k.id ? " on" : ""),
+        '<i style="background:' + k.c + '"><svg viewBox="0 0 24 24" aria-hidden="true">' + k.ico + '</svg></i><b>' + n + '</b><small>' + k.en + '</small>');
+      t.type = "button"; t.style.setProperty("--mw-c", k.c);
+      t.addEventListener("click", () => { pick = k.id; paint(); });
+      tiles.appendChild(t);
     });
     const k = WORK_KINDS.find(x => x.id === pick);
     const rows = own.filter(r => k.types.indexOf(r.post_type) >= 0);
-    if (!rows.length) oList.appendChild(el("p", "mw-empty", isMe
-      ? (pick === "rq" ? "Ask for help with a passage and it shows here." : pick === "ch" ? "Challenges you set show here." : "Discussions you open show here.")
-      : "Nothing here yet."));
-    rows.forEach(r => oList.appendChild(card(r)));
+    if (!rows.length) { list.appendChild(el("p", "mw-empty", "No " + k.en.toLowerCase() + " yet.")); return; }
+    rows.forEach(r => {
+      const c = studioCard(r, k.sec, false, (POST_KINDS.find(x => x.id === r.post_type) || {}).en || k.one);
+      c.classList.add("mw-card"); c.style.setProperty("--mw-c", k.c);
+      list.appendChild(c);
+    });
   }
-  Promise.all([
-    sbGet("feed?select=" + FEED_COLS + "&author_id=eq." + authorId + "&post_type=in.(" + types.join(",") + ")&repost_of=is.null&order=created_at.desc&limit=60"),
-    sbGet("feed?select=" + FEED_COLS + "&author_id=eq." + authorId + "&repost_of=not.is.null&order=created_at.desc&limit=40")
-  ]).then(([a, b2]) => { own = a || []; reposts = b2 || []; paint(); })
-    .catch(() => { trList.innerHTML = ""; trList.appendChild(el("p", "f-msg", "This work could not be loaded.")); });
+  sbGet("feed?select=" + FEED_COLS + "&author_id=eq." + authorId + "&post_type=in.(" + types.join(",") + ")&repost_of=is.null&order=created_at.desc&limit=60")
+    .then(a => { own = a || []; paint(); })
+    .catch(() => { list.innerHTML = ""; list.appendChild(el("p", "f-msg", "This work could not be loaded.")); });
   return wrap;
 }
 
@@ -21284,8 +21360,8 @@ function renderGrid() {
   if (!box) return;
   box.innerHTML = "";
   if (backend !== "supabase" || !myId()) return;
-  box.appendChild(glossCard());
   box.appendChild(workSection(myId(), true));
+  box.appendChild(glossCard());
 }
 
 function postTile(r) {
@@ -21826,7 +21902,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1104-2330";
+const BUILD = "1105-0030";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
