@@ -3993,6 +3993,19 @@ html:root[data-look="compass"] .jx-num b { font-family: var(--f-serif); font-siz
   input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), textarea, select { font-size: max(16px, 1em) !important; }
 }
 
+
+/* specialized dictionaries */
+.sd-meta { display: grid; grid-template-columns: auto 1fr; gap: .35rem .8rem; margin: 0 0 .7rem; font-size: .86rem; }
+.sd-meta dt { color: var(--ink-faint); font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; padding-top: .12rem; }
+.sd-meta dd { margin: 0; color: var(--ink); }
+.sd-facts { margin: 0; padding-left: 1.1rem; display: grid; gap: .35rem; font-size: .88rem; color: var(--ink-soft); }
+.sd-go { display: grid; gap: .5rem; margin: .9rem 0 .3rem; }
+.sd-open { display: block; text-align: center; text-decoration: none; padding: .85rem 1rem; border-radius: 14px; font-weight: 700; color: #fff; background: var(--grad); }
+.sd-note { font-size: .78rem; color: var(--ink-faint); margin: .3rem 0 1rem; }
+.sd-src { display: grid; gap: .3rem; font-size: .78rem; margin-bottom: 1rem; }
+.sd-src span { font-weight: 700; color: var(--ink-soft); }
+.sd-src a { color: var(--mag-ink); word-break: break-word; }
+
 /* on a phone, while the keyboard is up: no bar and no Ask Compass button
    over it (the dictionary stays, it is for the text being typed) */
 body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
@@ -13735,6 +13748,126 @@ const KSL_LESSONS = [
 
 /* Still to come. A short list, not eight large cards. */
 
+/* ═══════════ SPECIALIZED DICTIONARIES ═══════════
+   Free, published Arabic–English term banks, one per field, each opened
+   on its publisher's own site. Every fact here is from the publisher or
+   a report about it, listed under "Where this is from"; nothing is
+   estimated. One print book is included and marked as such. */
+const SPEC_DICTS = [
+  { id: "sd-umd", field: "Medicine", fieldAr: "الطب",
+    en: "Unified Medical Dictionary", ar: "المعجم الطبي الموحد",
+    by: "World Health Organization, Regional Office for the Eastern Mediterranean (WHO EMRO)",
+    langs: "English ⇄ Arabic; many entries also in French, German and Spanish",
+    facts: ["The fifth online edition has more than 200,000 English–Arabic entries.",
+            "It began in Baghdad in the 1960s under the Arab Medical Union; WHO EMRO took over its development in 1973.",
+            "A WHO EMRO app is also available on the App Store."],
+    use: "Anatomy, diseases, drugs and procedures: the unified Arabic term rather than a translator's own coinage.",
+    url: "https://umd.emro.who.int/WHODictionary/", cta: "Open the dictionary",
+    src: [["WHO EMRO · About the UMD", "https://umd.emro.who.int/WHODictionary/Home/AboutUs"],
+          ["EMHJ (2016) · the WHO Global Arabic Programme", "https://www.emro.who.int/emhj-volume-22-2016/volume-22-issue-5/reviewing-the-role-of-the-who-global-arabic-programme.html"]] },
+  { id: "sd-unterm", field: "Diplomacy and politics", fieldAr: "الدبلوماسية والسياسة",
+    en: "UNTERM, the United Nations Terminology Database", ar: "قاعدة بيانات المصطلحات للأمم المتحدة",
+    by: "United Nations, Department for General Assembly and Conference Management",
+    langs: "The six official UN languages: Arabic, Chinese, English, French, Russian and Spanish",
+    facts: ["The official terminology of the UN's work, kept by UN language staff so that the same term is used across the system.",
+            "It brings together the terminology of the UN duty stations in New York, Geneva, Vienna and Nairobi, the regional commissions and agencies such as WHO and UNESCO.",
+            "Free to search, with no registration."],
+    use: "Resolutions, treaties, conferences, human rights, peacekeeping: the Arabic the UN itself uses.",
+    url: "https://unterm.un.org/unterm2/en", cta: "Open UNTERM",
+    src: [["UNTERM · About", "https://unterm.un.org/unterm2/about"],
+          ["Wikipedia · UN Multilingual Terminology Database", "https://en.wikipedia.org/wiki/United_Nations_Multilingual_Terminology_Database"]] },
+  { id: "sd-diplo", field: "Diplomacy and politics", fieldAr: "الدبلوماسية والسياسة",
+    en: "Diplomacy Arabic: Essential Middle Eastern Vocabularies", ar: "العربية الدبلوماسية",
+    by: "Edinburgh University Press · a print and e-book title, not free",
+    langs: "Arabic with English",
+    facts: ["More than 1,300 Arabic expressions, terms and idioms in ten key areas of diplomatic discourse.",
+            "An alphabetical index of every English term."],
+    use: "When the question is not a single term but how diplomatic Arabic is phrased.",
+    url: "https://www.degruyterbrill.com/document/doi/10.1515/9781474461252", cta: "See the book",
+    src: [["De Gruyter Brill · Diplomacy Arabic", "https://www.degruyterbrill.com/document/doi/10.1515/9781474461252"]] },
+  { id: "sd-wipo", field: "Law, patents and science", fieldAr: "القانون وبراءات الاختراع والعلوم",
+    en: "WIPO Pearl", ar: "بوابة ويبو بيرل للمصطلحات",
+    by: "World Intellectual Property Organization (WIPO)",
+    langs: "Ten languages, Arabic and English among them",
+    facts: ["More than 285,000 terms drawn from patent documents.",
+            "Every entry is validated by WIPO's language experts and terminologists and carries a reliability score.",
+            "Free; the interface is in Arabic as well as English."],
+    use: "Intellectual property law and the scientific and technical vocabulary of patents.",
+    url: "https://www.wipo.int/web/wipo-pearl", cta: "Open WIPO Pearl",
+    src: [["WIPO Pearl", "https://www.wipo.int/web/wipo-pearl"],
+          ["WIPO · WIPO Pearl interface in Arabic (2019)", "https://www.wipo.int/en/web/wipo-pearl/w/news/2019/news_0003"]] },
+  { id: "sd-imf", field: "Economics and finance", fieldAr: "الاقتصاد والمال",
+    en: "IMF Terminology", ar: "مصطلحات صندوق النقد الدولي",
+    by: "International Monetary Fund",
+    langs: "English, with Arabic, Chinese, French, Japanese, Portuguese, Russian and Spanish",
+    facts: ["More than 17,000 entries and acronyms from IMF documents.",
+            "Money and banking, public finance, the balance of payments and economic growth.",
+            "Open to the public to consult, read-only."],
+    use: "Economic reports, budgets, central-bank and financial texts.",
+    url: "https://www.imf.org/en/About/Terminology", cta: "Open IMF Terminology",
+    src: [["IMF · Terminology", "https://www.imf.org/en/About/Terminology"]] },
+  { id: "sd-escwa", field: "Development, society and water", fieldAr: "التنمية والمجتمع والمياه",
+    en: "ESCWA glossaries", ar: "مسارد الإسكوا",
+    by: "United Nations Economic and Social Commission for Western Asia (ESCWA)",
+    langs: "English ⇄ Arabic (the social protection glossary also in French)",
+    facts: ["Glossary of Shared Water Resources: technical, socio-economic and legal terms.",
+            "Trilingual Glossary of Key Social Protection Terminology, volume 1.",
+            "A gender glossary, English–Arabic."],
+    use: "Development reports, social policy, gender and water management in the Arab region.",
+    links: [["Shared water resources", "https://www.unescwa.org/publications/glossary-shared-water-resources"],
+            ["Social protection", "https://www.unescwa.org/publications/trilingual-glossary-social-protection-terminology-volume-1"],
+            ["Gender", "https://unescwa.org/tools/gender-glossary"]],
+    src: [["ESCWA publications", "https://www.unescwa.org/publications/glossary-shared-water-resources"]] },
+  { id: "sd-arabterm", field: "Engineering and technology", fieldAr: "الهندسة والتقنية",
+    en: "ARABTERM", ar: "المعجم التقني أرابترم",
+    by: "ALECSO (Arab League Educational, Cultural and Scientific Organization) with Germany's Federal Ministry for Economic Cooperation and Development; carried out by GIZ and the Arabization Coordination Bureau in Rabat",
+    langs: "Arabic, English, French and German",
+    facts: ["Standardised Modern Standard Arabic terms, often with a definition, organised by sector.",
+            "Fields include civil and hydraulic engineering, automotive technology, renewable energy, electrical engineering and IT, and water.",
+            "Free, with a phone app."],
+    use: "Technical manuals, engineering and energy texts.",
+    url: "https://www.arabterm.org", cta: "Open ARABTERM",
+    src: [["GIZ · ARABTERM", "https://giz.de/en/worldwide/16261.html"],
+          ["Al-Fanar Media (2014)", "https://al-fanarmedia.org/2014/01/arabterm-an-online-technical-dictionary/"]] },
+  { id: "sd-siwar", field: "Arabic dictionaries and energy terms", fieldAr: "معاجم عربية ومصطلحات الطاقة",
+    en: "Siwar", ar: "منصة سوار للمعاجم",
+    by: "King Salman Global Academy for the Arabic Language",
+    langs: "Arabic, with translation to and from Arabic",
+    facts: ["Launched in 2024 with ten dictionaries and more than 180,000 entries.",
+            "Includes the Energy Terminology Dictionary (with the Saudi Ministry of Energy): more than 1,500 Arabic–English terms in eight fields."],
+    use: "Checking an Arabic term against several dictionaries at once, and energy terminology.",
+    url: "https://siwar.ksaa.gov.sa", cta: "Open Siwar",
+    src: [["KSGAAL · Siwar launch", "https://ksaa.gov.sa/en/news/ksgaal-launches-siwar-linguistic-dictionaries-platform"],
+          ["KSGAAL · Energy Terminology Dictionary", "https://ksaa.gov.sa/en/news/ksgaal-launches-energy-terminology-dictionary-in-collaboration-with-the-ministry-of-energy"]] }
+];
+
+function runSpecDict(d) {
+  setCount(""); stage.innerHTML = "";
+  const head = el("div", "c-hero");
+  head.innerHTML = '<span class="c-badge">' + esc(d.field) + ' · <span dir="rtl" lang="ar">' + esc(d.fieldAr) + '</span></span>' +
+    '<h2 class="c-title">' + esc(d.en) + '</h2>' +
+    '<p class="c-ar" dir="rtl" lang="ar">' + esc(d.ar) + '</p>' +
+    '<p class="c-line">' + esc(d.use) + '</p>';
+  stage.appendChild(head);
+  const card = el("div", "card sd-card");
+  card.innerHTML = '<dl class="sd-meta"><dt>Published by</dt><dd>' + esc(d.by) + '</dd><dt>Languages</dt><dd>' + esc(d.langs) + '</dd></dl>' +
+    '<ul class="sd-facts">' + d.facts.map(f => '<li>' + esc(f) + '</li>').join("") + '</ul>';
+  stage.appendChild(card);
+  const go = el("div", "sd-go");
+  (d.links || [[d.cta, d.url]]).forEach(([lab, url]) => {
+    const a = document.createElement("a");
+    a.className = "btn-wide sd-open"; a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer";
+    a.textContent = lab + " ↗";
+    go.appendChild(a);
+  });
+  stage.appendChild(go);
+  stage.appendChild(el("p", "sd-note", "Opens on the publisher's own site. Check each term against a source text in the field before you use it."));
+  const src = el("div", "sd-src");
+  src.innerHTML = '<span>Where this is from</span>' + d.src.map(([t, u]) => '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + esc(t) + '</a>').join("");
+  stage.appendChild(src);
+  stage.appendChild(footNav({}));
+}
+
 const ITEMS = [
   { id: "meaning", ar: "دور المترجم والتكافؤ", en: "The Translator and Equivalence", kind: "guide", section: "method", group: "core",
     subject: "Bassnett (2014) · Husni & Newman (2015)",
@@ -13799,6 +13932,8 @@ const ITEMS = [
     subject: "Arabic ⇄ English",
     blurb: "Both directions: an Arabic word to its English meanings, an English word to its Arabic equivalents. 26,000+ entries.",
     run: runWikt },
+  ...SPEC_DICTS.map(d => ({ id: d.id, ar: d.ar, en: d.en, kind: "guide", section: "method", group: "spec",
+    subject: d.field + " · " + d.fieldAr, blurb: d.use, run: () => runSpecDict(d) })),
   { id: "lib-atoz", ar: "من الألف إلى الياء", en: "A to Z of Arabic–English Translation", kind: "guide", section: "method", group: "library",
     subject: "Husni & Newman · every entry",
     blurb: "All 148 entries, from Abbreviations to Wish, with the book’s Arabic and English pairs. Searchable.",
@@ -20822,7 +20957,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1104-1500";
+const BUILD = "1104-1600";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -22492,6 +22627,8 @@ const LEARN_GROUPS = [
   { id: "ku",     en: "Kuwait University courses", note: "The Translation Minor", order: ["minor"] },
   { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
   { id: "dict",   en: "Dictionaries", note: "المعاجم", order: ["lisan", "wikt"] },
+  { id: "spec",   en: "Specialized dictionaries", note: "المعاجم المتخصصة",
+    order: ["sd-umd", "sd-unterm", "sd-diplo", "sd-wipo", "sd-imf", "sd-escwa", "sd-arabterm", "sd-siwar"] },
   { id: "ref",    en: "The reference shelf", note: "Look things up", order: ["glossary", "lib-atoz", "lib-legal"] }
 ];
 function renderLearn() {
