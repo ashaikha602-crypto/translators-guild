@@ -1331,16 +1331,16 @@ details.th-card[open] > summary { border-bottom: 1px solid rgba(214,191,234,.15)
    cut-out; this puts the hand back on a ground of our own so it is not
    floating, in our lilac rather than their blue. */
 .alpha .a-hand, .lh-fig {
-  background: radial-gradient(circle at 50% 47%,
-    rgba(214,191,234,.20) 0 36%, rgba(214,191,234,.07) 56%, transparent 71%); }
+  background: radial-gradient(circle at 50% 50%, #DEDBF1 0 40%, #F4F3FA 40.5%); border-radius: 18px; overflow: hidden; }
+.alpha .a-hand img { padding: 6%; box-sizing: border-box; }
 /* A cut-out with no shadow reads as pasted on. drop-shadow follows the
    alpha rather than the box, so the shadow is the hand's own — and it is
    violet rather than black, so it belongs to this page. */
 .alpha .a-hand img, .lh-fig img {
-  filter: drop-shadow(0 6px 14px rgba(38,12,58,.55)) drop-shadow(0 1px 2px rgba(38,12,58,.4)); }
+  filter: drop-shadow(0 3px 6px rgba(38,12,58,.25)); }
 :root[data-theme="light"] .alpha .a-hand img,
 :root[data-theme="light"] .lh-fig img {
-  filter: drop-shadow(0 6px 14px rgba(90,58,124,.28)) drop-shadow(0 1px 2px rgba(90,58,124,.22)); }
+  filter: drop-shadow(0 3px 6px rgba(90,58,124,.18)); }
 /* Some of these are one handshape twice over, told apart only by the way
    the hand travels. The mark says so on the tile; the line says how on
    the letter's own page. */
@@ -13940,34 +13940,34 @@ const KU_COURSE_MORE = {
    handshape was never an option: getting a finger count wrong teaches
    the wrong letter. */
 const KSL_ALPHA = [
-  { l: "ا", n: "أَلِف", t: "ʾalif", img: "ksl/alif.webp" },
-  { l: "ب", n: "باء", t: "bāʾ", img: "ksl/ba.webp" },
-  { l: "ت", n: "تاء", t: "tāʾ", img: "ksl/ta.webp" },
-  { l: "ث", n: "ثاء", t: "thāʾ", img: "ksl/tha.webp" },
-  { l: "ج", n: "جيم", t: "jīm", img: "ksl/jim.webp" },
-  { l: "ح", n: "حاء", t: "ḥāʾ", img: "ksl/ha.webp" },
-  { l: "خ", n: "خاء", t: "khāʾ", img: "ksl/kha.webp" },
-  { l: "د", n: "دال", t: "dāl", img: "ksl/dal.webp" },
-  { l: "ذ", n: "ذال", t: "dhāl", img: "ksl/dhal.webp" },
-  { l: "ر", n: "راء", t: "rāʾ", img: "ksl/ra.webp" },
-  { l: "ز", n: "زاي", t: "zāy", img: "ksl/zay.webp" },
-  { l: "س", n: "سين", t: "sīn", img: "ksl/sin.webp" },
-  { l: "ش", n: "شين", t: "shīn", img: "ksl/shin.webp" },
-  { l: "ص", n: "صاد", t: "ṣād", img: "ksl/sad.webp" },
-  { l: "ض", n: "ضاد", t: "ḍād", img: "ksl/dad.webp" },
-  { l: "ط", n: "طاء", t: "ṭāʾ", img: "ksl/ta2.webp" },
-  { l: "ظ", n: "ظاء", t: "ẓāʾ", img: "ksl/dha.webp" },
-  { l: "ع", n: "عين", t: "ʿayn", img: "ksl/ayn.webp" },
-  { l: "غ", n: "غين", t: "ghayn", img: "ksl/ghayn.webp" },
-  { l: "ف", n: "فاء", t: "fāʾ", img: "ksl/fa.webp" },
-  { l: "ق", n: "قاف", t: "qāf", img: "ksl/qaf.webp" },
-  { l: "ك", n: "كاف", t: "kāf", img: "ksl/kaf.webp" },
-  { l: "ل", n: "لام", t: "lām", img: "ksl/lam.webp" },
-  { l: "م", n: "ميم", t: "mīm", img: "ksl/mim.webp" },
-  { l: "ن", n: "نون", t: "nūn", img: "ksl/nun.webp" },
-  { l: "ه", n: "هاء", t: "hāʾ", img: "ksl/ha2.webp" },
-  { l: "و", n: "واو", t: "wāw", img: "ksl/waw.webp" },
-  { l: "ي", n: "ياء", t: "yāʾ", img: "ksl/ya.webp" },
+  { l: "ا", n: "أَلِف", t: "ʾalif", img: "ksl/alif.webp?v=2" },
+  { l: "ب", n: "باء", t: "bāʾ", img: "ksl/ba.webp?v=2" },
+  { l: "ت", n: "تاء", t: "tāʾ", img: "ksl/ta.webp?v=2" },
+  { l: "ث", n: "ثاء", t: "thāʾ", img: "ksl/tha.webp?v=2" },
+  { l: "ج", n: "جيم", t: "jīm", img: "ksl/jim.webp?v=2" },
+  { l: "ح", n: "حاء", t: "ḥāʾ", img: "ksl/ha.webp?v=2" },
+  { l: "خ", n: "خاء", t: "khāʾ", img: "ksl/kha.webp?v=2" },
+  { l: "د", n: "دال", t: "dāl", img: "ksl/dal.webp?v=2" },
+  { l: "ذ", n: "ذال", t: "dhāl", img: "ksl/dhal.webp?v=2" },
+  { l: "ر", n: "راء", t: "rāʾ", img: "ksl/ra.webp?v=2" },
+  { l: "ز", n: "زاي", t: "zāy", img: "ksl/zay.webp?v=2" },
+  { l: "س", n: "سين", t: "sīn", img: "ksl/sin.webp?v=2" },
+  { l: "ش", n: "شين", t: "shīn", img: "ksl/shin.webp?v=2" },
+  { l: "ص", n: "صاد", t: "ṣād", img: "ksl/sad.webp?v=2" },
+  { l: "ض", n: "ضاد", t: "ḍād", img: "ksl/dad.webp?v=2" },
+  { l: "ط", n: "طاء", t: "ṭāʾ", img: "ksl/ta2.webp?v=2" },
+  { l: "ظ", n: "ظاء", t: "ẓāʾ", img: "ksl/dha.webp?v=2" },
+  { l: "ع", n: "عين", t: "ʿayn", img: "ksl/ayn.webp?v=2" },
+  { l: "غ", n: "غين", t: "ghayn", img: "ksl/ghayn.webp?v=2" },
+  { l: "ف", n: "فاء", t: "fāʾ", img: "ksl/fa.webp?v=2" },
+  { l: "ق", n: "قاف", t: "qāf", img: "ksl/qaf.webp?v=2" },
+  { l: "ك", n: "كاف", t: "kāf", img: "ksl/kaf.webp?v=2" },
+  { l: "ل", n: "لام", t: "lām", img: "ksl/lam.webp?v=2" },
+  { l: "م", n: "ميم", t: "mīm", img: "ksl/mim.webp?v=2" },
+  { l: "ن", n: "نون", t: "nūn", img: "ksl/nun.webp?v=2" },
+  { l: "ه", n: "هاء", t: "hāʾ", img: "ksl/ha2.webp?v=2" },
+  { l: "و", n: "واو", t: "wāw", img: "ksl/waw.webp?v=2" },
+  { l: "ي", n: "ياء", t: "yāʾ", img: "ksl/ya.webp?v=2" },
 ];
 
 /* Not letters of the alphabet, but part of the same fingerspelling set
@@ -13981,28 +13981,28 @@ const KSL_ALPHA = [
    draw on the post. Where there is no arrow there is no `mv` — which is
    not a claim that the sign is still, only that the source did not say. */
 const KSL_EXTRA = [
-  { l: "ة", n: "تاء مربوطة", t: "tāʾ marbūṭa", img: "ksl/tamarbuta.webp", mvk: "↔",
+  { l: "ة", n: "تاء مربوطة", t: "tāʾ marbūṭa", img: "ksl/tamarbuta.webp?v=2", mvk: "↔",
     mv: "Carried from side to side." },
-  { l: "أ", n: "ألف بهمزة فوقها", t: "ʾalif + hamza above", img: "ksl/alifhamza.webp", mvk: "↔",
+  { l: "أ", n: "ألف بهمزة فوقها", t: "ʾalif + hamza above", img: "ksl/alifhamza.webp?v=2", mvk: "↔",
     mv: "The same fist as <b>ا</b>, thumb up &mdash; moved from side to side." },
-  { l: "إ", n: "ألف بهمزة تحتها", t: "ʾalif + hamza below", img: "ksl/alifhamzabelow.webp", mvk: "↔",
+  { l: "إ", n: "ألف بهمزة تحتها", t: "ʾalif + hamza below", img: "ksl/alifhamzabelow.webp?v=2", mvk: "↔",
     mv: "The fist of <b>ا</b> turned over, thumb down &mdash; moved from side to side." },
-  { l: "آ", n: "ألف ممدودة", t: "ʾalif madda", img: "ksl/alifmadda.webp", mvk: "↺",
+  { l: "آ", n: "ألف ممدودة", t: "ʾalif madda", img: "ksl/alifmadda.webp?v=2", mvk: "↺",
     mv: "The same fist as <b>ا</b>, thumb up &mdash; swept in an arc." },
-  { l: "ؤ", n: "واو بهمزة", t: "wāw + hamza", img: "ksl/wawhamza.webp", mvk: "↺",
+  { l: "ؤ", n: "واو بهمزة", t: "wāw + hamza", img: "ksl/wawhamza.webp?v=2", mvk: "↺",
     mv: "The same pinch as <b>و</b> &mdash; it turns as it travels." },
-  { l: "ئ", n: "ياء بهمزة", t: "yāʾ + hamza", img: "ksl/yahamza.webp", mvk: "↔",
+  { l: "ئ", n: "ياء بهمزة", t: "yāʾ + hamza", img: "ksl/yahamza.webp?v=2", mvk: "↔",
     mv: "The same hand as <b>ي</b> &mdash; moved from side to side." },
-  { l: "ئـ", n: "ياء بهمزة — متّصلة", t: "yāʾ + hamza, joined", img: "ksl/yahamza2.webp", mvk: "↺",
+  { l: "ئـ", n: "ياء بهمزة — متّصلة", t: "yāʾ + hamza, joined", img: "ksl/yahamza2.webp?v=2", mvk: "↺",
     mv: "Index out, pointing &mdash; it turns as it travels." },
-  { l: "ء", n: "همزة", t: "hamza", img: "ksl/hamza.webp", mvk: "↔",
+  { l: "ء", n: "همزة", t: "hamza", img: "ksl/hamza.webp?v=2", mvk: "↔",
     mv: "The same fist as <b>ب</b>, index up &mdash; moved from side to side." },
-  { l: "ى", n: "ألف مقصورة", t: "ʾalif maqṣūra", img: "ksl/alifmaqsura.webp", mvk: "↓",
+  { l: "ى", n: "ألف مقصورة", t: "ʾalif maqṣūra", img: "ksl/alifmaqsura.webp?v=2", mvk: "↓",
     mv: "The same hand as <b>ي</b> &mdash; drawn downward." },
-  { l: "لا", n: "لام ألف", t: "lām-ʾalif", img: "ksl/lamalif.webp" },
-  { l: "لأ", n: "لام ألف بهمزة", t: "lām-ʾalif + hamza", img: "ksl/lamalifhamza.webp", mvk: "↔",
+  { l: "لا", n: "لام ألف", t: "lām-ʾalif", img: "ksl/lamalif.webp?v=2" },
+  { l: "لأ", n: "لام ألف بهمزة", t: "lām-ʾalif + hamza", img: "ksl/lamalifhamza.webp?v=2", mvk: "↔",
     mv: "The same hand as <b>لا</b> &mdash; moved from side to side." },
-  { l: "ال", n: "أداة التعريف", t: "al-, the article", img: "ksl/al.webp" },
+  { l: "ال", n: "أداة التعريف", t: "al-, the article", img: "ksl/al.webp?v=2" },
 ];
 function kslAll() { return KSL_ALPHA.concat(KSL_EXTRA); }
 
@@ -22512,7 +22512,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-1000";
+const BUILD = "1105-1100";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
