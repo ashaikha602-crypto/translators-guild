@@ -4140,6 +4140,50 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .cs-realnote { font-size: .8rem; margin: .45rem 0 0; color: #6EE7B7; }
 .cs-voice-k { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: #34D399; margin: .5rem 0 0; }
 .cs-voice-k.dim { color: inherit; opacity: .55; }
+.pv-back { position: fixed; inset: 0; z-index: 9999; background: rgba(5,5,12,.92); display: grid; place-items: center; align-content: center; gap: 1rem; padding: 1.2rem;
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; animation: swapIn 220ms var(--ease) both; }
+.pv-photo { position: relative; width: min(86vw, 26rem); aspect-ratio: 1; border-radius: 50%; background: center / cover no-repeat; box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  -webkit-touch-callout: none; pointer-events: auto; }
+.pv-shield { position: absolute; inset: 0; border-radius: 50%; -webkit-touch-callout: none; }
+.pv-name { margin: 0; text-align: center; font-family: var(--f-serif); font-size: 1.1rem; color: var(--white); }
+.pv-x { all: unset; position: absolute; top: max(1rem, env(safe-area-inset-top)); right: 1rem; width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center;
+  font-size: 1.6rem; color: #fff; background: rgba(255,255,255,.12); cursor: pointer; }
+.np { margin: .9rem 0; border-radius: 16px; border: var(--hair); background: rgba(255,255,255,.03); padding: .7rem; }
+.np-top { display: flex; align-items: center; gap: .5rem; }
+.np-top b { font-family: var(--f-serif); font-size: .98rem; flex: 1; }
+.np-tabs { display: inline-flex; background: rgba(255,255,255,.06); border-radius: 999px; padding: .15rem; }
+.np-tabs button, .np-new { all: unset; cursor: pointer; font-size: .74rem; padding: .3rem .6rem; border-radius: 999px; }
+.np-tabs button.on { background: #38BDF8; color: #0b1020; font-weight: 700; }
+.np-new { border: var(--hair); }
+.np-sym { display: flex; flex-wrap: wrap; gap: .25rem; margin: .55rem 0 .2rem; }
+.np-sym button { all: unset; cursor: pointer; min-width: 1.9rem; height: 1.9rem; display: grid; place-items: center; border-radius: 8px; background: rgba(255,255,255,.07); font-size: .95rem; }
+.np-hint { font-size: .74rem; opacity: .75; margin: .2rem 0 .5rem; min-height: 1em; }
+.np-paper { position: relative; border-radius: 10px; overflow: hidden; background-color: #FBF8EE;
+  background-image: linear-gradient(to right, transparent calc(50% - 1px), rgba(214,64,64,.45) calc(50% - 1px), rgba(214,64,64,.45) calc(50% + 1px), transparent calc(50% + 1px)),
+    repeating-linear-gradient(to bottom, transparent 0 27px, rgba(70,110,190,.28) 27px 28px); }
+.np-cv { display: block; width: 100%; height: 300px; touch-action: none; cursor: crosshair; }
+.np-ta { display: block; width: 100%; box-sizing: border-box; height: 300px; border: 0; resize: none; background: transparent; color: #1E2A5A; font: 500 1rem/28px var(--f-sans); padding: 0 .6rem; }
+.np-guide { margin-top: .6rem; font-size: .82rem; }
+.np-guide summary { cursor: pointer; font-weight: 600; color: #7DD3FC; }
+.np-guide ol { padding-left: 1.2rem; margin: .4rem 0; } .np-guide li { margin: .2rem 0; }
+.cs-desk { display: grid; gap: .1rem; }
+.cs-lamp { border-radius: 18px; padding: 1rem; text-align: center; border: 1px solid rgba(56,189,248,.35); background: rgba(56,189,248,.07); }
+.cs-lamp.on .cs-wave i { animation: csWave .9s ease-in-out infinite; opacity: 1; }
+.cs-lamp.on .cs-wave i:nth-child(2) { animation-delay: .1s } .cs-lamp.on .cs-wave i:nth-child(3) { animation-delay: .2s }
+.cs-lamp.on .cs-wave i:nth-child(4) { animation-delay: .3s } .cs-lamp.on .cs-wave i:nth-child(5) { animation-delay: .4s }
+.cs-lamp.air { border-color: rgba(248,113,113,.6); background: rgba(248,113,113,.08); }
+.cs-lamp .cs-clock { display: block; }
+.cs-notes-img { width: 100%; border-radius: 8px; background: #FBF8EE; margin-top: .4rem; }
+.cs-fold { opacity: .7; }
+.cs-modes-back { margin: 1.2rem 0 .4rem; width: 100%; }
+.sb-console { border-radius: 20px; padding: 1rem; background: linear-gradient(180deg, #161a2b, #0e1120); border: 1px solid rgba(244,114,182,.35); display: grid; gap: .7rem; }
+.sb-row { display: flex; align-items: center; justify-content: space-between; gap: .6rem; font-size: .8rem; }
+.sb-air { display: inline-flex; align-items: center; gap: .45rem; padding: .35rem .7rem; border-radius: 8px; border: 1px solid rgba(255,255,255,.15); font-weight: 800; letter-spacing: .14em; font-size: .72rem; opacity: .45; }
+.sb-air i { width: 10px; height: 10px; border-radius: 50%; background: #F87171; }
+.sb-air.on { opacity: 1; border-color: #F87171; color: #FCA5A5; box-shadow: 0 0 18px rgba(248,113,113,.35); }
+.sb-chan { font-size: .78rem; opacity: .85; }
+.sb-cough { all: unset; cursor: pointer; padding: .5rem .9rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.2); font-size: .8rem; font-weight: 600; }
+.sb-cough.on { background: #FBBF24; color: #0b1020; }
 .im-modes { display: grid; gap: .5rem; margin: .2rem 0 1.1rem; }
 .im-lab { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; opacity: .75; margin: 0 0 .1rem; }
 .im-tile { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: .15rem .6rem; padding: .8rem .95rem; border-radius: 16px;
@@ -16089,6 +16133,27 @@ function initialsFor(name) {
    anyone who knows where to look can still find the file the browser
    downloaded to show it. Nothing on any website can prevent that, and
    she should hear it from me rather than assume otherwise. */
+
+/* A member's photo, shown large. It is drawn as a background on a layer
+   that cannot be long-pressed, dragged or right-clicked, so the browser
+   offers no "save image"; the page simply shows it. */
+function viewPhoto(url, name) {
+  const back = el("div", "pv-back");
+  back.setAttribute("role", "dialog"); back.setAttribute("aria-label", (name || "Profile") + " photo");
+  const ph = el("div", "pv-photo");
+  ph.style.backgroundImage = 'url("' + String(url).replace(/"/g, "%22") + '")';
+  const shield = el("div", "pv-shield");
+  ph.appendChild(shield);
+  const cap = el("p", "pv-name", escapeText(name || ""));
+  const x = el("button", "pv-x", "×"); x.type = "button"; x.setAttribute("aria-label", "Close");
+  back.appendChild(ph); back.appendChild(cap); back.appendChild(x);
+  const close = () => { back.remove(); document.removeEventListener("keydown", esc); };
+  const esc = e => { if (e.key === "Escape") close(); };
+  back.addEventListener("click", e => { if (e.target === back || e.target === x) close(); });
+  ["contextmenu", "dragstart"].forEach(t => back.addEventListener(t, e => e.preventDefault()));
+  document.addEventListener("keydown", esc);
+  document.body.appendChild(back);
+}
 function paintFace(node, path, name) {
   if (!node) return;
   node.textContent = "";
@@ -18239,6 +18304,12 @@ async function runPublic(id) {
   const head = el("div", "ig-head");
   const av = el("span", "avatar");
   paintFace(av, p.avatar_path, p.display_name);
+  /* tap to see the photo large: to look at, not to keep */
+  if (p.avatar_path) {
+    av.style.cursor = "zoom-in";
+    av.setAttribute("role", "button"); av.setAttribute("aria-label", "View profile photo");
+    av.addEventListener("click", () => viewPhoto(avatarUrl(p.avatar_path) + "?v=" + encodeURIComponent(p.avatar_path.split("/").pop()), p.display_name));
+  }
   head.appendChild(av);
   const who = el("div", "ig-id");
   const pubName = el("h1", "ig-name",
@@ -22805,7 +22876,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-1000";
+const BUILD = "1106-1110";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -31156,9 +31227,10 @@ function consecStop() {
 /* The best voice the device has. Phones ship a plain voice and, as a free
    download, an Enhanced or Premium one that sounds far more natural; the
    member can also pick one by hand, and that choice is kept. */
+const CS_NOVELTY = /compact|eloquence|novelty|bad news|good news|bahh|bells|bubbles|cellos|jester|organ|trinoids|whisper|zarvox|albert|fred|junior|ralph|kathy|superstar|wobble|boing|deranged|hysterical|pipe organ|grandma|grandpa|rocko|sandy|shelley|flo|reed|eddy/i;
 function consecVoices(lang) {
   const vs = (window.speechSynthesis && speechSynthesis.getVoices()) || [];
-  return vs.filter(v => (v.lang || "").replace("_", "-").toLowerCase().indexOf(lang) === 0);
+  return vs.filter(v => (v.lang || "").replace("_", "-").toLowerCase().indexOf(lang) === 0 && !CS_NOVELTY.test((v.name || "") + " " + (v.voiceURI || "")));
 }
 function consecVoiceScore(v, lang) {
   const n = (v.name || "") + " " + (v.voiceURI || "");
@@ -31167,7 +31239,7 @@ function consecVoiceScore(v, lang) {
   if (/enhanced|natural|neural|wavenet|online/i.test(n)) s += 40;
   if (/google|microsoft/i.test(n)) s += 15;
   if (/siri/i.test(n)) s += 30;
-  if (/compact|eloquence|novelty|bad news|bells|bubbles|cellos|jester|organ|trinoids|whisper|zarvox|albert|fred|junior|ralph|kathy|superstar|wobble|boing/i.test(n)) s -= 80;
+  if (CS_NOVELTY.test(n)) s -= 200;
   const l = (v.lang || "").toLowerCase();
   if (lang === "ar" && /ar-(sa|kw|ae)/.test(l)) s += 5;
   if (lang === "en" && /en-(gb|us)/.test(l)) s += 5;
@@ -31269,6 +31341,11 @@ function consecListen(into, onText, onState) {
   };
   return out;
 }
+function csBackToModes() {
+  const b = el("button", "ghost cs-modes-back", "← All interpreting modes"); b.type = "button";
+  b.addEventListener("click", () => { consecStop(); clearTrail(); openItem(ITEMS.find(t => t.id === "booth")); });
+  return b;
+}
 function csSteps(on) {
   const s = el("div", "cs-steps");
   ["Listen", "Speak", "Check"].forEach((t, k) => s.appendChild(el("span", k === on ? "on" : k < on ? "done" : "", '<b>' + (k + 1) + '</b>' + t)));
@@ -31297,6 +31374,78 @@ function consecPlay(url, onstart, onend) {
   const p = a.play();
   if (p && p.catch) p.catch(() => fin(false));
 }
+const MIC_SVG = '<svg class="cs-mic-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>';
+/* Symbols interpreters commonly use in consecutive notes. */
+const CS_SYMBOLS = [["→", "leads to, causes"], ["←", "comes from"], ["↑", "rise, increase"], ["↓", "fall, decrease"], ["=", "same, equals, agree"],
+  ["≠", "different, disagree"], ["+", "and, more"], ["−", "less, without"], ["∴", "therefore"], ["∵", "because"], ["/", "but, contrast"],
+  ["✓", "yes, agreed"], ["✗", "no, rejected"], ["?", "question, problem"], ["!", "important"], ["”", "same as above"]];
+/* The interpreter's pad: a steno pad with a line down the middle, written
+   on with a finger or a pen, or typed. Notes are for remembering what was
+   said, not a translation. */
+function csNotepad() {
+  const node = el("div", "np");
+  node.innerHTML = '<div class="np-top"><b>Notepad</b><span class="np-tabs"><button type="button" class="on" data-m="pen">✎ Write</button><button type="button" data-m="type">⌨ Type</button></span>' +
+    '<button type="button" class="np-new">New page</button></div>';
+  const sym = el("div", "np-sym");
+  CS_SYMBOLS.forEach(([c, m]) => { const b = el("button", "", c); b.type = "button"; b.title = m; b.setAttribute("aria-label", c + ": " + m); sym.appendChild(b); });
+  node.appendChild(sym);
+  const hint = el("p", "np-hint", "Tap a symbol to see what it stands for.");
+  node.appendChild(hint);
+  const paper = el("div", "np-paper");
+  const cv = document.createElement("canvas"); cv.className = "np-cv";
+  const ta = document.createElement("textarea"); ta.className = "np-ta"; ta.dir = "auto"; ta.hidden = true;
+  ta.placeholder = "Ideas, names, numbers, links. One idea per line.";
+  paper.appendChild(cv); paper.appendChild(ta);
+  node.appendChild(paper);
+  const guide = document.createElement("details");
+  guide.className = "np-guide";
+  guide.innerHTML = '<summary>How interpreters take notes</summary>' +
+    '<p>Jean-François Rozan, <i>La prise de notes en interprétation consécutive</i> (Geneva, 1956), set out the seven principles still taught today:</p><ol>' +
+    '<li><b>Note the idea, not the words.</b></li><li><b>Abbreviate</b> long words and names.</li><li><b>Links</b>: mark how ideas connect (but, because, therefore).</li>' +
+    '<li><b>Negation</b>: mark “not” clearly, often with a stroke.</li><li><b>Emphasis</b>: underline what the speaker stresses.</li>' +
+    '<li><b>Verticality</b>: write down the page, one idea under another, not across.</li><li><b>Shift</b> (décalage): indent each step so the structure shows at a glance.</li></ol>' +
+    '<p>Numbers, names and dates are the exception: write them in full, at once.</p>';
+  node.appendChild(guide);
+  let mode = "pen", drew = false;
+  const ctx = cv.getContext("2d");
+  const size = () => {
+    const r = paper.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    const img = drew ? cv.toDataURL() : null;
+    cv.width = Math.max(10, r.width) * dpr; cv.height = 300 * dpr;
+    cv.style.height = "300px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#1E2A5A";
+    if (img) { const im = new Image(); im.onload = () => ctx.drawImage(im, 0, 0, r.width, 300); im.src = img; }
+  };
+  requestAnimationFrame(size);
+  let last = null;
+  const pos = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  cv.addEventListener("pointerdown", e => { e.preventDefault(); cv.setPointerCapture(e.pointerId); last = pos(e); drew = true; });
+  cv.addEventListener("pointermove", e => {
+    if (!last) return;
+    const p = pos(e);
+    ctx.lineWidth = e.pressure && e.pointerType === "pen" ? 1 + e.pressure * 2.4 : 2.2;
+    ctx.beginPath(); ctx.moveTo(last[0], last[1]); ctx.lineTo(p[0], p[1]); ctx.stroke();
+    last = p;
+  });
+  ["pointerup", "pointercancel", "pointerleave"].forEach(t => cv.addEventListener(t, () => { last = null; }));
+  node.querySelectorAll(".np-tabs button").forEach(b => b.addEventListener("click", () => {
+    mode = b.dataset.m;
+    node.querySelectorAll(".np-tabs button").forEach(x => x.classList.toggle("on", x === b));
+    cv.hidden = mode !== "pen"; ta.hidden = mode === "pen";
+    hint.textContent = mode === "pen" ? "Tap a symbol to see what it stands for." : "Tap a symbol to add it.";
+    if (mode === "type") ta.focus();
+  }));
+  sym.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+    if (mode === "type") {
+      const at = ta.selectionStart || ta.value.length;
+      ta.value = ta.value.slice(0, at) + b.textContent + " " + ta.value.slice(at); ta.focus();
+    } else hint.innerHTML = "<b>" + b.textContent + "</b> " + b.title;
+  }));
+  node.querySelector(".np-new").addEventListener("click", () => { ctx.clearRect(0, 0, cv.width, cv.height); drew = false; ta.value = ""; });
+  return { node: node, snapshot: () => ({ img: drew ? cv.toDataURL("image/png") : "", text: ta.value.trim() }) };
+}
+
 function runSpoken(mode) {
   consecStop();
   const SIM = mode === "simul";
@@ -31344,8 +31493,12 @@ function runSpoken(mode) {
     });
     stage.appendChild(seg);
 
-    stage.appendChild(el("p", "cs-lab", "3 · The speaker's voice"));
-    const vbox = el("div", "cs-voices");
+    if (REAL_AUDIO[st.genre]) {
+      stage.appendChild(el("p", "cs-lab", "3 · The speakers"));
+      stage.appendChild(el("div", "cs-voices", '<p class="cs-tip"><b>Real people, recorded.</b> LibriVox volunteers reading the Universal Declaration of Human Rights: English read by the volunteer credited as <b>KS</b>, Arabic by the volunteer credited as <b>FE</b> (LibriVox credits them by these initials). Public domain.</p>'));
+    }
+    stage.appendChild(el("p", "cs-lab", REAL_AUDIO[st.genre] ? "Phone voice (only if a recording is missing)" : "3 · The speaker's voice"));
+    const vbox = el("div", "cs-voices" + (REAL_AUDIO[st.genre] ? " cs-fold" : ""));
     ["ar", "en"].forEach(lang => {
       const all = consecVoices(lang).sort((a, b) => consecVoiceScore(b, lang) - consecVoiceScore(a, lang));
       const row = el("div", "cs-vrow");
@@ -31369,11 +31522,13 @@ function runSpoken(mode) {
     stage.appendChild(el("p", "cs-mini", (R ? "✓ Your speech will be written out as you talk." : "This browser cannot write speech out: you will speak, then type what you said.") +
       (navigator.mediaDevices && window.MediaRecorder ? " ✓ You will be recorded, to hear yourself back." : "")));
 
-    const go = el("button", "primary cs-go", SIM ? "Start · " + SIM_N_LABEL() : "Start · " + CONSEC_N + " segments"); go.type = "button";
-    go.onclick = () => { st.started = true; SIM ? simul() : start(); };
+    const go = el("button", "primary cs-go", SIM ? "Start · the mic opens and the speech begins" : "Start · the speaker begins"); go.type = "button";
+    /* one tap: simultaneous opens the mic and starts the speech at once;
+       consecutive starts the speaker at once */
+    go.onclick = () => { st.started = true; if (SIM) { simul(); const b = stage.querySelector(".cs-mic-btn"); b && b.click(); } else start(); };
     stage.appendChild(go);
     stage.appendChild(el("p", "sd-note", "The texts are the interpreting section's own: " + BOOTH_GENRES.find(x => x.id === st.genre).hint));
-    stage.appendChild(footNav({}));
+    stage.appendChild(csBackToModes());
   }
   function SIM_N_LABEL() { return "a speech of " + SIMUL_N + " passages"; }
   const lv = k => BOOTH_LEVELS.find(L => L.key === k);
@@ -31412,93 +31567,93 @@ function runSpoken(mode) {
     stage.innerHTML = "";
     setCount("Consecutive · " + (st.i + 1) + " of " + st.queue.length);
     setDots(st.queue.length, st.i, st.i);
-    stage.appendChild(el("p", "cs-head", "Segment " + (st.i + 1) + " of " + st.queue.length + " · the speaker speaks " +
-      (from === "ar" ? "<b>Arabic</b> · you interpret into <b>English</b>" : "<b>English</b> · you interpret into <b>Arabic</b>")));
-    stage.appendChild(csSteps(0));
-    const box = el("div", "cs-listen");
-    box.innerHTML = '<span class="cs-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><p class="cs-state">Press play. The speaker will speak <b>once</b>.</p>' +
-      (q.audio ? '<p class="cs-voice-k">● Real recorded voice</p>' : '<p class="cs-voice-k dim">Phone voice</p>');
-    stage.appendChild(box);
-    const stateP = box.querySelector(".cs-state");
-    const play = el("button", "primary cs-big", "▶ Play the speaker"); play.type = "button";
-    stage.appendChild(play);
+    const desk = el("div", "cs-desk");
+    stage.appendChild(desk);
+    desk.appendChild(el("p", "cs-head", "Segment " + (st.i + 1) + " of " + st.queue.length + " · " +
+      (from === "ar" ? "speaker: <b>Arabic</b> · you: <b>English</b>" : "speaker: <b>English</b> · you: <b>Arabic</b>") +
+      (q.audio ? ' · <span class="cs-voice-k">● real voice</span>' : ' · <span class="cs-voice-k dim">phone voice</span>')));
+    const steps = csSteps(0); desk.appendChild(steps);
+    /* the speaker's lamp: listening, finished, your turn */
+    const lamp = el("div", "cs-lamp");
+    lamp.innerHTML = '<span class="cs-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><p class="cs-state">The speaker speaks <b>once</b>. Have your notepad ready, then press play.</p>';
+    desk.appendChild(lamp);
+    const stateP = lamp.querySelector(".cs-state");
+    const act = el("button", "primary cs-big", "▶ Play the speaker"); act.type = "button";
+    desk.appendChild(act);
     const rep = el("button", "link cs-rep", "Ask the speaker to repeat (" + st.repeat + " left)"); rep.type = "button"; rep.hidden = true;
-    stage.appendChild(rep);
-    const padLab = el("p", "cs-lab", "Notes · optional");
-    const pad = document.createElement("textarea");
-    pad.className = "cs-pad"; pad.placeholder = "Jot names, numbers and the outline while you listen"; pad.dir = "auto";
-    stage.appendChild(padLab); stage.appendChild(pad);
-    let spoken = Math.max(4, Math.round(srcText.split(/\s+/).length / 2.3)), t0 = 0;
+    desk.appendChild(rep);
+    /* the interpreter's pad: notes, not a translation */
+    const pad = csNotepad();
+    desk.appendChild(pad.node);
+    /* what you say, written out as you speak (shown once you speak) */
+    const saidLab = el("p", "cs-lab", "What you are saying"); saidLab.hidden = true;
+    const said = document.createElement("textarea");
+    said.className = "cs-said"; said.dir = into === "ar" ? "rtl" : "ltr"; said.hidden = true;
+    said.placeholder = consecRecog() ? "Your words appear here as you speak. Correct anything misheard." : "Type what you said.";
+    desk.appendChild(saidLab); desk.appendChild(said);
+    let spoken = Math.max(4, Math.round(srcText.split(/\s+/).length / 2.3)), t0 = 0, mic = null, secs = 0;
     const heard = ok => {
-      box.classList.remove("on");
+      lamp.classList.remove("on");
       if (!ok) {
-        const secs = Math.max(5, Math.round(srcText.split(/\s+/).length / 2));
-        stateP.innerHTML = '<span class="cs-sight" dir="' + (from === "ar" ? "rtl" : "ltr") + '">' + srcText + '</span><small>No ' + (from === "ar" ? "Arabic" : "English") + ' voice on this device. Read it: it hides in ' + secs + ' seconds.</small>';
-        setTimeout(() => turn(), secs * 1000);
+        const n = Math.max(5, Math.round(srcText.split(/\s+/).length / 2));
+        stateP.innerHTML = '<span class="cs-sight" dir="' + (from === "ar" ? "rtl" : "ltr") + '">' + srcText + '</span><small>No voice for this language here. Read it: it hides in ' + n + ' seconds.</small>';
+        setTimeout(yourTurn, n * 1000);
         return;
       }
       spoken = Math.max(2, Math.round((Date.now() - t0) / 1000));
-      turn();
+      yourTurn();
     };
     const speak = () => {
-      play.disabled = true; rep.hidden = true;
-      stateP.innerHTML = "<b>Listening…</b> take notes below if you need them.";
-      if (q.audio) consecPlay(q.audio, () => { if (!t0) t0 = Date.now(); box.classList.add("on"); }, ok => { if (!ok) consecSay(srcText, from, () => { t0 = Date.now(); box.classList.add("on"); }, heard); else heard(true); });
-      else consecSay(srcText, from, () => { t0 = Date.now(); box.classList.add("on"); }, heard);
+      act.disabled = true; rep.hidden = true; t0 = 0;
+      stateP.innerHTML = "<b>Listening…</b> note the ideas, names and numbers.";
+      const on = () => { if (!t0) t0 = Date.now(); lamp.classList.add("on"); };
+      if (q.audio) consecPlay(q.audio, on, ok => ok ? heard(true) : consecSay(srcText, from, on, heard));
+      else consecSay(srcText, from, on, heard);
     };
-    play.onclick = speak;
+    act.onclick = speak;
     rep.onclick = () => { if (st.repeat > 0) { st.repeat--; rep.textContent = "Ask the speaker to repeat (" + st.repeat + " left)"; speak(); } };
-    function turn() {
-      stateP.innerHTML = "The speaker has finished. <b>Now it is your turn to speak.</b>";
-      play.disabled = false;
-      play.className = "primary cs-big cs-mic-btn";
-      play.innerHTML = '<svg class="cs-mic-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> Tap and speak your interpretation';
-      play.onclick = () => speakNow(q, from, into, srcText, spoken, pad);
+    function yourTurn() {
+      steps.replaceWith(csSteps(1));
+      stateP.innerHTML = "The speaker has stopped. <b>Your turn: speak your interpretation</b>, reading from your notes.";
+      act.disabled = false;
+      act.className = "primary cs-big cs-mic-btn";
+      act.innerHTML = MIC_SVG + " Tap to start speaking";
       rep.hidden = st.repeat <= 0;
+      act.onclick = startMic;
+    }
+    function startMic() {
+      rep.hidden = true;
+      lamp.classList.add("air");
+      stateP.innerHTML = '<b>The microphone is on.</b> Speak in ' + (into === "ar" ? "Arabic" : "English") + ' now.<span class="cs-clock">0 s · the speaker took ' + spoken + ' s</span>';
+      saidLab.hidden = false; said.hidden = false;
+      consecTick = setInterval(() => { secs++; const c = lamp.querySelector(".cs-clock"); if (c) c.textContent = secs + " s · the speaker took " + spoken + " s"; }, 1000);
+      mic = consecListen(into, t => { said.value = t; }, msg => { const c = lamp.querySelector(".cs-clock"); stateP.innerHTML = msg + (c ? c.outerHTML : ""); });
+      act.className = "primary cs-big";
+      act.innerHTML = "■ Done · check my interpretation";
+      act.onclick = finish;
+    }
+    function finish() {
+      if (consecTick) { clearInterval(consecTick); consecTick = null; }
+      mic && mic.stop();
+      act.disabled = true;
+      setTimeout(() => {
+        const words = (said.value || (mic && mic.text()) || "").trim();
+        if (!words) {
+          act.disabled = false;
+          stateP.innerHTML = "<b>None of your words reached the page.</b> Speech to text did not catch them. Tap to speak again, or type what you said, then tap Done.";
+          act.className = "primary cs-big cs-mic-btn"; act.innerHTML = MIC_SVG + " Speak again"; act.onclick = startMic;
+          const typed = el("button", "ghost cs-big", "I typed it · check"); typed.type = "button";
+          typed.onclick = () => { const w = said.value.trim(); if (w) check(q, from, into, srcText, spoken, secs, w, pad.snapshot(), mic ? mic.url : () => ""); };
+          if (!desk.querySelector(".cs-typed")) { typed.classList.add("cs-typed"); act.after(typed); }
+          return;
+        }
+        check(q, from, into, srcText, spoken, secs, words, pad.snapshot(), mic ? mic.url : () => "");
+      }, 600);
     }
     const quit = el("button", "link cs-quit", "End the session"); quit.type = "button";
     quit.onclick = () => { consecStop(); st.log.length ? summary() : setup(); };
-    stage.appendChild(quit);
-  }
-  function speakNow(q, from, into, srcText, spoken, pad) {
-    consecStop();
-    const notes = pad.value;
-    stage.innerHTML = "";
-    setCount("Consecutive · " + (st.i + 1) + " of " + st.queue.length + " · speak");
-    stage.appendChild(el("p", "cs-head", "Segment " + (st.i + 1) + " of " + st.queue.length + " · speak in <b>" + (into === "ar" ? "Arabic" : "English") + "</b>"));
-    stage.appendChild(csSteps(1));
-    const live = el("div", "cs-live");
-    live.innerHTML = '<span class="cs-mic" aria-hidden="true"></span><p class="cs-state"><b>The microphone is on.</b> Speak your interpretation now, in ' + (into === "ar" ? "Arabic" : "English") + '.</p><p class="cs-clock">0 s · the speaker took ' + spoken + ' s</p>';
-    stage.appendChild(live);
-    if (notes.trim()) { const n = el("div", "cs-card cs-notes"); n.innerHTML = '<span class="cs-k">Your notes</span><p dir="auto">' + escapeText(notes) + '</p>'; stage.appendChild(n); }
-    stage.appendChild(el("p", "cs-lab", "What you are saying"));
-    const said = document.createElement("textarea");
-    said.className = "cs-said"; said.dir = into === "ar" ? "rtl" : "ltr";
-    said.placeholder = consecRecog() ? "Your words appear here as you speak. Correct anything misheard." : "Type what you said.";
-    stage.appendChild(said);
-    let secs = 0;
-    consecTick = setInterval(() => { secs++; live.querySelector(".cs-clock").textContent = secs + " s · the speaker took " + spoken + " s"; }, 1000);
-    const mic = consecListen(into, t => { said.value = t; }, msg => { live.querySelector(".cs-state").textContent = msg; });
-    const done = el("button", "primary cs-big", "■ Done · check my interpretation"); done.type = "button";
-    stage.appendChild(done);
-    done.onclick = () => {
-      if (consecTick) { clearInterval(consecTick); consecTick = null; }
-      mic.stop();
-      setTimeout(() => {
-        const words = (said.value || mic.text() || "").trim();
-        if (!words) {
-          /* nothing was captured: say so, and do not mark it */
-          live.querySelector(".cs-state").innerHTML = "<b>None of your words reached the page.</b> Speech to text did not catch them on this device. Tap the button to speak again, or type what you said, then tap Done.";
-          live.querySelector(".cs-mic").style.background = "#FBBF24";
-          done.textContent = "■ Done · check my interpretation";
-          const again = el("button", "primary cs-big cs-mic-btn", "Speak again"); again.type = "button";
-          again.onclick = () => { again.remove(); const m2 = consecListen(into, t => { said.value = t; }, msg => { live.querySelector(".cs-state").textContent = msg; }); done.onclick = () => { m2.stop(); setTimeout(() => { const w2 = (said.value || m2.text() || "").trim(); if (w2) check(q, from, into, srcText, spoken, secs, w2, notes, m2.url); }, 600); }; };
-          done.parentNode.insertBefore(again, done);
-          return;
-        }
-        check(q, from, into, srcText, spoken, secs, words, notes, mic.url);
-      }, 600);
-    };
+    desk.appendChild(quit);
+    speak();   /* the speaker starts as soon as the segment opens */
   }
   function check(q, from, into, srcText, spoken, secs, said, notes, audio) {
     consecStop();
@@ -31528,7 +31683,14 @@ function runSpoken(mode) {
       k.innerHTML = '<span class="cs-k">Key ideas</span>' + q.keys.map(x => '<span class="' + (keyMet(x, a) ? "hit" : "miss") + '">' + (keyMet(x, a) ? "✓ " : "✗ ") + escapeText(x) + '</span>').join("");
       stage.appendChild(k);
     }
-    if (notes && notes.trim()) stage.appendChild(card("Your notes", notes, "auto"));
+    if (notes && typeof notes === "object") {
+      if (notes.img || notes.text) {
+        const c = el("div", "cs-card"); c.appendChild(el("span", "cs-k", "Your notes"));
+        if (notes.img) { const im = document.createElement("img"); im.src = notes.img; im.alt = "Your handwritten notes"; im.className = "cs-notes-img"; c.appendChild(im); }
+        if (notes.text) c.appendChild(el("p", "", escapeText(notes.text)));
+        stage.appendChild(c);
+      }
+    } else if (notes && notes.trim()) stage.appendChild(card("Your notes", notes, "auto"));
     if (url) { const au = document.createElement("audio"); au.controls = true; au.src = url; au.className = "cs-audio"; const w = el("div", "cs-card"); w.appendChild(el("span", "cs-k", "Hear yourself")); w.appendChild(au); stage.appendChild(w); }
   }
   function summary() {
@@ -31548,7 +31710,7 @@ function runSpoken(mode) {
     const again = el("button", "primary cs-big", "Another session"); again.type = "button"; again.onclick = () => SIM ? simul() : start();
     const back = el("button", "ghost", "Change setting"); back.type = "button"; back.onclick = () => { st.started = false; setup(); };
     stage.appendChild(again); stage.appendChild(back);
-    stage.appendChild(footNav({}));
+    stage.appendChild(csBackToModes());
   }
 
   /* ── SIMULTANEOUS ── */
@@ -31561,11 +31723,14 @@ function runSpoken(mode) {
     st.log = [];
     stage.innerHTML = "";
     setCount("Simultaneous · " + g.en);
-    stage.appendChild(el("p", "cs-head", "A speech in <b>" + (from === "ar" ? "Arabic" : "English") + "</b> · you interpret into <b>" + (into === "ar" ? "Arabic" : "English") + "</b> as it runs"));
-    const box = el("div", "cs-listen");
-    box.innerHTML = '<span class="cs-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><p class="cs-state">Put your headphones on. When you press start, the microphone opens and the speaker begins. <b>Start speaking a few words after the speaker, and keep going.</b></p><p class="cs-clock"></p>';
-    stage.appendChild(box);
-    const stateP = box.querySelector(".cs-state"), clock = box.querySelector(".cs-clock");
+    /* the booth console: floor channel in, your channel out, the ON AIR lamp and a cough key */
+    const con = el("div", "sb-console");
+    con.innerHTML = '<div class="sb-row"><span class="sb-air"><i></i>ON AIR</span><span class="sb-clock cs-clock">0 s</span></div>' +
+      '<div class="sb-row"><span class="sb-chan">Floor: <b>' + (from === "ar" ? "Arabic" : "English") + '</b>' + (items[0] && items[0].audio ? ' · real voice' : ' · phone voice') + '</span><span class="sb-chan">You: <b>' + (into === "ar" ? "Arabic" : "English") + '</b></span></div>' +
+      '<div class="cs-lamp"><span class="cs-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><p class="cs-state">🎧 Headphones on. Press start: <b>the microphone opens and the speaker begins at once.</b> Start a few words behind the speaker and keep going.</p></div>';
+    stage.appendChild(con);
+    const box = con.querySelector(".cs-lamp"), air = con.querySelector(".sb-air");
+    const stateP = box.querySelector(".cs-state"), clock = con.querySelector(".sb-clock");
     const said = document.createElement("textarea");
     said.className = "cs-said"; said.dir = into === "ar" ? "rtl" : "ltr";
     said.placeholder = consecRecog() ? "Your words appear here as you speak." : "This browser cannot write speech out. You will be recorded; type a summary afterwards if you like.";
@@ -31573,26 +31738,38 @@ function runSpoken(mode) {
     stage.appendChild(go);
     stage.appendChild(el("p", "cs-lab", "What you are saying"));
     stage.appendChild(said);
-    const stop = el("button", "ghost cs-big", "■ Stop"); stop.type = "button"; stop.hidden = true;
-    stage.appendChild(stop);
+    const keys = el("div", "sb-row");
+    const cough = el("button", "sb-cough", "Cough key · hold to mute"); cough.type = "button"; cough.hidden = true;
+    const stop = el("button", "ghost", "■ Stop"); stop.type = "button"; stop.hidden = true;
+    keys.appendChild(cough); keys.appendChild(stop);
+    con.appendChild(keys);
     let mic = null, secs = 0, k = 0, cuts = [], ended = false;
     const finish = () => {
       if (ended) return; ended = true;
       try { speechSynthesis.cancel(); } catch (e) { }
+      try { consecAudio && consecAudio.pause(); } catch (e) { }
+      const a0 = stage.querySelector(".sb-air"); a0 && a0.classList.remove("on");
       if (consecTick) { clearInterval(consecTick); consecTick = null; }
       mic && mic.stop();
       setTimeout(() => results(items, from, into, said.value || (mic ? mic.text() : ""), cuts, mic ? mic.url() : ""), 700);
     };
     go.onclick = () => {
-      go.hidden = true; stop.hidden = false;
+      go.hidden = true; stop.hidden = false; cough.hidden = false;
       mic = consecListen(into, t => { said.value = t; }, msg => { stateP.textContent = msg; });
-      box.classList.add("on");
+      box.classList.add("on"); air.classList.add("on");
+      /* the cough key: hold to take your microphone off air, release to go back on */
+      let prefix = "";
+      const mute = e => { e.preventDefault(); if (!mic || ended) return; cough.classList.add("on"); air.classList.remove("on"); prefix = said.value; mic.stop(); mic = null; };
+      const unmute = () => { if (mic || ended || !cough.classList.contains("on")) return; cough.classList.remove("on"); air.classList.add("on");
+        mic = consecListen(into, t => { said.value = (prefix ? prefix + " " : "") + t; }, msg => { stateP.textContent = msg; }); };
+      cough.addEventListener("pointerdown", mute);
+      ["pointerup", "pointerleave", "pointercancel"].forEach(t => cough.addEventListener(t, unmute));
       stateP.innerHTML = "<b>Interpret now.</b> The speaker is speaking.";
       const t0 = Date.now();
       const timer = setInterval(() => { clock.textContent = Math.round((Date.now() - t0) / 1000) + " s"; if (ended) clearInterval(timer); }, 1000);
       const nextPart = () => {
         if (ended) return;
-        if (k >= items.length) { stateP.innerHTML = "The speaker has finished. Finish your sentence, then tap Stop."; box.classList.remove("on"); return; }
+        if (k >= items.length) { stateP.innerHTML = "The speaker has finished. Finish your sentence, then tap Stop."; box.classList.remove("on"); stop.className = "primary"; return; }
         const q = items[k++];
         cuts.push(said.value.length);
         const after = ok => {
