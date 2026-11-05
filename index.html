@@ -22930,7 +22930,7 @@ async function checkForNewBuild() {
   try {
     const r = await fetch(location.pathname + "?b=" + now, { cache: "no-store" });
     if (!r.ok) return;
-    const m = /const BUILD = "1106-2004"/.exec(await r.text());
+    const m = /const BUILD = "([0-9-]+)"/.exec(await r.text());
     live = m && m[1];
   } catch (e) { return; }
   if (!live || live === BUILD) return;
