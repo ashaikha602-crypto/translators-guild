@@ -22541,7 +22541,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-1800";
+const BUILD = "1105-1900";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -29541,8 +29541,8 @@ function allMinorCourses() {
    wpclipart.com and kept on Wikimedia Commons ("Sign language A.svg" to
    "Sign language Z.svg") show them, one hand each, laid out like the
    Kuwaiti alphabet. J and Z are drawn with the path the finger traces. */
-const ASL_HAVE = "CDGILMNPQVWY";
-const ASL_ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(l => ({ l: l, img: ASL_HAVE.indexOf(l) >= 0 ? "asl/" + l + ".webp?v=1" : "",
+const ASL_HAVE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const ASL_ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(l => ({ l: l, img: ASL_HAVE.indexOf(l) >= 0 ? "asl/" + l + ".webp?v=2" : "",
   mv: l === "J" || l === "Z" ? (l === "J" ? "The little finger traces a J in the air." : "The index finger traces a Z in the air.") : "" }));
 const ASL_CREDIT = "Drawings of the American manual alphabet: public domain, from <b>wpclipart.com</b>, via Wikimedia Commons " +
   "(“Sign language A.svg” to “Sign language Z.svg”).";
