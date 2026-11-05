@@ -22592,7 +22592,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-0015";
+const BUILD = "1106-0040";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -29597,6 +29597,15 @@ const ASL_ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(l => ({ l: l, img: 
   mv: l === "J" || l === "Z" ? (l === "J" ? "The little finger traces a J in the air." : "The index finger traces a Z in the air.") : "" }));
 const ASL_CREDIT = "Drawings of the American manual alphabet: public domain, from <b>wpclipart.com</b>, via Wikimedia Commons " +
   "(“Sign language A.svg” to “Sign language Z.svg”).";
+/* ASL lessons on YouTube, all by Deaf teachers of the language */
+const ASL_VIDEOS = [
+  { id: "bFv_mLwBvHc", t: "The alphabet (ABCs) in ASL", by: "Dr. Byron Bridges · Sign Language 101" },
+  { id: "va1aAXpVr2w", t: "Basic fingerspelling", by: "Dr. Bill Vicars · ASL University" },
+  { id: "DaMjr4AfYA0", t: "Learn sign language: Lesson 01", by: "Dr. Bill Vicars · ASL University" },
+  { id: "zC24wjEnZrg", t: "Lesson 1 review", by: "Dr. Bill Vicars · ASL University" },
+  { id: "ianCxd71xIo", t: "100 basic signs", by: "Dr. Bill Vicars · Lifeprint.com" },
+  { id: "NYoO2RImXEk", t: "Fingerspelling practice · Level 1", by: "Dr. Bill Vicars · ASL University" }
+];
 function runAsl() {
   function home() {
     stage.innerHTML = "";
@@ -29626,6 +29635,9 @@ function runAsl() {
     });
     stage.appendChild(grid);
     stage.appendChild(el("p", "ksl-credit", ASL_CREDIT));
+    stage.appendChild(videoStrip(ASL_VIDEOS, "Learn to sign · lessons from Deaf teachers"));
+    stage.appendChild(el("p", "ksl-credit", "Dr. Bill Vicars teaches ASL University (Lifeprint.com); his lessons are signed without sound, the way a class taught in ASL runs. " +
+      "Dr. Byron Bridges teaches for Sign Language 101. Start with the alphabet, then Lesson 1, its review, the hundred basic signs, and fingerspelling practice."));
     stage.appendChild(backFoot());
   }
   function letter(i) {
