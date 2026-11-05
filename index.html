@@ -4259,6 +4259,7 @@ details.sf-az-item summary span { font-family: var(--f-ar-text); color: var(--in
 .sd-hero { display: flex; align-items: center; gap: .9rem; padding: 1rem 1.1rem; border-radius: 20px;
   background: linear-gradient(135deg, color-mix(in srgb, var(--sd-c) 20%, var(--void-2)), var(--void-2)); border: var(--hair); }
 .sd-hero h2 { font-family: var(--f-serif); font-size: 1.3rem; margin: 0; color: var(--white); }
+.sd-tot { display: block; margin-top: .3rem; font-size: .76rem; font-weight: 700; color: var(--sd-c); }
 .sd-hero p { margin: .1rem 0 0; font-family: var(--f-ar-text); color: var(--ink-soft); }
 .sd-ic, .mg-ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; flex: none; background: var(--sd-c, var(--mg-c)); }
 .sd-ic svg, .mg-ic svg, .sf-dt i svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -14809,11 +14810,14 @@ function runSpecDictPage(fid) {
       stage.innerHTML = "";
       setDots(0, 0, 0);
       const f = sdField(pick);
+      const inF = all.filter(e => pick === "all" || e.f === pick);
+      const tot = inF.length, nsrc = new Set(inF.map(e => e.src.split(",")[0].split("(")[0].trim())).size;
       const hero = el("div", "sd-hero");
       hero.style.setProperty("--sd-c", f ? f.c : "#4FB0FF");
       hero.innerHTML = '<span class="sd-ic"><svg viewBox="0 0 24 24" aria-hidden="true">' + (f ? f.ico : SD_FIELDS[1].ico) + '</svg></span>' +
         '<div><h2>' + (f ? f.en + " dictionary" : "Specialized dictionaries") + '</h2>' +
-        '<p dir="rtl" lang="ar">' + (f ? "معجم " + f.ar : "المعاجم المتخصصة") + '</p></div>';
+        '<p dir="rtl" lang="ar">' + (f ? "معجم " + f.ar : "المعاجم المتخصصة") + '</p>' +
+        '<small class="sd-tot">' + tot.toLocaleString("en-US") + ' terms · ' + nsrc + (nsrc === 1 ? ' source' : ' sources') + '</small></div>';
       stage.appendChild(hero);
       const search = el("div", "gl-search sd-search");
       const input = document.createElement("input");
@@ -22535,7 +22539,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-1500";
+const BUILD = "1105-1530";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
