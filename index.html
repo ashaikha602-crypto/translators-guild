@@ -4354,6 +4354,7 @@ details.sf-az-item summary span { font-family: var(--f-ar-text); color: var(--in
 .mg-fchip.on { background: var(--white); color: var(--void); }
 .mg-msg { margin: 0; font-size: .8rem; color: #FF6B6B; min-height: 1em; }
 
+.sd-more{display:block;margin:14px auto 4px;padding:10px 18px;border-radius:999px;border:1px solid var(--line,rgba(127,127,127,.3));background:transparent;color:inherit;font:inherit;font-weight:600;cursor:pointer}
 .sd-plus { all: unset; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: 1.15rem; font-weight: 700;
   position: absolute; top: .6rem; right: .6rem; color: #fff; background: var(--sd-c); box-shadow: 0 6px 14px -8px var(--sd-c); }
 .sd-plus.in { background: var(--void-3); color: var(--sd-c); box-shadow: none; }
@@ -14499,6 +14500,18 @@ async function sdEntries() {
     const M = await loadLib("damascus-media");
     M.terms.forEach(t => add("media", t.en, t.ar, "Arabic Language Academy of Damascus (2022), Dictionary of Media Terms", "", "term"));
   } catch (e) { }
+  /* the Arabic of human-rights work: treaties, UN mandates, crimes,
+     freedoms and the bodies that defend them */
+  try {
+    const H = await loadLib("anhri-rights");
+    H.terms.forEach(t => add("rights", t.en, t.ar, "Sami, S. (2016), Dictionary of Human Rights, Arabic Network for Human Rights Information", "", "term"));
+  } catch (e) { }
+  /* the working vocabulary of diplomacy and politics, as al-Rifai's
+     two-way dictionary sets it */
+  try {
+    const P = await loadLib("rifai-diplomatic");
+    P.terms.forEach(t => add("politics", t.en, t.ar, "al-Rifai, A. (2012), Dictionary of Diplomatic and Political Terms, Nashiri", "", "term"));
+  } catch (e) { }
   /* the UN system's national-accounts terms, as ESCWA and the Council of
      Arab Economic Unity set them in Arabic */
   try {
@@ -14817,7 +14830,19 @@ function runSpecDictPage(fid) {
       list.innerHTML = "";
       note.textContent = h.length ? h.length + (h.length === 1 ? " entry" : " entries") :
         "Nothing matches that. Try the other language, or a shorter word.";
-      h.slice(0, 250).forEach(e => list.appendChild(sdRow(e, () => { const c = document.querySelector(".sd-mg small"); if (c) c.textContent = myGloss().terms.length + " terms · open"; })));
+      const onAdd = () => { const c = document.querySelector(".sd-mg small"); if (c) c.textContent = myGloss().terms.length + " terms · open"; };
+      let shown = 0;
+      const more = el("button", "sd-more");
+      more.type = "button";
+      function page() {
+        h.slice(shown, shown + 200).forEach(e => list.insertBefore(sdRow(e, onAdd), more));
+        shown = Math.min(h.length, shown + 200);
+        more.textContent = "Show more · " + (h.length - shown).toLocaleString("en-US") + " left";
+        more.hidden = shown >= h.length;
+      }
+      more.onclick = page;
+      list.appendChild(more);
+      page();
     }
     function render() {
       stage.innerHTML = "";
@@ -14852,8 +14877,10 @@ function runSpecDictPage(fid) {
       stage.appendChild(el("p", "sd-note",
         "Every entry is printed in the source named under it: the official Arabic and English texts of the Charter of the United Nations and " +
         "the Universal Declaration of Human Rights; Husni &amp; Newman, <i>Arabic–English–Arabic Translation: Issues and Strategies</i> (2015) " +
-        "and <i>A to Z of Arabic–English–Arabic Translation</i> (2013); the World Health Organization’s <i>Unified Medical Dictionary</i> (المعجم الطبي الموحد, 4th ed., 2006); and the United Nations’ <i>Glossary of Shared Water Resources: Technical, Socioeconomic and Legal Terminology</i> " +
-        "(ESCWA and BGR, 2012), a selection from its thematic index for study."));
+        "and <i>A to Z of Arabic–English–Arabic Translation</i> (2013); the World Health Organization’s <i>Unified Medical Dictionary</i> (4th ed., 2006); " +
+        "the United Nations’ <i>Glossary of Shared Water Resources</i> (ESCWA and BGR, 2012) and <i>Dictionary of National Accounts Terms</i> (CAEU and ESCWA, 2001); " +
+        "the Arabic Language Academy of Damascus, <i>Dictionary of Media Terms</i> (2022); al-Rifai, <i>Dictionary of Diplomatic and Political Terms</i> (Nashiri, 2012); " +
+        "and Sami, <i>Dictionary of Human Rights</i> (Arabic Network for Human Rights Information, 2016). The terms are given for study, each credited to its book."));
       stage.appendChild(footNav({}));
     }
     render();
@@ -22552,7 +22579,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-2130";
+const BUILD = "1105-2330";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
