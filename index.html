@@ -14494,6 +14494,17 @@ async function sdEntries() {
     const U = await loadLib("umd-medical");
     U.terms.forEach(t => add("medical", t.en, t.ar, "WHO EMRO, The Unified Medical Dictionary (4th ed., 2006)", "", "term"));
   } catch (e) { }
+  /* the Arabic Language Academy of Damascus's standard media terms */
+  try {
+    const M = await loadLib("damascus-media");
+    M.terms.forEach(t => add("media", t.en, t.ar, "Arabic Language Academy of Damascus (2022), Dictionary of Media Terms", "", "term"));
+  } catch (e) { }
+  /* the UN system's national-accounts terms, as ESCWA and the Council of
+     Arab Economic Unity set them in Arabic */
+  try {
+    const N = await loadLib("un-national-accounts");
+    N.terms.forEach(t => add("economic", t.en, t.ar, "CAEU & UN ESCWA (2001), Dictionary of National Accounts Terms", "", "term"));
+  } catch (e) { }
   out.sort((a, b) => a.en.toLowerCase() < b.en.toLowerCase() ? -1 : 1);
   SD_CACHE = out;
   return out;
@@ -22541,7 +22552,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-1900";
+const BUILD = "1105-2130";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
