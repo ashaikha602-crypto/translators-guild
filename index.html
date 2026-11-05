@@ -14388,6 +14388,8 @@ const SD_FIELDS = [
     ico: '<path d="M4 12h3l2-5 3 10 2.5-6 1.5 3h4"/>' },
   { id: "economic", en: "Economic and commercial", ar: "الاقتصاد والتجارة",     c: "#F472B6", booth: "business",   sf: "sf-economic",
     ico: '<path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/>' },
+  { id: "technical", en: "Scientific and technical", ar: "العلوم والتقنية",       c: "#2DD4BF", booth: null,         sf: "sf-technical",
+    ico: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>' },
   { id: "rights",   en: "Human rights",            ar: "حقوق الإنسان",          c: "#A78BFA", booth: "rights",     sf: null,
     ico: '<path d="M12 21s-7-4.4-7-10.2A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 7 2.8C19 16.6 12 21 12 21z"/>' }
 ];
@@ -14467,6 +14469,13 @@ async function sdEntries() {
       });
     });
   } catch (e) { /* the legal chapter's tables come with the page next time */ }
+  /* the UN's own Arabic for international water law, negotiation,
+     economics and the sciences of water, from its thematic index */
+  try {
+    const W = await loadLib("escwa-water");
+    const src = "ESCWA (2012), Glossary of Shared Water Resources, United Nations";
+    W.terms.forEach(t => add(t.f, t.en, t.ar, src, t.f === "technical" ? "Theme: " + t.th : "", "term"));
+  } catch (e) { }
   out.sort((a, b) => a.en.toLowerCase() < b.en.toLowerCase() ? -1 : 1);
   SD_CACHE = out;
   return out;
@@ -14478,7 +14487,6 @@ async function sdEntries() {
    portfolio, so it follows them from device to device and no one else
    can read it. */
 const MG_FIELDS = SD_FIELDS.concat([
-  { id: "technical", en: "Scientific and technical", ar: "العلوم والتقنية", c: "#2DD4BF", ico: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>' },
   { id: "literary",  en: "Literary",                 ar: "الأدب",           c: "#FBBF24", ico: '<path d="M5 4h9a5 5 0 0 1 5 5v11H10a5 5 0 0 1-5-5z"/>' },
   { id: "general",   en: "General",                  ar: "عام",             c: "#94A3B8", ico: '<circle cx="12" cy="12" r="8.5"/>' }
 ]);
@@ -14814,8 +14822,9 @@ function runSpecDictPage(fid) {
       paintList();
       stage.appendChild(el("p", "sd-note",
         "Every entry is printed in the source named under it: the official Arabic and English texts of the Charter of the United Nations and " +
-        "the Universal Declaration of Human Rights, and Husni &amp; Newman, <i>Arabic–English–Arabic Translation: Issues and Strategies</i> (2015) " +
-        "and <i>A to Z of Arabic–English–Arabic Translation</i> (2013). The dictionaries grow as sources are added."));
+        "the Universal Declaration of Human Rights; Husni &amp; Newman, <i>Arabic–English–Arabic Translation: Issues and Strategies</i> (2015) " +
+        "and <i>A to Z of Arabic–English–Arabic Translation</i> (2013); and the United Nations’ <i>Glossary of Shared Water Resources: Technical, Socioeconomic and Legal Terminology</i> " +
+        "(ESCWA and BGR, 2012), a selection from its thematic index for study."));
       stage.appendChild(footNav({}));
     }
     render();
@@ -22512,7 +22521,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-1130";
+const BUILD = "1105-1300";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
