@@ -4116,6 +4116,9 @@ details.sf-az-item summary span { font-family: var(--f-ar-text); color: var(--in
 .c-go-b { all: unset; cursor: pointer; display: grid; gap: .15rem; padding: .7rem .85rem; border-radius: 14px; background: var(--well); }
 .c-go-b b { color: var(--white); font-size: .9rem; }
 .c-go-b small { color: var(--ink-faint); font-size: .74rem; line-height: 1.4; }
+.asl-grid { direction: ltr; }
+.asl-l { font-family: var(--f-serif) !important; font-size: 1.8rem !important; }
+.asl-big { font-family: var(--f-serif); font-size: 4.5rem; line-height: 1; color: var(--white); }
 .guest-notice { font-size: .78rem; opacity: .8; }
 .gv-head { display: flex; align-items: baseline; gap: .45rem; }
 .gv-head b { font-family: var(--f-serif); font-size: 1.8rem; color: var(--white); }
@@ -14368,7 +14371,7 @@ function runSpecField(f) {
     watch.appendChild(el("p", "sf-it", "<b>It really happened</b> · " + cases.length + (cases.length === 1 ? " case" : " cases") + ", each with where it was reported"));
     watch.appendChild(box);
   }
-  sec("Watch out for", watch, false, cases.length ? "and " + cases.length + " real cases" : "");
+  sec("Watch out for", watch, false, cases.length ? "and " + cases.length + (cases.length === 1 ? " real case" : " real cases") : "");
   chain();
   stage.appendChild(el("p", "sd-note", "Sources: " + f.srcs));
   stage.appendChild(sfDeep(f));
@@ -14826,9 +14829,6 @@ function runSpecDictPage(fid) {
         chips.appendChild(b);
       });
       stage.appendChild(chips);
-      const mg = el("button", "sd-mg", '<span>📘 ' + esc(glossName()) + '</span><small>' + myGloss().terms.length + ' terms · open</small>');
-      mg.type = "button"; mg.addEventListener("click", () => openItem(MYGLOSS_ITEM));
-      stage.appendChild(mg);
       note = el("p", "note sd-count"); stage.appendChild(note);
       list = el("div", "sd-list"); stage.appendChild(list);
       paintList();
@@ -14880,7 +14880,7 @@ function runMyGlossary() {
     const addB = el("button", "mg-btn main", "＋ Add a term"); addB.type = "button";
     addB.addEventListener("click", () => glossSheet(null, render));
     const dictB = el("button", "mg-btn", "Browse the dictionaries"); dictB.type = "button";
-    dictB.addEventListener("click", () => openItem(ITEMS.find(t => t.id === "sd-politics")));
+    dictB.addEventListener("click", () => openItem(ITEMS.find(t => t.id === "sd-legal")));
     acts.appendChild(addB); acts.appendChild(dictB);
     hero.appendChild(acts);
     stage.appendChild(hero);
@@ -15110,8 +15110,6 @@ function sfDeep(f) {
   if ((SF_ATOZ[f.id] || []).length) tile("#A78BFA", '<path d="M4 19h16M6 15l4-10 4 10M7.5 11.5h5M15 9h5"/>', "From the A to Z",
     (SF_ATOZ[f.id] || []).length + " entries that trip translators here", () => openItem({ id: "sfaz-" + f.id, en: "From the A to Z",
       subject: f.en, kind: "guide", section: "method", run: () => runSfAtoz(f) }));
-  tile("#2BC48A", '<path d="M5 4.5h10.5A3.5 3.5 0 0 1 19 8v11.5H8.5A3.5 3.5 0 0 1 5 16z"/>', esc(glossName()),
-    "Your own terms for this field", () => openItem(MYGLOSS_ITEM));
   wrap.appendChild(grid);
   const vk = SF_VIDEO[f.id];
   const vids = vk ? BOOTH_VIDEOS.filter(v => v.t.indexOf(vk + " ·") === 0) : [];
@@ -15163,6 +15161,10 @@ const ITEMS = [
     subject: "لغة الإشارة الكويتية · KSL",
     blurb: "Kuwait's Deaf language and its forty handshapes &mdash; and why fingerspelling is not signing.",
     run: runKsl },
+  { id: "asl", ar: "لغة الإشارة الأمريكية", en: "American Sign Language", kind: "guide", section: "method", group: "voice",
+    subject: "ASL · fingerspelling",
+    blurb: "The American manual alphabet: twenty-six letters, one hand each, J and Z traced in the air.",
+    run: runAsl },
   { id: "lineage", ar: "تاريخ التَّرجمة", en: "Translation in History", kind: "guide", section: "method", group: "theory",
     subject: "The practice, the discipline, and the people",
     blurb: "Eight eras of the practice, eight moments of the discipline, and sixteen translators.",
@@ -22533,7 +22535,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-1430";
+const BUILD = "1105-1500";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -24217,12 +24219,12 @@ const LEARN_GROUPS = [
   { id: "core",   en: "The core course", note: "Follow in order",
     order: ["meaning", "phrase", "procedures", "toolkit", "variety", "texttypes", "fields", "errors", "commentary", "lib-atoz"] },
   { id: "ku",     en: "Kuwait University courses", note: "The Translation Minor", order: ["minor"] },
-  { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },
+  { id: "voice",  en: "Interpreting and signing", note: "Spoken and signed", order: ["modes", "ksl"] },  /* "asl" joins when all 26 drawings are in */
   { id: "avt",    en: "Audiovisual translation", note: "AVT", order: ["avt"] },
   { id: "spectr", en: "Specialized translation", note: "الترجمة المتخصصة",
     order: SPEC_FIELDS.map(f => f.id) },
   { id: "spec",   en: "Specialized dictionaries", note: "المعاجم المتخصصة",
-    order: SD_FIELDS.map(f => "sd-" + f.id).concat(["myglossary"]) },
+    order: SD_FIELDS.map(f => "sd-" + f.id) },
   { id: "dict",   en: "Dictionaries", note: "المعاجم", order: ["lisan", "wikt", "glossary"] }
 ];
 function renderLearn() {
@@ -29528,6 +29530,59 @@ function allMinorCourses() {
 /* Built as an element rather than written into an HTML string: the
    preload scanner reads the page source ahead of the parser and will
    try to fetch a src it finds spelled out there. */
+/* ═══ AMERICAN SIGN LANGUAGE · the manual alphabet ═══
+   The twenty-six letters as the public-domain drawings published by
+   wpclipart.com and kept on Wikimedia Commons ("Sign language A.svg" to
+   "Sign language Z.svg") show them, one hand each, laid out like the
+   Kuwaiti alphabet. J and Z are drawn with the path the finger traces. */
+const ASL_ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(l => ({ l: l, img: "asl/" + l + ".webp?v=1",
+  mv: l === "J" || l === "Z" ? (l === "J" ? "The little finger traces a J in the air." : "The index finger traces a Z in the air.") : "" }));
+const ASL_CREDIT = "Drawings of the American manual alphabet: public domain, from <b>wpclipart.com</b>, via Wikimedia Commons " +
+  "(“Sign language A.svg” to “Sign language Z.svg”).";
+function runAsl() {
+  function home() {
+    stage.innerHTML = "";
+    setCount("Fingerspelling · 26 letters");
+    setDots(0, 0, 0);
+    stage.appendChild(el("div", "verdict",
+      '<span class="vh">American Sign Language · ASL</span>' +
+      '<p class="vb">The manual alphabet of American Sign Language: one hand for each of the twenty-six letters, read left to right. ' +
+      'Two letters move: <b>J</b> and <b>Z</b> are traced in the air. Tap a letter to see it large.</p>'));
+    const grid = el("div", "alpha-grid asl-grid");
+    ASL_ALPHA.forEach((L, i) => {
+      const b = el("button", "alpha");
+      b.innerHTML = '<span class="a-hand">' + (L.mv ? '<span class="a-mv" aria-hidden="true">↝</span>' : '') + '</span>' +
+        '<span class="a-txt"><span class="a-l asl-l">' + L.l + '</span></span>';
+      const im = document.createElement("img"); im.src = L.img; im.alt = "The ASL handshape for " + L.l;
+      im.width = 560; im.height = 560; im.decoding = "async"; if (i > 5) im.loading = "lazy";
+      b.querySelector(".a-hand").appendChild(im);
+      if (L.mv) b.title = L.mv;
+      b.addEventListener("click", () => { pushTrail("American Sign Language", () => home()); letter(i); });
+      grid.appendChild(b);
+    });
+    stage.appendChild(grid);
+    stage.appendChild(el("p", "ksl-credit", ASL_CREDIT));
+    stage.appendChild(backFoot());
+  }
+  function letter(i) {
+    const L = ASL_ALPHA[i];
+    stage.innerHTML = "";
+    setCount(L.l + " · " + (i + 1) + "/26");
+    const hero = el("div", "letter-hero");
+    const fig = el("span", "lh-fig");
+    const im = document.createElement("img"); im.src = L.img; im.alt = "The ASL handshape for " + L.l; fig.appendChild(im);
+    hero.appendChild(fig);
+    hero.appendChild(el("div", "lh-txt", '<span class="asl-big">' + L.l + '</span>'));
+    stage.appendChild(hero);
+    if (L.mv) stage.appendChild(el("div", "block", '<span class="b-lab">How it moves</span><p>' + L.mv + '</p>'));
+    stage.appendChild(footNav({
+      back: i > 0 ? () => letter(i - 1) : null, backLabel: i > 0 ? ASL_ALPHA[i - 1].l : "",
+      next: i < 25 ? () => letter(i + 1) : null, nextLabel: i < 25 ? ASL_ALPHA[i + 1].l : ""
+    }));
+  }
+  home();
+}
+
 function handFig(L, eager) {
   const im = document.createElement("img");
   im.src = L.img;
