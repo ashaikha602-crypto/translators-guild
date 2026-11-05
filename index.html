@@ -4184,6 +4184,7 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .sb-chan { font-size: .78rem; opacity: .85; }
 .sb-cough { all: unset; cursor: pointer; padding: .5rem .9rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.2); font-size: .8rem; font-weight: 600; }
 .sb-cough.on { background: #FBBF24; color: #0b1020; }
+.mw-gloss { margin: .2rem 0 .8rem; }
 .im-modes { display: grid; gap: .5rem; margin: .2rem 0 1.1rem; }
 .im-lab { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; opacity: .75; margin: 0 0 .1rem; }
 .im-tile { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: .15rem .6rem; padding: .8rem .95rem; border-radius: 16px;
@@ -22207,6 +22208,7 @@ function workSection(authorId, isMe) {
   const wrap = el("div", "mw");
   const h = el("div", "mw-h", "<b>" + (isMe ? "My work" : "Work") + "</b>");
   wrap.appendChild(h);
+  if (isMe) { const gc = glossCard(); gc.classList.add("mw-gloss"); wrap.appendChild(gc); }
   const tiles = el("div", "mw-tiles4"); wrap.appendChild(tiles);
   if (isMe) {
     const add = el("button", "mw-add", "＋ Share a translation");
@@ -22337,7 +22339,6 @@ function renderGrid() {
   box.innerHTML = "";
   if (backend !== "supabase" || !myId()) return;
   box.appendChild(workSection(myId(), true));
-  box.appendChild(glossCard());
 }
 
 function postTile(r) {
@@ -22876,7 +22877,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-1110";
+const BUILD = "1106-1200";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -31333,6 +31334,17 @@ function consecListen(into, onText, onState) {
   } else {
     onState && onState("This browser cannot write speech out. Speak, then type what you said below.");
   }
+  /* Phones, iPhones above all, often hand over the words only when listening
+     stops. finish() stops and waits for them (or for a short while) before
+     anything is read or marked. */
+  out.finish = () => new Promise(res => {
+    const r = consecRec;
+    let done = false;
+    const go = () => { if (done) return; done = true; res(final.trim()); };
+    if (r) { const prev = r.onend; r.onend = () => { prev && prev(); setTimeout(go, 120); }; }
+    out.stop();
+    setTimeout(go, 1800);
+  });
   out.stop = () => {
     out.keep = false;
     try { consecRec && consecRec.stop(); } catch (e) { }
@@ -31634,10 +31646,10 @@ function runSpoken(mode) {
     }
     function finish() {
       if (consecTick) { clearInterval(consecTick); consecTick = null; }
-      mic && mic.stop();
       act.disabled = true;
-      setTimeout(() => {
-        const words = (said.value || (mic && mic.text()) || "").trim();
+      (mic ? mic.finish() : Promise.resolve("")).then(last => {
+        if (last && last.length > said.value.length) said.value = last;
+        const words = (said.value || "").trim();
         if (!words) {
           act.disabled = false;
           stateP.innerHTML = "<b>None of your words reached the page.</b> Speech to text did not catch them. Tap to speak again, or type what you said, then tap Done.";
@@ -31648,7 +31660,7 @@ function runSpoken(mode) {
           return;
         }
         check(q, from, into, srcText, spoken, secs, words, pad.snapshot(), mic ? mic.url : () => "");
-      }, 600);
+      });
     }
     const quit = el("button", "link cs-quit", "End the session"); quit.type = "button";
     quit.onclick = () => { consecStop(); st.log.length ? summary() : setup(); };
@@ -31750,8 +31762,10 @@ function runSpoken(mode) {
       try { consecAudio && consecAudio.pause(); } catch (e) { }
       const a0 = stage.querySelector(".sb-air"); a0 && a0.classList.remove("on");
       if (consecTick) { clearInterval(consecTick); consecTick = null; }
-      mic && mic.stop();
-      setTimeout(() => results(items, from, into, said.value || (mic ? mic.text() : ""), cuts, mic ? mic.url() : ""), 700);
+      (mic ? mic.finish() : Promise.resolve("")).then(last => {
+        const t = (last || "").trim();
+        results(items, from, into, (t.length > said.value.length ? t : said.value), cuts, mic ? mic.url() : "");
+      });
     };
     go.onclick = () => {
       go.hidden = true; stop.hidden = false; cough.hidden = false;
@@ -32066,13 +32080,20 @@ function boothRound(genre) {
   const sendB = el("button", "im-send", "Send ↵"); sendB.type = "button";
   let micOn = null;
   const micOff = () => { if (micOn) { micOn.stop(); micOn = null; } micB.classList.remove("on"); micB.innerHTML = '<svg class="cs-mic-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> Speak instead'; };
+  /* stop the mic and wait for its last words before sending */
+  const micFlush = () => {
+    if (!micOn) return Promise.resolve();
+    const m = micOn; micOn = null;
+    micB.classList.remove("on"); micB.textContent = "…";
+    return m.finish().then(t => { if (t && t.length > (inp.value || "").length) inp.value = t; micOff(); });
+  };
   micB.addEventListener("click", () => {
     if (micOn) { micOff(); return; }
     if (!consecRecog()) { micB.textContent = "This browser cannot write speech out: type instead"; return; }
     micOn = consecListen(into, t => { inp.value = t; }, msg => { feed.textContent = msg; });
     micB.classList.add("on"); micB.innerHTML = '<span class="cs-mic" aria-hidden="true"></span> Listening… tap to stop';
   });
-  sendB.addEventListener("click", () => { micOff(); send(); });
+  sendB.addEventListener("click", () => { micFlush().then(() => send()); });
   talk.appendChild(micB); talk.appendChild(sendB);
   typing.appendChild(talk);
 
@@ -32142,6 +32163,15 @@ function boothRound(genre) {
   /* The clock beat them to it. The item counts as not delivered, which is
      what the delivery dial is for, and the round carries on. */
   function ranOut() {
+    /* the clock ran out mid-sentence: what you already said is still your answer */
+    if (micOn || String(inp.value || "").trim()) {
+      if (boothTimer) { clearInterval(boothTimer); boothTimer = null; }
+      micFlush().then(() => { if (String(inp.value || "").trim()) send(); else ranOutBlank(); });
+      return;
+    }
+    ranOutBlank();
+  }
+  function ranOutBlank() {
     stopBooth();
     const q = queue[idx];
     feed.innerHTML = '<b style="color:var(--coral)">\u2727 time</b> \u2014 ' +
@@ -32204,7 +32234,7 @@ function boothRound(genre) {
   }
 
   inp.addEventListener("keydown", e => {
-    if (e.key === "Enter") { e.preventDefault(); send(); }
+    if (e.key === "Enter") { e.preventDefault(); micFlush().then(() => send()); }
     if (e.key === "Tab") {
       e.preventDefault();
       stopBooth();
