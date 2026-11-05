@@ -14434,6 +14434,13 @@ const sdFold = s => String(s || "").toLowerCase().replace(/[ً-ٰٟـ]/g, "")
 const sdKey = e => e.f + "|" + e.en.toLowerCase();
 const sdField = id => SD_FIELDS.find(f => f.id === id);
 
+/* terms that belong to the law as much as to their own field: a court,
+   a sentence, a contract, a statute. They are shelved in the legal
+   dictionary too, credited to the same book. */
+const SD_LAWISH = /\b(laws?|legal(ly)?|courts?|judges?|judicial|judiciary|trial|evidence|witness|sentence|penalt(y|ies)|punishment|crimes?|criminal|offen[cs]e|prosecut(ion|or)|attorney|lawyers?|counsel|contracts?|(un)?constitutional|constitution|statutes?|legislat(ion|ive|or)|jurisdiction|custod(y|ial)|detention|detained|arrest|bail|verdict|testimony|plaintiff|defendant|litigation|tribunal|copyright|liab(ility|le)|convict(ion)?|acquittal|indictment|decree|ordinance|arbitrat(ion|or)|ratification|jurists?|juridical|(il)?legitima(te|cy)|illegal|(un)?lawful|jury|perjury|libel|defamation|slander|guardianship|wardship|inheritance|immunity|extradition|pardon|codification|habeas|injunction|summons|subpoena|notar(y|ized)|plea|lawsuit|felony|misdemeano(u)?r|fraud|forgery|parole|probation|imprisonment|penal)\b/i;
+const SD_ORGISH = /\b(Initiative|Cent(er|re)|Network|Association|Foundation|Organi[sz]ation|Institute|Front|Coalition|Committee for|Watch|Amnesty International|Society|Union|subscription)\b|^(Felony|Self subordination to law)$/i;
+const sdLawish = en => SD_LAWISH.test(en) && !SD_ORGISH.test(en);
+
 let SD_CACHE = null;
 async function sdEntries() {
   if (SD_CACHE) return SD_CACHE;
@@ -14495,22 +14502,28 @@ async function sdEntries() {
     const U = await loadLib("umd-medical");
     U.terms.forEach(t => add("medical", t.en, t.ar, "WHO EMRO, The Unified Medical Dictionary (4th ed., 2006)", "", "term"));
   } catch (e) { }
+  /* the terms of public health and epidemiology, read from El-Kashmery's
+     glossary page by page */
+  try {
+    const PH = await loadLib("public-health");
+    PH.terms.forEach(t => add("medical", t.en, t.ar, "El-Kashmery, A. R. (2006), Glossary of Basic Public Health Terms", "", "term"));
+  } catch (e) { }
   /* the Arabic Language Academy of Damascus's standard media terms */
   try {
     const M = await loadLib("damascus-media");
-    M.terms.forEach(t => add("media", t.en, t.ar, "Arabic Language Academy of Damascus (2022), Dictionary of Media Terms", "", "term"));
+    M.terms.forEach(t => { add("media", t.en, t.ar, "Arabic Language Academy of Damascus (2022), Dictionary of Media Terms", "", "term"); if (sdLawish(t.en)) add("legal", t.en, t.ar, "Arabic Language Academy of Damascus (2022), Dictionary of Media Terms", "", "term"); });
   } catch (e) { }
   /* the Arabic of human-rights work: treaties, UN mandates, crimes,
      freedoms and the bodies that defend them */
   try {
     const H = await loadLib("anhri-rights");
-    H.terms.forEach(t => add("rights", t.en, t.ar, "Sami, S. (2016), Dictionary of Human Rights, Arabic Network for Human Rights Information", "", "term"));
+    H.terms.forEach(t => { add("rights", t.en, t.ar, "Sami, S. (2016), Dictionary of Human Rights, Arabic Network for Human Rights Information", "", "term"); if (sdLawish(t.en)) add("legal", t.en, t.ar, "Sami, S. (2016), Dictionary of Human Rights, Arabic Network for Human Rights Information", "", "term"); });
   } catch (e) { }
   /* the working vocabulary of diplomacy and politics, as al-Rifai's
      two-way dictionary sets it */
   try {
     const P = await loadLib("rifai-diplomatic");
-    P.terms.forEach(t => add("politics", t.en, t.ar, "al-Rifai, A. (2012), Dictionary of Diplomatic and Political Terms, Nashiri", "", "term"));
+    P.terms.forEach(t => { add("politics", t.en, t.ar, "al-Rifai, A. (2012), Dictionary of Diplomatic and Political Terms, Nashiri", "", "term"); if (sdLawish(t.en)) add("legal", t.en, t.ar, "al-Rifai, A. (2012), Dictionary of Diplomatic and Political Terms, Nashiri", "", "term"); });
   } catch (e) { }
   /* the UN system's national-accounts terms, as ESCWA and the Council of
      Arab Economic Unity set them in Arabic */
@@ -14880,7 +14893,7 @@ function runSpecDictPage(fid) {
         "and <i>A to Z of Arabic–English–Arabic Translation</i> (2013); the World Health Organization’s <i>Unified Medical Dictionary</i> (4th ed., 2006); " +
         "the United Nations’ <i>Glossary of Shared Water Resources</i> (ESCWA and BGR, 2012) and <i>Dictionary of National Accounts Terms</i> (CAEU and ESCWA, 2001); " +
         "the Arabic Language Academy of Damascus, <i>Dictionary of Media Terms</i> (2022); al-Rifai, <i>Dictionary of Diplomatic and Political Terms</i> (Nashiri, 2012); " +
-        "and Sami, <i>Dictionary of Human Rights</i> (Arabic Network for Human Rights Information, 2016). The terms are given for study, each credited to its book."));
+        "El-Kashmery, <i>Glossary of Basic Public Health Terms</i> (2006); and Sami, <i>Dictionary of Human Rights</i> (Arabic Network for Human Rights Information, 2016). The terms are given for study, each credited to its book."));
       stage.appendChild(footNav({}));
     }
     render();
@@ -22579,7 +22592,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-2330";
+const BUILD = "1106-0015";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
