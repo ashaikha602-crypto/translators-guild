@@ -4110,6 +4110,12 @@ details.sf-az-item summary span { font-family: var(--f-ar-text); color: var(--in
 .sf-it { margin-top: .4rem !important; font-size: .82rem; color: var(--ink-soft); }
 .sf-watchbox { display: grid; gap: .6rem; min-width: 0; }
 .c-case { min-width: 0; overflow-wrap: break-word; }
+.m-line { display: block; font-size: .76rem; color: var(--ink-faint); margin-top: .15rem; font-style: italic; }
+.c-life { display: grid; gap: .7rem; }
+.c-go { display: grid; gap: .5rem; }
+.c-go-b { all: unset; cursor: pointer; display: grid; gap: .15rem; padding: .7rem .85rem; border-radius: 14px; background: var(--well); }
+.c-go-b b { color: var(--white); font-size: .9rem; }
+.c-go-b small { color: var(--ink-faint); font-size: .74rem; line-height: 1.4; }
 .guest-notice { font-size: .78rem; opacity: .8; }
 .gv-head { display: flex; align-items: baseline; gap: .45rem; }
 .gv-head b { font-family: var(--f-serif); font-size: 1.8rem; color: var(--white); }
@@ -14476,6 +14482,12 @@ async function sdEntries() {
     const src = "ESCWA (2012), Glossary of Shared Water Resources, United Nations";
     W.terms.forEach(t => add(t.f, t.en, t.ar, src, t.f === "technical" ? "Theme: " + t.th : "", "term"));
   } catch (e) { }
+  /* the standard Arabic medical terms, as the Unified Medical Dictionary
+     prints them, for the everyday words of medicine */
+  try {
+    const U = await loadLib("umd-medical");
+    U.terms.forEach(t => add("medical", t.en, t.ar, "WHO EMRO, The Unified Medical Dictionary (4th ed., 2006)", "", "term"));
+  } catch (e) { }
   out.sort((a, b) => a.en.toLowerCase() < b.en.toLowerCase() ? -1 : 1);
   SD_CACHE = out;
   return out;
@@ -14823,7 +14835,7 @@ function runSpecDictPage(fid) {
       stage.appendChild(el("p", "sd-note",
         "Every entry is printed in the source named under it: the official Arabic and English texts of the Charter of the United Nations and " +
         "the Universal Declaration of Human Rights; Husni &amp; Newman, <i>Arabic–English–Arabic Translation: Issues and Strategies</i> (2015) " +
-        "and <i>A to Z of Arabic–English–Arabic Translation</i> (2013); and the United Nations’ <i>Glossary of Shared Water Resources: Technical, Socioeconomic and Legal Terminology</i> " +
+        "and <i>A to Z of Arabic–English–Arabic Translation</i> (2013); the World Health Organization’s <i>Unified Medical Dictionary</i> (المعجم الطبي الموحد, 4th ed., 2006); and the United Nations’ <i>Glossary of Shared Water Resources: Technical, Socioeconomic and Legal Terminology</i> " +
         "(ESCWA and BGR, 2012), a selection from its thematic index for study."));
       stage.appendChild(footNav({}));
     }
@@ -22521,7 +22533,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1105-1300";
+const BUILD = "1105-1430";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -29865,6 +29877,7 @@ function runMinor() {
           '<span class="m-txt">' +
             '<span class="m-en">' + c.en + '</span>' +
             '<span class="m-arname" dir="rtl" lang="ar">' + c.ar + '</span>' +
+            (c.line ? '<span class="m-line">' + c.line + '</span>' : '') +
           '</span>';
         b.addEventListener("click", () => {
         pushTrail("All ten courses", () => { open = null; list(); });
@@ -29910,112 +29923,84 @@ function runMinor() {
        video nobody finds. */
     if (more.videos && more.videos.length) stage.appendChild(videoStrip(more.videos, "Watch first"));
 
-    /* The subject, as prose. Not a labelled box — a labelled box is a
-       form, and a form does not explain anything. */
-    const body = el("div", "c-body");
-    body.innerHTML = '<h3 class="c-h">The subject</h3><p>' + c.body + '</p>';
-    stage.appendChild(body);
+    /* The course as sections that open, the way the field pages read:
+       the subject, its parts in order, the numbers it works to, where it
+       is used in real life with the cases that show it, then practice. */
+    const secs = [];
+    const sec = (title, teaser, body, isOpen) => {
+      const d = document.createElement("details");
+      d.className = "avt-step"; if (isOpen) d.open = true;
+      d.innerHTML = '<summary><span class="avt-n">' + (secs.length + 1) + '</span><span class="avt-st"><b>' + title + '</b>' +
+        (teaser ? '<small>' + teaser + '</small>' : '') + '</span><span class="avt-chev" aria-hidden="true">⌄</span></summary><div class="avt-body"></div>';
+      const bd = d.querySelector(".avt-body");
+      if (typeof body === "string") bd.innerHTML = body; else bd.appendChild(body);
+      stage.appendChild(d); secs.push(d); return bd;
+    };
+    sec("The subject", "What the course is about", '<div class="c-body"><p>' + c.body + '</p></div>', true);
 
-    /* The course in sections. Where its units are written they are the
-       sections, and each one opens; otherwise the outline, so the page
-       still says what the course is made of. */
     if (c.units && c.units.length) {
-      const v = el("div", "c-body");
-      v.innerHTML = '<h3 class="c-h">The course, section by section</h3>' +
-        '<p>' + c.units.length + ' sections, in the order the course runs them. Each one is a sitting and ends ' +
-        'with something to translate.</p>';
-      stage.appendChild(v);
       const list = el("div", "m-list");
+      list.appendChild(el("p", "c-tsay", c.units.length + " sections, in the order the course runs them. Each one is a sitting and ends with something to translate."));
       c.units.forEach((u, k) => {
         const b = el("button", "m-course");
-        b.innerHTML =
-          '<span class="m-code">' + u.n + '</span>' +
-          '<span class="m-txt">' +
-            '<span class="m-en">' + u.en + '</span>' +
-            '<span class="m-arname" dir="rtl" lang="ar">' + u.ar + '</span>' +
-          '</span>';
-        b.addEventListener("click", () => {
-          pushTrail(c.code + " " + c.en, () => { open = c; course(); });
-          unit(c, k);
-        });
+        b.innerHTML = '<span class="m-code">' + u.n + '</span><span class="m-txt"><span class="m-en">' + u.en + '</span>' +
+          '<span class="m-arname" dir="rtl" lang="ar">' + u.ar + '</span></span>';
+        b.addEventListener("click", () => { pushTrail(c.code + " " + c.en, () => { open = c; course(); }); unit(c, k); });
         list.appendChild(b);
       });
-      stage.appendChild(list);
+      sec("The course, section by section", c.units.length + " sections to open", list);
     } else if (more.topics) {
-      const v = el("div", "c-body");
-      v.innerHTML = '<h3 class="c-h">The course, section by section</h3>' +
-        '<p>The sections of the course, in the order they build on one another. Your instructor may order them differently.</p>';
-      stage.appendChild(v);
       const ol = el("ol", "c-topics");
       more.topics.forEach(t => {
         const li = el("li", "c-topic");
-        li.innerHTML = '<span class="c-tn">' + t.en +
-          ' <span class="c-tar" dir="rtl" lang="ar">' + t.ar + '</span></span>' +
-          '<span class="c-tsay">' + t.say + '</span>' +
-          (t.src ? '<span class="c-tsrc">Source: ' + t.src + '</span>' : '');
+        li.innerHTML = '<span class="c-tn">' + t.en + ' <span class="c-tar" dir="rtl" lang="ar">' + t.ar + '</span></span>' +
+          '<span class="c-tsay">' + t.say + '</span>' + (t.src ? '<span class="c-tsrc">Source: ' + t.src + '</span>' : '');
         ol.appendChild(li);
       });
-      stage.appendChild(ol);
+      sec("The course, section by section", more.topics.length + " topics, in the order they build", ol);
     }
 
-    if (more.rule) {
-      const r = el("div", "c-rule");
-      r.innerHTML = '<span class="c-asks-lab">' + more.rule.t + '</span>' +
-        '<div class="c-rule-grid">' + more.rule.lines.map(l =>
-          '<div class="c-rule-row"><b>' + l[0] + '</b><span>' + l[1] + '</span></div>').join("") + '</div>' +
-        '<a class="c-src" href="' + more.rule.src[1] + '" target="_blank" rel="noopener">Source: ' + more.rule.src[0] + ' ↗</a>';
-      stage.appendChild(r);
-    }
+    if (more.rule) sec(more.rule.t, "The numbers", '<div class="c-rule-grid">' + more.rule.lines.map(l =>
+      '<div class="c-rule-row"><b>' + l[0] + '</b><span>' + l[1] + '</span></div>').join("") + '</div>' +
+      '<a class="c-src" href="' + more.rule.src[1] + '" target="_blank" rel="noopener">Source: ' + more.rule.src[0] + ' ↗</a>');
 
-    /* Real cases. Each one happened, and each says where it is reported. */
-    if (more.cases && more.cases.length) {
-      const h = el("div", "c-body");
-      h.innerHTML = '<h3 class="c-h">Real cases</h3><p>Things that actually happened, and what each one teaches. ' +
-        'Every case links to where it was reported.</p>';
-      stage.appendChild(h);
-      more.cases.forEach(x => {
-        const card = el("article", "c-case");
-        card.innerHTML =
-          '<div class="c-case-top"><span class="c-case-k">' + x.k + '</span><span class="c-case-yr">' + x.yr + '</span></div>' +
-          '<h4 class="c-case-t">' + x.t + '</h4>' +
-          '<p class="c-case-what">' + x.what + '</p>' +
-          (x.pair ? '<div class="c-pair"><span dir="auto">' + x.pair[0] + '</span><span class="c-pair-arr" aria-hidden="true">→</span><span dir="auto">' + x.pair[1] + '</span></div>' : '') +
-          '<div class="c-case-point"><span class="c-asks-lab">Why it matters</span><p>' + x.point + '</p></div>' +
-          '<div class="c-case-src">' + x.src.map(sr =>
-            '<a class="c-src" href="' + sr[1] + '" target="_blank" rel="noopener">' + sr[0] + ' ↗</a>').join("") + '</div>';
-        stage.appendChild(card);
-      });
-    }
+    /* where it is used, and what happened when it was done well or badly */
+    const life = el("div", "c-life");
+    life.innerHTML = '<p class="c-tsay">Where you meet it at work:</p><div class="chips-row">' +
+      c.settings.map(x => '<span class="chip-tag">' + x + '</span>').join("") + '</div>' +
+      '<div class="c-asks"><span class="c-asks-lab">What it asks of you</span><p>' + c.asks + '</p></div>';
+    (more.cases || []).forEach(x => {
+      const card = el("article", "c-case");
+      card.innerHTML = '<div class="c-case-top"><span class="c-case-k">' + x.k + '</span><span class="c-case-yr">' + x.yr + '</span></div>' +
+        '<h4 class="c-case-t">' + x.t + '</h4><p class="c-case-what">' + x.what + '</p>' +
+        (x.pair ? '<div class="c-pair"><span dir="auto">' + x.pair[0] + '</span><span class="c-pair-arr" aria-hidden="true">→</span><span dir="auto">' + x.pair[1] + '</span></div>' : '') +
+        '<div class="c-case-point"><span class="c-asks-lab">Why it matters</span><p>' + x.point + '</p></div>' +
+        '<div class="c-case-src">' + x.src.map(sr => '<a class="c-src" href="' + sr[1] + '" target="_blank" rel="noopener">' + sr[0] + ' ↗</a>').join("") + '</div>';
+      life.appendChild(card);
+    });
+    sec("In real life", (more.cases || []).length ? (more.cases || []).length + " real cases, each with where it was reported" : "Where it is used", life);
 
-    /* Where you meet it — a list of places, so it reads as a list. */
-    const wraps = el("div", "c-body");
-    wraps.innerHTML = '<h3 class="c-h">Where you meet it</h3>' +
-      '<div class="chips-row">' +
-      c.settings.map(x => '<span class="chip-tag">' + x + '</span>').join("") + '</div>';
-    stage.appendChild(wraps);
-
-    const asks = el("div", "c-asks");
-    asks.innerHTML = '<span class="c-asks-lab">What it asks of you</span><p>' + c.asks + '</p>';
-    stage.appendChild(asks);
-
-    /* Whatever the Guild already has that belongs to this course, as a
-       way in rather than as a list of names. */
-    const linked = (c.meets || []).map(id => ITEMS.find(t => t.id === id)).filter(Boolean);
+    /* the parts of the Compass that drill the same thing */
+    const RELATED = { "285": ["sf-legal", "sf-medical", "sf-economic", "sf-technical", "sd-legal", "sd-medical"],
+      "387": ["avt", "subtitle"], "283": ["texttypes", "fields"], "284": ["phrase", "lib-atoz"], "386": ["lineage"],
+      "388": ["sd-technical"], "180": ["meaning", "procedures"], "182": ["glossary", "sd-technical"],
+      "280": ["lib-atoz", "errors"], "281": ["lib-atoz", "errors"] };
+    const ids = [...new Set((c.meets || []).concat(RELATED[c.code] || []))];
+    const linked = ids.map(id => ITEMS.find(t => t.id === id)).filter(Boolean);
     if (linked.length) {
-      const v = el("div", "verdict");
-      v.appendChild(el("span", "vh", "Practise it here"));
-      v.appendChild(el("p", "vb",
-        "Nothing on this site replaces the course. These are the parts of it that drill the same thing, " +
-        "and they are open now."));
-      const row = el("div", "m-links");
+      const row = el("div", "c-go");
       linked.forEach(t => {
-        const b = el("button", "ghost", t.en + " →");
-        b.addEventListener("click", () => openItem(t));
-        row.appendChild(b);
+        const b = el("button", "c-go-b", '<b>' + t.en + '</b><small>' + (t.blurb || t.subject || "").replace(/<[^>]+>/g, "").slice(0, 90) + '</small>');
+        b.type = "button"; b.addEventListener("click", () => openItem(t)); row.appendChild(b);
       });
-      v.appendChild(row);
-      stage.appendChild(v);
+      sec("Practise it on Compass", linked.length + " pages that drill the same thing", row);
     }
+    secs.forEach((d, k) => {
+      const nx = secs[k + 1]; if (!nx) return;
+      const b = el("button", "avt-next", "Next: " + nx.querySelector(".avt-st b").textContent + " →"); b.type = "button";
+      b.addEventListener("click", () => { d.open = false; nx.open = true; setTimeout(() => nx.scrollIntoView({ behavior: "smooth", block: "start" }), 60); });
+      d.querySelector(".avt-body").appendChild(b);
+    });
 
     stage.appendChild(footNav({
       next: i < all.length - 1 ? (() => { open = all[i + 1]; course(); }) : null,
