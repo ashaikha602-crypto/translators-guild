@@ -4110,6 +4110,7 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .lu-pp { grid-row: span 2; font-size: 1.25rem; color: #34D399; text-align: right; }
 .lu-pm { font-weight: 600; }
 .lu-pe { font-size: .88rem; opacity: .85; overflow-wrap: anywhere; }
+.lu-patcard .deriv .w { white-space: nowrap; font-size: 1.15rem; }
 details.avt-step { border-radius: 18px; background: var(--void-2); border: var(--hair); overflow: hidden; }
 details.avt-step summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: .7rem; padding: .8rem .9rem; }
 details.avt-step summary::-webkit-details-marker { display: none; }
@@ -22647,7 +22648,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-0300";
+const BUILD = "1106-0345";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -31709,195 +31710,6 @@ const LU_PATTERNS = [
   { p: "فِعالة", m: "the activity or craft", ex: "كِتابة writing" }
 ];
 
-function luRows(rows, dir) {
-  const box = el("div", "lu-rows");
-  rows.forEach(r => {
-    const aAr = AR_RE.test(r.a), bAr = AR_RE.test(r.b);
-    const row = el("div", "lu-row");
-    row.innerHTML = '<div class="lu-pair"><span class="lu-a"' + (aAr ? ' dir="rtl" lang="ar"' : '') + '>' + r.a + '</span>' +
-      '<span class="lu-arr" aria-hidden="true">' + (dir === "rtl" ? "←" : "→") + '</span>' +
-      '<span class="lu-b"' + (bAr ? ' dir="rtl" lang="ar"' : '') + '>' + r.b + '</span></div>' +
-      (r.w ? '<p class="lu-w">' + r.w + '</p>' : '');
-    box.appendChild(row);
-  });
-  return box;
-}
-function luPage(o) {
-  setCount(o.count);
-  stage.innerHTML = "";
-  const hero = el("div", "c-hero lu-hero");
-  hero.style.setProperty("--lu-c", o.c);
-  hero.innerHTML = '<span class="c-badge">' + o.badge + '</span><h2 class="c-title">' + o.title + '</h2>' +
-    '<p class="c-ar" dir="rtl" lang="ar">' + o.ar + '</p><p class="c-line">' + o.line + '</p>';
-  stage.appendChild(hero);
-  const steps = [];
-  o.steps.forEach((s, k) => {
-    const sec = document.createElement("details");
-    sec.className = "avt-step lu-step"; if (k === 0) sec.open = true;
-    sec.innerHTML = '<summary><span class="avt-n">' + (k + 1) + '</span><span class="avt-st"><b>' + s.t + '</b>' +
-      (s.sub ? '<small>' + s.sub + '</small>' : '') + '</span><span class="avt-chev" aria-hidden="true">⌄</span></summary>';
-    const body = el("div", "avt-body");
-    s.fill(body);
-    if (k < o.steps.length - 1) {
-      const nx = el("button", "ghost lu-next", "Next · " + o.steps[k + 1].t + " →"); nx.type = "button";
-      nx.addEventListener("click", () => { sec.open = false; steps[k + 1].open = true; steps[k + 1].scrollIntoView({ behavior: "smooth", block: "start" }); });
-      body.appendChild(nx);
-    }
-    sec.appendChild(body);
-    stage.appendChild(sec); steps.push(sec);
-  });
-  const tr = el("div", "sf-try");
-  tr.style.setProperty("--sd-c", o.c);
-  tr.innerHTML = '<span class="sf-try-k">Practise it</span><b>' + o.tryT + '</b><p>' + o.tryP + '</p>';
-  const go = el("button", "primary sf-try-go", "Start practising"); go.type = "button";
-  go.addEventListener("click", () => openItem(ITEMS.find(t => t.id === o.practice)));
-  tr.appendChild(go);
-  stage.appendChild(tr);
-  stage.appendChild(el("p", "sd-note", o.src));
-  stage.appendChild(footNav({}));
-}
-const luP = html => { const p = el("p", "", html); return p; };
-const LU_SRC_AZ = "Husni &amp; Newman, <i>A to Z of Arabic–English–Arabic Translation</i> (2013)";
-
-function runPhraseology() {
-  const set = k => PHRASE_SETS.find(s => s.key === k);
-  luPage({
-    count: "Learn · Phraseology", badge: "Language in use", c: "#A78BFA",
-    title: "Phraseology", ar: "المتلازمات والعبارات الجاهزة",
-    line: "The words a language has already put together for you: partners, connectors, formulas. Get them wrong and the grammar is fine and the text still reads as translated.",
-    steps: [
-      { t: "What it is", sub: "and how to approach it", fill: b => {
-        b.appendChild(luP("A language stores ready-made pieces: a verb that goes with a noun (<i>make a decision</i>), a joint between two clauses (<i>however</i>), a formula for a moment (<i>bon appétit</i>). They are not built word by word, so they cannot be translated word by word."));
-        b.appendChild(luP("<b>How to approach it.</b> 1. Find the chunk, not the word: underline the whole partnership. 2. Ask what the chunk does: describe, join, agree, thank, refuse. 3. Look for the chunk the other language uses for that job, even if no word matches. 4. Check the register: the same job has a plain and a formal formula."));
-      } },
-      { t: "Word partners", sub: "the noun picks the verb", fill: b => {
-        const s1 = set("coll_en_ar"), s2 = set("coll_ar_en");
-        b.appendChild(luP(s1.lede)); b.appendChild(luRows(s1.rows));
-        b.appendChild(luP(s2.lede)); b.appendChild(luRows(s2.rows));
-        b.appendChild(luP("<b>Make, do and take place</b> (" + LU_SRC_AZ + "):")); b.appendChild(luRows(LU_VERBS));
-        b.appendChild(luP("<b>In diplomatic Arabic</b>, each noun has its verb: you <i>hold</i> (يعقد) a meeting, <i>give</i> (يدلي بـ) an opinion, <i>declare</i> (يعلن) a state of war. From al-Rifai, <i>Dictionary of Diplomatic and Political Terms</i> (2012):"));
-        b.appendChild(luRows(LU_DIPLO));
-      } },
-      { t: "Joining ideas", sub: "connectors and two-part particles", fill: b => {
-        const s = set("markers");
-        b.appendChild(luP(s.lede)); b.appendChild(luRows(s.rows)); b.appendChild(luP(s.note));
-        b.appendChild(luP("<b>Two-part connectors.</b> Many Arabic particles come in two parts, and the second must appear later in the sentence. English rarely works this way, so the second part is easy to drop (" + LU_SRC_AZ + "):"));
-        b.appendChild(luRows(LU_PAIRS));
-        b.appendChild(luP("<b>و and فـ</b> both can mean <i>and</i>, but they are not interchangeable:")); b.appendChild(luRows(LU_WAFA));
-      } },
-      { t: "Ready-made formulas", sub: "agreeing, disagreeing, exclaiming", fill: b => {
-        b.appendChild(luP("English often softens a <i>no</i> inside a polite, almost positive frame, which rarely survives a literal translation; Arabic tends to state approval more briefly (" + LU_SRC_AZ + ")."));
-        b.appendChild(luRows(LU_AGREE));
-      } },
-      { t: "Expressions the moment decides", sub: "one phrase, several Englishes", fill: b => {
-        const s = set("context"); b.appendChild(luP(s.lede)); b.appendChild(luRows(s.rows)); b.appendChild(luP(s.note));
-      } },
-      { t: "Speech acts", sub: "what the sentence is doing", fill: b => {
-        const s = set("speech"); b.appendChild(luP(s.lede)); b.appendChild(luRows(s.rows)); b.appendChild(luP(s.note));
-      } }
-    ],
-    practice: "phraseq", tryT: "Phraseology practice",
-    tryP: "Partners, connectors and formulas from this page, mixed: pick what the other language actually says.",
-    src: "Sources: " + LU_SRC_AZ + " (make/do, happen, correlative particles, wa and fa, approval and disapproval, exclamations); al-Rifai, <i>Dictionary of Diplomatic and Political Terms</i> (2012); Husni &amp; Newman, <i>Arabic–English–Arabic Translation</i> (2015)."
-  });
-}
-
-function runRegister() {
-  luPage({
-    count: "Learn · Register", badge: "Language in use", c: "#38BDF8",
-    title: "Register", ar: "المستوى اللغوي",
-    line: "One meaning can be said at several heights. The translation has to land at the same height, or it is accurate and still wrong.",
-    steps: [
-      { t: "What it is", sub: "and how to approach it", fill: b => {
-        b.appendChild(luP("<b>Register</b> is the level of formality. Getting it wrong causes comic or confusing effects: nobody in a fight says “I say, old fellow, will you kindly desist from hitting me?” (Husni &amp; Newman, 2015, pp. 56–57)."));
-        b.appendChild(luP("Arabic adds a second axis: dialect against standard (الفصحى and العامية), and inside the standard a plain and a high style. So a Kuwaiti line, an everyday MSA line, a formal line and a classical line can all mean the same thing."));
-        b.appendChild(luP("<b>How to approach it.</b> 1. Who is speaking, to whom, and where? 2. Place the source on the ladder. 3. Find the English at the same height: a contraction, a plain verb, a formula, an archaism. 4. Read it aloud: would that person say it to that person?"));
-      } },
-      { t: "One meaning, four heights", sub: "Kuwaiti to classical", fill: b => {
-        let si = 0, lv = 1;
-        const wrap = el("div", "lu-reg");
-        const draw = () => {
-          wrap.innerHTML = "";
-          const chips = el("div", "chips");
-          REGISTER.forEach((s, k) => { const c = el("button", "chip" + (k === si ? " on" : ""), "“" + s.meaning + "”"); c.type = "button"; c.onclick = () => { si = k; draw(); }; chips.appendChild(c); });
-          wrap.appendChild(chips);
-          const seg = el("div", "lu-seg");
-          REGISTER[si].stops.forEach((st, k) => { const c = el("button", k === lv ? "on" : "", st.name); c.type = "button"; c.onclick = () => { lv = k; draw(); }; seg.appendChild(c); });
-          wrap.appendChild(seg);
-          const st = REGISTER[si].stops[lv];
-          const card = el("div", "lu-regcard");
-          card.innerHTML = '<p class="lu-reg-ar" dir="rtl" lang="ar">' + st.ar + '</p><p class="lu-reg-en">“' + st.en + '”</p><p class="lu-w">' + st.note + '</p>';
-          wrap.appendChild(card);
-          const all = el("div", "lu-ladder");
-          REGISTER[si].stops.forEach((x, k) => {
-            const r = el("button", "lu-rung" + (k === lv ? " on" : "")); r.type = "button";
-            r.innerHTML = '<span class="lu-rung-n">' + x.name + '</span><span dir="rtl" lang="ar">' + x.ar + '</span><span>' + x.en + '</span>';
-            r.onclick = () => { lv = k; draw(); };
-            all.appendChild(r);
-          });
-          wrap.appendChild(all);
-        };
-        draw(); b.appendChild(wrap);
-      } },
-      { t: "Titles and terms of address", sub: "where register is most visible", fill: b => {
-        b.appendChild(luP("Address is culture-bound. Arabic has more honorifics and uses them more widely, and first names on first meeting can seem disrespectful. Tone honorifics down or drop them into English; add them into Arabic (" + LU_SRC_AZ + ")."));
-        b.appendChild(luP("• حضرتك is sometimes <i>sir</i> but usually just <i>you</i>.<br>• Arabic puts a title before the first name, English before the surname: الدكتورة سارة is <i>Dr Johnson</i>, not <i>Dr Sarah</i>.<br>• Formulas for the dead (المرحوم before the name, رحمه الله after) are translated once and then dropped."));
-        b.appendChild(luRows(LU_TITLES.map(r => ({ a: r[0], b: r[1] }))));
-      } },
-      { t: "Height in agreeing and refusing", sub: "the same job, plain and formal", fill: b => {
-        b.appendChild(luP("Politeness is register too. English marks it largely by distance in the grammar (<i>could you possibly</i>); Arabic more by word choice and blessing formulas:"));
-        b.appendChild(luRows(PHRASE_SETS.find(s => s.key === "speech").rows));
-      } }
-    ],
-    practice: "registerq", tryT: "Register practice",
-    tryP: "Hear a line and place it on the ladder, pick the line for a setting, and match the title to the office.",
-    src: "Sources: Husni &amp; Newman, <i>Arabic–English–Arabic Translation</i> (2015), pp. 56–57; " + LU_SRC_AZ + ", “Terms of address”. The four-height sets are this site’s teaching examples."
-  });
-}
-
-function runRoots() {
-  let cur = 0;
-  luPage({
-    count: "Learn · Roots and patterns", badge: "Language in use", c: "#34D399",
-    title: "Roots and Patterns", ar: "الجذر والوزن",
-    line: "Three consonants hold a family of words, and a pattern tells you the job each member does. English builds its words another way.",
-    steps: [
-      { t: "What it is", sub: "root and pattern", fill: b => {
-        b.appendChild(luP("Both languages borrow and both derive. English borrows (<i>algebra</i>, <i>safari</i>) and derives (<i>nation, national, nationalise, nationality</i>); Arabic borrows (بنك، ديمقراطية، تلفاز) and derives. The difference is the <b>mechanism</b>. English stacks affixes onto the front and back of a stem. Arabic threads a consonantal <b>root</b> through a <b>pattern</b> (وزن): ك-ت-ب in مَفعول gives مَكتوب, in مَفعَلة gives مَكتَبة."));
-        b.appendChild(luP("<b>How to approach it.</b> 1. Strip the word to its root. 2. Name the pattern: it tells you <i>doer</i>, <i>done-to</i>, <i>place</i>, <i>act</i>. 3. Expect a likely reading, not a certain one: مَكتوب is <i>written</i>, <i>a letter</i>, and <i>what is fated</i>, and only the sentence decides."));
-      } },
-      { t: "Ten families", sub: "the words the craft uses about itself", fill: b => {
-        const box = el("div", "lu-roots");
-        const draw = () => {
-          box.innerHTML = "";
-          const chips = el("div", "chips");
-          ROOTS.forEach((r, k) => { const c = el("button", "chip ar-chip" + (k === cur ? " on" : ""), r.root); c.type = "button"; c.onclick = () => { cur = k; draw(); }; chips.appendChild(c); });
-          box.appendChild(chips);
-          const r = ROOTS[cur];
-          const card = el("div", "lu-rootcard");
-          card.innerHTML = '<p class="lu-stamp" dir="rtl" lang="ar">' + r.root + '</p><p class="lu-sense">' + r.sense + '</p>' +
-            r.words.map(w => '<div class="lu-deriv"><span class="lu-dw" dir="rtl" lang="ar">' + w.w + '</span><span class="lu-dg"><b>' + w.tr + '</b> ' + w.en + '</span></div>').join("");
-          box.appendChild(card);
-        };
-        draw(); b.appendChild(box);
-      } },
-      { t: "Patterns carry meaning", sub: "read a word you have never met", fill: b => {
-        b.appendChild(luP("The pattern adds a meaning of its own, so a reader can often guess a new word. The examples are from the ten families above."));
-        const t = el("div", "lu-pats");
-        t.innerHTML = LU_PATTERNS.map(p => '<div class="lu-pat"><span class="lu-pp" dir="rtl" lang="ar">' + p.p + '</span><span class="lu-pm">' + p.m + '</span><span class="lu-pe" dir="auto">' + p.ex + '</span></div>').join("");
-        b.appendChild(t);
-      } },
-      { t: "How English builds words", sub: "prefixes and suffixes into Arabic", fill: b => {
-        b.appendChild(luP("Arabic affixes are few and grammatical, so English prefixes have no one-to-one match: translate the meaning, not the morpheme. Arabic dislikes compounding, so it prefers an iḍāfa (<i>overproduction</i>, إفراط الإنتاج) or a phrase (<i>subterranean</i>, تحت سطح الأرض). Suffixes are the same story: <i>drinkable</i> is قابل للشرب (" + LU_SRC_AZ + ", “Prefixes”, “Suffixes”)."));
-        b.appendChild(luRows(LU_PREFIX.map(r => ({ a: r[0] + " · " + r[1], b: r[2], w: r[3] })), "ltr"));
-      } }
-    ],
-    practice: "rootsq", tryT: "Roots and patterns practice",
-    tryP: "Find the root, name the pattern, choose the family member, and turn an English prefix into Arabic.",
-    src: "Sources: the ten families are standard Arabic derivation; prefixes and suffixes from " + LU_SRC_AZ + "."
-  });
-}
-
 /* A to Z (2013), “Prefixes”: prefix, meaning, Arabic, example */
 const LU_PREFIX = [
   ["anti-", "against", "مضاد / ضد", "antibiotics · مضاد حيوي"],
@@ -31920,6 +31732,246 @@ const LU_PREFIX = [
   ["un-", "not", "غير / لا / بلا", "unconnected · غير متصل; undoubtedly · بلا ريب"],
   ["vice-", "deputy", "نائب", "vice-president · نائب الرئيس"]
 ];
+
+/* ═══════════════════════════════════════════════════════════
+   THE PHRASEOLOGY CHAMBER — unscored, like every Chamber
+   ═══════════════════════════════════════════════════════════ */
+function runPhraseology() {
+  const LU_COUNT = "Phraseology";
+  let cur = 0;
+  setCount("Learn · " + LU_COUNT);
+
+  function render() {
+    stage.innerHTML = "";
+
+
+    const chips = el("div", "chips");
+    PHRASE_SETS.forEach((s, k) => {
+      const b = el("button", "chip" + (k === cur ? " on" : ""),
+        s.en + '<span class="c-sub">' + s.dirLabel + '</span>');
+      b.addEventListener("click", () => { cur = k; render(); });
+      chips.appendChild(b);
+    });
+    stage.appendChild(chips);
+
+    const set = PHRASE_SETS[cur];
+    const card = el("div", "card");
+    card.appendChild(el("div", "card-top",
+      '<span class="num-badge">' + set.dirLabel + '</span>' +
+      '<h3>' + set.en + ' <span class="ar" dir="rtl" lang="ar">' + set.ar + '</span></h3>'));
+    card.appendChild(el("p", "lede", set.lede));
+
+    const list = el("div", "pairs");
+    set.rows.forEach((r, k) => {
+      const aAr = AR_RE.test(r.a);
+      const bAr = AR_RE.test(r.b);
+      const row = el("div", "pair",
+        '<span class="p-a' + (aAr ? " is-ar" : "") + '"' + (aAr ? ' dir="rtl" lang="ar"' : '') + '>' + r.a + '</span>' +
+        '<span class="p-arrow" aria-hidden="true">→</span>' +
+        '<span class="p-b' + (bAr ? " is-ar" : "") + '"' + (bAr ? ' dir="rtl" lang="ar"' : '') + '>' + r.b + '</span>' +
+        '<span class="p-w">' + r.w + '</span>');
+      row.style.animationDelay = (70 + k * 55) + "ms";
+      list.appendChild(row);
+    });
+    card.appendChild(list);
+    stage.appendChild(card);
+
+    const v = el("div", "verdict");
+    v.appendChild(el("span", "vh", "What to take from this"));
+    v.appendChild(el("p", "vb", set.note));
+    stage.appendChild(v);
+
+    const pager = footNav({
+      back: cur > 0 ? ((v) => () => { cur = v - 1; render(); scrollTop(); })(cur) : null,
+      backLabel: cur > 0 ? PHRASE_SETS[cur - 1].en : "",
+      next: cur < PHRASE_SETS.length - 1 ? ((v) => () => { cur = v + 1; render(); scrollTop(); })(cur) : null,
+      nextLabel: cur < PHRASE_SETS.length - 1 ? PHRASE_SETS[cur + 1].en : "",
+      note: "Learn · " + (cur + 1) + " of " + PHRASE_SETS.length
+    });
+    stage.appendChild(luPractise("phraseq", "Phraseology"));
+    stage.appendChild(pager);
+  }
+  render();
+}
+
+/* ═══════════ THE REGISTER DIAL ═══════════ */
+function runRegister() {
+  const LU_COUNT = "Register";
+  let setIdx = 0, stop = 1;
+  setCount("Learn · " + LU_COUNT);
+
+  function render() {
+    stage.innerHTML = "";
+    const set = REGISTER[setIdx];
+
+    const chips = el("div", "chips");
+    REGISTER.forEach((s, k) => {
+      const b = el("button", "chip" + (k === setIdx ? " on" : ""), "“" + s.meaning + "”");
+      b.addEventListener("click", () => { setIdx = k; render(); });
+      chips.appendChild(b);
+    });
+    stage.appendChild(chips);
+
+    const dial = el("div", "dial");
+    const panel = el("div", "dial-panel");
+    const s = set.stops[stop];
+    panel.appendChild(el("p", "reg-name", s.name));
+
+    const pair = el("div", "pair");
+    const en = el("div"); en.appendChild(el("p", "p-en", "“" + s.en + "”"));
+    const ar = el("div"); ar.appendChild(el("p", "p-ar", s.ar));
+    pair.appendChild(en); pair.appendChild(el("div", "hairline")); pair.appendChild(ar);
+    panel.appendChild(pair);
+    panel.appendChild(el("p", "reg-note", s.note));
+    dial.appendChild(panel);
+
+    const track = el("div", "dial-track");
+    const range = document.createElement("input");
+    range.type = "range"; range.min = "0"; range.max = "3"; range.step = "1";
+    range.value = String(stop);
+    range.setAttribute("aria-label", "Level of language");
+    range.addEventListener("input", () => { stop = +range.value; render(); });
+    track.appendChild(range);
+    const stops = el("div", "stops");
+    set.stops.forEach((st, k) => stops.appendChild(el("span", k === stop ? "on" : "", st.name)));
+    track.appendChild(stops);
+    dial.appendChild(track);
+    stage.appendChild(dial);
+
+    const v = el("div", "verdict");
+    v.appendChild(el("span", "vh", "Why this chamber has no score"));
+    v.appendChild(el("p", "vb",
+      "All four Arabic lines mean the same thing, and none is more correct than the others. " +
+      "What changes is <b>who is speaking, to whom, and where</b> — and the English has to move with it. " +
+      "Pick the wrong level and the translation is accurate and still wrong."));
+    stage.appendChild(v);
+
+    /* A Chamber is not scored: there is nothing to finish and nothing to
+       win, so it offers no button that pretends otherwise. */
+    stage.appendChild(luTitles());
+    stage.appendChild(luPractise("registerq", "Register"));
+    stage.appendChild(footNav({}));
+  }
+  render();
+}
+
+/* ═══════════ THE ROOT CHAMBER ═══════════ */
+function runRoots() {
+  const LU_COUNT = "Roots and patterns";
+  let cur = 0;
+  setCount("Learn · " + LU_COUNT);
+
+  function render() {
+    stage.innerHTML = "";
+    const chips = el("div", "chips");
+    ROOTS.forEach((r, k) => {
+      const b = el("button", "chip ar-chip" + (k === cur ? " on" : ""), r.root);
+      b.addEventListener("click", () => { cur = k; render(); });
+      chips.appendChild(b);
+    });
+    stage.appendChild(chips);
+
+    const r = ROOTS[cur];
+    const card = el("div", "card");
+    card.appendChild(el("p", "stamp", r.root));
+    card.appendChild(el("p", "sense", r.sense));
+    const list = el("div", "derivs");
+    r.words.forEach((w, k) => {
+      const row = el("div", "deriv",
+        '<span class="w">' + w.w + '</span><span class="g">' +
+        '<span class="en">' + w.en + '</span><span class="tr">' + w.tr + '</span></span>');
+      row.style.animationDelay = (80 + k * 65) + "ms";
+      list.appendChild(row);
+    });
+    card.appendChild(list);
+    stage.appendChild(card);
+
+    /* §20: the old line here — "English builds words by borrowing; Arabic
+       builds them by bending three consonants" — was false in both
+       directions and taught the learner a caricature. English derives
+       heavily (nation, national, nationalise, nationality) and Arabic
+       borrows heavily (تِلفاز, ديمقراطيّة, بنك). What is actually
+       different is the mechanism, and that is what is taught now. */
+    const v = el("div", "verdict");
+    v.appendChild(el("span", "vh", "What is actually going on"));
+    v.appendChild(el("p", "vb",
+      "Both languages borrow and both languages derive. English borrows (<i>algebra</i>, <i>safari</i>) and derives " +
+      "(<i>nation, national, nationalise, nationality</i>); Arabic borrows (<b>بنك</b>, <b>ديمقراطيّة</b>, <b>تِلفاز</b>) " +
+      "and derives. The difference is the <b>mechanism</b>. English derivation stacks affixes onto the front and back of " +
+      "a stem, so the stem stays visibly intact. Arabic derivation threads a consonantal root through a <b>pattern</b> " +
+      "(وَزْن), so the root is interleaved with the pattern rather than sitting at one end of it: ك-ت-ب in the pattern " +
+      "مَفعول gives <b>مَكتوب</b>, and in مَفعَلة gives <b>مَكتَبة</b>."));
+    v.appendChild(el("p", "vb",
+      "Two consequences a translator meets constantly. First, the pattern carries meaning of its own — فاعِل gives the " +
+      "one who does it, مَفعول the one it is done to, مَفعَل the place — so a reader can often infer a word never met " +
+      "before. Second, a root's family is a network of <b>related but not predictable</b> senses: derivation gives you " +
+      "the likely reading, context gives you the actual one. <b>مَكتوب</b> is <i>written</i>, and it is also <i>a " +
+      "letter</i>, and it is also <i>what is fated</i> — three different English words, and only the sentence around it " +
+      "decides which. That is where the translating happens: not in the root, but in the choice the root leaves open."));
+    stage.appendChild(v);
+
+    /* Unscored, like every Chamber. */
+    stage.appendChild(luPatternsCard());
+    stage.appendChild(luPractise("rootsq", "Roots and patterns"));
+    stage.appendChild(footNav({}));
+  }
+  render();
+}
+
+/* the earlier layouts are kept; the new material is added in their own
+   style: more sets in Phraseology, the titles under the Register dial,
+   the patterns under the root card */
+function luPractise(id, name) {
+  const tr = el("div", "sf-try");
+  tr.style.setProperty("--sd-c", "#A78BFA");
+  tr.innerHTML = '<span class="sf-try-k">Practise it</span><b>' + name + ' practice</b><p>Questions taken only from this page.</p>';
+  const go = el("button", "primary sf-try-go", "Start practising"); go.type = "button";
+  go.addEventListener("click", () => openItem(ITEMS.find(t => t.id === id)));
+  tr.appendChild(go);
+  return tr;
+}
+function luTitles() {
+  const card = el("div", "card");
+  card.appendChild(el("div", "card-top", '<span class="num-badge">Titles</span><h3>Terms of address <span class="ar" dir="rtl" lang="ar">صيغ المخاطبة والألقاب</span></h3>'));
+  card.appendChild(el("p", "lede", "Arabic has more honorifics and uses them more widely. Tone them down or drop them into English; add them into Arabic. " +
+    "Arabic puts a title before the first name, English before the surname: الدكتورة سارة is <i>Dr Johnson</i>, not <i>Dr Sarah</i>. (Husni &amp; Newman, <i>A to Z</i>, 2013)"));
+  const list = el("div", "pairs");
+  LU_TITLES.forEach(r => list.appendChild(el("div", "pair",
+    '<span class="p-a">' + r[0] + '</span><span class="p-arrow" aria-hidden="true">→</span><span class="p-b is-ar" dir="rtl" lang="ar">' + r[1] + '</span>')));
+  card.appendChild(list);
+  return card;
+}
+function luPatternsCard() {
+  const card = el("div", "card lu-patcard");
+  card.appendChild(el("p", "stamp", "الأوزان"));
+  card.appendChild(el("p", "sense", "patterns: the meaning each one adds"));
+  const list = el("div", "derivs");
+  LU_PATTERNS.forEach(p => list.appendChild(el("div", "deriv",
+    '<span class="w">' + p.p + '</span><span class="g"><span class="en">' + p.m + '</span><span class="tr">' + p.ex + '</span></span>')));
+  card.appendChild(list);
+  return card;
+}
+/* the new sets join the old ones, in the same shape */
+(function () {
+  const rows = (arr) => arr.map(r => ({ a: r.a, b: r.b, w: r.w || "" }));
+  PHRASE_SETS.push(
+    { key: "diplo", en: "Verbs in diplomacy", ar: "أفعال الدبلوماسية", dir: "en_ar", dirLabel: "English → Arabic",
+      lede: "Each noun takes its own verb. You <b>hold</b> (يعقد) a meeting, <b>give</b> (يدلي بـ) an opinion, <b>declare</b> (يعلن) a state of war.",
+      note: "From al-Rifai, <i>Dictionary of Diplomatic and Political Terms</i> (2012). Learn the noun with its verb, as one piece.", rows: rows(LU_DIPLO) },
+    { key: "makedo", en: "Make, do, take place", ar: "عمل · جعل · انعقد", dir: "en_ar", dirLabel: "English → Arabic",
+      lede: "<i>Make</i> and <i>do</i> are often عمل or فعل; causative <i>make</i> takes <b>جعل</b>. <i>Happen</i> is for the unplanned (حصل), <i>take place</i> for the planned (انعقد، جرى).",
+      note: "<i>The meeting happened yesterday</i> is unidiomatic: a meeting <b>takes place</b>. (Husni &amp; Newman, <i>A to Z</i>, 2013)", rows: rows(LU_VERBS) },
+    { key: "pairs", en: "Two-part connectors", ar: "الأدوات المزدوجة", dir: "both", dirLabel: "Both directions",
+      lede: "Many Arabic particles come in two parts, and the second must appear later in the sentence. English rarely works this way, so the second part is easy to drop.",
+      note: "Check every إما for its أو, every ما إن for its حتى, every أما for its فـ. (Husni &amp; Newman, <i>A to Z</i>, 2013)", rows: rows(LU_PAIRS) },
+    { key: "wafa", en: "و and فـ", ar: "الواو والفاء", dir: "en_ar", dirLabel: "English → Arabic",
+      lede: "Both can mean <i>and</i>, but they are not interchangeable. Only فـ introduces the result of a condition; only و introduces a circumstantial clause; و is the one between nouns.",
+      note: "Between nouns, English uses commas and one <i>and</i>; Arabic repeats و. (Husni &amp; Newman, <i>A to Z</i>, 2013)", rows: rows(LU_WAFA) },
+    { key: "agree", en: "Agreeing and exclaiming", ar: "الموافقة والاعتراض والتعجب", dir: "en_ar", dirLabel: "English → Arabic",
+      lede: "English often softens a <i>no</i> inside a polite, almost positive frame, which rarely survives a literal translation; Arabic tends to state approval more briefly.",
+      note: "Translate the degree, not the grammar: <i>I couldn’t agree more</i> is a negative in English and a plain <b>تماما</b> in Arabic. (Husni &amp; Newman, <i>A to Z</i>, 2013)", rows: rows(LU_AGREE) }
+  );
+})();
 
 /* ═══════════ PRACTICE: built only from the Learn pages above ═══════════ */
 function luPick(pool, right, n, key) {
