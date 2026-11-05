@@ -4135,6 +4135,11 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .lu-compact .deriv .g .en { font-size: .84rem; }
 .lu-compact .deriv .g .tr { font-size: .66rem; }
 .lu-compact .sf-try b { font-size: 1rem; }
+.cs-real { font-size: .62rem; color: #34D399; margin-left: .25rem; }
+.chip.on .cs-real { color: #fff; }
+.cs-realnote { font-size: .8rem; margin: .45rem 0 0; color: #6EE7B7; }
+.cs-voice-k { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: #34D399; margin: .5rem 0 0; }
+.cs-voice-k.dim { color: inherit; opacity: .55; }
 .im-modes { display: grid; gap: .5rem; margin: .2rem 0 1.1rem; }
 .im-lab { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; opacity: .75; margin: 0 0 .1rem; }
 .im-tile { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: .15rem .6rem; padding: .8rem .95rem; border-radius: 16px;
@@ -22800,7 +22805,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-0900";
+const BUILD = "1106-1000";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -31141,6 +31146,7 @@ const CONSEC_N = 6, SIMUL_N = 4;
 let consecRec = null, consecMedia = null, consecTick = null, consecStream = null;
 function consecStop() {
   try { window.speechSynthesis && speechSynthesis.cancel(); } catch (e) { }
+  try { typeof consecAudio !== "undefined" && consecAudio && consecAudio.pause(); } catch (e) { }
   try { consecRec && consecRec.abort(); } catch (e) { }
   try { consecMedia && consecMedia.state !== "inactive" && consecMedia.stop(); } catch (e) { }
   try { consecStream && consecStream.getTracks().forEach(t => t.stop()); } catch (e) { }
@@ -31269,6 +31275,28 @@ function csSteps(on) {
   return s;
 }
 
+/* Real human voices. LibriVox volunteers' public-domain readings of the
+   Universal Declaration of Human Rights (archive.org, item
+   universal_declaration_librivox): English read by KS, Arabic read by FE.
+   Cut article by article at the reader's own pauses, each cut checked
+   against the length of the article's text; Arabic Article 3 is left out
+   because its boundary could not be fixed with confidence. The text shown
+   is the OHCHR text the readers read (UDHR in Unicode). */
+const REAL_AUDIO = { rights: [{"art": 1, "lv": "turns", "i": 0, "en": "audio/udhr/en-01.mp3", "ar": "audio/udhr/ar-01.mp3", "enText": "All human beings are born free and equal in dignity and rights. They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood.", "arText": "يولد جميع الناس أحرارًا متساوين في الكرامة والحقوق. وقد وهبوا عقلاً وضميرًا وعليهم أن يعامل بعضهم بعضًا بروح الإخاء."}, {"art": 3, "lv": "sentences", "i": 0, "en": "audio/udhr/en-03.mp3", "ar": null, "enText": "Everyone has the right to life, liberty and the security of person.", "arText": "لكل فرد الحق في الحياة والحرية وسلامة شخصه."}, {"art": 4, "lv": "sentences", "i": 1, "en": "audio/udhr/en-04.mp3", "ar": "audio/udhr/ar-04.mp3", "enText": "No one shall be held in slavery or servitude; slavery and the slave trade shall be prohibited in all their forms.", "arText": "لا يجوز إسترقاق أو إستعباد أي شخص. ويحظر الإسترقاق وتجارة الرقيق بكافة أوضاعهما."}, {"art": 5, "lv": "sentences", "i": 2, "en": "audio/udhr/en-05.mp3", "ar": "audio/udhr/ar-05.mp3", "enText": "No one shall be subjected to torture or to cruel, inhuman or degrading treatment or punishment.", "arText": "لا يعرض أي إنسان للتعذيب ولا للعقوبات أو المعاملات القاسية أو الوحشية أو الحاطة بالكرامة."}, {"art": 9, "lv": "sentences", "i": 3, "en": "audio/udhr/en-09.mp3", "ar": "audio/udhr/ar-09.mp3", "enText": "No one shall be subjected to arbitrary arrest, detention or exile.", "arText": "لا يجوز القبض على أي إنسان أو حجزه أو نفيه تعسفاً."}, {"art": 12, "lv": "turns", "i": 3, "en": "audio/udhr/en-12.mp3", "ar": "audio/udhr/ar-12.mp3", "enText": "No one shall be subjected to arbitrary interference with his privacy, family, home or correspondence, nor to attacks upon his honour and reputation. Everyone has the right to the protection of the law against such interference or attacks.", "arText": "لا يعرض أحد لتدخل تعسفي في حياته الخاصة أو أسرته أو مسكنه أو مراسلاته أو لحملات على شرفه وسمعته. ولكل شخص الحق في حماية القانون من مثل هذا التدخل أو تلك الحملات."}, {"art": 14, "lv": "turns", "i": 2, "en": "audio/udhr/en-14.mp3", "ar": "audio/udhr/ar-14.mp3", "enText": "Everyone has the right to seek and to enjoy in other countries asylum from persecution. This right may not be invoked in the case of prosecutions genuinely arising from non‐political crimes or from acts contrary to the purposes and principles of the United Nations.", "arText": "لكل فرد الحق أن يلجأ إلى بلاد أخرى أو يحاول الالتجاء إليها هربا من الاضطهاد. لا ينتفع بهذا الحق من قدم للمحاكمة في جرائم غير سياسية أو لأعمال تناقض أغراض الأمم المتحدة ومبادئها."}, {"art": 19, "lv": "turns", "i": 1, "en": "audio/udhr/en-19.mp3", "ar": "audio/udhr/ar-19.mp3", "enText": "Everyone has the right to freedom of opinion and expression; this right includes freedom to hold opinions without interference and to seek, receive and impart information and ideas through any media and regardless of frontiers.", "arText": "لكل شخص الحق في حرية الرأي والتعبير. ويشمل هذا الحق حرية اعتناق الآراء دون أي تدخل، واستقاء الأنباء والأفكار وتلقيها وإذاعتها بأية وسيلة كانت دون تقيد بالحدود الجغرافية."}] };
+const REAL_CREDIT = "Real voices: LibriVox volunteers reading the Universal Declaration of Human Rights (public domain), English read by KS, Arabic read by FE. Cut article by article.";
+let consecAudio = null;
+function consecPlay(url, onstart, onend) {
+  try { consecAudio && consecAudio.pause(); } catch (e) { }
+  const a = new Audio(url);
+  consecAudio = a;
+  let done = false;
+  const fin = ok => { if (done) return; done = true; onend(ok); };
+  a.onplaying = () => { onstart && onstart(); };
+  a.onended = () => fin(true);
+  a.onerror = () => fin(false);
+  const p = a.play();
+  if (p && p.catch) p.catch(() => fin(false));
+}
 function runSpoken(mode) {
   consecStop();
   const SIM = mode === "simul";
@@ -31297,12 +31325,14 @@ function runSpoken(mode) {
     stage.appendChild(el("p", "cs-lab", "1 · Setting"));
     const gs = el("div", "chips cs-chips");
     BOOTH_GENRES.forEach(g => {
-      const c = el("button", "chip" + (g.id === st.genre ? " on" : ""), g.en); c.type = "button";
+      const c = el("button", "chip" + (g.id === st.genre ? " on" : ""), g.en + (REAL_AUDIO[g.id] ? ' <span class="cs-real">● real voices</span>' : '')); c.type = "button";
       c.onclick = () => { st.genre = g.id; state.genre = g.id; save(); setup(); };
       gs.appendChild(c);
     });
     stage.appendChild(gs);
     stage.appendChild(el("p", "cs-src", BOOTH_GENRES.find(x => x.id === st.genre).hint));
+    stage.appendChild(el("p", "cs-realnote", REAL_AUDIO[st.genre] ? "✓ This setting uses <b>real recorded human voices</b>, not the phone's voice." :
+      "This setting still uses the phone's voice. <b>Human rights</b> has real recorded voices; more settings are coming."));
 
     stage.appendChild(el("p", "cs-lab", "2 · Direction"));
     const seg = el("div", "cs-seg" + (SIM ? " two" : ""));
@@ -31349,9 +31379,25 @@ function runSpoken(mode) {
   const lv = k => BOOTH_LEVELS.find(L => L.key === k);
   const tag = (x, k) => Object.assign({ level: lv(k) }, x);
 
+  /* the real recordings of a setting, as booth items carrying their audio */
+  function realItems(g, from) {
+    return (REAL_AUDIO[g.id] || []).filter(r => r[from]).map(r => {
+      const base = (g[r.lv] || [])[r.i];
+      return Object.assign(tag(base, r.lv), { audio: r[from], speakText: from === "ar" ? r.arText : r.enText,
+        showModel: from === "ar" ? r.enText : r.arText, art: r.art });
+    });
+  }
   /* ── CONSECUTIVE ── */
   function start() {
     const g = BOOTH_GENRES.find(x => x.id === st.genre);
+    if (REAL_AUDIO[g.id]) {
+      const dirs = st.both ? ["ar-en", "en-ar"] : [st.dir];
+      const lists = dirs.map(d => shuffled(realItems(g, d === "ar-en" ? "ar" : "en")).map(q => Object.assign({}, q, { dir: d })));
+      const q2 = [];
+      for (let k = 0; q2.length < CONSEC_N && (lists[0][k] || (lists[1] && lists[1][k])); k++) lists.forEach(l => { if (l[k] && q2.length < CONSEC_N) q2.push(l[k]); });
+      st.queue = q2; st.i = 0; st.repeat = 1; st.log = [];
+      segment(); return;
+    }
     const pool = shuffled((g.sentences || []).map(x => tag(x, "sentences"))).slice(0, CONSEC_N - 2)
       .concat(shuffled((g.turns || []).map(x => tag(x, "turns"))).slice(0, 2));
     st.queue = pool.map((q, i) => Object.assign({}, q, { dir: st.both ? (i % 2 ? "en-ar" : "ar-en") : st.dir }));
@@ -31362,7 +31408,7 @@ function runSpoken(mode) {
     consecStop();
     const q = st.queue[st.i];
     const from = q.dir === "ar-en" ? "ar" : "en", into = from === "ar" ? "en" : "ar";
-    const srcText = from === "ar" ? q.ar : q.ok[0];
+    const srcText = q.speakText || (from === "ar" ? q.ar : q.ok[0]);
     stage.innerHTML = "";
     setCount("Consecutive · " + (st.i + 1) + " of " + st.queue.length);
     setDots(st.queue.length, st.i, st.i);
@@ -31370,7 +31416,8 @@ function runSpoken(mode) {
       (from === "ar" ? "<b>Arabic</b> · you interpret into <b>English</b>" : "<b>English</b> · you interpret into <b>Arabic</b>")));
     stage.appendChild(csSteps(0));
     const box = el("div", "cs-listen");
-    box.innerHTML = '<span class="cs-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><p class="cs-state">Press play. The speaker will speak <b>once</b>.</p>';
+    box.innerHTML = '<span class="cs-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><p class="cs-state">Press play. The speaker will speak <b>once</b>.</p>' +
+      (q.audio ? '<p class="cs-voice-k">● Real recorded voice</p>' : '<p class="cs-voice-k dim">Phone voice</p>');
     stage.appendChild(box);
     const stateP = box.querySelector(".cs-state");
     const play = el("button", "primary cs-big", "▶ Play the speaker"); play.type = "button";
@@ -31396,7 +31443,8 @@ function runSpoken(mode) {
     const speak = () => {
       play.disabled = true; rep.hidden = true;
       stateP.innerHTML = "<b>Listening…</b> take notes below if you need them.";
-      consecSay(srcText, from, () => { t0 = Date.now(); box.classList.add("on"); }, heard);
+      if (q.audio) consecPlay(q.audio, () => { if (!t0) t0 = Date.now(); box.classList.add("on"); }, ok => { if (!ok) consecSay(srcText, from, () => { t0 = Date.now(); box.classList.add("on"); }, heard); else heard(true); });
+      else consecSay(srcText, from, () => { t0 = Date.now(); box.classList.add("on"); }, heard);
     };
     play.onclick = speak;
     rep.onclick = () => { if (st.repeat > 0) { st.repeat--; rep.textContent = "Ask the speaker to repeat (" + st.repeat + " left)"; speak(); } };
@@ -31460,6 +31508,7 @@ function runSpoken(mode) {
     setCount("Consecutive · " + (st.i + 1) + " of " + st.queue.length + " · check");
     stage.appendChild(csSteps(2));
     csResult(q, from, into, srcText, said, m, secs, spoken, notes, audio());
+    if (q.audio) stage.appendChild(el("p", "sd-note", REAL_CREDIT + " This one: Article " + q.art + "."));
     const nx = el("button", "primary cs-big", st.i < st.queue.length - 1 ? "Next segment →" : "See the session"); nx.type = "button";
     nx.onclick = () => { if (st.i < st.queue.length - 1) { st.i++; segment(); } else summary(); };
     stage.appendChild(nx);
@@ -31472,7 +31521,7 @@ function runSpoken(mode) {
     const card = (k, t, dir, cls) => { const c = el("div", "cs-card" + (cls ? " " + cls : "")); c.innerHTML = '<span class="cs-k">' + k + '</span><p dir="' + dir + '">' + (t ? escapeText(t) : "<i>nothing recorded</i>") + '</p>'; return c; };
     stage.appendChild(card("The speaker said", srcText, from === "ar" ? "rtl" : "ltr"));
     stage.appendChild(card("You said · your own words, as heard", said, into === "ar" ? "rtl" : "ltr", "you"));
-    stage.appendChild(card("The official text", into === "ar" ? q.ar : q.ok[0], into === "ar" ? "rtl" : "ltr", "model"));
+    stage.appendChild(card("The official text", q.showModel || (into === "ar" ? q.ar : q.ok[0]), into === "ar" ? "rtl" : "ltr", "model"));
     if (into === "en" && q.keys && q.keys.length) {
       const a = norm(said);
       const k = el("div", "cs-keys");
@@ -31507,7 +31556,8 @@ function runSpoken(mode) {
     consecStop();
     const g = BOOTH_GENRES.find(x => x.id === st.genre);
     const from = st.dir === "ar-en" ? "ar" : "en", into = from === "ar" ? "en" : "ar";
-    const items = shuffled((g.turns || []).map(x => tag(x, "turns"))).concat(shuffled((g.sentences || []).map(x => tag(x, "sentences")))).slice(0, SIMUL_N);
+    const real = REAL_AUDIO[g.id] ? shuffled(realItems(g, from)) : [];
+    const items = real.length ? real.slice(0, SIMUL_N) : shuffled((g.turns || []).map(x => tag(x, "turns"))).concat(shuffled((g.sentences || []).map(x => tag(x, "sentences")))).slice(0, SIMUL_N);
     st.log = [];
     stage.innerHTML = "";
     setCount("Simultaneous · " + g.en);
@@ -31545,10 +31595,12 @@ function runSpoken(mode) {
         if (k >= items.length) { stateP.innerHTML = "The speaker has finished. Finish your sentence, then tap Stop."; box.classList.remove("on"); return; }
         const q = items[k++];
         cuts.push(said.value.length);
-        consecSay(from === "ar" ? q.ar : q.ok[0], from, null, ok => {
+        const after = ok => {
           if (!ok) { stateP.innerHTML = "No " + (from === "ar" ? "Arabic" : "English") + " voice on this device, so the speech cannot be played. Choose another direction."; return; }
           setTimeout(nextPart, 900);
-        });
+        };
+        if (q.audio) consecPlay(q.audio, null, ok => ok ? after(true) : consecSay(q.speakText, from, null, after));
+        else consecSay(from === "ar" ? q.ar : q.ok[0], from, null, after);
       };
       setTimeout(nextPart, 700);
     };
@@ -31563,6 +31615,7 @@ function runSpoken(mode) {
     setCount("Simultaneous · check");
     /* the whole rendering is marked against the whole speech */
     const whole = { level: lv("turns"), ar: items.map(q => q.ar).join(" "), ok: [items.map(q => q.ok[0]).join(" ")], keys: [].concat.apply([], items.map(q => q.keys || [])) };
+    if (items[0] && items[0].speakText) { whole.speakText = items.map(q => q.speakText).join(" "); whole.showModel = items.map(q => q.showModel).join(" "); }
     if (!String(said || "").trim()) {
       const v = el("div", "verdict");
       v.appendChild(el("span", "vh", "None of your words reached the page"));
@@ -31575,7 +31628,8 @@ function runSpoken(mode) {
     }
     const m = boothMark(whole, said, from === "ar" ? "ar-en" : "en-ar");
     st.log = [{ share: m.share || 0 }];
-    csResult(whole, from, into, from === "ar" ? whole.ar : whole.ok[0], said, m, null, null, "", url);
+    csResult(whole, from, into, whole.speakText || (from === "ar" ? whole.ar : whole.ok[0]), said, m, null, null, "", url);
+    if (whole.speakText) stage.appendChild(el("p", "sd-note", REAL_CREDIT));
     stage.appendChild(el("p", "sd-note", "Simultaneous interpreters compress: a full rendering is not expected. What matters is the key ideas, the names and the numbers."));
     const again = el("button", "primary cs-big", "Another speech"); again.type = "button"; again.onclick = () => simul();
     const back = el("button", "ghost", "Change setting"); back.type = "button"; back.onclick = () => { st.started = false; setup(); };
