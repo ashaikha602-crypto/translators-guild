@@ -22715,7 +22715,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-0430";
+const BUILD = "1106-0520";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -31702,15 +31702,15 @@ const LU_VERBS = [
 /* al-Rifai (2012): the verb a noun takes in diplomatic Arabic */
 const LU_DIPLO = [
   { a: "hold a meeting", b: "يعقد الاجتماع" },
-  { a: "call an urgent meeting", b: "يدعو إلى اجتماع عاجل" },
+  { a: "convoke an urgent meeting", b: "يدعو إلى اجتماع عاجل" },
   { a: "give an opinion", b: "يدلي برأي" },
   { a: "survey public opinion", b: "يستطلع الرأي العام" },
   { a: "defy public opinion", b: "يتحدى الرأي العام" },
   { a: "welcome a political decision", b: "يرحب بالقرار السياسي" },
-  { a: "take part in political decision-making", b: "يساهم في اتخاذ القرارات السياسية" },
-  { a: "declare a state of war", b: "يعلن حالة الحرب" },
+  { a: "contribute to political decision-making", b: "يساهم في اتخاذ القرارات السياسية" },
+  { a: "declare the state of war", b: "يعلن حالة الحرب" },
   { a: "put an end to war", b: "يضع نهاية للحرب" },
-  { a: "establish a lasting peace", b: "يقيم السلام الدائم" },
+  { a: "establish permanent peace", b: "يقيم السلام الدائم" },
   { a: "promote peace", b: "يعزز السلام" },
   { a: "support peace efforts", b: "يدعم جهود السلام" },
   { a: "reinforce diplomatic relations", b: "يعزز العلاقات الدبلوماسية" },
@@ -31720,8 +31720,8 @@ const LU_DIPLO = [
   { a: "solve a diplomatic crisis", b: "يحل الأزمة الدبلوماسية" },
   { a: "defend human rights", b: "يدافع عن حقوق الإنسان" },
   { a: "apply international law", b: "يطبق القانون الدولي" },
-  { a: "comply with the law", b: "يتقيد بالقوانين" },
-  { a: "rig the elections", b: "يزور الانتخابات" },
+  { a: "comply with laws", b: "يتقيد بالقوانين" },
+  { a: "falsify the elections", b: "يزور الانتخابات" },
   { a: "cancel an official visit", b: "يلغي الزيارة الرسمية" }
 ];
 
@@ -32105,25 +32105,81 @@ function luPick(pool, right, n, key) {
   return shuffled(pool.filter(x => key(x) !== key(right) && !clash(x))).slice(0, n);
 }
 function phraseQuiz() {
+  /* Every question is about ONE phrase. The options share its slot (the
+     same noun, the same sentence), and the wrong ones are the ones the
+     sources mark wrong: the literal verb, the partner of another noun, the
+     particle the book says not to use. Nothing is matched by its noun. */
   const Q = [];
-  const ask = (rows, prompt, ch, tag) => rows.forEach(r => {
-    const others = luPick(rows, r, 2, x => x.b);
-    Q.push({ src: r.a, srcEn: !AR_RE.test(r.a), ask: prompt,
-      opts: [{ t: r.b, tag: tag, ok: true }].concat(others.map(o => ({ t: o.b, tag: "that goes with " + o.a.replace(/<[^>]+>/g, "") }))),
-      why: (r.w || "") , ch: ch });
-  });
-  const set = k => PHRASE_SETS.find(s => s.key === k).rows.filter((r, i, a) => a.findIndex(x => x.a === r.a) === i);
-  ask(set("coll_en_ar"), "Which Arabic partner?", "Word partners", "the Learn page");
-  ask(set("coll_ar_en"), "Which English partner?", "Word partners", "the Learn page");
-  ask(LU_DIPLO, "Which verb does diplomatic Arabic use?", "Word partners", "al-Rifai (2012)");
-  ask(LU_VERBS, "Which is the Arabic?", "Make, do, take place", "A to Z (2013)");
-  ask(set("markers"), "Which connector?", "Joining ideas", "the Learn page");
-  ask(LU_PAIRS, "Which two-part connector?", "Joining ideas", "A to Z (2013)");
-  ask(LU_AGREE, "Which formula?", "Ready-made formulas", "A to Z (2013)");
-  ask(set("context"), "Which English fits this moment?", "Expressions the moment decides", "the Learn page");
-  Q.push({ src: "و or فـ", srcEn: true, ask: "Which one introduces the result of a condition?",
-    opts: [{ t: "فـ", tag: "A to Z (2013)", ok: true }, { t: "و", tag: "و is for lists and circumstance" }, { t: "Either, freely", tag: "they are not interchangeable" }],
-    why: "Only فـ introduces the result of a condition; only و introduces a circumstantial clause (حال).", ch: "Joining ideas" });
+  const q = (src, srcEn, ask, ok, okTag, wrong, why, ch) => Q.push({ src: src, srcEn: srcEn, ask: ask,
+    opts: [{ t: ok, tag: okTag, ok: true }].concat(wrong.map(w => ({ t: w[0], tag: w[1] }))), why: why, ch: ch });
+  const RF = "al-Rifai (2012)", AZ = "A to Z (2013)", HN = "Husni & Newman (2015)";
+  /* diplomatic Arabic → the English verb, al-Rifai's own pairs */
+  [["يعقد الاجتماع", "___ a meeting", "hold", [["give", "you give an opinion"], ["declare", "you declare a state of war"]]],
+   ["يدلي برأي", "___ an opinion", "give", [["hold", "you hold a meeting"], ["enforce", "you enforce a ceasefire"]]],
+   ["يعلن حالة الحرب", "___ the state of war", "declare", [["hold", "you hold a meeting"], ["give", "you give an opinion"]]],
+   ["يضع نهاية للحرب", "___ an end to war", "put", [["give", "you give an opinion"], ["hold", "you hold a meeting"]]],
+   ["يفرض وقف إطلاق النار", "___ ceasefire", "enforce", [["put", "you put an end to war"], ["give", "you give an opinion"]]],
+   ["يستطلع الرأي العام", "___ public opinion", "survey", [["hold", "you hold a meeting"], ["enforce", "you enforce a ceasefire"]]],
+   ["يعلق المفاوضات الدبلوماسية", "___ diplomatic negotiations", "suspend", [["hang", "the literal meaning of علّق"], ["declare", "you declare a state of war"]]],
+   ["يحل الأزمة الدبلوماسية", "___ diplomatic crisis", "solve", [["hold", "you hold a meeting"], ["enforce", "you enforce a ceasefire"]]],
+   ["يلغي الزيارة الرسمية", "___ official visit", "cancel", [["put", "you put an end to war"], ["declare", "you declare a state of war"]]],
+   ["يطبق القانون الدولي", "___ international law", "apply", [["hold", "you hold a meeting"], ["put", "you put an end to war"]]],
+   ["يدافع عن حقوق الإنسان", "___ human rights", "defend", [["survey", "you survey public opinion"], ["hold", "you hold a meeting"]]]
+  ].forEach(r => q(r[0], false, "Which English verb? " + r[1], r[2], RF, r[3],
+    "al-Rifai, <i>Dictionary of Diplomatic and Political Terms</i> (2012): " + r[0] + " = " + r[1].replace("___", r[2]) + ".", "Verbs in diplomacy"));
+  /* the stage of the agreement decides the verb (the Learn page) */
+  const ag = PHRASE_SETS.find(x => x.key === "coll_en_ar").rows;
+  ag.slice(0, 3).forEach(r => q(r.a, true, "Which Arabic verb for this stage of the agreement?", r.b, "the Learn page",
+    ag.slice(0, 3).filter(x => x !== r).map(x => [x.b, "that is “" + x.a + "”"]), r.w, "Word partners"));
+  ag.slice(3).forEach(r => q(r.a, true, "Which Arabic adjective?", r.b, "the Learn page",
+    ag.slice(3).filter(x => x !== r).map(x => [x.b, "that is “" + x.a + "”"]), r.w, "Word partners"));
+  /* اتخذ: only where the page says outright which verbs fail */
+  q("اتخذ سياسة", false, "Which English verb? ___ a policy", "adopt", "the Learn page", [["take", "the page: not English here"], ["make", "the page: not English here"]],
+    "Only <i>adopt</i>. Neither <i>make</i> nor <i>take</i> collocates with <i>policy</i> here.", "Word partners");
+  q("اتخذ خطوات", false, "Which English verb? ___ steps", "take", "the Learn page", [["make", "the page: make steps is not English"], ["adopt", "you adopt a policy"]],
+    "Fixed pairing; <i>make steps</i> is not English.", "Word partners");
+  /* make / do / جعل and happen / take place, A to Z */
+  q("These jokes will make you laugh.", true, "Which Arabic verb renders this make?", "جعل", AZ, [["عمل", "for make = do"], ["فعل", "for make = do"]],
+    "Causative <i>make</i> (make someone do something) takes جعل: ستجعلك هذه النكت تضحك.", "Make, do, take place");
+  q("I did my homework.", true, "Which Arabic verb?", "عمل / فعل", AZ, [["جعل", "only for causative make"], ["انعقد", "for planned events"]],
+    "عملت / فعلت وظائفي.", "Make, do, take place");
+  q("The conference sessions took place last month.", true, "Which Arabic verb?", "انعقد", AZ, [["حصل", "for happen: the unplanned"], ["جعل", "causative make"]],
+    "<i>Take place</i> is for planned events: انعقد، جرى، عقد. حصل is for <i>happen</i>.", "Make, do, take place");
+  q("I don’t understand what happened there.", true, "Which Arabic verb?", "حصل", AZ, [["انعقد", "for planned events"], ["جعل", "causative make"]],
+    "لا أفهم ماذا حصل هناك. <i>Happen</i> and <i>occur</i> are for the unplanned.", "Make, do, take place");
+  q("The meeting ___ yesterday.", true, "Which is idiomatic English?", "took place", AZ, [["happened", "the book: unidiomatic for a planned event"], ["occurred", "for the unplanned"]],
+    "In careful usage a meeting <i>takes place</i> or <i>is held</i>; <i>the meeting happened yesterday</i> is unidiomatic.", "Make, do, take place");
+  /* two-part connectors: the missing second part, A to Z's own sentences */
+  q("ما إن رآني ___ سلّم عليّ", false, "Which second part completes it?", "حتى", AZ, [["أو", "the partner of إما"], ["فحسب", "the partner of ليس … بل"]],
+    "“No sooner did he see me, than he greeted me.”", "Two-part connectors");
+  q("إما أن تدفع الغرامة ___ تدخل السجن", false, "Which second part completes it?", "أو", AZ, [["حتى", "the partner of ما إن"], ["إلا", "the partner of ما"]],
+    "“Either you pay the fine, or you’ll have to go to jail.”", "Two-part connectors");
+  q("ما هذا ___ مياه الصرف", false, "Which second part completes it?", "إلا", AZ, [["حتى", "the partner of ما إن"], ["أم", "the partner of سواء"]],
+    "“This is nothing but wastage.”", "Two-part connectors");
+  q("مشهورة ليس في الشرق الأوسط ___ بل في جميع أنحاء العالم أيضا", false, "Which word completes it?", "فحسب", AZ, [["حتى", "the partner of ما إن"], ["أو", "the partner of إما"]],
+    "“…famous not just in the Middle East, but all over the world.”", "Two-part connectors");
+  /* و and فـ, A to Z */
+  q("رأيت سلوى ___ليلى وسالي", false, "Which joins the nouns?", "و", AZ, [["فـ", "the book: NOT فليلى"], ["ثم", "a sequence, not a list"]],
+    "Between nouns only و: رأيت سلوى وليلى وسالي.", "و and فـ");
+  q("فشل في الامتحان ___يجب أن يترك الجامعة", false, "Which carries the result?", "فـ", AZ, [["و", "joins without the result"], ["أم", "a question particle"]],
+    "فـ links cause and effect: <i>and so, as a result</i>.", "و and فـ");
+  /* connectors, Arabic → the English the page gives */
+  const mk = PHRASE_SETS.find(x => x.key === "markers").rows;
+  [["ومن ثَمّ", "therefore", ["in contrast", "moreover"]], ["غير أنّ", "however", ["moreover", "as a result"]],
+   ["علاوة على ذلك", "moreover", ["in contrast", "however"]], ["في المقابل", "in contrast", ["moreover", "as a result"]],
+   ["وبناءً عليه", "accordingly", ["however", "in contrast"]], ["ونتيجة لذلك", "as a result", ["however", "moreover"]]]
+    .forEach(([ar, en, wr]) => {
+      const row = mk.find(r => r.a === en);
+      const tagOf = w => { const r2 = mk.find(r => r.a === w); return r2 ? "that is " + r2.b.replace(/&middot;/g, "·") : ""; };
+      q(ar, false, "Which English connector?", en, "the Learn page", wr.map(w => [w, tagOf(w)]), row ? row.w : "", "Joining ideas");
+    });
+  /* the trials' own items, with the book's distractors */
+  COLLOC.forEach(x => Q.push(Object.assign({ ask: "Which partner does the other language use?" }, x, { ch: "Word partners" })));
+  COURTESY.forEach(x => Q.push(Object.assign({ ask: "What would an English speaker actually say?" }, x, { ch: "Gulf courtesy formulas" })));
+  /* the expression the moment decides: same words, different moments */
+  const cx = PHRASE_SETS.find(x => x.key === "context").rows;
+  cx.forEach(r => q(r.a.replace(/<[^>]+>/g, "").replace(/&mdash;/g, "—"), false, "Which English fits this moment?", r.b.replace(/&middot;/g, "·").replace(/&mdash;/g, "—"), "the Learn page",
+    cx.filter(x => x !== r).slice(0, 2).map(x => [x.b.replace(/&middot;/g, "·").replace(/&mdash;/g, "—"), "another moment"]), r.w, "The moment decides"));
   return Q;
 }
 function registerQuiz() {
