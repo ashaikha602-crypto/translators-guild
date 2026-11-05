@@ -4135,6 +4135,44 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .lu-compact .deriv .g .en { font-size: .84rem; }
 .lu-compact .deriv .g .tr { font-size: .66rem; }
 .lu-compact .sf-try b { font-size: 1rem; }
+.im-modes { display: grid; gap: .5rem; margin: .2rem 0 1.1rem; }
+.im-lab { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; opacity: .75; margin: 0 0 .1rem; }
+.im-tile { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: .15rem .6rem; padding: .8rem .95rem; border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--im-c) 45%, transparent); background: color-mix(in srgb, var(--im-c) 10%, transparent); }
+.im-tile b { font-family: var(--f-serif); font-size: 1.02rem; color: var(--white); }
+.im-tile .im-ar { grid-column: 2; grid-row: 1; font-size: .9rem; color: var(--im-c); }
+.im-tile .im-say { grid-column: 1 / -1; font-size: .8rem; opacity: .85; line-height: 1.4; }
+.im-tile .im-here { grid-column: 1 / -1; font-size: .72rem; font-weight: 700; color: var(--im-c); }
+.im-talk { display: flex; gap: .5rem; margin: .6rem 0 .2rem; }
+.im-micb, .im-send { all: unset; cursor: pointer; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: .45rem; padding: .6rem .9rem; border-radius: 999px; font-size: .85rem; font-weight: 600; }
+.im-micb { flex: 1; background: rgba(56,189,248,.14); border: 1px solid rgba(56,189,248,.5); color: #7DD3FC; }
+.im-micb.on { background: rgba(248,113,113,.16); border-color: rgba(248,113,113,.6); color: #FCA5A5; }
+.im-send { background: var(--grad); color: var(--white); }
+.cs-mic-svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; flex: none; }
+.cs-mic-ico { width: 12px; height: 16px; border-radius: 6px; border: 2px solid currentColor; display: inline-block; }
+.cs-what { border-radius: 16px; padding: .9rem 1rem; background: rgba(56,189,248,.08); border: 1px solid rgba(56,189,248,.35); font-size: .9rem; line-height: 1.55; }
+.cs-what p { margin: 0; } .cs-what p + p { margin-top: .5rem; }
+.cs-warn { color: #FCD34D; }
+.cs-seg.two { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.cs-voices { border-radius: 16px; border: var(--hair); padding: .8rem; background: rgba(255,255,255,.03); display: grid; gap: .55rem; }
+.cs-vrow { display: grid; grid-template-columns: 4rem minmax(0,1fr) auto; gap: .5rem; align-items: center; }
+.cs-vlab { font-size: .8rem; font-weight: 600; }
+.cs-vsel { min-width: 0; width: 100%; padding: .45rem .5rem; border-radius: 10px; background: rgba(255,255,255,.06); color: var(--white); border: var(--hair); font: inherit; font-size: .8rem; }
+.cs-vnone { grid-column: 2 / -1; font-size: .78rem; opacity: .8; }
+.cs-hear { padding: .4rem .7rem; font-size: .78rem; }
+.cs-tip { font-size: .76rem; opacity: .8; margin: .2rem 0 0; line-height: 1.5; }
+.cs-mini { font-size: .8rem; opacity: .8; margin: .8rem 0 0; }
+.cs-steps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: .3rem; margin: .2rem 0 .9rem; }
+.cs-steps span { text-align: center; font-size: .76rem; padding: .4rem 0; border-radius: 999px; background: rgba(255,255,255,.05); opacity: .55; }
+.cs-steps span b { display: inline-grid; place-items: center; width: 1.2rem; height: 1.2rem; border-radius: 50%; margin-right: .35rem; background: rgba(255,255,255,.12); font-size: .7rem; }
+.cs-steps span.on { opacity: 1; background: rgba(56,189,248,.2); color: #7DD3FC; font-weight: 700; }
+.cs-steps span.done { opacity: .85; }
+.cs-big { width: 100%; margin: .8rem 0 .3rem; padding: .85rem 1rem; font-size: .95rem; }
+.cs-mic-btn { background: linear-gradient(135deg, #F87171, #F472B6) !important; color: #fff !important; display: inline-flex; align-items: center; justify-content: center; gap: .55rem; }
+.cs-rep { display: block; margin: .2rem auto .6rem; }
+.cs-card.you { border-color: rgba(56,189,248,.45); }
+.cs-card.model { border-color: rgba(52,211,153,.45); }
+.cs-notes p { font-size: .85rem; }
 .cs-entry { all: unset; box-sizing: border-box; cursor: pointer; display: grid; gap: .3rem; width: 100%; margin: .9rem 0; padding: 1rem 1.1rem; border-radius: 18px;
   background: linear-gradient(135deg, rgba(56,189,248,.18), rgba(167,139,250,.16)); border: 1px solid rgba(56,189,248,.45); }
 .cs-entry-k { font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: #38BDF8; font-weight: 700; }
@@ -22762,7 +22800,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-0700";
+const BUILD = "1106-0815";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -31087,69 +31125,156 @@ async function refreshStanding() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   CONSECUTIVE — listen once, take notes, speak, then check.
-   The segments are the booth's own sentences and turns: the UN Charter,
-   the UDHR, published legal and press texts, the A to Z's examples, each
+   SPOKEN INTERPRETING — consecutive and simultaneous.
+   The segments are the booth's own sentences and turns (the UN Charter,
+   the UDHR, published legal and press texts, the A to Z's examples), each
    with its official other-language text. The device reads the source
-   aloud (its own Arabic and English voices), records what you say, and
-   turns your speech into text where the browser can; then the official
-   text is shown beside yours. Nothing here is scored for a Mark.
+   aloud in the best voice it has; you speak; the browser turns your speech
+   into text where it can and records you; then the official text is shown
+   beside yours. Not scored for a Mark.
    ═══════════════════════════════════════════════════════════ */
 const CONSEC_ITEM = { id: "consec", en: "Consecutive interpreting", ar: "الترجمة التتبعية", kind: "workshop", section: "booth",
-  subject: "Listen once · take notes · speak", run: () => runConsec() };
-const CONSEC_N = 6;
-let consecRec = null, consecMedia = null, consecTick = null;
+  subject: "Listen · take notes · speak", run: () => runSpoken("consec") };
+const SIMUL_ITEM = { id: "simul", en: "Simultaneous interpreting", ar: "الترجمة الفورية", kind: "workshop", section: "booth",
+  subject: "Speak while the speaker speaks", run: () => runSpoken("simul") };
+const CONSEC_N = 6, SIMUL_N = 4;
+let consecRec = null, consecMedia = null, consecTick = null, consecStream = null;
 function consecStop() {
   try { window.speechSynthesis && speechSynthesis.cancel(); } catch (e) { }
   try { consecRec && consecRec.abort(); } catch (e) { }
   try { consecMedia && consecMedia.state !== "inactive" && consecMedia.stop(); } catch (e) { }
+  try { consecStream && consecStream.getTracks().forEach(t => t.stop()); } catch (e) { }
   if (consecTick) { clearInterval(consecTick); consecTick = null; }
-  consecRec = null;
+  consecRec = null; consecStream = null;
+}
+/* The best voice the device has. Phones ship a plain voice and, as a free
+   download, an Enhanced or Premium one that sounds far more natural; the
+   member can also pick one by hand, and that choice is kept. */
+function consecVoices(lang) {
+  const vs = (window.speechSynthesis && speechSynthesis.getVoices()) || [];
+  return vs.filter(v => (v.lang || "").replace("_", "-").toLowerCase().indexOf(lang) === 0);
+}
+function consecVoiceScore(v, lang) {
+  const n = (v.name || "") + " " + (v.voiceURI || "");
+  let s = 0;
+  if (/premium/i.test(n)) s += 50;
+  if (/enhanced|natural|neural|wavenet|online/i.test(n)) s += 40;
+  if (/google|microsoft/i.test(n)) s += 15;
+  if (/siri/i.test(n)) s += 30;
+  if (/compact|eloquence|novelty|bad news|bells|bubbles|cellos|jester|organ|trinoids|whisper|zarvox|albert|fred|junior|ralph|kathy|superstar|wobble|boing/i.test(n)) s -= 80;
+  const l = (v.lang || "").toLowerCase();
+  if (lang === "ar" && /ar-(sa|kw|ae)/.test(l)) s += 5;
+  if (lang === "en" && /en-(gb|us)/.test(l)) s += 5;
+  if (v.localService) s += 2;
+  return s;
 }
 function consecVoice(lang) {
-  const vs = (window.speechSynthesis && speechSynthesis.getVoices()) || [];
-  const want = lang === "ar" ? ["ar-KW", "ar-SA", "ar"] : ["en-GB", "en-US", "en"];
-  for (const w of want) {
-    const v = vs.find(x => (x.lang || "").replace("_", "-").toLowerCase().indexOf(w.toLowerCase()) === 0);
-    if (v) return v;
-  }
-  return null;
+  const all = consecVoices(lang);
+  if (!all.length) return null;
+  const pick = state["csVoice_" + lang];
+  const chosen = pick && all.find(v => v.voiceURI === pick);
+  if (chosen) return chosen;
+  return all.slice().sort((a, b) => consecVoiceScore(b, lang) - consecVoiceScore(a, lang))[0];
 }
 const consecRecog = () => window.SpeechRecognition || window.webkitSpeechRecognition || null;
+/* the speaker reads like a speaker: a sentence at a time, a short breath between */
 function consecSay(text, lang, onstart, onend) {
   if (!window.speechSynthesis) { onend(false); return; }
   const v = consecVoice(lang);
   if (!v) { onend(false); return; }
-  const u = new SpeechSynthesisUtterance(text);
-  u.voice = v; u.lang = v.lang; u.rate = .95;
-  let done = false;
+  const parts = String(text).replace(/\s+/g, " ").split(/(?<=[.!?؟؛])\s+/).filter(Boolean);
+  let i = 0, started = false, done = false;
   const fin = ok => { if (done) return; done = true; if (consecTick) { clearInterval(consecTick); consecTick = null; } onend(ok); };
-  u.onstart = onstart; u.onend = () => fin(true); u.onerror = () => fin(false);
-  speechSynthesis.cancel(); speechSynthesis.speak(u);
+  const next = () => {
+    if (i >= parts.length) { fin(true); return; }
+    const u = new SpeechSynthesisUtterance(parts[i++]);
+    u.voice = v; u.lang = v.lang; u.rate = lang === "ar" ? .88 : .92; u.pitch = 1;
+    u.onstart = () => { if (!started) { started = true; onstart && onstart(); } };
+    u.onend = () => setTimeout(next, 260);
+    u.onerror = () => fin(started);
+    speechSynthesis.speak(u);
+  };
+  speechSynthesis.cancel();
+  next();
   /* Chrome stops a long utterance after about fifteen seconds unless nudged */
   consecTick = setInterval(() => { try { if (speechSynthesis.speaking) { speechSynthesis.pause(); speechSynthesis.resume(); } } catch (e) { } }, 10000);
 }
+/* the microphone: speech to text and a recording, each where the browser allows */
+function consecListen(into, onText, onState) {
+  const R = consecRecog();
+  let chunks = [], url = "";
+  const out = { url: () => url };
+  if (navigator.mediaDevices && window.MediaRecorder) {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+      consecStream = stream;
+      try {
+        consecMedia = new MediaRecorder(stream);
+        consecMedia.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+        consecMedia.onstop = () => { if (chunks.length) url = URL.createObjectURL(new Blob(chunks, { type: chunks[0].type || "audio/webm" })); };
+        consecMedia.start();
+      } catch (e) { }
+    }).catch(() => onState && onState("The microphone was not allowed. Allow it in your browser settings, or type instead."));
+  }
+  if (R) {
+    try {
+      const r = new R();
+      r.lang = into === "ar" ? "ar-SA" : "en-US";
+      r.continuous = true; r.interimResults = true;
+      let final = "";
+      r.onresult = ev => {
+        let interim = "";
+        for (let k = ev.resultIndex; k < ev.results.length; k++) {
+          if (ev.results[k].isFinal) final += ev.results[k][0].transcript + " ";
+          else interim += ev.results[k][0].transcript;
+        }
+        onText((final + interim).trim());
+      };
+      r.onerror = e => onState && onState(e && e.error === "not-allowed" ? "The microphone was not allowed. Allow it in your browser settings, or type instead." : "Speech to text paused. You can type or correct below.");
+      r.onend = () => { if (consecRec === r && out.keep) { try { r.start(); } catch (e) { } } };
+      out.keep = true;
+      r.start(); consecRec = r;
+    } catch (e) { }
+  }
+  out.stop = () => {
+    out.keep = false;
+    try { consecRec && consecRec.stop(); } catch (e) { }
+    try { consecMedia && consecMedia.state !== "inactive" && consecMedia.stop(); } catch (e) { }
+    setTimeout(() => { try { consecStream && consecStream.getTracks().forEach(t => t.stop()); } catch (e) { } }, 300);
+  };
+  return out;
+}
+function csSteps(on) {
+  const s = el("div", "cs-steps");
+  ["Listen", "Speak", "Check"].forEach((t, k) => s.appendChild(el("span", k === on ? "on" : k < on ? "done" : "", '<b>' + (k + 1) + '</b>' + t)));
+  return s;
+}
 
-function runConsec() {
+function runSpoken(mode) {
   consecStop();
+  const SIM = mode === "simul";
   const st = { genre: state.genre && BOOTH_GENRES.find(g => g.id === state.genre) ? state.genre : BOOTH_GENRES[0].id,
-    mode: state.consecMode || boothDir() };
-  /* voices load late on some devices */
-  try { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = () => { if (curView === "trial" && active && active.id === "consec" && !st.started) setup(); }; } catch (e) { }
+    dir: state.consecMode && state.consecMode !== "both" ? state.consecMode : boothDir(), both: !SIM && state.consecMode === "both" };
+  try { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = () => { if (!st.started && active && (active.id === "consec" || active.id === "simul")) setup(); }; } catch (e) { }
   setup();
 
   function setup() {
     consecStop();
     stage.innerHTML = "";
-    setCount("Consecutive · listen and speak");
+    setCount(SIM ? "Simultaneous · speak while they speak" : "Consecutive · listen, then speak");
     setDots(0, 0, 0);
     const hero = el("div", "c-hero cs-hero");
-    hero.innerHTML = '<span class="c-badge">Consecutive</span><h2 class="c-title">Listen once. Speak.</h2>' +
-      '<p class="c-ar" dir="rtl" lang="ar">الترجمة التتبعية</p>' +
-      '<p class="c-line">A speaker says a segment once. You take notes, then render it aloud. Then you see the official text beside what you said.</p>';
+    hero.innerHTML = '<span class="c-badge">' + (SIM ? "Simultaneous" : "Consecutive") + '</span>' +
+      '<h2 class="c-title">' + (SIM ? "Speak while the speaker speaks" : "Listen, then speak") + '</h2>' +
+      '<p class="c-ar" dir="rtl" lang="ar">' + (SIM ? "الترجمة الفورية" : "الترجمة التتبعية") + '</p>';
     stage.appendChild(hero);
+    const what = el("div", "cs-what");
+    what.innerHTML = SIM ?
+      '<p><b>You interpret out loud, at the same time as the speaker.</b> The speech runs without stopping; you start a few words behind and keep going until it ends.</p>' +
+      '<p class="cs-warn">🎧 Wear headphones. Without them the microphone hears the speaker as well as you.</p>' :
+      '<p><b>You interpret out loud.</b> The speaker says a segment once. Listen and take notes. When the speaker stops, tap the microphone and say your interpretation.</p>';
+    stage.appendChild(what);
 
-    stage.appendChild(el("p", "cs-lab", "Setting"));
+    stage.appendChild(el("p", "cs-lab", "1 · Setting"));
     const gs = el("div", "chips cs-chips");
     BOOTH_GENRES.forEach(g => {
       const c = el("button", "chip" + (g.id === st.genre ? " on" : ""), g.en); c.type = "button";
@@ -31157,57 +31282,62 @@ function runConsec() {
       gs.appendChild(c);
     });
     stage.appendChild(gs);
-    const g = BOOTH_GENRES.find(x => x.id === st.genre);
-    stage.appendChild(el("p", "cs-src", g.hint));
+    stage.appendChild(el("p", "cs-src", BOOTH_GENRES.find(x => x.id === st.genre).hint));
 
-    stage.appendChild(el("p", "cs-lab", "Direction"));
-    const seg = el("div", "cs-seg");
-    [["ar-en", "Arabic → English"], ["en-ar", "English → Arabic"], ["both", "Both ways"]].forEach(([id, t]) => {
-      const b = el("button", st.mode === id ? "on" : "", t); b.type = "button";
-      b.onclick = () => { st.mode = id; state.consecMode = id; save(); setup(); };
+    stage.appendChild(el("p", "cs-lab", "2 · Direction"));
+    const seg = el("div", "cs-seg" + (SIM ? " two" : ""));
+    (SIM ? [["ar-en", "Arabic → English"], ["en-ar", "English → Arabic"]] : [["ar-en", "Arabic → English"], ["en-ar", "English → Arabic"], ["both", "Both ways"]]).forEach(([id, t]) => {
+      const on = id === "both" ? st.both : (!st.both && st.dir === id);
+      const b = el("button", on ? "on" : "", t); b.type = "button";
+      b.onclick = () => { if (id === "both") st.both = true; else { st.both = false; st.dir = id; state.boothDir = id; } state.consecMode = id; save(); setup(); };
       seg.appendChild(b);
     });
     stage.appendChild(seg);
-    stage.appendChild(el("p", "cs-src", st.mode === "both" ? "The direction changes every segment, as it does in liaison work." :
-      "Every segment in this direction."));
 
-    /* what this device can do, said plainly */
-    const ar = consecVoice("ar"), en = consecVoice("en"), R = consecRecog(), M = !!(navigator.mediaDevices && window.MediaRecorder);
-    const chk = el("div", "cs-check");
-    const line = (ok, t) => '<p class="' + (ok ? "ok" : "no") + '"><span>' + (ok ? "✓" : "–") + '</span>' + t + '</p>';
-    chk.innerHTML = '<b>This device</b>' +
-      line(ar, ar ? "Arabic voice: " + escapeText(ar.name) : "No Arabic voice: Arabic segments will be shown as text for a few seconds instead") +
-      line(en, en ? "English voice: " + escapeText(en.name) : "No English voice: English segments will be shown as text for a few seconds instead") +
-      line(R, R ? "Speech to text: on" : "Speech to text is not available in this browser: type what you said") +
-      line(M, M ? "Recording: on, so you can hear yourself back" : "Recording is not available in this browser");
-    const test = el("button", "ghost cs-test", "Test the voices"); test.type = "button";
-    test.onclick = () => consecSay(BOOTH_GENRES.find(x => x.id === st.genre).terms[0].ar, "ar", null, () =>
-      consecSay(BOOTH_GENRES.find(x => x.id === st.genre).terms[0].ok[0], "en", null, () => { }));
-    chk.appendChild(test);
-    stage.appendChild(chk);
+    stage.appendChild(el("p", "cs-lab", "3 · The speaker's voice"));
+    const vbox = el("div", "cs-voices");
+    ["ar", "en"].forEach(lang => {
+      const all = consecVoices(lang).sort((a, b) => consecVoiceScore(b, lang) - consecVoiceScore(a, lang));
+      const row = el("div", "cs-vrow");
+      row.appendChild(el("span", "cs-vlab", lang === "ar" ? "Arabic" : "English"));
+      if (!all.length) { row.appendChild(el("span", "cs-vnone", "No voice on this device: the text will show for a few seconds instead.")); vbox.appendChild(row); return; }
+      const sel = document.createElement("select"); sel.className = "cs-vsel";
+      const cur = consecVoice(lang);
+      all.forEach(v => { const o = document.createElement("option"); o.value = v.voiceURI; o.textContent = v.name + " · " + v.lang; if (cur && v.voiceURI === cur.voiceURI) o.selected = true; sel.appendChild(o); });
+      sel.onchange = () => { state["csVoice_" + lang] = sel.value; save(); };
+      const hear = el("button", "ghost cs-hear", "▶ Hear"); hear.type = "button";
+      const g = BOOTH_GENRES.find(x => x.id === st.genre);
+      const sample = lang === "ar" ? (g.sentences[0] || g.terms[0]).ar : (g.sentences[0] || g.terms[0]).ok[0];
+      hear.onclick = () => consecSay(sample, lang, null, () => { });
+      row.appendChild(sel); row.appendChild(hear);
+      vbox.appendChild(row);
+    });
+    vbox.appendChild(el("p", "cs-tip", "For a clearer, more natural voice on iPhone: Settings → Accessibility → Spoken Content → Voices → Arabic (and English), and download an <b>Enhanced</b> or <b>Premium</b> voice. It then appears in the list above. On Android: Settings → Text-to-speech → install the Google voice data."));
+    stage.appendChild(vbox);
 
-    const how = el("div", "verdict");
-    how.appendChild(el("span", "vh", "How it runs"));
-    how.appendChild(el("p", "vb", "1. Tap Play the speaker: it says the segment <b>once</b>; the text stays hidden. 2. Take notes on the pad while you listen. " +
-      "3. When the speaker stops, tap Render it and say your rendering aloud, then tap Done. 4. Check your rendering against the official text, then go on. " +
-      "You may ask for <b>one repeat</b> per session, as you could ask a real speaker."));
-    stage.appendChild(how);
-    const go = el("button", "primary cs-go", "Start · " + CONSEC_N + " segments"); go.type = "button";
-    go.onclick = () => { st.started = true; start(); };
+    const R = consecRecog();
+    stage.appendChild(el("p", "cs-mini", (R ? "✓ Your speech will be written out as you talk." : "This browser cannot write speech out: you will speak, then type what you said.") +
+      (navigator.mediaDevices && window.MediaRecorder ? " ✓ You will be recorded, to hear yourself back." : "")));
+
+    const go = el("button", "primary cs-go", SIM ? "Start · " + SIM_N_LABEL() : "Start · " + CONSEC_N + " segments"); go.type = "button";
+    go.onclick = () => { st.started = true; SIM ? simul() : start(); };
     stage.appendChild(go);
+    stage.appendChild(el("p", "sd-note", "The texts are the interpreting section's own: " + BOOTH_GENRES.find(x => x.id === st.genre).hint));
     stage.appendChild(footNav({}));
   }
+  function SIM_N_LABEL() { return "a speech of " + SIMUL_N + " passages"; }
+  const lv = k => BOOTH_LEVELS.find(L => L.key === k);
+  const tag = (x, k) => Object.assign({ level: lv(k) }, x);
 
+  /* ── CONSECUTIVE ── */
   function start() {
     const g = BOOTH_GENRES.find(x => x.id === st.genre);
-    const pool = shuffled((g.sentences || []).map(x => Object.assign({ level: BOOTH_LEVELS.find(L => L.key === "sentences") }, x)))
-      .slice(0, CONSEC_N - 2)
-      .concat(shuffled((g.turns || []).map(x => Object.assign({ level: BOOTH_LEVELS.find(L => L.key === "turns") }, x))).slice(0, 2));
-    st.queue = pool.map((q, i) => Object.assign({}, q, { dir: st.mode === "both" ? (i % 2 ? "en-ar" : "ar-en") : st.mode }));
-    st.i = 0; st.repeat = 1; st.log = []; st.notes = "";
+    const pool = shuffled((g.sentences || []).map(x => tag(x, "sentences"))).slice(0, CONSEC_N - 2)
+      .concat(shuffled((g.turns || []).map(x => tag(x, "turns"))).slice(0, 2));
+    st.queue = pool.map((q, i) => Object.assign({}, q, { dir: st.both ? (i % 2 ? "en-ar" : "ar-en") : st.dir }));
+    st.i = 0; st.repeat = 1; st.log = [];
     segment();
   }
-
   function segment() {
     consecStop();
     const q = st.queue[st.i];
@@ -31216,155 +31346,201 @@ function runConsec() {
     stage.innerHTML = "";
     setCount("Consecutive · " + (st.i + 1) + " of " + st.queue.length);
     setDots(st.queue.length, st.i, st.i);
-    const head = el("p", "cs-head", (st.i + 1) + " of " + st.queue.length + " · " + (from === "ar" ? "Arabic speaker · render into English" : "English speaker · render into Arabic"));
-    stage.appendChild(head);
+    stage.appendChild(el("p", "cs-head", "Segment " + (st.i + 1) + " of " + st.queue.length + " · the speaker speaks " +
+      (from === "ar" ? "<b>Arabic</b> · you interpret into <b>English</b>" : "<b>English</b> · you interpret into <b>Arabic</b>")));
+    stage.appendChild(csSteps(0));
     const box = el("div", "cs-listen");
-    box.innerHTML = '<span class="cs-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><p class="cs-state">Tap Play when you are ready.</p>';
+    box.innerHTML = '<span class="cs-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><p class="cs-state">Press play. The speaker will speak <b>once</b>.</p>';
     stage.appendChild(box);
     const stateP = box.querySelector(".cs-state");
+    const play = el("button", "primary cs-big", "▶ Play the speaker"); play.type = "button";
+    stage.appendChild(play);
+    const rep = el("button", "link cs-rep", "Ask the speaker to repeat (" + st.repeat + " left)"); rep.type = "button"; rep.hidden = true;
+    stage.appendChild(rep);
+    const padLab = el("p", "cs-lab", "Notes · optional");
     const pad = document.createElement("textarea");
-    pad.className = "cs-pad"; pad.placeholder = "Your notes"; pad.dir = "auto"; pad.value = "";
-    stage.appendChild(pad);
-    const row = el("div", "cs-row");
-    const play = el("button", "primary", "Play the speaker"); play.type = "button";
-    const rep = el("button", "ghost", "Ask for a repeat (" + st.repeat + " left)"); rep.type = "button"; rep.disabled = true;
-    row.appendChild(play); row.appendChild(rep);
-    stage.appendChild(row);
-    let spokenSecs = Math.max(4, Math.round(srcText.split(/\s+/).length / 2.3));
-    let t0 = 0;
+    pad.className = "cs-pad"; pad.placeholder = "Jot names, numbers and the outline while you listen"; pad.dir = "auto";
+    stage.appendChild(padLab); stage.appendChild(pad);
+    let spoken = Math.max(4, Math.round(srcText.split(/\s+/).length / 2.3)), t0 = 0;
     const heard = ok => {
       box.classList.remove("on");
       if (!ok) {
-        /* no voice for this language here: sight-consecutive instead */
         const secs = Math.max(5, Math.round(srcText.split(/\s+/).length / 2));
-        stateP.innerHTML = '<span class="cs-sight" dir="' + (from === "ar" ? "rtl" : "ltr") + '">' + srcText + '</span><small>No ' + (from === "ar" ? "Arabic" : "English") + ' voice on this device: read it, it hides in ' + secs + ' s.</small>';
-        setTimeout(() => { stateP.textContent = "The speaker has finished."; ready(); }, secs * 1000);
+        stateP.innerHTML = '<span class="cs-sight" dir="' + (from === "ar" ? "rtl" : "ltr") + '">' + srcText + '</span><small>No ' + (from === "ar" ? "Arabic" : "English") + ' voice on this device. Read it: it hides in ' + secs + ' seconds.</small>';
+        setTimeout(() => turn(), secs * 1000);
         return;
       }
-      spokenSecs = Math.max(2, Math.round((Date.now() - t0) / 1000));
-      stateP.textContent = "The speaker has finished (" + spokenSecs + " s). Your turn.";
-      ready();
+      spoken = Math.max(2, Math.round((Date.now() - t0) / 1000));
+      turn();
     };
     const speak = () => {
-      play.disabled = true; rep.disabled = true;
-      stateP.textContent = "Listening…";
+      play.disabled = true; rep.hidden = true;
+      stateP.innerHTML = "<b>Listening…</b> take notes below if you need them.";
       consecSay(srcText, from, () => { t0 = Date.now(); box.classList.add("on"); }, heard);
     };
     play.onclick = speak;
-    rep.onclick = () => { if (st.repeat > 0) { st.repeat--; rep.textContent = "Ask for a repeat (" + st.repeat + " left)"; speak(); } };
-    function ready() {
-      play.textContent = "Render it";
+    rep.onclick = () => { if (st.repeat > 0) { st.repeat--; rep.textContent = "Ask the speaker to repeat (" + st.repeat + " left)"; speak(); } };
+    function turn() {
+      stateP.innerHTML = "The speaker has finished. <b>Now it is your turn to speak.</b>";
       play.disabled = false;
-      rep.disabled = st.repeat <= 0;
-      play.onclick = () => render(q, from, into, srcText, spokenSecs, pad);
+      play.className = "primary cs-big cs-mic-btn";
+      play.innerHTML = '<svg class="cs-mic-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> Tap and speak your interpretation';
+      play.onclick = () => speakNow(q, from, into, srcText, spoken, pad);
+      rep.hidden = st.repeat <= 0;
     }
     const quit = el("button", "link cs-quit", "End the session"); quit.type = "button";
     quit.onclick = () => { consecStop(); st.log.length ? summary() : setup(); };
     stage.appendChild(quit);
   }
-
-  function render(q, from, into, srcText, spokenSecs, pad) {
+  function speakNow(q, from, into, srcText, spoken, pad) {
     consecStop();
     const notes = pad.value;
-    stage.querySelectorAll(".cs-row, .cs-listen").forEach(n => n.remove());
-    const R = consecRecog();
+    stage.innerHTML = "";
+    setCount("Consecutive · " + (st.i + 1) + " of " + st.queue.length + " · speak");
+    stage.appendChild(el("p", "cs-head", "Segment " + (st.i + 1) + " of " + st.queue.length + " · speak in <b>" + (into === "ar" ? "Arabic" : "English") + "</b>"));
+    stage.appendChild(csSteps(1));
     const live = el("div", "cs-live");
-    live.innerHTML = '<span class="cs-mic on" aria-hidden="true"></span><p class="cs-state">Speak now, in ' + (into === "ar" ? "Arabic" : "English") + '.</p><p class="cs-clock">0 s</p>';
-    stage.insertBefore(live, pad);
+    live.innerHTML = '<span class="cs-mic" aria-hidden="true"></span><p class="cs-state"><b>The microphone is on.</b> Speak your interpretation now, in ' + (into === "ar" ? "Arabic" : "English") + '.</p><p class="cs-clock">0 s · the speaker took ' + spoken + ' s</p>';
+    stage.appendChild(live);
+    if (notes.trim()) { const n = el("div", "cs-card cs-notes"); n.innerHTML = '<span class="cs-k">Your notes</span><p dir="auto">' + escapeText(notes) + '</p>'; stage.appendChild(n); }
+    stage.appendChild(el("p", "cs-lab", "What you are saying"));
     const said = document.createElement("textarea");
     said.className = "cs-said"; said.dir = into === "ar" ? "rtl" : "ltr";
-    said.placeholder = R ? "What you say appears here; correct it if the machine mishears." : "Type what you said.";
-    stage.insertBefore(said, pad);
-    let secs = 0, chunks = [], audioUrl = "";
-    consecTick = setInterval(() => { secs++; live.querySelector(".cs-clock").textContent = secs + " s · the speaker took " + spokenSecs + " s"; }, 1000);
-    /* record, so you can hear yourself back */
-    if (navigator.mediaDevices && window.MediaRecorder) {
-      navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-        try {
-          consecMedia = new MediaRecorder(stream);
-          consecMedia.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
-          consecMedia.onstop = () => { stream.getTracks().forEach(t => t.stop()); if (chunks.length) audioUrl = URL.createObjectURL(new Blob(chunks, { type: chunks[0].type || "audio/webm" })); };
-          consecMedia.start();
-        } catch (e) { stream.getTracks().forEach(t => t.stop()); }
-      }).catch(() => { });
-    }
-    if (R) {
-      try {
-        const r = new R();
-        r.lang = into === "ar" ? "ar-SA" : "en-US";
-        r.continuous = true; r.interimResults = true;
-        let final = "";
-        r.onresult = ev => {
-          let interim = "";
-          for (let k = ev.resultIndex; k < ev.results.length; k++) {
-            if (ev.results[k].isFinal) final += ev.results[k][0].transcript + " ";
-            else interim += ev.results[k][0].transcript;
-          }
-          said.value = (final + interim).trim();
-        };
-        r.onerror = () => { live.querySelector(".cs-state").textContent = "Speech to text stopped. Type or correct what you said."; };
-        r.start(); consecRec = r;
-      } catch (e) { }
-    }
-    const done = el("button", "primary cs-go", "Done"); done.type = "button";
-    stage.insertBefore(done, pad);
+    said.placeholder = consecRecog() ? "Your words appear here as you speak. Correct anything misheard." : "Type what you said.";
+    stage.appendChild(said);
+    let secs = 0;
+    consecTick = setInterval(() => { secs++; live.querySelector(".cs-clock").textContent = secs + " s · the speaker took " + spoken + " s"; }, 1000);
+    const mic = consecListen(into, t => { said.value = t; }, msg => { live.querySelector(".cs-state").textContent = msg; });
+    const done = el("button", "primary cs-big", "■ Done · check my interpretation"); done.type = "button";
+    stage.appendChild(done);
     done.onclick = () => {
       if (consecTick) { clearInterval(consecTick); consecTick = null; }
-      try { consecRec && consecRec.stop(); } catch (e) { }
-      try { consecMedia && consecMedia.state !== "inactive" && consecMedia.stop(); } catch (e) { }
-      setTimeout(() => check(q, from, into, srcText, spokenSecs, secs, said.value, notes, () => audioUrl), 450);
+      mic.stop();
+      setTimeout(() => check(q, from, into, srcText, spoken, secs, said.value, notes, mic.url), 500);
     };
   }
-
-  function check(q, from, into, srcText, spokenSecs, secs, said, notes, audio) {
+  function check(q, from, into, srcText, spoken, secs, said, notes, audio) {
     consecStop();
-    const modelText = into === "ar" ? q.ar : q.ok[0];
     const m = boothMark(q, said, q.dir);
-    st.log.push({ share: m.share || 0, secs: secs, spoken: spokenSecs });
+    st.log.push({ share: m.share || 0, secs: secs, spoken: spoken });
     stage.innerHTML = "";
     setCount("Consecutive · " + (st.i + 1) + " of " + st.queue.length + " · check");
-    const pct = Math.round((m.share || 0) * 100);
-    const top = el("div", "cs-score");
-    top.innerHTML = '<b>' + pct + '%</b><span>of the content carried</span><small>You took ' + secs + ' s · the speaker ' + spokenSecs + ' s</small>';
-    stage.appendChild(top);
-    const card = (k, t, dir) => { const c = el("div", "cs-card"); c.innerHTML = '<span class="cs-k">' + k + '</span><p dir="' + dir + '">' + (t ? escapeText(t) : "<i>nothing recorded</i>") + '</p>'; return c; };
-    stage.appendChild(card("The speaker said", srcText, from === "ar" ? "rtl" : "ltr"));
-    stage.appendChild(card("You said", said, into === "ar" ? "rtl" : "ltr"));
-    stage.appendChild(card("The official text", modelText, into === "ar" ? "rtl" : "ltr"));
-    if (into === "en" && q.keys && q.keys.length) {
-      const a = norm(said);
-      const k = el("div", "cs-keys");
-      k.innerHTML = '<span class="cs-k">Content to carry</span>' + q.keys.map(x => '<span class="' + (keyMet(x, a) ? "hit" : "miss") + '">' + (keyMet(x, a) ? "✓ " : "✗ ") + escapeText(x) + '</span>').join("");
-      stage.appendChild(k);
-    }
-    if (notes.trim()) stage.appendChild(card("Your notes", notes, "auto"));
-    const url = audio();
-    if (url) { const au = document.createElement("audio"); au.controls = true; au.src = url; au.className = "cs-audio"; const w = el("div", "cs-card"); w.appendChild(el("span", "cs-k", "Hear yourself")); w.appendChild(au); stage.appendChild(w); }
-    stage.appendChild(el("p", "sd-note", "The mark is content, not wording: an interpreter may say it another way. " +
-      (into === "en" ? "Each key idea counts once." : "It compares the content words of your Arabic with the official text.")));
-    const nx = el("button", "primary cs-go", st.i < st.queue.length - 1 ? "Next segment" : "See the session"); nx.type = "button";
+    stage.appendChild(csSteps(2));
+    csResult(q, from, into, srcText, said, m, secs, spoken, notes, audio());
+    const nx = el("button", "primary cs-big", st.i < st.queue.length - 1 ? "Next segment →" : "See the session"); nx.type = "button";
     nx.onclick = () => { if (st.i < st.queue.length - 1) { st.i++; segment(); } else summary(); };
     stage.appendChild(nx);
   }
-
+  function csResult(q, from, into, srcText, said, m, secs, spoken, notes, url) {
+    const pct = Math.round((m.share || 0) * 100);
+    const top = el("div", "cs-score");
+    top.innerHTML = '<b>' + pct + '%</b><span>of the content carried</span>' + (secs != null ? '<small>You took ' + secs + ' s · the speaker ' + spoken + ' s</small>' : '');
+    stage.appendChild(top);
+    const card = (k, t, dir, cls) => { const c = el("div", "cs-card" + (cls ? " " + cls : "")); c.innerHTML = '<span class="cs-k">' + k + '</span><p dir="' + dir + '">' + (t ? escapeText(t) : "<i>nothing recorded</i>") + '</p>'; return c; };
+    stage.appendChild(card("The speaker said", srcText, from === "ar" ? "rtl" : "ltr"));
+    stage.appendChild(card("You said", said, into === "ar" ? "rtl" : "ltr", "you"));
+    stage.appendChild(card("The official text", into === "ar" ? q.ar : q.ok[0], into === "ar" ? "rtl" : "ltr", "model"));
+    if (into === "en" && q.keys && q.keys.length) {
+      const a = norm(said);
+      const k = el("div", "cs-keys");
+      k.innerHTML = '<span class="cs-k">Key ideas</span>' + q.keys.map(x => '<span class="' + (keyMet(x, a) ? "hit" : "miss") + '">' + (keyMet(x, a) ? "✓ " : "✗ ") + escapeText(x) + '</span>').join("");
+      stage.appendChild(k);
+    }
+    if (notes && notes.trim()) stage.appendChild(card("Your notes", notes, "auto"));
+    if (url) { const au = document.createElement("audio"); au.controls = true; au.src = url; au.className = "cs-audio"; const w = el("div", "cs-card"); w.appendChild(el("span", "cs-k", "Hear yourself")); w.appendChild(au); stage.appendChild(w); }
+  }
   function summary() {
     consecStop();
     stage.innerHTML = "";
-    setCount("Consecutive · the session");
+    setCount((SIM ? "Simultaneous" : "Consecutive") + " · the session");
     const n = st.log.length;
     const avg = n ? Math.round(st.log.reduce((t, x) => t + x.share, 0) / n * 100) : 0;
-    const over = st.log.filter(x => x.secs > x.spoken * 1.5).length;
     const v = el("div", "verdict");
-    v.appendChild(el("span", "vh", n + " segments · " + avg + "% of the content carried"));
-    v.appendChild(el("p", "vb", over ? "On " + over + " of them you took more than half as long again as the speaker. In consecutive, aim to finish in about the speaker's time: notes for structure, not for words." :
-      "You kept to about the speaker's time on every segment."));
+    v.appendChild(el("span", "vh", n + (n === 1 ? " segment" : " segments") + " · " + avg + "% of the content carried"));
+    if (!SIM) {
+      const over = st.log.filter(x => x.secs > x.spoken * 1.5).length;
+      v.appendChild(el("p", "vb", over ? "On " + over + " of them you took more than half as long again as the speaker. Aim to finish in about the speaker's time: notes for structure, not for words." :
+        "You kept to about the speaker's time on every segment."));
+    }
     stage.appendChild(v);
-    const again = el("button", "primary cs-go", "Another session"); again.type = "button"; again.onclick = () => start();
+    const again = el("button", "primary cs-big", "Another session"); again.type = "button"; again.onclick = () => SIM ? simul() : start();
+    const back = el("button", "ghost", "Change setting"); back.type = "button"; back.onclick = () => { st.started = false; setup(); };
+    stage.appendChild(again); stage.appendChild(back);
+    stage.appendChild(footNav({}));
+  }
+
+  /* ── SIMULTANEOUS ── */
+  function simul() {
+    consecStop();
+    const g = BOOTH_GENRES.find(x => x.id === st.genre);
+    const from = st.dir === "ar-en" ? "ar" : "en", into = from === "ar" ? "en" : "ar";
+    const items = shuffled((g.turns || []).map(x => tag(x, "turns"))).concat(shuffled((g.sentences || []).map(x => tag(x, "sentences")))).slice(0, SIMUL_N);
+    st.log = [];
+    stage.innerHTML = "";
+    setCount("Simultaneous · " + g.en);
+    stage.appendChild(el("p", "cs-head", "A speech in <b>" + (from === "ar" ? "Arabic" : "English") + "</b> · you interpret into <b>" + (into === "ar" ? "Arabic" : "English") + "</b> as it runs"));
+    const box = el("div", "cs-listen");
+    box.innerHTML = '<span class="cs-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><p class="cs-state">Put your headphones on. When you press start, the microphone opens and the speaker begins. <b>Start speaking a few words after the speaker, and keep going.</b></p><p class="cs-clock"></p>';
+    stage.appendChild(box);
+    const stateP = box.querySelector(".cs-state"), clock = box.querySelector(".cs-clock");
+    const said = document.createElement("textarea");
+    said.className = "cs-said"; said.dir = into === "ar" ? "rtl" : "ltr";
+    said.placeholder = consecRecog() ? "Your words appear here as you speak." : "This browser cannot write speech out. You will be recorded; type a summary afterwards if you like.";
+    const go = el("button", "primary cs-big cs-mic-btn", '<svg class="cs-mic-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> Start: open the mic and play the speech'); go.type = "button";
+    stage.appendChild(go);
+    stage.appendChild(el("p", "cs-lab", "What you are saying"));
+    stage.appendChild(said);
+    const stop = el("button", "ghost cs-big", "■ Stop"); stop.type = "button"; stop.hidden = true;
+    stage.appendChild(stop);
+    let mic = null, secs = 0, k = 0, cuts = [], ended = false;
+    const finish = () => {
+      if (ended) return; ended = true;
+      try { speechSynthesis.cancel(); } catch (e) { }
+      if (consecTick) { clearInterval(consecTick); consecTick = null; }
+      mic && mic.stop();
+      setTimeout(() => results(items, from, into, said.value, cuts, mic ? mic.url() : ""), 600);
+    };
+    go.onclick = () => {
+      go.hidden = true; stop.hidden = false;
+      mic = consecListen(into, t => { said.value = t; }, msg => { stateP.textContent = msg; });
+      box.classList.add("on");
+      stateP.innerHTML = "<b>Interpret now.</b> The speaker is speaking.";
+      const t0 = Date.now();
+      const timer = setInterval(() => { clock.textContent = Math.round((Date.now() - t0) / 1000) + " s"; if (ended) clearInterval(timer); }, 1000);
+      const nextPart = () => {
+        if (ended) return;
+        if (k >= items.length) { stateP.innerHTML = "The speaker has finished. Finish your sentence, then tap Stop."; box.classList.remove("on"); return; }
+        const q = items[k++];
+        cuts.push(said.value.length);
+        consecSay(from === "ar" ? q.ar : q.ok[0], from, null, ok => {
+          if (!ok) { stateP.innerHTML = "No " + (from === "ar" ? "Arabic" : "English") + " voice on this device, so the speech cannot be played. Choose another direction."; return; }
+          setTimeout(nextPart, 900);
+        });
+      };
+      setTimeout(nextPart, 700);
+    };
+    stop.onclick = finish;
+    const quit = el("button", "link cs-quit", "Leave"); quit.type = "button";
+    quit.onclick = () => { ended = true; consecStop(); setup(); };
+    stage.appendChild(quit);
+  }
+  function results(items, from, into, said, cuts, url) {
+    consecStop();
+    stage.innerHTML = "";
+    setCount("Simultaneous · check");
+    /* the whole rendering is marked against the whole speech */
+    const whole = { level: lv("turns"), ar: items.map(q => q.ar).join(" "), ok: [items.map(q => q.ok[0]).join(" ")], keys: [].concat.apply([], items.map(q => q.keys || [])) };
+    const m = boothMark(whole, said, from === "ar" ? "ar-en" : "en-ar");
+    st.log = [{ share: m.share || 0 }];
+    csResult(whole, from, into, from === "ar" ? whole.ar : whole.ok[0], said, m, null, null, "", url);
+    stage.appendChild(el("p", "sd-note", "Simultaneous interpreters compress: a full rendering is not expected. What matters is the key ideas, the names and the numbers."));
+    const again = el("button", "primary cs-big", "Another speech"); again.type = "button"; again.onclick = () => simul();
     const back = el("button", "ghost", "Change setting"); back.type = "button"; back.onclick = () => { st.started = false; setup(); };
     stage.appendChild(again); stage.appendChild(back);
     stage.appendChild(footNav({}));
   }
 }
+const runConsec = () => runSpoken("consec");
 
 function runBooth() { stopBooth(); chooseGenre(); }
 
@@ -31374,6 +31550,25 @@ function chooseGenre() {
   setCount(BOOTH_GENRES.length + " settings · " + BOOTH_ROUND_SIZE + " turns a round");
   setDots(0, 0, 0);
 
+
+  /* Three ways to practise, side by side, so the spoken modes are seen */
+  const imModes = el("div", "im-modes");
+  imModes.appendChild(el("p", "im-lab", "How do you want to practise?"));
+  [["read", "Read and render", "قراءة وترجمة", "See the source, then type or say your rendering against the clock.", "#FBBF24"],
+   ["consec", "Consecutive", "تتبعية", "Hear a speaker once, take notes, then speak your interpretation.", "#38BDF8"],
+   ["simul", "Simultaneous", "فورية", "Speak while the speaker speaks. Headphones needed.", "#F472B6"]].forEach(([id, en, ar, say, c]) => {
+    const t = el("button", "im-tile");
+    t.type = "button"; t.style.setProperty("--im-c", c);
+    t.innerHTML = '<b>' + en + '</b><span class="im-ar" dir="rtl" lang="ar">' + ar + '</span><span class="im-say">' + say + '</span>' +
+      (id === "read" ? '<span class="im-here">Choose a setting below ↓</span>' : '<span class="im-here">Open →</span>');
+    t.addEventListener("click", () => {
+      if (id === "consec") openItem(CONSEC_ITEM);
+      else if (id === "simul") openItem(SIMUL_ITEM);
+      else { const gg = stage.querySelector(".genre-grid"); gg && gg.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    });
+    imModes.appendChild(t);
+  });
+  stage.appendChild(imModes);
 
   /* Direction first, because it governs everything below it. */
   const dirWrap = el("div", "dir-pick");
@@ -31397,14 +31592,6 @@ function chooseGenre() {
   dirWrap.appendChild(el("p", "dir-say",
     BOOTH_DIRS.find(d => d.id === boothDir()).say));
   stage.appendChild(dirWrap);
-
-  /* the spoken mode: listen once, take notes, speak */
-  const cs = el("button", "cs-entry");
-  cs.type = "button";
-  cs.innerHTML = '<span class="cs-entry-k">New · consecutive</span><b>Listen once. Take notes. Speak.</b>' +
-    '<span>The speaker is read aloud and the text stays hidden; you render it out loud, then check it against the official text.</span>';
-  cs.addEventListener("click", () => openItem(CONSEC_ITEM));
-  stage.appendChild(cs);
 
   /* professionals at work first, then the settings to practise */
   stage.appendChild(videoStrip(BOOTH_VIDEOS, "Watch professionals"));
@@ -31599,6 +31786,21 @@ function boothRound(genre) {
   if (into === "ar") { inp.dir = "rtl"; inp.lang = "ar"; inp.className = "ar-in"; inp.placeholder = "ترجمتك"; }
   else { inp.placeholder = "…"; }
   typing.appendChild(inp);
+  /* speak instead of typing: the microphone writes into the same field */
+  const talk = el("div", "im-talk");
+  const micB = el("button", "im-micb", '<svg class="cs-mic-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> Speak instead'); micB.type = "button";
+  const sendB = el("button", "im-send", "Send ↵"); sendB.type = "button";
+  let micOn = null;
+  const micOff = () => { if (micOn) { micOn.stop(); micOn = null; } micB.classList.remove("on"); micB.innerHTML = '<svg class="cs-mic-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> Speak instead'; };
+  micB.addEventListener("click", () => {
+    if (micOn) { micOff(); return; }
+    if (!consecRecog()) { micB.textContent = "This browser cannot write speech out: type instead"; return; }
+    micOn = consecListen(into, t => { inp.value = t; }, msg => { feed.textContent = msg; });
+    micB.classList.add("on"); micB.innerHTML = '<span class="cs-mic" aria-hidden="true"></span> Listening… tap to stop';
+  });
+  sendB.addEventListener("click", () => { micOff(); send(); });
+  talk.appendChild(micB); talk.appendChild(sendB);
+  typing.appendChild(talk);
 
   const gauge = el("div", "gauge");
   const clock = el("span", "ok", queue[0].secs + "s");
@@ -31610,7 +31812,7 @@ function boothRound(genre) {
   typing.appendChild(bar);
   stage.appendChild(typing);
 
-  const feed = el("p", "note", "Each item has its own clock. Enter to send, Tab to pass.");
+  const feed = el("p", "note", "Each item has its own clock. Type, or tap Speak instead and say it; then Send. Tab passes.");
   stage.appendChild(feed);
 
   /* A round is against a clock, which is exactly why there has to be a
@@ -31637,6 +31839,7 @@ function boothRound(genre) {
     void phrase.offsetWidth;
     setDots(queue.length, idx, idx);
     inp.value = "";
+    micOff();
     quitBtn.textContent = log.length ? "End this round" : "Leave this round";
     quitNote.textContent = log.length + " of " + queue.length + " answered";
     begin();                 /* this item's own clock, from the top */
