@@ -22715,7 +22715,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-0520";
+const BUILD = "1106-0610";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -32207,27 +32207,63 @@ function registerQuiz() {
   return Q;
 }
 function rootsQuiz() {
+  /* Recognising a root is easy for anyone who reads Arabic. These ask what
+     the Learn page teaches: what a pattern does to a root, how one word
+     carries several English words, and how English prefixes and suffixes
+     cross into Arabic (A to Z, 2013). */
   const Q = [];
-  const all = [];
-  ROOTS.forEach(r => r.words.forEach(w => all.push({ w: w.w, root: r.root, sense: r.sense, en: w.en })));
-  all.forEach(x => {
-    const wrong = shuffled(ROOTS.filter(r => r.root !== x.root)).slice(0, 2);
-    Q.push({ src: x.w, ask: "Which root is it built on?",
-      opts: [{ t: x.root, tag: x.sense, ok: true }].concat(wrong.map(r => ({ t: r.root, tag: r.sense }))),
-      why: x.w + ": " + x.en, ch: "Ten families" });
+  const PAT = { doer: "the one who does it", done: "the one it is done to", place: "the place where it is done",
+    act: "the act, from the doubled verb", seek: "seeking it, or becoming it", ifti: "the act, from the verb with an inserted ت", craft: "the activity or craft" };
+  const PATNAME = { doer: "فاعِل", done: "مَفعول", place: "مَفعَل · مَفعَلة", act: "تَفعيل", seek: "اِستِفعال", ifti: "اِفتِعال", craft: "فِعالة" };
+  [["كاتِب", "ك ت ب", "doer", "writer"], ["ناشِر", "ن ش ر", "doer", "publisher"], ["حاكِم", "ح ك م", "doer", "ruler"], ["ناقِل", "ن ق ل", "doer", "carrier"],
+   ["مَكتوب", "ك ت ب", "done", "written"], ["مَنقول", "ن ق ل", "done", "transmitted"], ["مَنشور", "ن ش ر", "done", "published"],
+   ["مَكتَب", "ك ت ب", "place", "office, desk"], ["مَكتَبة", "ك ت ب", "place", "library"], ["مَحكَمة", "ح ك م", "place", "court"],
+   ["تَعليم", "ع ل م", "act", "education"], ["تَفسير", "ف س ر", "act", "explanation"], ["تَحكيم", "ح ك م", "act", "arbitration"], ["تَعديل", "ع د ل", "act", "amendment"], ["تَقرير", "ق ر ر", "act", "report"],
+   ["اِستِفسار", "ف س ر", "seek", "enquiry: asking for an explanation"], ["اِستِسلام", "س ل م", "seek", "surrender"], ["اِستِقرار", "ق ر ر", "seek", "stability: becoming settled"],
+   ["اِنتِقال", "ن ق ل", "ifti", "a move"], ["اِعتِدال", "ع د ل", "ifti", "moderation"], ["اِنتِشار", "ن ش ر", "ifti", "spread"],
+   ["كِتابة", "ك ت ب", "craft", "writing"]
+  ].forEach(([w, root, k, en]) => {
+    const wrong = shuffled(Object.keys(PAT).filter(x => x !== k)).slice(0, 2);
+    Q.push({ src: w, ask: "Built on " + root + ". What does its pattern add?",
+      opts: [{ t: PAT[k], tag: PATNAME[k], ok: true }].concat(wrong.map(x => ({ t: PAT[x], tag: PATNAME[x] }))),
+      why: w + " (" + PATNAME[k] + "): " + en + ".", ch: "Patterns carry meaning" });
   });
-  LU_PATTERNS.forEach(p => {
-    const wrong = shuffled(LU_PATTERNS.filter(o => o !== p)).slice(0, 2);
-    Q.push({ src: p.p, ask: "What meaning does this pattern add?",
-      opts: [{ t: p.m, tag: "the Learn page", ok: true }].concat(wrong.map(o => ({ t: o.m, tag: o.p }))),
-      why: "For example: " + p.ex, ch: "Patterns carry meaning" });
+  /* one word, several English words: the sentence decides */
+  [["مَكتوب", "written · a letter · what is fated", "only one English word, always <i>written</i>", "<i>a book</i>"],
+   ["مُعَلِّم", "teacher · and master craftsman", "only <i>teacher</i>", "<i>scholar</i>, which is عالِم"],
+   ["مُقَرِّر", "a rapporteur · or the person who decides", "<i>a syllabus</i>, which is مُقَرَّر", "<i>a report</i>, which is تقرير"],
+   ["مُعَدَّل", "a rate, an average · also amended", "<i>moderation</i>, which is اعتدال", "<i>justice</i>, which is عدل"],
+   ["حُكم", "a ruling, a judgment · also rule, government", "<i>wisdom</i>, which is حكمة", "<i>a court</i>, which is محكمة"]
+  ].forEach(([w, ok, a, b]) => Q.push({ src: w, ask: "Which English can it be?",
+    opts: [{ t: ok.replace(/<[^>]+>/g, ""), tag: "the family card", ok: true }, { t: a.replace(/<[^>]+>/g, ""), tag: "not this word" }, { t: b.replace(/<[^>]+>/g, ""), tag: "another member" }],
+    why: "A root's family is related but not predictable: the likely reading comes from the pattern, the actual one from the sentence.", ch: "Ten families" }));
+  Q.push({ src: "عالِم · عالَم", ask: "One vowel apart. What are they?",
+    opts: [{ t: "scholar · world", tag: "the family card", ok: true }, { t: "world · scholar", tag: "the other way round" }, { t: "knowledge · science", tag: "that is عِلم" }],
+    why: "عالِم (ʿālim) is a scholar; عالَم (ʿālam) is the world, “that which is known”.", ch: "Ten families" });
+  Q.push({ src: "dragoman", srcEn: true, ask: "Where does this English word come from, and may you use it today?",
+    opts: [{ t: "From تُرجُمان; a historical borrowing, not a modern rendering", tag: "the family card", ok: true },
+           { t: "From تَرجَمة; the normal English word for translator", tag: "translator is the word" },
+           { t: "From مُتَرجِم; used for court interpreters today", tag: "interpreter is the word" }],
+    why: "English <i>dragoman</i> is تُرجُمان, borrowed centuries ago through Italian and French: a fossil of contact. Modern تُرجُمان renders as <i>interpreter</i>.", ch: "Ten families" });
+  /* how English prefixes and suffixes cross into Arabic — the method, from A to Z */
+  const M = { idafa: "an iḍāfa", prep: "a prepositional phrase", comp: "a compound", np: "a noun phrase" };
+  [["overproduction", "إفراط الإنتاج", "idafa"], ["presidency", "مدة الرئاسة", "idafa"], ["subterranean", "تحت سطح الأرض", "prep"], ["supernatural", "فوق الطبيعة", "prep"],
+   ["decentralization", "لامركزية", "comp"], ["low-born", "وضيع النسب", "np"], ["drinkable", "قابل للشرب", "np"], ["infallible", "منزه عن الخطأ", "np"]
+  ].forEach(([en, ar, k]) => {
+    const wrong = shuffled(Object.keys(M).filter(x => x !== k && !(k === "np" && x === "idafa"))).slice(0, 2);
+    Q.push({ src: en + " → " + ar, srcEn: true, ask: "What kind of Arabic does A to Z use for it?",
+      opts: [{ t: M[k], tag: "A to Z (2013)", ok: true }].concat(wrong.map(x => ({ t: M[x], tag: "not this one" }))),
+      why: "English prefixes and suffixes have no one-to-one Arabic match: translate the meaning, not the morpheme. Arabic dislikes compounding and prefers an iḍāfa.", ch: "How English builds words" });
   });
-  LU_PREFIX.forEach(r => {
-    const wrong = shuffled(LU_PREFIX.filter(o => o !== r)).slice(0, 2);
-    Q.push({ src: r[3].split(" · ")[0], srcEn: true, ask: "Which Arabic renders the prefix " + r[0] + "?",
-      opts: [{ t: r[2], tag: "A to Z (2013)", ok: true }].concat(wrong.map(o => ({ t: o[2], tag: o[0] }))),
-      why: r[3], ch: "How English builds words" });
-  });
+  Q.push({ src: "anti- · contra- · counter-", srcEn: true, ask: "Which Arabic do they tend to share?",
+    opts: [{ t: "مُضادّ", tag: "A to Z (2013)", ok: true }, { t: "ضِدّ", tag: "the book: rather than ضدّ" }, { t: "لا", tag: "for a- and de-" }],
+    why: "Several English prefixes share one Arabic word: contra-, counter-, anti- tend to be مضادّ rather than ضدّ.", ch: "How English builds words" });
+  Q.push({ src: "reconstruction", srcEn: true, ask: "How does A to Z render the re-?",
+    opts: [{ t: "إعادة + iḍāfa: إعادة الإعمار", tag: "A to Z (2013)", ok: true }, { t: "a prefix joined to the word", tag: "Arabic has no such prefix" }, { t: "بعد: بعد الإعمار", tag: "that is post-" }],
+    why: "re- (again) is إعادة followed by an iḍāfa.", ch: "How English builds words" });
+  Q.push({ src: "irrevocable · incomparable · insufficient", srcEn: true, ask: "The same prefix in. Does Arabic use one word for it?",
+    opts: [{ t: "No: لا يُردّ · عديم النظير · غير كافٍ", tag: "A to Z (2013)", ok: true }, { t: "Yes: always غير", tag: "three different solutions" }, { t: "Yes: always لا", tag: "three different solutions" }],
+    why: "One English prefix, several Arabic solutions: غير، عدم، عديم، لا. The meaning decides.", ch: "How English builds words" });
   return Q;
 }
 
