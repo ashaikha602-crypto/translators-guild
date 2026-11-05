@@ -4111,6 +4111,30 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .lu-pm { font-weight: 600; }
 .lu-pe { font-size: .88rem; opacity: .85; overflow-wrap: anywhere; }
 .lu-patcard .deriv .w { white-space: nowrap; font-size: 1.15rem; }
+.lu-compact .chips { gap: .35rem; }
+.lu-compact .chip { font-size: .7rem; padding: .28rem .62rem; text-transform: none; letter-spacing: 0; }
+.lu-compact .chip .c-sub { font-size: .52rem; letter-spacing: .06em; }
+.lu-compact .chip.ar-chip { font-size: .85rem; letter-spacing: .06em; }
+.lu-compact .card { padding: 1rem; }
+.lu-compact .card-top h3 { font-size: .98rem; }
+.lu-compact .card-top .num-badge { font-size: .66rem; }
+.lu-compact .lede, .lu-compact .verdict p.vb { font-size: .82rem; line-height: 1.55; }
+.lu-compact .pair { padding: .55rem .7rem; }
+.lu-compact .pair .p-a, .lu-compact .pair .p-b { font-size: .86rem; }
+.lu-compact .pair .p-a.is-ar, .lu-compact .pair .p-b.is-ar { font-size: .95rem; }
+.lu-compact .pair .p-w { font-size: .76rem; }
+.lu-compact .dial { gap: .8rem; }
+.lu-compact .dial-panel { padding: 1rem; gap: .8rem; }
+.lu-compact .dial-panel .pair .p-en { font-size: .95rem; }
+.lu-compact .dial-panel .pair .p-ar { font-size: 1.08rem; line-height: 1.6; }
+.lu-compact .dial-panel .reg-note { font-size: .8rem; }
+.lu-compact .stamp { font-size: 1.6rem; }
+.lu-compact .sense { font-size: .64rem; }
+.lu-compact .deriv { grid-template-columns: minmax(4.5rem,auto) 1fr; gap: .7rem; padding: .5rem .7rem; }
+.lu-compact .deriv .w { font-size: 1.05rem; }
+.lu-compact .deriv .g .en { font-size: .84rem; }
+.lu-compact .deriv .g .tr { font-size: .66rem; }
+.lu-compact .sf-try b { font-size: 1rem; }
 details.avt-step { border-radius: 18px; background: var(--void-2); border: var(--hair); overflow: hidden; }
 details.avt-step summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: .7rem; padding: .8rem .9rem; }
 details.avt-step summary::-webkit-details-marker { display: none; }
@@ -9729,6 +9753,49 @@ const REGISTER = [
       { name: "Everyday MSA", ar: "تُوُفِّيَ.", en: "He passed away.", note: "The passive is the euphemism: <i>he was taken</i>. English reaches for <i>passed away</i> at the same height." },
       { name: "Formal", ar: "اِنتقل إلى رحمة اللّه تعالى.", en: "He has passed into the mercy of God.", note: "An obituary, a formal announcement. Rendering this as <i>he died</i> is accurate and tone-deaf." },
       { name: "Classical", ar: "وافَتْه المَنِيَّة.", en: "Death came upon him.", note: "Literary. The Arabic makes death the subject and the man the object, and English can keep that." }
+    ] }
+  ,
+  { meaning: "Come in.",
+    stops: [
+      { name: "Kuwaiti", ar: "تفضّل، حيّاك.", en: "Come on in!", note: "Warm and quick: حيّاك is a welcome, not a literal <i>may He keep you alive</i>." },
+      { name: "Everyday MSA", ar: "تفضّل بالدخول.", en: "Please come in.", note: "Neutral and polite." },
+      { name: "Formal", ar: "يُرجى التفضّل بالدخول.", en: "Kindly come in.", note: "A notice, an office, an announcement." },
+      { name: "Classical", ar: "ادخُلْ على الرَّحب والسَّعة.", en: "Enter, and be most welcome.", note: "Literary hospitality. In a modern text, keep it only if the voice is deliberately old." }
+    ] },
+  { meaning: "Wait a moment.",
+    stops: [
+      { name: "Kuwaiti", ar: "لحظة، اصبر شوي.", en: "Hang on a sec.", note: "شوي shortens it; English shortens <i>second</i> to <i>sec</i>." },
+      { name: "Everyday MSA", ar: "انتظر لحظة.", en: "Wait a moment.", note: "Neutral." },
+      { name: "Formal", ar: "يُرجى الانتظار قليلاً.", en: "Please wait a moment.", note: "The passive يُرجى removes the speaker: a reception desk, a phone line." },
+      { name: "Classical", ar: "تمهَّلْ قليلاً.", en: "Tarry a while.", note: "Old and literary. English needs an old verb to match it." }
+    ] },
+  { meaning: "Where are you going?",
+    stops: [
+      { name: "Kuwaiti", ar: "وين رايح؟", en: "Where you off to?", note: "Casual; between friends it is friendly, not nosy." },
+      { name: "Everyday MSA", ar: "إلى أين تذهب؟", en: "Where are you going?", note: "Neutral." },
+      { name: "Formal", ar: "ما وجهتك؟", en: "What is your destination?", note: "Official: a check-in desk, a form, a border." },
+      { name: "Classical", ar: "أين تمضي؟", en: "Whither are you bound?", note: "Literary. In modern English <i>whither</i> is a deliberate archaism." }
+    ] },
+  { meaning: "Hurry up.",
+    stops: [
+      { name: "Kuwaiti", ar: "يلّا بسرعة!", en: "Come on, hurry up!", note: "يلّا carries the push that <i>come on</i> carries." },
+      { name: "Everyday MSA", ar: "أسرِع.", en: "Hurry.", note: "Neutral, and already sharp in English without a <i>please</i>." },
+      { name: "Formal", ar: "نرجو الإسراع.", en: "We kindly ask you to proceed promptly.", note: "A request in writing: the urgency is wrapped in politeness." },
+      { name: "Classical", ar: "عَجِّلْ.", en: "Make haste.", note: "One word in Arabic, two old words in English." }
+    ] },
+  { meaning: "He is very rich.",
+    stops: [
+      { name: "Kuwaiti", ar: "عنده فلوس وايد.", en: "He's loaded.", note: "وايد is the Kuwaiti <i>very, a lot</i>. English slang matches the ease." },
+      { name: "Everyday MSA", ar: "هو غنيّ جداً.", en: "He is very rich.", note: "Neutral." },
+      { name: "Formal", ar: "يتمتّع بثراء واسع.", en: "He is a man of considerable wealth.", note: "Profiles and reports: wealth described, not exclaimed." },
+      { name: "Classical", ar: "ذو مالٍ وَفير.", en: "A man of abundant wealth.", note: "ذو + noun is the classical way to describe someone by what they have." }
+    ] },
+  { meaning: "Be quiet.",
+    stops: [
+      { name: "Kuwaiti", ar: "اسكت!", en: "Quiet!", note: "Blunt. Between strangers it would be rude in either language." },
+      { name: "Everyday MSA", ar: "اسكُت من فضلك.", en: "Please be quiet.", note: "The من فضلك softens it as <i>please</i> does." },
+      { name: "Formal", ar: "يُرجى التزام الهدوء.", en: "Please keep quiet.", note: "A sign in a library or a hospital. Nobody is addressed directly." },
+      { name: "Classical", ar: "أنصِتْ.", en: "Hearken.", note: "To listen in silence. English has only an old word for it." }
     ] }
 ];
 
@@ -22648,7 +22715,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-0345";
+const BUILD = "1106-0430";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -24673,6 +24740,7 @@ let active = null;
 }
 
 function openItem(t, arg, keepTrail) {
+  if (typeof stage !== "undefined" && stage) stage.classList.toggle("lu-compact", !!t && ["phraseology", "register", "roots"].indexOf(t.id) >= 0);
   /* Remember what to come back to: the chamber you were reading, or the
      tab you were on. Passing keepTrail means the caller is restoring a
      screen rather than going somewhere new. */
@@ -31970,6 +32038,62 @@ function luPatternsCard() {
     { key: "agree", en: "Agreeing and exclaiming", ar: "الموافقة والاعتراض والتعجب", dir: "en_ar", dirLabel: "English → Arabic",
       lede: "English often softens a <i>no</i> inside a polite, almost positive frame, which rarely survives a literal translation; Arabic tends to state approval more briefly.",
       note: "Translate the degree, not the grammar: <i>I couldn’t agree more</i> is a negative in English and a plain <b>تماما</b> in Arabic. (Husni &amp; Newman, <i>A to Z</i>, 2013)", rows: rows(LU_AGREE) }
+  );
+})();
+
+
+/* two more sets, from the rows the Collocation and Speech Acts trials
+   already teach (Husni & Newman, 2015) */
+(function () {
+  const strip = h => String(h || "").replace(/<[^>]+>/g, "");
+  const okOf = q => (q.opts.find(o => o.ok) || {}).t || "";
+  PHRASE_SETS.push(
+    { key: "adj", en: "Adjective partners", ar: "الصفة وموصوفها", dir: "en_ar", dirLabel: "English → Arabic",
+      lede: "English <i>heavy</i> has about thirty Arabic partners, decided by the noun: rain, fog, a smoker and losses each take a different one.",
+      note: "Look up the pair, not the adjective. The dictionary word for <i>heavy</i> (ثقيل) is the wrong partner nearly every time. (Husni &amp; Newman, 2015, pp. 16–17)",
+      rows: COLLOC.map(q => ({ a: strip(q.src), b: okOf(q), w: "" })) },
+    { key: "gulf", en: "Gulf courtesy formulas", ar: "عبارات المجاملة", dir: "ar_en", dirLabel: "Arabic → English",
+      lede: "Formulas built on health, safety and blessing. The function crosses over, never the words.",
+      note: "Ask what the formula does in that moment (thanks, wishes, excuses) and say what an English speaker says then; sometimes that is nothing.",
+      rows: COURTESY.map(q => ({ a: strip(q.src), b: okOf(q), w: strip(q.why) })) }
+  );
+  ROOTS.push(
+    { root: "ح ك م", sense: "to judge, to rule",
+      words: [
+        { w: "حُكم", tr: "ḥukm", en: "a ruling, a judgment; also rule, government" },
+        { w: "حاكِم", tr: "ḥākim", en: "ruler, governor" },
+        { w: "مَحكَمة", tr: "maḥkama", en: "court — the place where judgment is given (مَفعَلة)" },
+        { w: "حُكومة", tr: "ḥukūma", en: "government" },
+        { w: "حِكمة", tr: "ḥikma", en: "wisdom" },
+        { w: "تَحكيم", tr: "taḥkīm", en: "arbitration" },
+        { w: "مُحَكَّم", tr: "muḥakkam", en: "refereed — of a journal or a paper" }
+      ] },
+    { root: "ع د ل", sense: "to be just, to make even",
+      words: [
+        { w: "عَدل", tr: "ʿadl", en: "justice" },
+        { w: "عادِل", tr: "ʿādil", en: "just, fair (فاعِل)" },
+        { w: "تَعديل", tr: "taʿdīl", en: "an amendment, a modification" },
+        { w: "مُعَدَّل", tr: "muʿaddal", en: "a rate, an average; also amended" },
+        { w: "اِعتِدال", tr: "iʿtidāl", en: "moderation" },
+        { w: "مُعادَلة", tr: "muʿādala", en: "an equation" }
+      ] },
+    { root: "ق ر ر", sense: "to settle, to decide",
+      words: [
+        { w: "قَرار", tr: "qarār", en: "a decision, a resolution" },
+        { w: "تَقرير", tr: "taqrīr", en: "a report" },
+        { w: "مُقَرِّر", tr: "muqarrir", en: "a rapporteur; also the person who decides" },
+        { w: "إقرار", tr: "iqrār", en: "an acknowledgment, an admission" },
+        { w: "اِستِقرار", tr: "istiqrār", en: "stability (اِستِفعال)" },
+        { w: "مُقَرَّر", tr: "muqarrar", en: "a set course, a syllabus; also decided" }
+      ] },
+    { root: "ن ش ر", sense: "to spread, to publish",
+      words: [
+        { w: "نَشر", tr: "nashr", en: "publishing, publication" },
+        { w: "ناشِر", tr: "nāshir", en: "a publisher (فاعِل)" },
+        { w: "مَنشور", tr: "manshūr", en: "published; a leaflet; a post online (مَفعول)" },
+        { w: "نَشرة", tr: "nashra", en: "a bulletin, a newscast" },
+        { w: "اِنتِشار", tr: "intishār", en: "spread, deployment" }
+      ] }
   );
 })();
 
