@@ -1445,6 +1445,7 @@ a.ks-s-en:hover { color: var(--white); }
 .opt.opt-hand { align-items: center; }
 .opt.opt-hand .txt { display: flex; align-items: center; justify-content: flex-start; direction: ltr; }
 .prompt .src.big-letter { font-size: 4.2rem; line-height: 1.25; margin: .2rem 0 0; }
+.prompt .q-hand.is-asl, .opt .o-hand.is-asl { background: radial-gradient(circle, #DEDBF1 0 62%, #F4F3FA 63%); padding: 6%; box-sizing: border-box; }
 .opt .o-hand { width: 5.2rem; height: 5.2rem; border-radius: 50%; background: rgba(214,191,234,.12); }
 
 @media (min-width: 520px) { .alpha-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -15349,6 +15350,11 @@ const ITEMS = [
     direction: "both",
     blurb: "Official names of Arab courts and parliaments, doublets, shall, and the legal meaning of everyday words.",
     run: () => runChoice(LEGAL_Q, "Which is right?") },
+  { id: "aslq", ar: "لغة الإشارة الأمريكية", en: "American Sign Language", kind: "trial", section: "trials",
+    subject: "American Sign Language · ASL",
+    direction: "both",
+    blurb: "Which letter is this sign, and which sign is this letter, across all twenty-six letters of the ASL alphabet.",
+    run: () => runChoice(aslQuiz(), "Which is right?") },
   { id: "kslq", ar: "لغة الإشارة الكويتية", en: "Kuwaiti Sign Language", kind: "trial", section: "trials",
     subject: "لغة الإشارة الكويتية · Learn",
     direction: "both",
@@ -22592,7 +22598,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-0040";
+const BUILD = "1106-0125";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -24219,7 +24225,7 @@ const TRIAL_ORDER = [
   "legalq",                                  /* legal texts */
   "revise",                                  /* 9.1 revision */
   "subtitle",                                /* 10.2 subtitling */
-  "kslq",                                    /* signing (interpreting has its own tab) */
+  "kslq", "aslq",                            /* signing (interpreting has its own tab) */
   "atozq"                                    /* the reference shelf */
 ];
 function fillLedger(sectionId, section) {
@@ -28555,7 +28561,7 @@ function resumeOrRestart(saved, unit, onResume, onRestart) {
    the alt text is read aloud and would give the answer away. */
 function quizHand(src, cls) {
   const im = document.createElement("img");
-  im.src = src; im.alt = "A handshape"; im.className = cls;
+  im.src = src; im.alt = "A handshape"; im.className = cls + (/^asl\//.test(src) ? " is-asl" : "");
   im.width = 560; im.height = 560; im.decoding = "async";
   return im;
 }
@@ -28641,6 +28647,36 @@ function kslQuiz() {
       why: "Brows, mouth, head and posture are not expression added to a sign; they are often the grammar." }
   ];
   F.forEach(q => { q.ch = CH; pool.push(q); });
+  return pool;
+}
+
+/* ═══════════ ASL TRIAL ═══════════
+   The same two drills as KSL, on the twenty-six public-domain drawings of
+   the ASL page: which letter is this hand, which hand is this letter. */
+function aslQuiz() {
+  const A = ASL_ALPHA.filter(L => L.img);
+  const others = (L, n) => shuffled(A.filter(x => x.l !== L.l)).slice(0, n);
+  const CH = "ASL";
+  const pool = [];
+  A.forEach(L => {
+    const mv = L.mv ? " " + L.mv : "";
+    pool.push({ src: "sign → letter", srcImg: L.img, ask: "Which letter is this sign?",
+      opts: [{ t: L.l, tag: "ASL", ok: true }].concat(others(L, 2).map(x => ({ t: x.l, tag: "ASL" }))),
+      why: "This is the handshape for <b>" + L.l + "</b> in the American manual alphabet." + mv, ch: CH });
+    pool.push({ src: L.l, big: true, ask: "Which sign is this letter?",
+      opts: [{ t: L.l, img: L.img, tag: L.l, ok: true }].concat(others(L, 2).map(x => ({ t: x.l, img: x.img, tag: x.l }))),
+      why: "The handshape for <b>" + L.l + "</b> in the American manual alphabet." + mv, ch: CH });
+  });
+  pool.push({ src: "J and Z", srcEn: true, ask: "What makes these two letters different from the other twenty-four?",
+    opts: [{ t: "They move: each is traced in the air", tag: "the ASL page", ok: true },
+           { t: "They use both hands", tag: "one hand, like every letter" },
+           { t: "They have no handshape of their own", tag: "each has one" }],
+    why: "The little finger traces a J in the air; the index finger traces a Z.", ch: CH });
+  pool.push({ src: "ASL and KSL", srcEn: true, ask: "Are they the same language?",
+    opts: [{ t: "No. Each is a language of its own community", tag: "the KSL lessons", ok: true },
+           { t: "Yes, KSL is ASL with Arabic letters", tag: "the lessons say it is not" },
+           { t: "Only their alphabets differ", tag: "they are separate languages" }],
+    why: "KSL is “not the same language as the sign language of Egypt, or Jordan, or America.”", ch: CH });
   return pool;
 }
 
@@ -29616,6 +29652,9 @@ function runAsl() {
       '<p class="vb">The manual alphabet of American Sign Language: one hand for each of the twenty-six letters, read left to right. ' +
       'Two letters move: <b>J</b> and <b>Z</b> are traced in the air. Tap a letter to see it large.</p>' +
       (ASL_HAVE.length < 26 ? '<p class="vb">' + ASL_HAVE.length + ' of the 26 drawings are here so far; the rest are being added.</p>' : '')));
+    stage.appendChild(videoStrip(ASL_VIDEOS, "Learn to sign · lessons from Deaf teachers"));
+    stage.appendChild(el("p", "ksl-credit", "Dr. Bill Vicars teaches ASL University (Lifeprint.com); his lessons are signed without sound, the way a class taught in ASL runs. " +
+      "Dr. Byron Bridges teaches for Sign Language 101. Start with the alphabet, then Lesson 1, its review, the hundred basic signs, and fingerspelling practice."));
     const grid = el("div", "alpha-grid asl-grid");
     ASL_ALPHA.forEach((L, i) => {
       const b = el("button", "alpha");
@@ -29635,9 +29674,6 @@ function runAsl() {
     });
     stage.appendChild(grid);
     stage.appendChild(el("p", "ksl-credit", ASL_CREDIT));
-    stage.appendChild(videoStrip(ASL_VIDEOS, "Learn to sign · lessons from Deaf teachers"));
-    stage.appendChild(el("p", "ksl-credit", "Dr. Bill Vicars teaches ASL University (Lifeprint.com); his lessons are signed without sound, the way a class taught in ASL runs. " +
-      "Dr. Byron Bridges teaches for Sign Language 101. Start with the alphabet, then Lesson 1, its review, the hundred basic signs, and fingerspelling practice."));
     stage.appendChild(backFoot());
   }
   function letter(i) {
