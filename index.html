@@ -4144,6 +4144,8 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
   -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; animation: swapIn 220ms var(--ease) both; }
 .pv-photo { position: relative; width: min(86vw, 26rem); aspect-ratio: 1; border-radius: 50%; background: center / cover no-repeat; box-shadow: 0 20px 60px rgba(0,0,0,.6);
   -webkit-touch-callout: none; pointer-events: auto; }
+[data-photo] { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+.ig-head [data-photo] { cursor: zoom-in; }
 .pv-shield { position: absolute; inset: 0; border-radius: 50%; -webkit-touch-callout: none; }
 .pv-name { margin: 0; text-align: center; font-family: var(--f-serif); font-size: 1.1rem; color: var(--white); }
 .pv-x { all: unset; position: absolute; top: max(1rem, env(safe-area-inset-top)); right: 1rem; width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center;
@@ -4262,6 +4264,7 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .cs-score { text-align: center; margin: .4rem 0 1rem; }
 .cs-score b { display: block; font-family: var(--f-serif); font-size: 2.2rem; color: #38BDF8; }
 .cs-score span { font-size: .85rem; } .cs-score small { display: block; opacity: .7; font-size: .76rem; margin-top: .2rem; }
+.cs-score.self span { display: block; font-weight: 600; } .cs-self { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; margin-top: .6rem; }
 .cs-card { border-radius: 14px; border: var(--hair); padding: .75rem .9rem; margin: .5rem 0; background: rgba(255,255,255,.03); }
 .cs-card p { margin: .3rem 0 0; font-size: .95rem; line-height: 1.6; overflow-wrap: anywhere; }
 .cs-k { font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; opacity: .7; display: block; }
@@ -16163,11 +16166,40 @@ function paintFace(node, path, name) {
     const url = avatarUrl(path) + "?v=" + encodeURIComponent(path.split("/").pop());
     node.style.backgroundImage = 'url("' + url.replace(/"/g, "%22") + '")';
     node.classList.add("has-photo");
+    node.dataset.photo = url; node.dataset.who = name || "";
   } else {
     node.textContent = initialsFor(name);
     node.classList.remove("has-photo");
+    delete node.dataset.photo;
   }
 }
+/* Any member's photo, anywhere on the site: press and hold to see it large.
+   On a profile (yours or anyone's) a plain tap opens it too. */
+(function photoPeek() {
+  let timer = null, opened = false, sx = 0, sy = 0;
+  const face = t => t && t.closest ? t.closest("[data-photo]") : null;
+  const onProfile = f => !!f.closest(".ig-head");
+  document.addEventListener("pointerdown", e => {
+    const f = face(e.target); opened = false;
+    if (!f) return;
+    sx = e.clientX; sy = e.clientY;
+    clearTimeout(timer);
+    timer = setTimeout(() => { opened = true; viewPhoto(f.dataset.photo, f.dataset.who); }, 450);
+  }, true);
+  const cancel = () => { clearTimeout(timer); timer = null; };
+  document.addEventListener("pointermove", e => { if (timer && Math.hypot(e.clientX - sx, e.clientY - sy) > 10) cancel(); }, true);
+  ["pointerup", "pointercancel", "scroll"].forEach(t => document.addEventListener(t, cancel, true));
+  document.addEventListener("click", e => {
+    const f = face(e.target);
+    if (!f) return;
+    /* the hold already opened it: swallow the click so the row does not also open */
+    if (opened) { opened = false; e.preventDefault(); e.stopPropagation(); return; }
+    /* a ring means a story is up: the tap still opens the story; hold for the photo */
+    if (onProfile(f) && !f.closest(".story-new")) { e.preventDefault(); e.stopPropagation(); viewPhoto(f.dataset.photo, f.dataset.who); }
+  }, true);
+  /* no "save image" menu on a held photo */
+  document.addEventListener("contextmenu", e => { if (face(e.target)) e.preventDefault(); }, true);
+})();
 
 function paintAvatar(node, name) {
   paintFace(node, state.profile && state.profile.avatar_path, name);
@@ -18309,7 +18341,6 @@ async function runPublic(id) {
   if (p.avatar_path) {
     av.style.cursor = "zoom-in";
     av.setAttribute("role", "button"); av.setAttribute("aria-label", "View profile photo");
-    av.addEventListener("click", () => viewPhoto(avatarUrl(p.avatar_path) + "?v=" + encodeURIComponent(p.avatar_path.split("/").pop()), p.display_name));
   }
   head.appendChild(av);
   const who = el("div", "ig-id");
@@ -22877,7 +22908,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-1430";
+const BUILD = "1106-2004";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -22899,7 +22930,7 @@ async function checkForNewBuild() {
   try {
     const r = await fetch(location.pathname + "?b=" + now, { cache: "no-store" });
     if (!r.ok) return;
-    const m = /const BUILD = "([0-9-]+)"/.exec(await r.text());
+    const m = /const BUILD = "1106-2004"/.exec(await r.text());
     live = m && m[1];
   } catch (e) { return; }
   if (!live || live === BUILD) return;
@@ -31531,8 +31562,11 @@ function runSpoken(mode) {
     });
     stage.appendChild(gs);
     stage.appendChild(el("p", "cs-src", BOOTH_GENRES.find(x => x.id === st.genre).hint));
-    stage.appendChild(el("p", "cs-realnote", REAL_AUDIO[st.genre] ? "✓ This setting uses <b>real recorded human voices</b>, not the phone's voice." :
-      "This setting still uses the phone's voice. <b>Human rights</b> has real recorded voices; more settings are coming."));
+    const has = l => (REAL_AUDIO[st.genre] || []).some(r => r.clip ? r.lang === l : r[l]);
+    stage.appendChild(el("p", "cs-realnote", has("ar") && has("en") ? "✓ This setting uses <b>real recorded human voices</b> in Arabic and English, not the phone's voice." :
+      has("en") ? "✓ <b>English speakers are real recordings.</b> No free Arabic recording was found for this setting yet, so Arabic → English uses the phone's voice." :
+      has("ar") ? "✓ <b>Arabic speakers are real recordings.</b> No free English recording was found for this setting yet, so English → Arabic uses the phone's voice." :
+      "No free recording was found for this setting yet, so it uses the phone's voice."));
 
     stage.appendChild(el("p", "cs-lab", "2 · Direction"));
     const seg = el("div", "cs-seg" + (SIM ? " two" : ""));
@@ -31546,7 +31580,8 @@ function runSpoken(mode) {
 
     if (REAL_AUDIO[st.genre]) {
       stage.appendChild(el("p", "cs-lab", "3 · The speakers"));
-      stage.appendChild(el("div", "cs-voices", '<p class="cs-tip"><b>Real people, recorded.</b> LibriVox volunteers reading the Universal Declaration of Human Rights: English read by the volunteer credited as <b>KS</b>, Arabic by the volunteer credited as <b>FE</b> (LibriVox credits them by these initials). Public domain.</p>'));
+      stage.appendChild(el("div", "cs-voices", '<p class="cs-tip"><b>Real people, recorded.</b> ' + (REAL_SPEAKERS[st.genre] ||
+        'LibriVox volunteers reading the Universal Declaration of Human Rights: English read by the volunteer credited as <b>KS</b>, Arabic by the volunteer credited as <b>FE</b> (LibriVox credits them by these initials). Public domain.') + '</p>'));
     }
     stage.appendChild(el("p", "cs-lab", REAL_AUDIO[st.genre] ? "Phone voice (only if a recording is missing)" : "3 · The speaker's voice"));
     const vbox = el("div", "cs-voices" + (REAL_AUDIO[st.genre] ? " cs-fold" : ""));
@@ -31587,20 +31622,31 @@ function runSpoken(mode) {
 
   /* the real recordings of a setting, as booth items carrying their audio */
   function realItems(g, from) {
-    return (REAL_AUDIO[g.id] || []).filter(r => r[from]).map(r => {
+    /* recordings with no official translation (clips): the speaker's own
+       words, transcribed; the interpreter marks the rendering against them */
+    const clips = (REAL_AUDIO[g.id] || []).filter(r => r.clip && r.lang === from).map(r =>
+      Object.assign({ level: lv("turns"), ar: from === "ar" ? r.text : "", ok: [from === "en" ? r.text : ""] },
+        { audio: r.clip, speakText: r.text, noref: true, credit: r.credit, title: r.title, src: r.src }));
+    return clips.length ? clips : ((REAL_AUDIO[g.id] || []).filter(r => !r.clip && r[from]).map(r => {
       /* the site's own item where there is one (it carries the key ideas);
          otherwise the article itself, in the OHCHR texts */
       const base = r.lv ? (g[r.lv] || [])[r.i] : { ar: r.arText, ok: [r.enText] };
       return Object.assign(tag(base, r.lv || "turns"), { audio: r[from], speakText: from === "ar" ? r.arText : r.enText,
         showModel: from === "ar" ? r.enText : r.arText, art: r.art });
-    });
+    }));
+  }
+  /* shuffle whole recordings, never the parts inside one: a speech is heard in order */
+  function bySpeech(list) {
+    if (!list.length || !list[0].src) return shuffled(list);
+    const ids = shuffled(Array.from(new Set(list.map(q => q.src))));
+    return [].concat.apply([], ids.map(id => list.filter(q => q.src === id)));
   }
   /* ── CONSECUTIVE ── */
   function start() {
     const g = BOOTH_GENRES.find(x => x.id === st.genre);
-    if (REAL_AUDIO[g.id]) {
-      const dirs = st.both ? ["ar-en", "en-ar"] : [st.dir];
-      const lists = dirs.map(d => shuffled(realItems(g, d === "ar-en" ? "ar" : "en").filter(q => q.speakText.length < 420)).map(q => Object.assign({}, q, { dir: d })));
+    const dirs = st.both ? ["ar-en", "en-ar"] : [st.dir];
+    const lists = dirs.map(d => bySpeech(realItems(g, d === "ar-en" ? "ar" : "en").filter(q => q.noref || q.speakText.length < 420)).map(q => Object.assign({}, q, { dir: d }))).filter(l => l.length);
+    if (lists.length) {
       const q2 = [];
       for (let k = 0; q2.length < CONSEC_N && (lists[0][k] || (lists[1] && lists[1][k])); k++) lists.forEach(l => { if (l[k] && q2.length < CONSEC_N) q2.push(l[k]); });
       st.queue = q2; st.i = 0; st.repeat = 1; st.log = [];
@@ -31710,26 +31756,44 @@ function runSpoken(mode) {
   }
   function check(q, from, into, srcText, spoken, secs, said, notes, audio) {
     consecStop();
-    const m = boothMark(q, said, q.dir);
-    st.log.push({ share: m.share || 0, secs: secs, spoken: spoken });
+    const m = q.noref ? { share: null } : boothMark(q, said, q.dir);
+    const entry = { share: m.share, secs: secs, spoken: spoken };
+    st.log.push(entry);
     stage.innerHTML = "";
     setCount("Consecutive · " + (st.i + 1) + " of " + st.queue.length + " · check");
     stage.appendChild(csSteps(2));
-    csResult(q, from, into, srcText, said, m, secs, spoken, notes, audio());
-    if (q.audio) stage.appendChild(el("p", "sd-note", REAL_CREDIT + " This one: Article " + q.art + "."));
+    csResult(q, from, into, srcText, said, m, secs, spoken, notes, audio(), entry);
+    if (q.audio) stage.appendChild(el("p", "sd-note", q.credit || (REAL_CREDIT + " This one: Article " + q.art + ".")));
     const nx = el("button", "primary cs-big", st.i < st.queue.length - 1 ? "Next segment →" : "See the session"); nx.type = "button";
     nx.onclick = () => { if (st.i < st.queue.length - 1) { st.i++; segment(); } else summary(); };
     stage.appendChild(nx);
   }
-  function csResult(q, from, into, srcText, said, m, secs, spoken, notes, url) {
-    const pct = Math.round((m.share || 0) * 100);
+  function csResult(q, from, into, srcText, said, m, secs, spoken, notes, url, entry) {
     const top = el("div", "cs-score");
-    top.innerHTML = '<b>' + pct + '%</b><span>of the content carried</span>' + (secs != null ? '<small>You took ' + secs + ' s · the speaker ' + spoken + ' s</small>' : '');
-    stage.appendChild(top);
+    const time = secs != null ? '<small>You took ' + secs + ' s · the speaker ' + spoken + ' s</small>' : '';
+    if (q.noref) {
+      /* no official translation exists for a real recording, so the site does
+         not pretend to mark it: you compare, idea by idea, and mark yourself */
+      top.classList.add("self");
+      top.innerHTML = '<span>How much of the speaker\'s content did you carry?</span>' + time;
+      const row = el("div", "cs-self");
+      [[1, "All of it"], [0.75, "Most"], [0.5, "About half"], [0.25, "Little"]].forEach(([v, t]) => {
+        const b = el("button", "chip", t); b.type = "button";
+        b.onclick = () => { if (entry) entry.share = v; row.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); };
+        row.appendChild(b);
+      });
+      top.appendChild(row);
+      stage.appendChild(top);
+    } else {
+      const pct = Math.round((m.share || 0) * 100);
+      top.innerHTML = '<b>' + pct + '%</b><span>of the content carried</span>' + time;
+      stage.appendChild(top);
+    }
     const card = (k, t, dir, cls) => { const c = el("div", "cs-card" + (cls ? " " + cls : "")); c.innerHTML = '<span class="cs-k">' + k + '</span><p dir="' + dir + '">' + (t ? escapeText(t) : "<i>nothing recorded</i>") + '</p>'; return c; };
     stage.appendChild(card("The speaker said", srcText, from === "ar" ? "rtl" : "ltr"));
     stage.appendChild(card("You said · your own words, as heard", said, into === "ar" ? "rtl" : "ltr", "you"));
-    stage.appendChild(card("The official text", q.showModel || (into === "ar" ? q.ar : q.ok[0]), into === "ar" ? "rtl" : "ltr", "model"));
+    if (q.noref) stage.appendChild(el("p", "cs-tip", "<b>No official translation exists for this recording.</b> Read what the speaker said above, idea by idea, and check each idea, name and number against what you said. Then mark yourself."));
+    else stage.appendChild(card("The official text", q.showModel || (into === "ar" ? q.ar : q.ok[0]), into === "ar" ? "rtl" : "ltr", "model"));
     if (into === "en" && q.keys && q.keys.length) {
       const a = norm(said);
       const k = el("div", "cs-keys");
@@ -31750,10 +31814,10 @@ function runSpoken(mode) {
     consecStop();
     stage.innerHTML = "";
     setCount((SIM ? "Simultaneous" : "Consecutive") + " · the session");
-    const n = st.log.length;
-    const avg = n ? Math.round(st.log.reduce((t, x) => t + x.share, 0) / n * 100) : 0;
+    const n = st.log.length, marked = st.log.filter(x => x.share != null), mk = marked.length;
+    const avg = mk ? Math.round(marked.reduce((t, x) => t + x.share, 0) / mk * 100) : 0;
     const v = el("div", "verdict");
-    v.appendChild(el("span", "vh", n + (n === 1 ? " segment" : " segments") + " · " + avg + "% of the content carried"));
+    v.appendChild(el("span", "vh", n + (n === 1 ? " segment" : " segments") + (mk ? " · " + avg + "% of the content carried" + (mk < n ? " (on the " + mk + " marked)" : "") : "")));
     if (!SIM) {
       const over = st.log.filter(x => x.secs > x.spoken * 1.5).length;
       v.appendChild(el("p", "vb", over ? "On " + over + " of them you took more than half as long again as the speaker. Aim to finish in about the speaker's time: notes for structure, not for words." :
@@ -31771,8 +31835,10 @@ function runSpoken(mode) {
     consecStop();
     const g = BOOTH_GENRES.find(x => x.id === st.genre);
     const from = st.dir === "ar-en" ? "ar" : "en", into = from === "ar" ? "en" : "ar";
-    const real = REAL_AUDIO[g.id] ? shuffled(realItems(g, from)) : [];
-    const items = real.length ? real.slice(0, SIMUL_N) : shuffled((g.turns || []).map(x => tag(x, "turns"))).concat(shuffled((g.sentences || []).map(x => tag(x, "sentences")))).slice(0, SIMUL_N);
+    let real = REAL_AUDIO[g.id] ? shuffled(realItems(g, from)) : [];
+    /* a recorded speech plays whole and in order */
+    if (real[0] && real[0].src) real = realItems(g, from).filter(q => q.src === real[0].src);
+    const items = real.length ? (real[0].src ? real : real.slice(0, SIMUL_N)) : shuffled((g.turns || []).map(x => tag(x, "turns"))).concat(shuffled((g.sentences || []).map(x => tag(x, "sentences")))).slice(0, SIMUL_N);
     st.log = [];
     stage.innerHTML = "";
     setCount("Simultaneous · " + g.en);
@@ -31853,6 +31919,7 @@ function runSpoken(mode) {
     /* the whole rendering is marked against the whole speech */
     const whole = { level: lv("turns"), ar: items.map(q => q.ar).join(" "), ok: [items.map(q => q.ok[0]).join(" ")], keys: [].concat.apply([], items.map(q => q.keys || [])) };
     if (items[0] && items[0].speakText) { whole.speakText = items.map(q => q.speakText).join(" "); whole.showModel = items.map(q => q.showModel).join(" "); }
+    if (items[0] && items[0].noref) whole.noref = true;
     if (!String(said || "").trim()) {
       const v = el("div", "verdict");
       v.appendChild(el("span", "vh", "None of your words reached the page"));
@@ -31863,10 +31930,10 @@ function runSpoken(mode) {
       stage.appendChild(again); stage.appendChild(footNav({}));
       return;
     }
-    const m = boothMark(whole, said, from === "ar" ? "ar-en" : "en-ar");
-    st.log = [{ share: m.share || 0 }];
-    csResult(whole, from, into, whole.speakText || (from === "ar" ? whole.ar : whole.ok[0]), said, m, null, null, "", url);
-    if (whole.speakText) stage.appendChild(el("p", "sd-note", REAL_CREDIT));
+    const m = whole.noref ? { share: null } : boothMark(whole, said, from === "ar" ? "ar-en" : "en-ar");
+    st.log = [{ share: m.share }];
+    csResult(whole, from, into, whole.speakText || (from === "ar" ? whole.ar : whole.ok[0]), said, m, null, null, "", url, st.log[0]);
+    if (whole.speakText) stage.appendChild(el("p", "sd-note", items[0].credit ? Array.from(new Set(items.map(q => q.credit))).join(" ") : REAL_CREDIT));
     stage.appendChild(el("p", "sd-note", "Simultaneous interpreters compress: a full rendering is not expected. What matters is the key ideas, the names and the numbers."));
     const again = el("button", "primary cs-big", "Another speech"); again.type = "button"; again.onclick = () => simul();
     const back = el("button", "ghost", "Change setting"); back.type = "button"; back.onclick = () => { st.started = false; setup(); };
