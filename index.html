@@ -22908,7 +22908,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-2239";
+const BUILD = "1106-0011";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -31749,11 +31749,19 @@ function runSpoken(mode) {
         const words = (said.value || "").trim();
         if (!words) {
           act.disabled = false;
-          stateP.innerHTML = "<b>None of your words reached the page.</b> Speech to text did not catch them. Tap to speak again, or type what you said, then tap Done.";
+          stateP.innerHTML = CS_STT_OFF ?
+            "<b>Writing out your voice is not switched on yet.</b> Your voice was recorded, but the site's speech service is still waiting for its key. For now: tap the box below, tap the 🎤 on your keyboard, say your interpretation again, then tap <b>Check</b>." :
+            "<b>None of your words reached the page.</b> Speech to text did not catch them. Tap to speak again, or type what you said in the box below, then tap <b>Check</b>.";
           act.className = "primary cs-big cs-mic-btn"; act.innerHTML = MIC_SVG + " Speak again"; act.onclick = startMic;
-          const typed = el("button", "ghost cs-big", "I typed it · check"); typed.type = "button";
-          typed.onclick = () => { const w = said.value.trim(); if (w) check(q, from, into, srcText, spoken, secs, w, pad.snapshot(), mic ? mic.url : () => ""); };
-          if (!desk.querySelector(".cs-typed")) { typed.classList.add("cs-typed"); act.after(typed); }
+          const typed = el("button", "ghost cs-big", "Check what is in the box"); typed.type = "button";
+          typed.onclick = () => { const w = said.value.trim(); if (w) check(q, from, into, srcText, spoken, secs, w, pad.snapshot(), mic ? mic.url : () => ""); else said.focus(); };
+          if (!desk.querySelector(".cs-typed")) {
+            typed.classList.add("cs-typed");
+            /* the box goes right under the buttons, not below the notepad */
+            act.after(saidLab); saidLab.after(said); said.after(typed);
+          }
+          saidLab.hidden = false; said.hidden = false;
+          said.placeholder = into === "ar" ? "اكتب أو أملِ ترجمتك هنا" : "Type or dictate your interpretation here";
           return;
         }
         check(q, from, into, srcText, spoken, secs, words, pad.snapshot(), mic ? mic.url : () => "");
