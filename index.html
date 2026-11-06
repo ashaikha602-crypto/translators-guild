@@ -543,6 +543,7 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 :root[data-skin="clear"] input.sw:checked { background: #34c759; border-color: #34c759; }
 .hall-theme { display: flex; width: max-content; gap: 2px; margin-top: 1rem; padding: 3px; border-radius: 999px;
   background: rgba(214,191,234,.08); border: var(--hair); }
+[data-theme-pick][hidden] { display: none !important; }
 .hall-theme button { all: unset; cursor: pointer; padding: .38rem .9rem; border-radius: 999px;
   font-size: .78rem; font-weight: 600; color: var(--ink-soft); }
 .hall-theme button.on { background: var(--grad-h); color: #fff; }
@@ -5268,7 +5269,7 @@ button.up-next[hidden] { display: none; }
       <div class="hall-theme" role="radiogroup" aria-label="Theme">
         <button type="button" data-theme-pick="compass-dark" role="radio" aria-checked="true">Dark</button>
         <button type="button" data-theme-pick="compass" role="radio" aria-checked="false">Light</button>
-        <button type="button" data-theme-pick="dark" role="radio" aria-checked="false">Purple</button>
+        <button type="button" data-theme-pick="dark" role="radio" aria-checked="false" hidden>Purple</button>
       </div>
     </header>
 
@@ -5485,7 +5486,7 @@ button.up-next[hidden] { display: none; }
         <button type="button" class="pick" data-theme-pick="compass-dark" role="radio" aria-checked="false">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
           <span>Dark</span></button>
-        <button type="button" class="pick" data-theme-pick="dark" role="radio" aria-checked="false">
+        <button type="button" class="pick" data-theme-pick="dark" role="radio" aria-checked="false" hidden>
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 5.5l2 6.5-2 6.5-2-6.5z"/></svg>
           <span>Purple</span></button>
       </div>
@@ -23088,7 +23089,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-1243";
+const BUILD = "1106-1321";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -24927,13 +24928,15 @@ const THEME_KEY = "guild.theme";
    Light (data-theme stays "light"), so every screen that already works in
    Light works in Clear; data-skin="clear" only restyles the surfaces. */
 const THEME_NAMES = { compass: "Light", "compass-dark": "Dark", dark: "Purple" };
-const THEME_ORDER = ["compass-dark", "compass", "dark"];
+/* Purple is switched off for everyone for now (kept here to bring back) */
+const PURPLE_ON = false;
+const THEME_ORDER = PURPLE_ON ? ["compass-dark", "compass", "dark"] : ["compass-dark", "compass"];
 function themeChoice() {
   /* Three looks: Dark (the default) and Light, the Compass design, and
      Purple, the original. Light is kept only once someone picks it. */
   try {
     const v = localStorage.getItem(THEME_KEY);
-    if (v === "dark" || v === "compass") return v;
+    if ((v === "dark" && PURPLE_ON) || v === "compass") return v;
     return "compass-dark";
   } catch (e) { return "compass-dark"; }
 }
@@ -24964,6 +24967,7 @@ function paintTheme() {
 }
 function setThemeChoice(choice) {
   try {
+    if (choice === "dark" && !PURPLE_ON) choice = "compass-dark";
     if (choice === "dark" || choice === "compass") localStorage.setItem(THEME_KEY, choice);
     else localStorage.removeItem(THEME_KEY);
   } catch (e) {}
