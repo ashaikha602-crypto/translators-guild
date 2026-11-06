@@ -543,6 +543,8 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 :root[data-skin="clear"] input.sw:checked { background: #34c759; border-color: #34c759; }
 .hall-theme { display: flex; width: max-content; gap: 2px; margin-top: 1rem; padding: 3px; border-radius: 999px;
   background: rgba(214,191,234,.08); border: var(--hair); }
+/* the look is chosen on Home and in Settings, and posting has its own button under My work */
+#theme-toggle, #seal-create { display: none !important; }
 [data-theme-pick][hidden] { display: none !important; }
 .hall-theme button { all: unset; cursor: pointer; padding: .38rem .9rem; border-radius: 999px;
   font-size: .78rem; font-weight: 600; color: var(--ink-soft); }
@@ -23089,7 +23091,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-1321";
+const BUILD = "1106-1323";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
