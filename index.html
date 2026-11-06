@@ -18161,6 +18161,7 @@ const MORE_ICO =
    tab, so the button, the count, the tile and the line above a repost
    are all obviously the one idea. Drawn rather than typed — "↻" is a
    clock arrow, and a font that has no glyph for it prints a box. */
+const REPOST_ON = false;
 const REPOST_ICO =
   '<svg class="ico-re" viewBox="0 0 24 24" aria-hidden="true">' +
   '<path d="M4 9.5A3.5 3.5 0 0 1 7.5 6H17l-2.5-2.5' +
@@ -19083,7 +19084,9 @@ function postCard(r, opts) {
   /* A private post is nobody's to pass on, and you cannot repost your
      own: on your own posts the mark only counts how often others did. */
   let nRe = r.reposts || 0;
-  if (r.author_id !== myId() && r.visibility !== "private") {
+  /* reposting is switched off until it is a finished feature */
+  if (!REPOST_ON) { /* no repost button */ }
+  else if (r.author_id !== myId() && r.visibility !== "private") {
     const rp = el("button", "pa-btn", REPOST_ICO + '<span class="ig-n">' + nRe + "</span>");
     rp.type = "button"; rp.title = "Repost this"; rp.setAttribute("aria-label", "Repost this");
     rp.addEventListener("click", async () => {
@@ -22473,7 +22476,7 @@ function profileGrid(authorId, isMe) {
     /* Posts, reels, reposts — drawn as icons, the way she marked them
        on the reference. Translations keep their own way in, from the
        circle above. */
-    GRID_TABS.filter(t2 => !t2.mine || isMe).forEach(t2 => {
+    GRID_TABS.filter(t2 => (!t2.mine || isMe) && (t2.id !== "repost" || REPOST_ON)).forEach(t2 => {
       /* icon and a word under it: an icon alone has to be guessed */
       const b = el("button", "grid-tab",
         '<svg viewBox="0 0 24 24" aria-hidden="true">' + t2.ico + '</svg><span class="gt-l">' + (t2.short || t2.lab) + '</span>');
@@ -23085,7 +23088,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-1134";
+const BUILD = "1106-1222";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
