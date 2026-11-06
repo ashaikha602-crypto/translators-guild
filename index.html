@@ -4862,6 +4862,49 @@ button.st-make { all: unset; cursor: pointer; box-sizing: border-box; width: 100
   border: 1px dashed rgba(199,125,255,.55); color: var(--mag-ink); font-weight: 600; font-size: .92rem; margin-bottom: .9rem; }
 button.st-make[hidden] { display: none; }
 .st-list { display: grid; gap: .8rem; }
+/* ── each kind of post, its own look ── */
+.st-card.pk { position: relative; overflow: hidden; }
+.pk-badge { display: inline-flex; align-items: center; gap: .4rem; font-size: .64rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 800; color: var(--pk-c); position: relative; z-index: 1; }
+.pk-badge svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.st-card.pk > * { position: relative; z-index: 1; }
+/* discussion: a speech bubble */
+.st-card.pk-discussion { background: linear-gradient(160deg, rgba(167,139,250,.20), rgba(167,139,250,.05)) !important; border: 1px solid rgba(167,139,250,.4) !important; border-radius: 24px 24px 24px 6px; }
+.st-card.pk-discussion::before { content: "\201C"; position: absolute; right: .9rem; top: .1rem; font-family: Georgia, var(--f-serif), serif; font-size: 5.5rem; line-height: 1; color: rgba(167,139,250,.32); z-index: 0; }
+.st-card.pk-discussion :is(.st-text, .st-quote) { font-size: 1.02rem; line-height: 1.5; }
+/* challenge: a poster */
+.st-card.pk-challenge { background: radial-gradient(120% 140% at 100% 0%, rgba(255,107,107,.38), transparent 55%), linear-gradient(160deg, #2B0F1A, #150812) !important; border: 1px solid rgba(255,107,107,.5) !important; box-shadow: 0 10px 30px rgba(255,80,80,.2); color: #FFE9E9; }
+.st-card.pk-challenge::before { content: ""; position: absolute; right: -14px; top: -10px; width: 110px; height: 110px; z-index: 0; opacity: .16;
+  background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 3 4 14h7l-1 7 9-11h-7z' fill='%23FF6B6B'/%3E%3C/svg%3E"); }
+.st-card.pk-challenge .st-title { font-size: 1.18rem; font-weight: 800; letter-spacing: .01em; }
+.st-card.pk-challenge .st-acts > span:first-child { background: rgba(255,107,107,.2); color: #FF9A9A; border-radius: 999px; padding: .22rem .65rem; font-weight: 700; }
+/* translation: facing pages */
+.st-card.pk-translation { background: linear-gradient(180deg, rgba(255,181,71,.12), rgba(255,181,71,.03)) !important; border: 1px solid rgba(255,181,71,.38) !important; }
+.st-card.pk-translation .st-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 12px; overflow: hidden; background: #FBF6EC; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.st-card.pk-translation .st-pair > div { padding: .75rem .8rem; }
+.st-card.pk-translation .st-pair > div + div { border-left: 1px dashed rgba(60,40,10,.25); }
+.st-card.pk-translation .st-pair small { display: block; color: #B07A1C; letter-spacing: .12em; text-transform: uppercase; font-weight: 800; font-size: .6rem; margin-bottom: .3rem; }
+.st-card.pk-translation .st-pair p { font-family: var(--f-serif); color: #2A2418 !important; -webkit-text-fill-color: #2A2418; margin: 0; }
+/* request and help: an airmail letter with a stamp */
+.st-card.pk-request, .st-card.pk-help { background: #F3F8FF !important; border: none !important; padding-top: 1.15rem; box-shadow: 0 10px 26px rgba(0,0,0,.3); }
+.st-card.pk-request::before, .st-card.pk-help::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; z-index: 0;
+  background: repeating-linear-gradient(135deg, #E5484D 0 10px, #F3F8FF 10px 18px, #2B9AF3 18px 28px, #F3F8FF 28px 36px); }
+.st-card.pk-request::after, .st-card.pk-help::after { content: "REQUEST"; position: absolute; right: .8rem; top: 1rem; z-index: 0; border: 2px solid #2B9AF3; color: #2B9AF3;
+  transform: rotate(8deg); font-weight: 800; font-size: .6rem; letter-spacing: .16em; padding: .2rem .45rem; border-radius: 4px; opacity: .75; }
+.st-card.pk-help::after { content: "HELP"; border-color: #E5484D; color: #E5484D; }
+/* image: a print */
+.st-card.pk-image { background: #fff !important; border: none !important; border-radius: 4px; padding: .7rem .7rem 1.1rem; box-shadow: 0 14px 30px rgba(0,0,0,.4); transform: rotate(-.6deg); }
+.st-card.pk-image .st-media { border-radius: 2px; }
+/* audiovisual: a film strip */
+.st-card.pk-reel { background: #0A0A0F !important; border: none !important; padding-left: 1.7rem; padding-right: 1.7rem; }
+.st-card.pk-reel::before, .st-card.pk-reel::after { content: ""; position: absolute; top: 0; bottom: 0; width: 16px; z-index: 0;
+  background: radial-gradient(circle, rgba(255,255,255,.75) 3px, transparent 3.4px) center 6px / 16px 18px repeat-y; }
+.st-card.pk-reel::before { left: 3px; } .st-card.pk-reel::after { right: 3px; }
+/* light cards keep dark ink */
+.st-card.pk-light :is(.st-title, .st-quote, .st-text, .st-when, .st-acts, .st-acts span, .st-who b, .st-note) { color: #1B2333 !important; -webkit-text-fill-color: #1B2333; }
+.st-card.pk-light :is(.st-quote, .st-text) { background: rgba(43,154,243,.07) !important; border-color: rgba(43,154,243,.25) !important; }
+.st-card.pk-light .st-go { background: linear-gradient(135deg, #3AA6FF, #2B7FE0) !important; color: #fff !important; -webkit-text-fill-color: #fff; border: none !important; box-shadow: 0 6px 16px rgba(43,127,224,.35); }
+.st-card.pk-help .st-go { background: linear-gradient(135deg, #F36B6F, #E5484D) !important; box-shadow: 0 6px 16px rgba(229,72,77,.3); }
+.st-card.pk-light .st-tag { color: #24518A; background: rgba(43,154,243,.1); border-color: rgba(43,154,243,.35); }
 .rp-card { cursor: pointer; margin: .2rem 0; outline: none; }
 .rp-sheet { position: relative; background: linear-gradient(180deg, #FBF8F1 0%, #F4EFE3 100%); color: #1F2433; border-radius: 6px 22px 6px 6px;
   padding: 1.25rem 1.2rem 1rem; box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 14px 34px rgba(0,0,0,.35), 0 2px 6px rgba(0,0,0,.25);
@@ -18722,6 +18765,18 @@ function researchCard(r) {
 function studioCard(r, sec, hero, kindLab) {
   if (r.post_type === "research" && !hero) return researchCard(r);
   const c = el("article", "st-card" + (hero ? " st-hero" : ""));
+  /* each kind of post has its own look */
+  const PK_NAME = { translation: "Translation", help: "Help wanted", request: "Request", discussion: "Discussion",
+    challenge: "Challenge", image: "Image", reel: "Audiovisual", other: "Post" };
+  const pk = PK_NAME[r.post_type] ? r.post_type : "other";
+  if (!hero) {
+    c.classList.add("pk", "pk-" + pk);
+    if (pk === "request" || pk === "help" || pk === "image") c.classList.add("pk-light");
+    const lk = PK_LOOK[pk] || PK_LOOK.other;
+    c.style.setProperty("--pk-c", lk[0]);
+    c.appendChild(el("span", "pk-badge", '<svg viewBox="0 0 24 24" aria-hidden="true">' + lk[1] + '</svg>' + PK_NAME[pk]));
+    kindLab = "";
+  }
   c.tabIndex = 0;
   c.setAttribute("role", "button");
   const open = write => openPost(r, write ? { write: true } : undefined);
@@ -23030,7 +23085,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-1129";
+const BUILD = "1106-1134";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
