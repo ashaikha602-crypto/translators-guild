@@ -4505,6 +4505,12 @@ details.sf-az-item summary span { font-family: var(--f-ar-text); color: var(--in
 .mg-acts { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .3rem; }
 .mg-btn { all: unset; cursor: pointer; font-size: .82rem; font-weight: 700; padding: .55rem .9rem; border-radius: 12px; background: var(--void-3); color: var(--white); }
 .mg-btn.main { background: var(--white); color: var(--void); }
+.mg-vis { all: unset; box-sizing: border-box; display: flex; gap: .7rem; align-items: center; width: 100%; margin-top: .8rem; padding: .7rem .85rem; border-radius: 14px; border: var(--hair); cursor: pointer; }
+.mg-vis b { display: block; font-size: .88rem; } .mg-vis small { display: block; font-size: .74rem; opacity: .75; }
+.mg-sw { flex: 0 0 auto; width: 2.4rem; height: 1.4rem; border-radius: 1rem; background: #34D399; position: relative; }
+.mg-sw i { position: absolute; top: .15rem; right: .15rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: #fff; }
+.mg-vis.off .mg-sw { background: var(--void-3); } .mg-vis.off .mg-sw i { right: auto; left: .15rem; }
+.mg-hidden-note { font-size: .78rem; opacity: .75; margin: .3rem 0 0; }
 .mg-empty { padding: 1.2rem 1rem; border-radius: 18px; border: 1.5px dashed var(--void-3); text-align: center; }
 .mg-empty b { font-family: var(--f-serif); font-size: 1.05rem; color: var(--white); }
 .mg-empty p { font-size: .86rem; color: var(--ink-soft); line-height: 1.55; margin: .4rem 0 0; }
@@ -14816,7 +14822,7 @@ function glossPublish() {
       await fetch(SUPABASE.url + "/rest/v1/glossaries", {
         method: "POST",
         headers: Object.assign(await sbHeaders(), { "Prefer": "resolution=merge-duplicates,return=minimal" }),
-        body: JSON.stringify({ user_id: myId(), name: (g.name || "").trim() || null,
+        body: JSON.stringify({ user_id: myId(), name: (g.name || "").trim() || null, hidden: !!g.hidden,
           terms: g.terms.map(t => ({ en: t.en, ar: t.ar, own: t.own || "", alts: t.alts || [], f: t.f, src: t.src || "", note: t.note || "" })),
           updated_at: new Date().toISOString() })
       });
@@ -14837,7 +14843,17 @@ function runGlossView(row, who) {
   hero.appendChild(el("div", "mg-name", "<h2>" + esc(title) + "</h2>"));
   hero.appendChild(el("p", "mg-sub", terms.length + (terms.length === 1 ? " term" : " terms") + " · " + secs.length + (secs.length === 1 ? " section" : " sections")));
   stage.appendChild(hero);
+  if (row.hidden) hero.appendChild(el("p", "mg-hidden-note", "Hidden from other members. You see it as the admin."));
   if (!terms.length) stage.appendChild(el("p", "mg-empty", "No terms added yet."));
+  /* only the admin may change another member's glossary; the database checks it too */
+  const ADM = typeof admIsAdmin !== "undefined" && admIsAdmin && row.user_id && row.user_id !== myId();
+  const saveAs = async next => {
+    const r = await fetch(SUPABASE.url + "/rest/v1/glossaries?user_id=eq." + row.user_id, { method: "PATCH",
+      headers: Object.assign(await sbHeaders(), { "Content-Type": "application/json", "Prefer": "return=minimal" }),
+      body: JSON.stringify({ terms: next, updated_at: new Date().toISOString() }) });
+    if (!r.ok) throw new Error("save " + r.status);
+    row.terms = next; runGlossView(row, who);
+  };
   const box = el("div", "mg-secs");
   secs.forEach(f => {
     const sec = el("section", "mg-sec"); sec.style.setProperty("--mg-c", f.c);
@@ -14854,6 +14870,21 @@ function runGlossView(row, who) {
         (t.note ? '<p class="mg-note">' + esc(t.note) + '</p>' : '') +
         (mine.length ? '<div class="mg-yours"><span class="mg-yours-h">' + esc(poss) + ' translation' + (mine.length > 1 ? 's' : '') + '</span>' +
           mine.map(v => '<span class="mg-yc"><span dir="auto">' + esc(v) + '</span></span>').join("") + '</div>' : '');
+      if (ADM) {
+        const a = el("div", "mg-tacts");
+        const ed = el("button", "mg-mini", "✎ Edit (admin)"); ed.type = "button";
+        ed.addEventListener("click", () => {
+          const v = window.prompt("Translation of “" + t.en + "”", t.own || t.ar || "");
+          if (v === null) return;
+          saveAs(terms.map(x => x === t ? Object.assign({}, x, { own: v.trim() }) : x)).catch(() => alert("Could not save."));
+        });
+        const rm = el("button", "mg-mini", "Remove (admin)"); rm.type = "button";
+        rm.addEventListener("click", () => {
+          if (!rm.dataset.sure) { rm.dataset.sure = "1"; rm.textContent = "Tap again to remove"; rm.classList.add("warn"); return; }
+          saveAs(terms.filter(x => x !== t)).catch(() => alert("Could not save."));
+        });
+        a.appendChild(ed); a.appendChild(rm); r.appendChild(a);
+      }
       body.appendChild(r);
     });
     sec.appendChild(body); box.appendChild(sec);
@@ -14864,8 +14895,9 @@ function runGlossView(row, who) {
 function glossVisitCard(userId, who) {
   const holder = el("div");
   const paint = rows => {
-    const row = (rows && rows[0]) || { name: "", terms: [] };
+    const row = (rows && rows[0]) || { user_id: userId, name: "", terms: [] };
     if (!Array.isArray(row.terms)) row.terms = [];
+    row.user_id = userId;
     const poss = who ? who + (/s$/i.test(who) ? "\u2019" : "\u2019s") : "Their";
     const c = el("button", "mg-card");
     c.type = "button";
@@ -14875,7 +14907,11 @@ function glossVisitCard(userId, who) {
       section: "profile", run: () => runGlossView(row, who) }));
     holder.appendChild(c);
   };
-  sbGet("glossaries?select=name,terms&user_id=eq." + userId).then(paint, () => paint(null));
+  sbGet("glossaries?select=name,terms,hidden&user_id=eq." + userId).then(rows => {
+    if (rows && rows[0]) return paint(rows);
+    /* no row returned: either none yet (show it empty) or hidden by its owner (show nothing) */
+    return sbRpc("glossary_state", { target: userId }).then(st => { if (st !== "hidden") paint(null); }, () => paint(null));
+  }, () => paint(null));
   return holder;
 }
 let glossFirstPub = false;
@@ -15186,6 +15222,13 @@ function runMyGlossary() {
     dictB.addEventListener("click", () => openItem(ITEMS.find(t => t.id === "sd-legal")));
     acts.appendChild(addB); acts.appendChild(dictB);
     hero.appendChild(acts);
+    /* who can see it: on her profile for everyone, or only for her */
+    const vis = el("button", "mg-vis" + (g.hidden ? " off" : ""), g.hidden ?
+      '<span class="mg-sw"><i></i></span><span><b>Hidden from others</b><small>Only you can see this glossary. Tap to show it on your profile.</small></span>' :
+      '<span class="mg-sw"><i></i></span><span><b>Shown on your profile</b><small>Other members can read it, but only you can change it. Tap to hide it.</small></span>');
+    vis.type = "button";
+    vis.addEventListener("click", () => { g.hidden = !g.hidden; glossTouch(); render(); });
+    hero.appendChild(vis);
     stage.appendChild(hero);
 
     if (!g.terms.length) {
@@ -17858,6 +17901,13 @@ async function sbGet(path) {
   return r.json();
 }
 
+async function sbRpc(name, args) {
+  const r = await fetch(SUPABASE.url + "/rest/v1/rpc/" + name, { method: "POST",
+    headers: Object.assign(await sbHeaders(), { "Content-Type": "application/json" }), body: JSON.stringify(args || {}) });
+  if (!r.ok) throw new Error("rpc " + r.status);
+  return r.json();
+}
+
 const myId = () => (session && session.user && session.user.id) || null;
 
 /* 1,414 rather than 1414, which is how she wrote it. */
@@ -18422,8 +18472,7 @@ async function runPublic(id) {
   }
   if (acts.children.length) stage.appendChild(acts);
 
-  stage.appendChild(workSection(id, false));
-  stage.appendChild(glossVisitCard(id, (p.first_name || String(p.display_name || "").trim().split(/\s+/)[0] || "").trim()));
+  stage.appendChild(workSection(id, false, (p.first_name || String(p.display_name || "").trim().split(/\s+/)[0] || "").trim()));
 
   stage.appendChild(footNav({ backLabel: "Back" }));
 }
@@ -22236,13 +22285,14 @@ const WORK_KINDS = [
     ico: '<path d="M20 11.5a7.5 7.5 0 0 1-11 6.6L4 19.5l1.4-4.4A7.5 7.5 0 1 1 20 11.5z"/>' }
 ];
 function workKind(t) { return WORK_KINDS.find(k => k.types.indexOf(t) >= 0); }
-function workSection(authorId, isMe) {
+function workSection(authorId, isMe, who) {
   /* Four small coloured squares, one per kind; the one tapped is listed
      underneath. Little writing, nothing else. */
   const wrap = el("div", "mw");
   const h = el("div", "mw-h", "<b>" + (isMe ? "My work" : "Work") + "</b>");
   wrap.appendChild(h);
   if (isMe) { const gc = glossCard(); gc.classList.add("mw-gloss"); wrap.appendChild(gc); }
+  else { const gv = glossVisitCard(authorId, who); gv.classList.add("mw-gloss"); wrap.appendChild(gv); }
   const tiles = el("div", "mw-tiles4"); wrap.appendChild(tiles);
   if (isMe) {
     const add = el("button", "mw-add", "＋ Share a translation");
@@ -22911,7 +22961,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-0955";
+const BUILD = "1106-1125";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
