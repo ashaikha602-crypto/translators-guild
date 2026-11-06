@@ -14837,6 +14837,7 @@ function runGlossView(row, who) {
   hero.appendChild(el("div", "mg-name", "<h2>" + esc(title) + "</h2>"));
   hero.appendChild(el("p", "mg-sub", terms.length + (terms.length === 1 ? " term" : " terms") + " · " + secs.length + (secs.length === 1 ? " section" : " sections")));
   stage.appendChild(hero);
+  if (!terms.length) stage.appendChild(el("p", "mg-empty", "No terms added yet."));
   const box = el("div", "mg-secs");
   secs.forEach(f => {
     const sec = el("section", "mg-sec"); sec.style.setProperty("--mg-c", f.c);
@@ -14862,9 +14863,9 @@ function runGlossView(row, who) {
 }
 function glossVisitCard(userId, who) {
   const holder = el("div");
-  sbGet("glossaries?select=name,terms&user_id=eq." + userId).then(rows => {
-    const row = rows && rows[0];
-    if (!row || !Array.isArray(row.terms) || !row.terms.length) return;
+  const paint = rows => {
+    const row = (rows && rows[0]) || { name: "", terms: [] };
+    if (!Array.isArray(row.terms)) row.terms = [];
     const poss = who ? who + (/s$/i.test(who) ? "\u2019" : "\u2019s") : "Their";
     const c = el("button", "mg-card");
     c.type = "button";
@@ -14873,7 +14874,8 @@ function glossVisitCard(userId, who) {
     c.addEventListener("click", () => openItem({ id: "gloss:" + userId, en: (row.name || "").trim() || poss + " glossary", subject: "Terms, by field",
       section: "profile", run: () => runGlossView(row, who) }));
     holder.appendChild(c);
-  }).catch(() => {});
+  };
+  sbGet("glossaries?select=name,terms&user_id=eq." + userId).then(paint, () => paint(null));
   return holder;
 }
 let glossFirstPub = false;
@@ -15276,7 +15278,7 @@ const MYGLOSS_ITEM = { id: "myglossary", ar: "مسردي", en: "My glossary", ki
 /* the glossary as it shows on the member's own profile */
 function glossCard() {
   const g = myGloss();
-  if (!glossFirstPub && g.terms.length) { glossFirstPub = true; glossPublish(); }
+  if (!glossFirstPub) { glossFirstPub = true; glossPublish(); }
   const byF = {};
   g.terms.forEach(t => { byF[t.f] = (byF[t.f] || 0) + 1; });
   const fs = MG_FIELDS.filter(f => byF[f.id]);
@@ -22909,7 +22911,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-0929";
+const BUILD = "1106-0955";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
