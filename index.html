@@ -23088,7 +23088,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-1222";
+const BUILD = "1106-1243";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -31639,14 +31639,33 @@ const REAL_SPEAKERS = {};
 Object.keys(REAL_CLIPS).forEach(g => { REAL_SPEAKERS[g] = Array.from(new Set(REAL_CLIPS[g].map(c => c.credit.replace(/^Real voices?: /, "")))).map(t => "<br>• " + escapeText(t)).join(""); });
 const REAL_CREDIT = "Real voices: LibriVox volunteers reading the Universal Declaration of Human Rights (public domain), English read by KS, Arabic read by FE. Cut article by article.";
 let consecAudio = null;
+/* iPhone plays sound only when the play starts from a tap. So one player is
+   unlocked the moment the member taps Start (a fifth of a second of silence),
+   and every speaker clip after that plays through the same player, even
+   while the microphone is recording. */
+const CS_SILENT = "data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYwLjE2LjEwMAAAAAAAAAAAAAAA//NwwAAAAAAAAAAAAEluZm8AAAAPAAAACgAABMsAOzs7Ozs7Ozs7UVFRUVFRUVFRUWdnZ2dnZ2dnZ2d9fX19fX19fX19kpKSkpKSkpKSkqioqKioqKioqKi+vr6+vr6+vr6+1NTU1NTU1NTU1Orq6urq6urq6ur/////////////AAAAAExhdmM2MC4zMQAAAAAAAAAAAAAAACQDBgAAAAAAAATL+A9CeQAAAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80DEpAAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsSjAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
+function csUnlockAudio() {
+  try { if (navigator.audioSession) navigator.audioSession.type = "play-and-record"; } catch (e) { }
+  try {
+    if (!consecAudio) consecAudio = new Audio();
+    const a = consecAudio;
+    if (a.dataset.unlocked) return;
+    a.dataset.unlocked = "1";
+    a.src = CS_SILENT;
+    const p = a.play();
+    if (p && p.catch) p.catch(() => { delete a.dataset.unlocked; });
+  } catch (e) { }
+}
 function consecPlay(url, onstart, onend) {
   try { consecAudio && consecAudio.pause(); } catch (e) { }
-  const a = new Audio(url);
-  consecAudio = a;
+  if (!consecAudio) consecAudio = new Audio();
+  const a = consecAudio;
+  a.onplaying = a.onended = a.onerror = null;
+  a.src = url;
   let done = false;
   const fin = ok => { if (done) return; done = true; onend(ok); };
   a.onplaying = () => { onstart && onstart(); };
-  a.onended = () => fin(true);
+  a.onended = () => { a.onerror = null; fin(true); };
   a.onerror = () => fin(false);
   const p = a.play();
   if (p && p.catch) p.catch(() => fin(false));
@@ -31795,7 +31814,7 @@ function runSpoken(mode) {
     const go = el("button", "primary cs-go", SIM ? "Start · the mic opens and the speech begins" : "Start · the speaker begins"); go.type = "button";
     /* one tap: simultaneous opens the mic and starts the speech at once;
        consecutive starts the speaker at once */
-    go.onclick = () => { st.started = true; if (SIM) { simul(); const b = stage.querySelector(".cs-mic-btn"); b && b.click(); } else start(); };
+    go.onclick = () => { csUnlockAudio(); st.started = true; if (SIM) { simul(); const b = stage.querySelector(".cs-mic-btn"); b && b.click(); } else start(); };
     stage.appendChild(go);
     if (!REAL_CLIPS[st.genre]) stage.appendChild(el("p", "sd-note", "The texts are the interpreting section's own: " + BOOTH_GENRES.find(x => x.id === st.genre).hint));
     stage.appendChild(csBackToModes());
@@ -31893,7 +31912,7 @@ function runSpoken(mode) {
       /* a recording that will not play is shown as text, never read by a synthetic voice */
       consecPlay(q.audio, on, ok => heard(!!ok));
     };
-    act.onclick = speak;
+    act.onclick = () => { csUnlockAudio(); speak(); };
     rep.onclick = () => { if (st.repeat > 0) { st.repeat--; rep.textContent = "Ask the speaker to repeat (" + st.repeat + " left)"; speak(); } };
     function yourTurn() {
       steps.replaceWith(csSteps(1));
@@ -32067,6 +32086,7 @@ function runSpoken(mode) {
       });
     };
     go.onclick = () => {
+      csUnlockAudio();
       go.hidden = true; stop.hidden = false; cough.hidden = false;
       mic = consecListen(into, t => { said.value = t; }, msg => { stateP.innerHTML = msg; }, () => { said.focus(); });
       box.classList.add("on"); air.classList.add("on");
