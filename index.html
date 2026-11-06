@@ -4137,6 +4137,7 @@ html:root[data-look="compass"]:not([data-mode]) .mw-add { color: var(--cn-ink); 
 .lu-compact .sf-try b { font-size: 1rem; }
 .cs-real { font-size: .62rem; color: #34D399; margin-left: .25rem; }
 .chip.on .cs-real { color: #fff; }
+.cs-none { font-size: .62rem; opacity: .7; margin-left: .2rem; } .cs-chips .chip:disabled, .cs-seg button:disabled { opacity: .38; cursor: not-allowed; }
 .cs-realnote { font-size: .8rem; margin: .45rem 0 0; color: #6EE7B7; }
 .cs-voice-k { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: #34D399; margin: .5rem 0 0; }
 .cs-voice-k.dim { color: inherit; opacity: .55; }
@@ -22908,7 +22909,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-0018";
+const BUILD = "1106-0929";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -31543,12 +31544,15 @@ function csNotepad() {
   return { node: node, snapshot: () => ({ img: drew ? cv.toDataURL("image/png") : "", text: ta.value.trim() }) };
 }
 
+/* real recorded speakers only: no phone (synthetic) voices anywhere in the spoken modes */
+const realHas = (g, l) => (REAL_AUDIO[g] || []).some(r => r.clip ? r.lang === l : r[l]);
 function runSpoken(mode) {
   consecStop();
   const SIM = mode === "simul";
   const st = { genre: state.genre && BOOTH_GENRES.find(g => g.id === state.genre) ? state.genre : BOOTH_GENRES[0].id,
     dir: state.consecMode && state.consecMode !== "both" ? state.consecMode : boothDir(), both: !SIM && state.consecMode === "both" };
-  try { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = () => { if (!st.started && active && (active.id === "consec" || active.id === "simul")) setup(); }; } catch (e) { }
+  /* start on a setting and direction that have real speakers */
+  if (!realHas(st.genre, "ar") && !realHas(st.genre, "en")) st.genre = BOOTH_GENRES.find(g => realHas(g.id, "ar") || realHas(g.id, "en")).id;
   setup();
 
   function setup() {
@@ -31571,23 +31575,29 @@ function runSpoken(mode) {
     stage.appendChild(el("p", "cs-lab", "1 · Setting"));
     const gs = el("div", "chips cs-chips");
     BOOTH_GENRES.forEach(g => {
-      const c = el("button", "chip" + (g.id === st.genre ? " on" : ""), g.en + (REAL_AUDIO[g.id] ? ' <span class="cs-real">● real voices</span>' : '')); c.type = "button";
-      c.onclick = () => { st.genre = g.id; state.genre = g.id; save(); setup(); };
+      const any = realHas(g.id, "ar") || realHas(g.id, "en");
+      const c = el("button", "chip" + (g.id === st.genre ? " on" : ""), g.en + (any ? '' : ' <span class="cs-none">· no recordings yet</span>')); c.type = "button";
+      if (!any) { c.disabled = true; c.title = "No free recording of a real speaker has been found for this setting yet."; }
+      c.onclick = () => { if (!any) return; st.genre = g.id; state.genre = g.id; save(); setup(); };
       gs.appendChild(c);
     });
     stage.appendChild(gs);
     if (!REAL_CLIPS[st.genre]) stage.appendChild(el("p", "cs-src", BOOTH_GENRES.find(x => x.id === st.genre).hint));
-    const has = l => (REAL_AUDIO[st.genre] || []).some(r => r.clip ? r.lang === l : r[l]);
-    stage.appendChild(el("p", "cs-realnote", has("ar") && has("en") ? "✓ This setting uses <b>real recorded human voices</b> in Arabic and English, not the phone's voice." :
-      has("en") ? "✓ <b>English speakers are real recordings.</b> No free Arabic recording was found for this setting yet, so Arabic → English uses the phone's voice." :
-      has("ar") ? "✓ <b>Arabic speakers are real recordings.</b> No free English recording was found for this setting yet, so English → Arabic uses the phone's voice." :
-      "No free recording was found for this setting yet, so it uses the phone's voice."));
+    const has = l => realHas(st.genre, l);
+    /* only the directions that have a real speaker can be chosen */
+    if (!has(st.dir === "ar-en" ? "ar" : "en")) { st.dir = has("ar") ? "ar-en" : "en-ar"; }
+    if (st.both && !(has("ar") && has("en"))) st.both = false;
+    stage.appendChild(el("p", "cs-realnote", has("ar") && has("en") ? "✓ Every speaker here is a <b>real recorded person</b>, in Arabic and in English." :
+      has("en") ? "✓ Every speaker here is a <b>real recorded person</b>. No free recording of an Arabic speaker has been found for this setting yet, so only English → Arabic is open." :
+      "✓ Every speaker here is a <b>real recorded person</b>. No free recording of an English speaker has been found for this setting yet, so only Arabic → English is open."));
 
     stage.appendChild(el("p", "cs-lab", "2 · Direction"));
     const seg = el("div", "cs-seg" + (SIM ? " two" : ""));
     (SIM ? [["ar-en", "Arabic → English"], ["en-ar", "English → Arabic"]] : [["ar-en", "Arabic → English"], ["en-ar", "English → Arabic"], ["both", "Both ways"]]).forEach(([id, t]) => {
       const on = id === "both" ? st.both : (!st.both && st.dir === id);
       const b = el("button", on ? "on" : "", t); b.type = "button";
+      const ok = id === "both" ? has("ar") && has("en") : has(id === "ar-en" ? "ar" : "en");
+      if (!ok) { b.disabled = true; b.title = "No real speaker recorded for this direction yet"; }
       b.onclick = () => { if (id === "both") st.both = true; else { st.both = false; st.dir = id; state.boothDir = id; } state.consecMode = id; save(); setup(); };
       seg.appendChild(b);
     });
@@ -31598,26 +31608,6 @@ function runSpoken(mode) {
       stage.appendChild(el("div", "cs-voices", '<p class="cs-tip"><b>Real people, recorded.</b> ' + (REAL_SPEAKERS[st.genre] ||
         'LibriVox volunteers reading the Universal Declaration of Human Rights: English read by the volunteer credited as <b>KS</b>, Arabic by the volunteer credited as <b>FE</b> (LibriVox credits them by these initials). Public domain.') + '</p>'));
     }
-    stage.appendChild(el("p", "cs-lab", REAL_AUDIO[st.genre] ? "Phone voice (only if a recording is missing)" : "3 · The speaker's voice"));
-    const vbox = el("div", "cs-voices" + (REAL_AUDIO[st.genre] ? " cs-fold" : ""));
-    ["ar", "en"].forEach(lang => {
-      const all = consecVoices(lang).sort((a, b) => consecVoiceScore(b, lang) - consecVoiceScore(a, lang));
-      const row = el("div", "cs-vrow");
-      row.appendChild(el("span", "cs-vlab", lang === "ar" ? "Arabic" : "English"));
-      if (!all.length) { row.appendChild(el("span", "cs-vnone", "No voice on this device: the text will show for a few seconds instead.")); vbox.appendChild(row); return; }
-      const sel = document.createElement("select"); sel.className = "cs-vsel";
-      const cur = consecVoice(lang);
-      all.forEach(v => { const o = document.createElement("option"); o.value = v.voiceURI; o.textContent = v.name + " · " + v.lang; if (cur && v.voiceURI === cur.voiceURI) o.selected = true; sel.appendChild(o); });
-      sel.onchange = () => { state["csVoice_" + lang] = sel.value; save(); };
-      const hear = el("button", "ghost cs-hear", "▶ Hear"); hear.type = "button";
-      const g = BOOTH_GENRES.find(x => x.id === st.genre);
-      const sample = lang === "ar" ? (g.sentences[0] || g.terms[0]).ar : (g.sentences[0] || g.terms[0]).ok[0];
-      hear.onclick = () => consecSay(sample, lang, null, () => { });
-      row.appendChild(sel); row.appendChild(hear);
-      vbox.appendChild(row);
-    });
-    vbox.appendChild(el("p", "cs-tip", "For a clearer, more natural voice on iPhone: Settings → Accessibility → Spoken Content → Voices → Arabic (and English), and download an <b>Enhanced</b> or <b>Premium</b> voice. It then appears in the list above. On Android: Settings → Text-to-speech → install the Google voice data."));
-    stage.appendChild(vbox);
 
     const R = consecRecog();
     stage.appendChild(el("p", "cs-mini", (CS_IOS ? "🎤 You speak and are recorded; your words are written out when you finish." : R ? "✓ Your speech will be written out as you talk." : "This browser cannot write speech out: you will type what you said.") +
@@ -31710,7 +31700,7 @@ function runSpoken(mode) {
       lamp.classList.remove("on");
       if (!ok) {
         const n = Math.max(5, Math.round(srcText.split(/\s+/).length / 2));
-        stateP.innerHTML = '<span class="cs-sight" dir="' + (from === "ar" ? "rtl" : "ltr") + '">' + srcText + '</span><small>No voice for this language here. Read it: it hides in ' + n + ' seconds.</small>';
+        stateP.innerHTML = '<span class="cs-sight" dir="' + (from === "ar" ? "rtl" : "ltr") + '">' + srcText + '</span><small>The recording did not load. Read it instead: it hides in ' + n + ' seconds.</small>';
         setTimeout(yourTurn, n * 1000);
         return;
       }
@@ -31721,8 +31711,8 @@ function runSpoken(mode) {
       act.disabled = true; rep.hidden = true; t0 = 0;
       stateP.innerHTML = "<b>Listening…</b> note the ideas, names and numbers.";
       const on = () => { if (!t0) t0 = Date.now(); lamp.classList.add("on"); };
-      if (q.audio) consecPlay(q.audio, on, ok => ok ? heard(true) : consecSay(srcText, from, on, heard));
-      else consecSay(srcText, from, on, heard);
+      /* a recording that will not play is shown as text, never read by a synthetic voice */
+      consecPlay(q.audio, on, ok => heard(!!ok));
     };
     act.onclick = speak;
     rep.onclick = () => { if (st.repeat > 0) { st.repeat--; rep.textContent = "Ask the speaker to repeat (" + st.repeat + " left)"; speak(); } };
@@ -31922,11 +31912,10 @@ function runSpoken(mode) {
         const q = items[k++];
         cuts.push(said.value.length);
         const after = ok => {
-          if (!ok) { stateP.innerHTML = "No " + (from === "ar" ? "Arabic" : "English") + " voice on this device, so the speech cannot be played. Choose another direction."; return; }
+          if (!ok) { stateP.innerHTML = "The recording did not load. Check your connection and tap Leave, then start again."; return; }
           setTimeout(nextPart, 900);
         };
-        if (q.audio) consecPlay(q.audio, null, ok => ok ? after(true) : consecSay(q.speakText, from, null, after));
-        else consecSay(from === "ar" ? q.ar : q.ok[0], from, null, after);
+        consecPlay(q.audio, null, ok => after(!!ok));
       };
       setTimeout(nextPart, 700);
     };
