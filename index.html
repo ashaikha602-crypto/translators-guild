@@ -17976,6 +17976,7 @@ async function sbRpc(name, args) {
   return r.json();
 }
 
+const SITE_URL = "https://translators-compass.vercel.app";
 const myId = () => (session && session.user && session.user.id) || null;
 
 /* 1,414 rather than 1414, which is how she wrote it. */
@@ -22651,7 +22652,8 @@ function emptyThere(tab) {
    button, so the link is a real route: #u=<username> opens that member's
    public profile, under the same privacy rules as everywhere else. */
 function profileUrl(handle) {
-  return handle ? location.origin + location.pathname + "#u=" + encodeURIComponent(handle) : "";
+  /* shared links always carry the site's public address, whichever address it was opened on */
+  return handle ? SITE_URL + "/#u=" + encodeURIComponent(handle) : "";
 }
 function myShareUrl() {
   return profileUrl(state.profile && state.profile.username);
@@ -23091,7 +23093,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1106-1323";
+const BUILD = "1107-1858";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
