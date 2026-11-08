@@ -23093,7 +23093,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1107-1858";
+const BUILD = "1108-1355";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -32010,8 +32010,9 @@ function runSpoken(mode) {
     }
     const card = (k, t, dir, cls) => { const c = el("div", "cs-card" + (cls ? " " + cls : "")); c.innerHTML = '<span class="cs-k">' + k + '</span><p dir="' + dir + '">' + (t ? escapeText(t) : "<i>nothing recorded</i>") + '</p>'; return c; };
     stage.appendChild(card("The speaker said", srcText, from === "ar" ? "rtl" : "ltr"));
-    stage.appendChild(card("You said · your own words, as heard", said, into === "ar" ? "rtl" : "ltr", "you"));
-    if (q.noref) stage.appendChild(el("p", "cs-tip", "<b>No official translation exists for this recording.</b> Read what the speaker said above, idea by idea, and check each idea, name and number against what you said. Then mark yourself."));
+    if (!q.selfOnly) stage.appendChild(card("You said · your own words, as heard", said, into === "ar" ? "rtl" : "ltr", "you"));
+    if (q.noref && q.selfOnly && q.showModel) stage.appendChild(card("The official text", q.showModel, into === "ar" ? "rtl" : "ltr", "model"));
+    else if (q.noref) stage.appendChild(el("p", "cs-tip", "<b>No official translation exists for this recording.</b> Read what the speaker said above, idea by idea, and check each idea, name and number against what you said. Then mark yourself."));
     else stage.appendChild(card("The official text", q.showModel || (into === "ar" ? q.ar : q.ok[0]), into === "ar" ? "rtl" : "ltr", "model"));
     if (into === "en" && q.keys && q.keys.length) {
       const a = norm(said);
@@ -32096,7 +32097,11 @@ function runSpoken(mode) {
     go.onclick = () => {
       csUnlockAudio();
       go.hidden = true; stop.hidden = false; cough.hidden = false;
-      mic = consecListen(into, t => { said.value = t; }, msg => { stateP.innerHTML = msg; }, () => { said.focus(); });
+      mic = consecListen(into, t => { said.value = t; }, msg => { stateP.innerHTML = msg; }, () => { });
+      if (CS_IOS) {
+        said.readOnly = true;
+        said.placeholder = "Just speak: you are being recorded. Do not use the keyboard microphone; it silences the speaker.";
+      }
       box.classList.add("on"); air.classList.add("on");
       /* the cough key: hold to take your microphone off air, release to go back on */
       let prefix = "";
@@ -32110,7 +32115,7 @@ function runSpoken(mode) {
         mic = consecListen(into, t => { said.value = (prefix ? prefix + " " : "") + t; }, msg => { stateP.innerHTML = msg; }); };
       cough.addEventListener("pointerdown", mute);
       ["pointerup", "pointerleave", "pointercancel"].forEach(t => cough.addEventListener(t, unmute));
-      stateP.innerHTML = "<b>Interpret now.</b> The speaker is speaking.";
+      stateP.innerHTML = "<b>Interpret now.</b> The speaker is speaking." + (CS_IOS ? " Just speak out loud; you are being recorded." : "");
       const t0 = Date.now();
       const timer = setInterval(() => { clock.textContent = Math.round((Date.now() - t0) / 1000) + " s"; if (ended) clearInterval(timer); }, 1000);
       const nextPart = () => {
@@ -32139,6 +32144,19 @@ function runSpoken(mode) {
     const whole = { level: lv("turns"), ar: items.map(q => q.ar).join(" "), ok: [items.map(q => q.ok[0]).join(" ")], keys: [].concat.apply([], items.map(q => q.keys || [])) };
     if (items[0] && items[0].speakText) { whole.speakText = items.map(q => q.speakText).join(" "); whole.showModel = items.map(q => q.showModel).join(" "); }
     if (items[0] && items[0].noref) whole.noref = true;
+    if (!String(said || "").trim() && url) {
+      const m0 = { share: null };
+      st.log = [{ share: null }];
+      csResult(Object.assign({}, whole, { noref: true, selfOnly: true }), from, into, whole.speakText || (from === "ar" ? whole.ar : whole.ok[0]), "", m0, null, null, "", url, st.log[0]);
+      stage.appendChild(el("p", "sd-note", CS_STT_OFF ?
+        "Your voice was recorded. Writing it out is not switched on yet, so listen to yourself above and compare it with what the speaker said." :
+        "Your voice was recorded, but no words could be written out. Listen to yourself above and compare it with what the speaker said."));
+      if (whole.speakText) stage.appendChild(el("p", "sd-note", items[0].credit ? Array.from(new Set(items.map(q => q.credit))).join(" ") : REAL_CREDIT));
+      const again0 = el("button", "primary cs-big", "Another speech"); again0.type = "button"; again0.onclick = () => simul();
+      const back0 = el("button", "ghost", "Change setting"); back0.type = "button"; back0.onclick = () => { st.started = false; setup(); };
+      stage.appendChild(again0); stage.appendChild(back0); stage.appendChild(footNav({}));
+      return;
+    }
     if (!String(said || "").trim()) {
       const v = el("div", "verdict");
       v.appendChild(el("span", "vh", "None of your words reached the page"));
