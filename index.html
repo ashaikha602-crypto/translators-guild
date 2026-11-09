@@ -5662,7 +5662,7 @@ const RANKS = [
      have to be retyped guarantee it happens again. */
   { share: 0,    en: "Novice",            ar: "مُبتدِئ" },
   { share: 0.2,  en: "Advanced Beginner", ar: "مُبتدِئ مُتقدِّم" },
-  { share: 0.5,  en: "Competent",         ar: "كَفء" },
+  { share: 0.5,  en: "Competent",         ar: "كُفْء" },
   { share: 0.8,  en: "Proficient",        ar: "مُتقِن" },
   /* Expert is every published trial, never fewer and never more: fewer and
      it is not the top, more and nobody can reach it. */
@@ -6448,7 +6448,7 @@ const TEXT_WORLDS = [
           "Add a translator's note for what you sacrificed. That is scholarship, not apology."],
     lede: "Literary translation is the only kind where the form is part of the message. You are not moving information; you are rebuilding an effect out of different materials.",
     demands: ["Preserve voice — a character's register is characterisation",
-              "Keep what the author left ambiguous ambiguous",
+              "Leave ambiguous what the author left ambiguous",
               "Match rhythm and sentence length; they carry pace"],
     trap: "Explaining. When a translator resolves an ambiguity, fills a silence, or unpacks a metaphor, the reader loses the experience the author built. Trust the reader as much as the author did.",
     xfers: [
@@ -23135,7 +23135,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1109-1701";
+const BUILD = "1109-1818";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -31476,7 +31476,7 @@ async function refreshStanding() {
    into text where it can and records you; then the official text is shown
    beside yours. Not scored for a Mark.
    ═══════════════════════════════════════════════════════════ */
-const CONSEC_ITEM = { id: "consec", en: "Consecutive interpreting", ar: "الترجمة التتبعية", kind: "workshop", section: "booth",
+const CONSEC_ITEM = { id: "consec", en: "Consecutive interpreting", ar: "الترجمة التتابعية", kind: "workshop", section: "booth",
   subject: "Listen · take notes · speak", run: () => runSpoken("consec") };
 const SIMUL_ITEM = { id: "simul", en: "Simultaneous interpreting", ar: "الترجمة الفورية", kind: "workshop", section: "booth",
   subject: "Speak while the speaker speaks", run: () => runSpoken("simul") };
@@ -31811,7 +31811,7 @@ function runSpoken(mode) {
     const hero = el("div", "c-hero cs-hero");
     hero.innerHTML = '<span class="c-badge">' + (SIM ? "Simultaneous" : "Consecutive") + '</span>' +
       '<h2 class="c-title">' + (SIM ? "Speak while the speaker speaks" : "Listen, then speak") + '</h2>' +
-      '<p class="c-ar" dir="rtl" lang="ar">' + (SIM ? "الترجمة الفورية" : "الترجمة التتبعية") + '</p>';
+      '<p class="c-ar" dir="rtl" lang="ar">' + (SIM ? "الترجمة الفورية" : "الترجمة التتابعية") + '</p>';
     stage.appendChild(hero);
     const what = el("div", "cs-what");
     what.innerHTML = SIM ?
@@ -32235,7 +32235,7 @@ function chooseGenre() {
   const imModes = el("div", "im-modes");
   imModes.appendChild(el("p", "im-lab", "How do you want to practise?"));
   [["read", "Read and render", "قراءة وترجمة", "See the source, then type or say your rendering against the clock.", "#FBBF24"],
-   ["consec", "Consecutive", "تتبعية", "Hear a speaker once, take notes, then speak your interpretation.", "#38BDF8"],
+   ["consec", "Consecutive", "تتابعية", "Hear a speaker once, take notes, then speak your interpretation.", "#38BDF8"],
    ["simul", "Simultaneous", "فورية", "Speak while the speaker speaks. Headphones needed.", "#F472B6"]].forEach(([id, en, ar, say, c]) => {
     const t = el("button", "im-tile");
     t.type = "button"; t.style.setProperty("--im-c", c);
