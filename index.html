@@ -4623,6 +4623,30 @@ details.sf-az-item summary span { font-family: var(--f-ar-text); color: var(--in
 .sf-steps li b { display: block; color: var(--white); margin-bottom: .15rem; }
 .sf-steps li span { color: var(--ink-soft); font-size: .9rem; line-height: 1.5; }
 .sf-ex-t { display: block; font-family: var(--f-serif); font-size: 1.05rem; color: var(--white); margin: .2rem 0 .6rem; }
+/* a member's profile: one follow button, message and share as corner icons */
+.ig-head.has-quick { position: relative; padding-right: 5.6rem; }
+.pf-quick { position: absolute; top: 0; right: 0; display: flex; gap: .45rem; }
+.pf-ic { all: unset; box-sizing: border-box; width: 2.5rem; height: 2.5rem; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  border: var(--hair); background: rgba(255,255,255,.04); transition: transform .15s ease, background .2s ease; }
+.pf-ic svg { width: 1.2rem; height: 1.2rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.pf-ic:active { transform: scale(.9); } .pf-ic:hover { background: rgba(255,255,255,.09); }
+:root[data-theme="light"] .pf-ic { background: rgba(0,0,0,.03); }
+.pf-follow { margin: .4rem 0 1.2rem; }
+.follow-btn.big { all: unset; box-sizing: border-box; width: 100%; height: 3rem; border-radius: 999px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: .5rem; font-weight: 700; font-size: 1rem; letter-spacing: .01em;
+  color: #fff; background: linear-gradient(135deg, var(--acc, #F5B14C), #6366F1); box-shadow: 0 8px 22px rgba(56,189,248,.28);
+  transition: background .28s ease, color .28s ease, box-shadow .28s ease, transform .12s ease, border-color .28s ease; border: 1.5px solid transparent; }
+.follow-btn.big:active { transform: scale(.97); }
+.follow-btn.big.on { background: transparent; color: var(--white, #fff); border-color: rgba(255,255,255,.22); box-shadow: none; }
+:root[data-theme="light"] .follow-btn.big.on { color: #1d1d1f; border-color: rgba(0,0,0,.15); }
+.follow-btn.big.ask { background: rgba(239,68,68,.12); color: #F87171; border-color: rgba(239,68,68,.45); box-shadow: none; }
+.follow-btn.big .fb-ic { display: inline-grid; place-items: center; width: 1.25rem; height: 1.25rem; }
+.follow-btn.big .fb-ic:empty { display: none; }
+.follow-btn.big .fb-ic svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.follow-btn.big.pop .fb-ic { animation: fbPop .38s cubic-bezier(.3,1.6,.5,1); }
+@keyframes fbPop { 0% { transform: scale(.3) rotate(-30deg); opacity: 0; } 100% { transform: none; opacity: 1; } }
+.count-row b.bump { display: inline-block; animation: fbBump .4s ease; }
+@keyframes fbBump { 0% { transform: translateY(0); } 35% { transform: translateY(-5px) scale(1.15); color: var(--acc, #38BDF8); } 100% { transform: none; } }
 .sf-pair { display: grid; gap: .5rem; }
 .sf-pair > div { background: var(--well); border-radius: 14px; padding: .7rem .85rem; }
 .sf-pair small { display: block; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; margin-bottom: .3rem; }
@@ -18020,25 +18044,36 @@ async function unfollow(id) {
 
 /* A follow button that owns its own state, so the whole list does not
    have to be redrawn to change one word. */
-function followButton(m) {
-  const b = el("button", "follow-btn");
-  let on = !!m.i_follow;
-  const paint = () => {
+function followButton(m, opt) {
+  opt = opt || {};
+  const b = el("button", "follow-btn" + (opt.big ? " big" : ""));
+  b.type = "button";
+  let on = !!m.i_follow, asking = false, askT = null;
+  const PLUS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+  const TICK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  const paint = pop => {
     /* "Friends" used to appear here when the follow was mutual. There
        are no friends in the Guild — only followers and following. */
-    b.textContent = on ? "Following" : "Follow";
-    b.classList.toggle("on", on);
+    b.classList.toggle("on", on); b.classList.toggle("ask", asking);
+    b.innerHTML = '<span class="fb-ic">' + (asking ? "" : on ? TICK : PLUS) + '</span><span class="fb-t">' +
+      (asking ? "Unfollow?" : on ? "Following" : "Follow") + '</span>';
+    b.setAttribute("aria-pressed", String(on));
+    if (pop) { b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); }
   };
   paint();
   b.addEventListener("click", async (e) => {
     e.stopPropagation();
+    if (b.dataset.busy) return;
+    /* on a profile, unfollowing asks once, so a stray tap does not undo it */
+    if (opt.big && on && !asking) { asking = true; paint(); clearTimeout(askT); askT = setTimeout(() => { asking = false; paint(); }, 3000); return; }
+    asking = false; clearTimeout(askT);
     /* Change the word straight away; the server catches up behind it.
        Waiting for the round trip made the button feel stuck. */
-    if (b.dataset.busy) return;
     b.dataset.busy = "1";
-    const was = on; on = !on; paint();
+    const was = on; on = !on; paint(true);
+    opt.onChange && opt.onChange(on);
     try { was ? await unfollow(m.id) : await follow(m.id); }
-    catch (err) { on = was; paint(); b.textContent = "Not allowed"; setTimeout(paint, 2500); }
+    catch (err) { on = was; paint(); opt.onChange && opt.onChange(on); b.querySelector(".fb-t").textContent = "Not allowed"; setTimeout(() => paint(), 2500); }
     finally { delete b.dataset.busy; }
   });
   return b;
@@ -18522,25 +18557,34 @@ async function runPublic(id) {
     stage.appendChild(box);
   }
 
-  const acts = el("p", "seal-actions wide two");
-  if (dir.allow_follows) acts.appendChild(followButton(
-    { id: id, i_follow: dir.i_follow, follows_me: dir.follows_me }));
+  /* message and share sit as small icons in the profile's top corner */
+  const quick = el("div", "pf-quick");
   /* Offered unless they take none at all; the database refuses it if
      their setting says no, and the thread says so plainly rather than
      failing in silence. */
   if (p.who_can_message !== "nobody") {
-    const dm = el("button", "ghost", "Message");
-    dm.type = "button";
+    const dm = el("button", "pf-ic", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5h17v11h-17z"/><path d="M3.9 7l8.1 6 8.1-6"/></svg>');
+    dm.type = "button"; dm.setAttribute("aria-label", "Message " + p.display_name); dm.title = "Message";
     dm.addEventListener("click", () => openThread(id, p.display_name, p.title));
-    acts.appendChild(dm);
+    quick.appendChild(dm);
   }
   if (p.username) {
-    const sh = el("button", "ghost", "Share Profile");
-    sh.type = "button";
+    const sh = el("button", "pf-ic", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M7.5 8.5L12 4l4.5 4.5"/><path d="M5 13v6.5h14V13"/></svg>');
+    sh.type = "button"; sh.setAttribute("aria-label", "Share this profile"); sh.title = "Share profile";
     sh.addEventListener("click", () => shareProfile(sh, p.username));
-    acts.appendChild(sh);
+    quick.appendChild(sh);
   }
-  if (acts.children.length) stage.appendChild(acts);
+  if (quick.children.length) { head.classList.add("has-quick"); head.appendChild(quick); }
+  if (dir.allow_follows) {
+    const acts = el("div", "pf-follow");
+    const fCount = pubCells[1].querySelector("b");
+    let nF = c.followers || 0;
+    acts.appendChild(followButton({ id: id, i_follow: dir.i_follow, follows_me: dir.follows_me }, { big: true, onChange: on => {
+      nF = Math.max(0, nF + (on ? 1 : -1)); fCount.textContent = tally(nF);
+      fCount.classList.remove("bump"); void fCount.offsetWidth; fCount.classList.add("bump");
+    } }));
+    stage.appendChild(acts);
+  }
 
   stage.appendChild(workSection(id, false, (p.first_name || String(p.display_name || "").trim().split(/\s+/)[0] || "").trim()));
 
@@ -23093,7 +23137,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1109-1657";
+const BUILD = "1109-1658";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
