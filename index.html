@@ -4658,6 +4658,8 @@ details.sf-az-item summary span { font-family: var(--f-ar-text); color: var(--in
 /* on a phone, while the keyboard is up: no bar and no Ask Compass button
    over it (the dictionary stays, it is for the text being typed) */
 body.typing #bottom-nav, body.typing .hp-fab { display: none !important; }
+/* kept on the real bottom of the screen (see the visualViewport pin) */
+@media (max-width: 760px) { #bottom-nav, .hp-fab, .qd-btn { translate: 0 var(--vv-dy, 0px); } }
 /* ═══════════ ROOM TO BREATHE ═══════════
    Everything sat too close together. More space between sections and
    between the boxes in them, a little more inside each box, and on a
@@ -23135,7 +23137,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1109-1818";
+const BUILD = "1109-1828";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -25111,6 +25113,32 @@ const isTextBox = n => n && (n.tagName === "TEXTAREA" || n.tagName === "SELECT" 
   if (window.visualViewport) {
     let rt = null;
     window.visualViewport.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(unstick, 120); });
+    /* iPhone Safari can keep the shorter page height it had while the
+       keyboard was up, and then anything pinned to the bottom floats
+       mid-screen. Measure where the visible screen really ends and move
+       the bar, the Ask button and the dictionary button down to it. */
+    const vv = window.visualViewport;
+    let raf = 0;
+    const pin = () => {
+      raf = 0;
+      if (document.body.classList.contains("typing")) { document.documentElement.style.setProperty("--vv-dy", "0px"); return; }
+      if (!navBar || navBar.hidden || !window.matchMedia("(max-width: 760px)").matches) { document.documentElement.style.setProperty("--vv-dy", "0px"); return; }
+      /* where the bar is, without the current correction, against where the
+         visible screen ends (minus the bar's usual 10px gap) */
+      const cur = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--vv-dy")) || 0;
+      const at = navBar.getBoundingClientRect().bottom - cur;
+      const gap = parseFloat(getComputedStyle(navBar).bottom);
+      const want = vv.offsetTop + vv.height - (gap >= 0 && gap < 120 ? gap : 10);
+      const dy = Math.round(want - at);
+      /* only a real gap counts; small differences are the toolbar animating */
+      document.documentElement.style.setProperty("--vv-dy", (Math.abs(dy) > 24 && dy < 600 ? dy : 0) + "px");
+    };
+    const later = () => { if (!raf) raf = requestAnimationFrame(pin); };
+    vv.addEventListener("resize", later); vv.addEventListener("scroll", later);
+    window.addEventListener("scroll", later, { passive: true });
+    window.addEventListener("resize", later);
+    document.addEventListener("focusout", () => { setTimeout(later, 350); setTimeout(later, 900); });
+    later();
   }
   const phone = window.matchMedia("(pointer: coarse)");
   document.addEventListener("focusin", e => {
