@@ -4631,20 +4631,18 @@ details.sf-az-item summary span { font-family: var(--f-ar-text); color: var(--in
 .pf-ic svg { width: 1.2rem; height: 1.2rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .pf-ic:active { transform: scale(.9); } .pf-ic:hover { background: rgba(255,255,255,.09); }
 :root[data-theme="light"] .pf-ic { background: rgba(0,0,0,.03); }
-.pf-follow { margin: .4rem 0 1.2rem; }
-.follow-btn.big { all: unset; box-sizing: border-box; width: 100%; height: 3rem; border-radius: 999px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: .5rem; font-weight: 700; font-size: 1rem; letter-spacing: .01em;
-  color: #fff; background: linear-gradient(135deg, var(--acc, #F5B14C), #6366F1); box-shadow: 0 8px 22px rgba(56,189,248,.28);
-  transition: background .28s ease, color .28s ease, box-shadow .28s ease, transform .12s ease, border-color .28s ease; border: 1.5px solid transparent; }
-.follow-btn.big:active { transform: scale(.97); }
-.follow-btn.big.on { background: transparent; color: var(--white, #fff); border-color: rgba(255,255,255,.22); box-shadow: none; }
-:root[data-theme="light"] .follow-btn.big.on { color: #1d1d1f; border-color: rgba(0,0,0,.15); }
-.follow-btn.big.ask { background: rgba(239,68,68,.12); color: #F87171; border-color: rgba(239,68,68,.45); box-shadow: none; }
-.follow-btn.big .fb-ic { display: inline-grid; place-items: center; width: 1.25rem; height: 1.25rem; }
-.follow-btn.big .fb-ic:empty { display: none; }
-.follow-btn.big .fb-ic svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.follow-btn.big.pop .fb-ic { animation: fbPop .38s cubic-bezier(.3,1.6,.5,1); }
-@keyframes fbPop { 0% { transform: scale(.3) rotate(-30deg); opacity: 0; } 100% { transform: none; opacity: 1; } }
+.pf-follow { margin: .2rem 0 1.2rem; }
+.follow-btn.big { all: unset; box-sizing: border-box; position: relative; display: inline-block; width: 9.5rem; height: 2.35rem; border-radius: 10px;
+  cursor: pointer; font-weight: 600; font-size: .92rem; overflow: hidden; color: #fff; background-color: var(--acc, #F5B14C);
+  border: 1px solid transparent; -webkit-tap-highlight-color: transparent;
+  transition: background-color .35s ease, color .35s ease, border-color .35s ease, transform .15s ease; }
+.follow-btn.big:active { transform: scale(.96); }
+.follow-btn.big.on { background-color: rgba(255,255,255,.08); color: var(--white, #fff); border-color: rgba(255,255,255,.14); }
+:root[data-theme="light"] .follow-btn.big.on { background-color: rgba(0,0,0,.05); color: #1d1d1f; border-color: rgba(0,0,0,.1); }
+.follow-btn.big.ask { background-color: rgba(239,68,68,.12); color: #EF4444; border-color: rgba(239,68,68,.35); }
+.follow-btn.big .fb-face { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; transform: translateY(8px);
+  transition: opacity .3s ease, transform .3s ease; pointer-events: none; }
+.follow-btn.big:not(.on):not(.ask) .f-off, .follow-btn.big.on:not(.ask) .f-on, .follow-btn.big.ask .f-ask { opacity: 1; transform: none; }
 .count-row b.bump { display: inline-block; animation: fbBump .4s ease; }
 @keyframes fbBump { 0% { transform: translateY(0); } 35% { transform: translateY(-5px) scale(1.15); color: var(--acc, #38BDF8); } 100% { transform: none; } }
 .sf-pair { display: grid; gap: .5rem; }
@@ -18049,16 +18047,16 @@ function followButton(m, opt) {
   const b = el("button", "follow-btn" + (opt.big ? " big" : ""));
   b.type = "button";
   let on = !!m.i_follow, asking = false, askT = null;
-  const PLUS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
-  const TICK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-  const paint = pop => {
+  /* the profile's button keeps three labels stacked and fades between them,
+     so the change is smooth; list rows keep a plain word */
+  if (opt.big) b.innerHTML = '<span class="fb-face f-off">Follow</span><span class="fb-face f-on">Following</span><span class="fb-face f-ask">Unfollow?</span>';
+  const paint = () => {
     /* "Friends" used to appear here when the follow was mutual. There
        are no friends in the Guild — only followers and following. */
     b.classList.toggle("on", on); b.classList.toggle("ask", asking);
-    b.innerHTML = '<span class="fb-ic">' + (asking ? "" : on ? TICK : PLUS) + '</span><span class="fb-t">' +
-      (asking ? "Unfollow?" : on ? "Following" : "Follow") + '</span>';
+    if (!opt.big) b.textContent = on ? "Following" : "Follow";
     b.setAttribute("aria-pressed", String(on));
-    if (pop) { b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); }
+    b.setAttribute("aria-label", asking ? "Tap again to unfollow" : on ? "Following" : "Follow");
   };
   paint();
   b.addEventListener("click", async (e) => {
@@ -18070,10 +18068,10 @@ function followButton(m, opt) {
     /* Change the word straight away; the server catches up behind it.
        Waiting for the round trip made the button feel stuck. */
     b.dataset.busy = "1";
-    const was = on; on = !on; paint(true);
+    const was = on; on = !on; paint();
     opt.onChange && opt.onChange(on);
     try { was ? await unfollow(m.id) : await follow(m.id); }
-    catch (err) { on = was; paint(); opt.onChange && opt.onChange(on); b.querySelector(".fb-t").textContent = "Not allowed"; setTimeout(() => paint(), 2500); }
+    catch (err) { on = was; paint(); opt.onChange && opt.onChange(on); flash("That could not be done.", err); }
     finally { delete b.dataset.busy; }
   });
   return b;
@@ -23137,7 +23135,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1109-1658";
+const BUILD = "1109-1701";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
