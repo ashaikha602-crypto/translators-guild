@@ -4335,7 +4335,24 @@ details.sf-az-item summary span { font-family: var(--f-ar-text); color: var(--in
 .gv-t { display: grid; gap: .1rem; min-width: 0; flex: 1; }
 .gv-t b { color: var(--white); font-size: .92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .gv-t small { font-size: .72rem; color: var(--ink-faint); }
-.gv-seen { font-size: .74rem; color: var(--ink-soft); white-space: nowrap; }
+.gv-seen { font-size: .74rem; color: var(--ink-soft); white-space: nowrap; display: grid; justify-items: end; gap: .1rem; }
+.gv-seen small { font-size: .68rem; color: var(--ink-faint); }
+.gv-av { position: relative; }
+.gv-dot { position: absolute; right: -1px; bottom: -1px; width: 11px; height: 11px; border-radius: 50%; background: #22C55E; border: 2px solid var(--void-2); }
+.gv-live { display: inline-flex; align-items: center; gap: .3rem; color: #22C55E; font-weight: 600; }
+.gv-live i, .gv-on-count i { width: 7px; height: 7px; border-radius: 50%; background: #22C55E; display: inline-block; animation: gvPulse 2s ease-in-out infinite; }
+@keyframes gvPulse { 50% { opacity: .35; } }
+.gv-on-count { margin-left: auto; display: inline-flex; align-items: center; gap: .35rem; font-style: normal; font-size: .8rem; color: #22C55E; font-weight: 600; }
+.gv-row.on { border-color: rgba(34,197,94,.35); }
+.gv-row.tap { cursor: pointer; }
+.gv-visits { margin: -.2rem 0 .3rem 2.9rem; padding: .3rem 0 .3rem .8rem; border-left: 2px solid var(--void-3); display: grid; gap: .35rem; }
+.gv-visits[hidden] { display: none; }
+.gv-tabs { display: flex; gap: .4rem; margin-bottom: .8rem; }
+.gv-tab { padding: .45rem 1rem; border-radius: 999px; border: var(--hair); background: var(--void-2); color: var(--ink-soft); font: 600 .85rem var(--f-sans, inherit); cursor: pointer; }
+.gv-tab.on { background: var(--white); color: var(--void); border-color: transparent; }
+.gv-visit { display: grid; grid-template-columns: 6.2rem 1fr auto; align-items: baseline; gap: .5rem; font-size: .78rem; color: var(--ink-soft); }
+.gv-visit b { color: var(--white); font-weight: 600; font-variant-numeric: tabular-nums; }
+.gv-visit small { color: var(--ink-faint); font-size: .72rem; }
 
 /* uploaded videos, played in place like the YouTube ones */
 .avt { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; background: #000; }
@@ -21156,7 +21173,7 @@ function settingsMenu() {
     ]],
     ["Login", [
       (typeof admIsAdmin !== "undefined" && admIsAdmin) ? ["admin", "Content Admin", "", tap("admin-btn")] : null,
-      (typeof admIsAdmin !== "undefined" && admIsAdmin) ? ["people", "Guests", "", go(() => openItem(GUESTS_ITEM))] : null,
+      (typeof admIsAdmin !== "undefined" && admIsAdmin) ? ["people", "Visitors", "", go(() => openItem(GUESTS_ITEM))] : null,
       ["reset", "Reset my marks", "", tap("reset-btn"), "warn"],
       ["out", "Log out", "", tap("signout-btn"), "danger"]
     ]]
@@ -23137,7 +23154,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1109-1828";
+const BUILD = "1110-1701";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -34049,9 +34066,10 @@ const isGuest = () => !session && !!state.guest;
   });
 })();
 
-/* The owner's list of guests: a name and when this device was last here,
-   sent once on entry and then at most every ten minutes while in use. The
-   device keeps a random id so the same guest is one row, not many. */
+/* The owner's list of guests: a name, and each visit's arrival and departure.
+   While the site is open and on screen this device sends a small beat every
+   minute; when it is hidden or closed it sends one last beat saying it left.
+   The device keeps a random id so the same guest is one row, not many. */
 function guestDevice() {
   try {
     let id = localStorage.getItem("guild.gdev");
@@ -34059,33 +34077,99 @@ function guestDevice() {
     return id;
   } catch (e) { return null; }
 }
-function guestPing(force) {
+let guestBeatOk = true;     /* false once the server says guest_beat is not there yet */
+function guestPing(force, leaving) {
   if (!isGuest()) return;
+  const dev = guestDevice(); if (!dev) return;
+  const name = String(state.guest || "").slice(0, 40);
+  const headers = { "apikey": SUPABASE.key, "Authorization": "Bearer " + SUPABASE.key, "Content-Type": "application/json" };
+  if (guestBeatOk) {
+    fetch(SUPABASE.url + "/rest/v1/rpc/guest_beat", { method: "POST", headers, keepalive: true,
+      body: JSON.stringify({ p_device: dev, p_name: name, p_leaving: !!leaving }) })
+      .then(r => { if (r.status === 404) { guestBeatOk = false; guestPing(true, leaving); } }).catch(() => {});
+    return;
+  }
   let last = 0;
   try { last = Number(localStorage.getItem("guild.gping") || 0); } catch (e) {}
   if (!force && Date.now() - last < 10 * 60 * 1000) return;
-  const dev = guestDevice(); if (!dev) return;
   try { localStorage.setItem("guild.gping", String(Date.now())); } catch (e) {}
-  fetch(SUPABASE.url + "/rest/v1/rpc/guest_ping", {
-    method: "POST",
-    headers: { "apikey": SUPABASE.key, "Authorization": "Bearer " + SUPABASE.key, "Content-Type": "application/json" },
-    body: JSON.stringify({ p_device: dev, p_name: String(state.guest || "").slice(0, 40) })
-  }).catch(() => {});
+  fetch(SUPABASE.url + "/rest/v1/rpc/guest_ping", { method: "POST", headers, keepalive: true,
+    body: JSON.stringify({ p_device: dev, p_name: name }) }).catch(() => {});
 }
+/* Signed-in members: the same beat, so the owner can see how long each visit lasted. */
+let memberBeatOk = true;
+async function memberBeat(leaving) {
+  if (!memberBeatOk || !session || !session.user) return;
+  try {
+    const h = Object.assign(await sbHeaders(), { "Content-Type": "application/json" });
+    fetch(SUPABASE.url + "/rest/v1/rpc/member_beat", { method: "POST", headers: h, keepalive: true, body: JSON.stringify({ p_leaving: !!leaving }) })
+      .then(r => { if (r.status === 404) memberBeatOk = false; }).catch(() => {});
+  } catch (e) {}
+}
+setTimeout(() => memberBeat(), 3500);
+setInterval(() => { if (document.visibilityState === "visible") memberBeat(); }, 60 * 1000);
+document.addEventListener("visibilitychange", () => memberBeat(document.visibilityState !== "visible"));
+window.addEventListener("pagehide", () => memberBeat(true));
 setTimeout(() => guestPing(), 3000);
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") guestPing(); });
+setInterval(() => { if (document.visibilityState === "visible") guestPing(); }, 60 * 1000);
+document.addEventListener("visibilitychange", () => guestPing(false, document.visibilityState !== "visible"));
+window.addEventListener("pagehide", () => guestPing(false, true));
 
-const GUESTS_ITEM = { id: "guests", en: "Guests", subject: "Who continued as a guest", section: "profile", run: runGuests };
+const GUESTS_ITEM = { id: "guests", en: "Visitors", subject: "Guests and members: when they came and how long they stayed", section: "profile", run: runGuests };
+const GUEST_ONLINE_MS = 150 * 1000;   /* a beat in the last 2½ minutes, and not marked as left */
 async function runGuests() {
   setCount(""); stage.innerHTML = "";
-  stage.appendChild(el("p", "note", "Loading\u2026"));
-  let rows;
-  try { rows = await sbGet("guest_visits?select=name,first_seen,last_seen,visits&order=last_seen.desc&limit=1000"); }
+  stage.appendChild(el("p", "note", "Loading…"));
+  let rows, sess = [], open = {}, q = "", timer = null, tab = "guests";
+  let G = null, GS = null, MR = null, MS = null;
+  async function fetchAll() {
+    G = await sbGet("guest_visits?select=device_id,name,first_seen,last_seen,visits&order=last_seen.desc&limit=1000");
+    try { GS = await sbGet("guest_sessions?select=device_id,started_at,last_seen,left_at&order=started_at.desc&limit=3000"); }
+    catch (e) { GS = null; }   /* the sessions table is not there yet */
+    /* members: one row per signed-in person, built from their visits */
+    try {
+      MS = await sbGet("member_sessions?select=user_id,started_at,last_seen,left_at&order=started_at.desc&limit=5000");
+      const ids = [...new Set(MS.map(v => v.user_id))];
+      let names = {};
+      for (let i = 0; i < ids.length; i += 80) {
+        const part = await sbGet("profiles?select=id,first_name,last_name&id=in.(" + ids.slice(i, i + 80).join(",") + ")");
+        part.forEach(p => { names[p.id] = ((p.first_name || "") + " " + (p.last_name || "")).trim() || "Member"; });
+      }
+      const by = {};
+      MS.forEach(v => { (by[v.user_id] = by[v.user_id] || []).push(v); v.device_id = v.user_id; });
+      MR = ids.map(id => ({ device_id: id, name: names[id] || "Member", first_seen: by[id][by[id].length - 1].started_at,
+                            last_seen: by[id][0].last_seen, visits: by[id].length }));
+    } catch (e) { MR = null; MS = null; }
+    rows = tab === "guests" ? G : (MR || []); sess = tab === "guests" ? GS : MS;
+  }
+  try { await fetchAll(); }
   catch (e) { stage.innerHTML = ""; stage.appendChild(el("p", "note", "The guest list could not be read. It opens only for the site owner.")); stage.appendChild(footNav({})); return; }
-  let q = "";
+  const t = d => new Date(d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+  const day = d => {
+    const x = new Date(d), now = new Date(), y = new Date(now - 864e5);
+    if (x.toDateString() === now.toDateString()) return "Today";
+    if (x.toDateString() === y.toDateString()) return "Yesterday";
+    return x.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+  };
+  const dur = (a, b) => { const m = Math.max(1, Math.round((new Date(b) - new Date(a)) / 60000));
+    return m < 60 ? m + " min" : Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : ""); };
+  const isOn = v => v && !v.left_at && Date.now() - new Date(v.last_seen) < GUEST_ONLINE_MS;
   function render() {
     stage.innerHTML = "";
-    const head = el("div", "gv-head", '<b>' + rows.length + '</b><span>' + (rows.length === 1 ? "guest" : "guests") + ' so far</span>');
+    const by = {};
+    (sess || []).forEach(v => { (by[v.device_id] = by[v.device_id] || []).push(v); });
+    const online = rows.filter(r => isOn((by[r.device_id] || [])[0]));
+    const order = rows.slice().sort((a, b) => (isOn((by[b.device_id] || [])[0]) ? 1 : 0) - (isOn((by[a.device_id] || [])[0]) ? 1 : 0));
+    const tabs = el("div", "gv-tabs");
+    [["guests", "Guests"], ["members", "Members"]].forEach(([k, label]) => {
+      const b = el("button", "gv-tab" + (tab === k ? " on" : ""), label); b.type = "button";
+      b.addEventListener("click", () => { if (tab === k) return; tab = k; rows = tab === "guests" ? G : (MR || []); sess = tab === "guests" ? GS : MS; q = ""; render(); });
+      tabs.appendChild(b);
+    });
+    stage.appendChild(tabs);
+    const noun = tab === "guests" ? ["guest", "guests"] : ["member", "members"];
+    const head = el("div", "gv-head", '<b>' + rows.length + '</b><span>' + (rows.length === 1 ? noun[0] : noun[1]) + (tab === "guests" ? ' so far' : ' with recorded visits') + '</span>' +
+      (sess ? '<em class="gv-on-count"><i></i>' + online.length + ' online now</em>' : ''));
     stage.appendChild(head);
     if (rows.length > 8) {
       const sb = el("div", "gl-search"); const i = document.createElement("input");
@@ -34097,25 +34181,49 @@ async function runGuests() {
     function paintList() {
       list.innerHTML = "";
       const f = q.trim().toLowerCase();
-      const hits = rows.filter(r => !f || String(r.name || "").toLowerCase().indexOf(f) >= 0);
-      if (!hits.length) { list.appendChild(el("p", "mw-empty", rows.length ? "No guest by that name." : "No one has continued as a guest yet.")); return; }
+      const hits = order.filter(r => !f || String(r.name || "").toLowerCase().indexOf(f) >= 0);
+      if (!hits.length) { list.appendChild(el("p", "mw-empty", rows.length ? "No one by that name." : (tab === "guests" ? "No one has continued as a guest yet." : (MR ? "No member visits recorded yet." : "Member visit times start once the member-sessions SQL has been run.")))); return; }
       hits.forEach(r => {
         const nm = String(r.name || "Guest");
         const ini = nm.split(/\s+/).map(w => w.charAt(0)).join("").slice(0, 2).toUpperCase();
         const d = new Date(r.first_seen);
-        const row = el("div", "gv-row",
-          '<span class="gv-av">' + esc(ini) + '</span>' +
+        const vs = by[r.device_id] || [], on = isOn(vs[0]);
+        let seen;
+        if (on) seen = '<span class="gv-live"><i></i>Online</span><small>since ' + t(vs[0].started_at) + '</small>';
+        else if (vs[0]) seen = '<span>' + day(vs[0].started_at) + ' · ' + t(vs[0].started_at) + '\u2013' + t(vs[0].left_at || vs[0].last_seen) + '</span><small>stayed ' + dur(vs[0].started_at, vs[0].left_at || vs[0].last_seen) + '</small>';
+        else seen = '<span>Last seen ' + day(r.last_seen) + ' · ' + t(r.last_seen) + '</span>';
+        const row = el("div", "gv-row" + (on ? " on" : "") + (vs.length ? " tap" : ""),
+          '<span class="gv-av">' + esc(ini) + (on ? '<i class="gv-dot"></i>' : '') + '</span>' +
           '<span class="gv-t"><b dir="auto">' + esc(nm) + '</b><small>First came ' +
             d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) + ' · ' + (r.visits || 1) + (r.visits === 1 ? ' visit' : ' visits') + '</small></span>' +
-          '<span class="gv-seen">' + when(r.last_seen) + '</span>');
+          '<span class="gv-seen">' + seen + '</span>');
         list.appendChild(row);
+        if (!vs.length) return;
+        const box = el("div", "gv-visits"); box.hidden = !open[r.device_id];
+        vs.slice(0, 20).forEach((v, k) => {
+          const live = k === 0 && on;
+          box.appendChild(el("div", "gv-visit",
+            '<span>' + day(v.started_at) + '</span><b>' + t(v.started_at) + ' – ' + (live ? 'now' : t(v.left_at || v.last_seen)) + '</b>' +
+            '<small>' + (live ? 'on the site, ' + dur(v.started_at, Date.now()) : dur(v.started_at, v.left_at || v.last_seen)) + '</small>'));
+        });
+        list.appendChild(box);
+        row.addEventListener("click", () => { open[r.device_id] = box.hidden; box.hidden = !box.hidden; row.classList.toggle("open", !box.hidden); });
+        row.classList.toggle("open", !box.hidden);
       });
     }
     paintList();
-    stage.appendChild(el("p", "sd-note", "Guests type a name to look around without an account. Each device counts once; <i>last seen</i> is the last time it was open."));
+    stage.appendChild(el("p", "sd-note", (tab === "guests" ? "Guests type a name to look around without an account. Each device counts once. " : "Members are people signed in to their account. ") + "Tap a name to see when each visit began and ended, and how long it lasted. " +
+      (sess ? "Visit times are recorded from the day this feature went live; earlier visits have no times." : "Arrival and leaving times start once the guest-sessions SQL has been run.")));
     stage.appendChild(footNav({}));
   }
   render();
+  /* keep the list live while it is on screen */
+  timer = setInterval(async () => {
+    if (!document.body.contains(stage) || !stage.querySelector(".gv-list")) { clearInterval(timer); return; }
+    if (document.visibilityState !== "visible") return;
+    const active = document.activeElement && document.activeElement.type === "search";
+    try { await fetchAll(); if (!active) render(); } catch (e) {}
+  }, 30 * 1000);
 }
 
 function leaveGuest(mode) {
