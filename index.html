@@ -1003,6 +1003,16 @@ details.tg > .tg-in { padding: 0 .9rem .8rem; }
 .commission:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
 
 .c-top { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.c-guest { all: unset; box-sizing: border-box; display: block; width: 100%; text-align: center; cursor: pointer; margin: 1rem 0 .4rem; padding: .85rem 1rem; border-radius: 999px; border: var(--hair); color: var(--white); font-weight: 600; }
+.gw-back { position: fixed; inset: 0; z-index: 400; background: rgba(5,5,12,.6); display: grid; place-items: end center; padding: 16px; }
+.gw-card { width: min(440px, 100%); background: var(--void-2); border: var(--hair); border-radius: 22px; padding: 1.4rem 1.2rem 1rem; display: grid; gap: .7rem; text-align: center; margin-bottom: calc(10px + env(safe-area-inset-bottom)); }
+.gw-card h3 { margin: 0; font-family: var(--f-serif); color: var(--white); font-size: 1.25rem; }
+.gw-card p { margin: 0 0 .3rem; color: var(--ink-soft); font-size: .9rem; line-height: 1.5; }
+.gw-no { justify-self: center; }
+.c-by { display: flex; align-items: baseline; gap: .45rem; flex-wrap: wrap; margin-bottom: .2rem; }
+.c-name { color: var(--white); font-weight: 700; font-size: .95rem; }
+.c-handle { color: var(--ink-faint); font-size: .78rem; }
+.c-by + .c-text, .c-by + .c-quote { margin-top: 0; }
 .c-meta { display: flex; align-items: center; gap: .55rem; flex: none; }
 .commission .cnum {
   font-family: var(--f-serif); font-size: 1.5rem; font-weight: 500; line-height: 1;
@@ -16204,6 +16214,10 @@ function slug(email) {
    ever reach that member's row — nothing the client sends can widen it. */
 async function sbHeaders() {
   const t = await freshToken();
+  /* a guest reads with the public key: the database lets them see what
+     everyone in the Compass may see, and refuses every write */
+  if (!t && typeof isGuest === "function" && isGuest())
+    return { "apikey": SUPABASE.key, "Content-Type": "application/json", "Accept": "application/json" };
   if (!t) throw new Error("not signed in");
   return {
     "apikey": SUPABASE.key,
@@ -19928,7 +19942,7 @@ async function signedLinks(paths) {
     const t = await freshToken();
     const r = await fetch(SUPABASE.url + "/storage/v1/object/sign/attachments", {
       method: "POST",
-      headers: { apikey: SUPABASE.key, Authorization: "Bearer " + t, "Content-Type": "application/json" },
+      headers: Object.assign({ apikey: SUPABASE.key, "Content-Type": "application/json" }, t ? { Authorization: "Bearer " + t } : {}),
       body: JSON.stringify({ expiresIn: 600, paths: want })
     });
     if (!r.ok) return out;
@@ -19943,7 +19957,7 @@ async function signedLink(path) {
   const t = await freshToken();
   const r = await fetch(SUPABASE.url + "/storage/v1/object/sign/attachments/" + encodeURI(path), {
     method: "POST",
-    headers: { apikey: SUPABASE.key, Authorization: "Bearer " + t, "Content-Type": "application/json" },
+    headers: Object.assign({ apikey: SUPABASE.key, "Content-Type": "application/json" }, t ? { Authorization: "Bearer " + t } : {}),
     body: JSON.stringify({ expiresIn: 600 })
   });
   if (!r.ok) throw new Error("This file could not be opened.");
@@ -20221,9 +20235,8 @@ async function runPost(id, o) {
   }
 
   stage.appendChild(el("h3","pub-h", cs.length ? cs.length + (cs.length===1?" comment":" comments") : "Comments"));
-  /* the box to write in comes first, Instagram's way: always in reach */
+  /* the post, then its comments in order, then the box to write in, at the bottom */
   const quoteOpts = [r.source_text, r.translated_text].filter(Boolean);
-  commentBox = writeComment(id, null, () => runPost(id), quoteOpts);
   if (!cs.length) stage.appendChild(el("p", "note", "No comments yet. Be the first."));
   const box = el("div","c-list");
   const byParent = {};
@@ -20235,9 +20248,12 @@ async function runPost(id, o) {
     paintFace(av, w.avatar_path, w.display_name);
     d.appendChild(av);
     const tx = el("div", "c-txt");
+    /* the writer's full name on its own line, as on their profile; the comment below it */
     tx.innerHTML =
+      '<div class="c-by"><b class="c-name" dir="auto">' + esc(w.display_name || w.username || "Member") + '</b>' +
+        (w.username ? '<span class="c-handle">@' + esc(w.username) + '</span>' : '') + '</div>' +
       (c.quoted ? '<blockquote class="c-quote" dir="auto">' + esc(c.quoted) + '</blockquote>' : '') +
-      '<p class="c-text" dir="auto"><b class="ig-who">' + esc(w.username || w.display_name || "") + '</b> ' + linkMentions(c.content) + '</p>';
+      '<p class="c-text" dir="auto">' + linkMentions(c.content) + '</p>';
     const meta = el("div", "c-meta");
     meta.appendChild(el("span", null, when(c.created_at)));
     const re = el("button","c-reply","Reply");
@@ -20256,11 +20272,18 @@ async function runPost(id, o) {
   };
   (byParent[0] || []).forEach(c => drawC(c, 0));
   stage.appendChild(box);
+  commentBox = writeComment(id, null, () => runPost(id), quoteOpts);
   stage.appendChild(footNav({ backLabel: "Feed" }));
   if (o.write && commentBox) { commentBox.scrollIntoView({ block: "center" }); commentBox.focus(); }
 }
 
 function writeComment(postId, parentId, done, quoteOpts, after) {
+  if (isGuest()) {     /* guests read the conversation; joining it needs an account */
+    const g = el("button", "c-guest", "Create an account to comment");
+    g.type = "button"; g.addEventListener("click", () => guestWall("comment"));
+    if (after) after.after(g); else stage.appendChild(g);
+    return null;
+  }
   /* one line and a Post button, like Instagram; quoting a phrase from the
      post (what peer review looks like) is a tap away, not in the way */
   const wrap = el("div","c-write ig" + (parentId ? " reply" : ""));
@@ -22765,7 +22788,7 @@ function sharedHandle() {
    that can be served from the hash alone. */
 async function openSharedProfile() {
   const h = sharedHandle();
-  if (!h || backend !== "supabase") return;
+  if (!h || !(backend === "supabase" || isGuest())) return;
   try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
   try {
     const rows = await sbGet("profiles_public?select=id,username,display_name&username=eq." +
@@ -23154,7 +23177,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1110-1701";
+const BUILD = "1110-2306";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -24716,7 +24739,7 @@ async function renderLately() {
   const wrap = document.getElementById("lately-wrap");
   const box = document.getElementById("lately");
   if (!wrap || !box) return;
-  if (backend !== "supabase" || !myId()) { wrap.hidden = true; return; }
+  if (!((backend === "supabase" && myId()) || isGuest())) { wrap.hidden = true; return; }
   let rows = [];
   try {
     rows = await dropOrphans(await sbGet("feed?select=" + FEED_COLS + "&order=created_at.desc&limit=40"));
@@ -34235,6 +34258,35 @@ function leaveGuest(mode) {
   paintWho();
   show("gate");
 }
+
+/* Guests can look at everything everyone in the Compass can see: the feed,
+   posts, research, comments and profiles. Anything that writes (a like, a
+   comment, a follow, a post, a message, a report) asks them to make an account. */
+const GUEST_BLOCK = ".pa-btn.heart, .pa-btn.save, .pa-btn[aria-label^='Share'], .pa-btn[title='Repost this'], .follow-btn, .c-reply, .c-post, .hp-fab, .story-add, [aria-label*='essage'], [data-needs-account]";
+function guestWall(what) {
+  const old = document.getElementById("guest-wall"); if (old) old.remove();
+  const w = el("div", "gw-back"); w.id = "guest-wall";
+  const verb = { comment: "comment", like: "like posts", follow: "follow members" }[what] || "do that";
+  w.innerHTML = '<div class="gw-card" role="dialog" aria-modal="true"><h3>Create an account to ' + verb + '</h3>' +
+    '<p>As a guest you can read everything in the Compass. To like, comment, follow, post or send messages, you need your own account. It takes a minute.</p></div>';
+  const card = w.firstChild;
+  const up = el("button", "btn-wide", "Create an account"); up.type = "button";
+  up.addEventListener("click", () => { w.remove(); leaveGuest("up"); });
+  const lin = el("button", "ghost btn-wide", "Log in"); lin.type = "button";
+  lin.addEventListener("click", () => { w.remove(); leaveGuest("in"); });
+  const no = el("button", "link gw-no", "Not now"); no.type = "button";
+  no.addEventListener("click", () => w.remove());
+  card.appendChild(up); card.appendChild(lin); card.appendChild(no);
+  w.addEventListener("click", e => { if (e.target === w) w.remove(); });
+  document.body.appendChild(w);
+}
+document.addEventListener("click", e => {
+  if (!isGuest()) return;
+  const t = e.target.closest && e.target.closest(GUEST_BLOCK);
+  if (!t || t.closest("#guest-wall")) return;
+  e.preventDefault(); e.stopImmediatePropagation();
+  guestWall(t.classList.contains("heart") ? "like" : t.classList.contains("follow-btn") ? "follow" : (t.classList.contains("c-reply") || t.classList.contains("c-post")) ? "comment" : "");
+}, true);
 
 const GUEST_ITEM = { id: "guest-me", en: "Profile", subject: "Browsing as a guest", run: runGuestProfile };
 function runGuestProfile() {
