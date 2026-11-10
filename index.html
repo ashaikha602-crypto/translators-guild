@@ -4672,6 +4672,13 @@ details.sf-az-item summary span { font-family: var(--f-ar-text); color: var(--in
 .follow-btn.big:not(.on):not(.ask) .f-off, .follow-btn.big.on:not(.ask) .f-on, .follow-btn.big.ask .f-ask { opacity: 1; transform: none; }
 .count-row b.bump { display: inline-block; animation: fbBump .4s ease; }
 @keyframes fbBump { 0% { transform: translateY(0); } 35% { transform: translateY(-5px) scale(1.15); color: var(--acc, #38BDF8); } 100% { transform: none; } }
+.sfd-tbl { display: grid; gap: 0; margin: .6rem 0; border-radius: 14px; overflow: hidden; border: var(--hair); }
+.sfd-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .2rem .8rem; padding: .6rem .8rem; background: var(--well); }
+.sfd-row + .sfd-row { border-top: var(--hair); }
+.sfd-en { font-weight: 600; line-height: 1.4; } .sfd-en small { font-weight: 400; color: var(--ink-faint); }
+.sfd-ar { font-family: var(--f-ar-text); font-size: 1.08rem; line-height: 1.5; text-align: right; }
+.sfd-note { grid-column: 1 / -1; font-size: .78rem; color: var(--ink-faint); line-height: 1.45; }
+.sfd-key { border-left: 3px solid var(--acc, #38BDF8); padding: .4rem .8rem; margin: .7rem 0; font-weight: 600; }
 .sf-pair { display: grid; gap: .5rem; }
 .sf-pair > div { background: var(--well); border-radius: 14px; padding: .7rem .85rem; }
 .sf-pair small { display: block; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; margin-bottom: .3rem; }
@@ -5068,6 +5075,26 @@ button.st-go.light { background: #fff; color: #5b14b8; border: 0; font-weight: 7
 .learn-find input { all: unset; flex: 1; min-width: 0; font-size: 1rem; color: var(--white); }
 .learn-find input::placeholder { color: var(--ink-faint); }
 .learn-none { text-align: center; color: var(--ink-soft); display: grid; gap: .7rem; justify-items: center; }
+/* Learn on iPad and computers: sections one under another, full width,
+   their lessons in tidy columns, never sections side by side */
+@media (min-width: 760px) {
+  .ledger.learn-map { grid-template-columns: minmax(0, 1fr) !important; max-width: 1100px; margin-inline: auto; gap: 2.2rem; }
+  .learn-map .lm-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; --lm-sep: rgba(214,191,234,.12); }
+  :root[data-theme="light"] .learn-map .lm-list { --lm-sep: rgba(0,0,0,.07); }
+  .learn-map .lm-list .lesson-row + .lesson-row::before { display: none; }
+  .learn-map .lm-list .lesson-row { border-bottom: 1px solid var(--lm-sep) !important; }
+  .learn-map .lm-list .lesson-row:nth-child(odd) { border-right: 1px solid var(--lm-sep) !important; }
+  .learn-map .lm-list .lesson-row:last-child:nth-child(odd) { grid-column: 1 / -1; border-right: 0 !important; }
+}
+@media (min-width: 1180px) {
+  .learn-map .lm-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .learn-map .lm-list .lesson-row:nth-child(odd) { border-right: 0 !important; }
+  .learn-map .lm-list .lesson-row:not(:nth-child(3n)) { border-right: 1px solid var(--lm-sep) !important; }
+  .learn-map .lm-list .lesson-row:last-child:nth-child(odd) { grid-column: auto; }
+}
+@media (min-width: 760px) {
+  .learn-map .lm-list .lesson-row:only-child { grid-column: 1 / -1; border-right: 0 !important; }
+}
 .learn-none[hidden], .lm-group[hidden], .lesson-row[hidden], #lineage-block[hidden] { display: none; }
 .lr-num.done { background: var(--grad); color: #fff; }
 :root[data-theme="light"] .learn-find { background: #fff; border-color: rgba(60,30,100,.10); }
@@ -14634,6 +14661,98 @@ const SPEC_FIELDS = [
    translations, the language traps, real cases, then practice. Every
    section is made of material the Compass already carries with its
    sources; a field without such material simply has fewer sections. */
+/* ═══ SPECIALIZED TRANSLATION, IN DEPTH ═══
+   Each field's deeper lessons, built only from published research and
+   official bilingual texts, cited under every part. Nothing is invented:
+   the examples are quoted as printed in the source. */
+const SF_T = rows => '<div class="sfd-tbl">' + rows.map(r => '<div class="sfd-row"><span class="sfd-en" dir="ltr">' + r[0] + '</span>' +
+  '<span class="sfd-ar" dir="rtl" lang="ar">' + r[1] + '</span>' + (r[2] ? '<span class="sfd-note">' + r[2] + '</span>' : '') + '</div>').join("") + '</div>';
+const SF_FARAHATY = 'El-Farahaty, H. (2016). Translating Lexical Legal Terms Between English and Arabic. <i>International Journal for the Semiotics of Law</i> 29: 473–493. doi:10.1007/s11196-016-9460-2. Open access, CC BY 4.0; examples quoted from the article, headings and arrangement ours.';
+const SF_DEEP = {
+  "sf-legal": [
+    { t: "Why legal translation resists one-to-one equivalents", s: "Three constraints",
+      h: '<p>In legal translation, word-for-word correspondence (“isomorphism”) is unattainable, El-Farahaty writes, because of three constraints set out by Šarčević: <b>(1)</b> the asymmetry of legal systems, <b>(2)</b> the incongruity of legal terminology, and <b>(3)</b> legal-cultural diversity.</p>' +
+        '<p>Between English and Arabic the gap is wider still. The languages belong to different families, and so do the legal systems: legal English is tied to the <b>Common Law</b>, while legal Arabic draws on <b>Islamic law</b> and <b>Civil Law</b> (Egypt, for example, follows both). Terms such as <i>lien</i> and <i>pledge</i> carry separate meanings inside the Common Law that no Arabic term marks in the same way.</p>' +
+        '<p class="sfd-key">The legal translator’s job is “not merely transcoding the legal meaning but transferring the legal effect.”</p>' },
+    { t: "Archaic and Latin terms", s: "hereby, hereinafter, de facto",
+      h: '<p>Legal English keeps Old and Middle English words (<i>hereby, thereby, aforesaid, hereof</i>) and Latin ones (<i>ad hoc, de facto, pro rata, inter alia, ab initio, mutatis mutandis</i>). None has a one-to-one Arabic counterpart, so the translator renders the concept, uses a fixed Arabic formula, or leaves a redundant word out.</p>' +
+        SF_T([
+          ["hereunder / hereinafter", "فيما يلي", "a fixed Arabic formula"],
+          ["thereafter", "فيما بعد", ""],
+          ["set forth herein", "الواردة فيه", ""],
+          ["set forth <small>(UN Charter, art. 83.2)</small>", "المبيّنة", "the same English term, rendered differently by context"],
+          ["set forth <small>(UDHR, art. 28)</small>", "المنصوص عليها", ""],
+          ["foregoing <small>(UN Charter, art. 77.2)</small>", "سالفة الذكر", "an adverb becomes an iḍāfa phrase (structure shift)"],
+          ["I enclose herewith a detailed report about the case", "أرفق طيّه تقرير مفصل عن القضية", ""],
+          ["in the presence of the two witnesses hereinafter", "في حضور الشاهدين التاليين", ""],
+          ["I hereby declare …", "أُعلن …", "<i>hereby</i> omitted: it adds nothing to the meaning"],
+          ["de facto company", "شركة فعلية (وإن كانت لم تستوفِ الإجراءات القانونية اللازمة لذلك)", "explained, not transliterated"]
+        ]) +
+        '<p>From Arabic into English the task is easier, because English has the matching archaic words: <span dir="rtl" lang="ar">الشروط سالفة الذكر</span> → <i>the aforementioned conditions</i>; <span dir="rtl" lang="ar">في المادة 42 منه</span> → <i>in Article 42 thereof</i>.</p>' },
+    { t: "Terms of art", s: "common law, equity, barrister",
+      h: '<p>Terms of art have fixed legal meanings inside one legal system. Their literal Arabic renderings “offer no clear meaning” to an Arab reader:</p>' +
+        SF_T([
+          ["Common Law", "قانون العرف والعادة · القانون العام · القانون الأنغلوساكسوني", "literal renderings; Alwazna recommends transliteration plus a definition"],
+          ["Equity", "عدالة", "literal; does not convey the English system of equity"],
+          ["Equity Court", "محكمة الإنصاف", ""],
+          ["barrister", "محامٍ في المحكمة العليا", "functional adaptation: Arabic has one word, محامٍ, for solicitor and barrister"],
+          ["case law", "قانون الحالة · اجتهاد قضائي", "unclear to a lay reader without a paraphrase"],
+          ["Registry Office", "السجل المدني", "the nearest cultural equivalent"]
+        ]) +
+        '<p>A <b>paraphrase</b> makes such a term clear. <i>Case law</i>, for instance, becomes <span dir="rtl" lang="ar">مجموعة السابقات القانونية (الدعاوى المفصولة والمدوّنة) باعتبارها مرجعاً فقهياً للدعاوى المماثلة يصح التمسك بما قامت عليه أحكامها من المبادئ والقواعد</span> (Faruqi). Al-Qinai likewise recommends paraphrase for fixed terms such as <i>shadow cabinet</i> and <i>party whip</i>.</p>' },
+    { t: "Everyday words with legal meanings", s: "tender, consideration, compensation",
+      h: '<p>Common English words take a specific meaning in a legal text. The article gives these Arabic counterparts:</p>' +
+        SF_T([
+          ["distress", "الحجز على الأموال", ""],
+          ["construction", "تفسير", "of a document, not of a building"],
+          ["redemption", "فك الرهن", ""],
+          ["tender", "عطاء", "legally: to offer formally (a plea, evidence, or money to discharge a debt), not “soft”"],
+          ["prefer", "يعطي الأولوية لدائن", ""]
+        ]) +
+        '<p><b>Consideration</b> (<span dir="rtl" lang="ar">الاعتبار</span>) is a Common Law concept, the promise or act each party gives in exchange, which “does not exist” in Civil Law; it needs explaining, not just a word.</p>' +
+        '<p><b>Compensation</b> shows the trap. In a legal context it means money paid for something lost or damaged (<span dir="rtl" lang="ar">تعويض مالي</span>) unless the text says otherwise. Elsewhere it can be abstract (something that makes up for a hardship) or an employee’s salary and benefits.</p>' },
+    { t: "Abstract terms: do not disambiguate", s: "reasonable, fair, sufficient",
+      h: '<p>Words like <i>freedom</i> (<span dir="rtl" lang="ar">الحرية</span>), <i>privacy</i> (<span dir="rtl" lang="ar">الخصوصية</span>) and <i>right</i> (<span dir="rtl" lang="ar">الحق</span>) are open to many interpretations in court. Common Law phrases built on them can mislead when carried into Sharīʿa or Civil Law:</p>' +
+        SF_T([
+          ["reasonable steps", "خطوات معقولة", ""],
+          ["reasonable measures", "التدابير المعقولة", ""],
+          ["reasonable person", "شخص عاقل", ""],
+          ["beyond reasonable doubt", "ما لا يدع مجالاً للشك", ""],
+          ["fair and regular trial", "محاكمة عادلة ونظامية", ""],
+          ["sufficient cause", "سبب كافٍ", "the reader does not know what scale makes a cause “sufficient”"]
+        ]) +
+        '<p class="sfd-key">The rule: translate abstract terms literally and leave their interpretation to the court, “even if this translation will result in a vague text.”</p>' },
+    { t: "Culture-bound formulas and Islamic legal terms", s: "basmala, times, khulʿ",
+      h: '<p>Arabic official documents (marriage and divorce certificates, contracts) open and close with religious formulas, such as <span dir="rtl" lang="ar">بسم الله الرحمن الرحيم</span>, <span dir="rtl" lang="ar">والله وليّ التوفيق</span> and <span dir="rtl" lang="ar">والله الموفق</span>. They have no bearing on the document’s legal validity, so omitting them in an English translation is an accepted option (Mayoral Asensio). When kept, <i>Allah</i> is usually domesticated as <i>God</i>.</p>' +
+        '<p><b>Time by prayer.</b> A meeting “<span dir="rtl" lang="ar">بعد مغرب يوم الثلاثاء</span>” means nothing to an English reader. Explain it (<i>after sunset</i>) or, better, give the clock time. In the other direction, a lease that ends “at 11.59 pm” was rendered <span dir="rtl" lang="ar">بعد الزوال</span>, which is vague to readers who do not link prayer times to the sun.</p>' +
+        '<p><b>Islamic legal terms</b> have no English equivalent. <span dir="rtl" lang="ar">خُلع</span> (<i>khulʿ</i>) is not simply “divorce”: it can be (i) coined as <i>woman-sought divorce</i>, (ii) made explicit as <i>divorce (of wife) for consideration payable by her</i> (Faruqi), or (iii) explained in full. Each can be combined with borrowing the Arabic word itself.</p>' },
+    { t: "Doublets and triplets", s: "null and void, terms and conditions",
+      h: '<p>Both legal languages pair or triple near-synonyms. Before translating, decide whether each word carries its own legal effect or whether the pair is a single idea:</p>' +
+        SF_T([
+          ["This lease agreement made and entered into this … day of …", "حُرِّر عقد الإيجار هذا في … يوم … من شهر … سنة …", "one passive verb; “تم تحرير وبدأ” would be redundant"],
+          ["terms and conditions", "الشروط · الأحكام والشروط", "safer to keep two words: <i>terms</i> and <i>conditions</i> can differ legally"],
+          ["null and void", "باطلة ولاغية · باطل قطعاً", "kept as a pair, or one word with an intensifier"],
+          ["I give, devise and bequeath all of my property", "أورّث كل تركتي بوصية", "rather than the redundant أعطي وأوصي وأورث"]
+        ]) +
+        SF_T([
+          ["voluntarily / of my own free will", "بطوعي واختياري", "one English adverb can carry both"],
+          ["being fully aware and of sound mind", "لست مدهوشاً ومتمتع بقواي العقلية", "a negative clause turned positive (modulation)"],
+          ["the missing person", "المفقود الغائب", "two Arabic words, one English phrase"],
+          ["This contract revokes immediately without any prior notice if …", "يُفسخ هذا العقد فوراً وتلقائياً وبدون تنبيه أو إنذار في حالة …", ""]
+        ]) },
+    { t: "The legal translator’s toolbox", s: "Procedures, and when to use them",
+      h: '<p>For terms with no one-to-one equivalent, the article lists these procedures (after Wai-Yee, de Groot and others):</p>' +
+        '<ol class="sf-steps"><li><b>Transcription, then paraphrase or footnote</b><span>for unique concepts such as <i>khulʿ</i> or <i>Common Law</i>.</span></li>' +
+        '<li><b>Borrowing</b><span>keeping the source term, usually with an explanation.</span></li>' +
+        '<li><b>Literal translation</b><span>for abstract terms, so the court, not the translator, interprets them.</span></li>' +
+        '<li><b>Paraphrase (descriptive equivalence)</b><span>when a one-word rendering would hide the legal meaning.</span></li>' +
+        '<li><b>Functional adaptation</b><span><i>barrister</i> → <span dir="rtl" lang="ar">محامٍ في المحكمة العليا</span>.</span></li>' +
+        '<li><b>Neologism</b><span>if necessary, with an explanatory footnote.</span></li>' +
+        '<li><b>Omission</b><span>only for elements with no legal effect, such as religious formulas or a redundant <i>hereby</i>.</span></li></ol>' +
+        '<p class="sfd-key">The article concludes that this work “requires expertise, professional training, robust knowledge of the linguistic and legal systems of languages, as well as up-to-date electronic dictionaries and well-defined parallel corpora.”</p>' }
+  ].map(x => Object.assign(x, { src: SF_FARAHATY }))
+};
+
 const SF_MORE = {
   "sf-legal":     { booth: "legal",      theory: [], topics: ["Legal translation", "Risk and responsibility"],
     cases: [["285", "The Treaty of Wuchale"], ["281", "Twenty-four originals, one law"], ["283", "Waitangi: sovereignty and kāwanatanga"]] },
@@ -14703,6 +14822,8 @@ function runSpecField(f) {
       real.map(x => '<div class="sf-pair"><div><p dir="rtl" lang="ar">' + esc(x.ar) + '</p></div><div><p dir="ltr">' + esc(x.ok[0]) + '</p></div></div>').join("") +
       '<p class="sd-note">Source: ' + esc((SD_BOOTH[g.id] || [])[1] || "") + '.</p>', false, real.length + " sentences, both languages");
   }
+  /* going deeper: published research, cited under each part */
+  (SF_DEEP[f.id] || []).forEach(d => sec(d.t, d.h + '<p class="sd-note">Source: ' + d.src + '</p>', false, d.s));
   if (f.ex) {
     const e = f.ex;
     sec("A worked text, step by step", '<b class="sf-ex-t">' + e.title + '</b>' +
@@ -23177,7 +23298,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1110-2306";
+const BUILD = "1110-2307";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
