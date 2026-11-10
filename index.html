@@ -23298,7 +23298,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1110-2307";
+const BUILD = "1110-2316";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -23324,6 +23324,16 @@ async function checkForNewBuild() {
     live = m && m[1];
   } catch (e) { return; }
   if (!live || live === BUILD) return;
+  /* On Home with nothing being typed, take the new version straight away, so
+     nobody stays on an old build for days by ignoring the bar. Anywhere else
+     the bar asks first, so work in progress is never lost. */
+  try {
+    const typing = document.activeElement && /^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName);
+    const tried = sessionStorage.getItem("guild.autoBuild");
+    if (typeof curView !== "undefined" && curView === "hall" && !typing && tried !== live) {
+      sessionStorage.setItem("guild.autoBuild", live); location.reload(); return;
+    }
+  } catch (e) {}
   const bar = el("div", "new-build",
     '<span>A newer version of the site is ready.</span>');
   bar.id = "new-build";
