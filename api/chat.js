@@ -32,24 +32,30 @@ const SITEMAP = MAP.map(m => m.id + " | " + m.where + " › " + m.en + (m.ar && 
 const SB = "https://bldqausimrsusdzfbubk.supabase.co";
 const ANON = "sb_publishable_kyHEHTc00jWi5wN2nyiD0w_NtLbVHy_";
 const MODEL = process.env.HELPER_MODEL || "claude-opus-5-5";
+/* With no Anthropic key, answers come through Vercel's AI Gateway instead:
+   the deployment signs in with its own short-lived token (no key to paste
+   anywhere) and the cost is billed to the Vercel team's AI Gateway credits. */
+const GATEWAY = "https://ai-gateway.vercel.sh";
+const GATEWAY_MODEL = process.env.HELPER_GATEWAY_MODEL || "anthropic/claude-haiku-5.5";
+const gatewayToken = req => process.env.AI_GATEWAY_API_KEY || (req && req.headers["x-vercel-oidc-token"]) || process.env.VERCEL_OIDC_TOKEN || "";
 
 const MAX_TURNS = 8;          // earlier messages sent back for context
 const MAX_CHARS = 1500;       // per message from the member
 const PASSAGES = 12;           // passages given to the model per question
 const PER_HOUR = 30;          // questions per member per hour, per server instance
 
-const SYSTEM = `You are Ask Compass, the assistant of the Translators' Guild inside its app, Compass. Members are university students of Arabic–English translation, many at Kuwait University. They ask about translation studies and its theories, the history of translation, terms, procedures and strategies, interpreting, sign language, proverbs and idioms, the Library books, the Kuwait University courses, the trials, and the site itself: its features, where things are and how to use them. Passages under "Site guide" describe the site. Call the app Compass when you refer to it.
+const SYSTEM = `You are Ask Compass, the assistant of the Translators' Guild inside its app, Compass. Talk like a friendly, knowledgeable tutor, not a search box: understand everyday language, typos, mixed Arabic and English, and Gulf and Kuwaiti dialect, and work out what the member means before answering. Greet back when greeted, answer small talk in a sentence, and ask one short question back when a request is unclear. Members are university students of Arabic–English translation, many at Kuwait University. They ask about translation studies and its theories, the history of translation, terms, procedures and strategies, interpreting, sign language, proverbs and idioms, the Library books, the Kuwait University courses, the trials, and the site itself: its features, where things are and how to use them. Passages under "Site guide" describe the site. Call the app Compass when you refer to it.
 
 Where your knowledge comes from
 - Each question arrives with numbered passages from Compass's own material, inside <passages>. Answer from those passages, and from passages given earlier in this conversation, only.
-- Do not add facts, dates, names, definitions, examples or translations from your general knowledge, even when you are sure of them. This material is checked against published sources and the Guild does not publish anything that is not.
-- If the passages do not answer the question, say plainly that the site does not cover it yet. If a passage is close, point the member to it. Do not guess.
+- When the passages cover the question, keep to them: do not mix in other facts, dates, names or examples. This material is checked against published sources.
+- If the passages do not answer a question about translation, interpreting or language, do not stop there: say in one short sentence that this part is not from Compass's checked material, then give a brief, careful answer from general knowledge, and point to the nearest page on the site if there is one. Never invent a citation, a page or a quotation for such an answer, and say so when you are not sure.
 - You may explain, rephrase, compare and summarise what the passages say, and you may quiz the member on it using the passages' own examples and answers.
 - If a member asks you to check their own translation, comment only by applying what the passages say (for example a procedure, a strategy or a common error they describe). Say that this is your comment, not a published model answer, and never present a translation of your own as coming from a source.
 
 How to answer
 - Reply in the language the member writes in. Give key terms in both Arabic and English when the passages give both.
-- Keep it short: a few sentences, or a short list, unless the member asks for more.
+- Keep it short and natural: a few sentences, or a short list, unless the member asks for more. No stock phrases, no repeating the question back.
 - Plain text. You may use "- " for list items and **bold** for a key term. No headings, no tables.
 - End every answer that draws on study material with a line that starts "Read more:" naming where on the site the points came from and the published source when the passage gives one, for example: Read more: Learn › The Seven Procedures (Vinay & Darbelnet). Take these labels from the passages, never invent one.
 
@@ -163,6 +169,19 @@ const searchReply = found => {
 };
 
 module.exports = async (req, res) => {
+  /* GET /api/chat?health=1 : is a model answering? Says which route is in
+     use and, if it fails, why. No secrets, no member data. */
+  if (req.method === "GET" && /[?&]health=1/.test(req.url || "")) {
+    const direct = !!process.env.ANTHROPIC_API_KEY, token = direct ? "" : gatewayToken(req);
+    if (!direct && !token) return res.status(200).json({ route: "search-only", ok: false, why: "no key and no gateway token" });
+    try {
+      const c = direct ? new Anthropic() : new Anthropic({ apiKey: null, authToken: token, baseURL: GATEWAY });
+      const r = await c.messages.create({ model: direct ? MODEL : GATEWAY_MODEL, max_tokens: 20, messages: [{ role: "user", content: "Say: ready" }] });
+      return res.status(200).json({ route: direct ? "anthropic" : "gateway", ok: true, model: r.model, said: (r.content.find(b => b.type === "text") || {}).text || "" });
+    } catch (e) {
+      return res.status(200).json({ route: direct ? "anthropic" : "gateway", ok: false, status: e.status || null, why: String(e.message || e).slice(0, 300) });
+    }
+  }
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "method_not_allowed" });
@@ -197,8 +216,10 @@ module.exports = async (req, res) => {
   }
 
   const pages = pagesFor(question);
-  if (!process.env.ANTHROPIC_API_KEY) return res.status(200).json(Object.assign(searchReply(found), { actions: pages }));
-  if (!client) client = new Anthropic();   // reads ANTHROPIC_API_KEY
+  const direct = !!process.env.ANTHROPIC_API_KEY;
+  const token = direct ? "" : gatewayToken(req);
+  if (!direct && !token) return res.status(200).json(Object.assign(searchReply(found), { actions: pages }));
+  if (direct) { if (!client) client = new Anthropic(); }   // reads ANTHROPIC_API_KEY
 
   const last = msgs.pop();
   const messages = msgs.concat([{
@@ -208,15 +229,16 @@ module.exports = async (req, res) => {
   }]);
 
   try {
-    const r = await client.beta.messages.create({
-      model: MODEL,
-      max_tokens: 4000,
-      system: [{ type: "text", text: SYSTEM }, { type: "text", text: "<site_map>\n" + SITEMAP + "\n</site_map>", cache_control: { type: "ephemeral" } }],
-      messages,
-      output_config: { effort: "low" },
-      betas: ["server-side-fallback-2026-07-01"],
-      fallbacks: "default",
-    });
+    const system = [{ type: "text", text: SYSTEM }, { type: "text", text: "<site_map>\n" + SITEMAP + "\n</site_map>", cache_control: { type: "ephemeral" } }];
+    const r = direct
+      ? await client.beta.messages.create({
+          model: MODEL, max_tokens: 4000, system, messages,
+          output_config: { effort: "low" },
+          betas: ["server-side-fallback-2026-07-01"],
+          fallbacks: "default",
+        })
+      : await new Anthropic({ apiKey: null, authToken: token, baseURL: GATEWAY })
+          .messages.create({ model: GATEWAY_MODEL, max_tokens: 2000, system, messages });
     if (r.stop_reason === "refusal") {
       return res.status(200).json({ reply: "I can't help with that one. Try asking about a translation topic from the site.", sources: [] });
     }
