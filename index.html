@@ -23298,7 +23298,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1111-2225";
+const BUILD = "1112-2238";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -31781,6 +31781,7 @@ function consecListen(into, onText, onState, onKeyboard) {
   let chunks = [], url = "", blob = null, heard = false, final = "", recStopped = null;
   const out = { url: () => url, heard: () => heard, text: () => final.trim() };
   if (navigator.mediaDevices && window.MediaRecorder) {
+    try { if (navigator.audioSession) navigator.audioSession.type = "play-and-record"; } catch (e) { }
     recStopped = new Promise(done => {
       navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } }).then(stream => {
         consecStream = stream;
@@ -31853,9 +31854,16 @@ function consecListen(into, onText, onState, onKeyboard) {
     out.keep = false;
     try { consecRec && consecRec.stop(); } catch (e) { }
     try { consecMedia && consecMedia.state !== "inactive" && consecMedia.stop(); } catch (e) { }
-    setTimeout(() => { try { consecStream && consecStream.getTracks().forEach(t => t.stop()); } catch (e) { } }, 300);
+    setTimeout(() => { try { consecStream && consecStream.getTracks().forEach(t => t.stop()); } catch (e) { } csLoud(); }, 300);
   };
   return out;
+}
+/* iPhone: while the microphone is in use the phone is in "call" mode and
+   plays sound quietly through the earpiece. Once recording ends, switch back
+   to ordinary playback so "Hear yourself" comes out of the loudspeaker, also
+   when the phone's silent switch is on. */
+function csLoud() {
+  try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) { }
 }
 function csBackToModes() {
   const b = el("button", "ghost cs-modes-back", "← All interpreting modes"); b.type = "button";
@@ -31894,7 +31902,9 @@ let consecAudio = null;
    while the microphone is recording. */
 const CS_SILENT = "data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYwLjE2LjEwMAAAAAAAAAAAAAAA//NwwAAAAAAAAAAAAEluZm8AAAAPAAAACgAABMsAOzs7Ozs7Ozs7UVFRUVFRUVFRUWdnZ2dnZ2dnZ2d9fX19fX19fX19kpKSkpKSkpKSkqioqKioqKioqKi+vr6+vr6+vr6+1NTU1NTU1NTU1Orq6urq6urq6ur/////////////AAAAAExhdmM2MC4zMQAAAAAAAAAAAAAAACQDBgAAAAAAAATL+A9CeQAAAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80DEpAAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsSjAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
 function csUnlockAudio() {
-  try { if (navigator.audioSession) navigator.audioSession.type = "play-and-record"; } catch (e) { }
+  /* listening comes out of the loudspeaker; the session only becomes
+     "play and record" when the microphone actually opens (consecListen) */
+  csLoud();
   try {
     if (!consecAudio) consecAudio = new Audio();
     const a = consecAudio;
@@ -32269,7 +32279,7 @@ function runSpoken(mode) {
         stage.appendChild(c);
       }
     } else if (notes && notes.trim()) stage.appendChild(card("Your notes", notes, "auto"));
-    if (url) { const au = document.createElement("audio"); au.controls = true; au.src = url; au.className = "cs-audio"; const w = el("div", "cs-card"); w.appendChild(el("span", "cs-k", "Hear yourself")); w.appendChild(au); stage.appendChild(w); }
+    if (url) { const au = document.createElement("audio"); au.controls = true; au.src = url; au.className = "cs-audio"; au.setAttribute("playsinline", ""); au.volume = 1; au.addEventListener("play", csLoud); csLoud(); const w = el("div", "cs-card"); w.appendChild(el("span", "cs-k", "Hear yourself")); w.appendChild(au); stage.appendChild(w); }
   }
   function summary() {
     consecStop();
@@ -32383,7 +32393,7 @@ function runSpoken(mode) {
     setCount("Simultaneous · check");
     /* the whole rendering is marked against the whole speech */
     const whole = { level: lv("turns"), ar: items.map(q => q.ar).join(" "), ok: [items.map(q => q.ok[0]).join(" ")], keys: [].concat.apply([], items.map(q => q.keys || [])) };
-    if (items[0] && items[0].speakText) { whole.speakText = items.map(q => q.speakText).join(" "); whole.showModel = items.map(q => q.showModel).join(" "); }
+    if (items[0] && items[0].speakText) { whole.speakText = items.map(q => q.speakText).join(" "); whole.showModel = items.map(q => q.showModel || "").join(" ").trim(); }
     if (items[0] && items[0].noref) whole.noref = true;
     if (!String(said || "").trim() && url) {
       const m0 = { share: null };
