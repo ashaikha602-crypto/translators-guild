@@ -2660,6 +2660,15 @@ a.ks-s-en:hover { color: var(--white); }
   border-bottom: 1px solid rgba(214,191,234,.1); background: var(--void); }
 .dm-back { all: unset; cursor: pointer; width: 2.4rem; height: 2.4rem; display: grid; place-items: center; border-radius: 50%; }
 .dm-back svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.dm-more[hidden] { display: none; }
+.dm-more { all: unset; cursor: pointer; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; color: var(--ink); flex: none; }
+.dm-more svg { width: 22px; height: 22px; fill: currentColor; }
+.dm-col.tap { cursor: pointer; }
+.dm-sheet { gap: .35rem; padding: .7rem; }
+.dm-sheet-b { all: unset; box-sizing: border-box; display: block; width: 100%; text-align: center; cursor: pointer; padding: .9rem 1rem; border-radius: 14px; font-weight: 600; color: var(--ink); background: var(--void-3, rgba(127,127,127,.12)); }
+.dm-sheet-b.danger { color: #FF5C7A; }
+.dm-sheet-b.quiet { background: transparent; color: var(--ink-soft); }
+#dm-sheet { z-index: 600; }
 .dm-who { all: unset; cursor: pointer; display: flex; align-items: center; gap: .6rem; min-width: 0; flex: 1; }
 .dm-who-t { display: grid; line-height: 1.2; min-width: 0; }
 .dm-who-t b { font-size: 1rem; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -21317,7 +21326,6 @@ function settingsMenu() {
     ]],
     ["Login", [
       (typeof admIsAdmin !== "undefined" && admIsAdmin) ? ["admin", "Content Admin", "", tap("admin-btn")] : null,
-      (typeof admIsAdmin !== "undefined" && admIsAdmin) ? ["people", "Visitors", "", go(() => openItem(GUESTS_ITEM))] : null,
       ["reset", "Reset my marks", "", tap("reset-btn"), "warn"],
       ["out", "Log out", "", tap("signout-btn"), "danger"]
     ]]
@@ -21924,6 +21932,24 @@ async function runInbox() {
   draw();
 }
 
+/* a small sheet of actions for the chat: [label, danger, fn] */
+function dmSheet(items) {
+  const old = document.getElementById("dm-sheet"); if (old) old.remove();
+  const w = el("div", "gw-back"); w.id = "dm-sheet";
+  const card = el("div", "gw-card dm-sheet");
+  items.forEach(([label, danger, fn]) => {
+    const b = el("button", "dm-sheet-b" + (danger ? " danger" : ""), esc(label)); b.type = "button";
+    b.addEventListener("click", () => { w.remove(); fn(); });
+    card.appendChild(b);
+  });
+  const no = el("button", "dm-sheet-b quiet", "Cancel"); no.type = "button";
+  no.addEventListener("click", () => w.remove());
+  card.appendChild(no);
+  w.appendChild(card);
+  w.addEventListener("click", e => { if (e.target === w) w.remove(); });
+  document.body.appendChild(w);
+}
+
 /* A conversation opens over the whole screen, as it does in any
    messaging app, and closing it returns to wherever you were. */
 function openThread(otherId, name, title, avatarPath) {
@@ -21972,6 +21998,9 @@ async function runThread(otherId, hint) {
     '<b dir="auto">' + esc(withTitle(hint.title, hint.name || "Member")) + '</b><span></span>');
   who.appendChild(names);
   head.appendChild(who);
+  const more = el("button", "dm-more", '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>');
+  more.type = "button"; more.setAttribute("aria-label", "Chat options"); more.hidden = true;
+  head.appendChild(more);
   ov.appendChild(head);
 
   const body = el("div", "dm-body");
@@ -22027,7 +22056,20 @@ async function runThread(otherId, hint) {
     ring.addEventListener("click", e => { e.stopPropagation(); openStoryViewer([g], 0); });
   }).catch(() => {});
 
-  let cid = null;
+  let cid = null, clearedAt = null, canDelete = false;
+  more.addEventListener("click", () => {
+    if (!cid) return;
+    dmSheet([["Delete chat", true, async () => {
+      if (!confirm("Delete this chat from your messages? It disappears for you only. If they write again, only the new messages will show.")) return;
+      try {
+        const h = Object.assign(await sbHeaders(), { "Prefer": "resolution=merge-duplicates,return=minimal" });
+        const r = await fetch(SUPABASE.url + "/rest/v1/conversation_clears?on_conflict=user_id,conversation_id",
+          { method: "POST", headers: h, body: JSON.stringify({ conversation_id: cid, cleared_at: new Date().toISOString() }) });
+        if (!r.ok) throw new Error("clear " + r.status);
+        close();
+      } catch (e) { note.textContent = "That chat could not be deleted. Try again in a moment."; }
+    }]]);
+  });
   try { cid = await findOrOpenConversation(otherId); }
   catch (e) {
     thread.appendChild(el("p", "dm-sys", "This member does not take messages, or not from you yet."));
@@ -22070,7 +22112,12 @@ async function runThread(otherId, hint) {
 
   async function draw(force) {
     let rows = [];
-    try { rows = await sbGet("messages?select=*&conversation_id=eq." + cid + "&order=created_at.asc&limit=300"); }
+    if (clearedAt === null) {
+      clearedAt = "";
+      /* the delete options appear only once the database supports them */
+      try { const c = await sbGet("conversation_clears?select=cleared_at&conversation_id=eq." + cid); if (c[0]) clearedAt = c[0].cleared_at; canDelete = true; more.hidden = false; } catch (e) {}
+    }
+    try { rows = await sbGet("messages?select=*&conversation_id=eq." + cid + (clearedAt ? "&created_at=gt." + encodeURIComponent(clearedAt) : "") + "&order=created_at.asc&limit=300"); }
     catch (e) { if (!thread.children.length) thread.appendChild(el("p", "dm-sys", "Those messages could not be loaded.")); return; }
     const sig = rows.length + ":" + (rows.length ? rows[rows.length - 1].id + rows[rows.length - 1].read_at : "");
     if (!force && sig === lastSig) return;
@@ -22134,6 +22181,17 @@ async function runThread(otherId, hint) {
         col.appendChild(b);
       }
       line.appendChild(col);
+      if (m.mine && canDelete) {
+        col.classList.add("tap");
+        col.addEventListener("click", ev => {
+          if (ev.target.closest("a, button, video, audio")) return;
+          dmSheet([["Delete message", true, async () => {
+            if (!confirm("Delete this message? It will be removed for both of you.")) return;
+            try { await sbDel("messages?id=eq." + m.id + "&sender_id=eq." + myId()); await draw(true); }
+            catch (e) { note.textContent = "That message could not be deleted."; }
+          }], ["Copy text", false, () => { try { navigator.clipboard.writeText(m.p.text || ""); } catch (e) {} }]]);
+        });
+      }
       thread.appendChild(line);
       if (m === lastMine && lastMine === parsed[parsed.length - 1] && m.read_at) {
         thread.appendChild(el("div", "dm-seen", "Seen"));
@@ -23298,7 +23356,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1113-1901";
+const BUILD = "1113-1907";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -34279,6 +34337,17 @@ setInterval(() => { if (document.visibilityState === "visible") guestPing(); }, 
 document.addEventListener("visibilitychange", () => guestPing(false, document.visibilityState !== "visible"));
 window.addEventListener("pagehide", () => guestPing(false, true));
 
+function openVisitorsFromLink() {
+  if (location.hash !== "#visitors") return;
+  try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+  const tryOpen = n => {
+    if (typeof admIsAdmin !== "undefined" && admIsAdmin) { openItem(GUESTS_ITEM); return; }
+    if (n > 0) setTimeout(() => tryOpen(n - 1), 700);
+  };
+  tryOpen(12);
+}
+window.addEventListener("hashchange", openVisitorsFromLink);
+setTimeout(openVisitorsFromLink, 1200);
 const GUESTS_ITEM = { id: "guests", en: "Visitors", subject: "Guests and members: when they came and how long they stayed", section: "profile", run: runGuests };
 const GUEST_ONLINE_MS = 150 * 1000;   /* a beat in the last 2½ minutes, and not marked as left */
 async function runGuests() {
