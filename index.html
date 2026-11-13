@@ -30,9 +30,9 @@
      in the Add to Home Screen sheet — this only sets the default. -->
 <meta name="apple-mobile-web-app-title" content="Compass">
 <meta name="application-name" content="Compass">
-<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png?v=7">
-<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=7">
-<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=7">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png?v=8">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=8">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=8">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22339,7 +22339,7 @@ async function runNotifications() {
     const isUpdate = n.kind === "update";
     const face = el("span", "n-face");
     const av = el("span", "avatar sm");
-    if (isUpdate) av.innerHTML = '<img src="icons/icon-192.png?v=7" alt="">';
+    if (isUpdate) av.innerHTML = '<img src="icons/icon-192.png?v=8" alt="">';
     else paintFace(av, n.avatar_path, n.display_name);
     face.appendChild(av);
     if (N_BADGE[n.kind]) face.appendChild(el("span", "n-badge k-" + n.kind, '<svg viewBox="0 0 24 24" aria-hidden="true">' + N_BADGE[n.kind] + '</svg>'));
@@ -22967,7 +22967,7 @@ function pushToast(d) {
   if (old) old.remove();
   const t = el("button", "push-toast");
   t.type = "button";
-  t.innerHTML = '<img src="icons/icon-192.png?v=7" alt="">' +
+  t.innerHTML = '<img src="icons/icon-192.png?v=8" alt="">' +
     '<span><b>' + esc(d.title || "Compass") + '</b><span>' + esc(d.body || "") + '</span></span>';
   const go = () => { t.remove(); if (d.url) { location.hash = new URL(d.url, location.href).hash; openFromLink(); } };
   t.addEventListener("click", go);
@@ -23298,7 +23298,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1112-2238";
+const BUILD = "1113-1901";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
