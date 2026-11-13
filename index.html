@@ -1180,7 +1180,7 @@ button.hp-try:hover, button.hp-try:focus-visible { border-color: rgba(167,38,208
 .hp-msg { padding: .7rem .95rem; border-radius: 20px; line-height: 1.6; font-size: 1rem; overflow-wrap: anywhere; max-width: 86%; }
 .hp-msg p { margin: 0 0 .45rem; }
 .hp-msg p:last-child { margin-bottom: 0; }
-.hp-user { align-self: flex-end; background: linear-gradient(135deg, #8a2be2, #650fd0); color: #fff; white-space: pre-wrap; border-bottom-right-radius: 6px; }
+.hp-user { align-self: flex-end; background: linear-gradient(120deg, var(--cn, #FFB547), var(--cs, #FF6B6B)); color: #16151F; white-space: pre-wrap; border-bottom-right-radius: 6px; }
 .hp-assistant { align-self: flex-start; background: var(--void-2); border: var(--hair); color: var(--ink); border-bottom-left-radius: 6px; }
 .hp-assistant b { color: var(--white); }
 .hp-li { padding-inline-start: 1rem; position: relative; }
@@ -1586,7 +1586,7 @@ a.ks-s-en:hover { color: var(--white); }
   background: #fff; border-color: rgba(60,30,100,.13); box-shadow: 0 1px 2px rgba(40,20,70,.05); }
 :root[data-theme="light"] .opt:hover,
 :root[data-theme="light"] .chip:hover { border-color: rgba(101,15,208,.45); }
-:root[data-theme="light"] .chip.on { background: linear-gradient(135deg, #8a2be2, #650fd0); color: #fff; border-color: transparent; }
+:root[data-theme="light"] .chip.on { background: var(--acc-ink, #B45309); color: #fff; border-color: transparent; }
 :root[data-theme="light"] .prompt,
 :root[data-theme="light"] .verdict { background: #fff; border-color: rgba(60,30,100,.10);
   box-shadow: 0 1px 2px rgba(40,20,70,.04), 0 10px 28px -16px rgba(40,20,70,.18); }
@@ -1594,7 +1594,7 @@ a.ks-s-en:hover { color: var(--white); }
 :root[data-theme="light"] textarea,
 :root[data-theme="light"] select { background: #fff; color: var(--white); border-color: rgba(60,30,100,.16); }
 :root[data-theme="light"] input:focus,
-:root[data-theme="light"] textarea:focus { border-color: #8a2be2; box-shadow: 0 0 0 3px rgba(138,43,226,.14); }
+:root[data-theme="light"] textarea:focus { border-color: var(--acc, #F59E0B); box-shadow: 0 0 0 3px rgba(245,158,11,.18); }
 :root[data-theme="light"] .th-step { background: #f3ecfc; border-color: rgba(101,15,208,.18); color: #3b1a66; }
 :root[data-theme="light"] .th-tr { background: #fff; }
 :root[data-theme="light"] .th-ig { border-color: rgba(60,30,100,.08); }
@@ -1894,9 +1894,6 @@ a.ks-s-en:hover { color: var(--white); }
 .act-btn.quiet { border: 0; color: var(--ink-faint); }
 /* A number, not a button: nothing happens if you press it. */
 .act-btn.still { cursor: default; font-variant-numeric: tabular-nums; }
-.views-count { margin: .2rem 0 1rem; font-size: .9rem; color: var(--ink-soft); }
-.views-count b { font-family: var(--f-serif); font-size: 1.3rem; color: var(--white);
-  margin-inline-end: .25rem; }
 /* The clock time, and the day above it when it was not today. */
 .v-when { font-size: .74rem; color: var(--ink-soft); text-align: end;
   white-space: pre-line; line-height: 1.25; font-variant-numeric: tabular-nums; }
@@ -2093,7 +2090,7 @@ a.ks-s-en:hover { color: var(--white); }
 .push-share { width: 16px; height: 16px; vertical-align: -3px; fill: none; stroke: #0a84ff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .push-btns { display: flex; gap: .5rem; margin-top: .55rem; }
 .push-on, .push-no { all: unset; cursor: pointer; padding: .5rem 1.05rem; border-radius: 10px; font-size: .85rem; font-weight: 600; }
-.push-on { background: #8a2be2; color: #fff; }
+.push-on { background: var(--acc-ink, #B45309); color: #fff; }
 .push-on:disabled { opacity: .6; }
 .push-no { color: var(--ink-soft); }
 .push-x { all: unset; cursor: pointer; position: absolute; top: .4rem; right: .65rem; font-size: 1.3rem; line-height: 1; color: var(--ink-faint); padding: .2rem; }
@@ -2106,7 +2103,7 @@ a.ks-s-en:hover { color: var(--white); }
 .push-foot { font-size: .78rem; color: var(--ink-faint); margin: .9rem 0 0; }
 .push-sw { all: unset; cursor: pointer; flex: none; position: relative; width: 50px; height: 30px; border-radius: 15px;
   background: rgba(214,191,234,.25); transition: background .2s; }
-.push-sw.on { background: #8a2be2; }
+.push-sw.on { background: var(--acc, #F59E0B); }
 .push-knob { position: absolute; top: 2px; left: 2px; width: 26px; height: 26px; border-radius: 50%; background: #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: transform .2s; }
 .push-sw.on .push-knob { transform: translateX(20px); }
@@ -2116,13 +2113,13 @@ a.ks-s-en:hover { color: var(--white); }
 :root[data-theme="light"] .push-txt > b, :root[data-theme="light"] .push-steps, :root[data-theme="light"] .push-row { color: #111; }
 :root[data-theme="light"] .push-row { border-bottom-color: #efefef; }
 :root[data-theme="light"] .push-sw { background: #e2e2e2; }
-:root[data-theme="light"] .push-sw.on { background: #8a2be2; }
+:root[data-theme="light"] .push-sw.on { background: var(--acc, #F59E0B); }
 /* resuming a trial */
 .resume-card { text-align: center; }
 .resume-big { font-family: var(--f-serif); font-size: 1.7rem; margin: .4rem 0 .2rem; color: var(--white); }
 .resume-sub { font-size: .88rem; color: var(--ink-soft); margin: 0 0 1rem; }
 .resume-bar { width: 100%; max-width: 320px; justify-self: center; margin: 0 auto; height: 6px; border-radius: 3px; background: rgba(214,191,234,.15); overflow: hidden; }
-.resume-bar i { display: block; height: 100%; background: var(--grad, #8a2be2); border-radius: 3px; }
+.resume-bar i { display: block; height: 100%; background: var(--grad, #F59E0B); border-radius: 3px; }
 .resume-foot { display: grid; gap: .6rem; }
 .resume-foot button { width: 100%; }
 .resume-tag { color: var(--mag-ink) !important; border-color: var(--magenta) !important; }
@@ -2145,7 +2142,7 @@ a.ks-s-en:hover { color: var(--white); }
   box-shadow: 0 0 0 2000px rgba(0,0,0,.6); outline: 1px solid rgba(255,255,255,.55); outline-offset: -1px; }
 .crop-foot { display: grid; gap: .8rem; justify-items: center; padding: 1rem 1.5rem calc(env(safe-area-inset-bottom, 0px) + 1.4rem); }
 .crop-hint { font-size: .82rem; color: rgba(255,255,255,.65); }
-.crop-zoom { width: min(320px, 80vw); accent-color: #8a2be2; }
+.crop-zoom { width: min(320px, 80vw); accent-color: var(--acc, #F59E0B); }
 .n-list { display: grid; margin: .3rem 0 1rem; }
 .n-head { margin: 1.1rem 0 .3rem; padding: 0 .5rem; font-size: .68rem; font-weight: 600;
   letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
@@ -2640,8 +2637,8 @@ a.ks-s-en:hover { color: var(--white); }
 .dm-ring { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; box-sizing: border-box; flex: none; }
 .dm-ring .avatar { width: 56px; height: 56px; font-size: 1.1rem; }
 .dm-ring.new, .dm-ring.seen { padding: 2.5px; }
-.dm-ring.new { background: conic-gradient(from 210deg, #ffc46b, #ff5c7a, #a726d0, #650fd0, #ffc46b); }
-.dm-ring.seen { background: rgba(214,191,234,.3); }
+.dm-ring.new { background: var(--sig, conic-gradient(from 210deg, #FFB547, #FF6B6B, #F472B6, #A78BFA, #2DD4BF, #FFB547)); }
+.dm-ring.seen { background: var(--k-track, #262636); }
 .dm-ring.new .avatar, .dm-ring.seen .avatar { width: 100%; height: 100%; border: 2.5px solid var(--void); box-sizing: border-box; }
 .dm-ring.sm { width: 36px; height: 36px; }
 .dm-ring.sm .avatar { width: 36px; height: 36px; font-size: .8rem; }
@@ -2651,13 +2648,13 @@ a.ks-s-en:hover { color: var(--white); }
 .dm-prev-t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .dm-row.unread .dm-name { font-weight: 700; }
 .dm-row.unread .dm-prev { color: var(--white); font-weight: 600; }
-.dm-unread { width: 9px; height: 9px; border-radius: 50%; background: #3897f0; margin-right: .3rem; }
+.dm-unread { width: 9px; height: 9px; border-radius: 50%; background: var(--cn, #FFB547); margin-right: .3rem; }
 .dm-empty { margin: 1.5rem 0; text-align: center; color: var(--ink-soft); display: grid; gap: .3rem; font-size: .95rem; }
 .dm-empty-sub { font-size: .85rem; color: var(--ink-faint); }
 .dm-view { position: fixed; top: 0; left: 0; right: 0; height: 100%; z-index: 110; display: grid; grid-template-rows: auto 1fr auto auto;
   background: var(--void); color: var(--white); }
 .dm-head { display: flex; align-items: center; gap: .3rem; padding: calc(env(safe-area-inset-top, 0px) + .5rem) .6rem .5rem;
-  border-bottom: 1px solid rgba(214,191,234,.1); background: var(--void); }
+  border-bottom: 1px solid var(--k-line, rgba(255,255,255,.07)); background: var(--void); }
 .dm-back { all: unset; cursor: pointer; width: 2.4rem; height: 2.4rem; display: grid; place-items: center; border-radius: 50%; }
 .dm-back svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .dm-more[hidden] { display: none; }
@@ -2685,8 +2682,8 @@ a.ks-s-en:hover { color: var(--white); }
 .dm-col { display: flex; flex-direction: column; max-width: 74%; min-width: 0; }
 .dm-line.me .dm-col { align-items: flex-end; }
 .dm-bubble { padding: .55rem .85rem; border-radius: 22px; font-size: .95rem; line-height: 1.38; white-space: pre-wrap; overflow-wrap: anywhere; }
-.dm-line.them .dm-bubble { background: #2a1d3d; color: var(--white); }
-.dm-line.me .dm-bubble { background: linear-gradient(135deg, #8a2be2, #650fd0); color: #fff; }
+.dm-line.them .dm-bubble { background: var(--k-card2, #20202F); color: var(--k-ink, #F5F4FA); }
+.dm-line.me .dm-bubble { background: linear-gradient(120deg, var(--cn, #FFB547), var(--cs, #FF6B6B)); color: #16151F; }
 .dm-line.me:not(.first) .dm-bubble { border-top-right-radius: 6px; }
 .dm-line.me:not(.last) .dm-bubble { border-bottom-right-radius: 6px; }
 .dm-line.them:not(.first) .dm-bubble { border-top-left-radius: 6px; }
@@ -2694,11 +2691,11 @@ a.ks-s-en:hover { color: var(--white); }
 .dm-emoji { font-size: 2.4rem; line-height: 1.15; padding: .1rem .2rem; }
 .dm-ctx { font-size: .75rem; color: var(--ink-faint); margin: .3rem .3rem .25rem; }
 .dm-quote { display: flex; margin-bottom: .2rem; }
-.dm-line.them .dm-quote { border-left: 3px solid rgba(214,191,234,.25); padding-left: .45rem; }
-.dm-line.me .dm-quote { border-right: 3px solid rgba(214,191,234,.25); padding-right: .45rem; }
+.dm-line.them .dm-quote { border-left: 3px solid var(--k-faint, #7D7B90); padding-left: .45rem; }
+.dm-line.me .dm-quote { border-right: 3px solid rgba(22,21,31,.35); padding-right: .45rem; }
 .dm-story { all: unset; cursor: pointer; width: 112px; height: 196px; border-radius: 16px; background-size: cover;
   background-position: center; display: grid; place-items: center; overflow: hidden; color: #fff; box-sizing: border-box; padding: .5rem; }
-.dm-story.gone { cursor: default; width: auto; height: auto; padding: .5rem .8rem; border: 1px dashed rgba(214,191,234,.3);
+.dm-story.gone { cursor: default; width: auto; height: auto; padding: .5rem .8rem; border: 1px dashed var(--k-faint, #7D7B90);
   font-size: .8rem; color: var(--ink-faint); border-radius: 14px; }
 .dm-story-t { font-family: var(--f-serif); font-weight: 700; font-size: .85rem; text-align: center; line-height: 1.3; overflow-wrap: anywhere; }
 .dm-seen { align-self: flex-end; font-size: .75rem; color: var(--ink-faint); margin: -.2rem .3rem .4rem; }
@@ -2707,12 +2704,12 @@ a.ks-s-en:hover { color: var(--white); }
 .dm-hello b { color: var(--white); font-size: 1.1rem; }
 .dm-sys { text-align: center; color: var(--ink-soft); margin: 2rem 1rem; }
 .dm-bar { display: flex; align-items: flex-end; gap: .4rem; margin: .45rem .75rem calc(env(safe-area-inset-bottom, 0px) + .6rem);
-  padding: .35rem .4rem .35rem 1rem; border-radius: 26px; background: rgba(255,255,255,.07); border: 1px solid rgba(214,191,234,.14); }
+  padding: .35rem .4rem .35rem 1rem; border-radius: 26px; background: var(--k-card2, #20202F); border: 1px solid var(--k-line, rgba(255,255,255,.07)); }
 .dm-bar textarea { flex: 1; min-width: 0; border: 0; outline: none; resize: none; background: transparent; color: var(--white);
   font: inherit; font-size: 1rem; line-height: 1.35; padding: .5rem 0; max-height: 120px; }
 .dm-bar textarea::placeholder { color: var(--ink-faint); }
 .dm-heart { all: unset; cursor: pointer; font-size: 1.3rem; width: 2.4rem; height: 2.4rem; display: grid; place-items: center; }
-.dm-send { all: unset; cursor: pointer; font-weight: 700; font-size: .95rem; color: #8ab4ff; padding: 0 .8rem; height: 2.4rem; }
+.dm-send { all: unset; cursor: pointer; font-weight: 700; font-size: .95rem; color: var(--cn-ink, #FFB547); padding: 0 .8rem; height: 2.4rem; }
 .dm-send[hidden], .dm-heart[hidden] { display: none; }
 .dm-plus { all: unset; cursor: pointer; width: 2.1rem; height: 2.1rem; border-radius: 50%; display: grid; place-items: center;
   background: var(--grad); flex: none; margin: .15rem 0; }
@@ -2768,7 +2765,7 @@ a.ks-s-en:hover { color: var(--white); }
 .pe-sws { display: flex; gap: .55rem; }
 .pe-sw { all: unset; cursor: pointer; width: 24px; height: 24px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.45); }
 .pe-sw.on { outline: 2px solid #fff; outline-offset: 2px; }
-.pe-range { width: 7.5rem; accent-color: #a726d0; }
+.pe-range { width: 7.5rem; accent-color: #FF6B6B; }
 .pe-input { flex: 1 1 100%; max-width: 26rem; padding: .6rem 1rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.25);
   background: rgba(255,255,255,.08); color: #fff; font: 16px var(--f-sans); outline: none; }
 .pe-input::placeholder { color: rgba(255,255,255,.5); }
@@ -2777,17 +2774,11 @@ a.ks-s-en:hover { color: var(--white); }
 .pe-tools { display: flex; justify-content: space-around; padding: .4rem .5rem calc(.6rem + env(safe-area-inset-bottom)); border-top: 1px solid rgba(255,255,255,.08); }
 .pe-tool { all: unset; cursor: pointer; display: grid; justify-items: center; gap: .2rem; padding: .35rem .6rem; font-size: .72rem; color: rgba(255,255,255,.72); }
 .pe-tool svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.pe-tool.on { color: #d6bfea; }
+.pe-tool.on { color: #FFB547; }
 .pe-tool:disabled { opacity: .35; cursor: default; }
-:root[data-theme="light"] .dm-view, :root[data-theme="light"] .dm-head { background: #fff; color: #111; }
-:root[data-theme="light"] .dm-head { border-bottom-color: #efefef; }
-:root[data-theme="light"] .dm-line.them .dm-bubble { background: #efefef; color: #111; }
-:root[data-theme="light"] .dm-bar { background: #f2f2f2; border-color: #e6e6e6; }
-:root[data-theme="light"] .dm-bar textarea { color: #111; background: transparent; border: 0; box-shadow: none; }
-:root[data-theme="light"] .dm-send { color: #3897f0; }
-:root[data-theme="light"] .dm-search { background: #efefef; color: #111; }
-:root[data-theme="light"] .dm-row:active { background: #f5f5f5; }
-:root[data-theme="light"] .dm-ring.new .avatar, :root[data-theme="light"] .dm-ring.seen .avatar { border-color: #fff; }
+:root[data-theme="light"] .dm-bar textarea { color: var(--k-ink); background: transparent; border: 0; box-shadow: none; }
+:root[data-theme="light"] .dm-search { background: var(--k-card2); color: var(--k-ink); }
+:root[data-theme="light"] .dm-row:active { background: var(--k-card2); }
 
 /* ═══ Profile, Instagram-sized ═══ */
 .ig-actions { display: grid; grid-template-columns: 1fr 1fr auto; gap: 6px; margin: .9rem 0 0; }
@@ -2832,7 +2823,7 @@ a.ks-s-en:hover { color: var(--white); }
 .set-row.danger { color: #ff5c7a; }
 .set-row.warn .set-l { color: var(--ink-soft); }
 :root[data-theme="light"] .ig-btn { background: #efefef; color: #111; }
-:root[data-theme="light"] .chip-tag.solid { background: linear-gradient(135deg, #8a2be2, #650fd0); color: #fff; border-color: transparent; }
+:root[data-theme="light"] .chip-tag.solid { background: var(--acc-ink, #B45309); color: #fff; border-color: transparent; }
 :root[data-theme="light"] .ig-sq.on { background: #e0d2f5; }
 :root[data-theme="light"] .dp-card { background: #fff; border-color: #dbdbdb; }
 :root[data-theme="light"] .dp-follow.done { background: #efefef; color: #111; }
@@ -3093,7 +3084,7 @@ html:has(body.st-open), body.st-open { overflow: hidden; overscroll-behavior: no
    the phone it is being read on. */
 .m-links button { font-size: .82rem; padding: .5rem .9rem; max-width: 100%;
   white-space: normal; text-align: center; min-width: 0; }
-.m-slot { border-radius: var(--r-lg); border: 1px dashed rgba(214,191,234,.3);
+.m-slot { border-radius: var(--r-lg); border: 1px dashed var(--k-faint, #7D7B90);
   background: rgba(255,255,255,.02); padding: 1rem 1.1rem; display: grid; gap: .4rem; }
 .m-slot .b-lab { font-size: .66rem; font-weight: 700; letter-spacing: .2em;
   text-transform: uppercase; color: var(--lilac-dim); }
@@ -5485,11 +5476,6 @@ button.up-next[hidden] { display: none; }
              rows to anyone else regardless of what the page shows. -->
         <button type="button" class="icon-btn plain" id="seal-create" aria-label="Create">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><path d="M12 8v8M8 12h8"/></svg>
-        </button>
-        <button type="button" class="icon-btn plain badged" id="seal-views"
-                aria-label="Who viewed your profile" hidden>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.8 12S5.5 5.8 12 5.8 22.2 12 22.2 12 18.5 18.2 12 18.2 1.8 12 1.8 12z"/><circle cx="12" cy="12" r="3.1"/></svg>
-          <span class="badge" hidden></span>
         </button>
         <button type="button" class="icon-btn plain badged" id="seal-notifs" aria-label="Notifications">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 15V10a6 6 0 1 0-12 0v5l-1.6 2.5h15.2z"/><path d="M9.8 20a2.3 2.3 0 0 0 4.4 0"/></svg>
@@ -16370,7 +16356,7 @@ async function sbHeaders() {
 const PROFILE_COLS = "id,username,title,display_name,avatar_path,bio,motto,field_of_study,minor," +
   "institution,academic_level,marks,rank_slug,profile_visibility,discoverable,show_progress," +
   "show_interests,show_institution,show_academic_level,allow_follows," +
-  "who_can_message,show_online,read_receipts,verified,sees_profile_views," +
+  "who_can_message,show_online,read_receipts,verified," +
   "interpreting_fields,interpreting_rank,interpreting_halves";
 
 async function loadMyProfile() {
@@ -18647,7 +18633,6 @@ async function runPublic(id) {
   /* Opening somebody's profile is the event. Not awaited, and it
      cannot throw into this function: reading a profile must not fail
      because the note of it did. */
-  recordProfileView(id);
 
   stage.innerHTML = "";
 
@@ -21313,7 +21298,6 @@ function settingsMenu() {
       ["bell", "Notifications", "", go(() => openItem(NOTIFS_ITEM))],
       ["bell", "Phone notifications", pushState() === "granted" ? "On" : "Off", go(() => openItem(PUSH_ITEM))],
       ["mail", "Messages", "", go(() => openItem(INBOX_ITEM))],
-      p.sees_profile_views ? ["eye", "Profile views", "", tap("seal-views")] : null,
       ["people", "Discover people", "", go(() => openItem(FIND_ITEM))]
     ]],
     ["Display", [
@@ -22459,114 +22443,6 @@ async function runNotifications() {
 }
 
 /* The two numbers on the top bar. Quiet when there is nothing. */
-/* ── who viewed your profile ──
-   A screen for one account. It is not in anybody else's menu, and it
-   is not hidden behind a flag either: the rows are refused to anyone
-   but the profile's owner by row-level security, and a view is only
-   recorded at all for an account that holds the capability, so nobody
-   else's reading is logged in the first place. */
-/* The database decides whether this is worth recording, not this call,
-   and it keeps one per viewer per day so a refresh is not a second
-   visit. Nothing about the device, the address or where they are is
-   sent or kept — only who, whose, and when. */
-let lastViewSent = { id: null, at: 0 };
-async function recordProfileView(id) {
-  if (backend !== "supabase" || !myId() || !id || id === myId()) return;
-  /* Every open is a visit — the database keeps them all now. The only
-     thing stopped here is the same tap being sent twice, which is a
-     screen drawing itself again rather than somebody coming back. Three
-     seconds is far too short to be a second visit and long enough to
-     catch a double render. */
-  const now = Date.now();
-  if (lastViewSent.id === id && now - lastViewSent.at < 3000) return;
-  lastViewSent = { id: id, at: now };
-  try {
-    await fetch(SUPABASE.url + "/rest/v1/rpc/record_profile_view", {
-      method: "POST",
-      headers: Object.assign(await sbHeaders(), { "Content-Type": "application/json" }),
-      body: JSON.stringify({ target: id })
-    });
-  } catch (e) {}
-}
-
-const VIEWS_ITEM = { id: "views", en: "Profile Views",
-                     subject: "Who opened your profile", section: "profile",
-                     run: runProfileViews };
-
-/* The clock, not "4m". She wants to know that somebody opened her
-   profile at 10:58, and on which day. Read on her own phone, so it is
-   her own time zone with nothing to convert. */
-function viewClock(iso) {
-  const d = new Date(iso);
-  if (isNaN(d.getTime())) return "";
-  const t = String(d.getHours()).padStart(2, "0") + ":" +
-            String(d.getMinutes()).padStart(2, "0");
-  const now = new Date();
-  const sameDay = (a, b) => a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-  if (sameDay(d, now)) return t;
-  const y = new Date(now.getTime() - 86400000);
-  if (sameDay(d, y)) return "Yesterday\n" + t;
-  let day = "";
-  try { day = d.toLocaleDateString(undefined, { day: "numeric", month: "short" }); }
-  catch (e) { day = (d.getDate()) + "/" + (d.getMonth() + 1); }
-  return day + "\n" + t;
-}
-
-async function runProfileViews() {
-  setCount(""); stage.innerHTML = "";
-  const head = el("p", "views-count", "…");
-  const fresh = el("div", null);
-  const older = el("div", null);
-  const msg = el("p", "f-msg", "Loading…");
-  stage.appendChild(head); stage.appendChild(fresh);
-  stage.appendChild(older); stage.appendChild(msg);
-
-  let rows = [];
-  try {
-    rows = await sbGet("my_profile_views?select=*&order=viewed_at.desc&limit=100");
-  } catch (e) {
-    head.textContent = "";
-    msg.textContent = "That could not be loaded.";
-    stage.appendChild(footNav({ backLabel: "Profile" }));
-    return;
-  }
-
-  head.innerHTML = '<b>' + rows.length + '</b> ' +
-    (rows.length === 1 ? "profile view" : "profile views");
-  msg.textContent = rows.length ? "" : "Nobody has opened your profile yet.";
-
-  const unseen = rows.filter(r => !r.seen);
-  const seen   = rows.filter(r => r.seen);
-  const section = (into, label, list) => {
-    if (!list.length) return;
-    into.appendChild(el("h3", "pub-h", label));
-    list.forEach(v => {
-      const who = { id: v.viewer_id, username: v.username, title: v.title,
-                    display_name: v.display_name, avatar_path: v.avatar_path,
-                    rank_slug: v.rank_slug,
-                    main_interest: [v.field_of_study, v.academic_level]
-                                     .filter(Boolean).join(" · ") };
-      const row = memberRow(who, x => openPublic(x));
-      row.classList.add("with-when");
-      const stamp = el("span", "v-when", esc(viewClock(v.viewed_at)));
-      /* The full date and second, for anyone who wants to be sure. */
-      try { stamp.title = new Date(v.viewed_at).toLocaleString(); } catch (e) {}
-      row.appendChild(stamp);
-      into.appendChild(row);
-    });
-  };
-  section(fresh, "New", unseen);
-  section(older, unseen.length ? "Earlier" : "Recently", seen);
-
-  /* Opening the panel is what marks them read. */
-  if (unseen.length) {
-    sbPatch("profile_views?seen=is.false&profile_owner_id=eq." + myId(), { seen: true })
-      .then(paintBadges).catch(() => {});
-  }
-  stage.appendChild(footNav({ backLabel: "Profile" }));
-}
-
 async function paintBadges() {
   if (backend !== "supabase" || !myId()) return;
   const set = (id, n) => {
@@ -22585,15 +22461,6 @@ async function paintBadges() {
     set("seal-notifs", notes.length);
     set("seal-inbox", box.reduce((a, r) => a + Number(r.unread || 0), 0));
   } catch (e) {}
-  /* Asked for separately, and only when this account holds it: the
-     request is not even sent otherwise. */
-  if (state.profile && state.profile.sees_profile_views) {
-    try {
-      const v = await sbGet("profile_views?select=id&profile_owner_id=eq." + myId() +
-                            "&seen=is.false");
-      set("seal-views", v.length);
-    } catch (e) {}
-  }
 }
 
 /* Who liked a post. The list is what the reader is allowed to see: a
@@ -23303,17 +23170,6 @@ function wireProfileButtons() {
     nb.dataset.wired = "1";
     nb.addEventListener("click", () => openItem(NOTIFS_ITEM));
   }
-  const vb = document.getElementById("seal-views");
-  if (vb) {
-    /* Hidden unless this account holds the capability. That is a
-       convenience, not the protection: the rows themselves are refused
-       to anyone else by the database. */
-    vb.hidden = !(state.profile && state.profile.sees_profile_views);
-    if (!vb.dataset.wired) {
-      vb.dataset.wired = "1";
-      vb.addEventListener("click", () => openItem(VIEWS_ITEM));
-    }
-  }
   const ib = document.getElementById("seal-inbox");
   if (ib && !ib.dataset.wired) {
     ib.dataset.wired = "1";
@@ -23356,7 +23212,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1113-1909";
+const BUILD = "1113-1915";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -34050,7 +33906,7 @@ async function admSetReport(id, status) {
    not the lock. */
 const MEM_COLS = "id,display_name,username,title,verified,email," +
   "joined_at,last_login_at,last_seen_at,posts,comments,likes,follows," +
-  "messages,profiles_opened,studied,actions,last_action_at";
+  "messages,studied,actions,last_action_at";
 
 function admWhen(iso) {
   if (!iso) return null;
@@ -34179,7 +34035,7 @@ async function admMembers() {
       admEsc((rk ? rk : "") + (rk && mk ? " · " : "") + (mk ? mk + (mk === 1 ? " mark" : " marks") : ""))));
     [["posts", "post", "posts"], ["comments", "comment", "comments"],
      ["likes", "like", "likes"], ["follows", "follow", "follows"],
-     ["messages", "message", "messages"], ["profiles_opened", "profile opened", "profiles opened"],
+     ["messages", "message", "messages"],
      ["studied", "lesson", "lessons"]]
       .forEach(([k, one, many]) => {
         const n = m[k] || 0;
@@ -34284,180 +34140,8 @@ const isGuest = () => !session && !!state.guest;
     step.hidden = true;
     paintWho();
     unlock();
-    guestPing(true);
   });
 })();
-
-/* The owner's list of guests: a name, and each visit's arrival and departure.
-   While the site is open and on screen this device sends a small beat every
-   minute; when it is hidden or closed it sends one last beat saying it left.
-   The device keeps a random id so the same guest is one row, not many. */
-function guestDevice() {
-  try {
-    let id = localStorage.getItem("guild.gdev");
-    if (!id) { id = (crypto.randomUUID ? crypto.randomUUID() : ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16))); localStorage.setItem("guild.gdev", id); }
-    return id;
-  } catch (e) { return null; }
-}
-let guestBeatOk = true;     /* false once the server says guest_beat is not there yet */
-function guestPing(force, leaving) {
-  if (!isGuest()) return;
-  const dev = guestDevice(); if (!dev) return;
-  const name = String(state.guest || "").slice(0, 40);
-  const headers = { "apikey": SUPABASE.key, "Authorization": "Bearer " + SUPABASE.key, "Content-Type": "application/json" };
-  if (guestBeatOk) {
-    fetch(SUPABASE.url + "/rest/v1/rpc/guest_beat", { method: "POST", headers, keepalive: true,
-      body: JSON.stringify({ p_device: dev, p_name: name, p_leaving: !!leaving }) })
-      .then(r => { if (r.status === 404) { guestBeatOk = false; guestPing(true, leaving); } }).catch(() => {});
-    return;
-  }
-  let last = 0;
-  try { last = Number(localStorage.getItem("guild.gping") || 0); } catch (e) {}
-  if (!force && Date.now() - last < 10 * 60 * 1000) return;
-  try { localStorage.setItem("guild.gping", String(Date.now())); } catch (e) {}
-  fetch(SUPABASE.url + "/rest/v1/rpc/guest_ping", { method: "POST", headers, keepalive: true,
-    body: JSON.stringify({ p_device: dev, p_name: name }) }).catch(() => {});
-}
-/* Signed-in members: the same beat, so the owner can see how long each visit lasted. */
-let memberBeatOk = true;
-async function memberBeat(leaving) {
-  if (!memberBeatOk || !session || !session.user) return;
-  try {
-    const h = Object.assign(await sbHeaders(), { "Content-Type": "application/json" });
-    fetch(SUPABASE.url + "/rest/v1/rpc/member_beat", { method: "POST", headers: h, keepalive: true, body: JSON.stringify({ p_leaving: !!leaving }) })
-      .then(r => { if (r.status === 404) memberBeatOk = false; }).catch(() => {});
-  } catch (e) {}
-}
-setTimeout(() => memberBeat(), 3500);
-setInterval(() => { if (document.visibilityState === "visible") memberBeat(); }, 60 * 1000);
-document.addEventListener("visibilitychange", () => memberBeat(document.visibilityState !== "visible"));
-window.addEventListener("pagehide", () => memberBeat(true));
-setTimeout(() => guestPing(), 3000);
-setInterval(() => { if (document.visibilityState === "visible") guestPing(); }, 60 * 1000);
-document.addEventListener("visibilitychange", () => guestPing(false, document.visibilityState !== "visible"));
-window.addEventListener("pagehide", () => guestPing(false, true));
-
-function openVisitorsFromLink() {
-  if (location.hash !== "#visitors") return;
-  try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
-  const tryOpen = n => {
-    if (typeof admIsAdmin !== "undefined" && admIsAdmin) { openItem(GUESTS_ITEM); return; }
-    if (n > 0) setTimeout(() => tryOpen(n - 1), 700);
-  };
-  tryOpen(12);
-}
-window.addEventListener("hashchange", openVisitorsFromLink);
-setTimeout(openVisitorsFromLink, 1200);
-const GUESTS_ITEM = { id: "guests", en: "Visitors", subject: "Guests and members: when they came and how long they stayed", section: "profile", run: runGuests };
-const GUEST_ONLINE_MS = 150 * 1000;   /* a beat in the last 2½ minutes, and not marked as left */
-async function runGuests() {
-  setCount(""); stage.innerHTML = "";
-  stage.appendChild(el("p", "note", "Loading…"));
-  let rows, sess = [], open = {}, q = "", timer = null, tab = "guests";
-  let G = null, GS = null, MR = null, MS = null;
-  async function fetchAll() {
-    G = await sbGet("guest_visits?select=device_id,name,first_seen,last_seen,visits&order=last_seen.desc&limit=1000");
-    try { GS = await sbGet("guest_sessions?select=device_id,started_at,last_seen,left_at&order=started_at.desc&limit=3000"); }
-    catch (e) { GS = null; }   /* the sessions table is not there yet */
-    /* members: one row per signed-in person, built from their visits */
-    try {
-      MS = await sbGet("member_sessions?select=user_id,started_at,last_seen,left_at&order=started_at.desc&limit=5000");
-      const ids = [...new Set(MS.map(v => v.user_id))];
-      let names = {};
-      for (let i = 0; i < ids.length; i += 80) {
-        const part = await sbGet("profiles?select=id,first_name,last_name&id=in.(" + ids.slice(i, i + 80).join(",") + ")");
-        part.forEach(p => { names[p.id] = ((p.first_name || "") + " " + (p.last_name || "")).trim() || "Member"; });
-      }
-      const by = {};
-      MS.forEach(v => { (by[v.user_id] = by[v.user_id] || []).push(v); v.device_id = v.user_id; });
-      MR = ids.map(id => ({ device_id: id, name: names[id] || "Member", first_seen: by[id][by[id].length - 1].started_at,
-                            last_seen: by[id][0].last_seen, visits: by[id].length }));
-    } catch (e) { MR = null; MS = null; }
-    rows = tab === "guests" ? G : (MR || []); sess = tab === "guests" ? GS : MS;
-  }
-  try { await fetchAll(); }
-  catch (e) { stage.innerHTML = ""; stage.appendChild(el("p", "note", "The guest list could not be read. It opens only for the site owner.")); stage.appendChild(footNav({})); return; }
-  const t = d => new Date(d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
-  const day = d => {
-    const x = new Date(d), now = new Date(), y = new Date(now - 864e5);
-    if (x.toDateString() === now.toDateString()) return "Today";
-    if (x.toDateString() === y.toDateString()) return "Yesterday";
-    return x.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
-  };
-  const dur = (a, b) => { const m = Math.max(1, Math.round((new Date(b) - new Date(a)) / 60000));
-    return m < 60 ? m + " min" : Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : ""); };
-  const isOn = v => v && !v.left_at && Date.now() - new Date(v.last_seen) < GUEST_ONLINE_MS;
-  function render() {
-    stage.innerHTML = "";
-    const by = {};
-    (sess || []).forEach(v => { (by[v.device_id] = by[v.device_id] || []).push(v); });
-    const online = rows.filter(r => isOn((by[r.device_id] || [])[0]));
-    const order = rows.slice().sort((a, b) => (isOn((by[b.device_id] || [])[0]) ? 1 : 0) - (isOn((by[a.device_id] || [])[0]) ? 1 : 0));
-    const tabs = el("div", "gv-tabs");
-    [["guests", "Guests"], ["members", "Members"]].forEach(([k, label]) => {
-      const b = el("button", "gv-tab" + (tab === k ? " on" : ""), label); b.type = "button";
-      b.addEventListener("click", () => { if (tab === k) return; tab = k; rows = tab === "guests" ? G : (MR || []); sess = tab === "guests" ? GS : MS; q = ""; render(); });
-      tabs.appendChild(b);
-    });
-    stage.appendChild(tabs);
-    const noun = tab === "guests" ? ["guest", "guests"] : ["member", "members"];
-    const head = el("div", "gv-head", '<b>' + rows.length + '</b><span>' + (rows.length === 1 ? noun[0] : noun[1]) + (tab === "guests" ? ' so far' : ' with recorded visits') + '</span>' +
-      (sess ? '<em class="gv-on-count"><i></i>' + online.length + ' online now</em>' : ''));
-    stage.appendChild(head);
-    if (rows.length > 8) {
-      const sb = el("div", "gl-search"); const i = document.createElement("input");
-      i.type = "search"; i.value = q; i.dir = "auto"; i.placeholder = "Search a name";
-      i.addEventListener("input", () => { q = i.value; paintList(); });
-      sb.appendChild(i); stage.appendChild(sb);
-    }
-    const list = el("div", "gv-list"); stage.appendChild(list);
-    function paintList() {
-      list.innerHTML = "";
-      const f = q.trim().toLowerCase();
-      const hits = order.filter(r => !f || String(r.name || "").toLowerCase().indexOf(f) >= 0);
-      if (!hits.length) { list.appendChild(el("p", "mw-empty", rows.length ? "No one by that name." : (tab === "guests" ? "No one has continued as a guest yet." : (MR ? "No member visits recorded yet." : "Member visit times start once the member-sessions SQL has been run.")))); return; }
-      hits.forEach(r => {
-        const nm = String(r.name || "Guest");
-        const ini = nm.split(/\s+/).map(w => w.charAt(0)).join("").slice(0, 2).toUpperCase();
-        const d = new Date(r.first_seen);
-        const vs = by[r.device_id] || [], on = isOn(vs[0]);
-        let seen;
-        if (on) seen = '<span class="gv-live"><i></i>Online</span><small>since ' + t(vs[0].started_at) + '</small>';
-        else if (vs[0]) seen = '<span>' + day(vs[0].started_at) + ' · ' + t(vs[0].started_at) + '\u2013' + t(vs[0].left_at || vs[0].last_seen) + '</span><small>stayed ' + dur(vs[0].started_at, vs[0].left_at || vs[0].last_seen) + '</small>';
-        else seen = '<span>Last seen ' + day(r.last_seen) + ' · ' + t(r.last_seen) + '</span>';
-        const row = el("div", "gv-row" + (on ? " on" : "") + (vs.length ? " tap" : ""),
-          '<span class="gv-av">' + esc(ini) + (on ? '<i class="gv-dot"></i>' : '') + '</span>' +
-          '<span class="gv-t"><b dir="auto">' + esc(nm) + '</b><small>First came ' +
-            d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) + ' · ' + (r.visits || 1) + (r.visits === 1 ? ' visit' : ' visits') + '</small></span>' +
-          '<span class="gv-seen">' + seen + '</span>');
-        list.appendChild(row);
-        if (!vs.length) return;
-        const box = el("div", "gv-visits"); box.hidden = !open[r.device_id];
-        vs.slice(0, 20).forEach((v, k) => {
-          const live = k === 0 && on;
-          box.appendChild(el("div", "gv-visit",
-            '<span>' + day(v.started_at) + '</span><b>' + t(v.started_at) + ' – ' + (live ? 'now' : t(v.left_at || v.last_seen)) + '</b>' +
-            '<small>' + (live ? 'on the site, ' + dur(v.started_at, Date.now()) : dur(v.started_at, v.left_at || v.last_seen)) + '</small>'));
-        });
-        list.appendChild(box);
-        row.addEventListener("click", () => { open[r.device_id] = box.hidden; box.hidden = !box.hidden; row.classList.toggle("open", !box.hidden); });
-        row.classList.toggle("open", !box.hidden);
-      });
-    }
-    paintList();
-    stage.appendChild(el("p", "sd-note", (tab === "guests" ? "Guests type a name to look around without an account. Each device counts once. " : "Members are people signed in to their account. ") + "Tap a name to see when each visit began and ended, and how long it lasted. " +
-      (sess ? "Visit times are recorded from the day this feature went live; earlier visits have no times." : "Arrival and leaving times start once the guest-sessions SQL has been run.")));
-    stage.appendChild(footNav({}));
-  }
-  render();
-  /* keep the list live while it is on screen */
-  timer = setInterval(async () => {
-    if (!document.body.contains(stage) || !stage.querySelector(".gv-list")) { clearInterval(timer); return; }
-    if (document.visibilityState !== "visible") return;
-    const active = document.activeElement && document.activeElement.type === "search";
-    try { await fetchAll(); if (!active) render(); } catch (e) {}
-  }, 30 * 1000);
-}
 
 function leaveGuest(mode) {
   state.guest = ""; save();
