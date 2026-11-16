@@ -135,7 +135,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   --hair: 1px solid rgba(214,191,234,.14);
   --hair-lit: 1px solid rgba(214,191,234,.28);
   --grad-h: linear-gradient(90deg, #a726d0 0%, #8218c7 55%, #650fd0 100%);
-  --logo: url("icons/logo-1024.png?v=7");
+  --logo: url("icons/logo-1024.png?v=8");
   --ease: cubic-bezier(.16,.84,.28,1);
   --measure: 64ch;
 }
@@ -341,7 +341,7 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
 .fin-form { width: 100%; max-width: 30rem; display: grid; gap: .8rem; }
 .fin-verdict { display: grid; gap: 1.1rem; justify-items: center; animation: camForward 700ms var(--ease) both; }
 .fin-logo { width: 104px; height: 104px; border-radius: 24%; background-image: var(--logo); background-size: cover;
-  box-shadow: 0 0 90px -6px rgba(167,38,208,.95); animation: logoPulse 1.9s ease-in-out infinite; }
+  box-shadow: 0 0 90px -6px rgba(255,181,71,.7); animation: logoPulse 1.9s ease-in-out infinite; }
 .fin-rank { font-family: var(--f-serif); font-size: clamp(2rem,8vw,3.4rem); font-weight: 700; margin: 0;
   background: linear-gradient(180deg,#ffffff,#cdb3e6 58%,#a726d0);
   -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -381,9 +381,9 @@ button.link:hover { color: var(--white); transform: none; box-shadow: none; }
   display: block; width: clamp(116px, 25vw, 174px); aspect-ratio: 1;
   background-image: var(--logo); background-size: cover; background-position: center;
   border-radius: 24%; transform-style: preserve-3d;
-  box-shadow: 0 34px 64px -20px rgba(101,15,208,.85),
+  box-shadow: 0 34px 64px -24px rgba(0,0,0,.6),
               0 0 0 1px rgba(255,255,255,.12),
-              0 0 90px -22px rgba(167,38,208,.6);
+              0 0 90px -26px rgba(255,181,71,.45);
   animation: logoIn 1050ms var(--ease) both, logoFloat 7.5s ease-in-out infinite;
   animation-delay: 60ms, 1150ms;
 }
@@ -3683,7 +3683,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
 .hall-mark .ring { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hall-mark .face { position: absolute; inset: 22px; border-radius: 24%;
   background-image: var(--logo); background-size: cover; background-position: center;
-  box-shadow: 0 12px 26px -12px rgba(101,15,208,.85), 0 0 0 1px rgba(255,255,255,.12); }
+  box-shadow: 0 12px 26px -12px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.12); }
 
 /* ═══════════ THE CLIMB ═══════════ */
 .climb { padding: clamp(1.35rem,3.5vw,2.1rem); display: grid; gap: 1.6rem; }
@@ -3729,7 +3729,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--white); outline-off
 /* ═══════════ LEVEL UP ═══════════ */
 #unlock .u-logo { width: 100px; height: 100px; border-radius: 24%;
   background-image: var(--logo); background-size: cover;
-  box-shadow: 0 0 80px -8px rgba(167,38,208,.95);
+  box-shadow: 0 0 80px -8px rgba(255,181,71,.7);
   animation: logoPulse 1.7s ease-in-out infinite; }
 @keyframes logoPulse { 0%,100% { transform: scale(1) rotate(0); } 50% { transform: scale(1.07) rotate(-1.5deg); } }
 #unlock .u-rank { font-family: var(--f-serif); font-size: clamp(2rem,8vw,3.4rem); font-weight: 700; margin: 0;
@@ -23212,7 +23212,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1113-1915";
+const BUILD = "1116-1821";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
