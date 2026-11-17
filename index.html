@@ -1368,7 +1368,6 @@ details.th-card[open] > summary { border-bottom: 1px solid rgba(214,191,234,.15)
 .lh-move-k { display: block; font-size: .7rem; letter-spacing: .12em;
   text-transform: uppercase; color: var(--mag-ink); font-weight: 600; margin-bottom: .15rem; }
 .alpha .a-txt { display: flex; align-items: baseline; gap: .45rem; }
-.a-noimg { display: grid; place-items: center; width: 100%; aspect-ratio: 1; font-family: var(--f-ar, "Amiri", serif); font-size: clamp(2rem, 9vw, 3.4rem); color: var(--k-faint, #7D7B90); }
 .ksl-credit { margin: 0; font-size: .78rem; font-weight: 300; line-height: 1.55;
   color: var(--ink-soft); max-width: var(--measure); }
 .ksl-credit b, .ss-note b { color: var(--lilac); font-weight: 600; }
@@ -6667,10 +6666,10 @@ const HUMAN = [
   { src: "للّه دَرُّه!",
     opts: [
       { t: "How wonderful he is!", tag: "the meaning: an exclamation of praise", ok: true },
-      { t: "His milk is due to God.", tag: "word for word: dictionary words, meaning lost" },
+      { t: "His milk is due to God.", tag: "word for word — the book calls this a “mock-exoticism”" },
       { t: "God has taken his milk away.", tag: "wrong meaning entirely" }
     ],
-    why: "<b>للّه درّه</b> is praise. A word-for-word rendering keeps the dictionary meanings and loses the point, so recognise the fixed expression first and then translate what it does. After " + HN15 + ", p. 1. Recognise the fixed expression first; then translate what it does.", ch: "Start Here" },
+    why: "An inexperienced translator may render <b>للّه درّه</b> “by a mock-exoticism like ‘his milk is due to God/Allah’, rather than as ‘how wonderful so-and-so is!’” — " + HN15 + ", p. 1. Recognise the fixed expression first; then translate what it does.", ch: "Start Here" },
 
   { src: "فقدَ اللاعبُ أعصابَه بعد الهدف الثاني.",
     opts: [
@@ -6702,7 +6701,7 @@ const HUMAN = [
       { t: "He was seething with anger when he heard the news.", tag: "the Arabic meaning", ok: true },
       { t: "He laughed when he heard the news.", tag: "wrong meaning" }
     ],
-    why: "In Arabic you bite your fingertips (<b>عضّ أنامله</b>) in anger; an English speaker bites their nails out of anxiety, which is about nerves, not anger. " + HN15 + ", p. 31.", ch: "Section 3.2" },
+    why: "In Arabic you bite your fingertips (<b>عضّ أنامله</b>) in anger; an English speaker bites their nails out of anxiety, as in “a nail-biting wait”. " + HN15 + ", p. 31.", ch: "Section 3.2" },
 
   { src: "أثلجَ الخبرُ صدري.",
     opts: [
@@ -9475,9 +9474,9 @@ const BOOTH_GENRES = [
       { ar: "تتبادل الدول أكبر قدر من المساعدة.",
         ok: ["States shall afford one another the greatest measure of assistance."],
         keys: ["states", "afford one another", "greatest measure", "assistance"] },
-      { ar: "ألقت الشرطة القبض على المشتبه به في المطار.",
-        ok: ["The police arrested the suspect at the airport."],
-        keys: ["police", "arrested", "suspect", "airport"] },
+      { ar: "قبضت الشرطة اللص عند خروجه من موقع الجريمة.",
+        ok: ["The police seized the thief as he left the crime scene."],
+        keys: ["police", "seized", "thief", "crime scene"] },
       { ar: "نحن حمد بن عيسى آل خليفة أمير دولة البحرين.",
         ok: ["We, Hamad bin Isa Al Khalifa, Amir of the State of Bahrain."],
         keys: ["hamad bin isa al khalifa", "amir", "state of bahrain"] },
@@ -9501,10 +9500,20 @@ const BOOTH_GENRES = [
     ]
   },
   {
-    /* JOURNALISTIC AND MEDIA. The sentences and passages were written for the Compass;
-       the single terms and phrases are standard vocabulary. */
+    /* JOURNALISTIC AND MEDIA. Every item and every English rendering is
+       printed in a published source; nothing here is the site's own.
+       HN15 = Husni & Newman (2015), ch. 2: newspaper passages from
+         Tunisia (al-Sabah) and Egypt (al-Misri al-Yawm) with their
+         English, p. 65; regional press vocabulary, pp. 66–67.
+       HN13 = Husni & Newman (2013), A to Z, example sentences in the
+         entries "Adverbs", "Agreement", "The present", "Rise/raise",
+         "Conversation/conversant", "Hire/rent/let/lease/charter",
+         "Criticism/critic/critique/critical", "Disused/misuse/abuse",
+         "Hardly/barely/scarcely/no sooner", "The future", "Keep on …",
+         "The passive". The English of p. 65 is kept as printed,
+         except the typo ‘demonstations’. */
     id: "media", en: "Journalistic and media", ar: "إعلامي وصحفي",
-    hint: "Press vocabulary and news-style sentences written for the Compass.",
+    hint: "Real newspaper passages and press vocabulary, from Husni & Newman.",
     icon: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h6M7 13h6M7 16h4M16 9h2M16 13h2"/>',
     terms: [
       { ar: "حالة الاستنفار", ok: ["state of emergency", "a state of emergency"] },
@@ -9530,48 +9539,57 @@ const BOOTH_GENRES = [
       { ar: "قصر الرئاسة", ok: ["the presidential palace", "presidential palace"] }
     ],
     sentences: [
-      { ar: "افتتح الوزير أمس مستشفى جديداً.",
-        ok: ["The minister opened a new hospital yesterday."],
-        keys: ["minister", "opened", "new hospital", "yesterday"] },
-      { ar: "أعلنت الحكومة عن خطة جديدة لدعم المشاريع الصغيرة.",
-        ok: ["The government has announced a new plan to support small businesses.", "The government announced a new plan to support small projects."],
-        keys: ["government", "announced", "plan", "support", "small"] },
-      { ar: "نقلت وكالات الأنباء تصريحات المتحدث الرسمي باسم الوزارة.",
-        ok: ["News agencies carried the statements of the ministry's official spokesperson."],
-        keys: ["news agencies", "statements", "spokesperson", "ministry"] },
-      { ar: "ارتفعت أسعار النفط في الأسواق العالمية هذا الأسبوع.",
-        ok: ["Oil prices rose on world markets this week.", "Oil prices rose in global markets this week."],
-        keys: ["oil prices", "rose", "markets", "this week"] },
-      { ar: "عقد مجلس الأمة جلسة طارئة لمناقشة الميزانية.",
-        ok: ["The National Assembly held an emergency session to discuss the budget."],
-        keys: ["national assembly", "held", "emergency session", "discuss", "budget"] },
-      { ar: "أجرت الصحيفة مقابلة مع رئيس الجامعة حول خطط التطوير.",
-        ok: ["The newspaper interviewed the university president about development plans."],
-        keys: ["newspaper", "interview", "president", "development plans"] },
-      { ar: "دعا الأمين العام للأمم المتحدة إلى وقف فوري لإطلاق النار.",
-        ok: ["The UN Secretary-General called for an immediate ceasefire."],
-        keys: ["secretary-general", "called for", "immediate", "ceasefire"] },
-      { ar: "من المتوقع أن تهطل أمطار غزيرة على البلاد مساء الغد.",
-        ok: ["Heavy rain is expected across the country tomorrow evening."],
-        keys: ["heavy rain", "expected", "country", "tomorrow evening"] }
+      { ar: "أَلْقَى الوَزِيرُ أَمْسِ مُحاضَرَةً في القاهِرَةِ.",
+        ok: ["The minister delivered a speech yesterday in Cairo."],
+        keys: ["minister", "delivered", "speech", "yesterday", "cairo"] },
+      { ar: "لَقَدْ وافَقَتِ الحُكُومَةُ عَلَى زِيادَةٍ جَدِيدَةٍ في الضَّرائِبِ.",
+        ok: ["The government have agreed upon a new tax increase."],
+        keys: ["government", "agreed", "new tax increase"] },
+      { ar: "تَقُومُ المُعارَضَةُ بِاحْتِجاجاتٍ غَيْرِ مَسْبُوقَةٍ ضِدَّ الحُكُومَةِ.",
+        ok: ["The opposition are organizing unprecedented demonstrations against the government."],
+        keys: ["opposition", "unprecedented", "demonstrations", "government"] },
+      { ar: "رَفَعَتِ الحُكُومَةُ الأَسْعارَ الأُسْبُوعَ الماضِي.",
+        ok: ["The government raised prices last week."],
+        keys: ["government", "raised", "prices", "last week"] },
+      { ar: "انْتَقَدَ الصَّحَفِيُّ الوَزِيرَ انْتِقاداً لاذِعاً خِلالَ الحَدِيثِ.",
+        ok: ["During the interview, the journalist severely criticized the minister."],
+        keys: ["interview", "journalist", "severely", "criticized", "minister"] },
+      { ar: "اسْتَأْجَرَ الوَفْدُ الحُكُومِيُّ طائِرَةً خاصَّةً لِجَوْلَتِهِ الأُورُوبِيَّةِ.",
+        ok: ["The government delegation chartered a private plane for their European tour."],
+        keys: ["government delegation", "chartered", "private plane", "european tour"] },
+      { ar: "كانَتِ الجَرِيدَةُ انْتِقادِيَّةً لِقَرارِ الحُكُومَةِ السّابِقَةِ.",
+        ok: ["The newspaper was critical of the decision made by the previous government."],
+        keys: ["newspaper", "critical", "decision", "previous government"] },
+      { ar: "بَدَأَ وُزَراءُ الاتِّحادِ الأُورُوبِيِّ العَمَلَ لِفَرْضِ عُقُوباتٍ بِشَأْنِ انْتِهاكاتِ حُقُوقِ الإِنْسانِ.",
+        ok: ["EU Ministers are set to impose sanctions over human rights abuses."],
+        keys: ["eu ministers", "impose", "sanctions", "human rights abuses"] }
     ],
     turns: [
-      { ar: "أعلنت وزارة التربية أن العام الدراسي الجديد سيبدأ في منتصف سبتمبر. وأوضحت الوزارة أن جداول الحصص ستُنشر على موقعها الإلكتروني قبل بدء الدراسة بأسبوع.",
-        ok: ["The Ministry of Education announced that the new academic year will begin in mid-September. The ministry explained that class timetables will be published on its website a week before school starts."],
-        keys: ["ministry of education", "announced", "year", "mid-september", "timetable", "website", "week before"] },
-      { ar: "شارك آلاف المتطوعين في حملة لتنظيف الشواطئ نظمتها جمعية أهلية، وجمع المشاركون خلال يوم واحد أكثر من طنين من النفايات.",
-        ok: ["Thousands of volunteers took part in a beach clean-up campaign organized by a non-governmental association, and in a single day the participants collected more than two tonnes of waste."],
-        keys: ["volunteers", "took part", "beach", "campaign", "day", "two ton", "waste"] },
-      { ar: "ما إن أعلن الحكم نهاية المباراة حتى خرج المشجعون إلى الشوارع احتفالاً بالفوز.",
-        ok: ["No sooner had the referee blown the final whistle than the fans poured into the streets to celebrate the win."],
-        keys: ["no sooner", "referee", "fans", "streets", "celebrat", "win"] }
+      { ar: "وقد خلف الفراغ الذي تركته السلطة المحلية تفشي العديد من مظاهر الفوضى وخرقات كثيرة للقانون، فانتشرت ظاهرة البناء الفوضوي والاستيلاء على أراض تعود ملكيتها للبلدية أو للدولة بلغت حسب مصدر مسؤول نحو 42 هكتاراً.",
+        ok: ["The vacuum left by the local authorities has in many cases led to chaos and breaches of the law. The number of illegal building activities and exploitation of land belonging to the municipality or the state has spread across an area of approximately 42 hectares, according to an official source."],
+        keys: ["vacuum", "local authorities", "chaos", "breaches of the law", "illegal building", "municipality", "42 hectares", "official source"] },
+      { ar: "شهدت القاهرة وبعض المحافظات، أمس، عدداً من المظاهرات الفئوية، وتظاهر العشرات من أصحاب شركات إلحاق العمالة المصرية بالخارج، أمام مجلس الوزراء للتنديد بمشروع قرار يعد له الدكتور أحمد البرعي، وزير القوى العاملة، يهدف إلى تولي الوزارة عملية إلحاق العمالة المصرية المؤقتة بالسعودية أثناء موسم الحج.",
+        ok: ["A number of sectarian demonstrations took place yesterday both in Cairo and a number of Governorates. Dozens of owners of companies that employ Egyptian workers abroad staged a demonstration outside the Council for Ministers to protest against the proposal, resubmitted by Dr Ahmed al-Baraei, the Minister for Labour, that is aimed at giving the Ministry the power to administer the Egyptian workers who are temporarily in Saudi Arabia during the hajj season."],
+        keys: ["demonstrations", "cairo", "governorates", "egyptian workers abroad", "council", "proposal", "minister for labour", "hajj season"] },
+      { ar: "ما إِنْ قَرَأَ الرَّئِيسُ هذا التَّقْرِيرَ حَتَّى أَمَرَ بِتَصْحِيحِ الوَضْعِ.",
+        ok: ["No sooner did the president read this report than he ordered that the situation be improved."],
+        keys: ["no sooner", "president", "report", "ordered", "situation", "improved"] }
     ]
   },
   {
-    /* MEDICAL. The sentences and passages were written for the Compass;
-       the single terms and phrases are standard vocabulary. */
+    /* MEDICAL. Every item and every English rendering is printed in
+       Husni & Newman (2013), A to Z of Arabic–English–Arabic Translation,
+       in the entries "Anymore/no more/no longer/any longer",
+       "Effective/efficient/efficacious", "Disused/misuse/abuse",
+       "Even/even if/even though/even so", "Flammable, inflammable",
+       "Transliteration and transcription", "Nevertheless/notwithstanding",
+       "As/because/since/for", "Holiday/holidays/vacation/leave",
+       the entry on ظِلّ (in the light of) and "Ensure/insure/assure". The Arabic was read
+       from the book's page images. A medical glossary from a named
+       bilingual source (for example the WHO Constitution in its official
+       Arabic and English) is still to be added. */
     id: "medical", en: "Medical", ar: "طبّي",
-    hint: "Patients, medicines and health insurance, in sentences written for the Compass.",
+    hint: "Patients, medicines and health insurance, in the A to Z’s own example sentences.",
     icon: '<path d="M4 12h3l2-5 3 10 2.5-6 1.5 3h4"/><rect x="2.5" y="4.5" width="19" height="15" rx="3"/>',
     terms: [
       { ar: "شلل الأطفال", ok: ["polio"] },
@@ -9594,51 +9612,57 @@ const BOOTH_GENRES = [
       { ar: "مرض قاتل", ok: ["a deadly disease", "deadly disease"] },
       { ar: "التهاب الأمعاء", ok: ["inflammation of the intestines", "an inflammation of the intestines"] },
       { ar: "رفع أسعار الأدوية", ok: ["an increase in the price of medicines", "increase in the price of medicines"] },
-      { ar: "على الرغم من نصيحة الطبيب", ok: ["despite the doctor's advice", "despite the doctor’s advice", "in spite of the doctor's advice"] }
+      { ar: "برغم نصيحة طبيبها", ok: ["doctor's orders notwithstanding", "doctor’s orders notwithstanding"] }
     ],
     sentences: [
-      { ar: "لم تعد الحصبة منتشرة كما كانت في الماضي بفضل التطعيم.",
-        ok: ["Thanks to vaccination, measles is no longer as widespread as it was in the past."],
-        keys: ["vaccination", "measles", "no longer", "widespread", "past"] },
-      { ar: "يجب أن تتناول هذا الدواء مرتين يومياً بعد الأكل.",
-        ok: ["You should take this medicine twice a day after meals.", "You must take this medicine twice a day after eating."],
-        keys: ["take", "medicine", "twice a day", "after"] },
-      { ar: "قد يؤدي سوء استخدام المضادات الحيوية إلى مقاومة البكتيريا لها.",
-        ok: ["Misuse of antibiotics can make bacteria resistant to them."],
-        keys: ["misuse", "antibiotics", "bacteria", "resistan"] },
-      { ar: "زرت جدتي في المستشفى بعد العملية مباشرة.",
-        ok: ["I visited my grandmother in hospital right after the operation."],
-        keys: ["visited", "grandmother", "hospital", "after the operation"] },
-      { ar: "يعاني المريض من ارتفاع ضغط الدم.",
-        ok: ["The patient suffers from high blood pressure.", "The patient has high blood pressure."],
-        keys: ["patient", "high blood pressure"] },
-      { ar: "نصحه الطبيب بالراحة التامة لمدة أسبوع.",
-        ok: ["The doctor advised him to rest completely for a week.", "The doctor advised him to get complete rest for a week."],
-        keys: ["doctor", "advised", "rest", "week"] },
-      { ar: "على الرغم من نصيحة الطبيب، عاد إلى العمل في اليوم التالي.",
-        ok: ["Despite the doctor's advice, he went back to work the next day."],
-        keys: ["despite", "doctor", "advice", "back to work", "next day"] },
-      { ar: "لا يستطيع الحضور اليوم لأنه مصاب بالإنفلونزا.",
-        ok: ["He can't attend today because he has the flu.", "He cannot attend today because he has influenza."],
-        keys: ["attend", "today", "because"] }
+      { ar: "لَمْ يَعُدْ شَلَلُ الأَطْفالِ مَرَضاً قاتِلاً.",
+        ok: ["Polio is no longer a deadly disease."],
+        keys: ["polio", "no longer", "deadly disease"] },
+      { ar: "الأَسْبِرِينُ دَواءٌ فَعّالٌ ضِدَّ الصُّداعِ.",
+        ok: ["Aspirin is an effective drug against headaches."],
+        keys: ["aspirin", "effective", "drug", "headaches"] },
+      { ar: "إِنَّ سُوءَ اسْتِعْمالِ الجِهازِ يُضِرُّ بِالصِّحَّةِ.",
+        ok: ["Misuse of the equipment constitutes a health hazard."],
+        keys: ["misuse", "equipment", "health hazard"] },
+      { ar: "أُرِيدُ أَنْ أَزُورَ أُمّي في المُسْتَشْفَى حَتَّى وَلَوْ لِساعَةٍ واحِدَةٍ.",
+        ok: ["I want to visit my mother in hospital, if only for an hour."],
+        keys: ["visit", "mother", "hospital", "if only", "hour"] },
+      { ar: "هُناكَ أَدْوِيَةٌ عَدِيدَةٌ لِعِلاجِ الْتِهابِ الأَمْعاءِ.",
+        ok: ["There are plenty of medicines to treat an inflammation of the intestines."],
+        keys: ["plenty of medicines", "treat", "inflammation", "intestines"] },
+      { ar: "كَتَبَ البُرُوفِسُور أَنْدِي سْمِيث مَقالَةً حَوْلَ الأَمْراضِ الباطِنِيَّةِ.",
+        ok: ["Professor Andy Smith wrote an article on internal medicine."],
+        keys: ["professor andy smith", "article", "internal medicine"] },
+      { ar: "سافَرَتْ إِلَى مِصْرَ بِرَغْمِ نَصِيحَةِ طَبِيبِها.",
+        ok: ["She travelled to Egypt, doctor’s orders notwithstanding."],
+        keys: ["travelled", "egypt", "doctor", "notwithstanding"] },
+      { ar: "بِما أَنَّهُ مَرِيضٌ جِدّاً فَلَنْ يَحْضُرَ الاجْتِماعَ غَداً.",
+        ok: ["As he’s very ill, he won’t attend the meeting tomorrow."],
+        keys: ["very ill", "attend", "meeting", "tomorrow"] }
     ],
     turns: [
-      { ar: "يحق للموظفة الحصول على إجازة أمومة مدفوعة الأجر، بشرط أن تقدم شهادة طبية معتمدة.",
-        ok: ["A female employee is entitled to paid maternity leave, provided that she submits an approved medical certificate."],
-        keys: ["employee", "entitled", "paid maternity leave", "provided", "medical certificate"] },
-      { ar: "أطلقت وزارة الصحة حملة للتطعيم ضد الإنفلونزا الموسمية، ودعت كبار السن والمصابين بالأمراض المزمنة إلى أخذ اللقاح في أقرب مركز صحي.",
-        ok: ["The Ministry of Health has launched a seasonal flu vaccination campaign and urged the elderly and people with chronic diseases to get vaccinated at their nearest health centre."],
-        keys: ["ministry of health", "launched", "flu", "vaccin", "campaign", "elderly", "chronic", "health cent"] },
-      { ar: "يغطي التأمين الصحي تكاليف العلاج في المستشفيات الحكومية والخاصة.",
-        ok: ["Health insurance covers the cost of treatment in both public and private hospitals."],
-        keys: ["health insurance", "covers", "cost", "treatment", "private", "hospitals"] }
+      { ar: "ما دامَتْ عُطْلَةُ الأُمُومَةِ مُوَثَّقَةً بِالشَّهاداتِ الطِّبِّيَّةِ فَإِنَّهُ لا يُمْكِنُ لِصاحِبِ العَمَلِ أَنْ يَفْصِلَ المَرْأَةَ مِنْ عَمَلِها.",
+        ok: ["As long as the maternity leave is justified by a medical certificate, the employer cannot dismiss the woman."],
+        keys: ["as long as", "maternity leave", "medical certificate", "employer", "dismiss"] },
+      { ar: "اعْتَبَرَتْ نِقابَةُ الصَّيادِلَةِ أَنَّ رَفْعَ أَسْعارِ الأَدْوِيَةِ لَيْسَ لَهُ ما يُبَرِّرُهُ، خُصُوصاً في ظِلِّ الظُّرُوفِ الاقْتِصادِيَّةِ الصَّعْبَةِ الَّتي يَعِيشُها المُواطِنُونَ.",
+        ok: ["The pharmacists’ union believed that an increase in the price of medicines was not justifiable, particularly in light of the difficult economic conditions that people are living in."],
+        keys: ["pharmacists", "union", "increase", "price of medicines", "not justifiable", "in light of", "economic conditions"] },
+      { ar: "لِكُلِّ فَرْدٍ الحَقُّ في العِلاجِ طِبْقاً لِنِظامِ التَّأْمِينِ الصِّحِّيِّ الوَطَنِيِّ.",
+        ok: ["Every individual is entitled to treatment under the national health insurance scheme."],
+        keys: ["every individual", "entitled", "treatment", "national health insurance scheme"] }
     ]
   },
   {
-    /* CONFERENCE AND ACADEMIC. The sentences and passages were written for the Compass;
-       the single terms and phrases are standard vocabulary. */
+    /* CONFERENCE AND ACADEMIC. Every item and every English rendering is
+       printed in Husni & Newman (2013), A to Z of Arabic–English–Arabic
+       Translation, in the example sentences of these entries: "All (of)/
+       each/every", "Although/though/albeit", "Auxiliary verbs",
+       "Border/frontier/boundary", "Classic/classical/…", "Each/every",
+       "Happen/occur/take place", "Industrial/industrious", "Not only/just
+       … but also", "Number/figure/digit/numeral", "The past", "Wa and fa",
+       "Obligation", "Depend/dependent/dependant", "Agreement". */
     id: "conference", en: "Conference and academic", ar: "مؤتمرات وأكاديمي",
-    hint: "Lectures, exams, research and conferences, in sentences written for the Compass.",
+    hint: "Lectures, exams, research and conferences, in the A to Z’s own example sentences.",
     icon: '<path d="M3 8l9-4 9 4-9 4-9-4z"/><path d="M7 10.5V15c0 1.5 2.5 3 5 3s5-1.5 5-3v-4.5M21 8v5"/>',
     terms: [
       { ar: "عميد الكلية", ok: ["dean of the faculty", "the dean of the faculty"] },
@@ -9663,51 +9687,59 @@ const BOOTH_GENRES = [
       { ar: "نجحنا في الامتحانات", ok: ["made it through the exams", "we made it through the exams"] }
     ],
     sentences: [
-      { ar: "افتتح عميد الكلية المؤتمر بكلمة ترحيبية.",
-        ok: ["The dean of the faculty opened the conference with a welcoming speech."],
-        keys: ["dean", "opened", "conference", "welcom", "speech"] },
-      { ar: "قدمت الباحثة ورقة عن ترجمة الأمثال الكويتية.",
-        ok: ["The researcher presented a paper on translating Kuwaiti proverbs."],
-        keys: ["researcher", "presented", "paper", "translat", "kuwaiti proverbs"] },
-      { ar: "على الرغم من صعوبة الأسئلة، أنهيت الامتحان قبل انتهاء الوقت.",
-        ok: ["Although the questions were difficult, I finished the exam before the time was up."],
-        keys: ["questions", "difficult", "finished", "exam", "before"] },
-      { ar: "يجب تسليم البحث قبل نهاية الفصل الدراسي.",
-        ok: ["The research paper must be submitted before the end of the semester."],
-        keys: ["research", "submitted", "before the end", "semester"] },
-      { ar: "تُعقد الجلسة الثانية في القاعة الرئيسية بعد استراحة القهوة.",
-        ok: ["The second session will be held in the main hall after the coffee break."],
-        keys: ["second session", "held", "main hall", "coffee break"] },
-      { ar: "نُشر المقال في العدد الأخير من المجلة.",
-        ok: ["The article was published in the latest issue of the journal."],
-        keys: ["article", "published", "issue", "journal"] },
-      { ar: "طرح أحد الحضور سؤالاً على المتحدث في نهاية الجلسة.",
-        ok: ["At the end of the session, a member of the audience asked the speaker a question."],
-        keys: ["end of the session", "audience", "asked", "speaker", "question"] },
-      { ar: "تهدف الندوة إلى تبادل الخبرات بين المترجمين في المنطقة.",
-        ok: ["The symposium aims to exchange experience among translators in the region.", "The seminar aims to share experience among translators in the region."],
-        keys: ["aims", "experience", "translators", "region"] }
+      { ar: "حَضَرْنا كُلُّنا المُحاضَرَةَ الَّتي أَلْقاها عَمِيدُ الكُلِّيَّةِ.",
+        ok: ["All of us attended the lecture by the Dean of the Faculty."],
+        keys: ["all of us", "attended", "lecture", "dean of the faculty"] },
+      { ar: "بِرَغْمِ أَنَّ الامْتِحانَ كانَ صَعْباً إِلّا أَنَّني أَجَبْتُ عَلَى جَمِيعِ الأَسْئِلَةِ.",
+        ok: ["Even though the exam was difficult, I answered all the questions."],
+        keys: ["even though", "exam", "difficult", "answered", "questions"] },
+      { ar: "تُحاوِلُ جامِعَتُنا أَنْ تُوَسِّعَ آفاقَ العِلْمِ.",
+        ok: ["Our University is trying to push back the frontiers of science."],
+        keys: ["university", "push back", "frontiers of science"] },
+      { ar: "سَلَّمَ كُلُّ طالِبٍ واجِبَهُ.",
+        ok: ["The students each handed in their assignments."],
+        keys: ["students", "each", "handed in", "assignments"] },
+      { ar: "فَشِلَ في الامْتِحانِ فَيَجِبُ أَنْ يَتْرُكَ الجامِعَةَ.",
+        ok: ["He failed the exam and (so he) had to leave the university."],
+        keys: ["failed", "exam", "leave", "university"] },
+      { ar: "نُشِرَتِ المَقالَةُ في العَدَدِ الثّامِنِ لِلْمَجَلَّةِ.",
+        ok: ["The article was published in the eighth issue of the journal."],
+        keys: ["article", "published", "eighth issue", "journal"] },
+      { ar: "كانَ الباحِثُ يُبْدِعُ غَيْرَ مُعَوِّلٍ عَلَى الفَلْسَفَةِ.",
+        ok: ["The scholar created the theory independent of philosophy."],
+        keys: ["scholar", "created", "theory", "independent", "philosophy"] },
+      { ar: "خَرَجَ الأَساتِذَةُ واتَّجَهُوا إِلَى المَطارِ.",
+        ok: ["The lecturers left and headed for the airport."],
+        keys: ["lecturers", "left", "headed", "airport"] }
     ],
     turns: [
-      { ar: "عُقد الأسبوع الماضي المؤتمر السنوي للترجمة في الجامعة، بمشاركة أساتذة وطلاب من عدة دول عربية.",
-        ok: ["Last week the annual translation conference was held at the university, with the participation of professors and students from several Arab countries."],
-        keys: ["last week", "annual", "translation conference", "held", "professors", "students", "arab countries"] },
-      { ar: "لم تكن المحاضرة ممتعة فحسب، بل كانت مفيدة أيضاً للمترجمين المبتدئين.",
-        ok: ["The lecture was not only enjoyable but also useful for beginner translators."],
-        keys: ["not only", "enjoyable", "but also", "useful", "translators"] },
-      { ar: "ناقشنا في الجلسة السابقة أهم التحديات التي تواجه المترجم القانوني.",
-        ok: ["In the previous session, we discussed the main challenges facing the legal translator."],
-        keys: ["previous session", "discussed", "challenges", "legal translator"] },
-      { ar: "ينبغي أن تراعي المناهج الدراسية احتياجات سوق العمل.",
-        ok: ["Curricula should take the needs of the job market into account.", "Curricula should take into account the needs of the labour market."],
-        keys: ["curricul", "needs", "market"] }
+      { ar: "انْعَقَدَتِ الشَّهْرَ الماضِيَ جَلَساتُ مُؤْتَمَرِ الدَّوْرَةِ الخامِسَةِ وَالسِّتِّينَ لِمَجْمَعِ اللُّغَةِ العَرَبِيَّةِ في القاهِرَةِ.",
+        ok: ["Last month the sessions of the sixty-fifth conference of the Cairo Academy of the Arabic Language took place."],
+        keys: ["last month", "sessions", "sixty-fifth", "conference", "cairo academy of the arabic language", "took place"] },
+      { ar: "لَمْ يَكُنْ أُسْتاذاً جامِعِيّاً وَمُرَبِّياً فَقَطْ بَلْ ناقِداً وَكاتِباً كَذلِكَ.",
+        ok: ["He was not only a university teacher and educationalist but also a critic and a writer."],
+        keys: ["not only", "university teacher", "educationalist", "but also", "critic", "writer"] },
+      { ar: "سَبَقَ أَنْ عَرَضْنا الأَهْدافَ الرَّئِيسِيَّةَ لِلِاسْتِراتِيجِيَّةِ في المَقالِ السّابِقِ.",
+        ok: ["We had put forward the principal goals of the strategy in the previous article."],
+        keys: ["put forward", "principal goals", "strategy", "previous article"] },
+      { ar: "يَجِبُ أَنْ تُوضَعَ المَناهِجُ الدِّراسِيَّةُ مَعَ مُراعاةِ عُمْرِ الأَطْفالِ.",
+        ok: ["The curricula have to be designed with the children’s ages in mind."],
+        keys: ["curricula", "designed", "children", "ages", "in mind"] }
     ]
   },
   {
-    /* ISLAMIC AND RELIGIOUS. The sentences and passages were written for the Compass;
-       the single terms and phrases are standard vocabulary. */
+    /* ISLAMIC AND RELIGIOUS. Every item and every English rendering is
+       printed in a published source; nothing here is the site's own.
+       No Qur'anic verses are used.
+       HN15 = Husni & Newman (2015), Arabic–English–Arabic Translation:
+         Islamic legal terms and strategies, pp. 101, 113, 121, 126–127;
+         hajj season, p. 65; Minister of Justice and Islamic Affairs, p. 104.
+       HN13 = Husni & Newman (2013), A to Z of Arabic–English–Arabic
+         Translation: entries "Terms of address", "The conditional",
+         "The past", "Arab/Arabic/Arabian", "In case/in spite of", "Time",
+         "Interfere/interrupt/intervene", "Below/beneath/underneath/under". */
     id: "religious", en: "Islamic and religious", ar: "إسلامي وديني",
-    hint: "Islamic terms, religious formulas and honorifics, in sentences written for the Compass.",
+    hint: "Islamic legal terms, religious formulas and honorifics, from Husni & Newman.",
     icon: '<path d="M15.5 4.2a8 8 0 1 0 4.3 12.6A6.5 6.5 0 1 1 15.5 4.2z"/><path d="M17.6 7.3l.6 1.6 1.7.1-1.3 1.1.4 1.6-1.4-.9-1.4.9.4-1.6-1.3-1.1 1.7-.1z"/>',
     terms: [
       { ar: "الشريعة", ok: ["islamic law", "shariah", "sharia", "shariah law", "islamic (or shariah) law"] },
@@ -9739,42 +9771,34 @@ const BOOTH_GENRES = [
       { ar: "العمارة الإسلامية", ok: ["islamic architecture"] }
     ],
     sentences: [
-      { ar: "يكثر الناس من زيارة الأقارب في شهر رمضان.",
-        ok: ["People visit their relatives more often during Ramadan."],
-        keys: ["visit", "relatives", "ramadan"] },
-      { ar: "تتغير مواعيد الدوام الرسمي خلال شهر رمضان.",
-        ok: ["Official working hours change during the month of Ramadan."],
-        keys: ["working hours", "change", "ramadan"] },
-      { ar: "يؤدي ملايين المسلمين فريضة الحج كل عام.",
-        ok: ["Millions of Muslims perform the Hajj every year."],
-        keys: ["millions", "muslims", "perform", "hajj", "every year"] },
-      { ar: "زرنا المسجد الكبير في مدينة الكويت.",
-        ok: ["We visited the Grand Mosque in Kuwait City."],
-        keys: ["visited", "grand mosque", "kuwait city"] },
-      { ar: "تُعد العمارة الإسلامية من أبرز معالم الحضارة العربية.",
-        ok: ["Islamic architecture is one of the most prominent features of Arab civilization."],
-        keys: ["islamic architecture", "prominent", "arab civili"] },
-      { ar: "قرأت كتاباً عن تاريخ الأندلس.",
-        ok: ["I read a book on the history of al-Andalus."],
-        keys: ["read", "book", "history", "andalus"] }
+      { ar: "دخل الحاج مصطفى الغرفة.",
+        ok: ["Hajj Mustafa came into the room."], keys: ["hajj mustafa", "came", "room"] },
+      { ar: "بِرَغْمِ الحِصارِ اسْتَعَدَّ الشَّعْبُ لِشَهْرِ رَمَضانَ.",
+        ok: ["The population made preparations for Ramadan despite the blockade."], keys: ["ramadan", "despite", "blockade", "prepar"] },
+      { ar: "سَتَتَوَسَّطُ مُنَظَّمَةُ المُؤْتَمَرِ الإِسْلامِيِّ بَيْنَ الطَّرَفَيْنِ.",
+        ok: ["The Organization of the Islamic Conference (OIC) will intervene between the two parties."], keys: ["organization of the islamic conference", "intervene", "two parties"] },
+      { ar: "انْتَشَرَتِ العِمارَةُ الإِسْلامِيَّةُ في القُرُونِ الوُسْطَى.",
+        ok: ["Islamic architecture spread in the Middle Ages."], keys: ["islamic architecture", "spread", "middle ages"] },
+      { ar: "اشْتَرَيْتُ كِتاباً بِاللُّغَةِ العَرَبِيَّةِ عَنِ الأَنْدَلُسِ.",
+        ok: ["I bought an Arabic book on Islamic Spain."], keys: ["arabic book", "islamic spain", "bought"] },
+      { ar: "تَمْنَعُ السُّلُطاتُ المُحْتَلَّةُ المُصَلِّينَ دُونَ سِنِّ الخَمْسِينَ مِنْ دُخُولِ المَسْجِدِ.",
+        ok: ["The occupying authority refused entry to the mosque to worshippers below the age of fifty."], keys: ["occupying", "mosque", "worshippers", "fifty"] }
     ],
     turns: [
-      { ar: "أعلنت الجهات المختصة ثبوت رؤية هلال شهر شوال، وبذلك يكون يوم غد أول أيام عيد الفطر.",
-        ok: ["The competent authorities announced that the crescent moon of Shawwal has been sighted, so tomorrow will be the first day of Eid al-Fitr."],
-        keys: ["authorit", "crescent", "shawwal", "sight", "tomorrow", "first day", "eid"] },
-      { ar: "حضرة صاحب السمو أمير البلاد حفظه الله ورعاه",
-        ok: ["His Highness the Amir – may God preserve and protect him", "His Highness the Amir of the State – may God protect and preserve him"],
-        keys: ["his highness", "amir", "god"] },
-      { ar: "قال المتحدث إن الشيخ الراحل، رحمه الله، كان من رواد العمل الخيري في الكويت.",
-        ok: ["The speaker said that the late sheikh, may God have mercy on him, was one of the pioneers of charitable work in Kuwait.", "The speaker said that the late sheikh, God rest his soul, was a pioneer of charitable work in Kuwait."],
-        keys: ["late", "pioneer", "charit", "kuwait"] }
+      { ar: "مَواقِيتُ عَمَلِ مَكاتِبِ البَرِيدِ في شَهْرِ رَمَضانَ مِنَ الثّامِنَةِ صَباحاً إِلَى الخامِسَةِ مَساءً.",
+        ok: ["The post office opening times during Ramadan are from 8 a.m. until 5 p.m."], keys: ["post office", "opening times", "ramadan", "8", "5"] },
+      { ar: "حَضْرَةُ صاحِبِ الجَلالَةِ السُّلْطانُ قابُوس بن سَعِيد المُعَظَّم حَفِظَهُ اللهُ وَرَعاهُ",
+        ok: ["His Majesty, Sultan Qaboos bin Said al-Muazzam – may God preserve him and watch over him"], keys: ["his majesty", "sultan qaboos", "preserve", "watch over"] }
     ]
   },
   {
-    /* BUSINESS AND COMMERCIAL. The sentences and passages were written for the Compass;
-       the single terms and phrases are standard vocabulary. */
+    /* BUSINESS AND COMMERCIAL. Every pair is printed side by side in
+       Husni & Newman (2015): an Egyptian employment contract with its
+       English (pp. 156–157) and the Zanussi-Electrolux guarantee with its
+       Arabic (pp. 158–159). The bracketed فقط formula is left out of the
+       salary clause, as their note ii on p. 157 says it should be. */
     id: "business", en: "Business and commercial", ar: "تجاري واقتصادي",
-    hint: "Employment contracts and product guarantees, in clauses written for the Compass.",
+    hint: "Employment contracts and product guarantees, from published bilingual texts.",
     icon: '<rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5M3.5 12.5h17"/>',
     terms: [
       { ar: "المرتب الشهري", ok: ["monthly salary", "the monthly salary"] },
@@ -9794,38 +9818,38 @@ const BOOTH_GENRES = [
       { ar: "دون حاجة إلى إخطار سابق", ok: ["without any prior notice", "without prior notice"] },
       { ar: "بدون إذن كتابي من الشركة", ok: ["without written permission from the company"] },
       { ar: "مجاناً وبدون أي تكاليف مادية", ok: ["free of any charge", "free of charge"] },
-      { ar: "خلال سنتين من تاريخ الشراء", ok: ["within two years of the date of purchase", "within two years from the date of purchase"] }
+      { ar: "خلال مدة 12 شهراً من تاريخ شراء هذا المنتج", ok: ["within 12 months of the date of purchase"] }
     ],
     sentences: [
-      { ar: "يبلغ الراتب الشهري المتفق عليه ... ديناراً كويتياً، ويُدفع في نهاية كل شهر.",
-        ok: ["The agreed monthly salary is ... Kuwaiti dinars, payable at the end of each month."],
-        keys: ["agreed", "monthly salary", "kuwaiti dinars", "payable", "end of each month"] },
-      { ar: "يلتزم الموظف بالحفاظ على سرية المعلومات الخاصة بالشركة.",
-        ok: ["The employee undertakes to keep the company's information confidential.", "The employee shall maintain the confidentiality of the company's information."],
-        keys: ["employee", "confidential", "company", "information"] },
-      { ar: "يحق لأي من الطرفين إنهاء هذا العقد بإشعار كتابي مدته ثلاثون يوماً.",
-        ok: ["Either party may terminate this contract by giving thirty days' written notice.", "Either party may terminate this contract with 30 days' written notice."],
-        keys: ["either party", "terminate", "contract", "days", "written notice"] },
-      { ar: "يسري هذا الضمان لمدة سنتين من تاريخ الشراء.",
-        ok: ["This warranty is valid for two years from the date of purchase.", "This guarantee is valid for two years from the date of purchase."],
-        keys: ["valid", "two years", "date of purchase"] },
-      { ar: "لا يشمل الضمان الأضرار الناتجة عن سوء الاستخدام.",
-        ok: ["The warranty does not cover damage caused by misuse.", "The guarantee does not cover damage resulting from misuse."],
-        keys: ["does not cover", "damage", "misuse"] },
-      { ar: "يجب الاحتفاظ بفاتورة الشراء وتقديمها عند طلب الصيانة.",
-        ok: ["The purchase invoice must be kept and presented when requesting maintenance.", "Keep the purchase invoice and present it when you request a repair."],
-        keys: ["purchase", "kept", "present"] }
+      { ar: "المرتب الشهري المتفق عليه هو ... جنيه مصري تدفعه الشركة شهرياً في نهاية كل شهر ميلادي.",
+        ok: ["The monthly salary agreed upon is ... Egyptian Pounds, payable monthly by the company at the end of each calendar month."],
+        keys: ["monthly salary", "egyptian pounds", "payable", "end of each", "month"] },
+      { ar: "يتعهد الطرف الثاني بأن يكرس كل وقته وجهده لأعمال الطرف الأول أثناء ساعات العمل المقررة في القانون رقم 91.",
+        ok: ["Employee shall devote the whole of his time and attention to employer’s business during working hours, in accordance with the provisions set forth in Labour Act No. 91."],
+        keys: ["employee", "time", "employer", "working hours", "91"] },
+      { ar: "يلتزم الطرف الثاني بأن يراعي كافة الأوامر والتعليمات التي تصدر إليه من إدارة الشركة.",
+        ok: ["Employee undertakes to comply with all orders and instructions issued to employee by employer’s Management."],
+        keys: ["employee", "comply", "orders", "instructions", "management"] },
+      { ar: "يعد هذا الضمان إضافة إلى حقوقك القانونية الأخرى.",
+        ok: ["This guarantee is in addition to your statutory and other legal rights."],
+        keys: ["guarantee", "addition", "legal rights"] },
+      { ar: "يصبح أي جهاز أو جزء عاطل تم استبداله ملكاً خاصاً بالشركة.",
+        ok: ["Any appliance or defective part replaced shall become the Company’s property."],
+        keys: ["appliance", "defective", "replaced", "property"] },
+      { ar: "وربما يتم طلب وثيقة إثبات الشراء.",
+        ok: ["Proof of purchase may be required."],
+        keys: ["proof of purchase", "required"] }
     ],
     turns: [
-      { ar: "يُعيَّن الطرف الثاني في وظيفة مترجم اعتباراً من تاريخ توقيع هذا العقد، ويخضع لفترة تجربة مدتها مئة يوم.",
-        ok: ["The Second Party shall be appointed to the post of translator as from the date of signing this contract, and shall be subject to a probationary period of one hundred days."],
-        keys: ["second party", "appointed", "translator", "as from", "sign", "contract", "probation", "days"] },
-      { ar: "يتعهد الطرف الأول بدفع المبلغ المتفق عليه على ثلاث دفعات متساوية، على أن تُسدَّد الدفعة الأولى عند توقيع العقد.",
-        ok: ["The First Party undertakes to pay the agreed amount in three equal instalments, the first of which shall be paid upon signing the contract."],
-        keys: ["first party", "undertakes", "agreed amount", "three equal", "first", "signing"] },
-      { ar: "تتعهد الشركة بإصلاح الجهاز أو استبداله مجاناً إذا ثبت وجود عيب في التصنيع خلال فترة الضمان.",
-        ok: ["The company undertakes to repair or replace the appliance free of charge if a manufacturing defect is proven during the warranty period.", "The company undertakes to repair or replace the device free of charge if a manufacturing defect is proven within the guarantee period."],
-        keys: ["undertakes", "repair", "replace", "free of charge", "defect", "period"] }
+      { ar: "يوافق الطرف الأول على استخدام الطرف الثاني اعتباراً من ... لشغل وظيفة ...، على أن يكون للطرف الأول الحق في أن يعهد إلى الطرف الثاني بأي عمل آخر يتفق مع طبيعة مؤهلاته.",
+        ok: ["Employer agrees to employ employee as from .... in the capacity of …, provided that employer shall have the right to assign to employee any other services and duties within the nature of employee’s qualifications."],
+        keys: ["employer", "employ", "as from", "provided", "assign", "qualifications"] },
+      { ar: "يعتبر الطرف الثاني معيناً تحت الاختبار لمدة ثلاثة شهور، وفي خلال هذه الفترة أو عند انتهائها يكون للطرف الأول الحق في إنهاء أو فسخ هذا العقد فوراً دون حاجة إلى إخطار سابق ودون دفع أي مبلغ بصفة تعويض أو مكافأة.",
+        ok: ["Employee shall be deemed to have been appointed subject to a three-month probationary period, during which, or upon expiration thereof, employer shall be entitled to terminate or annul the present agreement without any prior notice or payment of any compensation or remuneration."],
+        keys: ["employee", "three-month", "probationary", "terminate", "notice", "compensation"] },
+      { ar: "نحن شركة زانوسي الكترولكس، نتعهد في حال وجود أي عيب تصنيعي أو مادي خلال مدة 12 شهراً من تاريخ شراء هذا المنتج، بأن نقوم بإصلاحه أو استبداله مجاناً وبدون أي تكاليف مادية، سواء للأيدي العاملة أو المواد المستخدمة أو لأجور النقل.",
+        ok: ["We, Zanussi-Electrolux, undertake that if within 12 months of the date of purchase this Zanussi-Electrolux appliance or any part thereof is proved to be defective by reason only of faulty workmanship or materials, we will at our discretion repair or replace the same free of any charge for labour, materials or carriage."],
+        keys: ["undertake", "12 months", "purchase", "defective", "repair", "replace", "free"] }
     ]
   },
   {
@@ -9888,10 +9912,16 @@ const BOOTH_GENRES = [
     ]
   },
   {
-    /* COMMUNITY AND LIAISON. The sentences and passages were written for the Compass;
-       the single terms and phrases are standard vocabulary. */
+    /* COMMUNITY AND LIAISON. Every item and every English rendering is
+       printed in Husni & Newman (2013), A to Z of Arabic–English–Arabic
+       Translation, in the example sentences of these entries: "Terms of
+       address", "Relative pronouns", "Hire/rent/let/lease/charter",
+       "Holiday/holidays/vacation/leave", "If/whether", "There is/are …",
+       "As/like", "Time", "Can/may/might", "As soon as", "During/for/in/
+       since", "Everyone/every one". The Arabic of "Terms of address" was
+       read from the book's page images. */
     id: "community", en: "Community and liaison", ar: "مجتمعي ومُرافِق",
-    hint: "Clinics, offices, flats and neighbours, in sentences written for the Compass.",
+    hint: "Hotels, post offices, flats and neighbours, in the A to Z’s own example sentences.",
     icon: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.4"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5M15.5 19c.4-2 1.5-3.3 3-3.5"/>',
     terms: [
       { ar: "الفندق", ok: ["hotel", "the hotel"] },
@@ -9908,49 +9938,49 @@ const BOOTH_GENRES = [
       { ar: "إضراب", ok: ["strike"] }
     ],
     phrases: [
-      { ar: "ما اسم حضرتك؟", ok: ["what is your name?", "what is your name, please?", "what is your name"] },
-      { ar: "لو سمحت، أين قسم الطوارئ؟", ok: ["excuse me, where is the emergency department?", "excuse me, where is the emergency room?", "where is the emergency department, please?"] },
+      { ar: "ما اسم حضرتك؟", ok: ["what is your name?", "what is your name, please?", "excuse me, sir, what is your name please?", "what is your name"] },
+      { ar: "يا أستاذ، أين المدخل من فضلك؟", ok: ["excuse me sir, where is the entrance, please?", "excuse me sir, where is the entrance?"] },
       { ar: "أوقات عمل مكاتب البريد", ok: ["post office opening times", "the post office opening times"] },
       { ar: "في البيت أم في المكتب", ok: ["at home or at work"] },
       { ar: "الأموال المزيفة", ok: ["counterfeit money"] },
-      { ar: "حالما يصل الطبيب", ok: ["as soon as the doctor arrives"] }
+      { ar: "حالما يعطيني المال", ok: ["as soon as he gives me the money"] }
     ],
     sentences: [
-      { ar: "نسيت جواز سفري في الغرفة.",
-        ok: ["I left my passport in the room.", "I forgot my passport in the room."],
-        keys: ["passport", "room"] },
-      { ar: "استأجرنا شقة قريبة من الجامعة.",
-        ok: ["We rented a flat near the university.", "We rented an apartment close to the university."],
-        keys: ["rented", "university"] },
-      { ar: "هل توجد وظائف شاغرة في قسم الترجمة؟",
-        ok: ["Are there any vacancies in the translation department?", "Are there any vacant positions in the translation department?"],
-        keys: ["vacan", "translation department"] },
-      { ar: "هل تعرف إن كان المكتب مفتوحاً يوم السبت؟",
-        ok: ["Do you know whether the office is open on Saturday?"],
-        keys: ["know", "office", "open", "saturday"] },
-      { ar: "انتظرنا ساعة كاملة في غرفة الانتظار.",
-        ok: ["We waited a whole hour in the waiting room."],
-        keys: ["waited", "hour", "waiting room"] },
-      { ar: "قالت لي الممرضة إن عليّ ملء هذا النموذج أولاً.",
-        ok: ["The nurse told me I have to fill in this form first."],
-        keys: ["nurse", "fill", "form", "first"] },
-      { ar: "يسكن جاري في الطابق الثالث.",
-        ok: ["My neighbour lives on the third floor.", "My neighbor lives on the third floor."],
-        keys: ["neighbo", "lives", "third floor"] },
-      { ar: "أعمل مترجماً في هذه الشركة منذ ثلاث سنوات.",
-        ok: ["I have worked as a translator at this company for three years."],
-        keys: ["worked", "translator", "company", "three years"] }
+      { ar: "نَسِيتُ الحَقِيبَةَ في الفُنْدُقِ الَّذِي نُقِيمُ فِيهِ.",
+        ok: ["I forgot the suitcase in the hotel (that) we are staying at."],
+        keys: ["forgot", "suitcase", "hotel", "staying"] },
+      { ar: "اسْتَأْجَرَ شَقَّةً صَغِيرَةً تَتَكَوَّنُ مِنْ غُرْفَتَيْنِ فَقَطْ.",
+        ok: ["He rented a flat with only two rooms."],
+        keys: ["rented", "flat", "two rooms"] },
+      { ar: "هَلْ هُناكَ وَظائِفُ شاغِرَةٌ في الشَّرِكَةِ الآنَ؟",
+        ok: ["Are there any vacancies/vacant positions in the company now?"],
+        keys: ["vacancies", "company", "now"] },
+      { ar: "هَلْ تَعْرِفُ إِنْ كانَ في البَيْتِ أَمْ في المَكْتَبِ؟",
+        ok: ["Do you know if/whether he’ll be at home or at work?"],
+        keys: ["know", "home", "work"] },
+      { ar: "لَمْ تَكُنْ هُناكَ جَرائِدُ في غُرْفَةِ الانْتِظارِ.",
+        ok: ["There were no newspapers in the waiting room."],
+        keys: ["no", "newspapers", "waiting room"] },
+      { ar: "يَجِبُ أَنْ تَذْهَبَ إِلَى الحَلّاقِ كَما قالَتْ أُمّي.",
+        ok: ["As my mother said, you should go to the hairdresser’s."],
+        keys: ["mother", "should go", "hairdresser"] },
+      { ar: "دَخَلَ الحاجُّ مُصْطَفَى الغُرْفَةَ.",
+        ok: ["Hajj Mustafa came into the room."],
+        keys: ["hajj mustafa", "came", "room"] },
+      { ar: "يَعْمَلُ هُنا مُنْذُ خَمْسِ سَنَواتٍ.",
+        ok: ["He has worked here for five years."],
+        keys: ["has worked", "here", "five years"] }
     ],
     turns: [
-      { ar: "من فضلك اخفض صوت التلفاز، فالأطفال نائمون والوقت متأخر.",
-        ok: ["Please turn down the TV; the children are asleep and it's late.", "Please turn the television down, the children are sleeping and it is late."],
-        keys: ["turn", "down", "children", "late"] },
-      { ar: "سأتصل بك حالما تصل نتائج الفحوصات.",
-        ok: ["I'll call you as soon as the test results come in."],
-        keys: ["call you", "as soon as", "results"] },
-      { ar: "يفتح المكتب أبوابه من الثامنة صباحاً حتى الثانية ظهراً، من الأحد إلى الخميس.",
-        ok: ["The office is open from 8 a.m. to 2 p.m., Sunday to Thursday."],
-        keys: ["office", "open", "8", "2", "sunday", "thursday"] }
+      { ar: "لا يُمْكِنُكَ أَنْ تَعْزِفَ مُوسِيقَى صاخِبَةً في مُنْتَصَفِ اللَّيْلِ وَإِلّا سَيَقُومُ الجِيرانُ بِاسْتِدْعاءِ الشُّرْطَةِ!",
+        ok: ["You can’t play such loud music in the middle of the night; the neighbours will call the police!"],
+        keys: ["can’t", "loud music", "middle of the night", "neighbours", "call the police"] },
+      { ar: "سَأُعْطِيهِ مِفْتاحَ البَيْتِ حالَما يُعْطِيني المالَ.",
+        ok: ["As soon as he gives me the money, I’ll give him the keys to the house."],
+        keys: ["as soon as", "money", "keys", "house"] },
+      { ar: "مَواقِيتُ عَمَلِ مَكاتِبِ البَرِيدِ في شَهْرِ رَمَضانَ مِنَ الثّامِنَةِ صَباحاً إِلَى الخامِسَةِ مَساءً.",
+        ok: ["The post office opening times during Ramadan are from 8 a.m. until 5 p.m."],
+        keys: ["post office", "opening times", "ramadan", "8", "5"] }
     ]
   }
 ];
@@ -10977,135 +11007,135 @@ const CONTEXT_Q = [
    The handbook's own list of the mistakes that actually recur. Every
    source sentence here is one it corrects. */
 /* ═══════════ LIBRARY TRIALS ═══════════
-   Three trials on the points the Library books teach. The example
-   sentences are the Compass's own; the grammar points and the facts
-   are credited to the book they come from. */
+   Three trials drawn from the Library pages, and only from them. Every
+   right answer is the book's own; every wrong option is either an error
+   the book names or a real form that belongs somewhere else. */
 const BAS14 = "Bassnett (2014)";
 const AZ_Q = [
-  { src: "سَتُقْلِعُ الطّائِرَةُ بَعْدَ عَشْرِ دَقائِقَ",
+  { src: "سَنَذْهَبُ إِلَى هُناكَ بَعْدَ ساعَتَيْنِ",
     opts: [
-      { t: "The plane will take off in ten minutes.", tag: "natural English", ok: true },
-      { t: "The plane will take off after ten minutes.", tag: "بعد carried over word for word" },
-      { t: "The plane will take off since ten minutes.", tag: "since marks a starting point" }
+      { t: "We will go there in two hours’ time.", tag: "the book’s rendering", ok: true },
+      { t: "We will go there after two hours.", tag: "بعد carried over word for word" },
+      { t: "We will go there since two hours.", tag: "since marks a starting point" }
     ],
-    why: "بعد with a stretch of time is English <i>in</i>, not <i>after</i>. After " + HN13 + ", entry “After/afterwards”.", ch: "A to Z" },
-  { src: "أَدْرُسُ التَّرْجَمَةَ مُنْذُ سَنَتَيْنِ",
+    why: "بعد with a stretch of time is English <i>in</i>, not <i>after</i>. " + HN13 + ", entry “After/afterwards”.", ch: "A to Z" },
+  { src: "عِشْتُ هُنا مُنْذُ ثَلاثَةِ أَعْوامٍ",
     opts: [
-      { t: "I study translation since two years.", tag: "the Arabic tense and منذ carried over" },
-      { t: "I have been studying translation for two years.", tag: "present perfect + for a period", ok: true },
-      { t: "I studied translation during two years.", tag: "during does not give a length of time" }
+      { t: "I live here since three years.", tag: "the Arabic tense and منذ carried over" },
+      { t: "I have lived here for three years.", tag: "present perfect + for a period", ok: true },
+      { t: "I lived here during three years.", tag: "during does not give a length of time" }
     ],
-    why: "منذ is <i>since</i> for a starting point and <i>for</i> for a period, and both need the present perfect. After " + HN13 + ", entry “During/for/in/since”.", ch: "A to Z" },
-  { src: "قَدَّمَتْ لَنا المُعَلِّمَةُ ثَلاثَ نَصائِحَ قَبْلَ الامْتِحانِ",
+    why: "منذ is <i>since</i> for a starting point and <i>for</i> for a period, and both need the present perfect. " + HN13 + ", entry “During/for/in/since”.", ch: "A to Z" },
+  { src: "وَجَّهَ لي خَمْسَ نَصائِحَ قَبْلَ مُغادَرَتي",
     opts: [
-      { t: "The teacher gave us three advices before the exam.", tag: "advice has no plural" },
-      { t: "The teacher gave us three pieces of advice before the exam.", tag: "natural English", ok: true },
-      { t: "The teacher advised us three advices before the exam.", tag: "verb and noun confused, and pluralized" }
+      { t: "He gave me five advices before I left.", tag: "advice has no plural" },
+      { t: "He gave me five pieces of advice before I left.", tag: "the book’s rendering", ok: true },
+      { t: "He advised me five advices before I left.", tag: "verb and noun confused, and pluralized" }
     ],
-    why: "<i>Advice</i> is uncountable, so a number needs <i>pieces of</i>. After " + HN13 + ", entry “Advise/advice”.", ch: "A to Z" },
-  { src: "قالَ إِنَّ الاجْتِماعَ قَدْ تَأَجَّلَ",
+    why: "<i>Advice</i> is uncountable, so a number needs <i>pieces of</i>. " + HN13 + ", entry “Advise/advice”.", ch: "A to Z" },
+  { src: "قالَتْ إِنَّهُ كانَ ذاهِباً لِلْبَيْتِ",
     opts: [
-      { t: "He told that the meeting had been postponed.", tag: "tell needs a personal object" },
-      { t: "He said that the meeting had been postponed.", tag: "only say takes a that-clause directly", ok: true },
-      { t: "He said us that the meeting had been postponed.", tag: "say takes no personal object" }
+      { t: "She told that he was going home.", tag: "tell needs a personal object" },
+      { t: "She said that he was going home.", tag: "only say takes a that-clause directly", ok: true },
+      { t: "She said him that he was going home.", tag: "say takes no personal object" }
     ],
-    why: "After " + HN13 + ", entry “Say/tell”.", ch: "A to Z" },
-  { src: "تَقَعُ المَدِينَةُ في شَمالِ غَرْبِ البِلادِ",
+    why: HN13 + ", entry “Say/tell”.", ch: "A to Z" },
+  { src: "زَحَفَ الجَيْشُ إِلَى جَنُوبِ شَرْقِ البِلادِ",
     opts: [
-      { t: "The city lies in the westnorth of the country.", tag: "Arabic order carried over" },
-      { t: "The city lies in the northwest of the country.", tag: "north/south always comes first", ok: true },
-      { t: "The city lies in the north and west of the country.", tag: "two regions, not one" }
+      { t: "The troops moved towards the eastsouth of the country.", tag: "Arabic order carried over" },
+      { t: "The troops moved towards the southeast of the country.", tag: "north/south always comes first", ok: true },
+      { t: "The troops moved towards the south and east of the country.", tag: "two regions, not one" }
     ],
-    why: "English always puts north or south before east or west. After " + HN13 + ", entry “Northeast/southeast/…”.", ch: "A to Z" },
-  { src: "Dr Emily Carter", srcEn: true, ask: "Arabic says الدكتورة إيميلي, with the title before the first name. How does English refer to her?",
+    why: "English always puts north or south before east or west. " + HN13 + ", entry “Northeast/southeast/…”.", ch: "A to Z" },
+  { src: "Dr Sarah Johnson", srcEn: true, ask: "Arabic says الدكتورة سارة, with the title before the first name. How does English refer to her?",
     opts: [
-      { t: "Dr Emily approved the proposal.", tag: "the Arabic usage carried over" },
-      { t: "Dr Carter approved the proposal.", tag: "English puts the title before the surname", ok: true },
-      { t: "Doctor Emily Carter she approved the proposal.", tag: "a resumptive pronoun English does not use" }
+      { t: "Dr Sarah agreed on this matter.", tag: "the Arabic usage carried over" },
+      { t: "Dr Johnson agreed on this matter.", tag: "English puts the title before the surname", ok: true },
+      { t: "Doctor Sarah Johnson she agreed on this matter.", tag: "a resumptive pronoun English does not use" }
     ],
-    why: "Arabic uses a title with the first name; English keeps it for the surname. After " + HN13 + ", entry “Terms of address”.", ch: "A to Z" },
-  { src: "هذا كِتابٌ أَصْعَبُ مِنْ أَنْ يَفْهَمَهُ المُبْتَدِئُ",
+    why: "Arabic uses a title with the first name; English keeps it for the last name. " + HN13 + ", entry “Terms of address”.", ch: "A to Z" },
+  { src: "هذِهِ المُهِمَّةُ أَصْعَبُ مِنْ أَنْ نَقُومَ بِها",
     opts: [
-      { t: "This is too difficult book for a beginner to understand.", tag: "too cannot go before adjective + noun" },
-      { t: "This is a very difficult book to understand it.", tag: "the sense of too is lost, and a resumptive it" },
-      { t: "This is too difficult a book for a beginner to understand.", tag: "too + adjective + a + noun", ok: true }
+      { t: "This is too difficult task for us to do.", tag: "too cannot go before adjective + noun" },
+      { t: "This is a very difficult task to do it.", tag: "the sense of too is lost, and a resumptive it" },
+      { t: "This is too difficult a task for us to do.", tag: "too + adjective + a + noun", ok: true }
     ],
-    why: "The elative + من + أن is the usual Arabic for <i>too … to</i>. After " + HN13 + ", entry “Too”.", ch: "A to Z" },
-  { src: "أَضَعْتُ المِفْتاحَ الَّذِي أَعْطَيْتَنِي إِيّاهُ",
+    why: "The elative + من + أن is the usual Arabic for <i>too … to</i>. " + HN13 + ", entry “Too”.", ch: "A to Z" },
+  { src: "نَسِيتُ الحَقِيبَةَ في الفُنْدُقِ الَّذِي نُقِيمُ فِيهِ",
     opts: [
-      { t: "I lost the key that you gave me it.", tag: "the Arabic resumptive pronoun carried over" },
-      { t: "I lost the key (that) you gave me.", tag: "natural English", ok: true },
-      { t: "I lost the key what you gave me.", tag: "what is not a relative pronoun after a noun" }
+      { t: "I forgot the suitcase in the hotel that we are staying at it.", tag: "the Arabic resumptive pronoun carried over" },
+      { t: "I forgot the suitcase in the hotel (that) we are staying at.", tag: "the book’s rendering", ok: true },
+      { t: "I forgot the suitcase in the hotel which we are staying.", tag: "the preposition is lost" }
     ],
-    why: "Arabic needs a resumptive pronoun (عائد); English does not, and adding one is a typical error. After " + HN13 + ", entry “Relative pronouns”.", ch: "A to Z" },
-  { src: "لَمْ يَعُدْ هذا المَحَلُّ مَفْتُوحاً",
+    why: "Arabic needs a resumptive pronoun (عائد); English does not, and adding one is a typical error. " + HN13 + ", entry “Relative pronouns”.", ch: "A to Z" },
+  { src: "لَمْ يَعُدْ شَلَلُ الأَطْفالِ مَرَضاً قاتِلاً",
     opts: [
-      { t: "This shop is no longer open.", tag: "لم يعد, ‘has stopped being’", ok: true },
-      { t: "This shop did not return open.", tag: "عاد read as ‘return’" },
-      { t: "This shop is not yet open.", tag: "not yet is لم … بعد" }
+      { t: "Polio is no longer a deadly disease.", tag: "لم يعد, ‘has stopped being’", ok: true },
+      { t: "Polio did not return a deadly disease.", tag: "عاد read as ‘return’" },
+      { t: "Polio is not yet a deadly disease.", tag: "not yet is لم … بعد" }
     ],
-    why: "After " + HN13 + ", entry “Anymore/no more/no longer/any longer”.", ch: "A to Z" },
-  { src: "“The number of students in the class has doubled.”", srcEn: true,
+    why: HN13 + ", entry “Anymore/no more/no longer/any longer”.", ch: "A to Z" },
+  { src: "“The number of cars on the road has increased dramatically.”", srcEn: true,
     opts: [
-      { t: "تَضاعَفَتْ كَمِّيَّةُ الطُّلّابِ في الصَّفِّ", tag: "كمية is for what cannot be counted" },
-      { t: "تَضاعَفَ عَدَدُ الطُّلّابِ في الصَّفِّ", tag: "عدد for countables", ok: true },
-      { t: "تَضاعَفَ رَقْمُ الطُّلّابِ في الصَّفِّ", tag: "رقم is a figure or digit" }
+      { t: "ازْدادَتْ كَمِّيَّةُ السَّيّاراتِ كَثِيراً", tag: "كمية is for what cannot be counted" },
+      { t: "ازْدادَ عَدَدُ السَّيّاراتِ كَثِيراً", tag: "عدد for countables", ok: true },
+      { t: "ازْدادَ رَقْمُ السَّيّاراتِ كَثِيراً", tag: "رقم is a figure or digit" }
     ],
-    why: "After " + HN13 + ", entries “Amount/number” and “Number/figure/digit/numeral”.", ch: "A to Z" },
-  { src: "“Is that tall tower new?”", srcEn: true,
+    why: HN13 + ", entries “Amount/number” and “Number/figure/digit/numeral”.", ch: "A to Z" },
+  { src: "“Can you see that tall building over there?”", srcEn: true,
     opts: [
-      { t: "هَلْ ذلِكَ البُرْجُ الطَّوِيلُ جَدِيدٌ؟", tag: "طويل is tall for people, and long" },
-      { t: "هَلْ ذلِكَ البُرْجُ العالِي جَدِيدٌ؟", tag: "height of a building: عالٍ", ok: true },
-      { t: "هَلْ ذلِكَ البُرْجُ الكَبِيرُ جَدِيدٌ؟", tag: "size, not height" }
+      { t: "هَلْ تُشاهِدُ ذلِكَ المَبْنَى الطَّوِيلَ؟", tag: "طويل is tall for people, and long" },
+      { t: "هَلْ تُشاهِدُ ذلِكَ المَبْنَى العالِيَ؟", tag: "the book’s rendering", ok: true },
+      { t: "هَلْ تُشاهِدُ ذلِكَ المَبْنَى الكَبِيرَ؟", tag: "size, not height" }
     ],
-    why: "After " + HN13 + ", entry “High/tall”.", ch: "A to Z" },
-  { src: "“The courts’ summer recess begins next week.”", srcEn: true,
+    why: HN13 + ", entry “High/tall”.", ch: "A to Z" },
+  { src: "“The court recess runs every year from the first of July until the end of September.”", srcEn: true,
     opts: [
-      { t: "تَبْدَأُ العُطْلَةُ القَضائِيَّةُ الصَّيْفِيَّةُ الأُسْبُوعَ المُقْبِلَ", tag: "the judicial recess", ok: true },
-      { t: "تَبْدَأُ الاسْتِراحَةُ القَضائِيَّةُ الصَّيْفِيَّةُ الأُسْبُوعَ المُقْبِلَ", tag: "recess read as a short break" },
-      { t: "تَبْدَأُ الإِجازَةُ المَرَضِيَّةُ الأُسْبُوعَ المُقْبِلَ", tag: "that is sick leave" }
+      { t: "تَبْدَأُ العُطْلَةُ القَضائِيَّةُ كُلَّ عامٍ مِنْ أَوَّلِ يُولْيُو", tag: "the book’s rendering", ok: true },
+      { t: "تَبْدَأُ الاسْتِراحَةُ القَضائِيَّةُ كُلَّ عامٍ مِنْ أَوَّلِ يُولْيُو", tag: "recess read as a short break" },
+      { t: "تَبْدَأُ الإِجازَةُ المَرَضِيَّةُ كُلَّ عامٍ مِنْ أَوَّلِ يُولْيُو", tag: "that is sick leave" }
     ],
-    why: "Courts and parliaments have a <i>recess</i>; Arabic uses عطلة. After " + HN13 + ", entry “Holiday/holidays/vacation/leave”.", ch: "A to Z" },
-  { src: "“This liquid is non-flammable.”", srcEn: true,
+    why: "Courts and parliaments have a <i>recess</i>; Arabic uses عطلة. " + HN13 + ", entry “Holiday/holidays/vacation/leave”.", ch: "A to Z" },
+  { src: "“Helium is non-flammable.”", srcEn: true,
     opts: [
-      { t: "هذا السّائِلُ قابِلٌ لِلِاشْتِعالِ", tag: "the opposite meaning" },
-      { t: "هذا السّائِلُ غَيْرُ قابِلٍ لِلِاشْتِعالِ", tag: "non-flammable", ok: true },
-      { t: "هذا السّائِلُ الْتِهابِيٌّ", tag: "التهاب is medical inflammation" }
+      { t: "غازُ الهِيلْيُوم قابِلٌ لِلِاشْتِعالِ", tag: "the opposite meaning" },
+      { t: "غازُ الهِيلْيُوم غَيْرُ قابِلٍ لِلِاشْتِعالِ", tag: "non-flammable", ok: true },
+      { t: "غازُ الهِيلْيُوم الْتِهابِيٌّ", tag: "التهاب is medical inflammation" }
     ],
-    why: "Technical English prefers <i>flammable</i>, because <i>inflammable</i> is easily misread as ‘not flammable’. After " + HN13 + ", entry “Flammable, inflammable”.", ch: "A to Z" },
-  { src: "“He eats too much sugar.”", srcEn: true,
+    why: "Technical English uses only <i>flammable</i>, because <i>inflammable</i> is misread as ‘not flammable’. " + HN13 + ", entry “Flammable, inflammable”.", ch: "A to Z" },
+  { src: "“He drinks too much.”", srcEn: true,
     opts: [
-      { t: "يَأْكُلُ السُّكَّرَ جِدّاً", tag: "جداً cannot modify the verb like this" },
-      { t: "يُفْرِطُ في تَناوُلِ السُّكَّرِ", tag: "أفرط في, ‘to be excessive in’", ok: true },
-      { t: "يَأْكُلُ السُّكَّرَ أَيْضاً", tag: "too read as ‘also’" }
+      { t: "يَشْرَبُ جِدّاً", tag: "جداً cannot modify the verb like this" },
+      { t: "يُفْرِطُ في الشَّرابِ", tag: "أفرط في, ‘to be excessive in’", ok: true },
+      { t: "يَشْرَبُ أَيْضاً", tag: "too read as ‘also’" }
     ],
-    why: "After " + HN13 + ", entry “Too”.", ch: "A to Z" },
-  { src: "Umm Kulthum · Oum Kalthoum · Om Kalsoum", srcEn: true, ask: "Spelling a name by how it sounds, with the nearest letters of each target language: what is this called?",
+    why: HN13 + ", entry “Too”.", ch: "A to Z" },
+  { src: "Naguib Mahfouz · Nagib Machfus · Nadjib Mahfoez", srcEn: true, ask: "Spelling a name by the sounds of each target language: what does the A to Z call this?",
     opts: [
       { t: "Transliteration", tag: "one-to-one, character for character" },
       { t: "Transcription", tag: "sounds rendered by the nearest target letters", ok: true },
       { t: "Translation", tag: "names are not translated" }
     ],
-    why: "Both are forms of romanization; a scholarly transliteration of the same name is Umm Kulthūm. After " + HN13 + ", entry “Transliteration and transcription”.", ch: "A to Z" },
+    why: "Both are forms of romanization; the scholarly transliteration of the same name is Najīb Maḥfūẓ. " + HN13 + ", entry “Transliteration and transcription”.", ch: "A to Z" },
   { src: "Arabic honorifics and terms of address", srcEn: true, ask: "Translating Arabic into English, what generally happens to them?",
     opts: [
       { t: "They are toned down or left out", tag: "Arabic → English", ok: true },
-      { t: "They are kept word for word", tag: "exotic-sounding English" },
+      { t: "They are kept word for word", tag: "a mock-exotic English" },
       { t: "They are amplified", tag: "that is the English → Arabic direction" }
     ],
-    why: "Going the other way, into Arabic, titles and courtesies are usually added, so the Arabic comes out more elaborate than the English. After " + HN13 + ", entry “Terms of address”.", ch: "A to Z" },
+    why: "Into Arabic, markers of respect must be added, so the target is an amplified version of the original. " + HN13 + ", entry “Terms of address”.", ch: "A to Z" },
   { src: "صلّى الله عليه وسلّم → ‘Peace Be Upon Him’ (PBUH)", ask: "Where does the A to Z say this rendering belongs?",
     opts: [
       { t: "In every text that names the Prophet", tag: "too wide" },
       { t: "In texts for a Muslim readership", tag: "not in general media texts", ok: true },
       { t: "Nowhere: always leave it out", tag: "that is the advice for رضي الله عنه" }
     ],
-    why: "In a general English text the formula reads as foreign and draws attention to itself. After " + HN13 + ", entry “Terms of address”.", ch: "A to Z" },
-  { src: "The A to Z of Arabic–English–Arabic Translation", srcEn: true, ask: "What is the book’s focus?",
+    why: "It remains a highly ‘foreignizing’ device that makes a general text unnecessarily exotic. " + HN13 + ", entry “Terms of address”.", ch: "A to Z" },
+  { src: "The A to Z of Arabic–English–Arabic Translation", srcEn: true, ask: "What is the book’s focus, in its own words?",
     opts: [
       { t: "A grammar book and composition manual", tag: "what it says it is not" },
       { t: "A history of Arabic–English translation", tag: "also what it says it is not" },
-      { t: "Common errors, in both directions, at the level of words and structures", tag: "the small-scale elements of translation", ok: true }
+      { t: "Common errors, in both directions, at the level of words and structures", tag: "the microstructural elements", ok: true }
     ],
     why: "The authors add that this practical aim is still rooted in theory. " + HN13 + ", Introduction.", ch: "A to Z" }
 ];
@@ -11145,11 +11175,11 @@ const LEGAL_Q = [
       { t: "رُبَّما تَتَّخِذُ كُلُّ دَوْلةٍ طَرَفٍ التَّدابِيرَ اللّازِمة", tag: "shall read as a possibility" }
     ],
     why: "Legal <i>shall</i> is never a future; Arabic often renders it with the imperfect. " + HN15 + ", pp. 138–140.", ch: "Legal Translation" },
-  { src: "“The Tenant does agree to pay all utility bills.”", srcEn: true, ask: "What happens to the declarative <i>do</i>?",
+  { src: "“The Distributor does agree that he is responsible for the cost of reassembly.”", srcEn: true, ask: "What happens to the declarative <i>do</i>?",
     opts: [
-      { t: "يَفْعَلُ المُسْتَأْجِرُ المُوافَقةَ عَلَى دَفْعِ جَمِيعِ فَواتِيرِ الخِدْمات", tag: "do translated as a verb" },
-      { t: "يُوافِقُ المُسْتَأْجِرُ بِالتَّأْكِيدِ عَلَى دَفْعِ جَمِيعِ فَواتِيرِ الخِدْمات", tag: "read as emphasis; it is not" },
-      { t: "يُوافِقُ المُسْتَأْجِرُ عَلَى دَفْعِ جَمِيعِ فَواتِيرِ الخِدْمات", tag: "do is never rendered", ok: true }
+      { t: "يَفْعَلُ المُوَزِّعُ المُوافَقةَ عَلَى أَنْ يَكُونَ مَسْؤُولاً", tag: "do translated as a verb" },
+      { t: "يُوافِقُ المُوَزِّعُ بِالتَّأْكِيدِ عَلَى أَنْ يَكُونَ مَسْؤُولاً", tag: "read as emphasis; it is not" },
+      { t: "يُوافِقُ المُوَزِّعُ عَلَى أَنْ يَكُونَ مَسْؤُولاً", tag: "do is never rendered", ok: true }
     ],
     why: "The performative <i>do</i> works like <i>hereby</i> and is not translated. " + HN15 + ", p. 141.", ch: "Legal Translation" },
   { src: "consideration", srcEn: true, ask: "In a contract, what does this mean?",
@@ -11245,7 +11275,7 @@ const CONCEPT_Q = [
       { t: "An idiom", tag: "its meaning is not figurative" }
     ],
     why: "Arabic examples include اعتكف في with جامع or مسجد. " + HN15 + ", p. 15.", ch: "Concepts" },
-  { src: "A fixed expression whose meaning cannot be worked out from its individual words.", srcEn: true, ask: "What is it?",
+  { src: "A fixed expression whose meaning is not the sum of the meanings of its words.", srcEn: true, ask: "What is it?",
     opts: [
       { t: "An idiom", tag: "non-literal, metaphorical meaning", ok: true },
       { t: "‘Idiomatic’ usage", tag: "natural, native-like language" },
@@ -11331,7 +11361,7 @@ const BAS_Q = [
       { t: "Linguistic equivalence", tag: "Popovič’s word-for-word type" }
     ],
     why: "J. B. Phillips’s rendering of Romans 16:16. " + BAS14 + ", p. 36.", ch: "Bassnett" },
-  { src: "The stable core of meaning that every translation of the same work shares.", ask: "Whose term is this, and what is it?",
+  { src: "What exists in common between all existing translations of a single work.", ask: "Whose term is this, and what is it?",
     opts: [
       { t: "Popovič’s invariant core", tag: "the stable semantic elements", ok: true },
       { t: "Benjamin’s pure language", tag: "a language that echoes the original" },
@@ -11352,7 +11382,7 @@ const BAS_Q = [
       { t: "Hans Vermeer", tag: "skopos, which leans to domestication" }
     ],
     why: "Venuti builds on Schleiermacher’s 1813 distinction. " + BAS14 + ", pp. 46–47.", ch: "Bassnett" },
-  { src: "Translate so the text does its job for the people who will use it, where they will use it.", ask: "Which theory?",
+  { src: "Translate so the text functions in the situation in which it is used, for the people who use it.", ask: "Which theory?",
     opts: [
       { t: "Polysystem theory", tag: "cultures translate according to need" },
       { t: "The cultural turn", tag: "context, history and convention" },
@@ -11418,21 +11448,21 @@ const REVISE = [
       { t: "قام المدير بتوقيع على العقد بالتوقيع.", tag: "more padding, and ungrammatical" }
     ],
     why: "<b>قام بـ</b> before a verb that can simply be used is the commonest padding in translated Arabic.", ch: "Section 9.1" },
-  { src: "تمّ اتخاذ القرار من قِبل مجلس الإدارة.",
+  { src: "تمّ اختراق الهدنة من جانب الحكومة.",
     opts: [
-      { t: "اتخذ القرارُ مجلسَ الإدارة.", tag: "the roles are reversed" },
-      { t: "اتخذ مجلسُ الإدارة القرار.", tag: "an actor, doing something", ok: true },
-      { t: "تمّ اتخاذ مجلس الإدارة من قِبل القرار.", tag: "reversed, and still padded" }
+      { t: "اخترقت الهدنةُ الحكومةَ.", tag: "the roles are reversed" },
+      { t: "اخترقت الحكومةُ الهدنة.", tag: "an actor, doing something", ok: true },
+      { t: "تمّ اختراق الحكومة من جانب الهدنة.", tag: "reversed, and still padded" }
     ],
-    why: "A passive with the doer named (من قبل، من طرف، من جانب) is common in the press, but careful writers avoid it and make the doer the subject. After " + HN13 + ", entry “The passive”.", ch: "Section 9.1" },
-  { src: "مَن الفائز: الفريق الأزرق أم الأحمر؟!",
+    why: "A passive with the doer named (من قبل، من طرف، من جانب) is common in media Arabic but “not considered normative usage” and is “frowned upon by careful users of Arabic” — " + HN13 + ", entry “The passive”.", ch: "Section 9.1" },
+  { src: "مَن المسؤول: الشرطة أم المتظاهرون؟!",
     ask: "Which English punctuation would a reviser keep?",
     opts: [
-      { t: "Who won: the blue team or the red?!", tag: "keeps the stacked ?! — English reduces it" },
-      { t: "Who won, the blue team or the red?", tag: "English punctuation", ok: true },
-      { t: "Who won the blue team or the red", tag: "no punctuation at all" }
+      { t: "Who is responsible: the police or the demonstrators?!", tag: "keeps the stacked ?! — English reduces it" },
+      { t: "Who is responsible, the police or the demonstrators?", tag: "English punctuation", ok: true },
+      { t: "Who is responsible the police or the demonstrators", tag: "no punctuation at all" }
     ],
-    why: "Arabic writers may stack marks to show intensity; English usually keeps one. After " + HN13 + ", entry “Punctuation”.", ch: "Section 5.1" },
+    why: "Arabic writers may stack marks to show intensity; “in translation, these must be reduced”. " + HN13 + ", entry “Punctuation”.", ch: "Section 5.1" },
   { src: "Each State Party shall adopt such measures as may be necessary.", srcEn: true,
     opts: [
       { t: "سوف تتخذ كل دولة طرف التدابير اللازمة.", tag: "سوف turns an obligation into a prediction" },
@@ -11440,11 +11470,11 @@ const REVISE = [
       { t: "تتخذ كل دولة طرف التدابير اللازمة.", tag: "the present tense: an obligation", ok: true }
     ],
     why: "In legal English <i>shall</i> expresses obligation, not the future, and Arabic legal texts often render it with the present tense (المضارع). " + HN15 + ", pp. 138–140.", ch: "Section 7.2" },
-  { src: "The Tenant shall pay the rent on the first day of each month.", srcEn: true,
+  { src: "The employee shall be deemed to have been appointed under probation for three months.", srcEn: true,
     opts: [
-      { t: "يدفع المستأجر الأجرة في اليوم الأول من كل شهر.", tag: "the binding rule", ok: true },
-      { t: "سوف يتم دفع الأجرة من قِبل المستأجر في اليوم الأول من كل شهر.", tag: "a prediction, plus padding" },
-      { t: "يرغب المستأجر في دفع الأجرة في اليوم الأول من كل شهر.", tag: "wrong meaning: a wish" }
+      { t: "يُعتبَر الموظف معيَّناً تحت الاختبار لمدة ثلاثة شهور.", tag: "the binding rule", ok: true },
+      { t: "سوف يتم اعتبار الموظف معيّناً تحت الاختبار لمدة ثلاثة شهور.", tag: "a prediction, plus padding" },
+      { t: "يرغب الموظف في التعيين تحت الاختبار لمدة ثلاثة شهور.", tag: "wrong meaning: a wish" }
     ],
     why: "Legal <i>shall</i> with the third person expresses obligation. " + HN13 + ", entry “Will/shall”.", ch: "Section 7.2" },
   { src: "الحكومة أعلنت عن إجراءات جديدة.",
@@ -11628,26 +11658,26 @@ const GLOSSARY_BOOKS = [
   { en: "Anaphora", ar: "التكرار الاستهلالي / الإحالة", def: "Repeating a word or phrase at the start of successive clauses or lines for effect (rhetorical anaphora); also pronouns referring back to earlier words (grammatical anaphora).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Antithesis", ar: "الطباق والمقابلة", def: "A contrast of ideas or words set in a balanced, parallel construction.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Antonym", ar: "الضدّ", def: "A word with the opposite meaning, such as night and day.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Apposition", ar: "البدل", def: "A noun phrase placed after another to describe it, with no linking word: ‘Ahmad, my oldest friend, called yesterday.’", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Apposition", ar: "البدل", def: "A noun phrase placed after another to describe it, with no linking word: ‘This jacket, a hand-me-down, …’", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Archaism", ar: "اللفظ المهجور", def: "An old or obsolete word or form; in legal English, aforesaid, heretofore, witnesseth.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Associative meaning", ar: "المعنى الترابطي", def: "Expectations attached to a referent, as when people assume a nurse is a woman.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Assonance", ar: "السجع الصوتي", def: "Repeating the same vowel sound in words close together, as in ‘the cat sat back’.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Assonance", ar: "السجع الصوتي", def: "Repeating the same vowel sounds in words close together: ‘Thy kingdom come, thy will be done.’", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Asyndeton", ar: "حذف أدوات العطف", def: "Leaving out conjunctions between coordinated words, phrases or clauses.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Attitudinal meaning", ar: "المعنى الموقفي", def: "The speaker’s attitude to the referent, shown through word choice (for example derogatory terms).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Causative verb", ar: "فعل سببي", def: "A transitive verb that makes something happen, such as raise or persuade; Arabic often uses جَعَلَ.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Code-switching", ar: "التناوب اللغوي", def: "Switching between two or more languages in the same conversation or text.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Code-switching", ar: "التناوب اللغوي", def: "Moving between two or more languages within the same stretch of speech or text.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Coherence", ar: "الاتساق الدلالي", def: "The thematic consistency that makes a text a connected whole rather than a string of unrelated sentences.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Cohesion", ar: "الترابط النصي", def: "The links between parts of a text made by devices such as conjunctions, pronouns and repetition.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Collocative meaning", ar: "المعنى التلازمي", def: "Meaning a word takes from the words it regularly appears with.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Communicative translation", ar: "الترجمة التواصلية", def: "Translation close to free translation, rendering source expressions with the culturally appropriate equivalents for the situation.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Concord", ar: "المطابقة", def: "Agreement between a verb and its subject in number (and, in Arabic, in gender).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Concord", ar: "المطابقة", def: "Agreement between the subject and the form of the verb, in number (and in Arabic in gender).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Copula", ar: "الفعل الرابط", def: "A linking verb such as be, seem, become or remain, followed by an adjective, not an adverb (‘This is nice’, not ‘nicely’).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Cultural transposition", ar: "النقل الثقافي", def: "Replacing a culture-specific item with a familiar target one: ‘carrying coals to Newcastle’ as كبائع الماء في حارة السقّائين.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Ellipsis", ar: "الحذف", def: "Leaving out a word the reader can supply, such as a repeated subject: ‘She cooked the rice and (she) served it.’", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Euphemism", ar: "التلطيف", def: "Replacing a harsh expression with a milder one, as with ‘passed away’ for ‘died’, or تُوُفّي for مات.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Cultural transposition", ar: "النقل الثقافي", def: "Replacing source culture-specific items with target ones: أَثْلَجَ قُلُوبَنا, ‘our hearts have been warmed’; Romeo and Juliet, قيس وليلى.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Ellipsis", ar: "الحذف", def: "Leaving out a word the reader can supply, such as a repeated subject: ‘He bought the ice-cream and (he) gave it to us.’", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Euphemism", ar: "التلطيف", def: "Replacing a harsh or offensive expression with a milder one, as when ‘Piss off!’ becomes إمشي (‘Go!’).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Exegetic translation", ar: "الترجمة التفسيرية", def: "Translation that adds information not in the source to explain concepts to the target reader.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Explicitation", ar: "التصريح", def: "Making explicit in the translation what is only implied in the source; the opposite is implicitation.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Generalization", ar: "التعميم", def: "Translating a term with a more general one, such as ابن العمّ and ابن الخال both as ‘cousin’. The opposite is particularization.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Generalization", ar: "التعميم", def: "Translating a term with a more general one, such as chair and seat both as كُرْسِيّ. The opposite is particularization.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Gisting", ar: "الترجمة الإجمالية", def: "A rough outline translation that shows what a text is about, often to decide whether a full translation is worth commissioning.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Hyperbole", ar: "المبالغة", def: "Exaggeration for emphasis or rhetorical effect.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Superordinate (hyperonym)", ar: "اللفظ العامّ", def: "A word whose meaning is broader and includes another’s: flower is the superordinate of rose.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
@@ -11659,19 +11689,19 @@ const GLOSSARY_BOOKS = [
   { en: "Inversion", ar: "التقديم والتأخير", def: "Moving a word or phrase to a new position in the sentence, usually for target-language style.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Jargon", ar: "لغة الاختصاص", def: "The specialized vocabulary of a profession, differing from the standard language only in its terms.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Lexicalized metaphor", ar: "الاستعارة المعجمية", def: "A metaphor so settled that dictionaries list it, such as the grim reaper.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Litotes", ar: "التلطيف بالنفي", def: "Understatement that denies the opposite for emphasis: ‘It’s not bad at all’ for ‘It’s good’.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Metonymy", ar: "المجاز المرسل / الكناية", def: "Using one word for another it suggests: ‘the White House’ for the US administration; القلم for writing.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Litotes", ar: "التلطيف بالنفي", def: "Understatement that denies the opposite for emphasis: ‘She’s not the cleverest person I ever met.’", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Metonymy", ar: "المجاز المرسل / الكناية", def: "Using one word for another it suggests: ‘a man of the cloth’ for a priest; أَهْل البَيْت for the Prophet’s family.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Modal verb", ar: "الفعل الناقص للجهة", def: "A verb expressing possibility, necessity or obligation: will, must, shall, should, can, may, might.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Mood", ar: "صيغة الفعل", def: "A category of the verb: indicative (statements), imperative (commands), subjunctive (doubt, supposition).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Onomatopoeia", ar: "المحاكاة الصوتية", def: "Words that imitate natural sounds.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Oxymoron", ar: "الجمع بين المتناقضين", def: "A seeming paradox made by joining contradictory words, such as ‘deafening silence’ (صمت مدوٍّ).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Pattern repetition", ar: "تكرار الأوزان", def: "Repeating Arabic word patterns for rhetorical effect, as in الشَّدّ والجَذْب.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Oxymoron", ar: "الجمع بين المتناقضين", def: "A seeming paradox made by joining contradictory words, such as ‘the honest thief’.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Pattern repetition", ar: "تكرار الأوزان", def: "Repeating Arabic word patterns for rhetorical effect: التَّطْبِيل والتَّزْمِير.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Pleonasm", ar: "الحشو", def: "Using superfluous or redundant words.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Reflected meaning", ar: "المعنى المنعكس", def: "When one sense of a polysemous word colours how its other senses are understood.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Reinforcement", ar: "التعزيز", def: "Adding a target-language item that strengthens a source item: ‘inside the box’, في داخل الصندوق. The opposite is condensation.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Reinforcement", ar: "التعزيز", def: "Adding a target-language item that strengthens a source item: ‘among the group’, مِنْ ضِمْنِ الفِرْقة. The opposite is condensation.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Theme and rheme", ar: "المبتدأ والخبر (الموضوع والمحمول)", def: "The theme is what a clause is about, usually placed first; the rheme is what is said about it (also topic and comment).", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Root repetition", ar: "الجناس الاشتقاقي", def: "Arabic device of placing words from the same root close together: تخليص الإبريز في تلخيص باريز.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
-  { en: "Semantic repetition", ar: "الترادف التوكيدي", def: "Using near-synonyms together, common in Arabic (العَوْن والمُساعَدة), but in English mostly kept to fixed pairs like ‘last will and testament’.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
+  { en: "Semantic repetition", ar: "الترادف التوكيدي", def: "Using near-synonyms together, common in Arabic (المَحْل والمَجاعة والمَسْغَبة), but in English mostly kept to fixed pairs like ‘last will and testament’.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Slang", ar: "اللغة العامية الدارجة", def: "A variety differing from the standard in grammar and vocabulary, used by one section of a speech community.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Social meaning", ar: "المعنى الاجتماعي", def: "What words show about relationships and roles, such as the Arabic plural ‘you’ used as a mark of respect.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
   { en: "Sociolect", ar: "اللهجة الاجتماعية", def: "The variety shared by a social group, such as ‘the Queen’s English’.", src: "Husni & Newman (2015), Glossary", lib: "hn" },
@@ -14314,34 +14344,34 @@ const KU_COURSE_MORE = {
    handshape was never an option: getting a finger count wrong teaches
    the wrong letter. */
 const KSL_ALPHA = [
-  { l: "ا", n: "أَلِف", t: "ʾalif" },
-  { l: "ب", n: "باء", t: "bāʾ" },
-  { l: "ت", n: "تاء", t: "tāʾ" },
-  { l: "ث", n: "ثاء", t: "thāʾ" },
-  { l: "ج", n: "جيم", t: "jīm" },
-  { l: "ح", n: "حاء", t: "ḥāʾ" },
-  { l: "خ", n: "خاء", t: "khāʾ" },
-  { l: "د", n: "دال", t: "dāl" },
-  { l: "ذ", n: "ذال", t: "dhāl" },
-  { l: "ر", n: "راء", t: "rāʾ" },
-  { l: "ز", n: "زاي", t: "zāy" },
-  { l: "س", n: "سين", t: "sīn" },
-  { l: "ش", n: "شين", t: "shīn" },
-  { l: "ص", n: "صاد", t: "ṣād" },
-  { l: "ض", n: "ضاد", t: "ḍād" },
-  { l: "ط", n: "طاء", t: "ṭāʾ" },
-  { l: "ظ", n: "ظاء", t: "ẓāʾ" },
-  { l: "ع", n: "عين", t: "ʿayn" },
-  { l: "غ", n: "غين", t: "ghayn" },
-  { l: "ف", n: "فاء", t: "fāʾ" },
-  { l: "ق", n: "قاف", t: "qāf" },
-  { l: "ك", n: "كاف", t: "kāf" },
-  { l: "ل", n: "لام", t: "lām" },
-  { l: "م", n: "ميم", t: "mīm" },
-  { l: "ن", n: "نون", t: "nūn" },
-  { l: "ه", n: "هاء", t: "hāʾ" },
-  { l: "و", n: "واو", t: "wāw" },
-  { l: "ي", n: "ياء", t: "yāʾ" },
+  { l: "ا", n: "أَلِف", t: "ʾalif", img: "ksl/alif.webp?v=2" },
+  { l: "ب", n: "باء", t: "bāʾ", img: "ksl/ba.webp?v=2" },
+  { l: "ت", n: "تاء", t: "tāʾ", img: "ksl/ta.webp?v=2" },
+  { l: "ث", n: "ثاء", t: "thāʾ", img: "ksl/tha.webp?v=2" },
+  { l: "ج", n: "جيم", t: "jīm", img: "ksl/jim.webp?v=2" },
+  { l: "ح", n: "حاء", t: "ḥāʾ", img: "ksl/ha.webp?v=2" },
+  { l: "خ", n: "خاء", t: "khāʾ", img: "ksl/kha.webp?v=2" },
+  { l: "د", n: "دال", t: "dāl", img: "ksl/dal.webp?v=2" },
+  { l: "ذ", n: "ذال", t: "dhāl", img: "ksl/dhal.webp?v=2" },
+  { l: "ر", n: "راء", t: "rāʾ", img: "ksl/ra.webp?v=2" },
+  { l: "ز", n: "زاي", t: "zāy", img: "ksl/zay.webp?v=2" },
+  { l: "س", n: "سين", t: "sīn", img: "ksl/sin.webp?v=2" },
+  { l: "ش", n: "شين", t: "shīn", img: "ksl/shin.webp?v=2" },
+  { l: "ص", n: "صاد", t: "ṣād", img: "ksl/sad.webp?v=2" },
+  { l: "ض", n: "ضاد", t: "ḍād", img: "ksl/dad.webp?v=2" },
+  { l: "ط", n: "طاء", t: "ṭāʾ", img: "ksl/ta2.webp?v=2" },
+  { l: "ظ", n: "ظاء", t: "ẓāʾ", img: "ksl/dha.webp?v=2" },
+  { l: "ع", n: "عين", t: "ʿayn", img: "ksl/ayn.webp?v=2" },
+  { l: "غ", n: "غين", t: "ghayn", img: "ksl/ghayn.webp?v=2" },
+  { l: "ف", n: "فاء", t: "fāʾ", img: "ksl/fa.webp?v=2" },
+  { l: "ق", n: "قاف", t: "qāf", img: "ksl/qaf.webp?v=2" },
+  { l: "ك", n: "كاف", t: "kāf", img: "ksl/kaf.webp?v=2" },
+  { l: "ل", n: "لام", t: "lām", img: "ksl/lam.webp?v=2" },
+  { l: "م", n: "ميم", t: "mīm", img: "ksl/mim.webp?v=2" },
+  { l: "ن", n: "نون", t: "nūn", img: "ksl/nun.webp?v=2" },
+  { l: "ه", n: "هاء", t: "hāʾ", img: "ksl/ha2.webp?v=2" },
+  { l: "و", n: "واو", t: "wāw", img: "ksl/waw.webp?v=2" },
+  { l: "ي", n: "ياء", t: "yāʾ", img: "ksl/ya.webp?v=2" },
 ];
 
 /* Not letters of the alphabet, but part of the same fingerspelling set
@@ -14355,28 +14385,28 @@ const KSL_ALPHA = [
    draw on the post. Where there is no arrow there is no `mv` — which is
    not a claim that the sign is still, only that the source did not say. */
 const KSL_EXTRA = [
-  { l: "ة", n: "تاء مربوطة", t: "tāʾ marbūṭa", mvk: "↔",
+  { l: "ة", n: "تاء مربوطة", t: "tāʾ marbūṭa", img: "ksl/tamarbuta.webp?v=2", mvk: "↔",
     mv: "Carried from side to side." },
-  { l: "أ", n: "ألف بهمزة فوقها", t: "ʾalif + hamza above", mvk: "↔",
+  { l: "أ", n: "ألف بهمزة فوقها", t: "ʾalif + hamza above", img: "ksl/alifhamza.webp?v=2", mvk: "↔",
     mv: "The same fist as <b>ا</b>, thumb up &mdash; moved from side to side." },
-  { l: "إ", n: "ألف بهمزة تحتها", t: "ʾalif + hamza below", mvk: "↔",
+  { l: "إ", n: "ألف بهمزة تحتها", t: "ʾalif + hamza below", img: "ksl/alifhamzabelow.webp?v=2", mvk: "↔",
     mv: "The fist of <b>ا</b> turned over, thumb down &mdash; moved from side to side." },
-  { l: "آ", n: "ألف ممدودة", t: "ʾalif madda", mvk: "↺",
+  { l: "آ", n: "ألف ممدودة", t: "ʾalif madda", img: "ksl/alifmadda.webp?v=3", mvk: "↺",
     mv: "The same fist as <b>ا</b>, thumb up &mdash; swept in an arc." },
-  { l: "ؤ", n: "واو بهمزة", t: "wāw + hamza", mvk: "↺",
+  { l: "ؤ", n: "واو بهمزة", t: "wāw + hamza", img: "ksl/wawhamza.webp?v=2", mvk: "↺",
     mv: "The same pinch as <b>و</b> &mdash; it turns as it travels." },
-  { l: "ئ", n: "ياء بهمزة", t: "yāʾ + hamza", mvk: "↔",
+  { l: "ئ", n: "ياء بهمزة", t: "yāʾ + hamza", img: "ksl/yahamza.webp?v=2", mvk: "↔",
     mv: "The same hand as <b>ي</b> &mdash; moved from side to side." },
-  { l: "ئـ", n: "ياء بهمزة — متّصلة", t: "yāʾ + hamza, joined", mvk: "↺",
+  { l: "ئـ", n: "ياء بهمزة — متّصلة", t: "yāʾ + hamza, joined", img: "ksl/yahamza2.webp?v=2", mvk: "↺",
     mv: "Index out, pointing &mdash; it turns as it travels." },
-  { l: "ء", n: "همزة", t: "hamza", mvk: "↔",
+  { l: "ء", n: "همزة", t: "hamza", img: "ksl/hamza.webp?v=2", mvk: "↔",
     mv: "The same fist as <b>ب</b>, index up &mdash; moved from side to side." },
-  { l: "ى", n: "ألف مقصورة", t: "ʾalif maqṣūra", mvk: "↓",
+  { l: "ى", n: "ألف مقصورة", t: "ʾalif maqṣūra", img: "ksl/alifmaqsura.webp?v=2", mvk: "↓",
     mv: "The same hand as <b>ي</b> &mdash; drawn downward." },
-  { l: "لا", n: "لام ألف", t: "lām-ʾalif" },
-  { l: "لأ", n: "لام ألف بهمزة", t: "lām-ʾalif + hamza", mvk: "↔",
+  { l: "لا", n: "لام ألف", t: "lām-ʾalif", img: "ksl/lamalif.webp?v=2" },
+  { l: "لأ", n: "لام ألف بهمزة", t: "lām-ʾalif + hamza", img: "ksl/lamalifhamza.webp?v=2", mvk: "↔",
     mv: "The same hand as <b>لا</b> &mdash; moved from side to side." },
-  { l: "ال", n: "أداة التعريف", t: "al-, the article" },
+  { l: "ال", n: "أداة التعريف", t: "al-, the article", img: "ksl/al.webp?v=2" },
 ];
 function kslAll() { return KSL_ALPHA.concat(KSL_EXTRA); }
 
@@ -14384,8 +14414,9 @@ function kslAll() { return KSL_ALPHA.concat(KSL_EXTRA); }
    alphabet @ksl_dictionary publishes and re-set on this site's own
    ground. Say so plainly — a hand nobody can source is a hand nobody
    should learn from. */
-const KSL_CREDIT = "The Guild is photographing its own handshapes for this alphabet. Until they are ready, " +
-  "watch each letter signed in the videos above.";
+const KSL_CREDIT = "Every handshape here is photographed by <b>@ksl_dictionary</b>, lifted from " +
+  "the Arabic finger alphabet they publish and set on our own ground. Credited while their " +
+  "permission is sought.";
 
 /* What a sign is assembled from — a checklist for watching a video. */
 const KSL_PARAMS = [
@@ -16897,13 +16928,13 @@ const GUIDE_MEANING = {
       body: "<p>A translator reads, interprets, decides and then writes. Three published cases show the job better than any definition.</p>",
       ex: [
         { s: "للّه دَرُّه!", b: "His milk is due to God.", g: "How wonderful he is!",
-          w: "Every word of the literal version is in the dictionary, yet the meaning is lost: the expression is simply praise. <span class='src'>after Husni &amp; Newman, 2015, p. 1</span>" },
-        { s: "“Break a leg!”, said to an actor just before the show", g: "بالتوفيق! / الله يوفقك!",
-          w: "Word for word it wishes an injury; in the theatre it wishes luck. The translator must know who is speaking, to whom, and in what situation." },
-        { s: "A Kuwaiti character welcomes a guest: «هلا والله!»", g: "“Welcome, welcome!” she said warmly in her Kuwaiti dialect.",
-          w: "Arab readers hear the dialect; English readers cannot, so the translator adds a few words to say so. This is <b>explicitation</b>: making explicit what the source only implies." }
+          w: "Every word of the literal version is in the dictionary, yet the meaning is lost. The book calls it “a mock-exoticism”. <span class='src'>Husni &amp; Newman, 2015, p. 1</span>" },
+        { s: "<i>Bon appétit</i>, said by a father to break the silence after a bitter family quarrel", g: "<i>Tuck in</i>, <i>Do start</i>, <i>I hope you like it</i> … chosen for the speaker and the moment",
+          w: "<i>Good appetite</i> means nothing in English. The translator must weigh who speaks, to whom, and what the moment means. <span class='src'>Bassnett, 2014, pp. 30–33</span>" },
+        { s: "A Lebanese wedding planner speaks Lebanese Arabic among Saudi characters (بنات الرياض)", g: "“In her singsong Lebanese Arabic, Madame Sawsan informed Sadeem …”",
+          w: "Arab readers hear the dialect; English readers cannot, so the translator adds four words. “The translator explicated what is implicit.” <span class='src'>Husni &amp; Newman, 2015, pp. 82–83</span>" }
       ],
-      quote: "Bassnett describes translation as a negotiation between texts and between cultures, with the translator in the middle and responsible to the readers of the translation. <span class='src'>after Bassnett, 2014, pp. 6, 33</span>" },
+      quote: "Translation is “a process of negotiation between texts and between cultures … mediated by the figure of the translator” — and the translator “has a clear moral responsibility to the TL readers”. <span class='src'>Bassnett, 2014, pp. 6, 33</span>" },
 
     { t: "Three kinds of translation", ar: "أنواع الترجمة الثلاثة",
       body: "<p>Roman Jakobson distinguishes three types (<span class='src'>Bassnett, 2014, pp. 25–26</span>):</p><ul>" +
@@ -16913,34 +16944,34 @@ const GUIDE_MEANING = {
         "<p>Even apparent synonyms are never perfect equivalents: each word carries “non-transferable associations and connotations”.</p>" },
 
     { t: "Language lives inside culture", ar: "اللغة والثقافة",
-      body: "<p>Bassnett compares language to the heart within the body of culture: a surgeon cannot operate on the heart and ignore the body, and a translator cannot treat a text apart from its culture (<span class='src'>after Bassnett, 2014, p. 25</span>).</p>",
+      body: "<p>Bassnett compares language to the heart within the body of culture: just as a surgeon cannot neglect the body, “the translator treats the text in isolation from the culture at his or her peril” (<span class='src'>2014, p. 25</span>).</p>",
       ex: [
-        { s: "dates (English)", g: "تمر",
-          w: "A perfect dictionary match, but in English dates are an occasional sweet; in Kuwait they are served to guests with coffee and carry hospitality. Same fruit, different value." },
-        { s: "as loyal as a dog", g: "وفيٌّ جداً / وفاءٌ نادر",
-          w: "In English the dog is a model of loyalty; in Arabic, comparing a person to a dog is an insult. Keep the loyalty and drop the dog." }
+        { s: "butter (British English)", g: "burro (Italian)",
+          w: "A perfect dictionary match, but in Britain butter is spread on bread and carries high status; in Italy it is mainly for cooking. Same word, different value. <span class='src'>Bassnett, 2014, pp. 29–30</span>" },
+        { s: "patient owl", g: "شخصٌ صبور / أصبرُ من الجمل",
+          w: "In the West the owl stands for wisdom; in Arab culture it is “the night crow” (غراب الليل), a bad omen. Drop the owl or use an Arabic animal with the same quality. <span class='src'>Husni &amp; Newman, 2015, p. 19</span>" }
       ],
-      quote: "Languages divide the world differently: Arabic has many words for camels of different ages and kinds, where English has one. <span class='src'>after Bassnett, 2014, p. 40</span>" },
+      quote: "Languages divide the world differently: Finnish has many words for snow, “in Arabic for aspects of camel behaviour”. <span class='src'>Bassnett, 2014, p. 40</span>" },
 
     { t: "Formal and dynamic equivalence", ar: "التكافؤ الشكلي والديناميكي",
       body: "<p>Eugene Nida separates two kinds of equivalence (<span class='src'>as cited in Bassnett, 2014, p. 36</span>):</p><ul>" +
-        "<li><b>Formal</b> equivalence stays as close as possible to the form and content of the original message.</li>" +
+        "<li><b>Formal</b> equivalence “focuses attention on the message itself, in both form and content”.</li>" +
         "<li><b>Dynamic</b> equivalence aims at <b>equivalent effect</b>: the new reader should respond as the original reader did.</li></ul>" +
-        "<p>Equivalent effect can go too far. One Bible translation turned “greeting with a holy kiss” into “give one another a hearty handshake all round”. Bassnett treats this as equivalent effect taken too far.</p>" },
+        "<p>Equivalent effect can go too far. One Bible translation turned “greeting with a holy kiss” into “give one another a hearty handshake all round” — “what seems to be a piece of inadequate translation in poor taste”.</p>" },
 
     { t: "Loss and gain", ar: "الفقد والكسب",
-      body: "<p>Since two languages never match exactly, something is always lost. But translation can sometimes make a text clearer or richer, and what is lost in one place can be made up elsewhere (<span class='src'>Bassnett, 2014, p. 39</span>). This making-up is called <b>compensation</b>.</p>",
+      body: "<p>Since two languages never match exactly, something is always lost. But the translator “can at times enrich or clarify the SL text as a direct result of the translation process”, and what is lost in one place can be made up elsewhere (<span class='src'>Bassnett, 2014, p. 39</span>). This making-up is called <b>compensation</b>.</p>",
       ex: [
-        { s: "قال له: «تفضّل يا أستاذ»", b: "He said to him: ‘Please, professor.’", g: "‘Do come in, sir,’ he said politely.",
-          w: "The respect in يا أستاذ has no exact English match, so the translator moves it into <i>sir</i> and <i>politely</i>. This is compensation." }
+        { s: "اشتغل على كتابه ليلَ نهار", b: "He worked on his book day and night.", g: "He worked on his book every single day.",
+          w: "The pair is dropped and its emphasis is carried by <i>every single</i>. <span class='src'>Husni &amp; Newman, 2015, p. 22</span>" }
       ] },
 
     { t: "Domestication and foreignisation", ar: "التوطين والتغريب",
-      body: "<p>Schleiermacher (1813) contrasted a translation that reads as if written in the target language with one that keeps the foreign visible. Lawrence Venuti took this up: domestication makes the text fit the expectations and norms of the target culture, while foreignisation keeps reminding readers that the text comes from somewhere else. <span class='src'>Bassnett, 2014, pp. 46–47</span></p>" +
+      body: "<p>Schleiermacher (1813) contrasted a translation that reads as if written in the target language with one that keeps the foreign visible. Lawrence Venuti took this up: “Domestication conforms to the expectations, values and norms of the target culture, while foreignization challenges readers by making them aware that they are encountering texts from outside their known parameters.” <span class='src'>Bassnett, 2014, pp. 46–47</span></p>" +
         "<p>Neither is always right. The brief, the readers and the purpose decide.</p>" },
 
     { t: "Purpose decides: Skopos", ar: "نظرية الغاية",
-      body: "<p>Reiss and Vermeer called it <b>skopos</b>, Greek for “purpose”. Vermeer’s rule, in short: produce a text that works in the situation where it will be used, for the people who will use it, in the way they need it to work. <span class='src'>Bassnett, 2014, p. 84</span></p>" +
+      body: "<p>Reiss and Vermeer called it <b>skopos</b>, Greek for “purpose”. Vermeer’s rule: “Translate/interpret/speak/write in a way that enables your text/translation to function in the situation in which it is used and with the people who want to use it and precisely in the way they want it to function.” <span class='src'>Bassnett, 2014, p. 84</span></p>" +
         "<p>So a professional letter, an instruction manual or a recipe may be restructured in the target language, from word-for-word to a complete rewrite, depending on what it must do.</p>" }
   ]
 };
@@ -16987,7 +17018,7 @@ const GUIDE_PHRASE = {
         "<p>Some calques are now ordinary Arabic: وقع في الحب, كذبة بيضاء, خط ساخن (<span class='src'>p. 20</span>). The choice depends on text type, register and audience (<span class='src'>p. 21</span>).</p>" },
 
     { t: "Idioms grow from culture", ar: "التعابير الاصطلاحية",
-      body: "<p>An idiom’s meaning cannot be worked out from its words (<span class='src'>after Husni &amp; Newman, 2015, p. 26</span>), and its words are frozen: بين المطرقة والسندان, never بين السندان والمطرقة (<span class='src'>p. 27</span>).</p>",
+      body: "<p>An idiom’s meaning “is not the sum of the meaning of its parts” (<span class='src'>quoted in Husni &amp; Newman, 2015, p. 26</span>), and its words are frozen: بين المطرقة والسندان, never بين السندان والمطرقة (<span class='src'>p. 27</span>).</p>",
       ex: [
         { s: "heart-warming", g: "يُثلج الصدر", w: "A language born in desert heat finds comfort in coolness; the easy life is عيش بارد, a “cold life”. <span class='src'>p. 28</span>" },
         { s: "apples and oranges", g: "شحمٌ ونار", w: "Opposites are “fat and fire” in Arabic. <span class='src'>p. 28</span>" }
@@ -17001,7 +17032,7 @@ const GUIDE_PHRASE = {
         ["سحب ذيله", "tail between one’s legs (shame)", "to strut"],
         ["عضّ أنامله", "nail-biting (anxiety)", "anger"],
         ["شدّ حزامه", "to tighten one’s belt", "also: to prepare oneself"]],
-      after: "<p>Look-alike idioms are a trap: check what the idiom means in its own language before trusting the resemblance. <span class='src'>after p. 31</span></p>" },
+      after: "<p>“The translator has to guard against imposing SL meanings on TL idioms, irrespective of formal similarities.” <span class='src'>p. 31</span></p>" },
 
     { t: "Seven ways to translate an idiom", ar: "استراتيجيات ترجمة التعبير",
       body: "<p>In order of preference (<span class='src'>Husni &amp; Newman, 2015, p. 33</span>):</p><ol>" +
@@ -17009,13 +17040,13 @@ const GUIDE_PHRASE = {
         "<li>Same meaning, different form: <i>a drop in the ocean</i> غيض من فيض; <i>to run with the hare and hunt with the hounds</i> لعب على الحبلين.</li>" +
         "<li>Paraphrase keeping some culture: <i>to back the wrong horse</i> راهن على الجواد الخاسر.</li>" +
         "<li>Functional equivalent: <i>dark horse</i> شخص غامض.</li>" +
-        "<li>Omission: <i>it drove him up the wall</i> → أغضبه كثيراً.</li>" +
+        "<li>Omission: <i>it really got his hackles up</i> → استشاط غضباً.</li>" +
         "<li>Addition: <i>to shrug one’s shoulders</i> هزّ كتفيه / هزّ كتفيه لامبالاةً.</li>" +
         "<li>Borrowing: <i>to have green fingers</i> يده خضراء.</li></ol>" +
         "<p>For <i>it’s raining cats and dogs</i> the book lists the borrowing تمطر الدنيا قططاً وكلاباً, idioms such as إنّ الدنيا تمطر كأفواه القرب, and the plain إنّ الدنيا تمطر بغزارة: register and audience decide (<span class='src'>pp. 34–35</span>).</p>" },
 
     { t: "Similes", ar: "التشبيه",
-      body: "<p>Similes are bound to culture. Rendering <i>as strong as a horse</i> as قوي مثل فرس would sound odd, even funny, to most Arabic readers (<span class='src'>Husni &amp; Newman, 2015, p. 35</span>). The options (<span class='src'>p. 36</span>):</p><ul>" +
+      body: "<p>Similes are bound to culture. Rendering <i>as strong as a horse</i> as قوي مثل فرس “would provoke ridicule from most Arabic speakers” (<span class='src'>Husni &amp; Newman, 2015, p. 35</span>). The options (<span class='src'>p. 36</span>):</p><ul>" +
         "<li>Same form and meaning: <i>as strong as a lion</i> قوي كالأسد.</li>" +
         "<li>Same meaning, different form: <i>as patient as Job</i> صبر أيوب.</li>" +
         "<li>Omission with compensation: <i>as thin as a matchstick</i> في غاية الرقة.</li>" +
@@ -17036,13 +17067,13 @@ const GUIDE_PHRASE = {
       body: "<p>Both languages join near-synonyms into fixed pairs: <i>null and void</i>, <i>first and foremost</i>; الصالح والطالح, لا يُعدّ ولا يُحصى (<span class='src'>Husni &amp; Newman, 2015, pp. 5–6</span>). Arabic still creates them freely. The book’s strategies (<span class='src'>pp. 21–22</span>):</p>",
       ex: [
         { s: "الجنّة والنار", g: "heaven and hell", w: "A similar pair." },
-        { s: "جال في طول البلاد وعرضها", g: "He travelled the length and breadth of the country.", w: "A pair for a pair." },
+        { s: "فتّش عن موظف جديد على السهل والوعر", g: "He looked for a new member of staff high and low.", w: "Another pair." },
         { s: "بلا قيدٍ أو شرط", g: "unconditionally", w: "One word for the pair." },
         { s: "قلباً وقالباً", g: "wholeheartedly", w: "Functional equivalent." }
       ] },
 
     { t: "Phrasal verbs and compounds", ar: "الأفعال العبارية والمركّبات",
-      body: "<p>Phrasal verbs are one of the hardest areas of learning and translation (<span class='src'>Husni &amp; Newman, 2015, p. 9</span>). <i>Take off</i> alone is خلع (clothes), أقلع (a plane), قلّد (imitate), نجح (succeed), بتر (amputate) and خفّض (deduct) (<span class='src'>p. 10</span>).</p>" +
+      body: "<p>Phrasal verbs are “one of the black spots” of learning and translation (<span class='src'>Husni &amp; Newman, 2015, p. 9</span>). <i>Take off</i> alone is خلع (clothes), أقلع (a plane), قلّد (imitate), نجح (succeed), بتر (amputate) and خفّض (deduct) (<span class='src'>p. 10</span>).</p>" +
         "<p>English builds compounds freely; Arabic usually uses an إضافة or a phrase: <i>bedroom</i> غرفة نوم, <i>real-estate agency</i> وكالة عقارية, <i>fire drill</i> تدريب على إطفاء الحريق — keep the preposition (<span class='src'>pp. 48–49</span>).</p>" +
         "<p>Into English, avoid turning every إضافة into <i>of</i>: مطار القاهرة is <i>Cairo airport</i>, صانع القرار is <i>decision-maker</i> (<span class='src'>pp. 50–51</span>).</p>" }
   ]
@@ -17052,7 +17083,7 @@ const GUIDE_VARIETY = {
   id: "variety", practise: "revise", sources: ["HN15", "HN13"],
   pages: [
     { t: "Dialect, register, idiolect", ar: "اللهجة والمستوى اللغوي",
-      body: "<p>A <b>dialect</b> differs in pronunciation, grammar and words; an <b>accent</b> only in pronunciation. <b>Register</b> is the level of formality, and getting it wrong causes comic or confusing effects: nobody in a playground scuffle says “Would you be so kind as to refrain from pushing me?” Each person also has an <b>idiolect</b>, a personal way of speaking. <span class='src'>Husni &amp; Newman, 2015, pp. 56–57</span></p>" },
+      body: "<p>A <b>dialect</b> differs in pronunciation, grammar and words; an <b>accent</b> only in pronunciation. <b>Register</b> is the level of formality, and getting it wrong causes comic or confusing effects: nobody in a fight says “I say, old fellow, will you kindly desist from hitting me?” Each person also has an <b>idiolect</b>, a personal way of speaking. <span class='src'>Husni &amp; Newman, 2015, pp. 56–57</span></p>" },
 
     { t: "Diglossia", ar: "الازدواجية اللغوية",
       body: "<p>Arabic has a standard variety (الفصحى) beside many spoken dialects (العامية). The dialect is the mother tongue; the standard is learned at school. Charles Ferguson (1959) described a “high” variety for sermons, lectures and news and a “low” one for family and friends; real speech moves along a continuum between them. <span class='src'>Husni &amp; Newman, 2015, pp. 58–62</span></p>" +
@@ -17068,29 +17099,29 @@ const GUIDE_VARIETY = {
     { t: "Dialogue into English", ar: "ترجمة الحوار إلى الإنجليزية",
       body: "<p>Arabic novels often write dialogue in formal Arabic, so the translator must decide how the character really sounds (<span class='src'>Husni &amp; Newman, 2015, p. 77</span>):</p>",
       ex: [
-        { s: "ماذا تريدين يا أختي؟ — a teenage boy to his sister", b: "What do you want, oh my sister?", g: "What do you want, sis?", w: "Natural speech for the speaker." }
+        { s: "ماذا تقولين يا أمّي؟ — a thirteen-year-old boy", b: "What are you saying, oh mother?", g: "What’re you saying, Mum? / What’re you on about, Mum?", w: "Natural speech for the speaker. <span class='src'>p. 77</span>" }
       ],
       quote: "Beware the Victorian “pseudo-biblical, neo-gothic, mock-Elizabethan, bogus Oriental style”. <span class='src'>Bernard Lewis, as cited in Husni &amp; Newman, 2015, p. 73</span>" },
 
     { t: "Dialect into Arabic", ar: "ترجمة اللهجة إلى العربية",
-      body: "<p>Which dialect would you choose? Any one may exclude readers elsewhere. One English line, four Arabic voices:</p>",
-      table: [["Variety", "I’m not going today."],
-        ["Standard Arabic", "لن أذهب اليوم"], ["Kuwaiti", "ما راح أروح اليوم"],
-        ["Egyptian", "مش رايح النهارده"], ["Levantine", "مش رايح اليوم"]],
-      after: "<p>The book suggests a middle way (<span class='src'>pp. 81–82</span>): Standard Arabic with spoken features most readers recognise — اللي, subject–verb–object order, ـوا for ـون, ما for لم. Compare الطلاب الذين يدرسون في المكتبة with الطلاب اللي يدرسوا في المكتبة.</p>" +
-        "<p>Without such choices, voices flatten: one Arabic Sherlock Holmes gives a London policeman the same formal Arabic as Holmes, losing both the social signal and the cultural colour (<span class='src'>p. 86</span>).</p>" },
+      body: "<p>Which dialect would you choose? Any one may exclude readers elsewhere. The same English line (<span class='src'>Husni &amp; Newman, 2015, p. 79</span>):</p>",
+      table: [["Variety", "That should not be a problem."],
+        ["Standard Arabic", "لا ينبغي أن يكون ذلك بمشكلة"], ["Kuwaiti", "مافي أي مشكلة"],
+        ["Egyptian", "مش مشكلة، مفيش مشكلة"], ["Algerian", "ما فيها باس"]],
+      after: "<p>The book suggests a middle way (<span class='src'>pp. 81–82</span>): Standard Arabic with spoken features most readers recognise — اللي, subject–verb–object order, ـوا for ـون, ما for لم. Compare الكشافون الذين يلعبون بكرة القدم with الكشافين اللي يلعبوا بكرة القدم.</p>" +
+        "<p>Without such choices, voices flatten: one Arabic Sherlock Holmes gives a London policeman the same formal Arabic as Holmes, “a pragmatic and a cultural loss” (<span class='src'>p. 86</span>).</p>" },
 
     { t: "A published commentary", ar: "تعليق منشور",
       body: "<p>Husni and Newman comment on their own English translation of Yūsuf Idrīs’s story حكاية مصرية جدًا (<span class='src'>2015, pp. 87–89</span>):</p><ul>" +
         "<li>يا أسطى → <i>guv’</i>: a British term used in similar situations; “teacher” or “sir” would sound wrong.</li>" +
-        "<li>عسكري → <i>cop</i>: the informal word suits the story’s register better than <i>police officer</i>.</li>" +
+        "<li>عسكري → <i>cop</i>: “In keeping with the register, ‘cop’ is preferable here to something formal like ‘police officer’.”</li>" +
         "<li>مترو → <i>train</i>, not <i>metro</i>: Cairo’s underground did not exist when the story was written.</li></ul>" +
         "<p>Each note names the problem, gives the solution and justifies it — the shape of a good commentary.</p>" },
 
     { t: "Punctuation", ar: "علامات الترقيم",
-      body: "<p>Western-style punctuation in Arabic is essentially a twentieth-century development and is often inconsistent. Writers may stack marks for intensity; English usually keeps one (<span class='src'>after Husni &amp; Newman, 2013, entry “Punctuation”</span>):</p>",
+      body: "<p>Western-style punctuation in Arabic is essentially a twentieth-century development and is often inconsistent. Writers may stack marks for intensity; in English, “these must be reduced” (<span class='src'>Husni &amp; Newman, 2013, entry “Punctuation”</span>):</p>",
       ex: [
-        { s: "مَن الفائز: الفريق الأزرق أم الأحمر؟!", g: "Who won, the blue team or the red?", w: "Arabic suspension points (…) at the end of a list are usually omitted or replaced by a comma." }
+        { s: "مَن المسؤول: الشرطة أم المتظاهرون؟!", g: "Who is responsible, the police or the demonstrators?", w: "Arabic suspension points (…) at the end of a list are usually omitted or replaced by a comma." }
       ] },
 
     { t: "Writing Arabic names in English", ar: "النقل الحرفي",
@@ -17102,21 +17133,21 @@ const GUIDE_FIELDS = {
   id: "fields", practise: "revise", sources: ["HN15", "HN13"],
   pages: [
     { t: "Legal texts follow a legal system", ar: "الترجمة القانونية",
-      body: "<p>Legal translation is tied to a legal system, not just a language: in the US <i>to table</i> a proposal means to shelve it, in the UK to submit it for discussion (<span class='src'>Husni &amp; Newman, 2015, p. 98</span>). The translator must understand what legal effect the text is meant to have, and how to produce that same effect in the other language (<span class='src'>after p. 99</span>).</p>" },
+      body: "<p>Legal translation is tied to a legal system, not just a language: in the US <i>to table</i> a proposal means to shelve it, in the UK to submit it for discussion (<span class='src'>Husni &amp; Newman, 2015, p. 98</span>). The translator must understand “what legal effect it is supposed to have, and how to achieve that legal effect in the other language” (<span class='src'>quoted on p. 99</span>).</p>" },
 
     { t: "Legal shall", ar: "shall في النصوص القانونية",
       body: "<p>In legal English <i>shall</i> expresses obligation, not the future (<span class='src'>Husni &amp; Newman, 2015, p. 138</span>). Arabic legal texts often use the present tense (المضارع), not سوف:</p>",
       ex: [
         { s: "Each State Party shall adopt such measures as may be necessary.", g: "تتخذ كل دولة طرف التدابير اللازمة", w: "UN convention text. <span class='src'>p. 140</span>" },
-        { s: "The Tenant shall pay the rent on the first day of each month.", g: "يدفع المستأجر الأجرة في اليوم الأول من كل شهر", w: "Obligation, in the present tense." }
+        { s: "The employee shall be deemed to have been appointed under probation for three months.", g: "يُعتبَر الموظف معيَّناً تحت الاختبار لمدة ثلاثة شهور", w: "<span class='src'>Husni &amp; Newman, 2013, entry “Will/shall”</span>" }
       ] },
 
     { t: "The passive", ar: "المبني للمجهول",
       body: "<p>Legal English uses the passive far more than Arabic does. Arabic translations often use an active verb or a verbal noun (<span class='src'>Husni &amp; Newman, 2015, p. 137</span>):</p>",
       ex: [
-        { s: "The application shall be examined by the Committee.", g: "تنظر اللجنة في الطلب", w: "An active verb with the doer as subject." },
-        { s: "The decision was taken by the board.", b: "تمّ اتخاذ القرار من قِبل مجلس الإدارة", g: "اتخذ مجلسُ الإدارة القرار",
-          w: "A named doer after من قبل / من طرف / من جانب is common in the press, but careful writers make the doer the subject. <span class='src'>after Husni &amp; Newman, 2013, entry “The passive”</span>" }
+        { s: "The proposed budget shall be reviewed by the Committee.", g: "تقوم اللجنة بمراجعة الميزانية المقترحة", w: "<span class='src'>p. 137</span>" },
+        { s: "The truce was broken by the government.", b: "تمّ اختراق الهدنة من جانب الحكومة", g: "اخترقت الحكومةُ الهدنة",
+          w: "A named doer with من قبل / من طرف / من جانب is “not considered normative usage” and is “frowned upon by careful users of Arabic”. <span class='src'>Husni &amp; Newman, 2013, entry “The passive”</span>" }
       ] },
 
     { t: "Translation memory", ar: "ذاكرة الترجمة",
@@ -17128,7 +17159,8 @@ const GUIDE_FIELDS = {
     { t: "Machine translation", ar: "الترجمة الآلية",
       body: "<p>The Georgetown experiment (1954) translated over sixty Russian sentences automatically, and its makers expected the problem to be solved within years. Yehoshua Bar-Hillel answered with “The box was in the pen”: a machine cannot tell a playpen from a writing pen (<span class='src'>Husni &amp; Newman, 2015, pp. 169–170</span>).</p>",
       ex: [
-        { s: "Tests reported in 2015", g: "Free online systems scrambled the word order of simple Arabic sentences, and an Arabic legal sentence defeated every system. Complex syntax was the main stumbling block.", w: "<span class='src'>after Husni &amp; Newman, 2015, pp. 171–172</span>" }
+        { s: "اشترت أختي سيارة جديدة الأسبوع الماضي", b: "Sisters car of the new week last bought.", g: "My sister bought a new car last week.",
+          w: "Two online systems tested in the book produced the broken version; an Arabic legal sentence defeated every system. Complex syntax was the main stumbling block. <span class='src'>pp. 171–172</span>" }
       ],
       quote: "Note: today’s systems are far more fluent than those tested in 2015, but a fluent sentence is not always an accurate one. Always post-edit." }
   ]
@@ -23180,7 +23212,7 @@ function wireProfileButtons() {
 /* Printed small under the notice. When a screen looks wrong, the first
    question is always whether the browser is showing an old copy, and
    this answers it without anybody having to guess. */
-const BUILD = "1117-2027";
+const BUILD = "1117-2050";
 function paintBuild() {
   const n = document.getElementById("build-stamp");
   /* kept for the refresh check only; visitors do not need to see it */
@@ -29195,7 +29227,7 @@ function quizHand(src, cls) {
    photographs), so nothing is drawn or guessed. The questions about the
    language take their answers word for word from the KSL lessons. */
 function kslQuiz() {
-  const A = KSL_ALPHA.filter(L => L.img);
+  const A = KSL_ALPHA;
   const others = (L, n) => shuffled(A.filter(x => x.l !== L.l)).slice(0, n);
   const CH = "KSL";
   const pool = [];
@@ -30320,11 +30352,6 @@ function runAsl() {
 }
 
 function handFig(L, eager) {
-  if (!L.img) {
-    const s = el("span", "a-noimg", L.l);
-    s.setAttribute("dir", "rtl"); s.setAttribute("lang", "ar"); s.setAttribute("aria-hidden", "true");
-    return s;
-  }
   const im = document.createElement("img");
   im.src = L.img;
   im.alt = "The handshape for " + L.n;
@@ -33022,11 +33049,11 @@ const PHRASE_SETS = [
 /* A to Z (2013): make / do / جعل, and happen / take place */
 const LU_VERBS = [
   { a: "I did my homework.", b: "عملت / فعلت وظائفي", w: "<i>Make</i> and <i>do</i> are both often عمل or فعل, interchangeably." },
-  { a: "This film will make you cry.", b: "سيجعلك هذا الفيلم تبكي", w: "Causative <i>make</i> (make someone do something) takes <b>جعل</b>." },
-  { a: "The news made her very happy.", b: "جعلها الخبر سعيدة جداً", w: "<b>جعل</b> again: making someone feel or become something." },
+  { a: "These jokes will make you laugh.", b: "ستجعلك هذه النكت تضحك", w: "Causative <i>make</i> (make someone do something) takes <b>جعل</b>." },
+  { a: "He made me the laughing-stock of the entire university.", b: "جعلني أضحوكة الجامعة كلها", w: "<b>جعل</b> again: making someone into something." },
   { a: "I don’t understand what happened there.", b: "لا أفهم ماذا حصل هناك", w: "<i>Happen</i> and <i>occur</i> are for the unplanned: <b>حصل</b>." },
-  { a: "The graduation ceremony took place last night.", b: "أُقيم حفل التخرج الليلة الماضية", w: "<i>Take place</i> and <i>be held</i> are for the planned: <b>انعقد، جرى، عقد</b>. <i>The meeting happened</i> is unidiomatic." },
-  { a: "It occurred to me that I had left my keys at home.", b: "خطر لي أنني تركت مفاتيحي في البيت", w: "<i>It occurred to me</i> has its own set: تبادر إلى ذهنه، خطر له، خيّل إليه." }
+  { a: "Last month the sessions of the conference took place.", b: "انعقدت الشهر الماضي جلسات المؤتمر", w: "<i>Take place</i> and <i>be held</i> are for the planned: <b>انعقد، جرى، عقد</b>. <i>The meeting happened</i> is unidiomatic." },
+  { a: "It occurred to me that I should respond.", b: "خيّل إليّ أن من الضروري أن أجيب", w: "<i>It occurred to me</i> has its own set: تبادر إلى ذهنه، خطر له، خيّل إليه." }
 ];
 
 /* al-Rifai (2012): the verb a noun takes in diplomatic Arabic */
@@ -33057,19 +33084,19 @@ const LU_DIPLO = [
 
 /* A to Z (2013): two-part connectors, and wa / fa */
 const LU_PAIRS = [
-  { a: "either … or", b: "إما … أو", w: "“Either you finish the report today, or we postpone the meeting.” إما أن تنهي التقرير اليوم أو نؤجل الاجتماع" },
-  { a: "not only … but also", b: "لا / ليس … فحسب بل … أيضا", w: "“The dish is popular not only in Kuwait but also across the Gulf.” هذا الطبق مشهور ليس في الكويت فحسب بل في الخليج كله أيضاً" },
-  { a: "no sooner … than", b: "ما إن … حتى", w: "“No sooner had the bell rung than the students left.” ما إن رنّ الجرس حتى خرج الطلاب" },
+  { a: "either … or", b: "إما … أو", w: "“Either you pay the fine, or you’ll have to go to jail.” إما أن تدفع الغرامة أو تدخل السجن" },
+  { a: "not only … but also", b: "لا / ليس … فحسب بل … أيضا", w: "“…famous not just in the Middle East, but all over the world.” …مشهورة ليس في الشرق الأوسط فحسب بل في جميع أنحاء العالم أيضا" },
+  { a: "no sooner … than", b: "ما إن … حتى", w: "“No sooner did he see me, than he greeted me.” ما إن رآني حتى سلّم عليّ" },
   { a: "neither … nor", b: "لا … ولا", w: "The second part must come; dropping it is the usual slip." },
   { a: "whether … or", b: "سواء … أم / أو", w: "A pair English writes as one: the أم is easy to leave out." },
-  { a: "nothing but", b: "ما … إلا / ليس … إلا", w: "“This is nothing but a rumour.” ما هذا إلا إشاعة" },
+  { a: "nothing but", b: "ما … إلا / ليس … إلا", w: "“This is nothing but wastage.” ما هذا إلا …" },
   { a: "as for …", b: "أما … فـ", w: "The فـ that answers أما is obligatory in Arabic and has no English word." },
   { a: "since / given that …", b: "بما أن … فإن", w: "Again a second part, فإن, that English does without." }
 ];
 const LU_WAFA = [
-  { a: "I met Fatima, Noura and Sarah.", b: "التقيت فاطمة ونورة وسارة", w: "Between nouns, only <b>و</b> (not فنورة). English uses commas and one <i>and</i>." },
-  { a: "It rained heavily, so the match was postponed.", b: "أمطرت بغزارة فأُجّلت المباراة", w: "<b>فـ</b> carries result or sequence: <i>and so, thus, therefore</i>." },
-  { a: "We advised him many times, yet he did not listen.", b: "نصحناه مرات كثيرة فلم يستمع", w: "<b>فـ</b> can also contrast: <i>yet, however</i>." }
+  { a: "I saw Salwa, Leila and Sally.", b: "رأيت سلوى وليلى وسالي", w: "Between nouns, only <b>و</b> (not فليلى). English uses commas and one <i>and</i>." },
+  { a: "He failed the exam and (so he) had to leave the university.", b: "فشل في الامتحان فيجب أن يترك الجامعة", w: "<b>فـ</b> carries result or sequence: <i>and so, thus, therefore</i>." },
+  { a: "Her accomplice confessed, yet she insists on denying her involvement.", b: "رغم اعتراف شريكها فهي تنفي تورطها بإلحاح", w: "<b>فـ</b> can also contrast: <i>yet, however</i>." }
 ];
 
 /* A to Z (2013): agreeing and disagreeing, graded; exclamations */
@@ -33079,7 +33106,7 @@ const LU_AGREE = [
   { a: "I agree up to a point, but …", b: "أنا معك إلى حد ما ولكن …", w: "Introduces disapproval politely." },
   { a: "That’s out of the question.", b: "هذا الأمر غير قابل للنقاش", w: "Strong disapproval." },
   { a: "What a wonderful book!", b: "ما أجمل الكتاب!", w: "Exclamation: the pattern <b>ما أفعل</b>." },
-  { a: "How nice it would be if you visited us!", b: "حبذا لو زرتنا", w: "<b>حبذا</b> with لو: <i>how nice it would be if</i>." },
+  { a: "How nice it would be if he did it!", b: "حبذا لو عمله", w: "<b>حبذا</b> with لو: <i>how nice it would be if</i>." },
   { a: "What a terrible man!", b: "بئس الرجل!", w: "<b>بئس</b> (how bad!) and <b>نعم</b> (how good!) never change for gender." }
 ];
 
